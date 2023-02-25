@@ -16,8 +16,12 @@ const GestionMission = () => {
               <Input label="Objet mission" width="80%" />
               <Input label="Type mission" width="80%" />
             </div>
-
             <div className="inside">
+              <Input label="Budget mission" width="80%" />
+              <Input label="Moyen de transport" width="80%" />
+            </div>
+
+            {/* <div className="inside">
               <Input label="Pays" width="80%" />
               <Input label="Destination" width="80%" />
             </div>
@@ -46,7 +50,7 @@ const GestionMission = () => {
                   <Input label="Heure" type="time" width="70%" />
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
           <div className="buttons">
             <Button label="Annuler" />
@@ -54,7 +58,7 @@ const GestionMission = () => {
           </div>
         </div>
         <div className="listeGM">
-          <Liste title="Liste des missions" />
+          <Liste title="Liste des missions" search="mission id"/>
         </div>
       </div>
     </div>
