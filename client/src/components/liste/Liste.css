@@ -14,7 +14,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-wrap: wrap; 
+  flex-wrap: wrap;
   gap: 1em;
 }
 select {
@@ -35,21 +35,7 @@ select:focus {
   box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.2);
   transition: all 0.2s ease;
 }
-
-/* .liste .outils .selectBox {
-  border: solid 1px var(--light-gray);
-  outline: none;
-  border-radius: 5px;
-  background-color: var(--white);
-
-  height: 30px;
-
-  font-weight: 500;
-  font-size: 11px;
-  color: var(--gray);
-  text-transform: capitalize;
-  cursor: pointer;
-} */
+ 
 .liste .rows {
   list-style: none;
   overflow-y: scroll;
