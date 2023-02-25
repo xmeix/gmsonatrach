@@ -1,0 +1,27 @@
+.row {
+  padding: 1.5em 1em;
+}
+.row:hover {
+}
+
+.row .info {
+  display: flex;
+  justify-content: space-between;
+}
+
+.row .id {
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.row .etat {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--orange);
+}
+
+.row .buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5em;
+}

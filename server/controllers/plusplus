@@ -1,0 +1,155 @@
+/**router.get("/", verifyTokenAndAdmin, getAllDemandes);
+router.get("/findbyid/:id", verifyToken, checkAccessType, getDemande);
+router.get("/findbytype/:type", verifyToken, checkAccessAllType, getAllTypeDemandes);
+export const getAllTypeDemandes = async (req, res) => {
+    try {
+
+        const user = await User.findById(req.user.id);
+        let demandes = await Demande.find({ __t: req.params.type });
+        let filteredDemandes;
+        if (user.role === 3) {
+            filteredDemandes = demandes.filter((demande) => demande.idEmetteur.toString() === user.id || demande.idDestinataire.toString() === user.id)
+        } else filteredDemandes = demandes;
+
+        res.status(200).json(filteredDemandes);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+}
+export const getDemande = async (req, res) => {
+    try {
+        const demande = await Demande.findById(req.params.id);// _id: req.params.id is the true CODE for findOne
+        res.status(200).json(demande);
+
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+}
+
+
+export const getAllDemandes = async (req, res) => {
+    try {
+        const demandes = await Demande.find();
+        res.status(200).json(demandes);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+}
+
+
+/** checkAccess veerifies if a RESSOURCE BELONGS TO THE CURRENT USER */
+/** id ==> demande   DC/DM*/
+
+
+// ARRAY DE DEMANDES TYPE : demandes
+//SI req.user.id EST EMP && (type = DC || DM) ==> ( demandes.loop.filter(idEmetteur == req.user.id)) ELSE NEXT
+// RELEX && TYPE DB || SECRETAIRE || DIR ==> demandes
+//:id ==> id Emp connecté */
+// type Emp ==> ses dC , ses DM , type RELEX ==> DB , type SEC/DIR ==> TOUT
+/**
+export const checkAccessAllType = async (req, res, next) => {
+    try {
+
+        const type = req.params.type;
+        const user = await User.findById(req.user.id);
+
+        switch (type) {
+            case "DC": {
+                if (user.role !== 1 && user.role !== 3) res.status(500).json({ msg: "Unauthaurized" });
+            }; break;
+            case "DM": {
+                if (user.role === 4) res.status(500).json({ msg: "Unauthorized" });
+            }; break;
+            case "DB": { if (user.role === 3) res.status(500).json({ msg: "Unauthorized" }); }
+                break;
+        }
+
+        next();
+
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+}
+
+
+*/
+
+/** UPDATE ETAT */ /** ACCEPT OR REFUSE OR CANCEL (on envoie juste l'etat avec) */
+// DB && SEC && Cancel , DB && RELEX && (accept || refuse )
+// DM && (SEC||DIR) && (accept || refuse ), DM && EMP && DM BELONGS TO EMP && DM en attente &&(cancel)
+// DC && EMp &&  DM BELONGS TO EMP && DM en attente && (cancel) , DC && DIR && (accept || refuse )
+// req.user.id
+// req.params.id  
+/**export const checkAccessType = async (req, res, next) => {
+    try {
+
+        const demandeId = req.params.id;
+        const user = await User.findById(req.user.id);
+        const demande = await Demande.findById(demandeId);
+        const emetteur = demande.idEmetteur;
+        const destinataire = demande.idDestinataire;
+
+        if (user._id.toString() === emetteur.toString() || user._id.toString() === destinataire.toString()) next();
+        else res.status(500).json({ msg: "Unauthorized" });
+
+
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+}
+export const checkUpdateAccess = async (req, res, next) => {
+    try {
+
+        const demande = await Demande.findById(req.params.id);
+        const type = demande.__t;
+
+        const etat = demande.etat;
+        const user = await User.findById(req.user.id);
+        const operation = req.body.etat;
+
+
+        switch (type) {
+            case 'DB': {
+                if ((((user.role === 3 || user.role === 4) && operation === 4) || (user.role !== 4 && (operation === 2 || operation === 3))))
+                    res.status(500).json({ msg: "Unauthorized" });
+
+            }; break;
+            case 'DC': {
+                if (user.role === 3) checkAccessType(req, res, next);
+                if (user.role !== 3 || etat !== 1 || operation !== 4) res.status(500).json({ msg: "Unauthorized2" });
+
+            }; break;
+            case 'DM': {
+                console.log("DM");
+
+                if ((user.role === 3 || user.role === 4) && (operation === 2 || operation === 3))
+                    res.status(500).json({ msg: "Unauthorized" });
+                else if ((user.role !== 3 || etat !== 1 || operation !== 4)) res.status(500).json({ msg: "Unauthorized" });
+            }; break;
+        }
+        next();
+
+
+
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+}
+
+export const getMission = async (req, res) => {
+    try {
+        const user = await User.findById(req.user.id);
+        const mission = await Mission.findById(req.params.id);
+
+        if (user.role === 4) res.status(500).json({ msg: "Unauthorized" });
+        else if (user.role === 1 || user.role === 2) res.status(200).json({ mission });
+        else if (user.role === 3) {
+            if (mission.employes.includes(toId(user.id))) res.status(200).json({ mission });
+            else res.status(500).json({ msg: "Unauthorized" });
+        }
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+}
+
+*/
