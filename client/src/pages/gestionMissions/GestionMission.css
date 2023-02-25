@@ -18,7 +18,7 @@
   flex-direction: column;
   align-items: center;
   flex: 2.5;
- 
+
   padding: 2.2em;
   min-width: 300px;
 
@@ -41,6 +41,19 @@
   display: flex;
   flex-direction: column;
   margin-bottom: 2em;
+}
+.gestionMissions .formGM .inputs .element {
+  margin: 1em;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5em;
+}
+.gestionMissions .formGM .inputs .element label {
+  font-weight: 600;
+  font-size: 13px;
+  text-transform: capitalize;
+  color: var(--gray);
 }
 .gestionMissions .formGM .inputs .inside {
   display: flex;

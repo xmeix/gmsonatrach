@@ -6,15 +6,24 @@ import PageName from "../../components/pageName/PageName";
 import "./GestionMission.css";
 import { useState } from "react";
 import Select from "react-select";
+import CreatableSelect from "react-select/creatable";
+
 const customStyles = {
-  control: (provided) => ({
+  control: (provided, state) => ({
     ...provided,
-    border: "1px solid var(--light-gray)", // Change the border color here
+    border: "1px solid var(--light-gray)",
+    boxShadow: "0px 1px 4px rgba(0, 0, 0, 0.1);",
+    "&:hover": {
+      border: "1px solid var(--light-gray)",
+    },
+    "&:focus": {
+      border: "1px solid var(--light-gray)",
+    },
   }),
 };
+
 const GestionMission = () => {
   const [visibility, setVisibility] = useState(1);
-
   const options = [
     { value: "BOUALOUACHE Lamia", label: "BOUALOUACHE Lamia" },
     { value: "MOUSLI Amina", label: "MOUSLI Amina" },
@@ -80,11 +89,34 @@ const GestionMission = () => {
           )}
           {visibility === 3 && (
             <div className="inputs">
-              <Select options={options} isMulti styles={customStyles} />
+              <div className="element">
+                <label>employés</label>
+                <Select
+                  options={options}
+                  isMulti
+                  placeholder="ajouter employé"
+                  styles={customStyles}
+                />
+              </div>
 
+              <div className="element">
+                <label>Taches</label>
+                <CreatableSelect
+                  isMulti
+                  placeholder="créer tache"
+                  options={options}
+                  styles={customStyles}
+                />
+              </div>
+            </div>
+          )}
+          {visibility === 4 && (
+            <div className="inputs">
               <div className="inside">
-                <Input label="Task" width="80%" />
-                <ul className="tasks"></ul>
+                <Input label="Observation" width="100%" />
+              </div>
+              <div className="inside">
+                <Input label="Circonscription admin" width="100%" />
               </div>
             </div>
           )}
