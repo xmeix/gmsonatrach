@@ -19,15 +19,18 @@
 }
 select {
   border: none;
-  padding: 10px;
+  padding: 5px;
   font-family: "Montserrat", sans-serif;
   font-size: 12px;
   font-weight: 600;
+  width: 100px;
   color: var(--gray);
   background-color: var(--white);
   border-radius: 5px;
   box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
   transition: all 0.2s ease;
+  text-align: center;
+  cursor: pointer;
 }
 
 select:focus {
@@ -35,7 +38,7 @@ select:focus {
   box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.2);
   transition: all 0.2s ease;
 }
- 
+
 .liste .rows {
   list-style: none;
   overflow-y: scroll;

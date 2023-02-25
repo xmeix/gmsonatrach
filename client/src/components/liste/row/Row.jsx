@@ -1,7 +1,4 @@
 import "./Row.css";
-import CheckRoundedIcon from "@mui/icons-material/CheckRounded";
-import ClearRoundedIcon from "@mui/icons-material/ClearRounded";
-import Button from "../button/Button";
 const Row = () => {
   return (
     <div className="row">
@@ -12,8 +9,8 @@ const Row = () => {
         <p className="etat">en cours</p>
       </div>
       <div className="buttons">
-        <Button title="accepter" />
-        <Button title="annuler" />
+        <button className="btn">Accepter</button>
+        <button className="btn">Refuser</button>
       </div>
     </div>
   );

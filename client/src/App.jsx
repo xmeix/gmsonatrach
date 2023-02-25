@@ -8,14 +8,16 @@ import LoginPage from "./pages/loginPage/LoginPage";
 import SuiviDepense from "./pages/suiviDepense/SuiviDepense";
 
 function App() {
+  const loggedIn = true;
   return (
-   <div className="app">
-      <NavBar /> 
+    <div className="app">
+      {loggedIn && <NavBar />}
       <Routes>
-          {/* <Route path="/" element={<LoginPage/>}/> */}
-          <Route path="/gestion-des-mission" element={<GestionMission/>}/> 
-        </Routes>  
-        </div>
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/gestion-des-mission" element={<GestionMission />} />
+        <Route path="/suivi-depense" element={<GestionMission />} />
+      </Routes>
+    </div>
   );
 }
 

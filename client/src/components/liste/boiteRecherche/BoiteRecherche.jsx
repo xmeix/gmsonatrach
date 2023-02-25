@@ -6,7 +6,7 @@ const BoiteRecherche = ({ search }) => {
     <div className="boiteRecherche">
       <InputAdornment
         position="start"
-        style={{ position: "absolute", top: "1.1em", left: "0.5em" }}
+        style={{ position: "absolute", top: "0.9em", left: "0.2em" }}
       >
         <SearchRoundedIcon className="searchIcon" />
       </InputAdornment>

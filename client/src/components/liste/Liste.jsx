@@ -25,7 +25,9 @@ const Liste = ({ title, search }) => {
           value={selectedOption}
           onChange={(e) => setSelectedOption(e.target.value)}
         >
-          <option value="">filter: Select an option</option>
+          <option value="" disabled>
+            filter
+          </option>
           {options.map((option, index) => (
             <option key={index} value={option}>
               {option}
