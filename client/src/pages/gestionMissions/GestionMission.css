@@ -1,6 +1,6 @@
 .gestionMissions {
   display: flex;
-  margin: 6em 2.5em 3.5em 2.5em;
+  margin: 2em;
   flex-direction: column;
 
   justify-content: center;

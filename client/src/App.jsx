@@ -13,7 +13,7 @@ function App() {
       <NavBar /> 
       <Routes>
           {/* <Route path="/" element={<LoginPage/>}/> */}
-          <Route path="/gm" element={<GestionMission/>}/> 
+          <Route path="/gestion-des-mission" element={<GestionMission/>}/> 
         </Routes>  
         </div>
   );
