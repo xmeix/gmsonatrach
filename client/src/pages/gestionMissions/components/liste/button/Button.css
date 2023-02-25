@@ -1,0 +1,19 @@
+.btn {
+  background-color: white;
+  outline: none;
+  border: solid 1px var(--light-gray);
+  border-radius: 5px;
+  font-size: 10px;
+  text-transform: uppercase;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  padding: 1em;
+  cursor: pointer;
+}
+.btn:hover {
+  background-color: var(--light-gray);
+}
+.btn .icon {
+  font-size: 17px;
+}
