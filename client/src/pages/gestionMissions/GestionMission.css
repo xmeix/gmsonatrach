@@ -1,8 +1,8 @@
 .gestionMissions {
   display: flex;
-  margin: 2em;
+ 
+  text-align: center;
   flex-direction: column;
-
   justify-content: center;
 }
 .gestionMissions .elements {
