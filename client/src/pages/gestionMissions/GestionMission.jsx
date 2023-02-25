@@ -34,6 +34,13 @@ const GestionMission = () => {
     setVisibility(visibility + 1);
     console.log(visibility);
   };
+  const AddMission = () => {
+    setVisibility(1);
+  };
+
+  const Predire = () => {
+    console.log("prediction");
+  };
   return (
     <div className="gestionMissions">
       <PageName name="gestion Mission" />
@@ -124,9 +131,21 @@ const GestionMission = () => {
             <button className="btn" onClick={() => setVisibility(1)}>
               Annuler
             </button>
-            <button className="btn" onClick={changeVisibility}>
-              Suivant
-            </button>
+            {visibility === 4 && (
+              <button className="btn" onClick={Predire}>
+                Prédire
+              </button>
+            )}
+            {visibility === 4 && (
+              <button className="btn" onClick={AddMission}>
+                Ajouter
+              </button>
+            )}
+            {visibility !== 4 && (
+              <button className="btn" onClick={changeVisibility}>
+                Suivant
+              </button>
+            )}
           </div>
         </div>
         <div className="listeGM">
