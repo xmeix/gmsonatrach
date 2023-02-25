@@ -5,7 +5,7 @@ const Liste = ({ title }) => {
   return (
     <div className="liste">
       <p className="listTitle">{title}</p>
-      <BoiteRecherche />P
+      <BoiteRecherche />
       <ul className="rows">
         <li>
           <Row />

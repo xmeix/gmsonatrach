@@ -1,3 +1,4 @@
+import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import Liste from "./components/liste/Liste";
 import NavBar from "./components/navbar/NavBar";
@@ -8,10 +9,13 @@ import SuiviDepense from "./pages/suiviDepense/SuiviDepense";
 
 function App() {
   return (
-    <div className="app">
-      <NavBar />
-      <GestionMission />
-    </div>
+   <div className="app">
+      <NavBar /> 
+      <Routes>
+          {/* <Route path="/" element={<LoginPage/>}/> */}
+          <Route path="/gm" element={<GestionMission/>}/> 
+        </Routes>  
+        </div>
   );
 }
 
