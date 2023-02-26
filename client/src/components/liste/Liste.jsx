@@ -2,9 +2,9 @@ import { useState } from "react";
 import BoiteRecherche from "./boiteRecherche/BoiteRecherche";
 import "./Liste.css";
 import Row from "./row/Row";
-const Liste = ({ title, search }) => {
+const Liste = ({ title, search, filterOptions }) => {
   const [selectedOption, setSelectedOption] = useState("");
-  const options = ["etat", "moyen de transport"];
+
   const data = [
     { name: "John", age: 30 },
     { name: "Jane", age: 25 },
@@ -19,7 +19,6 @@ const Liste = ({ title, search }) => {
       <p className="listTitle">{title}</p>
       <div className="outils">
         <BoiteRecherche search={search} />
-
         <select
           className="selectBox"
           value={selectedOption}
@@ -28,7 +27,7 @@ const Liste = ({ title, search }) => {
           <option value="" disabled>
             filter
           </option>
-          {options.map((option, index) => (
+          {filterOptions.map((option, index) => (
             <option key={index} value={option}>
               {option}
             </option>

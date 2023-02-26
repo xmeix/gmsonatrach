@@ -29,6 +29,7 @@ const GestionMission = () => {
     { value: "MOUSLI Amina", label: "MOUSLI Amina" },
     { value: "AID Feriel", label: "AID Feriel" },
   ];
+  const filterOptions = ["etat", "moyen de transport"];
 
   const changeVisibility = () => {
     setVisibility(visibility + 1);
@@ -43,7 +44,7 @@ const GestionMission = () => {
   };
   return (
     <div className="gestion">
-      <PageName name="gestion Mission" />
+      <PageName name="gestion Missions" />
       <div className="elements">
         <div className="form">
           <div className="formTitle">Formulaire d'ajout mission</div>
@@ -149,7 +150,11 @@ const GestionMission = () => {
           </div>
         </div>
         <div className="listeG">
-          <Liste title="Liste des missions" search="mission id" />
+          <Liste
+            title="Liste des missions"
+            search={["id"]}
+            filterOptions={filterOptions}
+          />
         </div>
       </div>
     </div>

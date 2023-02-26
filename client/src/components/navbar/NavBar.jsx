@@ -57,7 +57,7 @@ const NavBar = () => {
         )}
         {isOpen && <div className="hideDiv" onClick={handleHideMenu}></div>}
         {!responsive && (
-          <NavLink to="" className="tb"  >
+          <NavLink to="" className="tb">
             Tableau de bord
           </NavLink>
         )}
@@ -65,7 +65,7 @@ const NavBar = () => {
           <ul className="sublist">
             {titles.map((title, i) => (
               <li key={title.id}>
-                <NavLink to={title.path} className="link"  >
+                <NavLink to={title.path} className="link">
                   {title.title}
                 </NavLink>
               </li>
