@@ -4,7 +4,7 @@
   flex-direction: column;
   margin: 1em;
 }
-.input .subinput {
+.subinput {
   background: white;
   border: 1px solid var(--light-gray);
   box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1);
@@ -12,7 +12,7 @@
   padding: 0.8em 1em;
   outline: none;
 }
-.input .label {
+.label {
   font-weight: 600;
   font-size: 13px;
   line-height: 0;

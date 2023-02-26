@@ -61,3 +61,11 @@ body {
 .icn {
   font-size: 17px !important;
 }
+
+input,
+textArea,
+select {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  color: var(--gray);
+}
