@@ -1,16 +1,17 @@
 import "./Row.css";
-const Row = () => {
+const Row = ({ title, state, buttons }) => {
   return (
     <div className="row">
       <div className="info">
-        <p className="id">
-          <span>id:</span> 188875
-        </p>
-        <p className="etat">en cours</p>
+        <p className="id">{title}</p>
+        <p className="etat">{state}</p>
       </div>
       <div className="buttons">
-        <button className="btn">Accepter</button>
-        <button className="btn">Refuser</button>
+        {buttons.map((button, i) => (
+          <button key={i} className="btn">
+            {button}
+          </button>
+        ))}
       </div>
     </div>
   );

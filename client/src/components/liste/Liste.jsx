@@ -10,6 +10,9 @@ const Liste = ({ title, search, filterOptions }) => {
     { name: "Jane", age: 25 },
     { name: "Bob", age: 40 },
   ];
+  const id = "Lamia boualouache";
+  const state = "missionnaire";
+  const buttons = ["accepter", "refuser"];
 
   const filteredData = data.filter((item) => {
     //selectedOption ? item.name === selectedOption : true;
@@ -36,43 +39,19 @@ const Liste = ({ title, search, filterOptions }) => {
       </div>
       <ul className="rows">
         <li>
-          <Row />
+          <Row title={id} state={state} buttons={buttons} />
         </li>
         <li>
-          <Row />
+          <Row title={id} state={state} buttons={buttons} />
         </li>
         <li>
-          <Row />
+          <Row title={id} state={state} buttons={buttons} />
         </li>
         <li>
-          <Row />
+          <Row title={id} state={state} buttons={buttons} />
         </li>
         <li>
-          <Row />
-        </li>
-        <li>
-          <Row />
-        </li>
-        <li>
-          <Row />
-        </li>
-        <li>
-          <Row />
-        </li>
-        <li>
-          <Row />
-        </li>
-        <li>
-          <Row />
-        </li>
-        <li>
-          <Row />
-        </li>
-        <li>
-          <Row />
-        </li>
-        <li>
-          <Row />
+          <Row title={id} state={state} buttons={buttons} />
         </li>
       </ul>
     </div>
