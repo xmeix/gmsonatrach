@@ -1,19 +1,19 @@
-.gestionMissions {
+.gestion {
   display: flex;
   text-align: center;
   flex-direction: column;
   justify-content: center;
-}
-.gestionMissions .elements {
+} 
+.gestion .elements {
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
   gap: 3em;
 
-  margin: 10em 2.5em 2em 2.5em;
+  margin: 10em 2.5em 1.5em 2.5em;
 }
 /*___________________________________________________________________________________*/
-.gestionMissions .formGM {
+.gestion .form {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -29,59 +29,59 @@
   transition: all 0.5s ease-in-out;
 }
 
-.gestionMissions .formGM .pageNum {
+.gestion .form .pageNum {
 }
 
-.gestionMissions .formGM .formTitle {
+.gestion .form .formTitle {
   font-weight: 800;
   text-align: center;
   margin-bottom: 2em;
 }
-.gestionMissions .formGM .inputs {
+.gestion .form .inputs {
   display: flex;
   flex-direction: column;
   margin-bottom: 2em;
 }
-.gestionMissions .formGM .inputs .element {
+.gestion .form .inputs .element {
   margin: 1em;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 0.5em;
 }
-.gestionMissions .formGM .inputs .element label {
+.gestion .form .inputs .element label {
   font-weight: 600;
   font-size: 13px;
   text-transform: capitalize;
   color: var(--gray);
 }
-.gestionMissions .formGM .inputs .inside {
+.gestion .form .inputs .inside {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
 }
-.gestionMissions .formGM .inputs .inside div {
+.gestion .form .inputs .inside div {
   display: flex;
   justify-content: center;
   gap: 1em;
 }
-.gestionMissions .formGM .inputs p {
+.gestion .form .inputs p {
   font-weight: 500;
   color: var(--gray);
 }
-.gestionMissions .formGM .inputs .outside {
+.gestion .form .inputs .outside {
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-top: 1em;
 }
-.gestionMissions .formGM .buttons {
+.gestion .form .buttons {
   display: flex;
   gap: 0.5em;
 }
 /*___________________________________________________________________________________*/
 
-.gestionMissions .listeGM {
+.gestion .listeG {
   position: sticky;
   top: 6em;
   flex: 1.5;

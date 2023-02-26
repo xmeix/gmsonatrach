@@ -3,7 +3,7 @@ import Input from "../../components/form/input/Input";
 import Button from "../../components/form/button/Button";
 import NavBar from "../../components/navbar/NavBar";
 import PageName from "../../components/pageName/PageName";
-import "./GestionMission.css";
+import "./../../css/Gestion.css";
 import { useState } from "react";
 import Select from "react-select";
 import CreatableSelect from "react-select/creatable";
@@ -42,10 +42,10 @@ const GestionMission = () => {
     console.log("prediction");
   };
   return (
-    <div className="gestionMissions">
+    <div className="gestion">
       <PageName name="gestion Mission" />
       <div className="elements">
-        <div className="formGM">
+        <div className="form">
           <div className="formTitle">Formulaire d'ajout mission</div>
           {visibility === 1 && (
             <div className="inputs">
@@ -148,7 +148,7 @@ const GestionMission = () => {
             )}
           </div>
         </div>
-        <div className="listeGM">
+        <div className="listeG">
           <Liste title="Liste des missions" search="mission id" />
         </div>
       </div>
