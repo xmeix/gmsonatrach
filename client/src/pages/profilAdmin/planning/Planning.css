@@ -1,0 +1,5 @@
+.planning {
+  height: 90.5vh;
+  background-color: aqua;
+  overflow-x: scroll;
+}

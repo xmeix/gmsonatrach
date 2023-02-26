@@ -1,12 +1,10 @@
-import Liste from "../../components/liste/Liste";
-import Input from "../../components/form/input/Input";
-import Button from "../../components/form/button/Button";
-import NavBar from "../../components/navbar/NavBar";
-import PageName from "../../components/pageName/PageName";
-import "./../../css/Gestion.css";
+import "./../../../css/Gestion.css";
 import { useState } from "react";
 import Select from "react-select";
 import CreatableSelect from "react-select/creatable";
+import Liste from "../../../components/liste/Liste";
+import Input from "../../../components/form/input/Input";
+import PageName from "../../../components/pageName/PageName";
 
 const customStyles = {
   control: (provided, state) => ({

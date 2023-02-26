@@ -1,7 +1,7 @@
-import Input from "../../components/form/input/Input";
-import Liste from "../../components/liste/Liste";
-import PageName from "../../components/pageName/PageName";
-import "./../../css/Gestion.css";
+import Liste from "../../../components/liste/Liste";
+import Input from "../../../components/form/input/Input";
+import PageName from "../../../components/pageName/PageName";
+import "./../../../css/Gestion.css";
 const GestionRelex = () => {
   const filterOptions = ["etat"];
   const entries = [

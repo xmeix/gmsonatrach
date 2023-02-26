@@ -1,7 +1,6 @@
 import "./SuiviDepense.css";
-
-import Input from "../../components/form/input/Input";
-import Button from "../../components/form/button/Button";
+import Input from "./../../../components/form/input/Input";
+import Button from "./../../../components/form/button/Button";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 const SuiviDepense = () => {
