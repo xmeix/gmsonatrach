@@ -34,20 +34,22 @@ body {
 }
 /* style horizontal scrollbar */
 .scrollable::-webkit-scrollbar-corner {
-  background-color: #f1f1f1;
+  background-color: #cc2828 !important;
 }
 
 .scrollable::-webkit-scrollbar-x {
-  height: 10px;
+  height: 5px;
+  background-color: #cc2828 !important;
 }
 
 .scrollable::-webkit-scrollbar-thumb:horizontal {
-  background-color: #888;
+  background-color: #cc2828 !important;
+
   border-radius: 10px;
 }
 
 .scrollable::-webkit-scrollbar-track:horizontal {
-  background-color: #f1f1f1;
+  background-color: #cc2828 !important;
 }
 /*_________________________________________________*/
 .link {
