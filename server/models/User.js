@@ -51,6 +51,8 @@ const UserSchema = new mongoose.Schema(
       type: String,
       required: true,
       enum: [
+        "DG",
+        "RELEX",
         "PMO",
         "FIN",
         "SD",

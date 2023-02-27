@@ -12,25 +12,38 @@ export const createDemande = async (req, res) => {
       return;
     }
     const type = req.params.type;
+    const structure = req.user.structure;
     const user = req.user;
     let newDemande;
     let destinataire;
 
-    if (type === "DC") {
-      destinataire = await User.findOne({ role: 1 });
-    } else if (type === "DM") {
-      destinataire = await User.findOne({ role: 2 });
+    if (type === "DM" || type === "DC") {
+      destinataire = await User.findOne({
+        role: "responsable",
+        structure: structure,
+      });
+      console.log("structure" + structure);
+
+      console.log("destinataire1" + destinataire);
     } else if (type === "DB") {
-      destinataire = await User.findOne({ role: 4 });
+      destinataire = await User.findOne({ role: "relex" });
     }
 
     destinataire = toId(destinataire.id);
     let emetteur = toId(user.id);
+    console.log("destinataire2" + destinataire);
+    console.log("emetteur3" + emetteur);
     switch (type) {
       case "DC": {
-        const { motif } = req.body;
+        const { motif, NbJours, DateDepart, DateRetour, LieuSejour, Nature } =
+          req.body;
         newDemande = new DC({
-          motif: motif,
+          motif,
+          NbJours,
+          DateDepart,
+          DateRetour,
+          LieuSejour,
+          Nature,
           idEmetteur: emetteur,
           idDestinataire: destinataire,
         });
@@ -40,7 +53,7 @@ export const createDemande = async (req, res) => {
       case "DM": {
         const { motif } = req.body;
         newDemande = new DM({
-          motif: motif,
+          motif,
           idEmetteur: emetteur,
           idDestinataire: destinataire,
         });
@@ -60,28 +73,25 @@ export const createDemande = async (req, res) => {
           dateRetour,
         } = req.body;
         newDemande = new DB({
-          motif: motif,
+          motif,
           idEmetteur: emetteur,
           idDestinataire: destinataire,
-          numSC: numSC,
-          designationSC: designationSC,
-          montantEngage: montantEngage,
-          nature: nature,
-          motifDep: motifDep,
-          observation: observation,
-          dateDepart: dateDepart,
-          dateRetour: dateRetour,
+          numSC,
+          designationSC,
+          montantEngage,
+          nature,
+          motifDep,
+          observation,
+          dateDepart,
+          dateRetour,
         });
         break;
       }
     }
 
     const savedDemande = await newDemande.save();
-    return res
-      .status(201)
-      .json({ newDemande, msg: "Demande created successfully" });
+    return res.status(201).json({ savedDemande, msg: "Demande envoyée" });
   } catch (err) {
-    console.log("errr: " + err.message);
     res.status(500).json({ error: err.message });
   }
 };
@@ -91,8 +101,17 @@ export const getDemandes = async (req, res) => {
     const user = await User.findById(req.user.id);
     let demandes = await Demande.find();
     let filteredDemandes;
-    //if relex ==> then allow all demande de billetterie //if secretaire ou directeur ==> allow all DC, DB , DM //if employe ===> allow only his own DC , DM
-    if (user.role === 3 || user.role === 4) {
+    /**
+     * emp : get his DC , DM
+     * responsable : get demandes d'une structure
+     * directeur / secretaire : get All demandes
+     * relex : get only db
+     */
+    if (
+      user.role === "employe" ||
+      user.role === "relex" ||
+      user.role === "responsable"
+    ) {
       filteredDemandes = demandes.filter(
         (demande) =>
           demande.idEmetteur.toString() === user.id ||
@@ -109,13 +128,13 @@ export const updateDemEtat = async (req, res) => {
   try {
     const demande = await Demande.findById(req.params.id);
 
-    if (demande.etat === 1 && req.body.etat !== 1) {
+    if (demande.etat === "en-attente" && req.body.etat !== "en-attente") {
       const updatedDemande = await Demande.findByIdAndUpdate(
         req.params.id,
         { etat: req.body.etat },
         { new: true }
       );
-      res.status(200).json({ updatedDemande, msg: "Updated successfully" });
+      res.status(200).json({ updatedDemande, msg: "Modifié avec succés" });
     } else {
       res.status(406).json({ error: "Unauthorized" });
     }

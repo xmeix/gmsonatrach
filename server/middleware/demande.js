@@ -10,7 +10,7 @@ export const checkCreateAccess = async (req, res, next) => {
     const role = req.user.role;
 
     switch (role) {
-      case 1:
+      case "directeur":
         {
           /** allowed to create DB only */
           if (type !== "DB") {
@@ -18,7 +18,7 @@ export const checkCreateAccess = async (req, res, next) => {
           }
         }
         break;
-      case 2:
+      case "responsable":
         {
           /** allowed to create Db Only */
           if (type !== "DB") {
@@ -26,18 +26,26 @@ export const checkCreateAccess = async (req, res, next) => {
           }
         }
         break;
-      case 3:
+      case "secretaire":
+        {
+          /** allowed to create Db Only */
+          if (type !== "DB") {
+            throw new Error("Unauthorized");
+          }
+        }
+        break;
+      case "relex":
+        {
+          /** NOT ALLOWED TO CREATE ANYTHING*/
+          throw new Error("Unauthorized");
+        }
+        break;
+      case "employe":
         {
           /** allowed to create DM,DC*/
           if (type === "DB") {
             throw new Error("Unauthorized");
           }
-        }
-        break;
-      case 4:
-        {
-          /** NOT ALLOWED TO CREATE ANYTHING*/
-          throw new Error("Unauthorized");
         }
         break;
     }
@@ -60,14 +68,19 @@ export const updateAccessCheck = async (req, res, next) => {
           //DB can be updated by
           /**
            * directeur (cancel)
+           * responsable (cancel his own)
            * secretaire (cancel)
            * Relex (accept , refuse)
            * NOT EMPLOYE
            */
           if (
-            user.role === 3 ||
-            (user.role === 4 && operation === 4) ||
-            (user.role !== 4 && (operation === 2 || operation === 3))
+            user.role === "employe" ||
+            (user.role === "relex" && operation === "annulée") ||
+            (user.role !== "relex" &&
+              (operation === "acceptée" || operation === "refusée")) ||
+            (user.role === "responsable" &&
+              operation === "annulée" &&
+              demande.idEmetteur.toString() !== user.id)
           )
             throw new Error("Unauthorized");
         }
@@ -76,15 +89,24 @@ export const updateAccessCheck = async (req, res, next) => {
         {
           //DC can be updated by
           /**
-           * employe ( cancel )
+           * employe ( cancel his own)
+           * responsable (accept / refuse his own structure emp demands )
            * directeur ( accept / refuse )
            * NOT SECRETAIRE NOT RELEX
            */
           if (
-            user.role === 2 ||
-            user.role === 4 ||
-            (operation === 4 && user.role !== 3) ||
-            ((operation === 2 || operation === 3) && user.role !== 1)
+            user.role === "secretaire" ||
+            user.role === "relex" ||
+            (operation === "annulée" && user.role !== "employe") ||
+            ((operation === "acceptée" || operation === "refusée") &&
+              user.role !== "directeur" &&
+              user.role !== "responsable") ||
+            (user.role === "employe" &&
+              operation === "annulée" &&
+              demande.idEmetteur.toString() !== user.id) ||
+            (user.role === "responsable" &&
+              (operation === "acceptée" || operation === "refusée") &&
+              demande.idDestinataire.toString() !== user.id)
           )
             throw new Error("Unauthorized");
         }
@@ -93,17 +115,25 @@ export const updateAccessCheck = async (req, res, next) => {
         {
           //DM can be updated by
           /**
-           * employe ( cancel )
+           * employe ( cancel his own)
+           * responsable (accept / refuse his own sectors demands)
            * directeur ( accept / refuse )
            * secretaire ( accept / refuse )
            * NOT RELEX
            */
           if (
-            user.role === 4 ||
-            (user.role !== 3 && operation === 4) ||
-            ((operation === 2 || operation === 3) &&
-              user.role !== 1 &&
-              user.role !== 2)
+            user.role === "relex" ||
+            (user.role !== "employe" && operation === "annulée") ||
+            ((operation === "acceptée" || operation === "refusée") &&
+              user.role !== "directeur" &&
+              user.role !== "secretaire" &&
+              user.role !== "responsable") ||
+            (user.role === "employe" &&
+              operation === "annulée" &&
+              demande.idEmetteur.toString() !== user.id) ||
+            (user.role === "responsable" &&
+              (operation === "acceptée" || operation === "refusée") &&
+              demande.idDestinataire.toString() !== user.id)
           )
             throw new Error("Unauthorized");
         }

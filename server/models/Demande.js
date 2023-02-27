@@ -4,6 +4,7 @@ const DemandeSchema = new mongoose.Schema(
   {
     motif: {
       type: String,
+      default: "",
     },
     etat: {
       type: String,
@@ -12,6 +13,7 @@ const DemandeSchema = new mongoose.Schema(
     },
     raisonRefus: {
       type: String,
+      default: "",
     },
     idEmetteur: {
       type: mongoose.Schema.Types.ObjectId,

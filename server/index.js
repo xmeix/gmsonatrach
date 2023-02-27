@@ -10,7 +10,6 @@ import demandeRoutes from "./routes/demande.js";
 import missionRoutes from "./routes/mission.js";
 import ordreMissionRoutes from "./routes/ordreMission.js";
 import depenseRoutes from "./routes/depense.js";
-import tacheRoutes from "./routes/tache.js";
 import rapportRoutes from "./routes/rapportFM.js";
 
 /** CONFIGURATION */
@@ -31,7 +30,6 @@ app.use("/demande", demandeRoutes);
 app.use("/mission", missionRoutes);
 app.use("/ordremission", ordreMissionRoutes);
 app.use("/depense", depenseRoutes);
-app.use("/tache", tacheRoutes);
 app.use("/rapportFM", rapportRoutes);
 
 /** MONGOOSE SETUP */

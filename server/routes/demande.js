@@ -8,7 +8,7 @@ import {
 import { verifyToken } from "../middleware/auth.js";
 
 const router = express.Router();
- 
+
 /**CREATE */
 router.post("/:type", verifyToken, checkCreateAccess, createDemande);
 
