@@ -28,15 +28,14 @@ const GestionEmploye = () => {
             <div className="inside">
               {entries.map((entry, i) => {
                 return (
-                  <>
+                  <div key={i}>
                     <Input
-                      key={i}
                       label={entry.label}
                       type={entry.type}
                       width={entry.width}
                     />
                     {i % 3 !== 0 && i !== 7 && <div className="line" />}
-                  </>
+                  </div>
                 );
               })}
             </div>

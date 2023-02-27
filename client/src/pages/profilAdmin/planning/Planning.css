@@ -40,9 +40,15 @@
   font-weight: 400 !important;
 }
 
-th {
-  font-weight: 400;
+th,
+tr {
+  font-weight: 600;
+  font-size: 12px;
   padding: 0.5em 1em;
   border-right: solid 1px var(--light-gray);
   border-bottom: solid 1px var(--light-gray);
+}
+
+tr {
+  padding: 1em;
 }

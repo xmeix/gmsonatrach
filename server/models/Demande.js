@@ -4,27 +4,32 @@ const DemandeSchema = new mongoose.Schema(
   {
     motif: {
       type: String,
-      required: true,
     },
     etat: {
-      type: Number,
-      default: 1
+      type: String,
+      enum: ["en-attente", "acceptée", "refusée", "annulée"],
+      default: "en-attente",
+    },
+    raisonRefus: {
+      type: String,
     },
     idEmetteur: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
+      ref: "User",
     },
     idDestinataire: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
+      ref: "User",
     },
-  }, {
-  timestamps: true
-}, {
-  discriminatorKey: 'type',
-  toJSON: { virtuals: true },
-  toObject: { virtuals: true }
-},
+  },
+  {
+    timestamps: true,
+  },
+  {
+    discriminatorKey: "type",
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
+  }
 );
 
 const Demande = mongoose.model("Demande", DemandeSchema);

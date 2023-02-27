@@ -5,22 +5,26 @@ const DBSchema = new mongoose.Schema(
   {
     numSC: {
       type: Number,
-      required: true,
+      //required: true,
     },
     designationSC: {
       type: String,
-      required: true,
+      //required: true,
     },
     montantEngage: {
       type: Number,
-      required: true,
+      //required: true,
     },
     nature: {
+      //Aller ret/aller
       type: String,
+      enum: ["aller-retour", "retour", "aller"],
       required: true,
     },
     motifDep: {
+      //mission travail/mission formation
       type: String,
+      enum: ["travail", "formation"],
       required: true,
     },
     observation: {
@@ -29,19 +33,19 @@ const DBSchema = new mongoose.Schema(
     },
     dateDepart: {
       type: Date,
-      required: true,
+      //required: true,
     },
     dateRetour: {
       type: Date,
-      required: true,
+      //required: true,
     },
-
-  }, {
-  discriminatorKey: 'type',
-  toJSON: { virtuals: true },
-  toObject: { virtuals: true }
-},
+  },
+  {
+    discriminatorKey: "type",
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
+  }
 );
 
-const DB = Demande.discriminator('DB', DBSchema);
+const DB = Demande.discriminator("DB", DBSchema);
 export default DB;

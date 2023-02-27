@@ -7,8 +7,10 @@ const MissionSchema = new mongoose.Schema(
       required: true,
     },
     type: {
-      type: Number,
-      default: 1,
+      // LOC/ETR
+      type: String,
+      enum: ["LOCAL", "ETRANGER"],
+      required: true,
     },
     budget: {
       type: Number,
@@ -21,23 +23,31 @@ const MissionSchema = new mongoose.Schema(
     employes: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
+        ref: "User",
         required: true,
       },
-    ]
-    ,
+    ],
     taches: [
       {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Tache',
-        required: true,
+        idTache: {
+          type: String,
+          required: true,
+        },
+        content: {
+          type: String,
+          required: true,
+        },
+        state: {
+          type: String,
+          enum: ["accomplie", "non-accomplie"],
+        },
       },
     ],
     tDateDeb: [
       {
         type: Date,
         required: true,
-      }
+      },
     ],
     tDateRet: [
       {
@@ -46,7 +56,9 @@ const MissionSchema = new mongoose.Schema(
       },
     ],
     moyenTransport: {
+      //AVION / ROUTE
       type: String,
+      enum: ["avion", "route"],
       required: true,
     },
     lieuDep: {
@@ -58,20 +70,36 @@ const MissionSchema = new mongoose.Schema(
       required: true,
     },
     observation: {
+      //text area //
       type: String,
       required: true,
     },
     etat: {
-      type: Number,
-      default: 1,
+      type: String,
+      enum: [
+        "en-attente",
+        "planifiée",
+        "refusée",
+        "annulée",
+        "terminée",
+        "en-cours",
+        "modifiée",
+      ],
+      default: "en-attente",
+    },
+
+    raisonRefus: {
+      type: String,
     },
     circonscriptionAdm: {
+      //Code wilaya
       type: String,
       required: true,
-    }
-  }, {
-  timestamps: true
-}
+    },
+  },
+  {
+    timestamps: true,
+  }
 );
 const Mission = mongoose.model("Mission", MissionSchema);
 export default Mission;

@@ -1,7 +1,10 @@
 import { useState } from "react";
 import PageName from "../../../components/pageName/PageName";
 import "./Planning.css";
+import uuid from "react-uuid";
+
 const Planning = () => {
+  const missions = [];
   const monthsOfYear = [
     "January",
     "February",
@@ -19,6 +22,16 @@ const Planning = () => {
   const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   const currentDate = new Date();
   const [date, setDate] = useState(currentDate);
+
+  const employees = [];
+
+  for (let i = 1; i <= 200; i++) {
+    const employee = {
+      number: i,
+      name: `Employee ${i}`,
+    };
+    employees.push(employee);
+  }
 
   function prevMonth() {
     const prevDate = new Date(date.getFullYear(), date.getMonth() - 1);
@@ -49,12 +62,18 @@ const Planning = () => {
 
     let rows = [];
     let cells = [];
-    cells.push(<th key={0}>employé</th>);
-    days.forEach((day, index) => {
-      cells.push(<th key={index}>{day}</th>);
+    cells.push(<th key={uuid()}>employé</th>);
+    cells.push(<th key={uuid()}>Stream</th>);
+
+    days.forEach((day) => {
+      cells.push(<th key={uuid()}>{day}</th>);
+    });
+    rows.forEach((row) => {
+      cells.push(<tr key={uuid()}>a</tr>);
     });
 
     rows.push(<tr key={daysInMonth}>{cells}</tr>);
+
     return rows;
   }
   return (

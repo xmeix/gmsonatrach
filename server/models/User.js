@@ -24,20 +24,6 @@ const UserSchema = new mongoose.Schema(
       max: 10,
       validate: /^(0)(5|6|7)[0-9]{8}$/,
     },
-    adresse: {
-      type: String,
-      required: true,
-    },
-    dateNaissance: {
-      type: Date,
-      required: true,
-      min: "1923-01-01",
-      max: "2123-01-01",
-    },
-    lieuNaissance: {
-      type: String,
-      required: true,
-    },
     email: {
       type: String,
       required: true,
@@ -50,19 +36,34 @@ const UserSchema = new mongoose.Schema(
       min: 5,
     },
     role: {
-      type: Number,
-      default: 3,
+      //1-directeur 2-secretaire 3-employe 4-relex 5-sous-directeur
+      type: String,
+      enum: ["directeur", "secretaire", "employe", "relex", "responsable"],
+      default: "employe",
     },
     etat: {
-      type: Number,
-      default: 1,
+      //2-missionnaire/1-non missionnaire
+      type: String,
+      enum: ["non-missionnaire", "missionnaire"],
+      default: "non-missionnaire",
     },
-    taches: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Tache",
-      },
-    ],
+    structure: {
+      type: String,
+      required: true,
+      enum: [
+        "PMO",
+        "FIN",
+        "SD",
+        "PRC",
+        "HCM",
+        "MRO",
+        "IPM",
+        "PDN",
+        "TECH",
+        "DATA",
+        "CHANGE",
+      ],
+    },
   },
   {
     timestamps: true,
