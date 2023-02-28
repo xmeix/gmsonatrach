@@ -7,6 +7,7 @@ export const createMission = async (req, res) => {
   try {
     const {
       objetMission,
+      structure,
       type,
       budget,
       pays,
@@ -19,55 +20,62 @@ export const createMission = async (req, res) => {
       destination,
       observation,
       etat,
+      raisonRefus,
+
       circonscriptionAdm,
     } = req.body;
 
-    const newTaches = taches.map((tache) => toId(tache));
+    //const newTaches = taches.map((tache) => toId(tache));
     const newEmployes = employes.map((employe) => toId(employe));
 
+    const createdBy = toId(req.user.id);
     const mission = new Mission({
       objetMission: objetMission,
-      type: type,
-      budget: budget,
-      pays: pays,
+      structure,
+      type,
+      budget,
+      pays,
       employes: newEmployes,
-      taches: newTaches,
-      tDateDeb: tDateDeb,
-      tDateRet: tDateRet,
-      moyenTransport: moyenTransport,
-      lieuDep: lieuDep,
-      destination: destination,
-      observation: observation,
-      etat: etat,
-      circonscriptionAdm: circonscriptionAdm,
+      taches,
+      tDateDeb,
+      tDateRet,
+      moyenTransport,
+      lieuDep,
+      destination,
+      observation,
+      etat,
+      raisonRefus,
+      circonscriptionAdm,
+      createdBy,
     });
 
     const savedMission = await mission.save();
-    res
-      .status(201)
-      .json({ savedMission, msg: "Mission has been created successfully" });
+    res.status(201).json({ savedMission, msg: "mission crée avec succés" });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 };
 
 //toutes les missions (SEC && DIR peuvent voir toutes missions , EMP Peut voir ses missions seulement )
-
 export const getAllMissions = async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
     const missions = await Mission.find();
     let filteredMissions;
-    if (user.role === 4) res.status(500).json({ error: "Unauthorized" });
-    else if (user.role === 1 || user.role === 2)
+    if (user.role === "relex") res.status(500).json({ error: "Unauthorized" });
+    else if (user.role === "directeur" || user.role === "secretaire")
       res.status(200).json({ missions });
-    else if (user.role === 3) {
+    else if (user.role === "employe") {
       //if error occured then change to user.id without toId
       filteredMissions = missions.filter((mission) =>
         mission.employes.includes(toId(user.id))
       );
-    } else filteredDemandes = demandes;
-    res.status(200).json(filteredDemandes);
+    } else if (user.role === "responsable") {
+      filteredMissions = missions.filter(
+        (mission) => mission.structure === req.user.structure
+      );
+    } else filteredMissions = missions;
+    res.status(200).json(filteredMissions);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -76,7 +84,7 @@ export const getAllMissions = async (req, res) => {
 export const updateMissionEtat = async (req, res) => {
   try {
     const mission = await Mission.findById(req.params.id);
-    if (mission.etat === 1 && req.body.etat !== 1) {
+    if (mission.etat !== req.body.etat && req.body.etat !== "en-attente") {
       const updatedMission = await Mission.findByIdAndUpdate(
         req.params.id,
         { etat: req.body.etat },

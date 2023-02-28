@@ -1,0 +1,75 @@
+DC
+{
+  "motif": "Vacances", 
+  "NbJours": 5,
+  "DateDepart": "2023-03-01T00:00:00.000Z",
+  "DateRetour": "2023-03-06T00:00:00.000Z",
+  "LieuSejour": "Paris",
+  "Nature": "annuel"
+}
+DM
+{
+    "motif": "Raison de la demande" 
+  }
+
+
+{
+    "email":"amina@sonatrach.dz",
+    "password":"mousli"
+}
+
+{
+    "email":"feriel@sonatrach.dz",
+    "password":"aid"
+}
+
+
+{
+    "email":"email@sonatrach.dz",
+    "password":"maamri"
+}
+
+
+{
+    "email":"employe@sonatrach.dz",
+    "password":"employe"
+}
+
+{
+    "email":"relex@sonatrach.dz",
+    "password":"relex"
+}
+
+missions: 
+{
+  "objetMission": "Business trip to Paris",
+  "type": "LOCAL",
+  "budget": 5000,
+  "pays": "France",
+  "employes": [
+    "63fcfeb391d55086e5ff680f" 
+  ],
+  "taches": [
+    { 
+      "content": "Meet with potential clients",
+      "state": "accomplie"
+    },
+    { 
+      "content": "Attend industry conference",
+      "state": "non-accomplie"
+    }
+  ],
+  "tDateDeb": [
+    "2023-03-15T00:00:00.000Z",
+    "2023-03-16T00:00:00.000Z"
+  ],
+  "tDateRet": [
+    "2023-03-20T00:00:00.000Z",
+    "2023-03-21T00:00:00.000Z"
+  ],
+  "moyenTransport": "avion",
+  "lieuDep": "Algiers",
+  "destination": "Paris",
+  "observation": "Book hotel accommodation and transportation", 
+  "circonscriptionAdm": "16000"
+}

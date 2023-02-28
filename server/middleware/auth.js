@@ -47,7 +47,11 @@ export const verifyTokenAndAdmin = (req, res, next) => {
 
 export const verifyTokenAndResponsable = (req, res, next) => {
   verifyToken(req, res, () => {
-    if (req.user.role === "directeur" || req.user.role === "responsable") {
+    if (
+      req.user.role === "directeur" ||
+      req.user.role === "responsable" ||
+      req.user.role === "secretaire"
+    ) {
       next();
     } else {
       res.status(403).json({ error: "Unauthorized" });

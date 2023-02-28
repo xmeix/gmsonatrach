@@ -6,10 +6,26 @@ const MissionSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    structure: {
+      type: String,
+      enum: [
+        "PMO",
+        "FIN",
+        "SD",
+        "PRC",
+        "HCM",
+        "MRO",
+        "IPM",
+        "PDN",
+        "TECH",
+        "DATA",
+        "CHANGE",
+      ],
+    },
     type: {
       // LOC/ETR
       type: String,
-      enum: ["LOCAL", "ETRANGER"],
+      enum: ["local", "etranger"],
       required: true,
     },
     budget: {
@@ -40,6 +56,7 @@ const MissionSchema = new mongoose.Schema(
         state: {
           type: String,
           enum: ["accomplie", "non-accomplie"],
+          default: "non-accomplie",
         },
       },
     ],
@@ -78,22 +95,26 @@ const MissionSchema = new mongoose.Schema(
       type: String,
       enum: [
         "en-attente",
-        "planifiée",
+        "acceptée", //planifié + en cours
         "refusée",
         "annulée",
-        "terminée",
-        "en-cours",
-        "modifiée",
+        "terminée"
       ],
       default: "en-attente",
     },
 
     raisonRefus: {
       type: String,
+      default: "",
     },
     circonscriptionAdm: {
       //Code wilaya
       type: String,
+      required: true,
+    },
+    createdBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
       required: true,
     },
   },
