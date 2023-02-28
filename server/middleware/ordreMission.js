@@ -12,8 +12,7 @@ export const checkMissionEmpExistence = async (req, res, next) => {
 
         const filteredMissions = missions.filter((m) => toId(m.id).toString() === toId(req.body.mission).toString());
         const filteredEmployees = employes.filter((emp) => toId(emp.id).toString() === toId(req.body.employe).toString());
-        console.log(filteredEmployees.length + "  " + filteredMissions.length);
-        if (filteredEmployees.length === 0 || filteredMissions.length === 0) res.status(201).json({ error: "mission employee does not exist" });
+         if (filteredEmployees.length === 0 || filteredMissions.length === 0) res.status(201).json({ error: "mission employee does not exist" });
         else next();
 
     } catch (err) {

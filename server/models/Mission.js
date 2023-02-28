@@ -21,6 +21,7 @@ const MissionSchema = new mongoose.Schema(
         "DATA",
         "CHANGE",
       ],
+      required: true,
     },
     type: {
       // LOC/ETR
@@ -45,10 +46,6 @@ const MissionSchema = new mongoose.Schema(
     ],
     taches: [
       {
-        idTache: {
-          type: String,
-          required: true,
-        },
         content: {
           type: String,
           required: true,
@@ -60,18 +57,16 @@ const MissionSchema = new mongoose.Schema(
         },
       },
     ],
-    tDateDeb: [
-      {
-        type: Date,
-        required: true,
-      },
-    ],
-    tDateRet: [
-      {
-        type: Date,
-        required: true,
-      },
-    ],
+    tDateDeb: {
+      type: Date,
+      required: true,
+    },
+
+    tDateRet: {
+      type: Date,
+      required: true,
+    },
+
     moyenTransport: {
       //AVION / ROUTE
       type: String,
@@ -95,10 +90,11 @@ const MissionSchema = new mongoose.Schema(
       type: String,
       enum: [
         "en-attente",
-        "acceptée", //planifié + en cours
+        "acceptée", //planifié
         "refusée",
+        "en-cours",
         "annulée",
-        "terminée"
+        "terminée",
       ],
       default: "en-attente",
     },
@@ -113,6 +109,11 @@ const MissionSchema = new mongoose.Schema(
       required: true,
     },
     createdBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+    updatedBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,

@@ -5,7 +5,7 @@ import {
   getAllMissions,
 } from "../controllers/mission.js";
 import { checkUpdateMissionAccess } from "../middleware/mission.js";
-import { verifyToken, verifyTokenAndResponsable, verifyTokenAndSec } from "../middleware/auth.js";
+import { verifyToken, verifyTokenAndResponsable } from "../middleware/auth.js";
 
 const router = express.Router();
 

@@ -43,7 +43,8 @@ DM
 missions: 
 {
   "objetMission": "Business trip to Paris",
-  "type": "LOCAL",
+    "structure": "DATA",
+  "type": "local",
   "budget": 5000,
   "pays": "France",
   "employes": [
@@ -51,22 +52,17 @@ missions:
   ],
   "taches": [
     { 
-      "content": "Meet with potential clients",
-      "state": "accomplie"
+       "idTache": "T1",
+      "content": "Meet with potential clients"
     },
-    { 
-      "content": "Attend industry conference",
-      "state": "non-accomplie"
+    {  "idTache": "T2",
+      "content": "Attend industry conference" 
     }
   ],
-  "tDateDeb": [
+  "tDateDeb": 
     "2023-03-15T00:00:00.000Z",
-    "2023-03-16T00:00:00.000Z"
-  ],
-  "tDateRet": [
-    "2023-03-20T00:00:00.000Z",
-    "2023-03-21T00:00:00.000Z"
-  ],
+  "tDateRet":
+    "2023-03-20T00:00:00.000Z", 
   "moyenTransport": "avion",
   "lieuDep": "Algiers",
   "destination": "Paris",
