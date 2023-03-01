@@ -1,55 +1,54 @@
-.navbar{
+.navbar {
   display: flex;
   align-items: center;
-  justify-content:space-between;
-  flex-direction: row; 
-  position: sticky; 
+  justify-content: space-between;
+  flex-direction: row;
+  position: sticky;
   top: 0;
-  z-index: 999;  
+  z-index: 999;
   background-color: var(--white);
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
-  padding:0.8em 2em;
-} 
+  padding: 0.8em 6.5em;
+}
 .hideDiv {
   position: absolute;
   background-color: rgba(0, 0, 0, 0.486);
   top: 3.5em;
-  left: 0; 
+  left: 0;
   width: 100vw;
   height: 90.5vh;
   z-index: 998;
 }
-.navbar .icon{
-font-size: 30px; 
-color: var(--black);
-cursor: pointer;
-transition: all 0.8s ease-in-out; 
+.navbar .icon {
+  font-size: 30px;
+  color: var(--black);
+  cursor: pointer;
+  transition: all 0.8s ease-in-out;
 }
- .navbar .list{
+.navbar .list {
   display: flex;
   align-items: center;
-  justify-content:space-between;
+  justify-content: space-between;
   flex-direction: row;
-line-height: 0;
+  line-height: 0;
   /* add width */
 }
 .navbar .list .tb {
   display: flex;
   align-items: center;
-  justify-content:space-evenly; 
+  justify-content: space-evenly;
   text-decoration: none;
   color: var(--black);
-  font-weight:700;
-  font-size: 14px; 
+  font-weight: 700;
+  font-size: 14px;
   text-transform: capitalize;
 }
-.navbar .list .sublist   {
+.navbar .list .sublist {
   display: flex;
   align-items: center;
-  justify-content:space-evenly;
-  list-style: none; 
+  justify-content: space-evenly;
+  list-style: none;
   gap: 1em;
-  
 }
 /* .navbar .list .sublist li .link {
   text-decoration: none;
@@ -58,25 +57,28 @@ line-height: 0;
   font-size: 12px; 
   
 } */
-.navbar .list .sublist li:hover a{
-  color: #F08100;
+.navbar .list .sublist li:hover a {
+  color: #f08100;
   font-weight: 800;
 }
 .navbar .logout button {
-   
   outline: none;
-  cursor: pointer; 
+  cursor: pointer;
   border: 1px solid transparent;
   border-radius: 2px;
- 
+
   font-size: 14px;
-  color: var(--white); 
+  color: var(--white);
   background-color: var(--orange);
   transition: background-color 0.2s ease-in-out 0s, opacity 0.2s ease-in-out 0s;
   padding: 7px 18px;
 }
-.navbar .logout button:hover{
+.navbar .logout button:hover {
   background-color: var(--light-orange);
 }
- 
 
+@media screen and (max-width: 700px) {
+  .navbar {
+    padding: 0.8em 2em;
+  }
+}

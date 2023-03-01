@@ -30,7 +30,7 @@ const NavBar = () => {
   //____________________________________________________
   useEffect(() => {
     function handleWindowResize() {
-      if (getWindowSize().innerWidth <= 951) {
+      if (getWindowSize().innerWidth <= 1098) {
         setResponsive(true);
       } else {
         setResponsive(false);
