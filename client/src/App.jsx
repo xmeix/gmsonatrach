@@ -1,8 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
-import Liste from "./components/liste/Liste";
 import NavBar from "./components/navbar/NavBar";
-import PageName from "./components/pageName/PageName";
 import GestionEmploye from "./pages/profilAdmin/gestionEmployes/GestionEmploye";
 import GestionMission from "./pages/profilAdmin/gestionMissions/GestionMission";
 import GestionRelex from "./pages/profilAdmin/gestionRelex/GestionRelex";
@@ -14,7 +12,7 @@ function App() {
   const loggedIn = true;
   return (
     <div className="app">
-      {loggedIn && <NavBar />}
+      <NavBar />
       <Routes>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/gestion-des-mission" element={<GestionMission />} />

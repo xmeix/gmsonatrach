@@ -5,6 +5,7 @@ import CreatableSelect from "react-select/creatable";
 import Liste from "../../../components/liste/Liste";
 import Input from "../../../components/form/input/Input";
 import PageName from "../../../components/pageName/PageName";
+import TableM from "../../../components/table/TableM";
 
 const customStyles = {
   control: (provided, state) => ({
@@ -147,13 +148,11 @@ const GestionMission = () => {
             )}
           </div>
         </div>
-        <div className="listeG">
-          <Liste
-            title="Liste des missions"
-            search={["id"]}
-            filterOptions={filterOptions}
-          />
-        </div>
+        <TableM
+          title="Liste des missions"
+          search={["id"]}
+          filterOptions={filterOptions}
+        />
       </div>
     </div>
   );

@@ -2,6 +2,7 @@ import Liste from "../../../components/liste/Liste";
 import Input from "../../../components/form/input/Input";
 import PageName from "../../../components/pageName/PageName";
 import "./../../../css/Gestion.css";
+import TableM from "../../../components/table/TableM";
 const GestionEmploye = () => {
   const filterOptions = ["state"];
 
@@ -49,13 +50,11 @@ const GestionEmploye = () => {
             </button>
           </div>
         </div>
-        <div className="listeG">
-          <Liste
-            title="Liste des employés"
-            search={["id", "name"]}
-            filterOptions={filterOptions}
-          />
-        </div>
+        <TableM
+          title="Liste des employés"
+          search={["id", "name"]}
+          filterOptions={filterOptions}
+        />
       </div>
     </div>
   );

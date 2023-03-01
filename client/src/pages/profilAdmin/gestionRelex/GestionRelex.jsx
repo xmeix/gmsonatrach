@@ -2,6 +2,7 @@ import Liste from "../../../components/liste/Liste";
 import Input from "../../../components/form/input/Input";
 import PageName from "../../../components/pageName/PageName";
 import "./../../../css/Gestion.css";
+import TableM from "../../../components/table/TableM";
 const GestionRelex = () => {
   const filterOptions = ["etat"];
   const entries = [
@@ -90,13 +91,11 @@ const GestionRelex = () => {
             </button>
           </div>
         </div>
-        <div className="listeG">
-          <Liste
-            title="Liste des demandes de billetterie"
-            search={["id"]}
-            filterOptions={filterOptions}
-          />
-        </div>
+        <TableM
+          title="Liste des demandes de billetterie"
+          search={["id"]}
+          filterOptions={filterOptions}
+        />
       </div>
     </div>
   );
