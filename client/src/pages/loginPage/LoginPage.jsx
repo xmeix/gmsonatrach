@@ -7,7 +7,9 @@ import { InputAdornment } from "@mui/material";
 
 import LockRoundedIcon from "@mui/icons-material/LockRounded";
 import { NavLink } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
 const LoginPage = () => {
+  const [isLoggedIn, user, login, logout] = useAuth();
   const entries = ["email", "password"];
   return (
     <div className="loginPage">

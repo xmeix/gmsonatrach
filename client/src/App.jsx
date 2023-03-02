@@ -9,10 +9,10 @@ import GestionCMR from "./pages/profilAdmin/gestionCMR/GestionCMR";
 import Planning from "./pages/profilAdmin/planning/Planning";
 
 function App() {
-  const loggedIn = true;
+  const loggedIn = false;
   return (
     <div className="app">
-      <NavBar />
+      {loggedIn && <NavBar />}
       <Routes>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/gestion-des-mission" element={<GestionMission />} />

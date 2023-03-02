@@ -2,8 +2,7 @@ import "./../../../css/Gestion.css";
 import { useState } from "react";
 import Select from "react-select";
 import CreatableSelect from "react-select/creatable";
-import Liste from "../../../components/liste/Liste";
-import Input from "../../../components/form/input/Input";
+ import Input from "../../../components/form/input/Input";
 import PageName from "../../../components/pageName/PageName";
 import TableM from "../../../components/table/TableM";
 

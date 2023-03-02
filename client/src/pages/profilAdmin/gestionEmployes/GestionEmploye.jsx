@@ -1,5 +1,4 @@
-import Liste from "../../../components/liste/Liste";
-import Input from "../../../components/form/input/Input";
+ import Input from "../../../components/form/input/Input";
 import PageName from "../../../components/pageName/PageName";
 import "./../../../css/Gestion.css";
 import TableM from "../../../components/table/TableM";

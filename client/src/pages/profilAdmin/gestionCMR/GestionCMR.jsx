@@ -1,6 +1,5 @@
 import "./../../../css/Gestion.css";
-import Liste from "./../../../components/liste/Liste";
-import PageName from "../../../components/pageName/PageName";
+ import PageName from "../../../components/pageName/PageName";
 import TableM from "../../../components/table/TableM";
 const GestionCMR = () => {
   const filterOptions = ["etat"];
