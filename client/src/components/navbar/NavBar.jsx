@@ -4,16 +4,42 @@ import { useEffect, useState } from "react";
 import MenuRoundedIcon from "@mui/icons-material/Menu";
 import MenuBar from "../menuBar/MenuBar";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
+import { useAuth } from "../../hooks/useAuth";
+import { useSelector } from "react-redux";
+import { titles, employeTitles, relexTitles } from "../../data/navdata";
 const NavBar = () => {
-  const titles = [
-    { id: 1, title: "Planification", path: "/planification" },
-    { id: 2, title: "Gestion Des Mission", path: "/gestion-des-mission" },
-    { id: 3, title: "Gestion Des Employes", path: "/gestion-des-employes" },
-    { id: 4, title: "Gestion Service Relex", path: "/gestion-service-relex" },
-    { id: 5, title: "Gestion C/M/RFM", path: "/gestion-c-m-rfm" },
-  ];
   const [isOpen, setIsOpen] = useState(false);
   const [responsive, setResponsive] = useState(false);
+  const { logout } = useAuth();
+  const user = useSelector((state) => state.auth.user);
+  const [navData] = useState(() => {
+    if (user?.role === "directeur" || user?.role === "responsable")
+      return titles;
+    else if (user?.role === "employe") return employeTitles;
+    else if (user?.role === "relex") return relexTitles;
+    else [];
+  });
+  const [profileTitle] = useState(() => {
+    switch (user.role) {
+      case "directeur":
+        return "Director Account";
+        break;
+      case "responsable":
+        return "sub Director Account";
+        break;
+      case "secretaire":
+        return "Secretaire Account";
+        break;
+      case "relex":
+        return "Relex Account";
+        break;
+      case "employe":
+        return "Employe Account";
+        break;
+      default:
+        "";
+    }
+  });
 
   const handleMenu = () => {
     setIsOpen(true);
@@ -45,25 +71,25 @@ const NavBar = () => {
       window.removeEventListener("resize", handleWindowResize);
     };
   }, []);
+  const handleLogout = (e) => {
+    e.preventDefault();
+    logout();
+  };
   return (
     <div className="navbar">
       <div className="list">
         {isOpen && (
           <CloseRoundedIcon className="icon" onClick={handleHideMenu} />
         )}
-        {isOpen && <MenuBar titles={titles} />}
+        {isOpen && <MenuBar titles={navData} />}
         {!isOpen && responsive && (
           <MenuRoundedIcon className="icon" onClick={handleMenu} />
         )}
         {isOpen && <div className="hideDiv" onClick={handleHideMenu}></div>}
-        {!responsive && (
-          <NavLink to="" className="tb">
-            Tableau de bord
-          </NavLink>
-        )}
+        <div className="profileTitle">{profileTitle}</div>
         {!responsive && (
           <ul className="sublist">
-            {titles.map((title, i) => (
+            {navData.map((title, i) => (
               <li key={title.id}>
                 <NavLink to={title.path} className="link">
                   {title.title}
@@ -73,9 +99,9 @@ const NavBar = () => {
           </ul>
         )}
       </div>
-      <NavLink to="/login" className="logout">
-        <button type="button"> logout </button>
-      </NavLink>
+      <button type="button" className="logoutBtn" onClick={handleLogout}>
+        logout
+      </button>
     </div>
   );
 };

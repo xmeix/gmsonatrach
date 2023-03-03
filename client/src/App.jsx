@@ -1,27 +1,58 @@
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
 import NavBar from "./components/navbar/NavBar";
-import GestionEmploye from "./pages/profilAdmin/gestionEmployes/GestionEmploye";
-import GestionMission from "./pages/profilAdmin/gestionMissions/GestionMission";
-import GestionRelex from "./pages/profilAdmin/gestionRelex/GestionRelex";
+import Dashboard from "./pages/profilAdmin/Dashboard";
 import LoginPage from "./pages/loginPage/LoginPage";
-import GestionCMR from "./pages/profilAdmin/gestionCMR/GestionCMR";
-import Planning from "./pages/profilAdmin/planning/Planning";
+import GestionMission from "./pages/profilAdmin/GestionMission";
+import GestionEmploye from "./pages/profilAdmin/GestionEmploye";
+import GestionRelex from "./pages/profilAdmin/GestionRelex";
+import GestionCMR from "./pages/profilAdmin/GestionCMR";
+import Planning from "./pages/planning/Planning";
+
+import { useSelector } from "react-redux";
+import Formulaire from "./components/formulaire/Formulaire";
 
 function App() {
-  const loggedIn = false;
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   return (
     <div className="app">
-      {loggedIn && <NavBar />}
+      <Formulaire />
+      {/* {isLoggedIn && <NavBar />}
       <Routes>
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/gestion-des-mission" element={<GestionMission />} />
-        <Route path="/gestion-des-employes" element={<GestionEmploye />} />
-        <Route path="/suivi-depense" element={<GestionMission />} />
-        <Route path="/gestion-service-relex" element={<GestionRelex />} />
-        <Route path="/gestion-c-m-rfm" element={<GestionCMR />} />
-        <Route path="/planification" element={<Planning />} />
-      </Routes>
+        <Route path="/" element={isLoggedIn ? <Dashboard /> : <LoginPage />} />
+        <Route
+          path="/dashboard"
+          element={isLoggedIn ? <Dashboard /> : <LoginPage />}
+        />
+        <Route
+          path="/login"
+          element={!isLoggedIn ? <LoginPage /> : <Navigate to={"/login"} />}
+        />
+        <Route
+          path="/gestion-des-mission"
+          element={isLoggedIn ? <GestionMission /> : <Navigate to={"/login"} />}
+        />
+        <Route
+          path="/gestion-des-employes"
+          element={isLoggedIn ? <GestionEmploye /> : <Navigate to={"/login"} />}
+        />
+        <Route
+          path="/suivi-depense"
+          element={isLoggedIn ? <GestionMission /> : <Navigate to={"/login"} />}
+        />
+        <Route
+          path="/gestion-service-relex"
+          element={isLoggedIn ? <GestionRelex /> : <Navigate to={"/login"} />}
+        />
+        <Route
+          path="/gestion-c-m-rfm"
+          element={isLoggedIn ? <GestionCMR /> : <Navigate to={"/login"} />}
+        />
+        <Route
+          path="/planification"
+          element={isLoggedIn ? <Planning /> : <Navigate to={"/login"} />}
+        />
+      </Routes> */}
     </div>
   );
 }

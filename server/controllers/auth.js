@@ -51,8 +51,8 @@ export const login = async (req, res) => {
     const token = generateJWT(user);
 
     res.cookie("jwt", token, {
-      httpOnly: true,
-      secure: false, //should be true in production
+      httpOnly: false,
+      secure: true, //should be true in production
       sameSite: "None",
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
@@ -66,10 +66,11 @@ export const login = async (req, res) => {
 
 /** LOGOUT */
 export const logout = async (req, res) => {
-  const cookies = cookie.parse(req.headers.cookie || "");
-  if (!cookies.jwt) {
-    return res.status(400).json({ error: "JWT cookie not found" });
-  }
+  // const cookies = cookie.parse(req.headers.cookie || "");
+  // console.log(res.data);
+  // if (!cookies.jwt) {
+  //   return res.status(400).json({ error: "JWT cookie not found" });
+  // }
   res.clearCookie("jwt");
   res.json({ msg: "Logged out successfully" });
 };

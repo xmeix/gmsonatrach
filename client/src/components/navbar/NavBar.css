@@ -10,6 +10,10 @@
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
   padding: 0.8em 6.5em;
 }
+.profileTitle {
+  font-weight: 700;
+  margin-left: 1em;
+}
 .hideDiv {
   position: absolute;
   background-color: rgba(0, 0, 0, 0.486);
@@ -61,19 +65,19 @@
   color: #f08100;
   font-weight: 800;
 }
-.navbar .logout button {
+.navbar .logoutBtn {
   outline: none;
   cursor: pointer;
   border: 1px solid transparent;
   border-radius: 2px;
-
-  font-size: 14px;
+  font-size: 13px;
+  font-weight: 700;
   color: var(--white);
   background-color: var(--orange);
   transition: background-color 0.2s ease-in-out 0s, opacity 0.2s ease-in-out 0s;
-  padding: 7px 18px;
+  padding: 7px 12px;
 }
-.navbar .logout button:hover {
+.navbar .logoutBtn:hover {
   background-color: var(--light-orange);
 }
 

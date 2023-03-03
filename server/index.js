@@ -11,8 +11,8 @@ import missionRoutes from "./routes/mission.js";
 import ordreMissionRoutes from "./routes/ordreMission.js";
 import depenseRoutes from "./routes/depense.js";
 import rapportRoutes from "./routes/rapportFM.js";
-
-/** CONFIGURATION */
+import cookieParser from "cookie-parser";
+ /** CONFIGURATION */
 dotenv.config();
 const app = express();
 app.use(express.json());
@@ -21,7 +21,16 @@ app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 app.use(morgan("common"));
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
-app.use(cors({ credentials: true, origin: "http://localhost:3001" }));
+
+app.use(bodyParser.json());
+app.use(cookieParser());
+
+const corsOptions = {
+  credentials: true,
+  origin: "http://127.0.0.1:5173",
+};
+
+app.use(cors(corsOptions));
 //app.use(cors());
 
 /**ROUTES */

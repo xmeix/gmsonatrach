@@ -33,7 +33,6 @@ const UserSchema = new mongoose.Schema(
     password: {
       type: String,
       required: true,
-      min: 5,
     },
     role: {
       //1-directeur 2-secretaire 3-employe 4-relex 5-sous-directeur
