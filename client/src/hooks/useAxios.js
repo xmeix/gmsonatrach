@@ -1,21 +1,37 @@
 import { useSelector, useDispatch } from "react-redux";
 import { apiService } from "../api/apiService";
 import { useState } from "react";
+import {
+  fetchEnd,
+  fetchFailure,
+  fetchStart,
+  setLogin,
+  setLogout,
+} from "../store/features/authSlice";
 
-export const useAxios = (method) => {
+export const useAxios = () => {
   const isLoading = useSelector((state) => state.auth.isLoading);
   const dispatch = useDispatch();
-  const [axiosError, setAxiosError] = useState("");
-  const [axiosSuccessMsg, setAxiosSuccessMsg] = useState("");
+  const [error, setError] = useState("");
+  const [successMsg, setSuccessMsg] = useState("");
 
-  const callApi = async (url, body) => {
+  const callApi = async (method, url, body) => {
+    console.log("hereCallAPI");
+
     setError("");
     setSuccessMsg("");
     try {
       let response;
+      dispatch(fetchStart());
       switch (method) {
         case "post":
           response = await apiService.user.post(url, body);
+          if (url === "/auth/login") {
+            dispatch(setLogin(response.data));
+          } else if (url === "/auth/logout") {
+            dispatch(setLogout());
+          }
+
           break;
         case "delete":
           response = await apiService.user.delete(url, body);
@@ -26,11 +42,12 @@ export const useAxios = (method) => {
         default:
           throw new Error(`Invalid HTTP method: ${method}`);
       }
+      dispatch(fetchEnd());
       setSuccessMsg(response.data.msg);
-      return response;
     } catch (error) {
       console.log(error);
-      setError(error.response.data.error);
+      setError(error.response.data.error || "Something went wrong.");
+      dispatch(fetchFailure());
     }
   };
 

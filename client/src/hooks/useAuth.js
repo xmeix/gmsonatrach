@@ -5,8 +5,7 @@ import {
   setLogin,
   setLogout,
 } from "../store/features/authSlice";
-import { apiService } from "../api/apiService";
-import axios from "axios";
+import { apiService } from "../api/apiService"; 
 import { useState } from "react";
 export const useAuth = () => {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
@@ -53,7 +52,7 @@ export const useAuth = () => {
       dispatch(logoutStart());
       await apiService.user.post("/auth/logout");
       dispatch(setLogout());
-      setSuccessMsg(response.data.msg);
+      setSuccessMsg("logged out successfully");
     } catch (error) {
       console.error(error);
       setError(error.response.data.error);

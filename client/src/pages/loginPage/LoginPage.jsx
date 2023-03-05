@@ -1,24 +1,21 @@
 import "./LoginPage.css";
 import logo from "../../assets/logo.svg";
-import VisibilityOffRoundedIcon from "@mui/icons-material/VisibilityOffRounded";
-import VisibilityRoundedIcon from "@mui/icons-material/VisibilityRounded";
 import AlternateEmailRoundedIcon from "@mui/icons-material/AlternateEmailRounded";
 import { InputAdornment } from "@mui/material";
 import LockRoundedIcon from "@mui/icons-material/LockRounded";
-import { NavLink } from "react-router-dom";
-import { useAuth } from "../../hooks/useAuth";
 import { useState } from "react";
+import { useAxios } from "../../hooks/useAxios";
 
 const LoginPage = () => {
-  const { login } = useAuth();
   const entries = ["email", "password"];
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const { callApi, error, isLoading, successMsg } = useAxios();
   const handleLogin = (e) => {
     e.preventDefault();
     console.log(email, password);
-    login(email, password);
+    //login(email, password);
+    callApi("post", "/auth/login", { email, password });
   };
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
@@ -27,6 +24,7 @@ const LoginPage = () => {
   const handlePasswordChange = (event) => {
     setPassword(event.target.value);
   };
+
   return (
     <div className="loginPage">
       <img src={logo} className="logo" alt="" />
@@ -58,10 +56,17 @@ const LoginPage = () => {
             />
           </div>
         ))}
-        <button type="submit" className="LBtn" onClick={handleLogin}>
+        <button
+          type="submit"
+          className="LBtn"
+          onClick={handleLogin}
+          disabled={isLoading}
+        >
           Log in
         </button>
       </form>
+      {error && <div className="error-message">{error}</div>}
+      {successMsg && <div className="success-message">{successMsg}</div>}
     </div>
   );
 };

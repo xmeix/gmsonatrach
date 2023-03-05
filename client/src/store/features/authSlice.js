@@ -5,6 +5,8 @@ const initialState = {
   token: null,
   isLoading: false,
   isLoggedIn: false,
+  failure: false,
+  users: [],
   demandes: [],
   missions: [],
   rfms: [],
@@ -37,9 +39,28 @@ export const authSlice = createSlice({
     logoutStart: (state) => {
       state.isLoading = true;
     },
+    fetchStart: (state) => {
+      state.failure = false;
+      state.isLoading = true;
+    },
+    fetchEnd: (state) => {
+      state.isLoading = false;
+      state.failure = false;
+    },
+    fetchFailure: (state) => {
+      state.failure = true;
+    },
   },
 });
 
-export const { setLogin, setLogout, setDemandes, loginStart, logoutStart } =
-  authSlice.actions;
+export const {
+  setLogin,
+  setLogout,
+  setDemandes,
+  loginStart,
+  logoutStart,
+  fetchStart,
+  fetchEnd,
+  fetchFailure,
+} = authSlice.actions;
 export default authSlice.reducer;

@@ -42,7 +42,7 @@ const Formulaire = ({ title, entries, buttons, type }) => {
         break;
       case "mission":
         {
-          register(values);
+          //register(values);
         }
         break;
       default:

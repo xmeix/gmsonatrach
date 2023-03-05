@@ -7,20 +7,29 @@ import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import { useAuth } from "../../hooks/useAuth";
 import { useSelector } from "react-redux";
 import { titles, employeTitles, relexTitles } from "../../data/navdata";
+import { useAxios } from "../../hooks/useAxios";
 const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [responsive, setResponsive] = useState(false);
   const { logout } = useAuth();
+  const { callApi } = useAxios();
+
   const user = useSelector((state) => state.auth.user);
   const [navData] = useState(() => {
-    if (user?.role === "directeur" || user?.role === "responsable")
-      return titles;
-    else if (user?.role === "employe") return employeTitles;
-    else if (user?.role === "relex") return relexTitles;
-    else [];
+    switch (user?.role) {
+      case "directeur":
+      case "responsable":
+        return titles;
+      case "employe":
+        return employeTitles;
+      case "relex":
+        return relexTitles;
+      default:
+        return [];
+    }
   });
   const [profileTitle] = useState(() => {
-    switch (user.role) {
+    switch (user?.role) {
       case "directeur":
         return "Director Account";
         break;
@@ -73,7 +82,8 @@ const NavBar = () => {
   }, []);
   const handleLogout = (e) => {
     e.preventDefault();
-    logout();
+    //logout();
+    callApi("post", "/auth/logout", {});
   };
   return (
     <div className="navbar">

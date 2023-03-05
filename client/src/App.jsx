@@ -1,4 +1,4 @@
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import NavBar from "./components/navbar/NavBar";
 import Dashboard from "./pages/profilAdmin/Dashboard";
@@ -21,36 +21,36 @@ function App() {
       <Routes>
         <Route path="/" element={isLoggedIn ? <Dashboard /> : <LoginPage />} />
         <Route
-          path="/dashboard"
+          path="/tableau-de-bord"
           element={isLoggedIn ? <Dashboard /> : <LoginPage />}
         />
         <Route
           path="/login"
-          element={!isLoggedIn ? <LoginPage /> : <Navigate to={"/login"} />}
+          element={!isLoggedIn ? <LoginPage /> : <Dashboard />}
         />
         <Route
           path="/gestion-des-mission"
-          element={isLoggedIn ? <GestionMission /> : <Navigate to={"/login"} />}
+          element={isLoggedIn ? <GestionMission /> : <LoginPage />}
         />
         <Route
           path="/gestion-des-employes"
-          element={isLoggedIn ? <GestionEmploye /> : <Navigate to={"/login"} />}
+          element={isLoggedIn ? <GestionEmploye /> : <LoginPage />}
         />
         <Route
           path="/suivi-depense"
-          element={isLoggedIn ? <GestionMission /> : <Navigate to={"/login"} />}
+          element={isLoggedIn ? <GestionMission /> : <LoginPage />}
         />
         <Route
           path="/gestion-service-relex"
-          element={isLoggedIn ? <GestionRelex /> : <Navigate to={"/login"} />}
+          element={isLoggedIn ? <GestionRelex /> : <LoginPage />}
         />
         <Route
           path="/gestion-c-m-rfm"
-          element={isLoggedIn ? <GestionCMR /> : <Navigate to={"/login"} />}
+          element={isLoggedIn ? <GestionCMR /> : <LoginPage />}
         />
         <Route
           path="/planification"
-          element={isLoggedIn ? <Planning /> : <Navigate to={"/login"} />}
+          element={isLoggedIn ? <Planning /> : <LoginPage />}
         />
       </Routes>
     </div>
