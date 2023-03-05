@@ -68,3 +68,11 @@ export const verifyTokenAndSec = (req, res, next) => {
     }
   });
 };
+export function checkFields(fields) {
+  for (let field of fields) {
+    if (field === "") {
+      return false;
+    }
+  }
+  return true;
+}

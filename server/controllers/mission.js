@@ -2,6 +2,7 @@ import User from "../models/User.js";
 import Mission from "../models/Mission.js";
 import mongoose from "mongoose";
 import OrdreMission from "../models/OrdreMission.js";
+import { checkFields } from "../middleware/auth.js";
 const toId = mongoose.Types.ObjectId;
 
 export const createMission = async (req, res) => {
@@ -35,6 +36,27 @@ export const createMission = async (req, res) => {
       newEtat = "acceptée";
     else newEtat = etat;
 
+    //check
+    const fields = [
+      objetMission,
+      structure,
+      type,
+      budget,
+      pays,
+      employes,
+      taches,
+      tDateDeb,
+      tDateRet,
+      moyenTransport,
+      lieuDep,
+      destination,
+      observation,
+      circonscriptionAdm,
+    ];
+
+    if (!checkFields(fields)) {
+      throw new Error("empty fields");
+    }
     //const newTaches = taches.map((tache) => toId(tache));
     const newEmployes = employes.map((employe) => toId(employe));
 

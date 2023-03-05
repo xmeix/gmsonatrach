@@ -19,7 +19,25 @@ export const register = async (req, res) => {
     } = req.body;
     const salt = await bcrypt.genSalt();
     const passwordHash = await bcrypt.hash(password, salt);
-
+    const numTelRegex = /^(0)(5|6|7)[0-9]{8}$/;
+    if (
+      nom === "" ||
+      prenom === "" ||
+      fonction === "" ||
+      numTel === "" ||
+      email === "" ||
+      password === "" ||
+      role === "" ||
+      etat === "" ||
+      structure === ""
+    )
+      throw new Error("empty fields");
+    else if (!numTelRegex.test(numTel)) {
+      throw new Error("Invalid phone number");
+    } else {
+      const user = await User.findOne({ email: email });
+      if (user) throw new Error("user already exists");
+    }
     const newUser = new User({
       nom,
       prenom,
@@ -33,7 +51,7 @@ export const register = async (req, res) => {
     });
 
     const savedUser = await newUser.save();
-    res.status(201).json({ savedUser, msg: "Inscription avec succés" });
+    res.status(201).json({ savedUser, msg: "Registered Successfully" });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -44,10 +62,10 @@ export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
     const user = await User.findOne({ email: email });
-    if (!user) return res.status(400).json({ msg: "Utilisateur non trouvé" });
+    if (!user) throw new Error("Utilisateur non trouvé");
 
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.status(400).json({ msg: "Invalid credentials" });
+    if (!isMatch) throw new Error("Invalid credentials");
     const token = generateJWT(user);
 
     res.cookie("jwt", token, {

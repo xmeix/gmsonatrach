@@ -1,5 +1,5 @@
 .formulaire {
-  padding: 2em;
+  padding: 6em;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
@@ -10,13 +10,15 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
-  gap: 1em;
+  gap: 1.5em;
 }
 .formulaire .inputs .inputGroup {
   display: flex;
   flex-direction: column;
   gap: 0.3em;
-  width: 260px;
+  width: 290px;
+
+  text-align: left;
 }
 .formulaire .inputs .inputGroup label {
   margin-left: 0.5em;
@@ -53,4 +55,37 @@
   cursor: pointer;
   font-weight: 700;
   color: var(--gray);
+}
+
+.error-message {
+  background-color: var(--error);
+  color: var(--white);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 0.5em 1.5em;
+  animation: slide-in 0.3s ease-out;
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.success-message {
+  background-color: var(--success);
+  color: var(--white);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 0.5em 1.5em;
+  animation: slide-in 0.3s ease-out;
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  border-radius: 5px;
+}
+@keyframes slide-in {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0);
+  }
 }

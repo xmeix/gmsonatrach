@@ -12,7 +12,7 @@ const MissionSchema = new mongoose.Schema(
         "PMO",
         "FIN",
         "SD",
-        "PRC",
+        "PRC", 
         "HCM",
         "MRO",
         "IPM",
@@ -61,12 +61,10 @@ const MissionSchema = new mongoose.Schema(
       type: Date,
       required: true,
     },
-
     tDateRet: {
       type: Date,
       required: true,
     },
-
     moyenTransport: {
       //AVION / ROUTE
       type: String,

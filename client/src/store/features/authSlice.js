@@ -4,7 +4,6 @@ const initialState = {
   user: null,
   token: null,
   isLoading: false,
-  isLoading: false,
   isLoggedIn: false,
   demandes: [],
   missions: [],

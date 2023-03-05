@@ -16,8 +16,8 @@ function App() {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   return (
     <div className="app">
-      <Formulaire />
-      {/* {isLoggedIn && <NavBar />}
+      {/* <Formulaire /> */}
+      {isLoggedIn && <NavBar />}
       <Routes>
         <Route path="/" element={isLoggedIn ? <Dashboard /> : <LoginPage />} />
         <Route
@@ -52,7 +52,7 @@ function App() {
           path="/planification"
           element={isLoggedIn ? <Planning /> : <Navigate to={"/login"} />}
         />
-      </Routes> */}
+      </Routes>
     </div>
   );
 }
