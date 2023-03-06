@@ -45,7 +45,7 @@ export const getRFMs = async (dispatch) => {
   } catch (err) {
     dispatch(fetchFailure());
   }
-};
+}; 
 export const getOMs = async (dispatch) => {
   dispatch(fetchStart());
   try {

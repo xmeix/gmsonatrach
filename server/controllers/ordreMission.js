@@ -6,7 +6,9 @@ const toId = mongoose.Types.ObjectId;
 export const getAllOrdresMissions = async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
-    const ordresMission = await OrdreMission.find();
+    const ordresMission = await OrdreMission.find()
+      .populate("employe")
+      .populate("mission");
     let filteredOMissions;
     if (user.role === "relex") throw new Error("Unauthorized");
     else if (user.role === "directeur" || user.role === "secretaire")

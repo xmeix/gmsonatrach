@@ -8,8 +8,11 @@ import {
   userButtons as buttons,
   userEntries,
 } from "../../data/formData";
+import { useSelector } from "react-redux";
+import { columnsUsersEmp, filterUserOptions } from "../../data/tableCols";
 const GestionEmploye = () => {
-  const filterOptions = ["state"];
+  const users = useSelector((state) => state.auth.users);
+  const usersEmp = users.filter((user) => user.role !== "relex");
 
   return (
     <div className="gestion">
@@ -23,8 +26,10 @@ const GestionEmploye = () => {
         />
         <TableM
           title="Liste des employés"
-          search={["id", "name"]}
-          filterOptions={filterOptions}
+          filterOptions={filterUserOptions}
+          columns={columnsUsersEmp}
+          data={usersEmp}
+          colType="user"
         />
       </div>
     </div>

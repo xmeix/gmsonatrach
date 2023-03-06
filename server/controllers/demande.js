@@ -101,7 +101,7 @@ export const getDemandes = async (req, res) => {
     let demandes = await Demande.find()
       .populate("idEmetteur")
       .populate("idDestinataire");
-    let filteredDemandes;
+    let filteredDemandes; 
     /**
      * emp : get his DC , DM
      * responsable : get demandes d'une structure

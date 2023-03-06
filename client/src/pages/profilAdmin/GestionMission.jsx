@@ -6,6 +6,8 @@ import {
   MissionEntries as entries,
   userButtons as buttons,
 } from "../../data/formData";
+import { useSelector } from "react-redux";
+import { columnsMissions, filterMissionsOptions } from "../../data/tableCols";
 const customStyles = {
   control: (provided, state) => ({
     ...provided,
@@ -21,7 +23,7 @@ const customStyles = {
 };
 
 const GestionMission = () => {
-  const filterOptions = ["etat", "moyen de transport"];
+  const missions = useSelector((state) => state.auth.missions);
 
   return (
     <div className="gestion">
@@ -36,7 +38,10 @@ const GestionMission = () => {
         <TableM
           title="Liste des missions"
           search={["id"]}
-          filterOptions={filterOptions}
+          filterOptions={filterMissionsOptions}
+          columns={columnsMissions}
+          data={missions}
+          colType="mission"
         />
       </div>
     </div>

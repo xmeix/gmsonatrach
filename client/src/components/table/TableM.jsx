@@ -2,6 +2,8 @@ import axios from "axios";
 import { useState, useEffect, useMemo } from "react";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import "./TableM.css";
+import { v4 as uuidv4 } from "uuid";
+
 import { format } from "date-fns";
 
 import {
@@ -22,27 +24,7 @@ import {
 } from "@material-ui/core";
 import { useSelector } from "react-redux";
 
-const columns = [
-  { id: "createdAt", label: "date", minWidth: "20px" },
-  { id: "idEmetteur", label: "Sender", minWidth: "20px" },
-  { id: "motif", label: "Motif", minWidth: "20px" },
-  { id: "etat", label: "State", minWidth: "20px" },
-];
-
-const filterOptions = [
-  "en-attente",
-  "acceptée",
-  "refusée",
-  "annulée",
-  "DB",
-  "DM",
-  "DC",
-];
-
-const TableM = ({ title }) => {
-  const data = useSelector((state) => state.auth.demandes);
-  const users = useSelector((state) => state.auth.users);
-
+const TableM = ({ title, filterOptions, columns, data, colType }) => {
   const [filter, setFilter] = useState("");
   const [filterOption, setFilterOption] = useState("");
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -62,39 +44,40 @@ const TableM = ({ title }) => {
     setPage(0);
   };
 
-  const getUserName = (id) => {
-    const user = users.find((u) => u._id === id);
-    if (user) {
-      return user.nom + " " + user.prenom;
-    }
-    return "";
-  };
-
   const filteredData = useMemo(() => {
     const hasFilter = filter || filterOption;
     if (!hasFilter) {
       return data;
     }
+    const trimmedFilter = filter.trim(); // remove leading/trailing spaces
     return data.filter((item) => {
       let result = true;
-      if (filter) {
+      if (trimmedFilter) {
+        // use trimmed filter value
         result = columns.some((column) => {
           if (!item[column.id]) {
             return false;
           }
-          const cellValue =
-            item[column.id].toString().toLowerCase() ||
-            item[column.id].nom.toString().toLowerCase() ||
-            item[column.id].prenom.toString().toLowerCase();
-          const filterValue = filter.toLowerCase();
+          const cellValue = item[column.id].toString().toLowerCase();
+          const filterValue = trimmedFilter.toLowerCase();
           return (
             cellValue.includes(filterValue) ||
-            (column.id === "idEmetteur" &&
+            ((column.id === "idEmetteur" ||
+              column.id === "idEmploye" ||
+              column.id === "createdBy") &&
               (item[column.id].nom
                 .toString()
                 .toLowerCase()
                 .includes(filterValue) ||
                 item[column.id].prenom
+                  .toString()
+                  .toLowerCase()
+                  .includes(filterValue) ||
+                (item[column.id].prenom + " " + item[column.id].nom)
+                  .toString()
+                  .toLowerCase()
+                  .includes(filterValue) ||
+                (item[column.id].nom + " " + item[column.id].prenom)
                   .toString()
                   .toLowerCase()
                   .includes(filterValue)))
@@ -196,22 +179,98 @@ const TableM = ({ title }) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {paginatedData.map((item) => (
-              <TableRow key={item.id}>
-                <TableCell align="center" className="tableColumn">
-                  {format(new Date(item.createdAt), "dd/mm/yy")}
-                </TableCell>
-                <TableCell align="center" className="tableColumn">
-                  {item.idEmetteur.nom + " " + item.idEmetteur.prenom}
-                </TableCell>
-                <TableCell align="center" className="tableColumn">
-                  {item.motif}
-                </TableCell>
-                <TableCell align="center" className="tableColumn">
-                  {item.etat}
-                </TableCell>
-              </TableRow>
-            ))}
+            {paginatedData.map((item) => {
+              if (colType === "demande" || colType === "db")
+                return (
+                  <TableRow key={uuidv4()}>
+                    <TableCell align="center" className="tableColumn">
+                      {format(new Date(item.createdAt), "dd/mm/yy")}
+                    </TableCell>
+                    <TableCell align="center" className="tableColumn">
+                      {item.idEmetteur.nom + " " + item.idEmetteur.prenom}
+                    </TableCell>
+                    <TableCell align="center" className="tableColumn">
+                      {item.motif}
+                    </TableCell>
+                    <TableCell align="center" className="tableColumn">
+                      {item.idEmetteur.structure}
+                    </TableCell>
+                    <TableCell align="center" className="tableColumn">
+                      {item.etat}
+                    </TableCell>
+                  </TableRow>
+                );
+              if (colType === "rfm")
+                return (
+                  <TableRow key={uuidv4()}>
+                    <TableCell align="center" className="tableColumn">
+                      {format(new Date(item.createdAt), "dd/mm/yy")}
+                    </TableCell>
+                    <TableCell align="center" className="tableColumn">
+                      {/* {item.idEmploye.nom + " " + item.idEmploye.prenom} */}
+                    </TableCell>
+                    <TableCell align="center" className="tableColumn">
+                      {item.motif}
+                    </TableCell>
+                    <TableCell align="center" className="tableColumn">
+                      {item.etat}
+                    </TableCell>
+                  </TableRow>
+                );
+
+              if (colType === "mission")
+                return (
+                  <TableRow key={uuidv4()}>
+                    <TableCell align="center" className="tableColumn">
+                      {format(new Date(item.createdAt), "dd/mm/yy")}
+                    </TableCell>
+                    <TableCell align="center" className="tableColumn">
+                      {item.createdBy.nom + " " + item.createdBy.prenom}
+                    </TableCell>
+                    <TableCell align="center" className="tableColumn">
+                      {item.objetMission}
+                    </TableCell>
+                    <TableCell align="center" className="tableColumn">
+                      {item.budget}
+                    </TableCell>
+                    <TableCell align="center" className="tableColumn">
+                      {format(new Date(item.tDateDeb), "dd/mm/yy")}
+                    </TableCell>
+                    <TableCell align="center" className="tableColumn">
+                      {format(new Date(item.tDateRet), "dd/mm/yy")}
+                    </TableCell>
+                    <TableCell align="center" className="tableColumn">
+                      {item.etat}
+                    </TableCell>
+                    <TableCell align="center" className="tableColumn">
+                      {item.raisonRefus}
+                    </TableCell>
+                  </TableRow>
+                );
+              if (colType === "user")
+                return (
+                  <TableRow key={uuidv4()}>
+                    <TableCell align="center" className="tableColumn">
+                      {format(new Date(item.createdAt), "dd/mm/yy")}
+                    </TableCell>
+                    <TableCell align="center" className="tableColumn">
+                      {item.nom}
+                    </TableCell>
+                    <TableCell align="center" className="tableColumn">
+                      {item.prenom}
+                    </TableCell>
+                    <TableCell align="center" className="tableColumn">
+                      {item.fonction}
+                    </TableCell>
+                    <TableCell align="center" className="tableColumn">
+                      {item.email}
+                    </TableCell>
+                    <TableCell align="center" className="tableColumn">
+                      {item.role}
+                    </TableCell>
+                  </TableRow>
+                );
+            })}
           </TableBody>
         </Table>
       </TableContainer>

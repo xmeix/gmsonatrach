@@ -108,7 +108,10 @@ export const createMission = async (req, res) => {
 export const getAllMissions = async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
-    const missions = await Mission.find();
+    const missions = await Mission.find()
+      .populate("createdBy")
+      .populate("updatedBy")
+      .populate("employes");
     let filteredMissions;
 
     if (user.role === "relex") throw new Error("Unauthorized");

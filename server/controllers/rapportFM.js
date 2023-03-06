@@ -6,7 +6,6 @@ const toId = mongoose.Types.ObjectId;
 
 export const createRapport = async (req, res) => {
   try {
-     
     let newRapport;
     const user = req.user;
     let missionnaire = toId(user.id);
@@ -16,7 +15,7 @@ export const createRapport = async (req, res) => {
       idMission: idMission,
       idEmploye: missionnaire,
     });
-    const savedRapport = await newRapport.save(); 
+    const savedRapport = await newRapport.save();
 
     res.status(201).json({ savedRapport, msg: "created successfully" });
   } catch (err) {
@@ -27,7 +26,10 @@ export const createRapport = async (req, res) => {
 export const getAllRapports = async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
-    const rapports = await RapportFM.find();
+
+    const rapports = await RapportFM.find()
+      .populate("idEmploye")
+      .populate("idMission");
     let filteredRapports;
     if (user.role === 4) throw new Error("Unauthorized");
     else if (user.role === 1 || user.role === 2)
