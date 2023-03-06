@@ -420,7 +420,7 @@ export const MissionEntries = [
   {
     id: "employes",
     label: "Employés",
-    inputType: "create-select",
+    inputType: "select",
     width: "230px",
     placeholder: "Sélectionnez les employés pour la mission",
     isMulti: true,

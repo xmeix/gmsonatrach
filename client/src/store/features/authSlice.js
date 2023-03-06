@@ -31,7 +31,22 @@ export const authSlice = createSlice({
       state.isLoggedIn = false;
     },
     setDemandes: (state, action) => {
-      state.demandes = action.payload.demandes;
+      state.demandes = action.payload;
+    },
+    setRFMs: (state, action) => {
+      state.rfms = action.payload;
+    },
+    setMissions: (state, action) => {
+      state.missions = action.payload;
+    },
+    setOMs: (state, action) => {
+      state.oms = action.payload;
+    },
+    setDepenses: (state, action) => {
+      state.depenses = action.payload;
+    },
+    setUsers: (state, action) => {
+      state.users = action.payload;
     },
     loginStart: (state) => {
       state.isLoading = true;
@@ -49,6 +64,7 @@ export const authSlice = createSlice({
     },
     fetchFailure: (state) => {
       state.failure = true;
+      state.isLoading = false;
     },
   },
 });
@@ -62,5 +78,10 @@ export const {
   fetchStart,
   fetchEnd,
   fetchFailure,
+  setMissions,
+  setRFMs,
+  setOMs,
+  setDepenses,
+  setUsers,
 } = authSlice.actions;
 export default authSlice.reducer;

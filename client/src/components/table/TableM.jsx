@@ -2,6 +2,8 @@ import axios from "axios";
 import { useState, useEffect, useMemo } from "react";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import "./TableM.css";
+import { format } from "date-fns";
+
 import {
   Table,
   TableBody,
@@ -18,17 +20,31 @@ import {
   TablePagination,
   InputAdornment,
 } from "@material-ui/core";
+import { useSelector } from "react-redux";
 
 const columns = [
-  { id: "id", label: "ID", minWidth: 50 },
-  { id: "title", label: "Title", minWidth: 150 },
-  { id: "completed", label: "Completed", minWidth: 200 },
+  { id: "createdAt", label: "date", minWidth: "20px" },
+  { id: "idEmetteur", label: "Sender", minWidth: "20px" },
+  { id: "motif", label: "Motif", minWidth: "20px" },
+  { id: "etat", label: "State", minWidth: "20px" },
+];
+
+const filterOptions = [
+  "en-attente",
+  "acceptée",
+  "refusée",
+  "annulée",
+  "DB",
+  "DM",
+  "DC",
 ];
 
 const TableM = ({ title }) => {
+  const data = useSelector((state) => state.auth.demandes);
+  const users = useSelector((state) => state.auth.users);
+
   const [filter, setFilter] = useState("");
-  const [completedFilter, setCompletedFilter] = useState("");
-  const [data, setData] = useState([]);
+  const [filterOption, setFilterOption] = useState("");
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [page, setPage] = useState(0);
   const [sortOrder, setSortOrder] = useState({
@@ -36,44 +52,64 @@ const TableM = ({ title }) => {
     direction: "asc",
   });
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const result = await axios.get(
-        "https://jsonplaceholder.typicode.com/todos"
-      );
-      setData(result.data);
-    };
-
-    fetchData();
-  }, []);
-
   const handleFilterChange = (event) => {
     setFilter(event.target.value);
     setPage(0);
   };
 
-  const handleCompletedFilterChange = (event) => {
-    setCompletedFilter(event.target.value);
-
+  const handleFilterOptionChange = (event) => {
+    setFilterOption(event.target.value);
     setPage(0);
   };
 
+  const getUserName = (id) => {
+    const user = users.find((u) => u._id === id);
+    if (user) {
+      return user.nom + " " + user.prenom;
+    }
+    return "";
+  };
+
   const filteredData = useMemo(() => {
+    const hasFilter = filter || filterOption;
+    if (!hasFilter) {
+      return data;
+    }
     return data.filter((item) => {
       let result = true;
       if (filter) {
-        result =
-          (result && item.title.toLowerCase().includes(filter.toLowerCase())) ||
-          (result && item.id.toString().includes(filter.toLowerCase())) ||
-          (result && item.completed.toString().includes(filter.toLowerCase()));
+        result = columns.some((column) => {
+          if (!item[column.id]) {
+            return false;
+          }
+          const cellValue =
+            item[column.id].toString().toLowerCase() ||
+            item[column.id].nom.toString().toLowerCase() ||
+            item[column.id].prenom.toString().toLowerCase();
+          const filterValue = filter.toLowerCase();
+          return (
+            cellValue.includes(filterValue) ||
+            (column.id === "idEmetteur" &&
+              (item[column.id].nom
+                .toString()
+                .toLowerCase()
+                .includes(filterValue) ||
+                item[column.id].prenom
+                  .toString()
+                  .toLowerCase()
+                  .includes(filterValue)))
+          );
+        });
       }
-      if (completedFilter) {
+      if (filterOption) {
         result =
-          result && item.completed.toString() === completedFilter.toString();
+          result &&
+          (item.__t.toString() === filterOption.toString() ||
+            item.etat.toString() === filterOption.toString());
       }
       return result;
     });
-  }, [data, filter, completedFilter]);
+  }, [data, filter, filterOption]);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -88,20 +124,20 @@ const TableM = ({ title }) => {
     page * rowsPerPage,
     page * rowsPerPage + rowsPerPage
   );
-  const sortedData = useMemo(() => {
-    const sorted = data.sort((a, b) => {
-      const column = sortOrder.column;
-      const direction = sortOrder.direction === "asc" ? 1 : -1;
-      if (a[column] < b[column]) {
-        return -1 * direction;
-      } else if (a[column] > b[column]) {
-        return 1 * direction;
-      } else {
-        return 0;
-      }
-    });
-    return sorted;
-  }, [data, sortOrder]);
+  // const sortedData = useMemo(() => {
+  //   const sorted = data.sort((a, b) => {
+  //     const column = sortOrder.column;
+  //     const direction = sortOrder.direction === "asc" ? 1 : -1;
+  //     if (a[column] < b[column]) {
+  //       return -1 * direction;
+  //     } else if (a[column] > b[column]) {
+  //       return 1 * direction;
+  //     } else {
+  //       return 0;
+  //     }
+  //   });
+  //   return sorted;
+  // }, [data, sortOrder]);
   const handleSort = (columnId) => {
     const isAsc =
       sortOrder.column === columnId && sortOrder.direction === "asc";
@@ -127,16 +163,26 @@ const TableM = ({ title }) => {
           />
         </div>
         <select
-          value={completedFilter}
-          onChange={(event) => handleCompletedFilterChange(event)}
+          value={filterOption}
+          onChange={(event) => handleFilterOptionChange(event)}
         >
           <option value="">All</option>
-          <option value={true}>completed</option>
-          <option value={false}>not - Completed</option>
+          {filterOptions.map((opt, i) => {
+            return (
+              <option key={i} value={opt}>
+                {opt}
+              </option>
+            );
+          })}
         </select>
       </form>
-      <TableContainer component={Paper}>
-        <Table className="tableContainer" stickyHeader>
+
+      <TableContainer
+        component={Paper}
+        style={{ width: "80vw" }}
+        aria-label="simple table"
+      >
+        <Table className="tableContainer" stickyHeader size="small">
           <TableHead>
             <TableRow>
               {columns.map((column) => (
@@ -153,14 +199,16 @@ const TableM = ({ title }) => {
             {paginatedData.map((item) => (
               <TableRow key={item.id}>
                 <TableCell align="center" className="tableColumn">
-                  {item.id}
+                  {format(new Date(item.createdAt), "dd/mm/yy")}
                 </TableCell>
-                <TableCell className="tableColumn">{item.title}</TableCell>
-                <TableCell className="tableColumn" align="center">
-                  {item.completed ? "true" : "false"}{" "}
+                <TableCell align="center" className="tableColumn">
+                  {item.idEmetteur.nom + " " + item.idEmetteur.prenom}
                 </TableCell>
-                <TableCell className="tableColumn" align="center">
-                  <button className="btn">Add</button>
+                <TableCell align="center" className="tableColumn">
+                  {item.motif}
+                </TableCell>
+                <TableCell align="center" className="tableColumn">
+                  {item.etat}
                 </TableCell>
               </TableRow>
             ))}

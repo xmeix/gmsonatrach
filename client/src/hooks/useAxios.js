@@ -8,6 +8,14 @@ import {
   setLogin,
   setLogout,
 } from "../store/features/authSlice";
+import {
+  getDemandes,
+  getDepenses,
+  getMissions,
+  getOMs,
+  getRFMs,
+  getUsers,
+} from "../api/apiCalls/getCalls";
 
 export const useAxios = () => {
   const isLoading = useSelector((state) => state.auth.isLoading);
@@ -28,6 +36,12 @@ export const useAxios = () => {
           response = await apiService.user.post(url, body);
           if (url === "/auth/login") {
             dispatch(setLogin(response.data));
+            getMissions(dispatch);
+            getDemandes(dispatch);
+            getRFMs(dispatch);
+            getOMs(dispatch);
+            getDepenses(dispatch);
+            getUsers(dispatch);
           } else if (url === "/auth/logout") {
             dispatch(setLogout());
           }

@@ -1,23 +1,19 @@
 import "./../../css/Gestion.css";
 import PageName from "../../components/pageName/PageName";
 import TableM from "../../components/table/TableM";
+import { useSelector } from "react-redux";
 const GestionCMR = () => {
-  const filterOptions = ["etat"];
+  const filterOptions = ["etat", "DB", "DM", "DC"];
+
+  
   return (
     <div className="gestion">
       <PageName name="gestion CMR" />
       <div className="elements">
         <TableM
-          title="Liste des demandes de congés"
+          title="Requests List"
           search={["id", "name"]}
-          filterOptions={filterOptions}
-        />
-
-        <TableM
-          title="Liste des demandes de modification"
-          search={["id", "name"]}
-          filterOptions={filterOptions}
-        />
+         />
 
         <TableM
           title="Liste des rapports fin de mission"

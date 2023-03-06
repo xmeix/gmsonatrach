@@ -95,11 +95,12 @@ export const createDemande = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
-
 export const getDemandes = async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
-    let demandes = await Demande.find();
+    let demandes = await Demande.find()
+      .populate("idEmetteur")
+      .populate("idDestinataire");
     let filteredDemandes;
     /**
      * emp : get his DC , DM
@@ -123,6 +124,34 @@ export const getDemandes = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+
+// export const getDemandes = async (req, res) => {
+//   try {
+//     const user = await User.findById(req.user.id);
+//     let demandes = await Demande.find();
+//     let filteredDemandes;
+//     /**
+//      * emp : get his DC , DM
+//      * responsable : get demandes d'une structure
+//      * directeur / secretaire : get All demandes
+//      * relex : get only db
+//      */
+//     if (
+//       user.role === "employe" ||
+//       user.role === "relex" ||
+//       user.role === "responsable"
+//     ) {
+//       filteredDemandes = demandes.filter(
+//         (demande) =>
+//           demande.idEmetteur.toString() === user.id ||
+//           demande.idDestinataire.toString() === user.id
+//       );
+//     } else filteredDemandes = demandes;
+//     res.status(200).json(filteredDemandes);
+//   } catch (err) {
+//     res.status(500).json({ error: err.message });
+//   }
+// };
 
 export const updateDemEtat = async (req, res) => {
   try {

@@ -92,3 +92,23 @@ export const logout = async (req, res) => {
   res.clearCookie("jwt");
   res.json({ msg: "Logged out successfully" });
 };
+
+export const getAllUsers = async (req, res) => {
+  try {
+    const users = await User.find();
+    const currUser = await User.findById(req.user.id);
+
+    let filteredUsers;
+
+    if (currUser.role === "relex" || currUser.role === "employe")
+      throw new Error("Unauthorized");
+    else if (currUser.role === "responsable") {
+      filteredUsers = users.filter(
+        (user) => user.structure === req.user.structure
+      );
+    } else filteredUsers = users;
+    res.status(200).json(filteredUsers);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};

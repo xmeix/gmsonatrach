@@ -7,6 +7,7 @@ import { useAuth } from "../../hooks/useAuth";
 import { useState } from "react";
 import ErrorIcon from "@mui/icons-material/Error";
 import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
+import { useAxios } from "../../hooks/useAxios";
 const customStyles = {
   control: (provided, state) => ({
     ...provided,
@@ -22,8 +23,9 @@ const customStyles = {
 };
 
 const Formulaire = ({ title, entries, buttons, type }) => {
-  const { register, error, isLoading, successMsg } = useAuth();
-   const [values, handleChange, resetForm] = useForm(() => {
+  // const { register, error, isLoading, successMsg } = useAuth();
+  const { callApi, error, isLoading, successMsg } = useAxios();
+  const [values, handleChange, resetForm] = useForm(() => {
     const vals = {};
     entries.forEach((entry) => {
       vals[entry.id.toLowerCase()] = "";
@@ -37,12 +39,15 @@ const Formulaire = ({ title, entries, buttons, type }) => {
     switch (type) {
       case "user":
         {
-          register(values);
+          //register(values);
+          callApi("post", "/auth/register", values);
         }
         break;
       case "mission":
         {
           //register(values);
+          callApi("post", "/mission", values);
+
         }
         break;
       default:

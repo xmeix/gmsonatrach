@@ -68,7 +68,6 @@
   border: solid 1px var(--light-gray) !important;
   box-shadow: none !important;
   min-height: 50vh;
-  min-width: 80vw;
 }
 
 .table .tableContainer .tableRow {
