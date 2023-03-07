@@ -6,7 +6,7 @@ import { createRapport, getAllRapports } from "../controllers/rapportFM.js";
 const router = express.Router();
 
 /* CREATE**/
-router.post("/", verifyToken, checkCreateAccess, createRapport);
+//router.post("/", verifyToken, checkCreateAccess, createRapport);
 
 /** READ */
 router.get("/", verifyToken, getAllRapports);

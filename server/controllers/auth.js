@@ -70,8 +70,8 @@ export const login = async (req, res) => {
 
     res.cookie("jwt", token, {
       httpOnly: false,
-      secure: true, //should be true in production
-      sameSite: "None",
+      secure: false, //should be true in production
+      sameSite: "lax",
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
     delete user.password;

@@ -80,6 +80,10 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
                 (item[column.id].nom + " " + item[column.id].prenom)
                   .toString()
                   .toLowerCase()
+                  .includes(filterValue) ||
+                item[column.id].structure
+                  .toString()
+                  .toLowerCase()
                   .includes(filterValue)))
           );
         });
@@ -87,8 +91,12 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
       if (filterOption) {
         result =
           result &&
-          (item.__t.toString() === filterOption.toString() ||
-            item.etat.toString() === filterOption.toString());
+          (item?.__t === filterOption.toString() ||
+            item?.etat === filterOption.toString() ||
+            item?.structure === filterOption.toString() ||
+            item?.role === filterOption.toString() ||
+            item?.moyenTransport === filterOption.toString() ||
+            item?.type === filterOption.toString());
       }
       return result;
     });
@@ -207,10 +215,7 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
                       {format(new Date(item.createdAt), "dd/mm/yy")}
                     </TableCell>
                     <TableCell align="center" className="tableColumn">
-                      {/* {item.idEmploye.nom + " " + item.idEmploye.prenom} */}
-                    </TableCell>
-                    <TableCell align="center" className="tableColumn">
-                      {item.motif}
+                      {/* {item.idEmploye?.nom + " " + item.idEmploye?.prenom} */}
                     </TableCell>
                     <TableCell align="center" className="tableColumn">
                       {item.etat}

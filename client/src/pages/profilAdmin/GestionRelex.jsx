@@ -8,7 +8,7 @@ import {
   userButtons as buttons,
 } from "../../data/formData";
 import { useSelector } from "react-redux";
-import { columnsDemandes, filterDemOptions } from "../../data/tableCols";
+import { columnsDemandes, filterDBOptions, filterDemOptions } from "../../data/tableCols";
 const GestionRelex = () => {
   const demandes = useSelector((state) => state.auth.demandes);
   const demandesDB = demandes.filter((dem) => dem.__t === "DB");
@@ -25,7 +25,7 @@ const GestionRelex = () => {
         <TableM
           title="Liste des demandes de billetterie"
           search={["id"]}
-          filterOptions={filterDemOptions}
+          filterOptions={filterDBOptions}
           columns={columnsDemandes}
           data={demandesDB}
           colType="demande"

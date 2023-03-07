@@ -13,11 +13,11 @@ export const filterDemOptions = [
   "DM",
   "DC",
 ];
+export const filterDBOptions = ["en-attente", "acceptée", "refusée", "annulée"];
 
 export const columnsRFM = [
   { id: "createdAt", label: "date", minWidth: "20px" },
-  { id: "idEmploye", label: "Sender", minWidth: "20px" },
-  { id: "motif", label: "Motif", minWidth: "20px" },
+  { id: "idEmploye", label: "Sender", minWidth: "20px" }, 
   { id: "etat", label: "State", minWidth: "20px" },
 ];
 export const filterRFMOptions = ["en-attente", "acceptée", "refusée"];
@@ -35,7 +35,6 @@ export const filterUserOptions = [
   "directeur",
   "secretaire",
   "employe",
-  "relex",
   "responsable",
   "non-missionnaire",
   "missionnaire",
@@ -80,4 +79,10 @@ export const filterMissionsOptions = [
   "etranger",
   "avion",
   "route",
+  "en-attente",
+  "acceptée", //planifié
+  "refusée",
+  "en-cours",
+  "annulée",
+  "terminée",
 ];

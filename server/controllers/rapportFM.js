@@ -32,8 +32,6 @@ export const getAllRapports = async (req, res) => {
       .populate("idMission");
     let filteredRapports;
     if (user.role === 4) throw new Error("Unauthorized");
-    else if (user.role === 1 || user.role === 2)
-      res.status(200).json({ rapports });
     else if (user.role === 3) {
       filteredRapports = rapports.filter(
         (rapport) => rapport.idEmploye.toString() === user.id

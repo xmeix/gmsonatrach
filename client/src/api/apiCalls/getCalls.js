@@ -15,7 +15,7 @@ export const getMissions = async (dispatch) => {
   dispatch(fetchStart());
   try {
     const res = await apiService.user.get("/mission/");
-    console.log(res.data);
+    //console.log(res.data);
     dispatch(setMissions(res.data));
     dispatch(fetchEnd());
   } catch (err) {
@@ -26,7 +26,7 @@ export const getDemandes = async (dispatch) => {
   dispatch(fetchStart());
   try {
     const res = await apiService.user.get("/demande/");
-    console.log(res.data);
+    //console.log(res.data);
     dispatch(setDemandes(res.data));
     dispatch(fetchEnd());
   } catch (err) {
@@ -39,18 +39,18 @@ export const getRFMs = async (dispatch) => {
   dispatch(fetchStart());
   try {
     const res = await apiService.user.get("/rapportFM/");
-    console.log(res.data);
+    console.log("RFMS: " + JSON.stringify(res.data));
     dispatch(setRFMs(res.data));
     dispatch(fetchEnd());
   } catch (err) {
     dispatch(fetchFailure());
   }
-}; 
+};
 export const getOMs = async (dispatch) => {
   dispatch(fetchStart());
   try {
     const res = await apiService.user.get("/ordremission/");
-    console.log(res.data.filteredOMissions);
+    //console.log(res.data.filteredOMissions);
     dispatch(setOMs(res.data.filteredOMissions));
     dispatch(fetchEnd());
   } catch (err) {
@@ -61,7 +61,7 @@ export const getDepenses = async (dispatch) => {
   dispatch(fetchStart());
   try {
     const res = await apiService.user.get("/depense/");
-    console.log(res.data);
+    //console.log(res.data);
     dispatch(setDepenses(res.data));
     dispatch(fetchEnd());
   } catch (err) {
@@ -73,7 +73,7 @@ export const getUsers = async (dispatch) => {
   dispatch(fetchStart());
   try {
     const res = await apiService.user.get("/auth/");
-    console.log(JSON.stringify(res.data));
+    //console.log(JSON.stringify(res.data));
     dispatch(setUsers(res.data));
     dispatch(fetchEnd());
   } catch (err) {

@@ -3,6 +3,7 @@ import Mission from "../models/Mission.js";
 import mongoose from "mongoose";
 import OrdreMission from "../models/OrdreMission.js";
 import { checkFields } from "../middleware/auth.js";
+import RapportFM from "../models/RapportFM.js";
 const toId = mongoose.Types.ObjectId;
 
 export const createMission = async (req, res) => {
@@ -86,7 +87,7 @@ export const createMission = async (req, res) => {
 
     const savedMission = await mission.save();
     if (newEtat === "acceptée" && newEmployes.length > 0) {
-      //on doit générer l'ordre de mission
+      //on doit générer l'ordre de mission et rfm
       const employeIds = newEmployes.map((employe) => employe._id);
       for (const employeId of employeIds) {
         const om = new OrdreMission({
@@ -94,6 +95,11 @@ export const createMission = async (req, res) => {
           employe: employeId,
         });
         om.save();
+        const rfm = new RapportFM({
+          idMission: savedMission.id,
+          idEmploye: employeId,
+        });
+        rfm.save();
       }
     }
     res
@@ -154,6 +160,11 @@ export const updateMissionEtat = async (req, res) => {
           employe: employeId,
         });
         om.save();
+        const rfm = new RapportFM({
+          idMission: savedMission.id,
+          idEmploye: employeId,
+        });
+        rfm.save();
       }
     }
     return res.status(200).json({
