@@ -4,6 +4,21 @@ import mongoose from "mongoose";
 
 const toId = mongoose.Types.ObjectId;
 
+export const updateRapport = async (req, res) => {
+  try {
+    const updatedReport = await RapportFM.findByIdAndUpdate(
+      req.params.id,
+      {
+        $set: req.body,
+      },
+      { new: true }
+    );
+    res.status(201).json({ updatedReport, msg: "updated successfully" });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
 export const createRapport = async (req, res) => {
   try {
     let newRapport;

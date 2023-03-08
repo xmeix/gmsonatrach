@@ -1,13 +1,12 @@
 import "./Formulaire.css";
 import Select from "react-select";
 import CreatableSelect from "react-select/creatable";
-
 import useForm from "../../hooks/useForm";
-import { useAuth } from "../../hooks/useAuth";
-import { useState } from "react";
 import ErrorIcon from "@mui/icons-material/Error";
 import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
 import { useAxios } from "../../hooks/useAxios";
+import { useDispatch } from "react-redux";
+ import { getMissions } from "../../api/apiCalls/getCalls";
 const customStyles = {
   control: (provided, state) => ({
     ...provided,
@@ -23,16 +22,18 @@ const customStyles = {
 };
 
 const Formulaire = ({ title, entries, buttons, type }) => {
-  // const { register, error, isLoading, successMsg } = useAuth();
   const { callApi, error, isLoading, successMsg } = useAxios();
+  const dispatch = useDispatch();
+
   const [values, handleChange, resetForm] = useForm(() => {
     const vals = {};
     entries.forEach((entry) => {
-      vals[entry.id.toLowerCase()] = "";
+      vals[entry.id] = "";
     });
     delete vals[""]; // remove empty string key
     return vals;
   });
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -47,7 +48,7 @@ const Formulaire = ({ title, entries, buttons, type }) => {
         {
           //register(values);
           callApi("post", "/mission", values);
-
+          getMissions(dispatch);
         }
         break;
       default:
@@ -56,6 +57,7 @@ const Formulaire = ({ title, entries, buttons, type }) => {
   };
   return (
     <div className="formulaire">
+      <div className="listTitle">{title}</div>
       <div className="inputs">
         {entries.map((entry, i) => {
           return (

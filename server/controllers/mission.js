@@ -27,6 +27,7 @@ export const createMission = async (req, res) => {
       circonscriptionAdm,
     } = req.body;
     const user = req.user;
+    console.log("BODY  " + req.body);
     //si c est un responsable et la mission créée n appartient pas a sa structure
     if (user.role === "responsable" && user.structure !== structure)
       throw new Error("Unauthorized");
@@ -121,8 +122,6 @@ export const getAllMissions = async (req, res) => {
     let filteredMissions;
 
     if (user.role === "relex") throw new Error("Unauthorized");
-    else if (user.role === "directeur" || user.role === "secretaire")
-      filteredMissions = missions;
     else if (user.role === "employe") {
       //can read  his own missions only!
       filteredMissions = missions.filter((mission) =>

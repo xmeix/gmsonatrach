@@ -17,10 +17,10 @@ export const filterDBOptions = ["en-attente", "acceptée", "refusée", "annulée
 
 export const columnsRFM = [
   { id: "createdAt", label: "date", minWidth: "20px" },
-  { id: "idEmploye", label: "Sender", minWidth: "20px" }, 
+  { id: "idEmploye", label: "Sender", minWidth: "20px" },
   { id: "etat", label: "State", minWidth: "20px" },
 ];
-export const filterRFMOptions = ["en-attente", "acceptée", "refusée"];
+export const filterRFMOptions = ["crée", "en-attente", "accepté", "refusé"];
 
 export const columnsUsersEmp = [
   { id: "createdAt", label: "date", minWidth: "20px" },

@@ -24,7 +24,7 @@ export const useAxios = () => {
   const [successMsg, setSuccessMsg] = useState("");
 
   const callApi = async (method, url, body) => {
-    console.log("hereCallAPI");
+    console.log("hereCallAPI" + JSON.stringify(body));
 
     setError("");
     setSuccessMsg("");
@@ -45,7 +45,7 @@ export const useAxios = () => {
           } else if (url === "/auth/logout") {
             dispatch(setLogout());
           }
-
+          console.log("here");
           break;
         case "delete":
           response = await apiService.user.delete(url, body);
@@ -60,7 +60,7 @@ export const useAxios = () => {
       setSuccessMsg(response.data.msg);
     } catch (error) {
       console.log(error);
-      setError(error.response.data.error || "Something went wrong.");
+      setError(error.response?.data.error || "Something went wrong.");
       dispatch(fetchFailure());
     }
   };

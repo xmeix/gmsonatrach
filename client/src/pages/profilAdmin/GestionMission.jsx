@@ -2,10 +2,7 @@ import "./../../css/Gestion.css";
 import PageName from "../../components/pageName/PageName";
 import TableM from "../../components/table/TableM";
 import Formulaire from "../../components/formulaire/Formulaire";
-import {
-  MissionEntries as entries,
-  userButtons as buttons,
-} from "../../data/formData";
+import { MissionEntries, userButtons as buttons } from "../../data/formData";
 import { useSelector } from "react-redux";
 import { columnsMissions, filterMissionsOptions } from "../../data/tableCols";
 const customStyles = {
@@ -24,7 +21,18 @@ const customStyles = {
 
 const GestionMission = () => {
   const missions = useSelector((state) => state.auth.missions);
+  const users = useSelector((state) => state.auth.users);
 
+  const employeesNonMissionnaires = users
+    .filter(
+      (user) => user.role === "employe" && user.etat === "non-missionnaire"
+    )
+    .map((user) => ({ label: user.nom + " " + user.prenom, value: user._id }));
+
+  const entries = MissionEntries.map((entry) => {
+    if (entry.id === "employes") entry.options = employeesNonMissionnaires;
+    return entry;
+  });
   return (
     <div className="gestion">
       <PageName name="gestion Missions" />

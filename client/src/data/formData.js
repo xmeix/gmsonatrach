@@ -1,3 +1,10 @@
+// import { useSelector } from "react-redux";
+
+// const users = useSelector((state) => state.auth.users);
+// const employeesNonMissionnaires = users.filter(
+//   (user) => user.role === "employe" && user.etat === "non-missionnaire"
+// );
+
 export const userButtons = [
   {
     id: 1,
@@ -424,6 +431,7 @@ export const MissionEntries = [
     width: "230px",
     placeholder: "Sélectionnez les employés pour la mission",
     isMulti: true,
+    // options: employeesNonMissionnaires,
   },
   {
     id: "taches",
@@ -434,14 +442,14 @@ export const MissionEntries = [
     isMulti: true,
   },
   {
-    id: "DateDep",
+    id: "tDateDeb",
     label: "Departure date",
     inputType: "date",
     width: "230px",
     placeholder: "Sélectionnez la date de début de la mission",
   },
   {
-    id: "DateRet",
+    id: "tDateRet",
     label: "Return date",
     inputType: "date",
     width: "230px",

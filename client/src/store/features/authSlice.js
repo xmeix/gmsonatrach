@@ -39,6 +39,14 @@ export const authSlice = createSlice({
     setMissions: (state, action) => {
       state.missions = action.payload;
     },
+    addMission: (state, action) => {
+      const mission = action.payload;
+      const { employes } = action.payload;
+      const empObjects = state.users.filter((user) =>
+        employes.includes(user._id)
+      );
+      state.missions.push({ ...action.payload, employes: empObjects });
+    },
     setOMs: (state, action) => {
       state.oms = action.payload;
     },

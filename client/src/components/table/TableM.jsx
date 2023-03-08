@@ -4,8 +4,6 @@ import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import "./TableM.css";
 import { v4 as uuidv4 } from "uuid";
 
-import { format } from "date-fns";
-
 import {
   Table,
   TableBody,
@@ -13,12 +11,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  TextField,
   Paper,
-  FormControl,
-  Select,
-  MenuItem,
-  InputLabel,
   TablePagination,
   InputAdornment,
 } from "@material-ui/core";
@@ -58,7 +51,16 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
           if (!item[column.id]) {
             return false;
           }
-          const cellValue = item[column.id].toString().toLowerCase();
+          let cellValue;
+          if (
+            item[column.id] === "createdBy" ||
+            item[column.id] === "tDateDeb" ||
+            item[column.id] === "tDateRet"
+          ) {
+            cellValue = item[column.id];
+          } else {
+            cellValue = item[column.id].toString().toLowerCase();
+          }
           const filterValue = trimmedFilter.toLowerCase();
           return (
             cellValue.includes(filterValue) ||
@@ -116,7 +118,7 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
     page * rowsPerPage + rowsPerPage
   );
   // const sortedData = useMemo(() => {
-  //   const sorted = data.sort((a, b) => {
+  //   const sorted = paginatedData.sort((a, b) => {
   //     const column = sortOrder.column;
   //     const direction = sortOrder.direction === "asc" ? 1 : -1;
   //     if (a[column] < b[column]) {
@@ -128,12 +130,12 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
   //     }
   //   });
   //   return sorted;
-  // }, [data, sortOrder]);
-  const handleSort = (columnId) => {
-    const isAsc =
-      sortOrder.column === columnId && sortOrder.direction === "asc";
-    setSortOrder({ column: columnId, direction: isAsc ? "desc" : "asc" });
-  };
+  // }, [paginatedData, sortOrder]);
+  // const handleSort = (columnId) => {
+  //   const isAsc =
+  //     sortOrder.column === columnId && sortOrder.direction === "asc";
+  //   setSortOrder({ column: columnId, direction: isAsc ? "desc" : "asc" });
+  // };
   return (
     <div className="table">
       <p className="listTitle">{title ? title : "list"}</p>
@@ -192,7 +194,9 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
                 return (
                   <TableRow key={uuidv4()}>
                     <TableCell align="center" className="tableColumn">
-                      {format(new Date(item.createdAt), "dd/mm/yy")}
+                      {/* {Intl.DateTimeFormat(["ban", "id"]).format(
+                        item.createdAt
+                      )} */}
                     </TableCell>
                     <TableCell align="center" className="tableColumn">
                       {item.idEmetteur.nom + " " + item.idEmetteur.prenom}
@@ -212,10 +216,12 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
                 return (
                   <TableRow key={uuidv4()}>
                     <TableCell align="center" className="tableColumn">
-                      {format(new Date(item.createdAt), "dd/mm/yy")}
+                      {Intl.DateTimeFormat(["ban", "id"]).format(
+                        new Date(item.createdAt)
+                      )}
                     </TableCell>
                     <TableCell align="center" className="tableColumn">
-                      {/* {item.idEmploye?.nom + " " + item.idEmploye?.prenom} */}
+                      {item.idEmploye?.nom + " " + item.idEmploye?.prenom}
                     </TableCell>
                     <TableCell align="center" className="tableColumn">
                       {item.etat}
@@ -227,22 +233,28 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
                 return (
                   <TableRow key={uuidv4()}>
                     <TableCell align="center" className="tableColumn">
-                      {format(new Date(item.createdAt), "dd/mm/yy")}
+                      {Intl.DateTimeFormat(["ban", "id"]).format(
+                        new Date(item.createdAt)
+                      )}
                     </TableCell>
                     <TableCell align="center" className="tableColumn">
-                      {item.createdBy.nom + " " + item.createdBy.prenom}
+                      {item.createdBy?.nom + " " + item.createdBy?.prenom}
                     </TableCell>
                     <TableCell align="center" className="tableColumn">
                       {item.objetMission}
                     </TableCell>
                     <TableCell align="center" className="tableColumn">
-                      {item.budget}
+                      {item.budget}DA
                     </TableCell>
                     <TableCell align="center" className="tableColumn">
-                      {format(new Date(item.tDateDeb), "dd/mm/yy")}
+                      {Intl.DateTimeFormat(["ban", "id"]).format(
+                        new Date(item.tDateDeb)
+                      )}
                     </TableCell>
                     <TableCell align="center" className="tableColumn">
-                      {format(new Date(item.tDateRet), "dd/mm/yy")}
+                      {Intl.DateTimeFormat(["ban", "id"]).format(
+                        new Date(item.tDateRet)
+                      )}
                     </TableCell>
                     <TableCell align="center" className="tableColumn">
                       {item.etat}
@@ -256,7 +268,9 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
                 return (
                   <TableRow key={uuidv4()}>
                     <TableCell align="center" className="tableColumn">
-                      {format(new Date(item.createdAt), "dd/mm/yy")}
+                      {Intl.DateTimeFormat(["ban", "id"]).format(
+                        new Date(item.createdAt)
+                      )}
                     </TableCell>
                     <TableCell align="center" className="tableColumn">
                       {item.nom}

@@ -27,11 +27,11 @@ const RapportFMSchema = new mongoose.Schema(
           type: String,
         },
       },
-    ], 
+    ],
     etat: {
       type: String,
-      enum: ["en-attente", "acceptée", "refusée", "annulée"],
-      default: "en-attente",
+      enum: ["créé", "en-attente", "accepté", "refusé"],
+      default: "créé",
     },
     idMission: {
       type: mongoose.Schema.Types.ObjectId,
