@@ -20,7 +20,7 @@ export const columnsRFM = [
   { id: "idEmploye", label: "Sender", minWidth: "20px" },
   { id: "etat", label: "State", minWidth: "20px" },
 ];
-export const filterRFMOptions = ["crée", "en-attente", "accepté", "refusé"];
+export const filterRFMOptions = ["créé", "en-attente", "accepté", "refusé"];
 
 export const columnsUsersEmp = [
   { id: "createdAt", label: "date", minWidth: "20px" },

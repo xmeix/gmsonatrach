@@ -44,6 +44,12 @@ export const useAxios = () => {
             getUsers(dispatch);
           } else if (url === "/auth/logout") {
             dispatch(setLogout());
+          } else if (url === "/auth/register") {
+            getUsers(dispatch);
+          } else if (url === "/mission") {
+            getMissions(dispatch);
+          } else if (url === "/demande/DB") {
+            getDemandes(dispatch);
           }
           console.log("here");
           break;

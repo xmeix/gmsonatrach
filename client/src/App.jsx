@@ -9,11 +9,30 @@ import GestionRelex from "./pages/profilAdmin/GestionRelex";
 import GestionCMR from "./pages/profilAdmin/GestionCMR";
 import Planning from "./pages/planning/Planning";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Formulaire from "./components/formulaire/Formulaire";
+import { apiService } from "./api/apiService";
+import { useEffect } from "react";
+import { setLogin, setToken } from "./store/features/authSlice";
 
 function App() {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const interval = setInterval(async () => {
+      try {
+        if (isLoggedIn) {
+          const res = await apiService.user.get("/auth/refresh");
+          dispatch(setToken(res.data.token));
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }, 36000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <div className="app">
       {/* <Formulaire /> */}

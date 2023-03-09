@@ -2,6 +2,7 @@ import bcrypt from "bcrypt";
 import { generateJWT } from "../middleware/auth.js";
 import User from "../models/User.js";
 import cookie from "cookie";
+import jwt from "jsonwebtoken";
 
 /** REGISTER USER */
 export const register = async (req, res) => {
@@ -61,22 +62,39 @@ export const register = async (req, res) => {
 export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
+
+    if (!email || !password) {
+      throw new Error("All fields are required");
+    }
+
     const user = await User.findOne({ email: email });
-    if (!user) throw new Error("Utilisateur non trouvé");
+    if (!user) {
+      throw new Error("Invalid email or password");
+    }
 
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) throw new Error("Invalid credentials");
-    const token = generateJWT(user);
+    if (!isMatch) throw new Error("Invalid email or password");
 
-    res.cookie("jwt", token, {
-      httpOnly: false,
-      secure: false, //should be true in production
-      sameSite: "lax",
-      maxAge: 7 * 24 * 60 * 60 * 1000,
+    const jwtToken = generateJWT(
+      user,
+      "15m" /*15min apres*/,
+
+      process.env.ACCESS_TOKEN_SECRET
+    );
+    const refreshToken = generateJWT(
+      user,
+      "1d", //15min apres
+      process.env.REFRESH_TOKEN_SECRET
+    );
+
+    res.cookie("jwt", refreshToken, {
+      httpOnly: true, //accessible only by web server
+      secure: true, // should be true in production https
+      sameSite: "None", //cross-site cookie
+      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
     delete user.password;
-
-    res.status(200).json({ token, user, msg: "Authentification avec succés" });
+    res.status(200).json({ token: jwtToken, user, msg: "Login successful" });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -84,13 +102,40 @@ export const login = async (req, res) => {
 
 /** LOGOUT */
 export const logout = async (req, res) => {
-  // const cookies = cookie.parse(req.headers.cookie || "");
-  // console.log(res.data);
-  // if (!cookies.jwt) {
-  //   return res.status(400).json({ error: "JWT cookie not found" });
-  // }
-  res.clearCookie("jwt");
-  res.json({ msg: "Logged out successfully" });
+  const cookies = req.cookies;
+  if (!cookies?.jwt) return res.status(204);
+
+  res.clearCookie("jwt", { httpOnly: true, sameSite: "None", secure: true });
+  res.json({ msg: "Logged out successfully and Cookie cleared" });
+};
+
+export const refresh = async (req, res) => {
+  const cookies = req.cookies;
+  if (!cookies?.jwt) {
+    return res.status(403).json({ error: "cookie not found" });
+  }
+  const refreshToken = cookies.jwt;
+
+  jwt.verify(
+    refreshToken,
+    process.env.REFRESH_TOKEN_SECRET,
+    async (err, decoded) => {
+      //if (err) return res.status(403).json({ msg: "Forbidden" });
+      const foundUser = await User.findById(decoded.UserInfo.id);
+      if (!foundUser) {
+        return res.status(401).json({ msg: "Unauthorized" });
+      }
+
+      const accessToken = generateJWT(
+        foundUser,
+        "15m",
+        process.env.ACCESS_TOKEN_SECRET
+      );
+      return res
+        .status(200)
+        .json({ token: accessToken, user: foundUser, msg: "Token refreshed" });
+    }
+  );
 };
 
 export const getAllUsers = async (req, res) => {

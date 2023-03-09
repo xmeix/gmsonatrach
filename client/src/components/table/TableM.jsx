@@ -194,9 +194,9 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
                 return (
                   <TableRow key={uuidv4()}>
                     <TableCell align="center" className="tableColumn">
-                      {/* {Intl.DateTimeFormat(["ban", "id"]).format(
-                        item.createdAt
-                      )} */}
+                      {Intl.DateTimeFormat(["ban", "id"]).format(
+                        new Date(item.createdAt)
+                      )}
                     </TableCell>
                     <TableCell align="center" className="tableColumn">
                       {item.idEmetteur.nom + " " + item.idEmetteur.prenom}

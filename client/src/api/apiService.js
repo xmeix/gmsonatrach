@@ -1,14 +1,18 @@
 import axios from "axios";
-
 const API_BASE_URL = "http://localhost:3001/";
 
 export const publicRequest = axios.create({
   baseURL: API_BASE_URL,
 });
 
+const token = localStorage.getItem("jwt");
 export const userRequest = axios.create({
   baseURL: API_BASE_URL,
-  withCredentials: true,
+  headers: {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${token}`,
+  },
+  withCredentials: "true",
 });
 
 export const apiService = {

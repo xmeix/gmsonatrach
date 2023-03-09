@@ -6,7 +6,6 @@ import ErrorIcon from "@mui/icons-material/Error";
 import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
 import { useAxios } from "../../hooks/useAxios";
 import { useDispatch } from "react-redux";
- import { getMissions } from "../../api/apiCalls/getCalls";
 const customStyles = {
   control: (provided, state) => ({
     ...provided,
@@ -48,7 +47,12 @@ const Formulaire = ({ title, entries, buttons, type }) => {
         {
           //register(values);
           callApi("post", "/mission", values);
-          getMissions(dispatch);
+        }
+        break;
+      case "DB":
+        {
+          //register(values);
+          callApi("post", "/demande/DB", values);
         }
         break;
       default:

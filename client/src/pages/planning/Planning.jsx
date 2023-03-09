@@ -1,10 +1,14 @@
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import PageName from "../../components/pageName/PageName";
 import "./Planning.css";
 import uuid from "react-uuid";
 
 const Planning = () => {
-  const missions = [];
+  const missions = useSelector((state) => state.auth.missions);
+  const Acceptedmissions = missions.filter(
+    (mission) => mission.etat === "acceptée"
+  );
   const monthsOfYear = [
     "January",
     "February",
@@ -23,15 +27,7 @@ const Planning = () => {
   const currentDate = new Date();
   const [date, setDate] = useState(currentDate);
 
-  const employees = [];
-
-  for (let i = 1; i <= 200; i++) {
-    const employee = {
-      number: i,
-      name: `Employee ${i}`,
-    };
-    employees.push(employee);
-  }
+  const employees = useSelector((state) => state.auth.users);
 
   function prevMonth() {
     const prevDate = new Date(date.getFullYear(), date.getMonth() - 1);
@@ -43,39 +39,55 @@ const Planning = () => {
     setDate(nextDate);
   }
 
-  function renderDays() {
-    const firstDayOfMonth = new Date(
-      date.getFullYear(),
-      date.getMonth(),
-      1
-    ).getDay();
-    const daysInMonth = new Date(
-      date.getFullYear(),
-      date.getMonth() + 1,
-      0
-    ).getDate();
+  // function renderDays() {
+  //   const firstDayOfMonth = new Date(
+  //     date.getFullYear(),
+  //     date.getMonth(),
+  //     1
+  //   ).getDay();
+  //   const daysInMonth = new Date(
+  //     date.getFullYear(),
+  //     date.getMonth() + 1,
+  //     0
+  //   ).getDate();
 
-    let days = [];
-    for (let i = 1; i <= daysInMonth; i++) {
-      days.push(i);
-    }
+  //   let days = [];
+  //   for (let i = 1; i <= daysInMonth; i++) {
+  //     days.push(i);
+  //   }
 
-    let rows = [];
-    let cells = [];
-    cells.push(<th key={uuid()}>employé</th>);
-    cells.push(<th key={uuid()}>Stream</th>);
+  //   let table = [];
+  //   let fstRow = [];
 
-    days.forEach((day) => {
-      cells.push(<th key={uuid()}>{day}</th>);
-    });
-    rows.forEach((row) => {
-      cells.push(<tr key={uuid()}>a</tr>);
-    });
+  //   fstRow.push(
+  //     <table>
+  //       <thead>
+  //         <tr>
+  //           <th>Employee</th>
+  //           <th>Stream</th>
+  //           {days.map((day) => (
+  //             <th key={uuid()}>{day}</th>
+  //           ))}
+  //         </tr>
+  //       </thead>
+  //       <tbody>
+  //         {/* {employees.map((emp) =>
+  //           emp ? (
+  //             <tr key={emp.id}>
+  //               <th>{emp.nom + " " + emp.prenom}</th>
+  //             </tr>
+  //           ) : null
+  //         )} */}
+  //       </tbody>
+  //     </table>
+  //   );
 
-    rows.push(<tr key={daysInMonth}>{cells}</tr>);
+  //   //fstRow.push(days.map((i) => <th>{i}</th>));
+  //   //table.push(<thead>{fstRow}</thead>);
 
-    return rows;
-  }
+  //   return table;
+  // }
+
   return (
     <div className="planning">
       <PageName name="Planification" />
@@ -93,9 +105,7 @@ const Planning = () => {
             Next
           </button>
         </div>
-        <table className="days">
-          <thead>{renderDays()}</thead>
-        </table>
+        <div className="days"> </div>
       </div>
     </div>
   );

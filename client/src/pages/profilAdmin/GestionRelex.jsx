@@ -4,11 +4,15 @@ import "./../../css/Gestion.css";
 import TableM from "../../components/table/TableM";
 import Formulaire from "../../components/formulaire/Formulaire";
 import {
-  userEntries as entries,
+  DBEntries as entries,
   userButtons as buttons,
 } from "../../data/formData";
 import { useSelector } from "react-redux";
-import { columnsDemandes, filterDBOptions, filterDemOptions } from "../../data/tableCols";
+import {
+  columnsDemandes,
+  filterDBOptions,
+  filterDemOptions,
+} from "../../data/tableCols";
 const GestionRelex = () => {
   const demandes = useSelector((state) => state.auth.demandes);
   const demandesDB = demandes.filter((dem) => dem.__t === "DB");
@@ -20,7 +24,7 @@ const GestionRelex = () => {
           type="DB"
           entries={entries}
           buttons={buttons}
-          title="Add user form"
+          title="Ticket Request Form"
         />
         <TableM
           title="Liste des demandes de billetterie"

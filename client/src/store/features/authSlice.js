@@ -23,12 +23,24 @@ export const authSlice = createSlice({
       state.isLoggedIn = true;
       state.token = action.payload.token;
       state.isLoading = false;
+      localStorage.setItem("jwt", action.payload.token);
+    },
+    setToken: (state, action) => {
+      state.token = action.payload.token;
+      localStorage.setItem("jwt", action.payload.token);
     },
     setLogout: (state) => {
       state.user = null;
       state.token = null;
       state.isLoading = false;
       state.isLoggedIn = false;
+      state.demandes = [];
+      state.users = [];
+      state.depenses = [];
+      state.missions = [];
+      state.oms = [];
+      state.rfms = [];
+      localStorage.removeItem("jwt");
     },
     setDemandes: (state, action) => {
       state.demandes = action.payload;
@@ -38,14 +50,6 @@ export const authSlice = createSlice({
     },
     setMissions: (state, action) => {
       state.missions = action.payload;
-    },
-    addMission: (state, action) => {
-      const mission = action.payload;
-      const { employes } = action.payload;
-      const empObjects = state.users.filter((user) =>
-        employes.includes(user._id)
-      );
-      state.missions.push({ ...action.payload, employes: empObjects });
     },
     setOMs: (state, action) => {
       state.oms = action.payload;
@@ -91,5 +95,8 @@ export const {
   setOMs,
   setDepenses,
   setUsers,
+  getTokenFromState,
+  setToken,
 } = authSlice.actions;
+
 export default authSlice.reducer;

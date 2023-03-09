@@ -113,7 +113,83 @@ export const userEntries = [
     isMulti: false,
   },
 ];
-export const DBEntries = [];
+export const DBEntries = [
+  {
+    id: "motif",
+    label: "Reason",
+    inputType: "text",
+    width: "230px",
+    placeholder: "Enter the reason for the request",
+  },
+  {
+    id: "numSC",
+    label: "sub-account number",
+    inputType: "number",
+    width: "230px",
+    placeholder: "Enter sub-account number",
+  },
+  {
+    id: "designationSC",
+    label: "sub-account designation",
+    inputType: "text",
+    width: "230px",
+    placeholder: "Enter sub-account designation",
+  },
+  {
+    id: "montantEngage",
+    label: "Engaged Amount",
+    inputType: "number",
+    width: "230px",
+    placeholder: "Enter engaged amount",
+  },
+  {
+    id: "nature",
+    label: "Nature",
+    inputType: "select",
+    width: "230px",
+    placeholder: "Select nature",
+    options: [
+      { label: "Round-trip", value: "aller-retour" },
+      { label: "One-way (departure)", value: "aller" },
+      { label: "One-way (return)", value: "retour" },
+    ],
+    isMulti: false,
+  },
+  {
+    id: "motifDep",
+    label: "Purpose of travel",
+    inputType: "select",
+    width: "230px",
+    placeholder: "Select purpose of travel",
+    options: [
+      { label: "Work", value: "travail" },
+      { label: "Training", value: "formation" },
+    ],
+    isMulti: false,
+  },
+  {
+    id: "observation",
+    label: "Observation",
+    inputType: "text",
+    width: "230px",
+    placeholder: "Enter observation",
+  },
+  {
+    id: "dateDepart",
+    label: "Departure Date",
+    inputType: "date",
+    width: "230px",
+    placeholder: "Select departure date",
+  },
+  {
+    id: "dateRetour",
+    label: "Return Date",
+    inputType: "date",
+    width: "230px",
+    placeholder: "Select return date",
+  },
+];
+
 export const DCEntries = [];
 export const DMEntries = [];
 export const RFMEntries = [];
