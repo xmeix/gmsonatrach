@@ -40,35 +40,59 @@
   font-weight: 400 !important;
   align-items: flex-start;
 }
-/* .calendar-grid {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 8px;
-}
-
-.calendar-day {
+.calendar {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 80px;
-  font-size: 24px;
-  background-color: #f5f5f5;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  gap: 1em;
+  width: 90vw;
+  height: 80vh;
+  border-radius: 5px;
+  margin: 0.5em 1em 1.5em;
+
+  background-color: var(--white);
+  overflow: scroll;
 }
 
-.calendar-day.weekend {
-  background-color: #f8f8f8;
-} */
-.th,
-.tr {
+.calendar .element {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+}
+
+.calendar .element .title {
+  display: flex;
+}
+.calendar .element .title .day {
+  padding: 0 1em;
+}
+
+.calendar .miss .jours {
+  display: flex;
+  justify-content: space-evenly;
+  width: 700px;
+  gap: 0.5em;
+
   font-weight: 600;
   font-size: 12px;
-  padding: 0.5em 1em;
-  border-right: solid 1px var(--light-gray);
-  border-bottom: solid 1px var(--light-gray);
 }
 
-.tr {
-  padding: 1em;
+.row {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+}
+.row .mission {
+  border-right: solid 1px var(--light-gray);
+  border-bottom: solid 1px var(--light-gray);
+  padding: 0.5em;
+}
+.calendar .element .postElement {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly !important;
+
+  padding: 0.5em 0;
+  border-right: solid 1px var(--light-gray);
+  border-bottom: solid 1px var(--light-gray);
+  align-items: center;
 }

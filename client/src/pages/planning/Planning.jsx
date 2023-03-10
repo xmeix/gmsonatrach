@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import PageName from "../../components/pageName/PageName";
 import "./Planning.css";
 import uuid from "react-uuid";
+import { render } from "react-dom";
 
 const Planning = () => {
   const missions = useSelector((state) => state.auth.missions);
@@ -26,6 +27,9 @@ const Planning = () => {
   const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   const currentDate = new Date();
   const [date, setDate] = useState(currentDate);
+  const year = date.getFullYear();
+  const month = date.getMonth();
+  const [days, setDays] = useState([]);
 
   const employees = useSelector((state) => state.auth.users);
 
@@ -39,54 +43,38 @@ const Planning = () => {
     setDate(nextDate);
   }
 
-  // function renderDays() {
-  //   const firstDayOfMonth = new Date(
-  //     date.getFullYear(),
-  //     date.getMonth(),
-  //     1
-  //   ).getDay();
-  //   const daysInMonth = new Date(
-  //     date.getFullYear(),
-  //     date.getMonth() + 1,
-  //     0
-  //   ).getDate();
+  useEffect(() => {
+    const renderDays = () => {
+      const daysInMonth = new Date(
+        date.getFullYear(),
+        date.getMonth() + 1,
+        0
+      ).getDate();
 
-  //   let days = [];
-  //   for (let i = 1; i <= daysInMonth; i++) {
-  //     days.push(i);
-  //   }
+      let days = [];
+      for (let i = 1; i <= daysInMonth; i++) {
+        days.push(i);
+      }
+      setDays(days);
+    };
 
-  //   let table = [];
-  //   let fstRow = [];
+    renderDays();
+  }, [date]);
 
-  //   fstRow.push(
-  //     <table>
-  //       <thead>
-  //         <tr>
-  //           <th>Employee</th>
-  //           <th>Stream</th>
-  //           {days.map((day) => (
-  //             <th key={uuid()}>{day}</th>
-  //           ))}
-  //         </tr>
-  //       </thead>
-  //       <tbody>
-  //         {/* {employees.map((emp) =>
-  //           emp ? (
-  //             <tr key={emp.id}>
-  //               <th>{emp.nom + " " + emp.prenom}</th>
-  //             </tr>
-  //           ) : null
-  //         )} */}
-  //       </tbody>
-  //     </table>
-  //   );
-
-  //   //fstRow.push(days.map((i) => <th>{i}</th>));
-  //   //table.push(<thead>{fstRow}</thead>);
-
-  //   return table;
-  // }
+  const checkMissions = (day, employe) => {
+    const miss = Acceptedmissions.some((m) => {
+      if (
+        m.employes.includes(employe.id) &&
+        new Date(year, month, day) >= new Date(m.tDateDeb) &&
+        new Date(year, month, day) <= new Date(m.tDateRet)
+      ) {
+        return true;
+      } else {
+        return false;
+      }
+    });
+    return miss;
+  };
 
   return (
     <div className="planning">
@@ -105,7 +93,45 @@ const Planning = () => {
             Next
           </button>
         </div>
-        <div className="days"> </div>
+        <div className="calendar">
+          <div className="element">
+            <th className="title">employé</th>
+            {employees.map((emp) => (
+              <div className="postElement" key={uuid()}>
+                {emp.nom}
+              </div>
+            ))}
+          </div>
+          <div className="element">
+            <th className="title">Stream</th>
+            {employees.map((emp) => (
+              <div className="postElement" key={uuid()}>
+                {emp.structure}
+              </div>
+            ))}
+          </div>
+          <div className="element">
+            <th className="title">
+              {days.map((day) => (
+                <div className="day" key={uuid()}>
+                  {day}
+                </div>
+              ))}
+            </th>
+            {employees.map((employee) => (
+              <div className="row" key={uuid()}>
+                {days.map((day) => {
+                  const miss = checkMissions(day, employee);
+                  return (
+                    <div className="mission" key={uuid()}>
+                      {miss ? "Y" : "X"}
+                    </div>
+                  );
+                })}
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );
