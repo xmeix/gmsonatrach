@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+import { refresh } from "../controllers/auth.js";
 
 export const generateJWT = (user, exp, secret) => {
   const payload = {
@@ -25,9 +26,20 @@ export const verifyToken = async (req, res, next) => {
   }
 
   const token = authHeader.split(" ")[1];
+  if (!token) {
+    return res.status(401).json({ message: "Access token not provided" });
+  }
 
-  jwt.verify(token, process.env.REFRESH_TOKEN_SECRET, (err, decoded) => {
-    if (err) return res.status(403).json({ error: "Forbidden" });
+  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
+    if (err) {
+      if (err.name === "TokenExpiredError") {
+        // If access token is expired, try to refresh it
+        return refresh(req, res, next);
+      }
+      return res
+        .status(403)
+        .json({ error: "access token error(Invalid or expired)" });
+    }
     req.user = decoded.UserInfo;
     next();
   });

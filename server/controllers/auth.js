@@ -78,7 +78,6 @@ export const login = async (req, res) => {
     const jwtToken = generateJWT(
       user,
       "15m" /*15min apres*/,
-
       process.env.ACCESS_TOKEN_SECRET
     );
     const refreshToken = generateJWT(
@@ -103,24 +102,30 @@ export const login = async (req, res) => {
 /** LOGOUT */
 export const logout = async (req, res) => {
   const cookies = req.cookies;
-  if (!cookies?.jwt) return res.status(204);
+  if (!cookies?.jwt) return res.status(204).send();
 
   res.clearCookie("jwt", { httpOnly: true, sameSite: "None", secure: true });
   res.json({ msg: "Logged out successfully and Cookie cleared" });
 };
 
-export const refresh = async (req, res) => {
+export const refresh = async (req, res, next) => {
   const cookies = req.cookies;
   if (!cookies?.jwt) {
     return res.status(403).json({ error: "cookie not found" });
   }
   const refreshToken = cookies.jwt;
-
+  //we need to get the refresh token , if found and not expired than continue else ERROR
   jwt.verify(
     refreshToken,
     process.env.REFRESH_TOKEN_SECRET,
     async (err, decoded) => {
-      //if (err) return res.status(403).json({ msg: "Forbidden" });
+      if (err) {
+        if (err.name === "TokenExpiredError") {
+          // If refresh token is expired, log out the user
+          return logout(req, res);
+        }
+        return res.status(403).json({ msg: "Forbidden" });
+      }
       const foundUser = await User.findById(decoded.UserInfo.id);
       if (!foundUser) {
         return res.status(401).json({ msg: "Unauthorized" });
@@ -131,9 +136,9 @@ export const refresh = async (req, res) => {
         "15m",
         process.env.ACCESS_TOKEN_SECRET
       );
-      return res
-        .status(200)
-        .json({ token: accessToken, user: foundUser, msg: "Token refreshed" });
+      res.set("Authorization", `Bearer ${accessToken}`);
+
+      next();
     }
   );
 };
