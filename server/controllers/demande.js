@@ -18,6 +18,7 @@ export const createDemande = async (req, res) => {
     let destinataire;
 
     if (type === "DM" || type === "DC") {
+      console.log("role" + req.user.role);
       destinataire = await User.findOne({
         role: "responsable",
         structure: structure,
@@ -37,6 +38,12 @@ export const createDemande = async (req, res) => {
       case "DC": {
         const { motif, NbJours, DateDepart, DateRetour, LieuSejour, Nature } =
           req.body;
+
+        if (new Date(DateDepart).getTime() >= new Date(DateRetour).getTime())
+          throw new Error(
+            "Dates shouldn't be equal, return date should be greater than departure date"
+          );
+
         newDemande = new DC({
           motif,
           NbJours,
@@ -101,7 +108,7 @@ export const getDemandes = async (req, res) => {
     let demandes = await Demande.find()
       .populate("idEmetteur")
       .populate("idDestinataire");
-    let filteredDemandes; 
+    let filteredDemandes;
     /**
      * emp : get his DC , DM
      * responsable : get demandes d'une structure

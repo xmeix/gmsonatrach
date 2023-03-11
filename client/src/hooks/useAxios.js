@@ -51,13 +51,17 @@ export const useAxios = () => {
           } else if (url === "/demande/DB") {
             getDemandes(dispatch);
           }
-          console.log("here");
+          console.log("post");
           break;
         case "delete":
+          console.log("delete");
           response = await apiService.user.delete(url, body);
           break;
         case "patch":
+          console.log("patch");
           response = await apiService.user.patch(url, body);
+          getDemandes(dispatch);
+
           break;
         default:
           throw new Error(`Invalid HTTP method: ${method}`);

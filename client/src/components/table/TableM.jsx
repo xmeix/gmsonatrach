@@ -16,17 +16,86 @@ import {
   InputAdornment,
 } from "@material-ui/core";
 import { useSelector } from "react-redux";
+import useBtn from "../../hooks/useBtn";
+import {
+  DirecteurBtns,
+  EmployeBtns,
+  ResponsableBtns,
+} from "../../data/tableBtns";
 
 const TableM = ({ title, filterOptions, columns, data, colType }) => {
   const [filter, setFilter] = useState("");
   const [filterOption, setFilterOption] = useState("");
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [page, setPage] = useState(0);
+  const currentUser = useSelector((state) => state.auth.user);
   const [sortOrder, setSortOrder] = useState({
     column: "id",
     direction: "asc",
   });
+  const [handleClose, handleShow, popupType, handleClick] = useBtn();
+  const renderConfiguration = (item, type) => {
+    let buttons;
+    let array;
+    switch (currentUser.role) {
+      case "directeur":
+        {
+          array = DirecteurBtns;
+        }
+        break;
+      case "responsable":
+        {
+          array = ResponsableBtns;
+        }
+        break;
+      case "employe":
+        {
+          array = EmployeBtns;
+        }
+        break;
+      case "relex":
+        {
+          array = relexBtns;
+        }
+        break;
+      case "secretaire":
+        {
+          array = DirecteurBtns;
+        }
+        break;
 
+      default:
+        break;
+    }
+
+    buttons = array.find(
+      (btn) => btn.type.toLowerCase() === type.toLowerCase()
+    );
+
+    if (!buttons) {
+      return null;
+    }
+    const { btns, showBtn } = buttons;
+    return (
+      <div>
+        {btns.map((button, index) => (
+          <button
+            className="bouton"
+            key={index}
+            onClick={() => handleClick(button, item, type)}
+          >
+            {button}
+          </button>
+        ))}
+
+        {/* {showBtn && (
+          <button className="btn" onClick={handleShow}>
+            see
+          </button>
+        )} */}
+      </div>
+    );
+  };
   const handleFilterChange = (event) => {
     setFilter(event.target.value);
     setPage(0);
@@ -136,6 +205,7 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
   //     sortOrder.column === columnId && sortOrder.direction === "asc";
   //   setSortOrder({ column: columnId, direction: isAsc ? "desc" : "asc" });
   // };
+
   return (
     <div className="table">
       <p className="listTitle">{title ? title : "list"}</p>
@@ -192,100 +262,201 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
             {paginatedData.map((item) => {
               if (colType === "demande" || colType === "db")
                 return (
-                  <TableRow key={uuidv4()}>
-                    <TableCell align="center" className="tableColumn">
+                  <TableRow key={uuidv4()} className="trow">
+                    <TableCell
+                      align="center"
+                      className="tableColumn"
+                      onClick={() => handleShow(item.__t)}
+                    >
                       {Intl.DateTimeFormat(["ban", "id"]).format(
                         new Date(item.createdAt)
                       )}
                     </TableCell>
-                    <TableCell align="center" className="tableColumn">
+                    <TableCell
+                      align="center"
+                      className="tableColumn"
+                      onClick={() => handleShow(item.__t)}
+                    >
                       {item.idEmetteur.nom + " " + item.idEmetteur.prenom}
                     </TableCell>
-                    <TableCell align="center" className="tableColumn">
+                    <TableCell
+                      align="center"
+                      className="tableColumn"
+                      onClick={() => handleShow(item.__t)}
+                    >
                       {item.motif}
                     </TableCell>
-                    <TableCell align="center" className="tableColumn">
+                    <TableCell
+                      align="center"
+                      className="tableColumn"
+                      onClick={() => handleShow(item.__t)}
+                    >
                       {item.idEmetteur.structure}
                     </TableCell>
-                    <TableCell align="center" className="tableColumn">
+                    <TableCell
+                      align="center"
+                      className="tableColumn"
+                      onClick={() => handleShow(item.__t)}
+                    >
                       {item.etat}
+                    </TableCell>
+
+                    <TableCell align="center" className="tableColumn">
+                      {renderConfiguration(item, "demande")}
                     </TableCell>
                   </TableRow>
                 );
               if (colType === "rfm")
                 return (
-                  <TableRow key={uuidv4()}>
-                    <TableCell align="center" className="tableColumn">
+                  <TableRow key={uuidv4()} className="trow">
+                    <TableCell
+                      align="center"
+                      className="tableColumn"
+                      onClick={() => handleShow("rfm")}
+                    >
                       {Intl.DateTimeFormat(["ban", "id"]).format(
                         new Date(item.createdAt)
                       )}
                     </TableCell>
-                    <TableCell align="center" className="tableColumn">
+                    <TableCell
+                      align="center"
+                      className="tableColumn"
+                      onClick={() => handleShow("rfm")}
+                    >
                       {item.idEmploye?.nom + " " + item.idEmploye?.prenom}
                     </TableCell>
-                    <TableCell align="center" className="tableColumn">
+                    <TableCell
+                      align="center"
+                      className="tableColumn"
+                      onClick={() => handleShow("rfm")}
+                    >
                       {item.etat}
+                    </TableCell>
+                    <TableCell align="center" className="tableColumn">
+                      {renderConfiguration(item, "rfm")}
                     </TableCell>
                   </TableRow>
                 );
 
               if (colType === "mission")
                 return (
-                  <TableRow key={uuidv4()}>
-                    <TableCell align="center" className="tableColumn">
+                  <TableRow key={uuidv4()} className="trow">
+                    <TableCell
+                      align="center"
+                      className="tableColumn"
+                      onClick={() => handleShow("mission")}
+                    >
                       {Intl.DateTimeFormat(["ban", "id"]).format(
                         new Date(item.createdAt)
                       )}
                     </TableCell>
-                    <TableCell align="center" className="tableColumn">
+                    <TableCell
+                      align="center"
+                      className="tableColumn"
+                      onClick={() => handleShow("mission")}
+                    >
                       {item.createdBy?.nom + " " + item.createdBy?.prenom}
                     </TableCell>
-                    <TableCell align="center" className="tableColumn">
+                    <TableCell
+                      align="center"
+                      className="tableColumn"
+                      onClick={() => handleShow("mission")}
+                    >
                       {item.objetMission}
                     </TableCell>
-                    <TableCell align="center" className="tableColumn">
+                    <TableCell
+                      align="center"
+                      className="tableColumn"
+                      onClick={() => handleShow("mission")}
+                    >
                       {item.budget}DA
                     </TableCell>
-                    <TableCell align="center" className="tableColumn">
+                    <TableCell
+                      align="center"
+                      className="tableColumn"
+                      onClick={() => handleShow("mission")}
+                    >
                       {Intl.DateTimeFormat(["ban", "id"]).format(
                         new Date(item.tDateDeb)
                       )}
                     </TableCell>
-                    <TableCell align="center" className="tableColumn">
+                    <TableCell
+                      align="center"
+                      className="tableColumn"
+                      onClick={() => handleShow("mission")}
+                    >
                       {Intl.DateTimeFormat(["ban", "id"]).format(
                         new Date(item.tDateRet)
                       )}
                     </TableCell>
-                    <TableCell align="center" className="tableColumn">
+                    <TableCell
+                      align="center"
+                      className="tableColumn"
+                      onClick={() => handleShow("mission")}
+                    >
                       {item.etat}
                     </TableCell>
-                    <TableCell align="center" className="tableColumn">
+                    <TableCell
+                      align="center"
+                      className="tableColumn"
+                      onClick={() => handleShow("mission")}
+                    >
                       {item.raisonRefus}
+                    </TableCell>
+                    <TableCell align="center" className="tableColumn">
+                      {renderConfiguration(item, "mission")}
                     </TableCell>
                   </TableRow>
                 );
               if (colType === "user")
                 return (
-                  <TableRow key={uuidv4()}>
-                    <TableCell align="center" className="tableColumn">
+                  <TableRow key={uuidv4()} className="trow">
+                    <TableCell
+                      align="center"
+                      className="tableColumn"
+                      onClick={() => handleShow("user")}
+                    >
                       {Intl.DateTimeFormat(["ban", "id"]).format(
                         new Date(item.createdAt)
                       )}
                     </TableCell>
-                    <TableCell align="center" className="tableColumn">
+                    <TableCell
+                      align="center"
+                      className="tableColumn"
+                      onClick={() => handleShow("user")}
+                    >
                       {item.nom}
                     </TableCell>
-                    <TableCell align="center" className="tableColumn">
+                    <TableCell
+                      align="center"
+                      className="tableColumn"
+                      onClick={() => handleShow("user")}
+                    >
                       {item.prenom}
                     </TableCell>
-                    <TableCell align="center" className="tableColumn">
+                    <TableCell
+                      align="center"
+                      className="tableColumn"
+                      onClick={() => handleShow("user")}
+                    >
                       {item.fonction}
                     </TableCell>
-                    <TableCell align="center" className="tableColumn">
+                    <TableCell
+                      align="center"
+                      className="tableColumn"
+                      onClick={() => handleShow("user")}
+                    >
                       {item.email}
                     </TableCell>
-                    <TableCell align="center" className="tableColumn">
+                    <TableCell
+                      align="center"
+                      className="tableColumn"
+                      onClick={() => handleShow("user")}
+                    >
                       {item.role}
+                    </TableCell>
+                    <TableCell align="center" className="tableColumn">
+                      {renderConfiguration(item, "user")}
                     </TableCell>
                   </TableRow>
                 );

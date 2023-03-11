@@ -136,6 +136,7 @@ export const refresh = async (req, res, next) => {
         "15m",
         process.env.ACCESS_TOKEN_SECRET
       );
+       
       res.set("Authorization", `Bearer ${accessToken}`);
 
       next();

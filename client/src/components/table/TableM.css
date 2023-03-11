@@ -95,3 +95,12 @@
   float: right;
   font-size: 15px !important;
 }
+
+.trow {
+  transition: 0.3s ease-in-out;
+}
+
+.trow:hover td:not(:last-child) {
+  background-color: var(--light-gray);
+  cursor: pointer;
+}

@@ -32,6 +32,11 @@ export const createMission = async (req, res) => {
     if (user.role === "responsable" && user.structure !== structure)
       throw new Error("Unauthorized");
 
+    if (new Date(tDateDeb).getTime() >= new Date(tDateRet).getTime())
+      throw new Error(
+        "Dates shouldn't be equal, return date should be greater than departure date"
+      );
+
     let newEtat;
     //si c est le responsable/directeur qui l'a créée alors elle sera automatiquement acceptée
     if (user.role === "responsable" || user.role === "directeur")

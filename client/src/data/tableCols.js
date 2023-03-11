@@ -3,7 +3,7 @@ export const columnsDemandes = [
   { id: "idEmetteur", label: "Sender", minWidth: "20px" },
   { id: "motif", label: "Motif", minWidth: "20px" },
   { id: "structure", label: "Structure", minWidth: "20px" },
-  { id: "etat", label: "State", minWidth: "20px" },
+  { id: "etat", label: "Status", minWidth: "20px" },
 ];
 export const filterDemOptions = [
   "en-attente",
@@ -18,7 +18,7 @@ export const filterDBOptions = ["en-attente", "acceptée", "refusée", "annulée
 export const columnsRFM = [
   { id: "createdAt", label: "date", minWidth: "20px" },
   { id: "idEmploye", label: "Sender", minWidth: "20px" },
-  { id: "etat", label: "State", minWidth: "20px" },
+  { id: "etat", label: "Status", minWidth: "20px" },
 ];
 export const filterRFMOptions = ["créé", "en-attente", "accepté", "refusé"];
 
@@ -55,11 +55,11 @@ export const filterUserOptions = [
 export const columnsMissions = [
   { id: "createdAt", label: "Date", minWidth: "20px" },
   { id: "createdBy", label: "Created by", minWidth: "20px" },
-  { id: "objetMission", label: "Mission objective", minWidth: "20px" },
+  { id: "objetMission", label: "Mission purpose", minWidth: "20px" },
   { id: "budget", label: "Budget", minWidth: "20px" },
   { id: "tDateDeb", label: "start date", minWidth: "20px" },
   { id: "tDateRet", label: "end date", minWidth: "20px" },
-  { id: "etat", label: "State", minWidth: "20px" },
+  { id: "etat", label: "Status", minWidth: "20px" },
 
   { id: "raisonRefus", label: "Reason for refusal", minWidth: "20px" },
 ];

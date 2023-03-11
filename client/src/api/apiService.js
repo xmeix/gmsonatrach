@@ -26,11 +26,4 @@ export const apiService = {
     put: (url, data, config) => userRequest.put(url, data, config),
     delete: (url, config) => userRequest.delete(url, config),
   },
-};
-/**
- * apiService.user.get('/users', {
- *    headers: {
- *  'Authorization': 'Bearer ' + authToken,
- * },
- * })
- */
+}; 

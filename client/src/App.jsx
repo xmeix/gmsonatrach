@@ -10,6 +10,7 @@ import GestionCMR from "./pages/profilAdmin/GestionCMR";
 import Planning from "./pages/planning/Planning";
 
 import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
 function App() {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const dispatch = useDispatch();
@@ -23,7 +24,7 @@ function App() {
   //     } catch (error) {
   //       console.error(error);
   //     }
-  //   }, 36000);
+  //   }, 5 * 60 * 1000);
 
   //   return () => clearInterval(interval);
   // }, []);

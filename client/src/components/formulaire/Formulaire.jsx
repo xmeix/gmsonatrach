@@ -18,7 +18,7 @@ const customStyles = {
       border: "1px solid var(--light-gray)",
     },
   }),
-};
+}; 
 
 const Formulaire = ({ title, entries, buttons, type }) => {
   const { callApi, error, isLoading, successMsg } = useAxios();

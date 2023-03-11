@@ -29,8 +29,9 @@ export const checkUpdateMissionAccess = async (req, res, next) => {
       else if (
         operation === "annulée" &&
         (mission.etat === "en-cours" ||
-          mission.etat !== "refusée" ||
-          mission.etat !== "terminée")
+          mission.etat === "refusée" ||
+          mission.etat === "acceptée" ||
+          mission.etat === "terminée")
       )
         throw new Error("Unauthorized");
       else if (
@@ -39,7 +40,8 @@ export const checkUpdateMissionAccess = async (req, res, next) => {
         mission.structure !== structure
       )
         throw new Error("Unauthorized");
-    } else if (!raisonRefus) throw new Error("Unauthorized");
+    } else if (operation === "refusée" && !raisonRefus)
+      throw new Error("Unauthorized");
     next();
   } catch (err) {
     res.status(500).json({ error: err.message });
