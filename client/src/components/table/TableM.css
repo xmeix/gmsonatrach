@@ -104,3 +104,25 @@
   background-color: var(--light-gray);
   cursor: pointer;
 }
+.popupInfo {
+  position: fixed;
+  z-index: 998;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 70vh;
+  width: 70vw;
+  /* border: solid 1px var(--light-gray); */
+  background-color: var(--white);
+  border-radius: 3px;
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+}
+.closePopup {
+  position: fixed;
+  z-index: 997;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.164);
+}

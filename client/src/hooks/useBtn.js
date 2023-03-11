@@ -7,9 +7,13 @@ function useBtn() {
   const user = useSelector((state) => state.auth.user);
   const { callApi } = useAxios();
 
-  const handleClick = (btnType, item, type, raison) => {
+  const handleClick = (btnType, item, type, raison, body) => {
+    console.log(
+      "request:" + btnType + " " + item + " " + type + " " + raison + " " + body
+    );
+
     switch (btnType.toLowerCase()) {
-      case "accepter":
+      case "accept":
         {
           //call the api that changes the state of item
           let route;
@@ -21,7 +25,7 @@ function useBtn() {
           });
         }
         break;
-      case "refuser":
+      case "refuse":
         {
           let route;
           if (type === "demande") route = "/demande";
@@ -33,24 +37,34 @@ function useBtn() {
           });
         }
         break;
-      case "annuler":
+      case "cancel":
         {
           if (type === "mission")
             callApi("patch", `/mission/${item.id}`, {
-              etat: type === "rfm" ? "accepté" : "acceptée",
+              etat: "annulée",
             });
-          //call the api that changes the state of item
         }
         break;
       case "delete":
         {
-          //call the api that changes the state of item
+        }
+        break;
+      case "update":
+        {
+        }
+        break;
+      case "send":
+        {
+          if (type === "rfm")
+            callApi("patch", `/rapportFM/${item.id}`, {
+              etat: "en-attente",
+            });
         }
         break;
     }
   };
   const handleShow = (showType) => {
-    //setPopupType(showType);
+    setPopupType(showType);
     console.log(showType);
   };
   const handleClose = () => {

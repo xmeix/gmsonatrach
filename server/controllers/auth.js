@@ -80,6 +80,8 @@ export const login = async (req, res) => {
       "15m" /*15min apres*/,
       process.env.ACCESS_TOKEN_SECRET
     );
+    res.set("Authorization", `Bearer ${jwtToken}`);
+
     const refreshToken = generateJWT(
       user,
       "1d", //15min apres
@@ -136,7 +138,7 @@ export const refresh = async (req, res, next) => {
         "15m",
         process.env.ACCESS_TOKEN_SECRET
       );
-       
+
       res.set("Authorization", `Bearer ${accessToken}`);
 
       next();

@@ -20,6 +20,7 @@ import useBtn from "../../hooks/useBtn";
 import {
   DirecteurBtns,
   EmployeBtns,
+  relexBtns,
   ResponsableBtns,
 } from "../../data/tableBtns";
 
@@ -33,7 +34,26 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
     column: "id",
     direction: "asc",
   });
+
+  //_____________________________________________________________
+  const [refuse, setRefuse] = useState(false);
+  const [raison, setRaison] = useState("");
+  const [update, setUpdate] = useState(false);
+  const [body, setBody] = useState(null);
+  const [savedItem, setSavedItem] = useState(null);
+  //_____________________________________________________________
+
   const [handleClose, handleShow, popupType, handleClick] = useBtn();
+
+  const handleCloseForm = () => {
+    setSavedItem(null);
+
+    setRefuse(false);
+    setUpdate(false);
+    setRaison("");
+    setBody("");
+  };
+
   const renderConfiguration = (item, type) => {
     let buttons;
     let array;
@@ -78,15 +98,43 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
     const { btns, showBtn } = buttons;
     return (
       <div>
-        {btns.map((button, index) => (
-          <button
-            className="bouton"
-            key={index}
-            onClick={() => handleClick(button, item, type)}
-          >
-            {button}
-          </button>
-        ))}
+        {btns.map((button, index) => {
+          if (
+            ((button === "accept" || button === "refuse") &&
+              item.etat === "en-attente") ||
+            (button === "delete" &&
+              (currentUser.role === "directeur" ||
+                (currentUser.role === "responsable" &&
+                  item.role !== "responsable"))) ||
+            (button === "delete" &&
+              currentUser.role === "secretaire" &&
+              item.role !== "responsable" &&
+              item.role !== "directeur") ||
+            ((button === "update" || button === "send") &&
+              item.etat !== "accepté" &&
+              item.etat !== "refusé") ||
+            (button === "cancel" &&
+              ((item.etat === "acceptée" && item.etat !== "en-cours") ||
+                item.etat === "en-attente"))
+          )
+            return (
+              <button
+                className="bouton"
+                key={index}
+                onClick={() => {
+                  if (button === "refuse") {
+                    setRefuse(true);
+                    setSavedItem(item);
+                  } else if (button === "update") {
+                    setUpdate(true);
+                    setSavedItem(item);
+                  } else return handleClick(button, item, type);
+                }}
+              >
+                {button}
+              </button>
+            );
+        })}
 
         {/* {showBtn && (
           <button className="btn" onClick={handleShow}>
@@ -302,7 +350,7 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
                     </TableCell>
 
                     <TableCell align="center" className="tableColumn">
-                      {renderConfiguration(item, "demande")}
+                      {renderConfiguration(item, item.__t)}
                     </TableCell>
                   </TableRow>
                 );
@@ -474,6 +522,30 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
+
+      {popupType && <div className="popupInfo">POP UP</div>}
+      {popupType && <div className="closePopup" onClick={handleClose}></div>}
+      {update && (
+        <div className="popupInfo">
+          <div className="title">Formulaire of RFM</div>
+          <button onClick={() => handleClick("update", item, type, body)}>
+            update
+          </button>
+          <button onClick={() => handleClick("send", item, type)}>send</button>
+        </div>
+      )}
+      {refuse && (
+        <div className="popupInfo">
+          <div className="title">Reason of Refusal</div>
+          <input type="text" onChange={(e) => setRaison(e.target.value)} />
+          <button onClick={() => handleClick("refuse", item, type, raison)}>
+            refuse
+          </button>
+        </div>
+      )}
+      {(update || refuse) && (
+        <div className="closePopup" onClick={handleCloseForm}></div>
+      )}
     </div>
   );
 };

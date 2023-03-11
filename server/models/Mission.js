@@ -12,7 +12,7 @@ const MissionSchema = new mongoose.Schema(
         "PMO",
         "FIN",
         "SD",
-        "PRC", 
+        "PRC",
         "HCM",
         "MRO",
         "IPM",
@@ -90,11 +90,12 @@ const MissionSchema = new mongoose.Schema(
         "en-attente",
         "acceptée", //planifié
         "refusée",
-        "en-cours",
+        "en-cours", //Date de debut === current date
         "annulée",
-        "terminée",
+        "terminée", //automatiquement a l envoi du RFM
       ],
       default: "en-attente",
+      
     },
 
     raisonRefus: {

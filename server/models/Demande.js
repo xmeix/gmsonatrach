@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const DemandeSchema = new mongoose.Schema(
   {
-    motif: {
+    motif: { 
       type: String,
       default: "",
     },

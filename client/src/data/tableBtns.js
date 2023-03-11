@@ -1,7 +1,7 @@
 export const relexBtns = [
   {
     type: "DB",
-    btns: ["accepter", "refuser"],
+    btns: ["accept", "refuse"], // if item.etat == en attente
     showBtn: true,
   },
 ];
@@ -19,7 +19,7 @@ export const EmployeBtns = [
   },
   {
     type: "RFM",
-    btns: ["update", "send"],
+    btns: ["update", "send"], //update&&send if not accepté or refusé
     showBtn: true,
   },
   {
@@ -36,7 +36,7 @@ export const SecretaireBtns = [
   },
   {
     type: "DM",
-    btns: ["accepter", "refuser"],
+    btns: ["accept", "refuse"], // if item.etat == en attente
     showBtn: true,
   },
   {
@@ -56,7 +56,7 @@ export const SecretaireBtns = [
   },
   {
     type: "mission",
-    btns: ["Cancel"],
+    btns: ["cancel"], //acceptée mais (pas en cours == date debut mission!= current date)
     showBtn: true,
   },
   {
@@ -69,17 +69,17 @@ export const SecretaireBtns = [
 export const DirecteurBtns = [
   {
     type: "DC",
-    btns: ["accepter", "refuser"],
+    btns: ["accept", "refuse"], // if item.etat == en attente
     showBtn: true,
   },
   {
     type: "DM",
-    btns: ["accepter", "refuser"],
+    btns: ["accept", "refuse"], // if item.etat == en attente
     showBtn: true,
   },
   {
     type: "RFM",
-    btns: ["accepter", "refuser"],
+    btns: ["accept", "refuse"], // if item.etat == en attente
     showBtn: true,
   },
   {
@@ -94,12 +94,12 @@ export const DirecteurBtns = [
   },
   {
     type: "mission",
-    btns: ["accepter", "refuser"],
+    btns: ["accept", "refuse", "cancel"], //si item.etat en attente
     showBtn: true,
   },
   {
     type: "user",
-    btns: ["Delete"],
+    btns: ["delete"], // if item.role !== directeur / responsable
     showBtn: true,
   },
 ];
@@ -107,17 +107,17 @@ export const DirecteurBtns = [
 export const ResponsableBtns = [
   {
     type: "DC",
-    btns: ["accepter", "refuser"],
+    btns: ["accept", "refuse"], // if item.etat == en attente
     showBtn: true,
   },
   {
     type: "DM",
-    btns: ["accepter", "refuser"],
+    btns: ["accept", "refuse"], // if item.etat == en attente
     showBtn: true,
   },
   {
     type: "RFM",
-    btns: ["accepter", "refuser"],
+    btns: ["accept", "refuse"], // if item.etat == en attente
     showBtn: true,
   },
   {
@@ -132,12 +132,12 @@ export const ResponsableBtns = [
   },
   {
     type: "mission",
-    btns: ["accepter", "refuser"],
+    btns: ["accept", "refuse", "cancel"], //si item.etat en attente + cancel == item.etat == accepté && !==en cours
     showBtn: true,
   },
   {
     type: "user",
-    btns: [],
+    btns: ["delete"],
     showBtn: true,
   },
 ];

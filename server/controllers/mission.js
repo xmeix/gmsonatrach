@@ -155,17 +155,18 @@ export const updateMissionEtat = async (req, res) => {
       { new: true }
     );
 
-    if (newEtat === "acceptée" && employes.length > 0) {
+    const operation = req.body.etat;
+    if (operation === "acceptée" && employes.length > 0) {
       //on doit générer l'ordre de mission
       const employeIds = employes.map((employe) => employe._id);
       for (const employeId of employeIds) {
         const om = new OrdreMission({
-          mission: savedMission.id,
+          mission: updatedMission.id,
           employe: employeId,
         });
         om.save();
         const rfm = new RapportFM({
-          idMission: savedMission.id,
+          idMission: updatedMission.id,
           idEmploye: employeId,
         });
         rfm.save();
@@ -173,7 +174,7 @@ export const updateMissionEtat = async (req, res) => {
     }
     return res.status(200).json({
       updatedMission,
-      msg: "mission state has been updated successfully",
+      msg: "mission status has been updated successfully",
     });
   } catch (err) {
     res.status(500).json({ error: err.message });

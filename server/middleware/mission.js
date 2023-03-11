@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import Mission from "../models/Mission.js";
-
+import cron from "node-cron";
 /** UPDATE ETAT ==> ((SEC||DIR) && annuler ) || (DIR && (accepter || refuser)) */
 export const checkUpdateMissionAccess = async (req, res, next) => {
   try {
@@ -30,7 +30,6 @@ export const checkUpdateMissionAccess = async (req, res, next) => {
         operation === "annulée" &&
         (mission.etat === "en-cours" ||
           mission.etat === "refusée" ||
-          mission.etat === "acceptée" ||
           mission.etat === "terminée")
       )
         throw new Error("Unauthorized");
@@ -47,3 +46,34 @@ export const checkUpdateMissionAccess = async (req, res, next) => {
     res.status(500).json({ error: err.message });
   }
 };
+
+// Run this job every day at midnight //UpdatesMissions Automatically
+cron.schedule("0 0 * * *", async () => {
+  const missions = await Mission.find({
+    tDateDeb: new Date(),
+  });
+  if (missions.length > 0) {
+    for (const mission of missions) {
+      if (mission.etat === "en-attente") {
+        mission.etat = "refusée";
+        await mission.save();
+      } else if (mission.etat === "acceptée") {
+        mission.etat = "en-cours";
+        await mission.save();
+      }
+    }
+  }
+
+  const secMissions = await Mission.find({
+    tDateRet: new Date(),
+  });
+
+  if (secMissions.length > 0) {
+    for (const mission of secMissions) {
+      if (mission.etat === "en-cours") {
+        mission.etat = "terminée";
+        await mission.save();
+      }
+    }
+  }
+});
