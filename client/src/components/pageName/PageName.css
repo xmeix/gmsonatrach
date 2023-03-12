@@ -5,10 +5,11 @@
   color: #000000;
   transition: all 0.5s ease-in-out;
   margin-top: 5em;
+  white-space: nowrap;
 }
 
 @media screen and (max-width: 800px) {
-  .pageName { 
+  .pageName {
     font-size: 35px;
   }
 }

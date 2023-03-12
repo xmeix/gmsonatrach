@@ -20,14 +20,14 @@
 
   text-align: left;
 }
-.formulaire .inputs .inputGroup label {
+label {
   margin-left: 0.5em;
   font-weight: 500;
   color: var(--gray);
 }
 
-.formulaire .inputs .inputGroup input,
-.formulaire .inputs .inputGroup textarea {
+input,
+textarea {
   background-color: var(--white);
   border-radius: 4px;
   box-shadow: 0px 1px 4px rgb(0 0 0 / 10%);
@@ -36,9 +36,13 @@
   font-size: 15px;
   outline: none;
 }
-.formulaire .inputs .inputGroup .select {
-}
 
+textarea {
+  max-width: 80%;
+  max-height: 60%;
+  min-width: 50%;
+  min-height: 5%;
+}
 .formulaire .buttons {
   display: flex;
   gap: 1em;
@@ -66,6 +70,7 @@
   background-color: var(--light-gray);
   letter-spacing: 1px;
   width: 100%;
+  transition: all 0.3s ease-in-out;
 }
 
 .error-message {

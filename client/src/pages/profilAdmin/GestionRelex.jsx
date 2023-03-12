@@ -11,21 +11,23 @@ import { useSelector } from "react-redux";
 import {
   columnsDemandes,
   filterDBOptions,
-  filterDemOptions,
-} from "../../data/tableCols";
+ } from "../../data/tableCols";
 const GestionRelex = () => {
   const demandes = useSelector((state) => state.auth.demandes);
+  const currentUser = useSelector((state) => state.auth.user);
   const demandesDB = demandes.filter((dem) => dem.__t === "DB");
   return (
     <div className="gestion">
       <PageName name="gestion RELEX" />
       <div className="elements">
-        <Formulaire
-          type="DB"
-          entries={entries}
-          buttons={buttons}
-          title="Ticket Request Form"
-        />
+        {currentUser.role !== "relex" && (
+          <Formulaire
+            type="DB"
+            entries={entries}
+            buttons={buttons}
+            title="Ticket Request Form"
+          />
+        )}
         <TableM
           title="Ticket Requests List"
           search={["id"]}

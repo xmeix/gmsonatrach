@@ -1,4 +1,5 @@
 import axios from "axios";
+
 import { useState, useEffect, useMemo } from "react";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import "./TableM.css";
@@ -31,7 +32,7 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
   const [page, setPage] = useState(0);
   const currentUser = useSelector((state) => state.auth.user);
   const [sortOrder, setSortOrder] = useState({
-    column: "id",
+    column: "createdAt",
     direction: "asc",
   });
 
@@ -92,7 +93,10 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
         {btns.map((button, index) => {
           if (
             ((button === "accept" || button === "refuse") &&
-              item.etat === "en-attente") ||
+              item.etat === "en-attente" &&
+              currentUser.role !== "employe" &&
+              currentUser.role !== "secretaire" &&
+              currentUser.role !== "relex") ||
             (button === "delete" &&
               (currentUser.role === "directeur" ||
                 (currentUser.role === "responsable" &&
@@ -534,9 +538,9 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
         </div>
       )}
       {refuse && (
-        <div className="popupInfo">
+        <div className="boiteRefus">
           <div className="title">Reason of Refusal</div>
-          <input type="text" onChange={(e) => setRaison(e.target.value)} />
+          <textarea onChange={(e) => setRaison(e.target.value)} />
           <button
             onClick={() => handleClick("refuse", savedItem, savedType, raison)}
           >

@@ -19,12 +19,13 @@ import {
 
 export const useAxios = () => {
   const isLoading = useSelector((state) => state.auth.isLoading);
+  const currentUser = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
   const [error, setError] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
 
   const callApi = async (method, url, body) => {
-    console.log("hereCallAPI" + JSON.stringify(body));
+    console.log("making a call...");
 
     setError("");
     setSuccessMsg("");
@@ -36,19 +37,30 @@ export const useAxios = () => {
           response = await apiService.user.post(url, body);
           if (url === "/auth/login") {
             dispatch(setLogin(response.data));
-            getMissions(dispatch);
             getDemandes(dispatch);
-            getRFMs(dispatch);
-            getOMs(dispatch);
-            getDepenses(dispatch);
-            getUsers(dispatch);
+            if (response.data.user.role === "employe") {
+              getMissions(dispatch);
+              getRFMs(dispatch);
+              getOMs(dispatch);
+              getDepenses(dispatch);
+            } else {
+              getMissions(dispatch);
+              getRFMs(dispatch);
+              getOMs(dispatch);
+              getDepenses(dispatch);
+              getUsers(dispatch);
+            }
           } else if (url === "/auth/logout") {
             dispatch(setLogout());
           } else if (url === "/auth/register") {
             getUsers(dispatch);
           } else if (url === "/mission") {
             getMissions(dispatch);
-          } else if (url === "/demande/DB") {
+          } else if (
+            url === "/demande/DB" ||
+            url === "/demande/DC" ||
+            url === "/demande/DM"
+          ) {
             getDemandes(dispatch);
           }
           console.log("post");
@@ -60,12 +72,19 @@ export const useAxios = () => {
         case "patch":
           console.log("patch");
           response = await apiService.user.patch(url, body);
-          getMissions(dispatch);
           getDemandes(dispatch);
-          getRFMs(dispatch);
-          getOMs(dispatch);
-          getDepenses(dispatch);
-          getUsers(dispatch);
+          if (currentUser.role === "employe") {
+            getMissions(dispatch);
+            getRFMs(dispatch);
+            getOMs(dispatch);
+            getDepenses(dispatch);
+          } else {
+            getMissions(dispatch);
+            getRFMs(dispatch);
+            getOMs(dispatch);
+            getDepenses(dispatch);
+            getUsers(dispatch);
+          }
 
           break;
         default:

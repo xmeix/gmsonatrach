@@ -18,7 +18,7 @@ const customStyles = {
       border: "1px solid var(--light-gray)",
     },
   }),
-}; 
+};
 
 const Formulaire = ({ title, entries, buttons, type }) => {
   const { callApi, error, isLoading, successMsg } = useAxios();
@@ -53,6 +53,18 @@ const Formulaire = ({ title, entries, buttons, type }) => {
         {
           //register(values);
           callApi("post", "/demande/DB", values);
+        }
+        break;
+      case "DC":
+        {
+          //register(values);
+          callApi("post", "/demande/DC", values);
+        }
+        break;
+      case "DM":
+        {
+          //register(values);
+          callApi("post", "/demande/DM", values);
         }
         break;
       default:

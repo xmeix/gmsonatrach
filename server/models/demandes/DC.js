@@ -3,10 +3,6 @@ import mongoose from "mongoose";
 
 const DCSchema = new mongoose.Schema(
   {
-    NbJours: {
-      type: Number,
-      required: true,
-    },
     DateDepart: {
       type: Date,
       required: true,

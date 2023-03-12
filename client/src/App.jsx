@@ -1,19 +1,71 @@
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
 import NavBar from "./components/navbar/NavBar";
-import Dashboard from "./pages/profilAdmin/Dashboard";
-import LoginPage from "./pages/loginPage/LoginPage";
-import GestionMission from "./pages/profilAdmin/GestionMission";
-import GestionEmploye from "./pages/profilAdmin/GestionEmploye";
-import GestionRelex from "./pages/profilAdmin/GestionRelex";
-import GestionCMR from "./pages/profilAdmin/GestionCMR";
-import Planning from "./pages/planning/Planning";
-
+import { lazy, Suspense } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
+import Loading from "./components/loading/Loading";
+
+const LoginPage = lazy(() => import("./pages/loginPage/LoginPage"));
+const Dashboard = lazy(() => import("./pages/profilAdmin/Dashboard"));
+const GestionMission = lazy(() => import("./pages/profilAdmin/GestionMission"));
+const GestionEmploye = lazy(() => import("./pages/profilAdmin/GestionEmploye"));
+const GestionRelex = lazy(() => import("./pages/profilAdmin/GestionRelex"));
+const GestionCMR = lazy(() => import("./pages/profilAdmin/GestionCMR"));
+const Planning = lazy(() => import("./pages/planning/Planning"));
+const GestionModification = lazy(() =>
+  import("./pages/profilEmploye/GestionModification")
+);
+const GestionConge = lazy(() => import("./pages/profilEmploye/GestionConge"));
+
 function App() {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
-  const dispatch = useDispatch();
+  const currentUser = useSelector((state) => state.auth.user);
+  let element = null;
+
+  if (!isLoggedIn) {
+    element = (
+      <>
+        <Route exact path="/" element={<LoginPage />} />{" "}
+        <Route path="*" element={<Navigate to="/" />} />
+      </>
+    );
+  } else if (currentUser.role === "employe") {
+    element = (
+      <>
+        <Route exact path="/" element={<Planning />} />
+        <Route path="/gestion-des-mission" element={<GestionMission />} />
+        <Route path="/gestion-modification" element={<GestionModification />} />
+        <Route path="/gestion-conge" element={<GestionConge />} />
+        <Route path="/gestion-depenses" element={<div>TODO</div>} />
+        <Route path="*" element={<Navigate to="/" />} />
+      </>
+    );
+  } else if (
+    currentUser.role === "responsable" ||
+    currentUser.role === "secretaire" ||
+    currentUser.role === "directeur"
+  ) {
+    element = (
+      <>
+        <Route exact path="/" element={<Dashboard />} />
+        <Route path="/planification" element={<Planning />} />
+        <Route path="/gestion-des-mission" element={<GestionMission />} />
+        <Route path="/gestion-des-employes" element={<GestionEmploye />} />
+        <Route path="/gestion-depenses" element={<GestionCMR />} />
+        <Route path="/gestion-service-relex" element={<GestionRelex />} />
+        <Route path="/gestion-c-m-rfm" element={<GestionCMR />} />
+        <Route path="*" element={<Navigate to="/" />} />
+      </>
+    );
+  } else if (currentUser.role === "relex") {
+    element = (
+      <>
+        <Route exact path="/" element={<GestionRelex />} />{" "}
+        <Route path="*" element={<Navigate to="/" />} />
+      </>
+    );
+  }
   // useEffect(() => {
   //   const interval = setInterval(async () => {
   //     try {
@@ -33,41 +85,9 @@ function App() {
     <div className="app">
       {/* <Formulaire /> */}
       {isLoggedIn && <NavBar />}
-      <Routes>
-        <Route path="/" element={isLoggedIn ? <Dashboard /> : <LoginPage />} />
-        <Route
-          path="/tableau-de-bord"
-          element={isLoggedIn ? <Dashboard /> : <LoginPage />}
-        />
-        <Route
-          path="/login"
-          element={!isLoggedIn ? <LoginPage /> : <Dashboard />}
-        />
-        <Route
-          path="/gestion-des-mission"
-          element={isLoggedIn ? <GestionMission /> : <LoginPage />}
-        />
-        <Route
-          path="/gestion-des-employes"
-          element={isLoggedIn ? <GestionEmploye /> : <LoginPage />}
-        />
-        <Route
-          path="/suivi-depense"
-          element={isLoggedIn ? <GestionMission /> : <LoginPage />}
-        />
-        <Route
-          path="/gestion-service-relex"
-          element={isLoggedIn ? <GestionRelex /> : <LoginPage />}
-        />
-        <Route
-          path="/gestion-c-m-rfm"
-          element={isLoggedIn ? <GestionCMR /> : <LoginPage />}
-        />
-        <Route
-          path="/planification"
-          element={isLoggedIn ? <Planning /> : <LoginPage />}
-        />
-      </Routes>
+      <Suspense fallback={<Loading />}>
+        <Routes>{element}</Routes>
+      </Suspense>
     </div>
   );
 }

@@ -6,11 +6,11 @@ import {
   getAllUsers,
   refresh,
 } from "../controllers/auth.js";
-import { verifyToken } from "../middleware/auth.js";
+import { verifyToken, verifyTokenAndResponsable } from "../middleware/auth.js";
 
 const router = express.Router();
 
-router.get("/", verifyToken, getAllUsers);
+router.get("/users", verifyTokenAndResponsable, getAllUsers);
 router.post("/register", register);
 router.post("/login", login);
 router.post("/logout", logout);

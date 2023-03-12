@@ -18,6 +18,7 @@ const NavBar = () => {
   const [navData] = useState(() => {
     switch (user?.role) {
       case "directeur":
+      case "secretaire":
       case "responsable":
         return titles;
       case "employe":

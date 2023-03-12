@@ -190,8 +190,61 @@ export const DBEntries = [
   },
 ];
 
-export const DCEntries = [];
-export const DMEntries = [];
+export const DCEntries = [
+  {
+    id: "motif",
+    label: "Reason",
+    inputType: "text",
+    width: "230px",
+    placeholder: "Enter the reason for the request",
+  }, 
+  {
+    id: "DateDepart",
+    label: "Departure Date",
+    inputType: "date",
+    width: "230px",
+    placeholder: "Select departure date",
+  },
+  {
+    id: "DateRetour",
+    label: "Return Date",
+    inputType: "date",
+    width: "230px",
+    placeholder: "Select return date",
+  },
+  {
+    id: "LieuSejour",
+    label: "Stay location",
+    inputType: "text",
+    width: "230px",
+    placeholder: "Enter stay location",
+  },
+  {
+    id: "Nature",
+    label: "Nature",
+    inputType: "select",
+    width: "230px",
+    placeholder: "Select nature",
+    options: [
+      { label: "Reliquat", value: "reliquat" },
+      { label: "Annuel", value: "annuel" },
+      { label: "Sans-solde", value: "sans-solde" },
+      { label: "Exceptionnel", value: "exceptionnel" },
+      { label: "Récupération", value: "recupération" },
+    ],
+    isMulti: false,
+  },
+];
+
+export const DMEntries = [
+  {
+    id: "motif",
+    label: "Reason",
+    inputType: "text",
+    width: "230px",
+    placeholder: "Enter the reason for the request",
+  },
+];
 export const RFMEntries = [];
 export const MissionEntries = [
   {
@@ -589,47 +642,3 @@ export const MissionEntries = [
   //   placeholder: "Enter a reason for refusal",
   // },
 ];
-
-// const entries = [
-//   {
-//     label: "Numéro Sous Compte",
-//     type: "number",
-//     width: "230px",
-//   },
-//   {
-//     label: "Désignation Sous Compte",
-//     type: "text",
-//     width: "230px",
-//   },
-//   {
-//     label: "Motif déplacement",
-//     type: "text",
-//     width: "230px",
-//   },
-//   {
-//     label: "Montant engagé",
-//     type: "number",
-//     width: "230px",
-//   },
-//   {
-//     label: "Nature demande",
-//     type: "text",
-//     width: "230px",
-//   },
-
-//   {
-//     label: "Observation",
-//     type: "text",
-//     width: "230px",
-//   },
-//   {
-//     label: "Date de départ",
-//     type: "date",
-//     width: "230px",
-//   },
-//   {
-//     label: "Date de retour",
-//     type: "date",
-//     width: "230px",
-//   },
-// ];

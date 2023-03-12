@@ -4,6 +4,7 @@ import DM from "../models/demandes/DM.js";
 import DB from "../models/demandes/DB.js";
 import Demande from "../models/Demande.js";
 import mongoose from "mongoose";
+import Mission from "../models/Mission.js";
 const toId = mongoose.Types.ObjectId;
 
 export const createDemande = async (req, res) => {
@@ -30,8 +31,7 @@ export const createDemande = async (req, res) => {
     let emetteur = toId(user.id);
     switch (type) {
       case "DC": {
-        const { motif, NbJours, DateDepart, DateRetour, LieuSejour, Nature } =
-          req.body;
+        const { motif, DateDepart, DateRetour, LieuSejour, Nature } = req.body;
 
         if (new Date(DateDepart).getTime() >= new Date(DateRetour).getTime())
           throw new Error(
@@ -40,7 +40,6 @@ export const createDemande = async (req, res) => {
 
         newDemande = new DC({
           motif,
-          NbJours,
           DateDepart,
           DateRetour,
           LieuSejour,
@@ -126,7 +125,6 @@ export const getDemandes = async (req, res) => {
   }
 };
 
- 
 export const updateDemEtat = async (req, res) => {
   try {
     const demande = await Demande.findById(req.params.id);
@@ -137,6 +135,22 @@ export const updateDemEtat = async (req, res) => {
         { etat: req.body.etat },
         { new: true }
       );
+
+      // Check if the DC is accepted
+      if (updatedDemande.type === "DC" && updatedDemande.etat === "acceptée") {
+        const missions = await Mission.find({
+          employes: updatedDemande.createdBy,
+          tDateDeb: { $lte: updatedDemande.DateRetour },
+          tDateRet: { $gte: updatedDemande.DateDepart },
+          etat: { $ne: "annulée" },
+        });
+
+        for (const mission of missions) {
+          mission.etat = "annulée";
+          await mission.save();
+        }
+      }
+
       res.status(200).json({ updatedDemande, msg: "Modifié avec succés" });
     } else {
       res.status(406).json({ error: "Unauthorized" });

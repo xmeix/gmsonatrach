@@ -8,6 +8,8 @@ import {
   filterDemOptions,
   filterRFMOptions,
 } from "../../data/tableCols";
+import Formulaire from "../../components/formulaire/Formulaire";
+import { userButtons, userEntries } from "../../data/formData";
 const GestionCMR = () => {
   const demandes = useSelector((state) => state.auth.demandes);
   const demandesCMR = demandes.filter(
@@ -15,10 +17,10 @@ const GestionCMR = () => {
   );
 
   const rfms = useSelector((state) => state.auth.rfms);
-
+  const currentUser = useSelector((state) => state.auth.user);
   return (
     <div className="gestion">
-      <PageName name="gestion CMR" />
+      <PageName name="Leave and reports" />
       <div className="elements">
         <TableM
           title="Requests List"
@@ -28,7 +30,6 @@ const GestionCMR = () => {
           filterOptions={filterDemOptions}
           colType="demande"
         />
-
         <TableM
           title="List of end-of-mission reports"
           search={["id", "name"]}
