@@ -60,7 +60,12 @@ export const useAxios = () => {
         case "patch":
           console.log("patch");
           response = await apiService.user.patch(url, body);
+          getMissions(dispatch);
           getDemandes(dispatch);
+          getRFMs(dispatch);
+          getOMs(dispatch);
+          getDepenses(dispatch);
+          getUsers(dispatch);
 
           break;
         default:

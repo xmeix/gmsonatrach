@@ -25,7 +25,7 @@ const GestionEmploye = () => {
           title="Add user form"
         />
         <TableM
-          title="Liste des employés"
+          title="Employees List"
           filterOptions={filterUserOptions}
           columns={columnsUsersEmp}
           data={usersEmp}

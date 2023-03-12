@@ -41,6 +41,7 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
   const [update, setUpdate] = useState(false);
   const [body, setBody] = useState(null);
   const [savedItem, setSavedItem] = useState(null);
+  const [savedType, setSavedType] = useState("");
   //_____________________________________________________________
 
   const [handleClose, handleShow, popupType, handleClick] = useBtn();
@@ -59,29 +60,19 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
     let array;
     switch (currentUser.role) {
       case "directeur":
-        {
-          array = DirecteurBtns;
-        }
+        array = DirecteurBtns;
         break;
       case "responsable":
-        {
-          array = ResponsableBtns;
-        }
+        array = ResponsableBtns;
         break;
       case "employe":
-        {
-          array = EmployeBtns;
-        }
+        array = EmployeBtns;
         break;
       case "relex":
-        {
-          array = relexBtns;
-        }
+        array = relexBtns;
         break;
       case "secretaire":
-        {
-          array = DirecteurBtns;
-        }
+        array = DirecteurBtns;
         break;
 
       default:
@@ -112,19 +103,25 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
               item.role !== "directeur") ||
             ((button === "update" || button === "send") &&
               item.etat !== "accepté" &&
-              item.etat !== "refusé") ||
+              item.etat !== "refusé" &&
+              item.etat !== "en-attente") ||
             (button === "cancel" &&
+              type === "mission" &&
               ((item.etat === "acceptée" && item.etat !== "en-cours") ||
-                item.etat === "en-attente"))
+                item.etat === "en-attente")) ||
+            (button === "cancel" &&
+              type !== "mission" &&
+              item.etat === "en-attente")
           )
             return (
               <button
-                className="bouton"
+                className={`bouton ${button}`}
                 key={index}
                 onClick={() => {
                   if (button === "refuse") {
                     setRefuse(true);
                     setSavedItem(item);
+                    setSavedType(type.toLowerCase());
                   } else if (button === "update") {
                     setUpdate(true);
                     setSavedItem(item);
@@ -343,14 +340,14 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
                     </TableCell>
                     <TableCell
                       align="center"
-                      className="tableColumn"
+                      className={item.etat}
                       onClick={() => handleShow(item.__t)}
                     >
                       {item.etat}
                     </TableCell>
 
                     <TableCell align="center" className="tableColumn">
-                      {renderConfiguration(item, item.__t)}
+                      {renderConfiguration(item, item.__t.toLowerCase())}
                     </TableCell>
                   </TableRow>
                 );
@@ -375,7 +372,7 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
                     </TableCell>
                     <TableCell
                       align="center"
-                      className="tableColumn"
+                      className={item.etat}
                       onClick={() => handleShow("rfm")}
                     >
                       {item.etat}
@@ -439,7 +436,7 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
                     </TableCell>
                     <TableCell
                       align="center"
-                      className="tableColumn"
+                      className={item.etat}
                       onClick={() => handleShow("mission")}
                     >
                       {item.etat}
@@ -528,17 +525,21 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
       {update && (
         <div className="popupInfo">
           <div className="title">Formulaire of RFM</div>
-          <button onClick={() => handleClick("update", item, type, body)}>
+          <button onClick={() => handleClick("update", savedItem, "rfm", body)}>
             update
           </button>
-          <button onClick={() => handleClick("send", item, type)}>send</button>
+          <button onClick={() => handleClick("send", savedItem, "rfm")}>
+            send
+          </button>
         </div>
       )}
       {refuse && (
         <div className="popupInfo">
           <div className="title">Reason of Refusal</div>
           <input type="text" onChange={(e) => setRaison(e.target.value)} />
-          <button onClick={() => handleClick("refuse", item, type, raison)}>
+          <button
+            onClick={() => handleClick("refuse", savedItem, savedType, raison)}
+          >
             refuse
           </button>
         </div>

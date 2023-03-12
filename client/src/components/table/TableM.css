@@ -101,7 +101,7 @@
 }
 
 .trow:hover td:not(:last-child) {
-  background-color: var(--light-gray);
+  background-color: var(--blue3);
   cursor: pointer;
 }
 .popupInfo {
@@ -125,4 +125,78 @@
   height: 100%;
   width: 100%;
   background-color: rgba(0, 0, 0, 0.164);
+}
+
+.bouton {
+  outline: none;
+  border: none;
+  background-color: var(--white);
+  padding: 0.7em 0.8em;
+  border-radius: 5px;
+  margin: 0.5em;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-size: 10px;
+  font-weight: 600;
+  font-family: "Montserrat", sans-serif;
+}
+
+.accept,
+.send {
+  background-color: var(--green2);
+}
+.accept:hover,
+.send:hover {
+  background-color: var(--green4);
+}
+
+.refuse,
+.delete {
+  background-color: var(--red1);
+}
+
+.refuse:hover,
+.delete:hover {
+  background-color: var(--red2);
+}
+
+.cancel,
+.update {
+  background-color: var(--blue3);
+}
+
+.cancel:hover,
+.update:hover {
+  background-color: var(--blue2);
+}
+
+.acceptée,
+.accepté,
+.refusée,
+.refusé,
+.annulée,
+.annulé,
+.en-attente,
+.créé {
+  font-family: "Montserrat", sans-serif !important;
+  font-weight: 600 !important;
+  font-size: 13px !important;
+}
+
+.acceptée,
+.accepté {
+  color: #008000 !important;
+}
+.refusée,
+.refusé {
+  color: #ff0000 !important;
+}
+.annulée,
+.annulé {
+  color: #408dda !important;
+}
+
+.en-attente,
+.créé {
+  color: var(--light-orange) !important;
 }

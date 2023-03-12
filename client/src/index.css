@@ -12,6 +12,27 @@ html {
   --dark-gray: #b6acac;
   --success: rgba(0, 154, 73, 0.7);
   --error: #ed4337;
+
+  /**SONATRACH*/
+  --orange1: #fcc288;
+  --orange2: #fee9d3;
+  --orange3: #fef9f3;
+
+  --gray1: #72959f;
+  --gray2: #ccdade;
+  --gray3: #f1f5f5;
+
+  --blue1: #a4ddec;
+  --blue2: #ddf2f7;
+  --blue3: #f6fbfc;
+
+  --green1: #86cca8;
+  --green2: #d2eade;
+  --green3: #f2f9f5;
+  --green4: #b2d8b2;
+
+  --red1: #ffdcdc;
+  --red2: #e98a8a;
 }
 body {
   color: var(--black) !important;

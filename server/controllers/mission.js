@@ -10,7 +10,7 @@ export const createMission = async (req, res) => {
   try {
     const {
       objetMission,
-      structure,
+      structure, //si c est directeur ou la secretaire , si responsable on l enleve
       type,
       budget,
       pays,
@@ -130,7 +130,7 @@ export const getAllMissions = async (req, res) => {
     else if (user.role === "employe") {
       //can read  his own missions only!
       filteredMissions = missions.filter((mission) =>
-        mission.employes.includes(toId(user.id))
+        mission.employes.some((employe) => employe.id === user.id)
       );
     } else if (user.role === "responsable") {
       //can read the missions from his own structure only!
@@ -156,6 +156,7 @@ export const updateMissionEtat = async (req, res) => {
     );
 
     const operation = req.body.etat;
+    //si la mission est acceptée alors on va creer OM pr ts les employés qui y participent + RFM
     if (operation === "acceptée" && employes.length > 0) {
       //on doit générer l'ordre de mission
       const employeIds = employes.map((employe) => employe._id);

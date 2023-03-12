@@ -9,7 +9,7 @@ export const relexBtns = [
 export const EmployeBtns = [
   {
     type: "DC",
-    btns: [],
+    btns: ["cancel"], //if en attente
     showBtn: true,
   },
   {
@@ -51,7 +51,7 @@ export const SecretaireBtns = [
   },
   {
     type: "DB",
-    btns: [],
+    btns: ["cancel"], //if en attente
     showBtn: true,
   },
   {
@@ -89,7 +89,7 @@ export const DirecteurBtns = [
   },
   {
     type: "DB",
-    btns: [],
+    btns: ["cancel"], //if en attente
     showBtn: true,
   },
   {
@@ -127,7 +127,7 @@ export const ResponsableBtns = [
   },
   {
     type: "DB",
-    btns: [],
+    btns: ["cancel"], //if en attente
     showBtn: true,
   },
   {

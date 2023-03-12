@@ -17,10 +17,11 @@ function useBtn() {
         {
           //call the api that changes the state of item
           let route;
-          if (type === "demande") route = "/demande";
+          if (type === "db" || type === "dm" || type === "dc")
+            route = "/demande";
           else if (type === "rfm") route = "/rapportFM";
           else if (type === "mission") route = "/mission";
-          callApi("patch", `${route}/${item.id}`, {
+          callApi("patch", `${route}/${item._id}`, {
             etat: type === "rfm" ? "accepté" : "acceptée",
           });
         }
@@ -28,10 +29,16 @@ function useBtn() {
       case "refuse":
         {
           let route;
-          if (type === "demande") route = "/demande";
+          if (
+            type === "db" ||
+            type === "dm" ||
+            type === "dc" ||
+            type === "demande"
+          )
+            route = "/demande";
           else if (type === "rfm") route = "/rapportFM";
           else if (type === "mission") route = "/mission";
-          callApi("patch", `${route}/${item.id}`, {
+          callApi("patch", `${route}/${item._id}`, {
             etat: type === "rfm" ? "refusé" : "refusée",
             raisonRefus: raison,
           });
@@ -39,10 +46,13 @@ function useBtn() {
         break;
       case "cancel":
         {
-          if (type === "mission")
-            callApi("patch", `/mission/${item.id}`, {
-              etat: "annulée",
-            });
+          let route;
+          if (type === "db" || type === "dm" || type === "dc")
+            route = "/demande";
+          else if (type === "mission") route = "/mission";
+          callApi("patch", `${route}/${item._id}`, {
+            etat: "annulée",
+          });
         }
         break;
       case "delete":
@@ -51,12 +61,13 @@ function useBtn() {
         break;
       case "update":
         {
+          if (type === "rfm") callApi("patch", `/rapportFM/${item.id}`, body);
         }
         break;
       case "send":
         {
           if (type === "rfm")
-            callApi("patch", `/rapportFM/${item.id}`, {
+            callApi("patch", `/rapportFM/${item._id}`, {
               etat: "en-attente",
             });
         }

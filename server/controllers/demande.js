@@ -18,22 +18,16 @@ export const createDemande = async (req, res) => {
     let destinataire;
 
     if (type === "DM" || type === "DC") {
-      console.log("role" + req.user.role);
       destinataire = await User.findOne({
         role: "responsable",
         structure: structure,
       });
-      console.log("structure" + structure);
-
-      console.log("destinataire1" + destinataire);
     } else if (type === "DB") {
       destinataire = await User.findOne({ role: "relex" });
     }
 
     destinataire = toId(destinataire.id);
     let emetteur = toId(user.id);
-    console.log("destinataire2" + destinataire);
-    console.log("emetteur3" + emetteur);
     switch (type) {
       case "DC": {
         const { motif, NbJours, DateDepart, DateRetour, LieuSejour, Nature } =
@@ -122,8 +116,8 @@ export const getDemandes = async (req, res) => {
     ) {
       filteredDemandes = demandes.filter(
         (demande) =>
-          demande.idEmetteur.toString() === user.id ||
-          demande.idDestinataire.toString() === user.id
+          demande.idEmetteur._id.toString() === user._id.toString() ||
+          demande.idDestinataire._id.toString() === user._id.toString()
       );
     } else filteredDemandes = demandes;
     res.status(200).json(filteredDemandes);
@@ -132,34 +126,7 @@ export const getDemandes = async (req, res) => {
   }
 };
 
-// export const getDemandes = async (req, res) => {
-//   try {
-//     const user = await User.findById(req.user.id);
-//     let demandes = await Demande.find();
-//     let filteredDemandes;
-//     /**
-//      * emp : get his DC , DM
-//      * responsable : get demandes d'une structure
-//      * directeur / secretaire : get All demandes
-//      * relex : get only db
-//      */
-//     if (
-//       user.role === "employe" ||
-//       user.role === "relex" ||
-//       user.role === "responsable"
-//     ) {
-//       filteredDemandes = demandes.filter(
-//         (demande) =>
-//           demande.idEmetteur.toString() === user.id ||
-//           demande.idDestinataire.toString() === user.id
-//       );
-//     } else filteredDemandes = demandes;
-//     res.status(200).json(filteredDemandes);
-//   } catch (err) {
-//     res.status(500).json({ error: err.message });
-//   }
-// };
-
+ 
 export const updateDemEtat = async (req, res) => {
   try {
     const demande = await Demande.findById(req.params.id);

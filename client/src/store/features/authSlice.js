@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   user: null,
-  token: null,
+  token: localStorage.getItem("jwt"),
   isLoading: false,
   isLoggedIn: false,
   failure: false,

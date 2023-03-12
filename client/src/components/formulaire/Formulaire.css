@@ -57,6 +57,17 @@
   color: var(--gray);
 }
 
+.formulaire .listTitle {
+  margin-bottom: 1.5em;
+  padding: 1em;
+  font-weight: 800;
+  text-transform: capitalize;
+  text-align: center;
+  background-color: var(--light-gray);
+  letter-spacing: 1px;
+  width: 100%;
+}
+
 .error-message {
   background-color: var(--error);
   color: var(--white);

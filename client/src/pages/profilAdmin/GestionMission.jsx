@@ -22,6 +22,7 @@ const customStyles = {
 const GestionMission = () => {
   const missions = useSelector((state) => state.auth.missions);
   const users = useSelector((state) => state.auth.users);
+  const currentUser = useSelector((state) => state.auth.user);
 
   const employeesNonMissionnaires = users
     .filter(
@@ -37,14 +38,16 @@ const GestionMission = () => {
     <div className="gestion">
       <PageName name="gestion Missions" />
       <div className="elements">
-        <Formulaire
-          type="mission"
-          entries={entries}
-          buttons={buttons}
-          title="Add mission form"
-        />
+        {currentUser.role !== "employe" && currentUser.role !== "relex" && (
+          <Formulaire
+            type="mission"
+            entries={entries}
+            buttons={buttons}
+            title="Add mission form"
+          />
+        )}
         <TableM
-          title="Liste des missions"
+          title="Business travels list"
           search={["id"]}
           filterOptions={filterMissionsOptions}
           columns={columnsMissions}

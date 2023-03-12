@@ -13,8 +13,7 @@ export const checkUpdateAccessReport = async (req, res, next) => {
       if (role !== "employe") throw new Error("Unauthorized");
       else if (
         Report.etat === "accepté" ||
-        Report.etat === "refusé" ||
-        Report.etat === "créé"
+        Report.etat === "refusé" 
       )
         throw new Error("Unauthorized");
     }

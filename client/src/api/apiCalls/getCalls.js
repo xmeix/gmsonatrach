@@ -15,7 +15,7 @@ export const getMissions = async (dispatch) => {
   dispatch(fetchStart());
   try {
     const res = await apiService.user.get("/mission/");
-    //console.log(res.data);
+    console.log("missions" + JSON.stringify(res.data));
     dispatch(setMissions(res.data));
     dispatch(fetchEnd());
   } catch (err) {

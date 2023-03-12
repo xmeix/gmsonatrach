@@ -27,7 +27,7 @@ const GestionRelex = () => {
           title="Ticket Request Form"
         />
         <TableM
-          title="Liste des demandes de billetterie"
+          title="Ticket Requests List"
           search={["id"]}
           filterOptions={filterDBOptions}
           columns={columnsDemandes}
