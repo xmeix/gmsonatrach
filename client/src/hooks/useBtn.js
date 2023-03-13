@@ -3,8 +3,7 @@ import { useSelector } from "react-redux";
 import { useAxios } from "./useAxios";
 
 function useBtn() {
-  const [popupType, setPopupType] = useState(null); //OM CARD ,USER CARD,MISSION CARD, DB,DC,DM CARD
-  const user = useSelector((state) => state.auth.user);
+   const user = useSelector((state) => state.auth.user);
   const { callApi } = useAxios();
 
   const handleClick = (btnType, item, type, raison, body) => {
@@ -73,15 +72,8 @@ function useBtn() {
         }
         break;
     }
-  };
-  const handleShow = (showType) => {
-    setPopupType(showType);
-    console.log(showType);
-  };
-  const handleClose = () => {
-    setPopupType(null);
-  };
-  return [handleClose, handleShow, popupType, handleClick];
+  };  
+  return [handleClick];
 }
 
 export default useBtn;

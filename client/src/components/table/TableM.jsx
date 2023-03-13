@@ -24,6 +24,8 @@ import {
   relexBtns,
   ResponsableBtns,
 } from "../../data/tableBtns";
+import Popup from "../popups/Popup";
+import usePopup from "../../hooks/usePopup";
 
 const TableM = ({ title, filterOptions, columns, data, colType }) => {
   const [filter, setFilter] = useState("");
@@ -37,23 +39,16 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
   });
 
   //_____________________________________________________________
-  const [refuse, setRefuse] = useState(false);
-  const [raison, setRaison] = useState("");
-  const [update, setUpdate] = useState(false);
-  const [body, setBody] = useState(null);
   const [savedItem, setSavedItem] = useState(null);
   const [savedType, setSavedType] = useState("");
   //_____________________________________________________________
 
-  const [handleClose, handleShow, popupType, handleClick] = useBtn();
-
+  const [handleClick] = useBtn();
+  const [isOpen, openPopup, closePopup, popupType] = usePopup();
   const handleCloseForm = () => {
+    console.log("are closing");
     setSavedItem(null);
-
-    setRefuse(false);
-    setUpdate(false);
-    setRaison("");
-    setBody("");
+    closePopup();
   };
 
   const renderConfiguration = (item, type) => {
@@ -94,6 +89,10 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
           if (
             ((button === "accept" || button === "refuse") &&
               item.etat === "en-attente" &&
+              item.__t === "DB" &&
+              currentUser.role === "relex") ||
+            ((button === "accept" || button === "refuse") &&
+              item.etat === "en-attente" &&
               currentUser.role !== "employe" &&
               currentUser.role !== "secretaire" &&
               currentUser.role !== "relex") ||
@@ -123,13 +122,13 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
                 key={index}
                 onClick={() => {
                   if (button === "refuse") {
-                    setRefuse(true);
+                    openPopup("refuse");
                     setSavedItem(item);
                     setSavedType(type.toLowerCase());
                   } else if (button === "update") {
-                    setUpdate(true);
+                    openPopup("update");
                     setSavedItem(item);
-                  } else return handleClick(button, item, type);
+                  } else handleClick(button, item, type);
                 }}
               >
                 {button}
@@ -524,19 +523,21 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
 
-      {popupType && <div className="popupInfo">POP UP</div>}
-      {popupType && <div className="closePopup" onClick={handleClose}></div>}
-      {update && (
-        <div className="popupInfo">
-          <div className="title">Formulaire of RFM</div>
-          <button onClick={() => handleClick("update", savedItem, "rfm", body)}>
-            update
-          </button>
-          <button onClick={() => handleClick("send", savedItem, "rfm")}>
-            send
-          </button>
-        </div>
+      {isOpen && (
+        <>
+          <Popup
+            item={savedItem}
+            type={savedType}
+            isOpen={isOpen}
+            closePopup={closePopup}
+            popupType={popupType}
+          />
+        </>
       )}
+
+      {/* {popupType && <div className="popupInfo">POP UP</div>}
+      {popupType && <div className="closePopup" onClick={handleClose}></div>}
+      {update && <FormRFM item={savedItem} />}
       {refuse && (
         <div className="boiteRefus">
           <div className="title">Reason of Refusal</div>
@@ -548,9 +549,8 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
           </button>
         </div>
       )}
-      {(update || refuse) && (
-        <div className="closePopup" onClick={handleCloseForm}></div>
-      )}
+       */}
+      {isOpen && <div className="closePopup" onClick={handleCloseForm}></div>}
     </div>
   );
 };

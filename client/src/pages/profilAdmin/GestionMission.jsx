@@ -4,7 +4,12 @@ import TableM from "../../components/table/TableM";
 import Formulaire from "../../components/formulaire/Formulaire";
 import { MissionEntries, userButtons as buttons } from "../../data/formData";
 import { useSelector } from "react-redux";
-import { columnsMissions, filterMissionsOptions } from "../../data/tableCols";
+import {
+  columnsMissions,
+  columnsRFM,
+  filterMissionsOptions,
+  filterRFMOptions,
+} from "../../data/tableCols";
 const customStyles = {
   control: (provided, state) => ({
     ...provided,
@@ -23,6 +28,7 @@ const GestionMission = () => {
   const missions = useSelector((state) => state.auth.missions);
   const users = useSelector((state) => state.auth.users);
   const currentUser = useSelector((state) => state.auth.user);
+  const rfms = useSelector((state) => state.auth.rfms);
 
   const employeesNonMissionnaires = users
     .filter(
@@ -46,6 +52,18 @@ const GestionMission = () => {
             title="Add mission form"
           />
         )}
+
+        {currentUser.role === "employe" && (
+          <TableM
+            title="List of end-of-mission reports"
+            search={["id", "name"]}
+            filterOptions={filterRFMOptions}
+            columns={columnsRFM}
+            data={rfms}
+            colType="rfm"
+          />
+        )}
+
         <TableM
           title="Business travels list"
           search={["id"]}

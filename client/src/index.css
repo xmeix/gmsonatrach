@@ -70,10 +70,12 @@ body {
 }
 .icon {
   font-size: 17px;
+  cursor: pointer;
 }
 
 .icn {
   font-size: 17px !important;
+  cursor: pointer;
 }
 
 input,

@@ -1,0 +1,120 @@
+.popup {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  transition: all 0.5s ease-in-out;
+  position: fixed;
+  z-index: 998;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: var(--white);
+  border-radius: 3px;
+  box-shadow: 0 0 0 2px rgba(70, 69, 69, 0.034);
+  overflow-y: auto;
+  white-space: wrap !important;
+}
+
+.popup-refuse {
+  height: 70vh;
+  width: 70vw;
+  /* border: solid 1px var(--light-gray); */
+  top: 50%;
+  justify-content: center;
+  align-items: center;
+}
+
+.popup-update {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5em;
+  height: 80vh;
+  width: 90vw;
+  /* border: solid 1px var(--light-gray); */
+  top: 55%;
+  font-size: 15px;
+  padding: 1em;
+}
+.popup-update span {
+  font-weight: 600;
+}
+.popup-update .direction {
+}
+.popup-update .infoEmploye {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5em;
+}
+.popup-update .infoMission {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5em;
+}
+.popup-update .infoMission .objetMission {
+}
+
+.popup-update .infoMission .itineraire {
+}
+
+.popup-update .infoMission .dates {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5em;
+}
+.popup-update .subTitle {
+  font-size: 16px;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+.popup-update .instruction {
+  font-size: 11px;
+  font-weight: 500;
+  font-style: italic;
+}
+.popup-update .infoMission .dates .dateContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5em;
+}
+
+.popup-update .infoMission .deroulement {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2em;
+  margin: 2em 0;
+}
+.popup-update .infoMission .moyens {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5em;
+}
+.title {
+  text-transform: capitalize;
+  color: var(--black);
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.popup button {
+  background-color: var(--white);
+  border-radius: 4px;
+  box-shadow: 0px 1px 4px rgb(0 0 0 / 10%);
+  border: 1px solid var(--light-gray);
+  padding: 0.6em 1em;
+  font-size: 15px;
+  outline: none;
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--black);
+  font-family: "Montserrat", sans-serif !important;
+  transition: all 0.3s ease-in-out;
+}
+
+.popup button:hover {
+  background-color: var(--red2);
+}
