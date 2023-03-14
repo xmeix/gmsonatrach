@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   Table,
   TableHead,
@@ -7,6 +7,7 @@ import {
   TableCell,
   Typography,
   makeStyles,
+  Radio,
 } from "@material-ui/core";
 
 const useStyles = makeStyles({
@@ -31,31 +32,104 @@ const PopupUpdate = ({ item }) => {
   const mission = item.idMission;
   const user = item.idEmploye;
   const [dates, setDates] = useState([]);
+  const [deroulement, setDeroulement] = useState([]);
+  const [hebergement, setHebergement] = useState([]);
+  const [diner, setDiner] = useState([]);
+  const [dejeuner, setDejeuner] = useState([]);
   const classes = useStyles();
 
-  const generateDates = () => {
-    const newDates = [];
-    let end = new Date(mission.tDateDeb);
-    let start = new Date(mission.tDateRet);
-
-    // loop through dates from start to end date
-    while (start <= end) {
-      newDates.push(new Date(start).toISOString());
-      start.setDate(start.getDate() + 1);
-    }
-    setDates(newDates);
-  };
-  // call generateDates when component mounts
   useEffect(() => {
-    generateDates();
-  }, []);
+    const generateDates = () => {
+      const newDates = [];
+      let end = new Date(mission.tDateDeb);
+      let start = new Date(mission.tDateRet);
+
+      // loop through dates from start to end date
+      while (start <= end) {
+        newDates.push(new Date(start).toISOString());
+        start.setDate(start.getDate() + 1);
+      }
+      setDates(newDates);
+    };
+    // call generateDates when component mounts
+       generateDates();
+ 
+  }, [mission.tDateDeb, mission.tDateRet]);
+
+  const [observations, setObservations] = useState([]);
+  const handleObservationChange = (dateIndex, type) => (event) => {
+    let array;
+    if (type === "observation") {
+      array = [...observations];
+    } else if (type === "dejeuner") {
+      array = [...dejeuner];
+    } else if (type === "diner") {
+      array = [...diner];
+    } else if (type === "hebergement") {
+      array = [...hebergement];
+    }
+
+    array[dateIndex] = event.target.value;
+
+    if (type === "observation") {
+      setObservations(array);
+    } else if (type === "dejeuner") {
+      setDejeuner(array);
+    } else if (type === "diner") {
+      setDiner(array);
+    } else if (type === "hebergement") {
+      setHebergement(array);
+    }
+  };
+  useMemo(() => {
+    try {
+      let newDeroulement = [];
+
+      for (let i = 0; i < dates.length; i++) {
+        newDeroulement.push({
+          IdDate: dates[i],
+          hebergement: hebergement[i] || "avec-prise-en-charge",
+          dejeuner: dejeuner[i] || "avec-prise-en-charge",
+          diner: diner[i] || "avec-prise-en-charge",
+          observations: observations[i] || "",
+        });
+      }
+      console.log(newDeroulement);
+
+      setDeroulement(newDeroulement);
+    } catch (error) {
+      console.error(error);
+      setDeroulement([]);
+    }
+  }, [dates, observations, hebergement, diner, dejeuner]);
+
+  function radioInput({ type, index, value }) {
+    let element;
+    if (type === "hebergement") {
+      element = hebergement[index];
+    } else if (type === "dejeuner") {
+      element = dejeuner[index];
+    } else if (type === "diner") {
+      element = diner[index];
+    }
+
+    return (
+      <Radio
+        value={value}
+        checked={element === value}
+        onChange={handleObservationChange(index, type)}
+      />
+    );
+  }
   return (
     <div className="popup-update">
       <h3 className="title">Ordre de Mission</h3>
       <div className="direction">DCG/RH - DAPS</div>
       <div className="infoEmploye">
         <div className="identificateur">
-          <span>N°</span> {item._id}/ SH-ONE/{new Date().getFullYear()}
+          <span>
+            N° {item._id}/ SH-ONE/{new Date().getFullYear()}
+          </span>
         </div>
         <div className="matricule">
           <span>Matricule:</span>
@@ -143,19 +217,19 @@ const PopupUpdate = ({ item }) => {
               <TableRow>
                 <TableCell align="center" />
                 <TableCell align="center" className={classes.tableHeaderCell}>
-                  Avec prise en charge
+                  avec prise en charge
                 </TableCell>
                 <TableCell align="center" className={classes.tableHeaderCell}>
                   Sans prise en charge
                 </TableCell>
                 <TableCell align="center" className={classes.tableHeaderCell}>
-                  Avec prise en charge
+                  avec prise en charge
                 </TableCell>
                 <TableCell align="center" className={classes.tableHeaderCell}>
                   Sans prise en charge
                 </TableCell>
                 <TableCell align="center" className={classes.tableHeaderCell}>
-                  Avec prise en charge
+                  avec prise en charge
                 </TableCell>
                 <TableCell align="center" className={classes.tableHeaderCell}>
                   Sans prise en charge
@@ -164,10 +238,28 @@ const PopupUpdate = ({ item }) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {dates.map((date, i) => (
-                <TableRow key={i}>
+              {dates.map((date, index) => (
+                <TableRow key={index}>
                   <TableCell align="center" className={classes.tableCell}>
                     {Intl.DateTimeFormat(["ban", "id"]).format(new Date(date))}
+                  </TableCell>
+                  <TableCell align="center">
+                    {radioInput("hebergement", index, "avec-prise-en-charge")}
+                  </TableCell>
+                  <TableCell align="center">
+                    {radioInput("hebergement", index, "sans-prise-en-charge")}
+                  </TableCell>
+                  <TableCell align="center">
+                    {radioInput("dejeuner", index, "avec-prise-en-charge")}
+                  </TableCell>
+                  <TableCell align="center">
+                    {radioInput("dejeuner", index, "sans-prise-en-charge")}
+                  </TableCell>
+                  <TableCell align="center">
+                    {radioInput("diner", index, "avec-prise-en-charge")}
+                  </TableCell>
+                  <TableCell align="center">
+                    {radioInput("diner", index, "sans-prise-en-charge")}
                   </TableCell>
                 </TableRow>
               ))}

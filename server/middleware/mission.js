@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 import Mission from "../models/Mission.js";
 import cron from "node-cron";
- 
 
 export const checkUpdateMissionAccess = async (req, res, next) => {
   try {
@@ -11,7 +10,6 @@ export const checkUpdateMissionAccess = async (req, res, next) => {
     const structure = req.user.structure;
     const raisonRefus = req.body.raisonRefus;
     if (operation) {
-
       if (operation === "en-attente") throw new Error("Unauthorized");
       if (operation === mission.etat) throw new Error("Unauthorized");
       else if (role === "employe" || role === "relex")
@@ -27,7 +25,7 @@ export const checkUpdateMissionAccess = async (req, res, next) => {
         mission.structure !== structure
       )
         throw new Error("Unauthorized");
-      //si mission pas en cours mais planifié (accepté) ==> ils peuvent l'annuler 
+      //si mission pas en cours mais planifié (accepté) ==> ils peuvent l'annuler
       else if (
         operation === "annulée" &&
         (mission.etat === "en-cours" ||
@@ -61,6 +59,7 @@ cron.schedule("0 0 * * *", async () => {
         await mission.save();
       } else if (mission.etat === "acceptée") {
         mission.etat = "en-cours";
+        ///creation des RFM
         await mission.save();
       }
     }

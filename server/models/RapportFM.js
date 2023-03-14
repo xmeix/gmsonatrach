@@ -6,25 +6,25 @@ const RapportFMSchema = new mongoose.Schema(
       {
         IdDate: {
           type: Date,
-          required: true,
         },
         hebergement: {
           type: String,
           enum: ["avec-prise-en-charge", "sans-prise-en-charge"],
-          required: true,
+          default: "avec-prise-en-charge",
         },
         dejeuner: {
           type: String,
           enum: ["avec-prise-en-charge", "sans-prise-en-charge"],
-          required: true,
+          default: "avec-prise-en-charge",
         },
         diner: {
           type: String,
           enum: ["avec-prise-en-charge", "sans-prise-en-charge"],
-          required: true,
+          default: "avec-prise-en-charge",
         },
         observation: {
           type: String,
+          default: "",
         },
       },
     ],

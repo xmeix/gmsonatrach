@@ -13,6 +13,7 @@ const DBSchema = new mongoose.Schema(
     },
     montantEngage: {
       type: Number,
+      default: 0,
       //required: true,
     },
     nature: {
@@ -33,11 +34,11 @@ const DBSchema = new mongoose.Schema(
     },
     dateDepart: {
       type: Date,
-      //required: true,
+      required: true,
     },
     dateRetour: {
       type: Date,
-      //required: true,
+      required: true,
     },
   },
   {

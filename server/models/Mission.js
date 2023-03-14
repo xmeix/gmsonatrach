@@ -33,6 +33,11 @@ const MissionSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    budgetConsome: {
+      // a ajouter dans la liste des missions terminées
+      type: Number,
+      default: 0,
+    },
     pays: {
       type: String,
       required: true,
@@ -71,6 +76,7 @@ const MissionSchema = new mongoose.Schema(
       enum: ["avion", "route"],
       required: true,
     },
+    //moyen de transport aller + retour
     lieuDep: {
       type: String,
       required: true,
@@ -95,15 +101,13 @@ const MissionSchema = new mongoose.Schema(
         "terminée", //automatiquement a l envoi du RFM
       ],
       default: "en-attente",
-      
     },
-
     raisonRefus: {
       type: String,
       default: "",
     },
     circonscriptionAdm: {
-      //Code wilaya
+      //a supprimer
       type: String,
       required: true,
     },
