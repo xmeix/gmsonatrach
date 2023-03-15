@@ -14,15 +14,26 @@
   white-space: wrap !important;
 }
 
+/*--------------------------------------------------*/
+
 .popup-refuse {
-  height: 70vh;
-  width: 70vw;
-  /* border: solid 1px var(--light-gray); */
+  height: auto;
+  width: auto;
   top: 50%;
-  justify-content: center;
-  align-items: center;
+  font-size: 15px;
+  padding: 1em;
+  gap: 1.5em !important;
 }
 
+.popup-refuse .pop-ref {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1em;
+}
+
+/*---------------------------------------------------*/
 .popup-update {
   display: flex;
   flex-direction: column;

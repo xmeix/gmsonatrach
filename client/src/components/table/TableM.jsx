@@ -534,22 +534,7 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
           />
         </>
       )}
-
-      {/* {popupType && <div className="popupInfo">POP UP</div>}
-      {popupType && <div className="closePopup" onClick={handleClose}></div>}
-      {update && <FormRFM item={savedItem} />}
-      {refuse && (
-        <div className="boiteRefus">
-          <div className="title">Reason of Refusal</div>
-          <textarea onChange={(e) => setRaison(e.target.value)} />
-          <button
-            onClick={() => handleClick("refuse", savedItem, savedType, raison)}
-          >
-            refuse
-          </button>
-        </div>
-      )}
-       */}
+ 
       {isOpen && <div className="closePopup" onClick={handleCloseForm}></div>}
     </div>
   );

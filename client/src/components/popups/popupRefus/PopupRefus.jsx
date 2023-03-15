@@ -6,12 +6,15 @@ const PopupRefus = ({ type, item }) => {
   const [handleClick] = useBtn();
 
   return (
-    <div className="popup">
-      <div className="title">Reason of Refusal</div>
-      <textarea onChange={(e) => setRaison(e.target.value)} />
-      <button onClick={() => handleClick("refuse", item, type, raison)}>
-        refuse
-      </button>
+    <div className="popup-refuse">
+      <div className="pop-ref">
+        {" "}
+        <div className="title">Reason of Refusal</div>
+        <textarea onChange={(e) => setRaison(e.target.value)} />
+        <button onClick={() => handleClick("refuse", item, type, raison)}>
+          refuse
+        </button>
+      </div>
     </div>
   );
 };

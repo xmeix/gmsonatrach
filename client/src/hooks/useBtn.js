@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { useAxios } from "./useAxios";
 
 function useBtn() {
-   const user = useSelector((state) => state.auth.user);
+  const user = useSelector((state) => state.auth.user);
   const { callApi } = useAxios();
 
   const handleClick = (btnType, item, type, raison, body) => {
@@ -27,6 +27,7 @@ function useBtn() {
         break;
       case "refuse":
         {
+          let nbRefus;
           let route;
           if (
             type === "db" ||
@@ -35,11 +36,14 @@ function useBtn() {
             type === "demande"
           )
             route = "/demande";
-          else if (type === "rfm") route = "/rapportFM";
-          else if (type === "mission") route = "/mission";
+          else if (type === "rfm") {
+            route = "/rapportFM";
+            nbRefus = item.nbRefus + 1;
+          } else if (type === "mission") route = "/mission";
           callApi("patch", `${route}/${item._id}`, {
-            etat: type === "rfm" ? "refusé" : "refusée",
+            etat: type === "rfm" ? "créé" : "refusée",
             raisonRefus: raison,
+            nbRefus: nbRefus,
           });
         }
         break;
@@ -60,7 +64,9 @@ function useBtn() {
         break;
       case "update":
         {
-          if (type === "rfm") callApi("patch", `/rapportFM/${item.id}`, body);
+          if (type === "rfm") {
+            callApi("patch", `/rapportFM/${item._id}`, { deroulement: body });
+          }
         }
         break;
       case "send":
@@ -72,7 +78,7 @@ function useBtn() {
         }
         break;
     }
-  };  
+  };
   return [handleClick];
 }
 

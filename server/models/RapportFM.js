@@ -43,6 +43,10 @@ const RapportFMSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
+    nbRefus: {
+      type: Number,
+      default: 0,
+    },
   },
   {
     timestamps: true,

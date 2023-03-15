@@ -1,14 +1,14 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   Table,
   TableHead,
   TableBody,
   TableRow,
   TableCell,
-  Typography,
   makeStyles,
   Radio,
 } from "@material-ui/core";
+import useBtn from "../../../hooks/useBtn";
 
 const useStyles = makeStyles({
   table: {
@@ -32,11 +32,18 @@ const PopupUpdate = ({ item }) => {
   const mission = item.idMission;
   const user = item.idEmploye;
   const [dates, setDates] = useState([]);
-  const [deroulement, setDeroulement] = useState([]);
-  const [hebergement, setHebergement] = useState([]);
-  const [diner, setDiner] = useState([]);
-  const [dejeuner, setDejeuner] = useState([]);
+  const [body, setBody] = useState([]);
+  const [hebergement, setHebergement] = useState(() =>
+    item.deroulement.map((item) => item.hebergement)
+  );
+  const [diner, setDiner] = useState(() =>
+    item.deroulement.map((item) => item.diner)
+  );
+  const [dejeuner, setDejeuner] = useState(() =>
+    item.deroulement.map((item) => item.dejeuner)
+  );
   const classes = useStyles();
+  const [handleClick] = useBtn();
 
   useEffect(() => {
     const generateDates = () => {
@@ -52,74 +59,80 @@ const PopupUpdate = ({ item }) => {
       setDates(newDates);
     };
     // call generateDates when component mounts
-       generateDates();
- 
+    generateDates();
   }, [mission.tDateDeb, mission.tDateRet]);
 
-  const [observations, setObservations] = useState([]);
+  const [observations, setObservations] = useState(() =>
+    item.deroulement.map((item) => item.observation)
+  );
   const handleObservationChange = (dateIndex, type) => (event) => {
     let array;
-    if (type === "observation") {
-      array = [...observations];
-    } else if (type === "dejeuner") {
-      array = [...dejeuner];
-    } else if (type === "diner") {
-      array = [...diner];
-    } else if (type === "hebergement") {
-      array = [...hebergement];
-    }
-
-    array[dateIndex] = event.target.value;
-
-    if (type === "observation") {
-      setObservations(array);
-    } else if (type === "dejeuner") {
-      setDejeuner(array);
-    } else if (type === "diner") {
-      setDiner(array);
-    } else if (type === "hebergement") {
-      setHebergement(array);
+    switch (type) {
+      case "observation":
+        array = [...observations];
+        array[dateIndex] = event.target.value;
+        setObservations(array);
+        break;
+      case "dejeuner":
+        array = [...dejeuner];
+        array[dateIndex] = event.target.value;
+        setDejeuner(array);
+        break;
+      case "diner":
+        array = [...diner];
+        array[dateIndex] = event.target.value;
+        setDiner(array);
+        break;
+      case "hebergement":
+        array = [...hebergement];
+        array[dateIndex] = event.target.value;
+        setHebergement(array);
+        break;
+      default:
+        break;
     }
   };
+
   useMemo(() => {
     try {
-      let newDeroulement = [];
+      let newBody = [];
 
       for (let i = 0; i < dates.length; i++) {
-        newDeroulement.push({
+        newBody.push({
           IdDate: dates[i],
           hebergement: hebergement[i] || "avec-prise-en-charge",
           dejeuner: dejeuner[i] || "avec-prise-en-charge",
           diner: diner[i] || "avec-prise-en-charge",
-          observations: observations[i] || "",
+          observation: observations[i] || "",
         });
       }
-      console.log(newDeroulement);
+      console.log(newBody);
 
-      setDeroulement(newDeroulement);
+      setBody(newBody);
     } catch (error) {
       console.error(error);
-      setDeroulement([]);
+      setBody([]);
     }
   }, [dates, observations, hebergement, diner, dejeuner]);
 
-  function radioInput({ type, index, value }) {
-    let element;
+  function radioInput(type, index, value) {
+    let element = [];
     if (type === "hebergement") {
       element = hebergement[index];
-    } else if (type === "dejeuner") {
-      element = dejeuner[index];
     } else if (type === "diner") {
       element = diner[index];
+    } else if (type === "dejeuner") {
+      element = dejeuner[index];
     }
-
-    return (
-      <Radio
-        value={value}
-        checked={element === value}
-        onChange={handleObservationChange(index, type)}
-      />
-    );
+    if (type) {
+      return (
+        <Radio
+          value={value}
+          checked={element === value}
+          onChange={handleObservationChange(index, type)}
+        />
+      );
+    }
   }
   return (
     <div className="popup-update">
@@ -261,6 +274,13 @@ const PopupUpdate = ({ item }) => {
                   <TableCell align="center">
                     {radioInput("diner", index, "sans-prise-en-charge")}
                   </TableCell>
+                  <TableCell align="center">
+                    <input
+                      value={observations[index]}
+                      type="text"
+                      onChange={handleObservationChange(index, "observation")}
+                    />
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -293,13 +313,24 @@ const PopupUpdate = ({ item }) => {
         <div className="moyens">
           <span className="subTitle">Moyens de transport utilisés :</span>{" "}
           <br />
-          <span>A l'aller:</span> AVION - ROUTE <br />
-          <span>Au retour:</span> AVION - ROUTE
+          <span>A l'aller:</span> {mission.moyenTransport}
+          <br />
+          <span>Au retour:</span>
+          {mission?.moyenTransportRet}
         </div>
       </div>
       <div className="signature">
         Visa du Missionnaire Le Responsable (signataire de l'Ordre de Mission)
         Signature & griffe
+      </div>
+
+      <div className="buttons">
+        <button onClick={() => handleClick("update", item, "rfm", "", body)}>
+          Update
+        </button>
+        <button onClick={() => handleClick("send", item, "rfm", "")}>
+          Send
+        </button>
       </div>
     </div>
   );

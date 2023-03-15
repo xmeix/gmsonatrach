@@ -197,7 +197,7 @@ export const DCEntries = [
     inputType: "text",
     width: "230px",
     placeholder: "Enter the reason for the request",
-  }, 
+  },
   {
     id: "DateDepart",
     label: "Departure Date",
@@ -601,7 +601,19 @@ export const MissionEntries = [
   },
   {
     id: "moyenTransport",
-    label: "Means of Transport",
+    label: "Moyen De Transport Utilisés A l'aller",
+    inputType: "select",
+    width: "230px",
+    placeholder: "Select a means of transport",
+    options: [
+      { label: "Airplane", value: "avion" },
+      { label: "Road", value: "route" },
+    ],
+    isMulti: false,
+  },
+  {
+    id: "moyenTransportRet",
+    label: "Moyen De Transport Utilisés au retour ",
     inputType: "select",
     width: "230px",
     placeholder: "Select a means of transport",
@@ -618,27 +630,4 @@ export const MissionEntries = [
     width: "230px",
     placeholder: "Enter any observations",
   },
-  // {
-  //   id: "etat",
-  //   label: "Status",
-  //   inputType: "select",
-  //   width: "230px",
-  //   placeholder: "Select a status",
-  //   options: [
-  //     { label: "Pending", value: "en-attente" },
-  //     { label: "Accepted", value: "acceptée" },
-  //     { label: "Refused", value: "refusée" },
-  //     { label: "In progress", value: "en-cours" },
-  //     { label: "Cancelled", value: "annulée" },
-  //     { label: "Completed", value: "terminée" },
-  //   ],
-  //   isMulti: false,
-  // },
-  // {
-  //   id: "raisonRefus",
-  //   label: "Reason for Refusal",
-  //   inputType: "text",
-  //   width: "230px",
-  //   placeholder: "Enter a reason for refusal",
-  // },
 ];

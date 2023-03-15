@@ -76,6 +76,12 @@ const MissionSchema = new mongoose.Schema(
       enum: ["avion", "route"],
       required: true,
     },
+    moyenTransportRet: {
+      //AVION / ROUTE
+      type: String,
+      enum: ["avion", "route"],
+      required: true,
+    },
     //moyen de transport aller + retour
     lieuDep: {
       type: String,

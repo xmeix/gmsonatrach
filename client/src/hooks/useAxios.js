@@ -68,6 +68,8 @@ export const useAxios = () => {
         case "delete":
           console.log("delete");
           response = await apiService.user.delete(url, body);
+          getUsers(dispatch);
+
           break;
         case "patch":
           console.log("patch");
