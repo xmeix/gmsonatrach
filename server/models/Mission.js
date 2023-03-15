@@ -70,18 +70,22 @@ const MissionSchema = new mongoose.Schema(
       type: Date,
       required: true,
     },
-    moyenTransport: {
-      //AVION / ROUTE
-      type: String,
-      enum: ["avion", "route"],
-      required: true,
-    },
-    moyenTransportRet: {
-      //AVION / ROUTE
-      type: String,
-      enum: ["avion", "route"],
-      required: true,
-    },
+    moyenTransport: [
+      {
+        //AVION / ROUTE
+        type: String,
+        enum: ["avion", "route"],
+        required: true,
+      },
+    ],
+    moyenTransportRet: [
+      {
+        //AVION / ROUTE
+        type: String,
+        enum: ["avion", "route"],
+        required: true,
+      },
+    ],
     //moyen de transport aller + retour
     lieuDep: {
       type: String,
@@ -94,7 +98,7 @@ const MissionSchema = new mongoose.Schema(
     observation: {
       //text area //
       type: String,
-      required: true,
+      // required: true,
     },
     etat: {
       type: String,
@@ -115,7 +119,7 @@ const MissionSchema = new mongoose.Schema(
     circonscriptionAdm: {
       //a supprimer
       type: String,
-      required: true,
+      // required: true,
     },
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,

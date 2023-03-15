@@ -5,7 +5,9 @@ import useForm from "../../hooks/useForm";
 import ErrorIcon from "@mui/icons-material/Error";
 import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
 import { useAxios } from "../../hooks/useAxios";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { MissionEntries } from "../../data/formData";
 const customStyles = {
   control: (provided, state) => ({
     ...provided,
@@ -22,8 +24,9 @@ const customStyles = {
 
 const Formulaire = ({ title, entries, buttons, type }) => {
   const { callApi, error, isLoading, successMsg } = useAxios();
+  const currentUser = useSelector((state) => state.auth.user);
+  const [selectedRole, setSelectedRole] = useState("");
   const dispatch = useDispatch();
-
   const [values, handleChange, resetForm] = useForm(() => {
     const vals = {};
     entries.forEach((entry) => {
@@ -33,9 +36,51 @@ const Formulaire = ({ title, entries, buttons, type }) => {
     return vals;
   });
 
+  /***----------------------------------------------------------- */
+  const missions = useSelector((state) => state.auth.missions);
+  const users = useSelector((state) => state.auth.users);
+  const [start, setStart] = useState(null);
+  const [end, setEnd] = useState(null);
+
+  const [employeesNonMissionnaires, setEmployeesNonMissionnaires] = useState(
+    []
+  );
+  useEffect(() => {
+    let newEmployeesNonMissionnaires;
+    if (start && end && type === "mission") {
+      newEmployeesNonMissionnaires = users
+        .filter(
+          (user) =>
+            user.role === "employe" &&
+            !missions.some(
+              (mission) =>
+                mission.employes.includes(user._id) &&
+                mission.etat === "acceptée" &&
+                mission.tDateDeb <= end &&
+                mission.tDateRet >= start
+            )
+        )
+        .map((user) => ({
+          label: user.nom + " " + user.prenom,
+          value: user._id,
+        }));
+
+      setEmployeesNonMissionnaires(newEmployeesNonMissionnaires);
+      let missEntries = MissionEntries.map((entry) => {
+        if (entry.id === "employes") entry.options = employeesNonMissionnaires;
+        return entry;
+      });
+
+      if (missEntries) {
+        entries = missEntries;
+      }
+    }
+  }, [start, end]);
+
+  /***-----------------------------------------------------------*/
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    setSelectedRole("");
     switch (type) {
       case "user":
         {
@@ -78,14 +123,40 @@ const Formulaire = ({ title, entries, buttons, type }) => {
         {entries.map((entry, i) => {
           return (
             <div className="inputGroup" key={i}>
-              <label htmlFor={entry.label}>{entry.label}</label>
+              {!(
+                currentUser.role === "secretaire" &&
+                entry.id === "role" &&
+                type === "user"
+              ) &&
+                !(
+                  currentUser.role === "responsable" &&
+                  entry.id === "structure" &&
+                  type === "mission"
+                ) &&
+                !(
+                  (currentUser.role === "responsable" ||
+                    currentUser.role === "directeur") &&
+                  entry.id === "structure" &&
+                  selectedRole !== "employe" &&
+                  selectedRole !== "responsable" &&
+                  type === "user"
+                ) && <label htmlFor={entry.label}>{entry.label}</label>}
 
               {entry.inputType !== "textArea" &&
                 entry.inputType !== "select" &&
                 entry.inputType !== "create-select" && (
                   <input
                     type={entry.inputType}
-                    onChange={handleChange}
+                    onChange={(e) => {
+                      if (type === "mission") {
+                        if (entry.id === "tDateDeb") {
+                          setStart(e.target.value);
+                        } else if (entry.id === "tDateRet") {
+                          setEnd(e.target.value);
+                        }
+                      }
+                      handleChange();
+                    }}
                     name={entry.id}
                   />
                 )}
@@ -103,20 +174,61 @@ const Formulaire = ({ title, entries, buttons, type }) => {
                   }
                 />
               )}
-              {entry.inputType === "select" && (
-                <Select
-                  className="select"
-                  options={entry.options}
-                  isMulti={entry.isMulti}
-                  placeholder={entry.label}
-                  styles={customStyles}
-                  onChange={(selectedOption) =>
-                    handleChange({
-                      target: { name: entry.id, value: selectedOption },
-                    })
-                  }
-                />
-              )}
+              {entry.inputType === "select" &&
+                !(
+                  currentUser.role === "secretaire" &&
+                  entry.id === "role" &&
+                  type === "user"
+                ) &&
+                !(
+                  currentUser.role === "responsable" &&
+                  entry.id === "structure" &&
+                  type === "mission"
+                ) &&
+                !(
+                  (currentUser.role === "responsable" ||
+                    currentUser.role === "directeur") &&
+                  entry.id === "structure" &&
+                  selectedRole !== "employe" &&
+                  selectedRole !== "responsable" &&
+                  type === "user"
+                ) && (
+                  <Select
+                    className="select"
+                    options={
+                      entry.id === "role" &&
+                      currentUser.role === "responsable" &&
+                      type === "user"
+                        ? [
+                            { value: "employe", label: "Employe" },
+                            { value: "secretaire", label: "Secretaire" },
+                          ]
+                        : entry.options
+                    }
+                    isMulti={entry.isMulti}
+                    placeholder={entry.label}
+                    styles={customStyles}
+                    onChange={(selectedOption) => {
+                      if (
+                        (currentUser.role === "responsable" ||
+                          currentUser.role === "directeur") &&
+                        entry.id === "role" &&
+                        type === "user" &&
+                        (selectedOption.value === "employe" ||
+                          selectedOption.value === "directeur" ||
+                          selectedOption.value === "responsable" ||
+                          selectedOption.value === "relex" ||
+                          selectedOption.value === "secretaire")
+                      ) {
+                        setSelectedRole(selectedOption.value);
+                      }
+                      handleChange({
+                        target: { name: entry.id, value: selectedOption },
+                      });
+                    }}
+                  />
+                )}
+
               {entry.inputType === "textArea" && (
                 <textarea
                   rows={5}

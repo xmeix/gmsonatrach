@@ -1,7 +1,6 @@
 import bcrypt from "bcrypt";
 import { generateJWT } from "../middleware/auth.js";
 import User from "../models/User.js";
-import cookie from "cookie";
 import jwt from "jsonwebtoken";
 
 /** REGISTER USER */
@@ -28,8 +27,6 @@ export const register = async (req, res) => {
       numTel === "" ||
       email === "" ||
       password === "" ||
-      role === "" ||
-      etat === "" ||
       structure === ""
     )
       throw new Error("empty fields");
@@ -110,41 +107,6 @@ export const logout = async (req, res) => {
   res.json({ msg: "Logged out successfully and Cookie cleared" });
 };
 
-// export const refresh = async (req, res) => {
-//   const cookies = req.cookies;
-//   if (!cookies?.jwt) {
-//     return res.status(403).json({ error: "cookie not found" });
-//   }
-//   const refreshToken = cookies.jwt;
-//   //we need to get the refresh token , if found and not expired than continue else ERROR
-//   jwt.verify(
-//     refreshToken,
-//     process.env.REFRESH_TOKEN_SECRET,
-//     async (err, decoded) => {
-//       if (err) {
-//         if (err.name === "TokenExpiredError") {
-//           // If refresh token is expired, log out the user
-//           return logout(req, res);
-//         }
-//         return res.status(403).json({ msg: "Forbidden" });
-//       }
-//       const foundUser = await User.findById(decoded.UserInfo.id);
-//       if (!foundUser) {
-//         return res.status(401).json({ msg: "Unauthorized" });
-//       }
-
-//       const accessToken = generateJWT(
-//         foundUser,
-//         "15m",
-//         process.env.ACCESS_TOKEN_SECRET
-//       );
-
-//       //res.set("Authorization", `Bearer ${accessToken}`);
-//       return Promise.resolve(accessToken);
-//       //next();
-//     }
-//   );
-// };
 export const refresh = async (req, res) => {
   const cookies = req.cookies;
   if (!cookies?.jwt) {

@@ -69,23 +69,10 @@ export const userEntries = [
     width: "230px",
     placeholder: "Sélectionnez votre rôle",
     options: [
-      { label: "Directeur", value: "directeur" },
       { label: "Secrétaire", value: "secretaire" },
       { label: "Employé", value: "employe" },
       { label: "Relex", value: "relex" },
       { label: "Responsable", value: "responsable" },
-    ],
-    isMulti: false,
-  },
-  {
-    id: "etat",
-    label: "Etat",
-    inputType: "select",
-    width: "230px",
-    placeholder: "Sélectionnez votre état",
-    options: [
-      { label: "Non-missionnaire", value: "non-missionnaire" },
-      { label: "Missionnaire", value: "missionnaire" },
     ],
     isMulti: false,
   },
@@ -96,8 +83,6 @@ export const userEntries = [
     width: "230px",
     placeholder: "Sélectionnez votre structure",
     options: [
-      { label: "DG", value: "DG" },
-      { label: "RELEX", value: "RELEX" },
       { label: "PMO", value: "PMO" },
       { label: "FIN", value: "FIN" },
       { label: "SD", value: "SD" },
@@ -609,7 +594,7 @@ export const MissionEntries = [
       { label: "Airplane", value: "avion" },
       { label: "Road", value: "route" },
     ],
-    isMulti: false,
+    isMulti: true,
   },
   {
     id: "moyenTransportRet",
@@ -621,7 +606,7 @@ export const MissionEntries = [
       { label: "Airplane", value: "avion" },
       { label: "Road", value: "route" },
     ],
-    isMulti: false,
+    isMulti: true,
   },
   {
     id: "observation",

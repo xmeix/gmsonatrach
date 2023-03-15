@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { useAuth } from "./useAuth";
-
+ 
 const useForm = (initialValues) => {
   const [values, setValues] = useState(initialValues);
   console.log(values);
@@ -43,22 +42,7 @@ const useForm = (initialValues) => {
         [name]: value,
       }));
 
-    // if (Array.isArray(value)) {
-    //   const newValue = value.map((option) =>
-    //     typeof option === "object" ? option.value : option
-    //   );
-    //   setValues((prevState) => ({
-    //     ...prevState,
-    //     [name]: newValue.value,
-    //   }));
-    // } else {
-    //   setValues((prevState) => ({
-    //     ...prevState,
-    //     [name]: value,
-    //   }));
-    // }
-
-    //console.log(values);
+    
   };
 
   const resetForm = () => {

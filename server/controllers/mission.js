@@ -19,29 +19,32 @@ export const createMission = async (req, res) => {
       tDateDeb,
       tDateRet,
       moyenTransport,
+      moyenTransportRet,
       lieuDep,
       destination,
       observation,
-      etat,
-      raisonRefus,
       circonscriptionAdm,
     } = req.body;
     const user = req.user;
-    console.log("BODY  " + req.body);
+
     //si c est un responsable et la mission créée n appartient pas a sa structure
     if (user.role === "responsable" && user.structure !== structure)
       throw new Error("Unauthorized");
-
+    //verification dates start and end
     if (new Date(tDateDeb).getTime() >= new Date(tDateRet).getTime())
       throw new Error(
         "Dates shouldn't be equal, return date should be greater than departure date"
       );
 
-    let newEtat;
+    let etat;
     //si c est le responsable/directeur qui l'a créée alors elle sera automatiquement acceptée
-    if (user.role === "responsable" || user.role === "directeur")
-      newEtat = "acceptée";
-    else newEtat = etat;
+    if (user.role === "responsable" || user.role === "directeur") {
+      etat = "acceptée";
+    }
+
+    if (user.role === "responsable") {
+      structure = user.structure;
+    }
 
     //check
     const fields = [
@@ -55,15 +58,15 @@ export const createMission = async (req, res) => {
       tDateDeb,
       tDateRet,
       moyenTransport,
+      moyenTransportRet,
       lieuDep,
       destination,
-      observation,
-      circonscriptionAdm,
     ];
 
     if (!checkFields(fields)) {
       throw new Error("empty fields");
     }
+
     //const newTaches = taches.map((tache) => toId(tache));
     const newEmployes = employes.map((employe) => toId(employe));
 
@@ -81,18 +84,18 @@ export const createMission = async (req, res) => {
       tDateDeb,
       tDateRet,
       moyenTransport,
+      moyenTransportRet,
       lieuDep,
       destination,
       observation,
-      etat: newEtat,
-      raisonRefus,
+      etat,
       circonscriptionAdm,
       createdBy,
       updatedBy,
     });
 
     const savedMission = await mission.save();
-    if (newEtat === "acceptée" && newEmployes.length > 0) {
+    if (etat === "acceptée" && newEmployes.length > 0) {
       //on doit générer l'ordre de mission et rfm
       const employeIds = newEmployes.map((employe) => employe._id);
       for (const employeId of employeIds) {
@@ -101,6 +104,8 @@ export const createMission = async (req, res) => {
           employe: employeId,
         });
         om.save();
+
+        //TO MOVE WHEN TESTING CRON ==> if etat==="en-cours" on cree les rfm pr chaque employe
         const rfm = new RapportFM({
           idMission: savedMission.id,
           idEmploye: employeId,

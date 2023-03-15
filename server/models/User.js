@@ -48,8 +48,9 @@ const UserSchema = new mongoose.Schema(
     },
     structure: {
       type: String,
-      required: true,
+      default: "SECRETARIAT",
       enum: [
+        "SECRETARIAT",
         "DG",
         "RELEX",
         "PMO",

@@ -1,13 +1,11 @@
-import Input from "../../components/form/input/Input";
-import PageName from "../../components/pageName/PageName";
+ import PageName from "../../components/pageName/PageName";
 import "./../../css/Gestion.css";
 import TableM from "../../components/table/TableM";
 import Formulaire from "../../components/formulaire/Formulaire";
 import {
   userEntries as entries,
   userButtons as buttons,
-  userEntries,
-} from "../../data/formData";
+ } from "../../data/formData";
 import { useSelector } from "react-redux";
 import { columnsUsersEmp, filterUserOptions } from "../../data/tableCols";
 const GestionEmploye = () => {
