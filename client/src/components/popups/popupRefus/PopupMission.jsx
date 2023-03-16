@@ -21,7 +21,6 @@ const PopupMission = ({ item }) => {
       <div className="info">
         <div className="info-mission">
           <div className="dates">
-            {" "}
             <p>
               <span>Date de debut mission:</span> {item.tDateDeb}
             </p>

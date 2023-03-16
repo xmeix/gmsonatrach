@@ -54,6 +54,37 @@
   display: flex;
   justify-content: space-between;
 }
+.popup-mission .info {
+  padding: 1em;
+  border: solid 1px black;
+  display: flex;
+  align-items: flex-start;
+  gap: 1em;
+  flex-wrap: wrap;
+}
+.popup-mission .info .info-mission,
+.popup-mission .info .info-budget {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.popup-mission .employes {
+  padding: 1em;
+  border: solid 1px black;
+}
+.popup-mission .taches {
+  padding: 1em;
+  border: solid 1px black;
+}
+.popup-mission .deplacement {
+  padding: 1em;
+  border: solid 1px black;
+}
+.popup-mission .info-creation {
+  padding: 1em;
+  border: solid 1px black;
+}
 /*---------------------------------------------------*/
 .popup-update {
   display: flex;
