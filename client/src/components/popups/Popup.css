@@ -16,7 +16,12 @@
 
 /*--------------------------------------------------*/
 
-.popup-refuse {
+.popup-refuse,
+.popup-mission,
+.popup-user,
+.popup-dm,
+.popup-dc,
+.popup-db {
   height: auto;
   width: auto;
   top: 50%;

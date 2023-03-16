@@ -28,9 +28,9 @@ const useStyles = makeStyles({
   },
 });
 
-const PopupUpdate = ({ item }) => {
-  const mission = item.idMission;
-  const user = item.idEmploye;
+const PopupUpdate = ({ item, close }) => {
+  const mission = item.idMission || null;
+  const user = item.idEmploye || null;
   const [dates, setDates] = useState([]);
   const [body, setBody] = useState([]);
   const [hebergement, setHebergement] = useState(() =>
@@ -48,9 +48,10 @@ const PopupUpdate = ({ item }) => {
   useEffect(() => {
     const generateDates = () => {
       const newDates = [];
-      let end = new Date(mission.tDateDeb);
-      let start = new Date(mission.tDateRet);
-
+      let start = new Date(mission.tDateDeb);
+      let end = new Date(mission.tDateRet);
+      console.log("start " + start);
+      console.log("end " + end);
       // loop through dates from start to end date
       while (start <= end) {
         newDates.push(new Date(start).toISOString());
@@ -178,7 +179,12 @@ const PopupUpdate = ({ item }) => {
               travail habituel)
             </span>
             <div className="dateContent">
-              <span>Le </span>: __/__/___, <span>a:</span> __ H __ Mn
+              <span>Le </span>:{" "}
+              {mission &&
+                Intl.DateTimeFormat(["ban", "id"]).format(
+                  new Date(mission.tDateDeb)
+                )}
+              , <span>a:</span> __ H __ Mn
             </div>
             <div className="dateContainer">
               <span>
@@ -297,11 +303,15 @@ const PopupUpdate = ({ item }) => {
               Date et heure du départ "du lieu où avait été déroulée la mission"
             </span>
             <div className="dateContent">
-              <span>Le </span>: __/__/___, <span>a:</span> __ H __ Mn
+              <span>Le </span>:
+              {Intl.DateTimeFormat(["ban", "id"]).format(
+                new Date(mission.tDateRet)
+              )}
+              , <span>a:</span> __ H __ Mn
             </div>
             <div className="dateContainer">
               <span>
-                Date et heure d’Arrivée "au lieu de résidence ou au lieu de
+                Date et heure d'Arrivée "au lieu de résidence ou au lieu de
                 travail habituel"
               </span>
             </div>
@@ -316,7 +326,7 @@ const PopupUpdate = ({ item }) => {
           <span>A l'aller:</span> {mission.moyenTransport}
           <br />
           <span>Au retour:</span>
-          {mission?.moyenTransportRet}
+          {mission.moyenTransportRet}
         </div>
       </div>
       <div className="signature">
@@ -324,14 +334,26 @@ const PopupUpdate = ({ item }) => {
         Signature & griffe
       </div>
 
-      <div className="buttons">
-        <button onClick={() => handleClick("update", item, "rfm", "", body)}>
-          Update
-        </button>
-        <button onClick={() => handleClick("send", item, "rfm", "")}>
-          Send
-        </button>
-      </div>
+      {item.etat === "créé" && (
+        <div className="buttons">
+          <button
+            onClick={() => {
+              handleClick("update", item, "rfm", "", body);
+              close();
+            }}
+          >
+            Update
+          </button>
+          <button
+            onClick={() => {
+              handleClick("send", item, "rfm", "");
+              close();
+            }}
+          >
+            Send
+          </button>
+        </div>
+      )}
     </div>
   );
 };

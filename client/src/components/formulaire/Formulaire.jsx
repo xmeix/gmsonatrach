@@ -155,7 +155,7 @@ const Formulaire = ({ title, entries, buttons, type }) => {
                           setEnd(e.target.value);
                         }
                       }
-                      handleChange();
+                      handleChange(e);
                     }}
                     name={entry.id}
                   />

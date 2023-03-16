@@ -137,7 +137,7 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
         })}
 
         {/* {showBtn && (
-          <button className="btn" onClick={handleShow}>
+          <button className="btn" onClick={openPopup}>
             see
           </button>
         )} */}
@@ -314,7 +314,10 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
                     <TableCell
                       align="center"
                       className="tableColumn"
-                      onClick={() => handleShow(item.__t)}
+                      onClick={() => {
+                        openPopup(item.__t.toLowerCase());
+                        setSavedItem(item);
+                      }}
                     >
                       {Intl.DateTimeFormat(["ban", "id"]).format(
                         new Date(item.createdAt)
@@ -323,28 +326,40 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
                     <TableCell
                       align="center"
                       className="tableColumn"
-                      onClick={() => handleShow(item.__t)}
+                      onClick={() => {
+                        openPopup(item.__t.toLowerCase());
+                        setSavedItem(item);
+                      }}
                     >
                       {item.idEmetteur.nom + " " + item.idEmetteur.prenom}
                     </TableCell>
                     <TableCell
                       align="center"
                       className="tableColumn"
-                      onClick={() => handleShow(item.__t)}
+                      onClick={() => {
+                        openPopup(item.__t.toLowerCase());
+                        setSavedItem(item);
+                      }}
                     >
                       {item.motif}
                     </TableCell>
                     <TableCell
                       align="center"
                       className="tableColumn"
-                      onClick={() => handleShow(item.__t)}
+                      onClick={() => {
+                        openPopup(item.__t.toLowerCase());
+                        setSavedItem(item);
+                      }}
                     >
                       {item.idEmetteur.structure}
                     </TableCell>
                     <TableCell
                       align="center"
                       className={item.etat}
-                      onClick={() => handleShow(item.__t)}
+                      onClick={() => {
+                        openPopup(item.__t.toLowerCase());
+                        setSavedItem(item);
+                      }}
                     >
                       {item.etat}
                     </TableCell>
@@ -360,7 +375,10 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
                     <TableCell
                       align="center"
                       className="tableColumn"
-                      onClick={() => handleShow("rfm")}
+                      onClick={() => {
+                        openPopup("update");
+                        setSavedItem(item);
+                      }}
                     >
                       {Intl.DateTimeFormat(["ban", "id"]).format(
                         new Date(item.createdAt)
@@ -369,14 +387,20 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
                     <TableCell
                       align="center"
                       className="tableColumn"
-                      onClick={() => handleShow("rfm")}
+                      onClick={() => {
+                        openPopup("update");
+                        setSavedItem(item);
+                      }}
                     >
                       {item.idEmploye?.nom + " " + item.idEmploye?.prenom}
                     </TableCell>
                     <TableCell
                       align="center"
                       className={item.etat}
-                      onClick={() => handleShow("rfm")}
+                      onClick={() => {
+                        openPopup("update");
+                        setSavedItem(item);
+                      }}
                     >
                       {item.etat}
                     </TableCell>
@@ -392,7 +416,12 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
                     <TableCell
                       align="center"
                       className="tableColumn"
-                      onClick={() => handleShow("mission")}
+                      onClick={() => {
+                        openPopup("mission");
+
+                        setSavedItem(item);
+                        setSavedType("mission");
+                      }}
                     >
                       {Intl.DateTimeFormat(["ban", "id"]).format(
                         new Date(item.createdAt)
@@ -401,28 +430,48 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
                     <TableCell
                       align="center"
                       className="tableColumn"
-                      onClick={() => handleShow("mission")}
+                      onClick={() => {
+                        openPopup("mission");
+
+                        setSavedItem(item);
+                        setSavedType("mission");
+                      }}
                     >
                       {item.createdBy?.nom + " " + item.createdBy?.prenom}
                     </TableCell>
                     <TableCell
                       align="center"
                       className="tableColumn"
-                      onClick={() => handleShow("mission")}
+                      onClick={() => {
+                        openPopup("mission");
+
+                        setSavedItem(item);
+                        setSavedType("mission");
+                      }}
                     >
                       {item.objetMission}
                     </TableCell>
                     <TableCell
                       align="center"
                       className="tableColumn"
-                      onClick={() => handleShow("mission")}
+                      onClick={() => {
+                        openPopup("mission");
+
+                        setSavedItem(item);
+                        setSavedType("mission");
+                      }}
                     >
                       {item.budget}DA
                     </TableCell>
                     <TableCell
                       align="center"
                       className="tableColumn"
-                      onClick={() => handleShow("mission")}
+                      onClick={() => {
+                        openPopup("mission");
+
+                        setSavedItem(item);
+                        setSavedType("mission");
+                      }}
                     >
                       {Intl.DateTimeFormat(["ban", "id"]).format(
                         new Date(item.tDateDeb)
@@ -431,7 +480,12 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
                     <TableCell
                       align="center"
                       className="tableColumn"
-                      onClick={() => handleShow("mission")}
+                      onClick={() => {
+                        openPopup("mission");
+
+                        setSavedItem(item);
+                        setSavedType("mission");
+                      }}
                     >
                       {Intl.DateTimeFormat(["ban", "id"]).format(
                         new Date(item.tDateRet)
@@ -440,14 +494,24 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
                     <TableCell
                       align="center"
                       className={item.etat}
-                      onClick={() => handleShow("mission")}
+                      onClick={() => {
+                        openPopup("mission");
+
+                        setSavedItem(item);
+                        setSavedType("mission");
+                      }}
                     >
                       {item.etat}
                     </TableCell>
                     <TableCell
                       align="center"
                       className="tableColumn"
-                      onClick={() => handleShow("mission")}
+                      onClick={() => {
+                        openPopup("mission");
+
+                        setSavedItem(item);
+                        setSavedType("mission");
+                      }}
                     >
                       {item.raisonRefus}
                     </TableCell>
@@ -462,7 +526,11 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
                     <TableCell
                       align="center"
                       className="tableColumn"
-                      onClick={() => handleShow("user")}
+                      onClick={() => {
+                        openPopup("user");
+                        setSavedItem(item);
+                        setSavedType("user");
+                      }}
                     >
                       {Intl.DateTimeFormat(["ban", "id"]).format(
                         new Date(item.createdAt)
@@ -471,35 +539,55 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
                     <TableCell
                       align="center"
                       className="tableColumn"
-                      onClick={() => handleShow("user")}
+                      onClick={() => {
+                        openPopup("user");
+                        setSavedItem(item);
+                        setSavedType("user");
+                      }}
                     >
                       {item.nom}
                     </TableCell>
                     <TableCell
                       align="center"
                       className="tableColumn"
-                      onClick={() => handleShow("user")}
+                      onClick={() => {
+                        openPopup("user");
+                        setSavedItem(item);
+                        setSavedType("user");
+                      }}
                     >
                       {item.prenom}
                     </TableCell>
                     <TableCell
                       align="center"
                       className="tableColumn"
-                      onClick={() => handleShow("user")}
+                      onClick={() => {
+                        openPopup("user");
+                        setSavedItem(item);
+                        setSavedType("user");
+                      }}
                     >
                       {item.fonction}
                     </TableCell>
                     <TableCell
                       align="center"
                       className="tableColumn"
-                      onClick={() => handleShow("user")}
+                      onClick={() => {
+                        openPopup("user");
+                        setSavedItem(item);
+                        setSavedType("user");
+                      }}
                     >
                       {item.email}
                     </TableCell>
                     <TableCell
                       align="center"
                       className="tableColumn"
-                      onClick={() => handleShow("user")}
+                      onClick={() => {
+                        openPopup("user");
+                        setSavedItem(item);
+                        setSavedType("user");
+                      }}
                     >
                       {item.role}
                     </TableCell>
@@ -534,7 +622,7 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
           />
         </>
       )}
- 
+
       {isOpen && <div className="closePopup" onClick={handleCloseForm}></div>}
     </div>
   );
