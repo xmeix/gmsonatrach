@@ -315,6 +315,7 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
                       align="center"
                       className="tableColumn"
                       onClick={() => {
+                        console.log("here : " + JSON.stringify(item));
                         openPopup(item.__t.toLowerCase());
                         setSavedItem(item);
                       }}
@@ -327,6 +328,8 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
                       align="center"
                       className="tableColumn"
                       onClick={() => {
+                        console.log("here : " + JSON.stringify(item));
+
                         openPopup(item.__t.toLowerCase());
                         setSavedItem(item);
                       }}
@@ -337,6 +340,8 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
                       align="center"
                       className="tableColumn"
                       onClick={() => {
+                        console.log("here : " + JSON.stringify(item));
+
                         openPopup(item.__t.toLowerCase());
                         setSavedItem(item);
                       }}
@@ -347,6 +352,8 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
                       align="center"
                       className="tableColumn"
                       onClick={() => {
+                        console.log("here : " + JSON.stringify(item));
+
                         openPopup(item.__t.toLowerCase());
                         setSavedItem(item);
                       }}

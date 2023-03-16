@@ -1,6 +1,5 @@
 .table {
   margin-bottom: 2em;
-  white-space: nowrap;
 }
 
 .table .search {
@@ -164,31 +163,31 @@ position: fixed;
 
 .accept,
 .send {
-  background-color: var(--green2);
+  background-color: var(--green2) !important;
 }
 .accept:hover,
 .send:hover {
-  background-color: var(--green4);
+  background-color: var(--green4) !important;
 }
 
 .refuse,
 .delete {
-  background-color: var(--red1);
+  background-color: var(--red1) !important;
 }
 
 .refuse:hover,
 .delete:hover {
-  background-color: var(--red2);
+  background-color: var(--red2) !important;
 }
 
 .cancel,
 .update {
-  background-color: var(--blue3);
+  background-color: var(--blue3) !important;
 }
 
 .cancel:hover,
 .update:hover {
-  background-color: var(--blue2);
+  background-color: var(--blue2) !important;
 }
 
 .acceptée,

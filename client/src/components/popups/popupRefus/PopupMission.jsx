@@ -1,13 +1,13 @@
 const PopupMission = ({ item }) => {
   return (
     <div className="popup-mission">
-      <div className="title">Mission Card</div>
+      <div className="title">Information mission</div>
       <div className="head">
         <h3>Object Mission: {item.objetMission}</h3>
         <div className="state">
-          <p>
+          <div>
             <span>Etat:</span>{" "}
-            <p
+            <span
               style={{
                 color:
                   item.etat === "en-attente"
@@ -19,50 +19,50 @@ const PopupMission = ({ item }) => {
               }}
             >
               {item.etat}
-            </p>
-          </p>
-          <p>
+            </span>
+          </div>
+          <div>
             <span>Raison du refus:</span> {item.raisonRefus || "/"}
-          </p>
+          </div>
           {/* {item.etat === "refusée" && (
-          <p>
+          <div>
             <span>Raison du refus:</span> {item.raisonRefus}
-          </p>
+          </div>
         )} */}
         </div>
       </div>
       <div className="info">
         <div className="info-mission">
           <div className="dates">
-            <p>
+            <div>
               <span>Date de debut mission:</span>
               {Intl.DateTimeFormat(["ban", "id"]).format(
                 new Date(item.tDateDeb)
               )}
-            </p>
-            <p>
+            </div>
+            <div>
               <span>Date de fin mission:</span>
               {Intl.DateTimeFormat(["ban", "id"]).format(
                 new Date(item.tDateRet)
               )}
-            </p>
+            </div>
           </div>
           <div>
             <span>Structure:</span> {item.structure}
           </div>
-          <p>
+          <div>
             <span>Type:</span> {item.type}
-          </p>
-          <p>
+          </div>
+          <div>
             <span>Observation:</span> {item.observation || "/"}
-          </p>
+          </div>
         </div>
         <div className="info-budget">
-          <p>
+          <div>
             <span>Budget: </span>
             {item.budget}
-          </p>
-          <p>
+          </div>
+          <div>
             <span>Budget Consomme:</span>{" "}
             {item.budgetConsome === 0 ? (
               <input
@@ -76,20 +76,22 @@ const PopupMission = ({ item }) => {
             ) : (
               item.budgetConsome
             )}
-          </p>
+          </div>
         </div>
       </div>
 
       <div className="employes">
         <span>Employes:</span>{" "}
-        {item.employes.map((emp) => (
-          <li className="employe">{emp.nom + " " + emp.prenom}</li>
+        {item.employes.map((emp, i) => (
+          <li className="employe" key={i}>
+            {emp.nom + " " + emp.prenom}
+          </li>
         ))}
       </div>
       <div className="taches">
         <span>Taches:</span>{" "}
-        {item.taches.map((tache) => (
-          <div className="tache">
+        {item.taches.map((tache, i) => (
+          <div className="tache" key={i}>
             <div className="content">{tache.content}</div>
             <div
               className="etat"
@@ -110,27 +112,27 @@ const PopupMission = ({ item }) => {
       </div>
 
       <div className="deplacement">
-        <p>
+        <div>
           <span>Pays:</span> {item.pays}
-        </p>
-        <p>
+        </div>
+        <div>
           <span>Moyen de transport aller:</span>{" "}
           {item.moyenTransport.join(" - ")}
-        </p>
-        <p>
+        </div>
+        <div>
           <span>Moyen de transport retour:</span>{" "}
           {item.moyenTransportRet.join(" - ")}
-        </p>
-        <p>
+        </div>
+        <div>
           <span>Lieu de depart:</span> {item.lieuDep}
-        </p>
-        <p>
+        </div>
+        <div>
           <span>Destination:</span> {item.destination}
-        </p>
-        <p>
+        </div>
+        <div>
           <span>Circonscription Administrative:</span>{" "}
           {item.circonscriptionAdm || " /"}
-        </p>
+        </div>
       </div>
 
       <div className="info-creation">

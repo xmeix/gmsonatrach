@@ -50,8 +50,7 @@ const PopupUpdate = ({ item, close }) => {
       const newDates = [];
       let start = new Date(mission.tDateDeb);
       let end = new Date(mission.tDateRet);
-      console.log("start " + start);
-      console.log("end " + end);
+
       // loop through dates from start to end date
       while (start <= end) {
         newDates.push(new Date(start).toISOString());
@@ -107,7 +106,6 @@ const PopupUpdate = ({ item, close }) => {
           observation: observations[i] || "",
         });
       }
-      console.log(newBody);
 
       setBody(newBody);
     } catch (error) {
@@ -139,8 +137,16 @@ const PopupUpdate = ({ item, close }) => {
   }
   return (
     <div className="popup-update">
-      <h3 className="title">Ordre de Mission</h3>
+      <h3 className="title">Compte Rendu de Mission</h3>
       <div className="direction">
+        <div>
+          Du{" "}
+          <span>
+            {Intl.DateTimeFormat(["ban", "id"]).format(
+              new Date(item.createdAt)
+            )}
+          </span>
+        </div>
         <span className="identificateur">
           N° {item._id}/ SH-ONE/{new Date().getFullYear()}
         </span>
@@ -339,6 +345,7 @@ const PopupUpdate = ({ item, close }) => {
       {item.etat === "créé" && (
         <div className="buttons">
           <button
+            className="update"
             onClick={() => {
               handleClick("update", item, "rfm", "", body);
               close();
@@ -347,6 +354,7 @@ const PopupUpdate = ({ item, close }) => {
             Update
           </button>
           <button
+            className="send"
             onClick={() => {
               handleClick("send", item, "rfm", "");
               close();

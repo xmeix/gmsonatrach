@@ -11,13 +11,29 @@
   overflow-y: auto;
   white-space: wrap !important;
 }
+/*--------------------------------------------------*/
+.popup-dm {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  /* border: solid 1px var(--light-gray); */
+  top: 15%;
+  left: 20%;
+  right: 20%;
+  bottom: 15%;
+  font-size: 13px;
+  padding: 1.5em;
+}
 
+.popup-dm .content {
+  text-align: left;
+  align-self: center;
+  font-size: 15px;
+}
 /*--------------------------------------------------*/
 
 .popup-refuse,
 .popup-user,
-.popup-dm,
-.popup-dc,
 .popup-db {
   height: auto;
   width: auto;
@@ -36,9 +52,35 @@
   align-items: center;
   gap: 1em;
 }
-
 /*---------------------------------------------------*/
-.popup-mission {
+.popup-dc .direction {
+  text-align: left;
+  display: flex;
+  justify-content: space-around;
+  font-size: 11px;
+  align-items: center;
+}
+.popup-dc .direction .dir {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 150px;
+  text-align: center;
+}
+
+.popup-dc .direction .dir img {
+  height: 70px;
+}
+.popup-dc .before-table {
+  margin-top: 2em;
+  text-align: left;
+}
+.popup-dc .before-table * {
+  margin-bottom: 1em;
+}
+/*---------------------------------------------------*/
+.popup-mission,
+.popup-dc {
   display: flex;
   flex-direction: column;
   gap: 1.5em;
@@ -63,6 +105,7 @@
 .popup-mission .head {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   font-size: 11px;
   text-align: left;
 }
@@ -70,12 +113,14 @@
 .popup-mission .info {
   display: flex;
   align-items: flex-start;
-  gap: 4em;
-  justify-content: space-evenly;
+  align-items: center;
+  gap: 2em;
+  justify-content: space-between;
   flex-wrap: wrap;
 }
 .popup-mission .info * {
   flex: 1;
+  padding: 0.5em 0;
 }
 .popup-mission .info .info-mission,
 .popup-mission .info .info-budget {
@@ -85,7 +130,10 @@
   margin: 0.5em 1em;
 }
 
-.popup-mission .taches {
+.popup-mission .deplacement {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
 }
 .popup-mission .tache {
   margin: 0.5em 0;
@@ -140,7 +188,9 @@
   padding: 1em;
 }
 .popup-update span,
-.popup-mission span {
+.popup-mission span,
+.popup-dm span,
+.popup-dc span {
   font-weight: 600;
   margin-right: 1em;
 }
@@ -208,12 +258,19 @@
   padding: 1.5em;
 }
 .title {
-  text-transform: capitalize;
+  text-transform: uppercase;
   color: var(--black);
   font-size: 18px;
   font-weight: 800;
+  margin-bottom: 3em;
+  text-align: center;
 }
-
+.popup-update .buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1em;
+}
 .popup button {
   background-color: var(--white);
   border-radius: 4px;
