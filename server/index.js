@@ -12,8 +12,12 @@ import ordreMissionRoutes from "./routes/ordreMission.js";
 import depenseRoutes from "./routes/depense.js";
 import rapportRoutes from "./routes/rapportFM.js";
 import cookieParser from "cookie-parser";
- /** CONFIGURATION */
+ 
+/** CONFIGURATION */
 dotenv.config();
+
+
+
 const app = express();
 app.use(express.json());
 app.use(helmet());

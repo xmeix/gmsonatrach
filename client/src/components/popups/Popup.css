@@ -47,43 +47,83 @@
   left: 3em;
   right: 3em;
   bottom: 3em;
-  font-size: 15px;
+  font-size: 13px;
   padding: 1.5em;
+}
+.popup-mission .employes,
+.popup-mission .taches,
+.popup-mission .deplacement,
+.popup-mission .info-creation,
+.popup-mission .info {
+  padding: 1em;
+  text-align: left;
+  border: solid 1px lightgray;
+  border-radius: 2px;
 }
 .popup-mission .head {
   display: flex;
   justify-content: space-between;
+  font-size: 11px;
+  text-align: left;
 }
+
 .popup-mission .info {
-  padding: 1em;
-  border: solid 1px black;
   display: flex;
   align-items: flex-start;
-  gap: 1em;
+  gap: 4em;
+  justify-content: space-evenly;
   flex-wrap: wrap;
+}
+.popup-mission .info * {
+  flex: 1;
 }
 .popup-mission .info .info-mission,
 .popup-mission .info .info-budget {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  text-align: left;
+}
+.popup-mission .employe {
+  margin: 0.5em 1em;
 }
 
-.popup-mission .employes {
-  padding: 1em;
-  border: solid 1px black;
-}
 .popup-mission .taches {
-  padding: 1em;
-  border: solid 1px black;
 }
-.popup-mission .deplacement {
-  padding: 1em;
-  border: solid 1px black;
+.popup-mission .tache {
+  margin: 0.5em 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5em;
+}
+.popup-mission .tache .content {
+  font-weight: 700;
+}
+.popup-mission .tache div {
+  flex: 1;
+}
+.popup-mission .tache button {
+  font-size: 12px;
+}
+.popup-mission .tache button:hover {
+  background-color: var(--blue2);
+}
+.popup-mission .info .info-mission .dates {
+  text-align: left;
 }
 .popup-mission .info-creation {
-  padding: 1em;
-  border: solid 1px black;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.popup-mission .info-creation .crea-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1em;
+}
+
+.popup-mission .info-creation .crea-container div {
+  flex: 1;
 }
 /*---------------------------------------------------*/
 .popup-update {
@@ -96,14 +136,13 @@
   left: 3em;
   right: 3em;
   bottom: 3em;
-  font-size: 15px;
+  font-size: 13px;
   padding: 1em;
 }
 .popup-update span,
 .popup-mission span {
   font-weight: 600;
-}
-.popup-update .direction {
+  margin-right: 1em;
 }
 .popup-update .infoEmploye {
   display: flex;
@@ -116,11 +155,6 @@
   flex-direction: column;
   align-items: flex-start;
   gap: 0.5em;
-}
-.popup-update .infoMission .objetMission {
-}
-
-.popup-update .infoMission .itineraire {
 }
 
 .popup-update .infoMission .dates {
