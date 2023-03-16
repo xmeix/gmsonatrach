@@ -144,27 +144,46 @@
   font-weight: 600;
   margin-right: 1em;
 }
+.popup-update .direction {
+  display: flex;
+  justify-content: space-around;
+}
+.popup-update .direction .identificateur {
+  font-size: 11px;
+}
+.popup-update .infoEmploye,
+.popup-update .infoMission .dates {
+  border: solid 1px lightgray;
+  padding: 1.5em;
+}
 .popup-update .infoEmploye {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 0.5em;
+  gap: 1em;
 }
 .popup-update .infoMission {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 0.5em;
+  gap: 1em;
 }
-
+.popup-update .infoMission .objetMission,
+.popup-update .infoMission .itineraire {
+  margin-left: 1.5em;
+}
 .popup-update .infoMission .dates {
+  text-align: left;
+}
+.popup-update .infoMission .dates .dateContainer {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 0.5em;
+  gap: 0.8em;
+  margin-top: 1em;
 }
 .popup-update .subTitle {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 600;
   text-transform: capitalize;
 }
@@ -172,12 +191,6 @@
   font-size: 11px;
   font-weight: 500;
   font-style: italic;
-}
-.popup-update .infoMission .dates .dateContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.5em;
 }
 
 .popup-update .infoMission .deroulement {
@@ -192,6 +205,7 @@
   flex-direction: column;
   align-items: flex-start;
   gap: 0.5em;
+  padding: 1.5em;
 }
 .title {
   text-transform: capitalize;

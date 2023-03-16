@@ -131,6 +131,8 @@ const PopupUpdate = ({ item, close }) => {
           value={value}
           checked={element === value}
           onChange={handleObservationChange(index, type)}
+          style={{ color: "var(--orange)" }}
+          size="small"
         />
       );
     }
@@ -138,13 +140,13 @@ const PopupUpdate = ({ item, close }) => {
   return (
     <div className="popup-update">
       <h3 className="title">Ordre de Mission</h3>
-      <div className="direction">DCG/RH - DAPS</div>
+      <div className="direction">
+        <span className="identificateur">
+          N° {item._id}/ SH-ONE/{new Date().getFullYear()}
+        </span>
+        <span>DCG/RH - DAPS</span>
+      </div>
       <div className="infoEmploye">
-        <div className="identificateur">
-          <span>
-            N° {item._id}/ SH-ONE/{new Date().getFullYear()}
-          </span>
-        </div>
         <div className="matricule">
           <span>Matricule:</span>
           {user._id}
@@ -323,10 +325,10 @@ const PopupUpdate = ({ item, close }) => {
         <div className="moyens">
           <span className="subTitle">Moyens de transport utilisés :</span>{" "}
           <br />
-          <span>A l'aller:</span> {mission.moyenTransport}
+          <span>A l'aller:</span> {mission.moyenTransport.join(" - ")}
           <br />
           <span>Au retour:</span>
-          {mission.moyenTransportRet}
+          {mission.moyenTransportRet.join(" - ")}
         </div>
       </div>
       <div className="signature">
