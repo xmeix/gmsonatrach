@@ -12,6 +12,17 @@
   white-space: wrap !important;
 }
 /*--------------------------------------------------*/
+
+.popup-db{
+  
+}
+
+
+
+
+
+
+/*--------------------------------------------------*/
 .popup-dm {
   display: flex;
   flex-direction: column;
@@ -33,8 +44,7 @@
 /*--------------------------------------------------*/
 
 .popup-refuse,
-.popup-user,
-.popup-db {
+.popup-user {
   height: auto;
   width: auto;
   top: 50%;
@@ -68,9 +78,6 @@
   text-align: center;
 }
 
-.popup-dc .direction .dir img {
-  height: 70px;
-}
 .popup-dc .before-table {
   margin-top: 2em;
   text-align: left;
@@ -80,7 +87,8 @@
 }
 /*---------------------------------------------------*/
 .popup-mission,
-.popup-dc {
+.popup-dc,
+.popup-db {
   display: flex;
   flex-direction: column;
   gap: 1.5em;

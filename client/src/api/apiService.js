@@ -10,10 +10,11 @@ export const userRequest = axios.create({
   baseURL: API_BASE_URL,
   headers: {
     "Content-Type": "application/json",
-    Authorization: `Bearer ${token}`,
+    Authorization: token ? `Bearer ${token}` : undefined,
   },
-  withCredentials: "true",
+  withCredentials: true,
 });
+
 userRequest.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("jwt");

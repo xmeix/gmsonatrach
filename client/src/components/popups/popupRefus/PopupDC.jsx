@@ -1,5 +1,8 @@
 import { makeStyles } from "@material-ui/core";
 import logo from "../../../assets/logo.svg";
+import jsPDF from "jspdf";
+import html2pdf from "html2pdf.js";
+
 import {
   Table,
   TableBody,
@@ -30,14 +33,30 @@ const useStyles = makeStyles({
 const PopupDC = ({ item }) => {
   const classes = useStyles();
 
+  const generatePDF = () => {
+    const element = document.getElementById("DC-Demande");
+
+    html2pdf()
+      .set({ jsPDF: { unit: "in", format: "letter", orientation: "portrait" } })
+      .from(element)
+      .save();
+  };
+
   return (
-    <div className="popup-dc">
+    <div className="popup-dc" id="DC-Demande">
       <div>
         <h1 className="title">Demande de congé</h1>
         <div className="direction">
           <div className="dir">
-            {" "}
-            <img src={logo} alt="" />
+            <img
+              src={logo}
+              alt=""
+              className="logo-image"
+              style={{
+                height: "70px",
+                width: "60px",
+              }}
+            />
             <span>Direction Corporate Ressources Humaines</span>
           </div>
 
@@ -160,6 +179,7 @@ const PopupDC = ({ item }) => {
           </div>
         </div>
       </div>
+      <button onClick={generatePDF}>Export to PDF</button>
     </div>
   );
 };

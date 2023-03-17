@@ -63,10 +63,13 @@ const Planning = () => {
 
   const checkMissions = (day, employe) => {
     const miss = Acceptedmissions.some((m) => {
+      const dateDeb = new Date(m.tDateDeb);
+      const dateRet = new Date(m.tDateRet);
+      const currentDate = new Date(year, month, day);
       if (
-        m.employes.includes(employe.id) &&
-        new Date(year, month, day) >= new Date(m.tDateDeb) &&
-        new Date(year, month, day) <= new Date(m.tDateRet)
+        (dateDeb.getTime() === currentDate.getTime() ||
+          dateRet.getTime() === dateDeb.getTime()) &&
+        m.employes.includes(employe.id)
       ) {
         return true;
       } else {
@@ -75,7 +78,6 @@ const Planning = () => {
     });
     return miss;
   };
-
   return (
     <div className="planning">
       <PageName name="Planification" />
@@ -95,7 +97,7 @@ const Planning = () => {
         </div>
         <div className="calendar">
           <div className="element">
-            <th className="title">employé</th>
+            <div className="title">employé</div>
             {employees.map((emp) => (
               <div className="postElement" key={uuid()}>
                 {emp.nom}
@@ -103,7 +105,7 @@ const Planning = () => {
             ))}
           </div>
           <div className="element">
-            <th className="title">Stream</th>
+            <div className="title">Stream</div>
             {employees.map((emp) => (
               <div className="postElement" key={uuid()}>
                 {emp.structure}
@@ -111,21 +113,23 @@ const Planning = () => {
             ))}
           </div>
           <div className="element">
-            <th className="title">
+            <div className="title">
               {days.map((day) => (
                 <div className="day" key={uuid()}>
                   {day}
                 </div>
               ))}
-            </th>
+            </div>
             {employees.map((employee) => (
               <div className="row" key={uuid()}>
                 {days.map((day) => {
                   const miss = checkMissions(day, employee);
                   return (
-                    <div className="mission" key={uuid()}>
-                      {miss ? "Y" : "X"}
-                    </div>
+                    <div
+                      className="mission"
+                      key={uuid()}
+                      style={{ backgroundColor: miss ? "black" : "lightblue" }}
+                    ></div>
                   );
                 })}
               </div>

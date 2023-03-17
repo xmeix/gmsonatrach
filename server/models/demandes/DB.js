@@ -22,6 +22,18 @@ const DBSchema = new mongoose.Schema(
       enum: ["aller-retour", "retour", "aller"],
       required: true,
     },
+    depart: {
+      type: String,
+      required: true,
+    },
+    destination: {
+      type: String,
+      required: true,
+    },
+    paysDestination: {
+      type: String,
+      required: true,
+    },
     motifDep: {
       //mission travail/mission formation
       type: String,
@@ -30,7 +42,6 @@ const DBSchema = new mongoose.Schema(
     },
     observation: {
       type: String,
-      required: true,
     },
     dateDepart: {
       type: Date,
@@ -40,6 +51,29 @@ const DBSchema = new mongoose.Schema(
       type: Date,
       required: true,
     },
+    direction: {
+      type: String,
+      default: "Projet SH-ONE",
+    },
+    sousSection: {
+      type: String,
+    },
+    division: {
+      type: String,
+    },
+    base: {
+      type: String,
+    },
+    gisement: {
+      type: String,
+    },
+    employes: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: true,
+      },
+    ],
   },
   {
     discriminatorKey: "type",

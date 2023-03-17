@@ -7,8 +7,7 @@ import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
 import { useAxios } from "../../hooks/useAxios";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { MissionEntries } from "../../data/formData";
-const customStyles = {
+ const customStyles = {
   control: (provided, state) => ({
     ...provided,
     border: "1px solid var(--light-gray)",
@@ -41,13 +40,16 @@ const Formulaire = ({ title, entries, buttons, type }) => {
   const users = useSelector((state) => state.auth.users);
   const [start, setStart] = useState(null);
   const [end, setEnd] = useState(null);
+  const [updatedEntries, setUpdatedEntries] = useState(entries); // new state variable
 
   const [employeesNonMissionnaires, setEmployeesNonMissionnaires] = useState(
     []
   );
   useEffect(() => {
+    console.log("jere");
     let newEmployeesNonMissionnaires;
-    if (start && end && type === "mission") {
+    if (start && end && (type === "mission" || type === "DB")) {
+      console.log("hereee");
       newEmployeesNonMissionnaires = users
         .filter(
           (user) =>
@@ -65,17 +67,29 @@ const Formulaire = ({ title, entries, buttons, type }) => {
           value: user._id,
         }));
 
-      setEmployeesNonMissionnaires(newEmployeesNonMissionnaires);
-      let missEntries = MissionEntries.map((entry) => {
-        if (entry.id === "employes") entry.options = employeesNonMissionnaires;
-        return entry;
-      });
+      console.log(newEmployeesNonMissionnaires);
 
-      if (missEntries) {
-        entries = missEntries;
+      setEmployeesNonMissionnaires(newEmployeesNonMissionnaires);
+      console.log(newEmployeesNonMissionnaires);
+      let newEntries;
+      if (type === "mission") {
+        newEntries = entries.map((entry) => {
+          if (entry.id === "employes")
+            entry.options = newEmployeesNonMissionnaires;
+          return entry;
+        });
+      } else if (type === "DB") {
+        newEntries = entries.map((entry) => {
+          if (entry.id === "employes")
+            entry.options = newEmployeesNonMissionnaires;
+          return entry;
+        });
+      }
+      if (newEntries) {
+        setUpdatedEntries(newEntries);
       }
     }
-  }, [start, end]);
+  }, [start, end, entries, missions, type, users]);
 
   /***-----------------------------------------------------------*/
   const handleSubmit = (e) => {
@@ -120,7 +134,7 @@ const Formulaire = ({ title, entries, buttons, type }) => {
     <div className="formulaire">
       <div className="listTitle">{title}</div>
       <div className="inputs">
-        {entries.map((entry, i) => {
+        {updatedEntries.map((entry, i) => {
           return (
             <div className="inputGroup" key={i}>
               {!(
@@ -152,6 +166,12 @@ const Formulaire = ({ title, entries, buttons, type }) => {
                         if (entry.id === "tDateDeb") {
                           setStart(e.target.value);
                         } else if (entry.id === "tDateRet") {
+                          setEnd(e.target.value);
+                        }
+                      } else if (type === "DB") {
+                        if (entry.id === "dateDepart") {
+                          setStart(e.target.value);
+                        } else if (entry.id === "dateRetour") {
                           setEnd(e.target.value);
                         }
                       }

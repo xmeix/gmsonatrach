@@ -26,10 +26,12 @@ export const createMission = async (req, res) => {
       circonscriptionAdm,
     } = req.body;
     const user = req.user;
-
+    let newStructure;
     //si c est un responsable et la mission créée n appartient pas a sa structure
-    if (user.role === "responsable" && user.structure !== structure)
-      throw new Error("Unauthorized");
+    if (user.role === "responsable") {
+      newStructure = user.structure;
+    }
+
     //verification dates start and end
     if (new Date(tDateDeb).getTime() >= new Date(tDateRet).getTime())
       throw new Error(
@@ -42,14 +44,10 @@ export const createMission = async (req, res) => {
       etat = "acceptée";
     }
 
-    if (user.role === "responsable") {
-      structure = user.structure;
-    }
-
     //check
     const fields = [
       objetMission,
-      structure,
+      newStructure,
       type,
       budget,
       pays,
@@ -75,7 +73,7 @@ export const createMission = async (req, res) => {
 
     const mission = new Mission({
       objetMission: objetMission,
-      structure,
+      structure: newStructure,
       type,
       budget,
       pays,

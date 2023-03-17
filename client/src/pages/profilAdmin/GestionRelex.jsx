@@ -1,4 +1,3 @@
-import Input from "../../components/form/input/Input";
 import PageName from "../../components/pageName/PageName";
 import "./../../css/Gestion.css";
 import TableM from "../../components/table/TableM";
@@ -8,10 +7,7 @@ import {
   userButtons as buttons,
 } from "../../data/formData";
 import { useSelector } from "react-redux";
-import {
-  columnsDemandes,
-  filterDBOptions,
- } from "../../data/tableCols";
+import { columnsDemandes, filterDBOptions } from "../../data/tableCols";
 const GestionRelex = () => {
   const demandes = useSelector((state) => state.auth.demandes);
   const currentUser = useSelector((state) => state.auth.user);

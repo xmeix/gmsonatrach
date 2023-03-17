@@ -71,6 +71,15 @@ export const createDemande = async (req, res) => {
           observation,
           dateDepart,
           dateRetour,
+          depart,
+          destination,
+          paysDestination,
+          direction,
+          sousSection,
+          division,
+          base,
+          gisement,
+          employes,
         } = req.body;
         newDemande = new DB({
           motif,
@@ -84,6 +93,15 @@ export const createDemande = async (req, res) => {
           observation,
           dateDepart,
           dateRetour,
+          depart,
+          destination,
+          paysDestination,
+          direction,
+          sousSection,
+          division,
+          base,
+          gisement,
+          employes,
         });
         break;
       }

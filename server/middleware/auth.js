@@ -63,6 +63,9 @@ export const generateJWT = (user, exp, secret) => {
 
 export const verifyToken = async (req, res, next) => {
   const authHeader = req.headers.authorization || req.headers.Authorization;
+  console.log("req.headers:", req.headers); // add this line
+
+  console.log("authHeader" + authHeader);
   if (!authHeader) {
     return res.status(401).json({ error: "Authorization header missing" });
   }
@@ -87,7 +90,7 @@ export const verifyToken = async (req, res, next) => {
       try {
         const newToken = await refresh(req, res);
         res.setHeader("Authorization", `Bearer ${newToken}`);
-        res.setHeader("Old-Authorization", `Bearer ${token}`);
+         res.setHeader("Old-Authorization", `Bearer ${token}`);
         req.user = jwt.decode(newToken).UserInfo;
         next();
       } catch (e) {
@@ -120,7 +123,7 @@ export const verifyTokenAndResponsable = (req, res, next) => {
     ) {
       next();
     } else {
-      res.status(403).json({ error: "Unauthorized" });
+      res.status(403).json({ error: "Unauthorized8" });
     }
   });
 };
