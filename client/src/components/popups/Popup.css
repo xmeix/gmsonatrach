@@ -13,15 +13,65 @@
 }
 /*--------------------------------------------------*/
 
-.popup-db{
-  
+.popup-db {
 }
 
+.popup-db .db-head {
+  border-style: solid;
+  border-width: 1px 1px 0px 1px;
+  border-color: var(--black);
+}
+.popup-db .db-head .db-container {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 1em;
+  border-bottom: solid 1px var(--black);
+}
+.popup-db .db-head .db-head-half {
+  text-align: left;
+}
+.popup-db .db-head .db-head-half .titre {
+  text-transform: uppercase;
+  color: var(--black);
+  font-size: 18px;
+  font-weight: 800;
+}
 
+.popup-db .db-head .db-head-info {
+  text-align: left;
+}
+.popup-db .db-body {
+  padding: 1em;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+.popup-db .db-body .db-date {
+  display: flex;
+}
 
+.popup-db .db-tab {
+  border-right: solid 1px var(--black);
+  border-bottom: solid 1px var(--black);
+}
+.popup-db .db-row {
+  display: flex;
+}
+.popup-db .db-cell {
+  flex: 1;
+  padding: 1em;
+  border-style: solid;
+  border-width: 1px 0px 0px 1px;
+  border-color: var(--black);
+}
 
-
-
+.popup-db .db-subtitle {
+  text-decoration: underline;
+  font-weight: 500;
+  text-transform: capitalize;
+}
 /*--------------------------------------------------*/
 .popup-dm {
   display: flex;
@@ -198,7 +248,8 @@
 .popup-update span,
 .popup-mission span,
 .popup-dm span,
-.popup-dc span {
+.popup-dc span,
+.popup-db span {
   font-weight: 600;
   margin-right: 1em;
 }
