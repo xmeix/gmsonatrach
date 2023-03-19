@@ -9,7 +9,7 @@
   text-align: center;
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 928px) {
   .pageName {
     font-size: 35px;
   }
