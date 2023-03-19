@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux";
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
+import randomColor from "randomcolor";
 
 const Planning = () => {
   const [monthOffset, setMonthOffset] = useState(0);
@@ -29,32 +30,38 @@ const Planning = () => {
           employe: emp,
           start: mission.tDateDeb,
           end: mission.tDateRet,
-          hasMission: true,
+          color: randomColor({
+            luminosity: "light",
+            format: "hex",
+          }),
         }))
       )
   );
-  console.log(acceptedMissions);
 
-  const handlePreviousMonth = () => {
+  const handlePreviousMonth = useCallback(() => {
     setMonthOffset((prevOffset) => prevOffset - 1);
-  };
+  }, []);
 
-  const handleNextMonth = () => {
+  const handleNextMonth = useCallback(() => {
     setMonthOffset((prevOffset) => prevOffset + 1);
-  };
+  }, []);
 
-  const isMissionDay = (day, mission) => {
-    const start = new Date(mission.start);
-    const end = new Date(mission.end);
-     return (
-      start.getDate() <= day &&
-      end.getDate() >= day &&
-      start.getMonth() === date.getMonth()
-    );
-  };
+  const isMissionDay = useCallback(
+    (day, mission) => {
+      const start = new Date(mission.start);
+      const end = new Date(mission.end);
+      const current = new Date(date.getFullYear(), date.getMonth(), day+1);
+      if (start.getDate() === day) console.log("start: " + day);
+      if (end.getDate() === day) console.log("end: " + day);
+      return current >= start && current <= end;
+    },
+    [date]
+  );
+
+  const memoizedIsMissionDay = useMemo(() => isMissionDay, [isMissionDay]);
 
   return (
-    <div>
+    <div style={{ overflow: "scroll" }}>
       <button onClick={handlePreviousMonth}>Previous Month</button>
       <button onClick={handleNextMonth}>Next Month</button>
       <table>
@@ -72,18 +79,24 @@ const Planning = () => {
               <td>{nom}</td>
               {[...Array(daysInMonth)].map((_, index) => {
                 const day = index + 1;
-                const missionExists = acceptedMissions.some(
-                  (item) => item.employe._id === _id && isMissionDay(day, item)
+                const matchingMission = acceptedMissions.find(
+                  (item) =>
+                    item.employe._id === _id && memoizedIsMissionDay(day, item)
                 );
-
                 return (
                   <td
                     key={index}
                     style={{
-                      backgroundColor: missionExists ? "green" : "white",
+                      backgroundColor: matchingMission
+                        ? matchingMission.color
+                        : "white",
                     }}
                   >
-                    {missionExists ? "Mission" : ""}
+                    {matchingMission ? (
+                      <div className="case-mission">mission</div>
+                    ) : (
+                      ""
+                    )}
                   </td>
                 );
               })}
