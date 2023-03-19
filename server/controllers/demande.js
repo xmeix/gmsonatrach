@@ -118,7 +118,8 @@ export const getDemandes = async (req, res) => {
     const user = await User.findById(req.user.id);
     let demandes = await Demande.find()
       .populate("idEmetteur")
-      .populate("idDestinataire");
+      .populate("idDestinataire")
+      ?.populate("employes");
     let filteredDemandes;
     /**
      * emp : get his DC , DM

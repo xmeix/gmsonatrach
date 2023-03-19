@@ -30,7 +30,7 @@ export const createMission = async (req, res) => {
     //si c est un responsable et la mission créée n appartient pas a sa structure
     if (user.role === "responsable") {
       newStructure = user.structure;
-    }
+    } else newStructure = structure;
 
     //verification dates start and end
     if (new Date(tDateDeb).getTime() >= new Date(tDateRet).getTime())

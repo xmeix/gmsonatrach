@@ -1,5 +1,5 @@
 import { useState } from "react";
- 
+
 const useForm = (initialValues) => {
   const [values, setValues] = useState(initialValues);
   console.log(values);
@@ -41,8 +41,6 @@ const useForm = (initialValues) => {
         ...prevState,
         [name]: value,
       }));
-
-    
   };
 
   const resetForm = () => {

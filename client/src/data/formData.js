@@ -26,6 +26,7 @@ export const userEntries = [
     inputType: "text",
     width: "230px",
     placeholder: "Entrez votre nom",
+    required: true,
   },
   {
     id: "prenom",
@@ -33,6 +34,7 @@ export const userEntries = [
     inputType: "text",
     width: "230px",
     placeholder: "Entrez votre prénom",
+    required: true,
   },
   {
     id: "fonction",
@@ -40,6 +42,7 @@ export const userEntries = [
     inputType: "text",
     width: "230px",
     placeholder: "Entrez votre fonction",
+    required: true,
   },
   {
     id: "numTel",
@@ -47,6 +50,7 @@ export const userEntries = [
     inputType: "tel",
     width: "230px",
     placeholder: "Entrez votre numéro de téléphone",
+    required: true,
   },
   {
     id: "email",
@@ -54,6 +58,7 @@ export const userEntries = [
     inputType: "email",
     width: "230px",
     placeholder: "Entrez votre adresse email",
+    required: true,
   },
   {
     id: "password",
@@ -61,6 +66,7 @@ export const userEntries = [
     inputType: "password",
     width: "230px",
     placeholder: "Entrez votre mot de passe",
+    required: true,
   },
   {
     id: "role",
@@ -75,6 +81,7 @@ export const userEntries = [
       { label: "Responsable", value: "responsable" },
     ],
     isMulti: false,
+    required: false,
   },
   {
     id: "structure",
@@ -96,6 +103,7 @@ export const userEntries = [
       { label: "CHANGE", value: "CHANGE" },
     ],
     isMulti: false,
+    required: false,
   },
 ];
 
@@ -106,6 +114,7 @@ export const DBEntries = [
     inputType: "number",
     width: "230px",
     placeholder: "Enter the SC number",
+    required: true,
   },
   {
     id: "designationSC",
@@ -113,6 +122,7 @@ export const DBEntries = [
     inputType: "text",
     width: "230px",
     placeholder: "Enter the SC designation",
+    required: true,
   },
   {
     id: "montantEngage",
@@ -120,6 +130,7 @@ export const DBEntries = [
     inputType: "number",
     width: "230px",
     placeholder: "Enter the amount engaged",
+    required: true,
   },
   {
     id: "nature",
@@ -133,6 +144,7 @@ export const DBEntries = [
       { label: "Aller", value: "aller" },
     ],
     isMulti: false,
+    required: true,
   },
   {
     id: "depart",
@@ -140,6 +152,7 @@ export const DBEntries = [
     inputType: "text",
     width: "230px",
     placeholder: "Enter the departure",
+    required: true,
   },
   {
     id: "destination",
@@ -147,6 +160,7 @@ export const DBEntries = [
     inputType: "text",
     width: "230px",
     placeholder: "Enter the destination",
+    required: true,
   },
   {
     id: "paysDestination",
@@ -447,6 +461,7 @@ export const DBEntries = [
       { label: "Zambia", value: "Zambia" },
       { label: "Zimbabwe", value: "Zimbabwe" },
     ],
+    required: true,
   },
   {
     id: "motifDep",
@@ -459,6 +474,7 @@ export const DBEntries = [
       { label: "Mission formation", value: "formation" },
     ],
     isMulti: false,
+    required: true,
   },
   {
     id: "observation",
@@ -466,6 +482,7 @@ export const DBEntries = [
     inputType: "textarea",
     width: "230px",
     placeholder: "Enter the observation",
+    required: true,
   },
   {
     id: "dateDepart",
@@ -473,6 +490,7 @@ export const DBEntries = [
     inputType: "date",
     width: "230px",
     placeholder: "Select departure date",
+    required: true,
   },
   {
     id: "dateRetour",
@@ -480,6 +498,7 @@ export const DBEntries = [
     inputType: "date",
     width: "230px",
     placeholder: "Select return date",
+    required: true,
   },
   {
     id: "direction",
@@ -487,6 +506,7 @@ export const DBEntries = [
     inputType: "text",
     width: "230px",
     placeholder: "Enter the direction",
+    required: true,
   },
   {
     id: "sousSection",
@@ -494,6 +514,7 @@ export const DBEntries = [
     inputType: "text",
     width: "230px",
     placeholder: "Enter the sub-section",
+    required: true,
   },
   {
     id: "division",
@@ -501,6 +522,7 @@ export const DBEntries = [
     inputType: "text",
     width: "230px",
     placeholder: "Enter the division",
+    required: true,
   },
   {
     id: "base",
@@ -508,6 +530,7 @@ export const DBEntries = [
     inputType: "text",
     width: "230px",
     placeholder: "Enter the base",
+    required: true,
   },
   {
     id: "gisement",
@@ -515,6 +538,7 @@ export const DBEntries = [
     inputType: "text",
     width: "230px",
     placeholder: "Enter Gisement",
+    required: true,
   },
   {
     id: "employes",
@@ -524,85 +548,9 @@ export const DBEntries = [
     placeholder: "Select Employés",
     options: [], // options will be dynamically populated based on data from the backend
     isMulti: true,
+    required: true,
   },
 ];
-
-// export const DBEntries = [
-//   {
-//     id: "motif",
-//     label: "Reason",
-//     inputType: "text",
-//     width: "230px",
-//     placeholder: "Enter the reason for the request",
-//   },
-//   {
-//     id: "numSC",
-//     label: "sub-account number",
-//     inputType: "number",
-//     width: "230px",
-//     placeholder: "Enter sub-account number",
-//   },
-//   {
-//     id: "designationSC",
-//     label: "sub-account designation",
-//     inputType: "text",
-//     width: "230px",
-//     placeholder: "Enter sub-account designation",
-//   },
-//   {
-//     id: "montantEngage",
-//     label: "Engaged Amount",
-//     inputType: "number",
-//     width: "230px",
-//     placeholder: "Enter engaged amount",
-//   },
-//   {
-//     id: "nature",
-//     label: "Nature",
-//     inputType: "select",
-//     width: "230px",
-//     placeholder: "Select nature",
-//     options: [
-//       { label: "Round-trip", value: "aller-retour" },
-//       { label: "One-way (departure)", value: "aller" },
-//       { label: "One-way (return)", value: "retour" },
-//     ],
-//     isMulti: false,
-//   },
-//   {
-//     id: "motifDep",
-//     label: "Purpose of travel",
-//     inputType: "select",
-//     width: "230px",
-//     placeholder: "Select purpose of travel",
-//     options: [
-//       { label: "Work", value: "travail" },
-//       { label: "Training", value: "formation" },
-//     ],
-//     isMulti: false,
-//   },
-//   {
-//     id: "observation",
-//     label: "Observation",
-//     inputType: "text",
-//     width: "230px",
-//     placeholder: "Enter observation",
-//   },
-//   {
-//     id: "dateDepart",
-//     label: "Departure Date",
-//     inputType: "date",
-//     width: "230px",
-//     placeholder: "Select departure date",
-//   },
-//   {
-//     id: "dateRetour",
-//     label: "Return Date",
-//     inputType: "date",
-//     width: "230px",
-//     placeholder: "Select return date",
-//   },
-// ];
 
 export const DCEntries = [
   {
@@ -611,6 +559,7 @@ export const DCEntries = [
     inputType: "text",
     width: "230px",
     placeholder: "Enter the reason for the request",
+    required: true,
   },
   {
     id: "DateDepart",
@@ -618,6 +567,7 @@ export const DCEntries = [
     inputType: "date",
     width: "230px",
     placeholder: "Select departure date",
+    required: true,
   },
   {
     id: "DateRetour",
@@ -625,6 +575,7 @@ export const DCEntries = [
     inputType: "date",
     width: "230px",
     placeholder: "Select return date",
+    required: true,
   },
   {
     id: "LieuSejour",
@@ -632,6 +583,7 @@ export const DCEntries = [
     inputType: "text",
     width: "230px",
     placeholder: "Enter stay location",
+    required: true,
   },
   {
     id: "Nature",
@@ -647,6 +599,7 @@ export const DCEntries = [
       { label: "Récupération", value: "recupération" },
     ],
     isMulti: false,
+    required: true,
   },
 ];
 
@@ -657,6 +610,7 @@ export const DMEntries = [
     inputType: "text",
     width: "230px",
     placeholder: "Enter the reason for the request",
+    required: true,
   },
 ];
 export const RFMEntries = [];
@@ -667,6 +621,7 @@ export const MissionEntries = [
     inputType: "text",
     width: "230px",
     placeholder: "Entrez l'objet de la mission",
+    required: true,
   },
   {
     id: "structure",
@@ -688,6 +643,7 @@ export const MissionEntries = [
       { label: "CHANGE", value: "CHANGE" },
     ],
     isMulti: false,
+    required: true,
   },
   {
     id: "type",
@@ -700,6 +656,7 @@ export const MissionEntries = [
       { label: "Etranger", value: "etranger" },
     ],
     isMulti: false,
+    required: true,
   },
   {
     id: "budget",
@@ -707,6 +664,7 @@ export const MissionEntries = [
     inputType: "number",
     width: "230px",
     placeholder: "Entrez le budget de la mission",
+    required: true,
   },
   {
     id: "pays",
@@ -1007,6 +965,7 @@ export const MissionEntries = [
       { label: "Zambia", value: "Zambia" },
       { label: "Zimbabwe", value: "Zimbabwe" },
     ],
+    required: true,
   },
   {
     id: "circonscriptionAdm",
@@ -1014,6 +973,7 @@ export const MissionEntries = [
     inputType: "text",
     width: "230px",
     placeholder: "Enter an administrative district value",
+    required: true,
   },
   {
     id: "employes",
@@ -1022,7 +982,7 @@ export const MissionEntries = [
     width: "230px",
     placeholder: "Sélectionnez les employés pour la mission",
     isMulti: true,
-    // options: employeesNonMissionnaires,
+    // options: employeesNonMissionnaires,required: true,
   },
   {
     id: "taches",
@@ -1031,6 +991,7 @@ export const MissionEntries = [
     width: "230px",
     placeholder: "Entrez les tâches de la mission",
     isMulti: true,
+    required: true,
   },
   {
     id: "tDateDeb",
@@ -1038,6 +999,7 @@ export const MissionEntries = [
     inputType: "date",
     width: "230px",
     placeholder: "Sélectionnez la date de début de la mission",
+    required: true,
   },
   {
     id: "tDateRet",
@@ -1045,6 +1007,7 @@ export const MissionEntries = [
     inputType: "date",
     width: "230px",
     placeholder: "Sélectionnez la date de début de la mission",
+    required: true,
   },
 
   {
@@ -1053,6 +1016,7 @@ export const MissionEntries = [
     inputType: "text",
     width: "230px",
     placeholder: "Enter the departure location",
+    required: true,
   },
   {
     id: "destination",
@@ -1060,6 +1024,7 @@ export const MissionEntries = [
     inputType: "text",
     width: "230px",
     placeholder: "Enter the destination",
+    required: true,
   },
   {
     id: "moyenTransport",
@@ -1072,6 +1037,7 @@ export const MissionEntries = [
       { label: "Road", value: "route" },
     ],
     isMulti: true,
+    required: true,
   },
   {
     id: "moyenTransportRet",
@@ -1084,6 +1050,7 @@ export const MissionEntries = [
       { label: "Road", value: "route" },
     ],
     isMulti: true,
+    required: true,
   },
   {
     id: "observation",
@@ -1091,5 +1058,6 @@ export const MissionEntries = [
     inputType: "textarea",
     width: "230px",
     placeholder: "Enter any observations",
+    required: true,
   },
 ];

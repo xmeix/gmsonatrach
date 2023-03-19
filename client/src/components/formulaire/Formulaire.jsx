@@ -7,7 +7,7 @@ import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
 import { useAxios } from "../../hooks/useAxios";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
- const customStyles = {
+const customStyles = {
   control: (provided, state) => ({
     ...provided,
     border: "1px solid var(--light-gray)",
@@ -161,6 +161,7 @@ const Formulaire = ({ title, entries, buttons, type }) => {
                 entry.inputType !== "create-select" && (
                   <input
                     type={entry.inputType}
+                    min={entry.inputType === "number" ? 0 : 0}
                     onChange={(e) => {
                       if (type === "mission") {
                         if (entry.id === "tDateDeb") {

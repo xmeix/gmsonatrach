@@ -1,70 +1,89 @@
-import "./../Popup.css";
 import logo from "../../../assets/logo.svg";
+
 const PopupDB = ({ item }) => {
+  const {
+    _id,
+    createdAt,
+    numSC,
+    designationSC,
+    montantEngage,
+    nature,
+    depart,
+    destination,
+    employes,
+    dateDepart,
+    dateRetour,
+    direction,
+    sousSection,
+    division,
+    base,
+    gisement,
+    observation,
+    motifDep,
+  } = item;
+
   return (
     <div className="popup-db">
-      <div className="db-head">
-        <div className="db-container">
-          <img
-            src={logo}
-            alt=""
-            className="logo-image"
-            style={{
-              height: "70px",
-              width: "60px",
-              flex: 1,
-            }}
-          />
-          <div className="db-head-half" style={{ flex: 1 }}>
+      <div className="db-tab">
+        <div className="db-row">
+          <div className="db-cell">
+            <img
+              src={logo}
+              alt=""
+              className="logo-image"
+              style={{ height: "70px", width: "60px", flex: 1 }}
+            />
+          </div>
+          <div className="db-cell">
             <div className="titre">Fiche Suiveuse</div>
             <div>Budget Exploitation</div>
           </div>
-          <div className="db-head-info" style={{ flex: 1 }}>
+          <div className="db-cell">
             <div>
               <span>Ordre</span> ....
             </div>
             <div>
-              <span>N°</span> {item._id}/
-              {new Date(item.createdAt).getFullYear()}
+              <span>N°</span> {_id}/{new Date(createdAt).getFullYear()}
             </div>
             <div>
-              <span>Date:</span> {new Date(item.createdAt).toLocaleDateString()}
+              <span>Date:</span> {new Date(createdAt).toLocaleDateString()}
             </div>
           </div>
         </div>
-        <div className="db-container">
-          <div style={{ flex: 1 }}>Référence budgétaire</div>
-          <div className="db-head-info" style={{ flex: 2 }}>
+        <div className="db-row">
+          <div className="db-cell" style={{ flex: 1 }}>
+            Référence budgétaire
+          </div>
+          <div className="db-cell" style={{ flex: 2 }}>
             <div>
-              <span>N° sous compte:</span> {item.numSC}
+              <span>N° sous compte:</span> {numSC}
             </div>
             <div>
-              <span>Désignation sous compte:</span> {item.designationSC}
+              <span>Désignation sous compte:</span> {designationSC}
             </div>
             <div>
-              <span>Montant engagé:</span> {item.montantEngage} DA
+              <span>Montant engagé:</span> {montantEngage} DA
             </div>
           </div>
         </div>
       </div>
+
       <div className="db-body">
         <div>
-          <span>Nature:</span>
-          {item.nature} sur le parcours :{" "}
-          {item.nature === "aller-retour"
-            ? item.depart + " / " + item.destination + " / " + item.depart + " "
-            : item.depart + " / " + item.destination + " "}
+          <span>Nature:</span>{" "}
+          {nature === "aller-retour"
+            ? `${depart} / ${destination} / ${depart}`
+            : `${depart} / ${destination}`}
           au profit de:
           <span>
             <br />
-            <br />- {item.employes.length} personnes
+            <br />- {employes.length} personnes
           </span>
         </div>
         <div className="db-date">
           <span>
-            Départ:
-            {new Date(item.dateDepart).toLocaleDateString()}à{" "}
-            {new Date(item.dateRetour).toLocaleTimeString([], {
+            Départ: {new Date(dateDepart).toLocaleDateString()} à{" "}
+            {new Date(dateDepart).toLocaleTimeString([], {
               hour12: false,
               hour: "2-digit",
               minute: "2-digit",
@@ -72,9 +91,8 @@ const PopupDB = ({ item }) => {
           </span>
 
           <span>
-            Retour:
-            {new Date(item.dateRetour).toLocaleDateString()}à{" "}
-            {new Date(item.dateRetour).toLocaleTimeString([], {
+            Retour: {new Date(dateRetour).toLocaleDateString()} à{" "}
+            {new Date(dateRetour).toLocaleTimeString([], {
               hour12: false,
               hour: "2-digit",
               minute: "2-digit",
@@ -82,6 +100,7 @@ const PopupDB = ({ item }) => {
           </span>
         </div>
       </div>
+
       <div className="db-tab">
         <div className="db-row">
           <div className="db-cell">direction</div>
@@ -91,18 +110,18 @@ const PopupDB = ({ item }) => {
           <div className="db-cell">gisement</div>
         </div>
         <div className="db-row">
-          <div className="db-cell">{item.direction || "projet SH-ONE"}</div>
-          <div className="db-cell">{item.sousSection || "/"}</div>
-          <div className="db-cell">{item.division || "/"}</div>{" "}
-          <div className="db-cell">{item.base || "/"}</div>{" "}
-          <div className="db-cell">{item.gisement || "/"}</div>{" "}
+          <div className="db-cell">{direction || "projet SH-ONE"}</div>
+          <div className="db-cell">{sousSection || "/"}</div>
+          <div className="db-cell">{division || "/"}</div>{" "}
+          <div className="db-cell">{base || "/"}</div>{" "}
+          <div className="db-cell">{gisement || "/"}</div>{" "}
         </div>
       </div>
       <div className="db-body">
         <span>Observations:</span>
-        {item.observation}
+        {observation}
         <span>Motif du déplacement: </span>
-        {"mission de " + item.motifDep}
+        {"mission de " + motifDep}
       </div>
       <div className="db-tab">
         <div className="db-row">
@@ -154,12 +173,11 @@ const PopupDB = ({ item }) => {
       </div>
       <div className="db-subtitle">
         La liste nominative des missionnaires du{" "}
-        {new Date(item.dateDepart).toLocaleDateString()} au{" "}
-        {new Date(item.dateRetour).toLocaleDateString()}
+        {new Date(dateDepart).toLocaleDateString()} au{" "}
+        {new Date(dateRetour).toLocaleDateString()}
       </div>
       <div className="db-subtitle">
-        BC N° /{item.direction || "SH-ONE"}/
-        {new Date(item.createdAt).getFullYear()}
+        BC N° /{direction || "SH-ONE"}/{new Date(createdAt).getFullYear()}
       </div>
       <div className="db-tab">
         <div className="db-row">
@@ -168,15 +186,15 @@ const PopupDB = ({ item }) => {
           <div className="db-cell">Départ </div>
           <div className="db-cell">Retour </div>
         </div>
-        {item.employes.map((emp, i) => (
+        {employes.map((emp, i) => (
           <div className="db-row" key={i}>
             <div className="db-cell">{i}</div>
             <div className="db-cell">{emp.nom + " " + emp.prenom}</div>
             <div className="db-cell">
-              {new Date(item.dateDepart).toLocaleDateString()}
+              {new Date(dateDepart).toLocaleDateString()}
             </div>
             <div className="db-cell">
-              {new Date(item.dateRetour).toLocaleDateString()}
+              {new Date(dateRetour).toLocaleDateString()}
             </div>
           </div>
         ))}
