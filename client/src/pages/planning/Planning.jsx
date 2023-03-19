@@ -1,109 +1,180 @@
 import { useSelector } from "react-redux";
 import { useCallback, useMemo, useState } from "react";
-import randomColor from "randomcolor";
-
+import usePopup from "../../hooks/usePopup";
+import Popup from "../../components/popups/Popup";
+import "./Planning.css";
+import PageName from "../../components/pageName/PageName";
 const Planning = () => {
   const [monthOffset, setMonthOffset] = useState(0);
+  const [savedItem, setSavedItem] = useState(null);
+  const [isOpen, openPopup, closePopup, popupType] = usePopup();
   const date = useMemo(() => {
     const today = new Date();
     return new Date(today.getFullYear(), today.getMonth() + monthOffset, 1);
   }, [monthOffset]);
-
   const users = useSelector((state) => state.auth.users);
   const daysInMonth = new Date(
     date.getFullYear(),
     date.getMonth() + 1,
     0
   ).getDate();
-
   const resources = useMemo(
-    () => users.map(({ _id, nom }) => ({ _id, nom })),
+    () =>
+      users.map(({ _id, nom, prenom, structure }) => ({
+        _id,
+        nom,
+        prenom,
+        structure,
+      })),
     [users]
   );
 
-  const acceptedMissions = useSelector((state) =>
-    state.auth.missions
+  //"#FFF1C1", "#FDE2E2", "#F5E5EA", "#C9E4DE", "#E3F1E4"
+  //"#FFE0B2", "#FFD180", "#FFCC80", "#FFB74D", "#FFA726"
+  const COLORS = ["#FFE0B2", "#FFD180", "#FFCC80", "#FFB74D", "#FFA726"];
+
+  const acceptedMissions = useSelector((state) => {
+    let count = 0; // initialize count variable
+    return state.auth.missions
       .filter((mission) => mission.etat === "acceptée")
       .flatMap((mission) =>
-        mission.employes.map((emp) => ({
-          mission: mission,
-          employe: emp,
-          start: mission.tDateDeb,
-          end: mission.tDateRet,
-          color: randomColor({
-            luminosity: "light",
-            format: "hex",
-          }),
-        }))
-      )
-  );
+        mission.employes.map((emp) => {
+          const color = COLORS[count % COLORS.length]; // use count variable to get color from array
+          count++; // increment count
+          return {
+            mission: mission,
+            employe: emp,
+            start: mission.tDateDeb,
+            end: mission.tDateRet,
+            color: color,
+          };
+        })
+      );
+  });
 
   const handlePreviousMonth = useCallback(() => {
     setMonthOffset((prevOffset) => prevOffset - 1);
   }, []);
-
   const handleNextMonth = useCallback(() => {
     setMonthOffset((prevOffset) => prevOffset + 1);
   }, []);
-
   const isMissionDay = useCallback(
     (day, mission) => {
       const start = new Date(mission.start);
       const end = new Date(mission.end);
-      const current = new Date(date.getFullYear(), date.getMonth(), day+1);
+      const current = new Date(date.getFullYear(), date.getMonth(), day);
       if (start.getDate() === day) console.log("start: " + day);
       if (end.getDate() === day) console.log("end: " + day);
-      return current >= start && current <= end;
+      return (
+        current >=
+          new Date(start.getFullYear(), start.getMonth(), start.getDate()) &&
+        current <= end
+      );
     },
     [date]
   );
-
   const memoizedIsMissionDay = useMemo(() => isMissionDay, [isMissionDay]);
-
+  const handleCloseForm = () => {
+    console.log("are closing");
+    setSavedItem(null);
+    closePopup();
+  };
   return (
-    <div style={{ overflow: "scroll" }}>
-      <button onClick={handlePreviousMonth}>Previous Month</button>
-      <button onClick={handleNextMonth}>Next Month</button>
-      <table>
-        <thead>
-          <tr>
-            <th>Resource</th>
-            {[...Array(daysInMonth)].map((_, index) => (
-              <th key={index}>{index + 1}</th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {resources.map(({ _id, nom }) => (
-            <tr key={_id}>
-              <td>{nom}</td>
-              {[...Array(daysInMonth)].map((_, index) => {
-                const day = index + 1;
-                const matchingMission = acceptedMissions.find(
-                  (item) =>
-                    item.employe._id === _id && memoizedIsMissionDay(day, item)
-                );
-                return (
-                  <td
-                    key={index}
-                    style={{
-                      backgroundColor: matchingMission
-                        ? matchingMission.color
-                        : "white",
-                    }}
-                  >
-                    {matchingMission ? (
-                      <div className="case-mission">mission</div>
-                    ) : (
-                      ""
-                    )}
+    <div className="planning">
+      <PageName name="Planification" />
+      <div className="departmentName">Projet SH-ONE</div>
+      <div className="planningTitle">Planning de mobilisation des missions</div>
+      <div className="tab">
+        <div className="schedule-head">
+          <button onClick={handlePreviousMonth}>Previous Month</button>
+          <p>
+            {date.toLocaleDateString("en-US", {
+              month: "long",
+              year: "numeric",
+            })}
+          </p>
+          <button onClick={handleNextMonth}>Next Month</button>
+        </div>
+        <div className="ov" style={{ overflowX: "scroll", height: 450 }}>
+          <table
+            className="planning-table"
+            style={{
+              overflowX: "scroll !important",
+            }}
+          >
+            <thead className="planning-thead">
+              <tr className="planning-trow">
+                <th className="planning-th">Resource</th>
+                <th className="planning-th">Structure</th>
+                {[...Array(daysInMonth)].map((_, index) => (
+                  <th key={index} className="planning-th">
+                    {index + 1}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody className="planning-tbody">
+              {resources.map(({ _id, nom, prenom, structure }) => (
+                <tr key={_id} className="planning-tbody-row">
+                  <td className="planning-tbody-td-res">
+                    {nom + " " + prenom}
                   </td>
-                );
-              })}
-            </tr>
-          ))}
-        </tbody>
-      </table>
+                  <td className="planning-tbody-td-res">{structure}</td>
+                  {[...Array(daysInMonth)].map((_, index) => {
+                    const day = index + 1;
+                    const matchingMission = acceptedMissions.find(
+                      (item) =>
+                        item.employe._id === _id &&
+                        memoizedIsMissionDay(day, item)
+                    );
+
+                    return (
+                      <td
+                        className={
+                          matchingMission
+                            ? "planning-mission"
+                            : "planning-tbody-td"
+                        }
+                        key={index}
+                        style={{
+                          backgroundColor: matchingMission
+                            ? matchingMission.color
+                            : "white",
+                        }}
+                        onClick={() => {
+                          if (matchingMission) {
+                            setSavedItem(matchingMission?.mission);
+                            openPopup("mission");
+                          }
+                        }}
+                      >
+                        {matchingMission ? (
+                          <div className="planning-mission"></div>
+                        ) : (
+                          ""
+                        )}
+                      </td>
+                    );
+                  })}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      {isOpen && (
+        <>
+          <Popup
+            item={savedItem}
+            type="mission"
+            isOpen={isOpen}
+            closePopup={closePopup}
+            popupType={popupType}
+          />
+        </>
+      )}
+
+      {isOpen && <div className="closePopup" onClick={handleCloseForm}></div>}
     </div>
   );
 };

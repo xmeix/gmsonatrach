@@ -68,6 +68,17 @@ body {
 .btn:hover {
   background-color: var(--light-gray);
 }
+
+.closePopup {
+  position: fixed;
+  z-index: 997;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.164);
+}
+
 .icon {
   font-size: 17px;
   cursor: pointer;
@@ -84,4 +95,64 @@ select {
   font-family: "Montserrat", sans-serif;
   font-weight: 500;
   color: var(--gray);
+}
+
+.accept,
+.send {
+  background-color: var(--green2) !important;
+}
+.accept:hover,
+.send:hover {
+  background-color: var(--green4) !important;
+}
+
+.refuse,
+.delete {
+  background-color: var(--red1) !important;
+}
+
+.refuse:hover,
+.delete:hover {
+  background-color: var(--red2) !important;
+}
+
+.cancel,
+.update {
+  background-color: var(--blue3) !important;
+}
+
+.cancel:hover,
+.update:hover {
+  background-color: var(--blue2) !important;
+}
+
+.acceptée,
+.accepté,
+.refusée,
+.refusé,
+.annulée,
+.annulé,
+.en-attente,
+.créé {
+  font-family: "Montserrat", sans-serif !important;
+  font-weight: 600 !important;
+  font-size: 13px !important;
+}
+
+.acceptée,
+.accepté {
+  color: #008000 !important;
+}
+.refusée,
+.refusé {
+  color: #ff0000 !important;
+}
+.annulée,
+.annulé {
+  color: #408dda !important;
+}
+
+.en-attente,
+.créé {
+  color: var(--light-orange) !important;
 }
