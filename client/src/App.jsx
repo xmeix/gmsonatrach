@@ -5,7 +5,9 @@ import { lazy, Suspense } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import Loading from "./components/loading/Loading";
-import { getMissions, getRFMs } from "./api/apiCalls/getCalls";
+import { getDemandes, getMissions, getRFMs } from "./api/apiCalls/getCalls";
+import { io } from "socket.io-client";
+import { setDemandes, setMissions } from "./store/features/authSlice";
 
 const LoginPage = lazy(() => import("./pages/loginPage/LoginPage"));
 const Dashboard = lazy(() => import("./pages/profilAdmin/Dashboard"));
@@ -18,6 +20,7 @@ const GestionModification = lazy(() =>
   import("./pages/profilEmploye/GestionModification")
 );
 const GestionConge = lazy(() => import("./pages/profilEmploye/GestionConge"));
+const socket = io("http://localhost:3001");
 
 function App() {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
@@ -25,15 +28,20 @@ function App() {
   let element = null;
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      console.log("client side working now");
-      getMissions(dispatch);
-      getRFMs(dispatch);
-    }, 60 * 1000); // 10000 milliseconds = 10 seconds
+  socket.on("updatedData", (data) => {
+    dispatch(setDemandes(data)); // Log the updated data
+    // Do something with the updated data
+  });
 
-    return () => clearInterval(intervalId);
-  }, []);
+  // useEffect(() => {
+  //   const intervalId = setInterval(() => {
+  //     console.log("client side working now");
+  //     getMissions(dispatch);
+  //     getRFMs(dispatch);
+  //   }, 60 * 1000); // 10000 milliseconds = 10 seconds
+
+  //   return () => clearInterval(intervalId);
+  // }, []);
 
   if (!isLoggedIn) {
     element = (

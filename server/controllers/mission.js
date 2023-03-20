@@ -141,6 +141,7 @@ export const getAllMissions = async (req, res) => {
         (mission) => mission.structure === req.user.structure
       );
     } else filteredMissions = missions;
+ 
     res.status(200).json(filteredMissions);
   } catch (err) {
     res.status(500).json({ error: err.message });

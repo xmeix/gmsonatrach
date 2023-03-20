@@ -1,3 +1,4 @@
+import { io } from "socket.io-client";
 import {
   fetchEnd,
   fetchFailure,
@@ -10,13 +11,16 @@ import {
   setUsers,
 } from "../../store/features/authSlice";
 import { apiService } from "../apiService";
+const socket = io("http://localhost:3001");
 
 export const getMissions = async (dispatch) => {
   dispatch(fetchStart());
   try {
     const res = await apiService.user.get("/mission/");
     console.log("getting missions...");
+
     dispatch(setMissions(res.data));
+
     dispatch(fetchEnd());
   } catch (err) {
     console.log("ERROR is TERROR");
@@ -28,14 +32,15 @@ export const getDemandes = async (dispatch) => {
   try {
     const res = await apiService.user.get("/demande/");
     console.log("getting demandes...");
-    dispatch(setDemandes(res.data));
+ 
+    socket.emit("updatedData", res.data);
+
     dispatch(fetchEnd());
   } catch (err) {
     console.log("ERROR is TERROR");
     dispatch(fetchFailure());
   }
 };
-//set users ...
 
 export const getRFMs = async (dispatch) => {
   dispatch(fetchStart());

@@ -104,79 +104,80 @@ export const checkUpdateMissionAccess = async (req, res, next) => {
 //     }
 //   }
 // });
-cron.schedule("*/60 * * * * *", async () => {
-  console.log("working");
 
-  // Update missions from accepted to en cours
-  await Mission.updateMany(
-    {
-      tDateDeb: { $lt: new Date() },
-      tDateRet: { $gte: new Date() },
-      etat: "acceptée",
-    },
-    { $set: { etat: "en-cours" } }
-  );
+// cron.schedule("*/60 * * * * *", async () => {
+//   console.log("working");
 
-  // Update missions with tDateDeb equal to current time
-  await Mission.updateMany(
-    { tDateDeb: new Date(), etat: "acceptée" },
-    { $set: { etat: "en-cours" } }
-  );
+//   // Update missions from accepted to en cours
+//   await Mission.updateMany(
+//     {
+//       tDateDeb: { $lt: new Date() },
+//       tDateRet: { $gte: new Date() },
+//       etat: "acceptée",
+//     },
+//     { $set: { etat: "en-cours" } }
+//   );
 
-  // Update users associated with missions en cours
-  const missionsEnCours = await Mission.find({
-    etat: "en-cours",
-  });
+//   // Update missions with tDateDeb equal to current time
+//   await Mission.updateMany(
+//     { tDateDeb: new Date(), etat: "acceptée" },
+//     { $set: { etat: "en-cours" } }
+//   );
 
-  for (const mission of missionsEnCours) {
-    const employeIds = mission.employes.map((employe) => employe._id);
-    await User.updateMany(
-      { _id: { $in: employeIds } },
-      { $set: { etat: "missionnaire" } }
-    );
-  }
+//   // Update users associated with missions en cours
+//   const missionsEnCours = await Mission.find({
+//     etat: "en-cours",
+//   });
 
-  // Update missions with tDateDeb equal to current time and etat equal to en-attente
-  await Mission.updateMany(
-    { tDateDeb: new Date(), etat: "en-attente" },
-    { $set: { etat: "refusée" } }
-  );
+//   for (const mission of missionsEnCours) {
+//     const employeIds = mission.employes.map((employe) => employe._id);
+//     await User.updateMany(
+//       { _id: { $in: employeIds } },
+//       { $set: { etat: "missionnaire" } }
+//     );
+//   }
 
-  // Update missions with tDateRet equal to current time and etat equal to en-cours
-  await Mission.updateMany(
-    { tDateRet: new Date(), etat: "en-cours" },
-    { $set: { etat: "terminée" } }
-  );
+//   // Update missions with tDateDeb equal to current time and etat equal to en-attente
+//   await Mission.updateMany(
+//     { tDateDeb: new Date(), etat: "en-attente" },
+//     { $set: { etat: "refusée" } }
+//   );
 
-  // Update users associated with completed missions
-  const missionsEnded = await Mission.find({
-    etat: "terminée",
-  });
+//   // Update missions with tDateRet equal to current time and etat equal to en-cours
+//   await Mission.updateMany(
+//     { tDateRet: new Date(), etat: "en-cours" },
+//     { $set: { etat: "terminée" } }
+//   );
 
-  for (const mission of missionsEnded) {
-    const employeIds = mission.employes.map((employe) => employe._id);
-    await User.updateMany(
-      { _id: { $in: employeIds } },
-      { $set: { etat: "non-missionnaire" } }
-    );
-  }
+//   // Update users associated with completed missions
+//   const missionsEnded = await Mission.find({
+//     etat: "terminée",
+//   });
 
-  // Create RFM documents for new missions
-  const missions = await Mission.find({
-    tDateDeb: new Date(),
-  });
+//   for (const mission of missionsEnded) {
+//     const employeIds = mission.employes.map((employe) => employe._id);
+//     await User.updateMany(
+//       { _id: { $in: employeIds } },
+//       { $set: { etat: "non-missionnaire" } }
+//     );
+//   }
 
-  const rfmDocs = [];
+//   // Create RFM documents for new missions
+//   const missions = await Mission.find({
+//     tDateDeb: new Date(),
+//   });
 
-  for (const mission of missions) {
-    const employeIds = mission.employes.map((employe) => employe._id);
-    for (const employeId of employeIds) {
-      rfmDocs.push({
-        idMission: mission._id,
-        idEmploye: employeId,
-      });
-    }
-  }
+//   const rfmDocs = [];
 
-  await RapportFM.insertMany(rfmDocs);
-});
+//   for (const mission of missions) {
+//     const employeIds = mission.employes.map((employe) => employe._id);
+//     for (const employeId of employeIds) {
+//       rfmDocs.push({
+//         idMission: mission._id,
+//         idEmploye: employeId,
+//       });
+//     }
+//   }
+
+//   await RapportFM.insertMany(rfmDocs);
+// });
