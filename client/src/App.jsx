@@ -5,6 +5,7 @@ import { lazy, Suspense } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import Loading from "./components/loading/Loading";
+import { getMissions, getRFMs } from "./api/apiCalls/getCalls";
 
 const LoginPage = lazy(() => import("./pages/loginPage/LoginPage"));
 const Dashboard = lazy(() => import("./pages/profilAdmin/Dashboard"));
@@ -22,6 +23,17 @@ function App() {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const currentUser = useSelector((state) => state.auth.user);
   let element = null;
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      console.log("client side working now");
+      getMissions(dispatch);
+      getRFMs(dispatch);
+    }, 60 * 1000); // 10000 milliseconds = 10 seconds
+
+    return () => clearInterval(intervalId);
+  }, []);
 
   if (!isLoggedIn) {
     element = (
