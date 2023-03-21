@@ -13,7 +13,8 @@ import depenseRoutes from "./routes/depense.js";
 import rapportRoutes from "./routes/rapportFM.js";
 import cookieParser from "cookie-parser";
 import { Server } from "socket.io";
-import http from "http"; 
+import http from "http";
+import Mission from "./models/Mission.js";
 
 // Configure environment variables
 dotenv.config();
@@ -44,7 +45,39 @@ app.use("/mission", missionRoutes);
 app.use("/ordremission", ordreMissionRoutes);
 app.use("/depense", depenseRoutes);
 app.use("/rapportFM", rapportRoutes);
+const setUpChangeStream = async () => {
+  const pipeline = [
+    {
+      $match: {
+        $and: [
+          { "fullDocument.tDateDeb": { $lt: new Date() } },
+          { "fullDocument.tDateRet": { $gte: new Date() } },
+          { "fullDocument.etat": "acceptée" },
+        ],
+      },
+    },
+    {
+      $project: {
+        _id: 0,
+        missionId: "$fullDocument._id",
+      },
+    },
+  ];
 
+  const changeStream = Mission.watch(pipeline);
+
+  changeStream.on("change", async (change) => {
+    try {
+      const { missionId } = change.fullDocument;
+      await Mission.updateOne(
+        { _id: missionId },
+        { $set: { etat: "en-cours" } }
+      );
+    } catch (error) {
+      console.error(error);
+    }
+  });
+};
 // Connect to the MongoDB database
 mongoose
   .connect(process.env.MONGO_URL, {
@@ -74,6 +107,13 @@ mongoose
         console.log(`Socket ${socket.id} disconnected`);
       });
     });
+
+    /**____________________________________________________________________________ */
+    //adding triggers logic:
+    // Set up a change stream for the Mission collection
+
+    setUpChangeStream();
+    // ____________________________________________________________________________
 
     // Start listening for HTTP requests
     server.listen(process.env.PORT || 6001, () => {

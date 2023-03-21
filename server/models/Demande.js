@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const DemandeSchema = new mongoose.Schema(
   {
-    motif: { 
+    motif: {
       type: String,
       default: "",
     },
@@ -15,6 +15,10 @@ const DemandeSchema = new mongoose.Schema(
       type: String,
       default: "",
     },
+    nbRefus: {
+      type: Number,
+      default: 0,
+    },
     idEmetteur: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
@@ -23,7 +27,7 @@ const DemandeSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
-  }, 
+  },
   {
     timestamps: true,
   },

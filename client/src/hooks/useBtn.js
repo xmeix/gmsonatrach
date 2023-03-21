@@ -1,12 +1,12 @@
-import { useSelector } from "react-redux";
-import { useAxios } from "./useAxios";
+ import { useAxios } from "./useAxios";
 
 const useBtn = () => {
-   const { callApi } = useAxios();
+  const { callApi } = useAxios();
 
   const handleClick = (btnType, item, type, raison, body) => {
-    console.log(raison)
-    const { _id, nbRefus } = item;
+    console.log(raison);
+    console.log(type);
+    const { _id } = item;
     const route = getRoute(type);
 
     switch (btnType.toLowerCase()) {
@@ -16,11 +16,9 @@ const useBtn = () => {
         break;
       case "refuse":
         const etatRefuse = type === "rfm" ? "créé" : "refusée";
-        const nbRefusIncremented = nbRefus + 1;
         callApi("patch", `${route}/${_id}`, {
           etat: etatRefuse,
           raisonRefus: raison || "",
-          nbRefus: nbRefusIncremented,
         });
         break;
       case "cancel":
@@ -30,13 +28,11 @@ const useBtn = () => {
         // do something
         break;
       case "update":
-        if (type === "rfm") {
-          callApi("patch", `/rapportFM/${_id}`, { deroulement: body });
-        }
+        callApi("patch", `/${route}/${_id}`, { deroulement: body });
+
         break;
       case "send":
-        if (type === "rfm")
-          callApi("patch", `/rapportFM/${_id}`, { etat: "en-attente" });
+        callApi("patch", `/${route}/${_id}`, { etat: "en-attente" });
         break;
       default:
         break;
@@ -49,8 +45,14 @@ const useBtn = () => {
         return "/rapportFM";
       case "mission":
         return "/mission";
-      default:
+      case "dm":
         return "/demande";
+      case "db":
+        return "/demande";
+      case "dc":
+        return "/demande";
+      default:
+        return "/";
     }
   };
 

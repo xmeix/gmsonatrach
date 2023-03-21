@@ -5,7 +5,7 @@ import DB from "../models/demandes/DB.js";
 import Demande from "../models/Demande.js";
 import mongoose from "mongoose";
 import Mission from "../models/Mission.js";
- const toId = mongoose.Types.ObjectId;
+const toId = mongoose.Types.ObjectId;
 
 export const createDemande = async (req, res) => {
   try {
@@ -33,10 +33,17 @@ export const createDemande = async (req, res) => {
       case "DC": {
         const { motif, DateDepart, DateRetour, LieuSejour, Nature } = req.body;
 
-        if (new Date(DateDepart).getTime() >= new Date(DateRetour).getTime())
+        if (new Date(DateDepart).getTime() < new Date().getTime()) {
+          throw new Error(
+            "Departure date should be greater than the current date"
+          );
+        } else if (
+          new Date(DateDepart).getTime() >= new Date(DateRetour).getTime()
+        ) {
           throw new Error(
             "Dates shouldn't be equal, return date should be greater than departure date"
           );
+        }
 
         newDemande = new DC({
           motif,
@@ -81,6 +88,19 @@ export const createDemande = async (req, res) => {
           gisement,
           employes,
         } = req.body;
+
+        if (new Date(dateDepart).getTime() < new Date().getTime()) {
+          throw new Error(
+            "Departure date should be greater than the current date"
+          );
+        } else if (
+          new Date(dateDepart).getTime() >= new Date(dateRetour).getTime()
+        ) {
+          throw new Error(
+            "Dates shouldn't be equal, return date should be greater than departure date"
+          );
+        }
+
         newDemande = new DB({
           motif,
           idEmetteur: emetteur,
@@ -150,11 +170,15 @@ export const updateDemEtat = async (req, res) => {
     const demande = await Demande.findById(req.params.id);
 
     if (demande.etat === "en-attente" && req.body.etat !== "en-attente") {
-      const updatedDemande = await Demande.findByIdAndUpdate(
-        req.params.id,
-        { etat: req.body.etat },
-        { new: true }
-      );
+      console.log(req.body);
+
+      demande.etat = req.body.etat;
+      demande.nbRefus =
+        demande.etat === "refusée" ? demande.nbRefus + 1 : demande.nbRefus;
+      demande.raisonRefus =
+        demande.etat === "refusée" ? req.body.raisonRefus : demande.raisonRefus;
+
+      const updatedDemande = await demande.save();
 
       // Check if the DC is accepted
       if (updatedDemande.type === "DC" && updatedDemande.etat === "acceptée") {

@@ -33,10 +33,6 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [page, setPage] = useState(0);
   const currentUser = useSelector((state) => state.auth.user);
-  const [sortOrder, setSortOrder] = useState({
-    column: "createdAt",
-    direction: "asc",
-  });
 
   //_____________________________________________________________
   const [savedItem, setSavedItem] = useState(null);
@@ -221,6 +217,33 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
     });
   }, [data, filter, filterOption]);
 
+  /** HANDLE  SORT ___________________________________________________*/
+  const [sortOrder, setSortOrder] = useState({
+    column: "createdAt",
+    direction: "desc",
+  });
+  const sortedData = useMemo(() => {
+    const sorted = [...filteredData].sort((a, b) => {
+      const column = sortOrder.column;
+      const direction = sortOrder.direction === "asc" ? 1 : -1;
+      if (a[column] < b[column]) {
+        return -1 * direction;
+      } else if (a[column] > b[column]) {
+        return 1 * direction;
+      } else {
+        return 0;
+      }
+    });
+    return sorted;
+  }, [filteredData, sortOrder]);
+
+  const handleSort = (columnId) => {
+    const isAsc =
+      sortOrder.column === columnId && sortOrder.direction === "asc";
+    setSortOrder({ column: columnId, direction: isAsc ? "desc" : "asc" });
+  };
+  /**_______________________________________________ */
+
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -230,30 +253,10 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
     setPage(0);
   };
 
-  const paginatedData = filteredData.slice(
+  const paginatedData = sortedData.slice(
     page * rowsPerPage,
     page * rowsPerPage + rowsPerPage
   );
-  // const sortedData = useMemo(() => {
-  //   const sorted = paginatedData.sort((a, b) => {
-  //     const column = sortOrder.column;
-  //     const direction = sortOrder.direction === "asc" ? 1 : -1;
-  //     if (a[column] < b[column]) {
-  //       return -1 * direction;
-  //     } else if (a[column] > b[column]) {
-  //       return 1 * direction;
-  //     } else {
-  //       return 0;
-  //     }
-  //   });
-  //   return sorted;
-  // }, [paginatedData, sortOrder]);
-  // const handleSort = (columnId) => {
-  //   const isAsc =
-  //     sortOrder.column === columnId && sortOrder.direction === "asc";
-  //   setSortOrder({ column: columnId, direction: isAsc ? "desc" : "asc" });
-  // };
-
   return (
     <div className="table">
       <p className="listTitle">{title ? title : "list"}</p>

@@ -4,7 +4,7 @@ import "../Popup.css";
 const PopupRefus = ({ type, item, close }) => {
   const [raison, setRaison] = useState("");
   const [handleClick] = useBtn();
-
+  console.log("raison=" + raison);
   return (
     <div className="popup-refuse">
       <div className="pop-ref">
@@ -13,8 +13,8 @@ const PopupRefus = ({ type, item, close }) => {
         <textarea onChange={(e) => setRaison(e.target.value)} />
         <button
           onClick={() => {
+            handleClick("refuse", item, type, raison, {});
             close();
-            handleClick("refuse", item, type, raison);
           }}
         >
           refuse
