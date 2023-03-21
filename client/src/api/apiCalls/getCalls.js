@@ -1,93 +1,44 @@
-import { io } from "socket.io-client";
+import { socket } from "../../App";
 import {
   fetchEnd,
   fetchFailure,
   fetchStart,
-  setDemandes,
-  setDepenses,
-  setMissions,
-  setOMs,
-  setRFMs,
-  setUsers,
 } from "../../store/features/authSlice";
 import { apiService } from "../apiService";
-const socket = io("http://localhost:3001");
 
-export const getMissions = async (dispatch) => {
+const fetchData = async (dispatch, endpoint, socketEvent) => {
   dispatch(fetchStart());
   try {
-    const res = await apiService.user.get("/mission/");
-    console.log("getting missions...");
-
-    dispatch(setMissions(res.data));
-
+    const res = await apiService.user.get(endpoint);
+    console.log(`getting ${endpoint}...`);
+    socket.emit("updatedData", res.data, socketEvent);
     dispatch(fetchEnd());
   } catch (err) {
-    console.log("ERROR is TERROR");
+    console.log(`ERROR getting ${endpoint}`);
     dispatch(fetchFailure());
   }
 };
-export const getDemandes = async (dispatch) => {
-  dispatch(fetchStart());
-  try {
-    const res = await apiService.user.get("/demande/");
-    console.log("getting demandes...");
- 
-    socket.emit("updatedData", res.data);
 
-    dispatch(fetchEnd());
-  } catch (err) {
-    console.log("ERROR is TERROR");
-    dispatch(fetchFailure());
-  }
+export const getMissions = async (dispatch) => {
+  await fetchData(dispatch, "/mission/", "mission");
+};
+
+export const getDemandes = async (dispatch) => {
+  await fetchData(dispatch, "/demande/", "demande");
 };
 
 export const getRFMs = async (dispatch) => {
-  dispatch(fetchStart());
-  try {
-    const res = await apiService.user.get("/rapportFM/");
-    console.log("getting RFMS...");
-    dispatch(setRFMs(res.data));
-    dispatch(fetchEnd());
-  } catch (err) {
-    console.log("ERROR is TERROR");
-    dispatch(fetchFailure());
-  }
+  await fetchData(dispatch, "/rapportFM/", "rfm");
 };
+
 export const getOMs = async (dispatch) => {
-  dispatch(fetchStart());
-  try {
-    const res = await apiService.user.get("/ordremission/");
-    console.log("getting OMs...");
-    dispatch(setOMs(res.data.filteredOMissions));
-    dispatch(fetchEnd());
-  } catch (err) {
-    console.log("ERROR is TERROR");
-    dispatch(fetchFailure());
-  }
+  await fetchData(dispatch, "/ordremission/", "om");
 };
+
 export const getDepenses = async (dispatch) => {
-  dispatch(fetchStart());
-  try {
-    const res = await apiService.user.get("/depense/");
-    console.log("getting depenses...");
-    dispatch(setDepenses(res.data));
-    dispatch(fetchEnd());
-  } catch (err) {
-    console.log("ERROR is TERROR");
-    dispatch(fetchFailure());
-  }
+  await fetchData(dispatch, "/depense/", "depense");
 };
 
 export const getUsers = async (dispatch) => {
-  dispatch(fetchStart());
-  try {
-    const res = await apiService.user.get("/auth/users");
-    console.log("getting users...");
-    dispatch(setUsers(res.data));
-    dispatch(fetchEnd());
-  } catch (err) {
-    console.log("ERROR is TERROR USERS ");
-    dispatch(fetchFailure());
-  }
+  await fetchData(dispatch, "/auth/users", "user");
 };

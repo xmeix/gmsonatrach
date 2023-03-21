@@ -1,6 +1,6 @@
-import { useSelector, useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { apiService } from "../api/apiService";
-import { useState } from "react";
 import {
   fetchEnd,
   fetchFailure,
@@ -17,89 +17,97 @@ import {
   getUsers,
 } from "../api/apiCalls/getCalls";
 
-export const useAxios = () => {
-  const isLoading = useSelector((state) => state.auth.isLoading);
-  const currentUser = useSelector((state) => state.auth.user);
-  const dispatch = useDispatch();
+const useAxios = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
+  const currentUser = useSelector((state) => state.auth.user);
+  const dispatch = useDispatch();
 
   const callApi = async (method, url, body) => {
-    console.log("making a call...");
-
+    setIsLoading(true);
     setError("");
     setSuccessMsg("");
+
     try {
       let response;
-      dispatch(fetchStart());
+
       switch (method) {
         case "post":
           response = await apiService.user.post(url, body);
+
           if (url === "/auth/login") {
             dispatch(setLogin(response.data));
-            getDemandes(dispatch);
-            if (response.data.user.role === "employe") {
-              getMissions(dispatch);
-              getRFMs(dispatch);
-              getOMs(dispatch);
-              getDepenses(dispatch);
-            } else {
-              getMissions(dispatch);
-              getRFMs(dispatch);
-              getOMs(dispatch);
-              getDepenses(dispatch);
-              getUsers(dispatch);
-            }
           } else if (url === "/auth/logout") {
             dispatch(setLogout());
-          } else if (url === "/auth/register") {
-            getUsers(dispatch);
-          } else if (url === "/mission") {
-            getMissions(dispatch);
-          } else if (
-            url === "/demande/DB" ||
-            url === "/demande/DC" ||
-            url === "/demande/DM"
-          ) {
-            getDemandes(dispatch);
           }
-          console.log("post");
+
           break;
+
         case "delete":
-          console.log("delete");
           response = await apiService.user.delete(url, body);
-          getUsers(dispatch);
-
           break;
+
         case "patch":
-          console.log("patch");
           response = await apiService.user.patch(url, body);
-          getDemandes(dispatch);
-          if (currentUser.role === "employe") {
-            getMissions(dispatch);
-            getRFMs(dispatch);
-            getOMs(dispatch);
-            getDepenses(dispatch);
-          } else {
-            getMissions(dispatch);
-            getRFMs(dispatch);
-            getOMs(dispatch);
-            getDepenses(dispatch);
-            getUsers(dispatch);
-          }
-
           break;
+
         default:
           throw new Error(`Invalid HTTP method: ${method}`);
       }
-      dispatch(fetchEnd());
+
+      if (url === "/auth/login") {
+        const { user } = response.data;
+
+        if (user.role === "employe") {
+          Promise.all([
+            getDemandes(dispatch),
+            getMissions(dispatch),
+            getRFMs(dispatch),
+            getOMs(dispatch),
+            getDepenses(dispatch),
+          ]);
+        } else {
+          Promise.all([
+            getDemandes(dispatch),
+            getMissions(dispatch),
+            getRFMs(dispatch),
+            getOMs(dispatch),
+            getDepenses(dispatch),
+            getUsers(dispatch),
+          ]);
+        }
+      } else if (
+        url === "/demande/DB" ||
+        url === "/demande/DC" ||
+        url === "/demande/DM"
+      ) {
+        getDemandes(dispatch);
+      } else if (url === "/auth/register") {
+        getUsers(dispatch);
+      } else if (url === "/mission") {
+        getMissions(dispatch);
+      }
+
       setSuccessMsg(response.data.msg);
     } catch (error) {
       console.log(error);
       setError(error.response?.data.error || "Something went wrong.");
-      dispatch(fetchFailure());
+    } finally {
+      setIsLoading(false);
+      dispatch(fetchEnd());
     }
   };
+
+  useEffect(() => {
+    Promise.all([
+      getMissions(dispatch),
+      getRFMs(dispatch),
+      getOMs(dispatch),
+      getDepenses(dispatch),
+      getUsers(dispatch),
+    ]);
+  }, []);
 
   return {
     isLoading,
@@ -108,3 +116,5 @@ export const useAxios = () => {
     callApi,
   };
 };
+
+export default useAxios;

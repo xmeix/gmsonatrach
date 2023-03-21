@@ -1,85 +1,60 @@
-import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useAxios } from "./useAxios";
 
-function useBtn() {
-  const user = useSelector((state) => state.auth.user);
-  const { callApi } = useAxios();
+const useBtn = () => {
+   const { callApi } = useAxios();
 
   const handleClick = (btnType, item, type, raison, body) => {
-    console.log(
-      "request:" + btnType + " " + item + " " + type + " " + raison + " " + body
-    );
+    console.log(raison)
+    const { _id, nbRefus } = item;
+    const route = getRoute(type);
 
     switch (btnType.toLowerCase()) {
       case "accept":
-        {
-          //call the api that changes the state of item
-          let route;
-          if (type === "db" || type === "dm" || type === "dc")
-            route = "/demande";
-          else if (type === "rfm") route = "/rapportFM";
-          else if (type === "mission") route = "/mission";
-          callApi("patch", `${route}/${item._id}`, {
-            etat: type === "rfm" ? "accepté" : "acceptée",
-          });
-        }
+        const etatAccept = type === "rfm" ? "accepté" : "acceptée";
+        callApi("patch", `${route}/${_id}`, { etat: etatAccept });
         break;
       case "refuse":
-        {
-          let nbRefus;
-          let route;
-          if (
-            type === "db" ||
-            type === "dm" ||
-            type === "dc" ||
-            type === "demande"
-          )
-            route = "/demande";
-          else if (type === "rfm") {
-            route = "/rapportFM";
-            nbRefus = item.nbRefus + 1;
-          } else if (type === "mission") route = "/mission";
-          callApi("patch", `${route}/${item._id}`, {
-            etat: type === "rfm" ? "créé" : "refusée",
-            raisonRefus: raison,
-            nbRefus: nbRefus,
-          });
-        }
+        const etatRefuse = type === "rfm" ? "créé" : "refusée";
+        const nbRefusIncremented = nbRefus + 1;
+        callApi("patch", `${route}/${_id}`, {
+          etat: etatRefuse,
+          raisonRefus: raison || "",
+          nbRefus: nbRefusIncremented,
+        });
         break;
       case "cancel":
-        {
-          let route;
-          if (type === "db" || type === "dm" || type === "dc")
-            route = "/demande";
-          else if (type === "mission") route = "/mission";
-          callApi("patch", `${route}/${item._id}`, {
-            etat: "annulée",
-          });
-        }
+        callApi("patch", `${route}/${_id}`, { etat: "annulée" });
         break;
       case "delete":
-        {
-        }
+        // do something
         break;
       case "update":
-        {
-          if (type === "rfm") {
-            callApi("patch", `/rapportFM/${item._id}`, { deroulement: body });
-          }
+        if (type === "rfm") {
+          callApi("patch", `/rapportFM/${_id}`, { deroulement: body });
         }
         break;
       case "send":
-        {
-          if (type === "rfm")
-            callApi("patch", `/rapportFM/${item._id}`, {
-              etat: "en-attente",
-            });
-        }
+        if (type === "rfm")
+          callApi("patch", `/rapportFM/${_id}`, { etat: "en-attente" });
+        break;
+      default:
         break;
     }
   };
+
+  const getRoute = (type) => {
+    switch (type) {
+      case "rfm":
+        return "/rapportFM";
+      case "mission":
+        return "/mission";
+      default:
+        return "/demande";
+    }
+  };
+
   return [handleClick];
-}
+};
 
 export default useBtn;

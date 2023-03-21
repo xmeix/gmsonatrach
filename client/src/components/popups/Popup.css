@@ -8,8 +8,7 @@
   border-radius: 3px;
   box-shadow: 0 0 0 2px rgba(70, 69, 69, 0.034);
   overflow-y: auto;
-  white-space: normal !important;
-  transition: all 0.5s ease-in-out;
+   transition: all 0.5s ease-in-out;
 }
 /*--------------------------------------------------*/
 
@@ -53,7 +52,8 @@
   text-transform: capitalize;
 }
 /*--------------------------------------------------*/
-.popup-dm {
+.popup-dm,
+.popup-refuse {
   display: flex;
   flex-direction: column;
   gap: 0.5em;
@@ -73,7 +73,6 @@
 }
 /*--------------------------------------------------*/
 
-.popup-refuse,
 .popup-user {
   height: auto;
   width: auto;

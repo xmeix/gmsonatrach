@@ -13,10 +13,7 @@ import depenseRoutes from "./routes/depense.js";
 import rapportRoutes from "./routes/rapportFM.js";
 import cookieParser from "cookie-parser";
 import { Server } from "socket.io";
-import http from "http";
-import { getAllMissions } from "./controllers/mission.js";
-import { getDemandes } from "./controllers/demande.js";
-import Demande from "./models/Demande.js";
+import http from "http"; 
 
 // Configure environment variables
 dotenv.config();
@@ -31,7 +28,6 @@ app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 app.use(morgan("common"));
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
-app.use(bodyParser.json());
 app.use(cookieParser());
 
 // Enable CORS for API calls
@@ -50,27 +46,40 @@ app.use("/depense", depenseRoutes);
 app.use("/rapportFM", rapportRoutes);
 
 // Connect to the MongoDB database
-const PORT = process.env.PORT || 6001;
-const server = http.createServer(app);
-export const io = new Server(server, {
-  cors: {
-    origin: ["http://127.0.0.1:5173", "http://localhost:5173"],
-  },
-});
-
 mongoose
   .connect(process.env.MONGO_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
   .then(() => {
-    server.listen(PORT, () => console.log(`Server Port ${PORT}`)); // Log message when user connects via socket
+    console.log("Connected to MongoDB database");
+
+    // Set up the HTTP server and Socket.IO instance
+    const server = http.createServer(app);
+    const io = new Server(server, {
+      cors: {
+        origin: ["http://127.0.0.1:5173", "http://localhost:5173"],
+      },
+    });
+
+    // Set up Socket.IO event listeners
     io.on("connection", (socket) => {
-      console.log("user is connected: " + socket.id);
-      socket.on("updatedData", async (demandes) => {
-        console.log("updated" + demandes);
-        io.emit("updatedData", demandes);
+      console.log(`Socket ${socket.id} connected`);
+
+      socket.on("updatedData", async (data, type) => {
+        io.emit("updatedData", data, type);
+      });
+
+      socket.on("disconnect", () => {
+        console.log(`Socket ${socket.id} disconnected`);
       });
     });
+
+    // Start listening for HTTP requests
+    server.listen(process.env.PORT || 6001, () => {
+      console.log(`Server listening on port ${process.env.PORT || 6001}`);
+    });
   })
-  .catch((error) => console.log(`${error}: did not connect.`));
+  .catch((error) => {
+    console.error(`Failed to connect to MongoDB database: ${error.message}`);
+  });

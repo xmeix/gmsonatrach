@@ -1,7 +1,7 @@
 import { useState } from "react";
 import useBtn from "../../../hooks/useBtn";
 import "../Popup.css";
-const PopupRefus = ({ type, item }) => {
+const PopupRefus = ({ type, item, close }) => {
   const [raison, setRaison] = useState("");
   const [handleClick] = useBtn();
 
@@ -11,7 +11,12 @@ const PopupRefus = ({ type, item }) => {
         {" "}
         <div className="title">Reason of Refusal</div>
         <textarea onChange={(e) => setRaison(e.target.value)} />
-        <button onClick={() => handleClick("refuse", item, type, raison)}>
+        <button
+          onClick={() => {
+            close();
+            handleClick("refuse", item, type, raison);
+          }}
+        >
           refuse
         </button>
       </div>

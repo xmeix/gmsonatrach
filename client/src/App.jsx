@@ -5,9 +5,15 @@ import { lazy, Suspense } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import Loading from "./components/loading/Loading";
-import { getDemandes, getMissions, getRFMs } from "./api/apiCalls/getCalls";
-import { io } from "socket.io-client";
-import { setDemandes, setMissions } from "./store/features/authSlice";
+ import { io } from "socket.io-client";
+import {
+  setDemandes,
+  setDepenses,
+  setMissions,
+  setOMs,
+  setRFMs,
+  setUsers,
+} from "./store/features/authSlice";
 
 const LoginPage = lazy(() => import("./pages/loginPage/LoginPage"));
 const Dashboard = lazy(() => import("./pages/profilAdmin/Dashboard"));
@@ -20,7 +26,8 @@ const GestionModification = lazy(() =>
   import("./pages/profilEmploye/GestionModification")
 );
 const GestionConge = lazy(() => import("./pages/profilEmploye/GestionConge"));
-const socket = io("http://localhost:3001");
+
+export const socket = io("http://localhost:3001");
 
 function App() {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
@@ -28,10 +35,45 @@ function App() {
   let element = null;
   const dispatch = useDispatch();
 
-  socket.on("updatedData", (data) => {
-    dispatch(setDemandes(data)); // Log the updated data
-    // Do something with the updated data
-  });
+  const handleSocketData = (data, type) => {
+    switch (type) {
+      case "demande":
+        dispatch(setDemandes(data));
+        break;
+      case "user":
+        dispatch(setUsers(data));
+        break;
+      case "mission":
+        dispatch(setMissions(data));
+        break;
+      case "rfm":
+        dispatch(setRFMs(data));
+        break;
+      case "om":
+        dispatch(setOMs(data));
+        break;
+      case "depense":
+        dispatch(setDepenses(data));
+        break;
+      default:
+        break;
+    }
+  };
+
+  const handleSocketConnection = () => {
+    socket.on("updatedData", handleSocketData);
+  };
+
+  const handleSocketDisconnection = () => {
+    socket.off("updatedData", handleSocketData);
+  };
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      handleSocketConnection();
+      return handleSocketDisconnection;
+    }
+  }, [isLoggedIn]);
 
   // useEffect(() => {
   //   const intervalId = setInterval(() => {
