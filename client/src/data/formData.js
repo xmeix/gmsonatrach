@@ -975,15 +975,7 @@ export const MissionEntries = [
     placeholder: "Enter an administrative district value",
     required: true,
   },
-  {
-    id: "employes",
-    label: "Employés",
-    inputType: "select",
-    width: "230px",
-    placeholder: "Sélectionnez les employés pour la mission",
-    isMulti: true,
-    // options: employeesNonMissionnaires,required: true,
-  },
+
   {
     id: "taches",
     label: "Tâches",
@@ -1009,7 +1001,16 @@ export const MissionEntries = [
     placeholder: "Sélectionnez la date de début de la mission",
     required: true,
   },
-
+  {
+    id: "employes",
+    label: "Employés",
+    inputType: "select",
+    width: "230px",
+    placeholder: "Sélectionnez les employés pour la mission , cela change ",
+    isMulti: true,
+    disabled: true,
+    // options: employeesNonMissionnaires,required: true,
+  },
   {
     id: "lieuDep",
     label: "Departure Location",

@@ -41,25 +41,21 @@ const Formulaire = ({ title, entries, buttons, type }) => {
   const [start, setStart] = useState(null);
   const [end, setEnd] = useState(null);
   const [updatedEntries, setUpdatedEntries] = useState(entries); // new state variable
+  const [disabled, setDisabled] = useState(true); // new state variable
 
-  const [employeesNonMissionnaires, setEmployeesNonMissionnaires] = useState(
-    []
-  );
   useEffect(() => {
-    console.log("jere");
     let newEmployeesNonMissionnaires;
     if (start && end && (type === "mission" || type === "DB")) {
-      console.log("hereee");
       newEmployeesNonMissionnaires = users
         .filter(
           (user) =>
             user.role === "employe" &&
             !missions.some(
               (mission) =>
-                mission.employes.includes(user._id) &&
-                mission.etat === "acceptée" &&
-                mission.tDateDeb <= end &&
-                mission.tDateRet >= start
+                mission.employes.some((u) => u._id === user._id) &&
+                (mission.etat === "en-cours" || mission.etat === "acceptée") &&
+                mission.tDateRet > start &&
+                mission.tDateDeb < end
             )
         )
         .map((user) => ({
@@ -67,10 +63,6 @@ const Formulaire = ({ title, entries, buttons, type }) => {
           value: user._id,
         }));
 
-      console.log(newEmployeesNonMissionnaires);
-
-      setEmployeesNonMissionnaires(newEmployeesNonMissionnaires);
-      console.log(newEmployeesNonMissionnaires);
       let newEntries;
       if (type === "mission") {
         newEntries = entries.map((entry) => {
@@ -87,6 +79,10 @@ const Formulaire = ({ title, entries, buttons, type }) => {
       }
       if (newEntries) {
         setUpdatedEntries(newEntries);
+        setDisabled(false);
+      } else {
+        setUpdatedEntries([]);
+        setDisabled(true);
       }
     }
   }, [start, end, entries, missions, type, users]);
@@ -161,7 +157,11 @@ const Formulaire = ({ title, entries, buttons, type }) => {
                 entry.inputType !== "create-select" && (
                   <input
                     type={entry.inputType}
-                    min={entry.inputType === "number" ? 0 : 0}
+                    min={
+                      (entry.inputType === "number" && 0) ||
+                      (entry.inputType === "date" &&
+                        new Date().toISOString().split("T")[0])
+                    }
                     onChange={(e) => {
                       if (type === "mission") {
                         if (entry.id === "tDateDeb") {
@@ -186,7 +186,7 @@ const Formulaire = ({ title, entries, buttons, type }) => {
                   className="select"
                   options={entry.options}
                   isMulti={entry.isMulti}
-                  placeholder={entry.label}
+                  placeholder={entry.placeholder}
                   styles={customStyles}
                   onChange={(selectedOption) =>
                     handleChange({
@@ -227,8 +227,9 @@ const Formulaire = ({ title, entries, buttons, type }) => {
                         : entry.options
                     }
                     isMulti={entry.isMulti}
-                    placeholder={entry.label}
+                    placeholder={entry.placeholder}
                     styles={customStyles}
+                    isDisabled={entry.id === "employes" && disabled}
                     onChange={(selectedOption) => {
                       if (
                         (currentUser.role === "responsable" ||
