@@ -82,6 +82,8 @@ body {
 .icon {
   font-size: 17px;
   cursor: pointer;
+  transition: all 0.5s ease-in-out;
+  color: var(--gray);
 }
 
 .icn {

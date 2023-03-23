@@ -102,13 +102,6 @@ export const createMission = async (req, res) => {
           employe: employeId,
         });
         om.save();
-
-        //TO MOVE WHEN TESTING CRON ==> if etat==="en-cours" on cree les rfm pr chaque employe
-        const rfm = new RapportFM({
-          idMission: savedMission.id,
-          idEmploye: employeId,
-        });
-        rfm.save();
       }
     }
     res
@@ -141,7 +134,7 @@ export const getAllMissions = async (req, res) => {
         (mission) => mission.structure === req.user.structure
       );
     } else filteredMissions = missions;
- 
+
     res.status(200).json(filteredMissions);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -170,11 +163,6 @@ export const updateMissionEtat = async (req, res) => {
           employe: employeId,
         });
         om.save();
-        const rfm = new RapportFM({
-          idMission: updatedMission.id,
-          idEmploye: employeId,
-        });
-        rfm.save();
       }
     }
     return res.status(200).json({

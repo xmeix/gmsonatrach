@@ -43,6 +43,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 1em;
 }
 /*_________________________________________________________________________*/
 .table select {
@@ -66,7 +67,9 @@
   box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.2);
   transition: all 0.2s ease;
 }
-
+.rotate {
+  transform: rotate(180deg);
+}
 /*_________________________________________________________________________*/
 .table .tableContainer {
   border: solid 1px var(--light-gray) !important;

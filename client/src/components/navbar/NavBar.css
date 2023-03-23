@@ -27,7 +27,7 @@
   z-index: 998;
 }
 .navbar .icon {
-  font-size: 30px;
+  font-size: 25px;
   color: var(--black);
   cursor: pointer;
   transition: all 0.8s ease-in-out;

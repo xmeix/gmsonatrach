@@ -4,7 +4,7 @@ import { useState, useEffect, useMemo } from "react";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import "./TableM.css";
 import { v4 as uuidv4 } from "uuid";
-
+import SortRoundedIcon from "@mui/icons-material/SortRounded";
 import {
   Table,
   TableBody,
@@ -237,10 +237,14 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
     return sorted;
   }, [filteredData, sortOrder]);
 
-  const handleSort = (columnId) => {
-    const isAsc =
-      sortOrder.column === columnId && sortOrder.direction === "asc";
-    setSortOrder({ column: columnId, direction: isAsc ? "desc" : "asc" });
+  const handleSort = () => {
+    const isAsc = sortOrder.direction === "asc";
+    console.log("sorted" + isAsc);
+
+    setSortOrder({
+      column: sortOrder.column,
+      direction: isAsc ? "desc" : "asc",
+    });
   };
   /**_______________________________________________ */
 
@@ -261,21 +265,29 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
     <div className="table">
       <p className="listTitle">{title ? title : "list"}</p>
       <form className="control">
-        <div style={{ position: "relative" }}>
-          <InputAdornment
-            position="start"
-            style={{ position: "absolute", top: "0.9em", left: "0.5em" }}
-          >
-            <SearchRoundedIcon className="searchIcon" />
-          </InputAdornment>
-          <input
-            className="search"
-            placeholder="search for ..."
-            label="Search"
-            value={filter}
-            onChange={handleFilterChange}
+        <div style={{ display: "flex", alignItems: "center", gap: "1em" }}>
+          <div style={{ position: "relative" }}>
+            {" "}
+            <InputAdornment
+              position="start"
+              style={{ position: "absolute", top: "0.9em", left: "0.5em" }}
+            >
+              <SearchRoundedIcon className="searchIcon" />
+            </InputAdornment>
+            <input
+              className="search"
+              placeholder="search for ..."
+              label="Search"
+              value={filter}
+              onChange={handleFilterChange}
+            />
+          </div>
+          <SortRoundedIcon
+            className={sortOrder.direction === "asc" ? "icon" : "icon rotate"}
+            onClick={handleSort}
           />
         </div>
+
         <select
           value={filterOption}
           onChange={(event) => handleFilterOptionChange(event)}

@@ -5,7 +5,7 @@ import { lazy, Suspense } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import Loading from "./components/loading/Loading";
- import { io } from "socket.io-client";
+import { io } from "socket.io-client";
 import {
   setDemandes,
   setDepenses,
@@ -14,7 +14,13 @@ import {
   setRFMs,
   setUsers,
 } from "./store/features/authSlice";
-
+import {
+  getDemandes,
+  getUsers,
+  getRFMs,
+  getOMs,
+  getMissions,
+} from "./api/apiCalls/getCalls";
 const LoginPage = lazy(() => import("./pages/loginPage/LoginPage"));
 const Dashboard = lazy(() => import("./pages/profilAdmin/Dashboard"));
 const GestionMission = lazy(() => import("./pages/profilAdmin/GestionMission"));
@@ -59,12 +65,21 @@ function App() {
         break;
     }
   };
-
+  const handleCronData = () => {
+    console.log("inside the handle Cron data ==> appjs");
+    getDemandes(dispatch);
+    getRFMs(dispatch);
+    getMissions(dispatch);
+    getOMs(dispatch);
+    getUsers(dispatch);
+  };
   const handleSocketConnection = () => {
+    socket.on("cronDataChange", handleCronData);
     socket.on("updatedData", handleSocketData);
   };
 
   const handleSocketDisconnection = () => {
+    socket.off("cronDataChange", handleCronData);
     socket.off("updatedData", handleSocketData);
   };
 
