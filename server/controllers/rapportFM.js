@@ -46,10 +46,10 @@ export const getAllRapports = async (req, res) => {
       .populate("idEmploye")
       .populate("idMission");
     let filteredRapports;
-    if (user.role === 4) throw new Error("Unauthorized");
-    else if (user.role === 3) {
+    if (user.role === "relex") throw new Error("Unauthorized");
+    else if (user.role === "employe") {
       filteredRapports = rapports.filter(
-        (rapport) => rapport.idEmploye.toString() === user.id
+        (rapport) => rapport.idEmploye.id === user.id
       );
     } else filteredRapports = rapports;
     res.status(200).json(filteredRapports);

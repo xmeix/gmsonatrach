@@ -16,7 +16,7 @@ export const getAllOrdresMissions = async (req, res) => {
     else if (user.role === "responsable") {
       filteredOMissions = await Promise.all(
         ordresMission.map(async (om) => {
-          let emp = await User.findById(om.employe);
+          let emp = await User.findById(om.employe.id);
           console.log(emp.structure);
           console.log(user.structure);
           return emp.structure === user.structure ? om : null;
@@ -28,7 +28,7 @@ export const getAllOrdresMissions = async (req, res) => {
     } else if (user.role === "employe") {
       //if error occured then change to user.id without toId
       filteredOMissions = ordresMission.filter(
-        (om) => om.employe.toString() === toId(user.id).toString()
+        (om) => om.employe.id === user.id
       );
     }
     res.status(200).json({ filteredOMissions });

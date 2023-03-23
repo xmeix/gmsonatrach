@@ -10,7 +10,9 @@
   padding: 5px;
   font-weight: 500;
   position: relative;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.055);
+  width: 120px;
+  font-size: 13px;
 }
 .table .listTitle {
   padding: 1em;
@@ -33,7 +35,7 @@
 
 .table .search:focus {
   outline: none;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.116);
   transition: all 0.2s ease;
 }
 /*_________________________________________________________________________*/
@@ -45,6 +47,12 @@
   align-items: center;
   gap: 1em;
 }
+
+.table .control .countControl {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--orange);
+}
 /*_________________________________________________________________________*/
 .table select {
   border: none;
@@ -52,11 +60,10 @@
   font-family: "Montserrat", sans-serif;
   font-size: 12px;
   font-weight: 600;
-  min-width: 150px;
   color: var(--gray);
   background-color: var(--white);
   border-radius: 5px;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.055);
   transition: all 0.2s ease;
   text-align: center;
   cursor: pointer;
@@ -64,7 +71,7 @@
 
 .table select:focus {
   outline: none;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.116);
   transition: all 0.2s ease;
 }
 .rotate {

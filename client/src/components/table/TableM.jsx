@@ -41,6 +41,7 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
 
   const [handleClick] = useBtn();
   const [isOpen, openPopup, closePopup, popupType] = usePopup();
+
   const handleCloseForm = () => {
     console.log("are closing");
     setSavedItem(null);
@@ -287,6 +288,7 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
             onClick={handleSort}
           />
         </div>
+        <div className="countControl">{filteredData.length} items</div>
 
         <select
           value={filterOption}

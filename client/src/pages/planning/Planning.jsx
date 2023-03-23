@@ -13,21 +13,37 @@ const Planning = () => {
     return new Date(today.getFullYear(), today.getMonth() + monthOffset, 1);
   }, [monthOffset]);
   const users = useSelector((state) => state.auth.users);
+  const missions = useSelector((state) => state.auth.missions);
   const daysInMonth = new Date(
     date.getFullYear(),
     date.getMonth() + 1,
     0
   ).getDate();
-  const resources = useMemo(
-    () =>
-      users.map(({ _id, nom, prenom, structure }) => ({
+
+  const currentUser = useSelector((state) => state.auth.user);
+  const resources = useMemo(() => {
+    if (currentUser.role === "employe") {
+      return missions
+        .filter(
+          (mission) =>
+            mission.etat === "acceptée" ||
+            mission.etat === "en-cours" ||
+            mission.etat === "terminée"
+        )
+        .map(({ _id, objetMission, structure }) => ({
+          _id,
+          objetMission,
+          structure,
+        }));
+    } else {
+      return users.map(({ _id, nom, prenom, structure }) => ({
         _id,
         nom,
         prenom,
         structure,
-      })),
-    [users]
-  );
+      }));
+    }
+  }, [currentUser, users, missions]);
 
   //"#FFF1C1", "#FDE2E2", "#F5E5EA", "#C9E4DE", "#E3F1E4"
   //"#FFE0B2", "#FFD180", "#FFCC80", "#FFB74D", "#FFA726"
@@ -35,23 +51,48 @@ const Planning = () => {
 
   const acceptedMissions = useSelector((state) => {
     let count = 0; // initialize count variable
-    return state.auth.missions
-      .filter((mission) => mission.etat === "acceptée")
-      .flatMap((mission) =>
-        mission.employes.map((emp) => {
+    if (currentUser.role === "employe") {
+      return state.auth.missions
+        .filter(
+          (mission) =>
+            mission.etat === "acceptée" ||
+            mission.etat === "en-cours" ||
+            mission.etat === "terminée"
+        )
+        .flatMap((mission) => {
           const color = COLORS[count % COLORS.length]; // use count variable to get color from array
           count++; // increment count
           return {
             mission: mission,
-            employe: emp,
+            employe: currentUser,
             start: mission.tDateDeb,
             end: mission.tDateRet,
             color: color,
           };
-        })
-      );
+        });
+    } else {
+      return state.auth.missions
+        .filter(
+          (mission) =>
+            mission.etat === "acceptée" ||
+            mission.etat === "en-cours" ||
+            mission.etat === "terminée"
+        )
+        .flatMap((mission) =>
+          mission.employes.map((emp) => {
+            const color = COLORS[count % COLORS.length]; // use count variable to get color from array
+            count++; // increment count
+            return {
+              mission: mission,
+              employe: emp,
+              start: mission.tDateDeb,
+              end: mission.tDateRet,
+              color: color,
+            };
+          })
+        );
+    }
   });
-
   const handlePreviousMonth = useCallback(() => {
     setMonthOffset((prevOffset) => prevOffset - 1);
   }, []);
@@ -63,8 +104,6 @@ const Planning = () => {
       const start = new Date(mission.start);
       const end = new Date(mission.end);
       const current = new Date(date.getFullYear(), date.getMonth(), day);
-      if (start.getDate() === day) console.log("start: " + day);
-      if (end.getDate() === day) console.log("end: " + day);
       return (
         current >=
           new Date(start.getFullYear(), start.getMonth(), start.getDate()) &&
@@ -79,6 +118,7 @@ const Planning = () => {
     setSavedItem(null);
     closePopup();
   };
+
   return (
     <div className="planning">
       <PageName name="Planification" />
@@ -104,8 +144,18 @@ const Planning = () => {
           >
             <thead className="planning-thead">
               <tr className="planning-trow">
-                <th className="planning-th">Resource</th>
-                <th className="planning-th">Structure</th>
+                {currentUser.role !== "employe" && (
+                  <>
+                    <th className="planning-th">Resource</th>
+                    <th className="planning-th">Structure</th>
+                  </>
+                )}
+                {currentUser.role === "employe" && (
+                  <>
+                    <th className="planning-th">Mission</th>
+                    <th className="planning-th">Structure</th>
+                  </>
+                )}
                 {[...Array(daysInMonth)].map((_, index) => (
                   <th key={index} className="planning-th">
                     {index + 1}
@@ -114,50 +164,94 @@ const Planning = () => {
               </tr>
             </thead>
             <tbody className="planning-tbody">
-              {resources.map(({ _id, nom, prenom, structure }) => (
-                <tr key={_id} className="planning-tbody-row">
-                  <td className="planning-tbody-td-res">
-                    {nom + " " + prenom}
-                  </td>
-                  <td className="planning-tbody-td-res">{structure}</td>
-                  {[...Array(daysInMonth)].map((_, index) => {
-                    const day = index + 1;
-                    const matchingMission = acceptedMissions.find(
-                      (item) =>
-                        item.employe._id === _id &&
-                        memoizedIsMissionDay(day, item)
-                    );
+              {currentUser.role === "employe" &&
+                resources.map(({ _id, objetMission, structure }) => (
+                  <tr key={_id} className="planning-tbody-row">
+                    <td className="planning-tbody-td-res">{objetMission}</td>
+                    <td className="planning-tbody-td-res">{structure}</td>
+                    {[...Array(daysInMonth)].map((_, index) => {
+                      const day = index + 1;
+                      const matchingMission = acceptedMissions.find(
+                        (item) =>
+                          item.mission._id === _id &&
+                          memoizedIsMissionDay(day, item)
+                      );
 
-                    return (
-                      <td
-                        className={
-                          matchingMission
-                            ? "planning-mission"
-                            : "planning-tbody-td"
-                        }
-                        key={index}
-                        style={{
-                          backgroundColor: matchingMission
-                            ? matchingMission.color
-                            : "white",
-                        }}
-                        onClick={() => {
-                          if (matchingMission) {
-                            setSavedItem(matchingMission?.mission);
-                            openPopup("mission");
+                      return (
+                        <td
+                          className={
+                            matchingMission
+                              ? "planning-mission"
+                              : "planning-tbody-td"
                           }
-                        }}
-                      >
-                        {matchingMission ? (
-                          <div className="planning-mission"></div>
-                        ) : (
-                          ""
-                        )}
-                      </td>
-                    );
-                  })}
-                </tr>
-              ))}
+                          key={index}
+                          style={{
+                            backgroundColor: matchingMission
+                              ? matchingMission.color
+                              : "white",
+                          }}
+                          onClick={() => {
+                            if (matchingMission) {
+                              setSavedItem(matchingMission?.mission);
+                              openPopup("mission");
+                            }
+                          }}
+                        >
+                          {matchingMission ? (
+                            <div className="planning-mission"></div>
+                          ) : (
+                            ""
+                          )}
+                        </td>
+                      );
+                    })}
+                  </tr>
+                ))}
+              {currentUser.role !== "employe" &&
+                resources.map(({ _id, nom, prenom, structure }) => (
+                  <tr key={_id} className="planning-tbody-row">
+                    <td className="planning-tbody-td-res">
+                      {nom + " " + prenom}
+                    </td>
+                    <td className="planning-tbody-td-res">{structure}</td>
+                    {[...Array(daysInMonth)].map((_, index) => {
+                      const day = index + 1;
+                      const matchingMission = acceptedMissions.find(
+                        (item) =>
+                          item.employe._id === _id &&
+                          memoizedIsMissionDay(day, item)
+                      );
+
+                      return (
+                        <td
+                          className={
+                            matchingMission
+                              ? "planning-mission"
+                              : "planning-tbody-td"
+                          }
+                          key={index}
+                          style={{
+                            backgroundColor: matchingMission
+                              ? matchingMission.color
+                              : "white",
+                          }}
+                          onClick={() => {
+                            if (matchingMission) {
+                              setSavedItem(matchingMission?.mission);
+                              openPopup("mission");
+                            }
+                          }}
+                        >
+                          {matchingMission ? (
+                            <div className="planning-mission"></div>
+                          ) : (
+                            ""
+                          )}
+                        </td>
+                      );
+                    })}
+                  </tr>
+                ))}
             </tbody>
           </table>
         </div>

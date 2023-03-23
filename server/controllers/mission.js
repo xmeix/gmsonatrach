@@ -3,7 +3,6 @@ import Mission from "../models/Mission.js";
 import mongoose from "mongoose";
 import OrdreMission from "../models/OrdreMission.js";
 import { checkFields } from "../middleware/auth.js";
-import RapportFM from "../models/RapportFM.js";
 const toId = mongoose.Types.ObjectId;
 
 export const createMission = async (req, res) => {
@@ -125,8 +124,12 @@ export const getAllMissions = async (req, res) => {
     if (user.role === "relex") throw new Error("Unauthorized");
     else if (user.role === "employe") {
       //can read  his own missions only!
-      filteredMissions = missions.filter((mission) =>
-        mission.employes.some((employe) => employe.id === user.id)
+      filteredMissions = missions.filter(
+        (mission) =>
+          mission.employes.some((employe) => employe.id === user.id) &&
+          (mission.etat === "en-cours" ||
+            mission.etat === "acceptée" ||
+            mission.etat === "terminée")
       );
     } else if (user.role === "responsable") {
       //can read the missions from his own structure only!
