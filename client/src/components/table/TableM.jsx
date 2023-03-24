@@ -112,7 +112,7 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
                 item.etat === "en-attente")) ||
             (button === "cancel" &&
               type !== "mission" &&
-              item.etat === "en-attente") 
+              item.etat === "en-attente")
           )
             return (
               <button
@@ -264,11 +264,127 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
     page * rowsPerPage + rowsPerPage
   );
 
-    
+  /**_______________________________________________________________________________________________________________________________ */
+  const handleOnClick = (item) => {
+    if (colType === "demande" || colType === "db")
+      openPopup(item.__t.toLowerCase());
+    else if (colType === "rfm") openPopup("update");
+    else openPopup(colType);
 
+    if (colType === "mission" || colType === "user") setSavedType(colType);
 
+    setSavedItem(item);
+  };
+  const tableCell = (item, property) => {
+    if (["createdAt", "tDateDeb", "tDateRet"].includes(property)) {
+      return (
+        <TableCell
+          align="center"
+          className="tableColumn"
+          onClick={() => handleOnClick(item)}
+        >
+          {new Date(item[property]).toLocaleDateString()}
+        </TableCell>
+      );
+    } else if (property === "idEmetteur.nom + ' ' + idEmetteur.prenom") {
+      return (
+        <TableCell
+          align="center"
+          className="tableColumn"
+          onClick={() => handleOnClick(item)}
+        >
+          {item.idEmetteur.nom + " " + item.idEmetteur.prenom}
+        </TableCell>
+      );
+    } else if (property === "idEmetteur.structure") {
+      return (
+        <TableCell
+          align="center"
+          className="tableColumn"
+          onClick={() => handleOnClick(item)}
+        >
+          {item.idEmetteur.structure}
+        </TableCell>
+      );
+    } else if (property === "idEmploye.nom + ' ' + idEmploye.prenom") {
+      return (
+        <TableCell
+          align="center"
+          className="tableColumn"
+          onClick={() => handleOnClick(item)}
+        >
+          {item.idEmploye.nom + " " + item.idEmploye.prenom}
+        </TableCell>
+      );
+    }
+    if (property === "createdBy.nom + ' ' + createdBy.prenom") {
+      return (
+        <TableCell
+          align="center"
+          className="tableColumn"
+          onClick={() => handleOnClick(item)}
+        >
+          {item.createdBy.nom + " " + item.createdBy.prenom}
+        </TableCell>
+      );
+    } else
+      return (
+        <TableCell
+          align="center"
+          className={property === "etat" ? item.etat : "tableColumn"}
+          onClick={() => handleOnClick(item)}
+        >
+          {item[property]}
+        </TableCell>
+      );
+  };
+  const [cols, setCols] = useState([]);
 
+  useEffect(() => {
+    switch (colType) {
+      case "demande":
+      case "db":
+        setCols([
+          "createdAt",
+          "idEmetteur.nom + ' ' + idEmetteur.prenom",
+          "motif",
+          "idEmetteur.structure",
+          "etat",
+        ]);
+        break;
 
+      case "rfm":
+        setCols([
+          "createdAt",
+          "idEmploye.nom + ' ' + idEmploye.prenom",
+          "etat",
+        ]);
+        break;
+
+      case "mission":
+        setCols([
+          "createdAt",
+          "createdBy.nom + ' ' + createdBy.prenom",
+          "objetMission",
+          "budget",
+          "tDateDeb",
+          "tDateRet",
+          "etat",
+          "raisonRefus",
+        ]);
+        break;
+
+      case "user":
+        setCols(["createdAt", "nom", "prenom", "fonction", "email", "role"]);
+        break;
+
+      default:
+        setCols([]);
+        break;
+    }
+  }, [colType]);
+
+  /**_______________________________________________________________________________________________________________________________ */
 
   return (
     <div className="table">
@@ -336,66 +452,7 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
               if (colType === "demande" || colType === "db")
                 return (
                   <TableRow key={uuidv4()} className="trow">
-                    <TableCell
-                      align="center"
-                      className="tableColumn"
-                      onClick={() => {
-                        console.log("here : " + JSON.stringify(item));
-                        openPopup(item.__t.toLowerCase());
-                        setSavedItem(item);
-                      }}
-                    >
-                      {Intl.DateTimeFormat(["ban", "id"]).format(
-                        new Date(item.createdAt)
-                      )}
-                    </TableCell>
-                    <TableCell
-                      align="center"
-                      className="tableColumn"
-                      onClick={() => {
-                        console.log("here : " + JSON.stringify(item));
-
-                        openPopup(item.__t.toLowerCase());
-                        setSavedItem(item);
-                      }}
-                    >
-                      {item.idEmetteur.nom + " " + item.idEmetteur.prenom}
-                    </TableCell>
-                    <TableCell
-                      align="center"
-                      className="tableColumn"
-                      onClick={() => {
-                        console.log("here : " + JSON.stringify(item));
-
-                        openPopup(item.__t.toLowerCase());
-                        setSavedItem(item);
-                      }}
-                    >
-                      {item.motif}
-                    </TableCell>
-                    <TableCell
-                      align="center"
-                      className="tableColumn"
-                      onClick={() => {
-                        console.log("here : " + JSON.stringify(item));
-
-                        openPopup(item.__t.toLowerCase());
-                        setSavedItem(item);
-                      }}
-                    >
-                      {item.idEmetteur.structure}
-                    </TableCell>
-                    <TableCell
-                      align="center"
-                      className={item.etat}
-                      onClick={() => {
-                        openPopup(item.__t.toLowerCase());
-                        setSavedItem(item);
-                      }}
-                    >
-                      {item.etat}
-                    </TableCell>
-
+                    {cols.map((col) => tableCell(item, col))}
                     <TableCell align="center" className="tableColumn">
                       {renderConfiguration(item, item.__t.toLowerCase())}
                     </TableCell>
@@ -404,40 +461,9 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
               if (colType === "rfm")
                 return (
                   <TableRow key={uuidv4()} className="trow">
-                    <TableCell
-                      align="center"
-                      className="tableColumn"
-                      onClick={() => {
-                        openPopup("update");
-                        setSavedItem(item);
-                      }}
-                    >
-                      {Intl.DateTimeFormat(["ban", "id"]).format(
-                        new Date(item.createdAt)
-                      )}
-                    </TableCell>
-                    <TableCell
-                      align="center"
-                      className="tableColumn"
-                      onClick={() => {
-                        openPopup("update");
-                        setSavedItem(item);
-                      }}
-                    >
-                      {item.idEmploye?.nom + " " + item.idEmploye?.prenom}
-                    </TableCell>
-                    <TableCell
-                      align="center"
-                      className={item.etat}
-                      onClick={() => {
-                        openPopup("update");
-                        setSavedItem(item);
-                      }}
-                    >
-                      {item.etat}
-                    </TableCell>
+                    {cols.map((col) => tableCell(item, col))}
                     <TableCell align="center" className="tableColumn">
-                      {renderConfiguration(item, "rfm")}
+                      {renderConfiguration(item, colType)}
                     </TableCell>
                   </TableRow>
                 );
@@ -445,186 +471,18 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
               if (colType === "mission")
                 return (
                   <TableRow key={uuidv4()} className="trow">
-                    <TableCell
-                      align="center"
-                      className="tableColumn"
-                      onClick={() => {
-                        openPopup("mission");
-
-                        setSavedItem(item);
-                        setSavedType("mission");
-                      }}
-                    >
-                      {Intl.DateTimeFormat(["ban", "id"]).format(
-                        new Date(item.createdAt)
-                      )}
-                    </TableCell>
-                    <TableCell
-                      align="center"
-                      className="tableColumn"
-                      onClick={() => {
-                        openPopup("mission");
-
-                        setSavedItem(item);
-                        setSavedType("mission");
-                      }}
-                    >
-                      {item.createdBy?.nom + " " + item.createdBy?.prenom}
-                    </TableCell>
-                    <TableCell
-                      align="center"
-                      className="tableColumn"
-                      onClick={() => {
-                        openPopup("mission");
-
-                        setSavedItem(item);
-                        setSavedType("mission");
-                      }}
-                    >
-                      {item.objetMission}
-                    </TableCell>
-                    <TableCell
-                      align="center"
-                      className="tableColumn"
-                      onClick={() => {
-                        openPopup("mission");
-
-                        setSavedItem(item);
-                        setSavedType("mission");
-                      }}
-                    >
-                      {item.budget}DA
-                    </TableCell>
-                    <TableCell
-                      align="center"
-                      className="tableColumn"
-                      onClick={() => {
-                        openPopup("mission");
-
-                        setSavedItem(item);
-                        setSavedType("mission");
-                      }}
-                    >
-                      {Intl.DateTimeFormat(["ban", "id"]).format(
-                        new Date(item.tDateDeb)
-                      )}
-                    </TableCell>
-                    <TableCell
-                      align="center"
-                      className="tableColumn"
-                      onClick={() => {
-                        openPopup("mission");
-
-                        setSavedItem(item);
-                        setSavedType("mission");
-                      }}
-                    >
-                      {Intl.DateTimeFormat(["ban", "id"]).format(
-                        new Date(item.tDateRet)
-                      )}
-                    </TableCell>
-                    <TableCell
-                      align="center"
-                      className={item.etat}
-                      onClick={() => {
-                        openPopup("mission");
-
-                        setSavedItem(item);
-                        setSavedType("mission");
-                      }}
-                    >
-                      {item.etat}
-                    </TableCell>
-                    <TableCell
-                      align="center"
-                      className="tableColumn"
-                      onClick={() => {
-                        openPopup("mission");
-
-                        setSavedItem(item);
-                        setSavedType("mission");
-                      }}
-                    >
-                      {item.raisonRefus}
-                    </TableCell>
+                    {cols.map((col) => tableCell(item, col))}
                     <TableCell align="center" className="tableColumn">
-                      {renderConfiguration(item, "mission")}
+                      {renderConfiguration(item, colType)}
                     </TableCell>
                   </TableRow>
                 );
               if (colType === "user")
                 return (
                   <TableRow key={uuidv4()} className="trow">
-                    <TableCell
-                      align="center"
-                      className="tableColumn"
-                      onClick={() => {
-                        openPopup("user");
-                        setSavedItem(item);
-                        setSavedType("user");
-                      }}
-                    >
-                      {Intl.DateTimeFormat(["ban", "id"]).format(
-                        new Date(item.createdAt)
-                      )}
-                    </TableCell>
-                    <TableCell
-                      align="center"
-                      className="tableColumn"
-                      onClick={() => {
-                        openPopup("user");
-                        setSavedItem(item);
-                        setSavedType("user");
-                      }}
-                    >
-                      {item.nom}
-                    </TableCell>
-                    <TableCell
-                      align="center"
-                      className="tableColumn"
-                      onClick={() => {
-                        openPopup("user");
-                        setSavedItem(item);
-                        setSavedType("user");
-                      }}
-                    >
-                      {item.prenom}
-                    </TableCell>
-                    <TableCell
-                      align="center"
-                      className="tableColumn"
-                      onClick={() => {
-                        openPopup("user");
-                        setSavedItem(item);
-                        setSavedType("user");
-                      }}
-                    >
-                      {item.fonction}
-                    </TableCell>
-                    <TableCell
-                      align="center"
-                      className="tableColumn"
-                      onClick={() => {
-                        openPopup("user");
-                        setSavedItem(item);
-                        setSavedType("user");
-                      }}
-                    >
-                      {item.email}
-                    </TableCell>
-                    <TableCell
-                      align="center"
-                      className="tableColumn"
-                      onClick={() => {
-                        openPopup("user");
-                        setSavedItem(item);
-                        setSavedType("user");
-                      }}
-                    >
-                      {item.role}
-                    </TableCell>
+                    {cols.map((col) => tableCell(item, col))}
                     <TableCell align="center" className="tableColumn">
-                      {renderConfiguration(item, "user")}
+                      {renderConfiguration(item, colType)}
                     </TableCell>
                   </TableRow>
                 );
