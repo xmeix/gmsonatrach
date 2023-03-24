@@ -9,6 +9,7 @@ import {
 import { useSelector } from "react-redux";
 import {
   columnsMissions,
+  columnsOM,
   columnsRFM,
   filterMissionsOptions,
   filterRFMOptions,
@@ -32,17 +33,8 @@ const GestionMission = () => {
   const users = useSelector((state) => state.auth.users);
   const currentUser = useSelector((state) => state.auth.user);
   const rfms = useSelector((state) => state.auth.rfms);
+  const oms = useSelector((state) => state.auth.oms);
 
-  // const employeesNonMissionnaires = users
-  //   .filter(
-  //     (user) => user.role === "employe" && user.etat === "non-missionnaire"
-  //   )
-  //   .map((user) => ({ label: user.nom + " " + user.prenom, value: user._id }));
-
-  // const entries = MissionEntries.map((entry) => {
-  //   if (entry.id === "employes") entry.options = employeesNonMissionnaires;
-  //   return entry;
-  // });
   return (
     <div className="gestion">
       <PageName name="gestion Missions" />
@@ -74,6 +66,14 @@ const GestionMission = () => {
           columns={columnsMissions}
           data={missions}
           colType="mission"
+        />
+        <TableM
+          title="employees Mission orders"
+          search={["id"]}
+          filterOptions={filterMissionsOptions}
+          columns={columnsOM}
+          data={oms}
+          colType="om"
         />
       </div>
     </div>

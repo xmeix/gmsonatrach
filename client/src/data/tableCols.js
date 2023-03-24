@@ -22,6 +22,7 @@ export const columnsRFM = [
   { id: "idEmploye", label: "Sender", minWidth: "20px" },
   { id: "etat", label: "Status", minWidth: "20px" },
 ];
+
 export const filterRFMOptions = ["créé", "en-attente", "accepté", "refusé"];
 
 export const columnsUsersEmp = [
@@ -53,7 +54,13 @@ export const filterUserOptions = [
   "DATA",
   "CHANGE",
 ];
-
+export const columnsOM = [
+  { id: "createdAt", label: "date", minWidth: "20px" },
+  { id: "mission.id", label: "Mission Id", minWidth: "20px" },
+  { id: "employe.nom", label: "Last Name", minWidth: "20px" },
+  { id: "employe.prenom", label: "First Name", minWidth: "20px" },
+  { id: "mission.objetMission", label: "Mission purpose", minWidth: "20px" },
+];
 export const columnsMissions = [
   { id: "createdAt", label: "Date", minWidth: "20px" },
   { id: "createdBy", label: "Created by", minWidth: "20px" },

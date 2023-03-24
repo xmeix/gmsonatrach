@@ -11,6 +11,7 @@ import {
   TableRow,
 } from "@mui/material";
 import "./../Popup.css";
+import usePDFGenerator from "../../../hooks/usePDFGenerator";
 const useStyles = makeStyles({
   table: {
     minWidth: 200,
@@ -32,18 +33,10 @@ const useStyles = makeStyles({
 });
 const PopupDC = ({ item }) => {
   const classes = useStyles();
-
-  const generatePDF = () => {
-    const element = document.getElementById("DC-Demande");
-
-    html2pdf()
-      .set({ jsPDF: { unit: "in", format: "letter", orientation: "portrait" } })
-      .from(element)
-      .save();
-  };
+  const [pdfRef, generatePDF] = usePDFGenerator();
 
   return (
-    <div className="popup-dc" id="DC-Demande">
+    <div className="popup-dc" id="DC-Demande" ref={pdfRef}>
       <div>
         <h1 className="title">Demande de congé</h1>
         <div className="direction">
@@ -179,7 +172,7 @@ const PopupDC = ({ item }) => {
           </div>
         </div>
       </div>
-      <button onClick={generatePDF}>Export to PDF</button>
+      <button onClick={generatePDF}>Generate PDF</button>
     </div>
   );
 };

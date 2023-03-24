@@ -1,11 +1,32 @@
 import { useSelector } from "react-redux";
 import logo from "../../../assets/logo.svg";
+import usePDFGenerator from "../../../hooks/usePDFGenerator";
 const PopupOM = ({ item }) => {
-  const oms = useSelector((state) => state.auth.oms);
-  const om = oms.filter((o) => o.mission.id === item.id).map((o) => o);
-  console.log(om);
+  const [pdfRef, generatePDF] = usePDFGenerator();
+
+  const {
+    _id: missionId,
+    lieuDep,
+    destination,
+    pays,
+    tDateDeb,
+    tDateRet,
+    objetMission,
+    moyenTransport,
+  } = item.mission;
+  const { _id: employeeId, nom, prenom, fonction } = item.employe;
+
+  const OmLabelLine = ({ label, content }) => (
+    <div className="om-label-line">
+      <div className="om-label">{label}</div>
+      <div className="om-content">{content}</div>
+    </div>
+  );
+  const SignatureElement = ({ text }) => (
+    <div className="om-signature-element">{text}</div>
+  );
   return (
-    <div className="popup-om">
+    <div className="popup-om" ref={pdfRef}>
       <div className="om-head">
         <div className="head-img">
           <img src={logo} alt="" className="logo" />
@@ -13,7 +34,10 @@ const PopupOM = ({ item }) => {
             Direction Générale <br />
             La direction projet SH-ONE{" "}
           </div>
-          <div className="om-identificateur">N° /SH-ONE/2021</div>
+          <div className="om-identificateur">
+            N° {missionId} /SH-ONE/
+            {new Date(item.createdAt).toISOString().slice(0, 4)}
+          </div>
         </div>
         <div className="official">
           <div className="head-off">
@@ -22,47 +46,42 @@ const PopupOM = ({ item }) => {
           <div className="head-subOff">Ministère de l'Energie et des mines</div>
         </div>
       </div>
-      <div className="om-title">Ordre de mission</div>
+      <div className="title">Ordre de mission</div>
       <div className="om-body">
-        <div className="om-label-line">
-          <div className="om-label">Matricule</div>
-          <div className="om-content"></div>
-        </div>
-        <div className="om-label-line">
-          <div className="om-label">Nom & Prénom</div>
-          <div className="om-content"></div>
-        </div>
-        <div className="om-label-line">
-          <div className="om-label">Fonction</div>
-          <div className="om-content"></div>
-        </div>
-        <div className="om-label-line">
-          <div className="om-label">Parcours</div>
-          <div className="om-content"></div>
-        </div>
-        <div className="om-label-line">
-          <div className="om-label">Objet de la mission</div>
-          <div className="om-content"></div>
-        </div>
-        <div className="om-label-line">
-          <div className="om-label">Date de depart</div>
-          <div className="om-content"></div>
-        </div>
-        <div className="om-label-line">
-          <div className="om-label">Date de retour</div>
-          <div className="om-content"></div>
-        </div>
-        <div className="om-label-line">
-          <div className="om-label">Moyen de transport</div>
-          <div className="om-content"></div>
-        </div>
+        <OmLabelLine label="Matricule" content={": " + employeeId} />
+        <OmLabelLine label="Nom & Prénom" content={": " + `${nom} ${prenom}`} />
+        <OmLabelLine label="Fonction" content={": " + fonction} />
+        <OmLabelLine
+          label="Parcours"
+          content={
+            ": " + `${lieuDep} Alger ${destination} ${pays} ${lieuDep} Alger`
+          }
+        />
+        <OmLabelLine
+          label="Objet de la mission"
+          content={": " + objetMission}
+        />
+        <OmLabelLine
+          label="Date de depart"
+          content={": " + new Date(tDateDeb).toISOString().slice(0, 10)}
+        />
+        <OmLabelLine
+          label="Date de retour"
+          content={": " + new Date(tDateRet).toISOString().slice(0, 10)}
+        />
+        <OmLabelLine
+          label="Moyen de transport"
+          content={": " + moyenTransport.join("-")}
+        />
       </div>
       <div className="om-signature">
-        <div className="om-signature-element">Le Directeur</div>
-        <div className="om-signature-element">Le Responsable Intérimaire</div>
-        <div className="om-signature-element">A.FELFOUL</div>
+        <SignatureElement text="Le Directeur" />
+        <SignatureElement text="Le Responsable Intérimaire" />
+        <SignatureElement text="A.FELFOUL" />
       </div>
+      <hr />
       <div className="om-foot"></div>
+      <button onClick={generatePDF}>Generate PDF</button>
     </div>
   );
 };

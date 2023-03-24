@@ -5,7 +5,7 @@ const MissionSchema = new mongoose.Schema(
     objetMission: {
       type: String,
       required: true,
-    },
+    }, 
     structure: {
       type: String,
       enum: [

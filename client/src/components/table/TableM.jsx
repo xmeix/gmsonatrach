@@ -176,6 +176,7 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
           } else {
             cellValue = item[column.id].toString().toLowerCase();
           }
+          console.log(column.id);
           const filterValue = trimmedFilter.toLowerCase();
           return (
             cellValue.includes(filterValue) ||
@@ -201,7 +202,31 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
                 item[column.id].structure
                   .toString()
                   .toLowerCase()
-                  .includes(filterValue)))
+                  .includes(filterValue))) ||
+            item["mission"]?._id
+              .toString()
+              .toLowerCase()
+              .includes(filterValue) ||
+            item["mission"]?.objetMission
+              .toString()
+              .toLowerCase()
+              .includes(filterValue) ||
+            item["employe"]?.nom
+              .toString()
+              .toLowerCase()
+              .includes(filterValue) ||
+            item["employe"]?.prenom
+              .toString()
+              .toLowerCase()
+              .includes(filterValue) ||
+            (item["employe"]?.prenom + " " + item["employe"]?.nom)
+              .toString()
+              .toLowerCase()
+              .includes(filterValue) ||
+            (item["employe"]?.nom + " " + item["employe"]?.prenom)
+              .toString()
+              .toLowerCase()
+              .includes(filterValue)
           );
         });
       }
@@ -279,16 +304,18 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
     if (["createdAt", "tDateDeb", "tDateRet"].includes(property)) {
       return (
         <TableCell
+          key={uuidv4()}
           align="center"
           className="tableColumn"
           onClick={() => handleOnClick(item)}
         >
-          {new Date(item[property]).toLocaleDateString()}
+          {new Date(item[property]).toISOString().slice(0, 10)}
         </TableCell>
       );
     } else if (property === "idEmetteur.nom + ' ' + idEmetteur.prenom") {
       return (
         <TableCell
+          key={uuidv4()}
           align="center"
           className="tableColumn"
           onClick={() => handleOnClick(item)}
@@ -296,9 +323,21 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
           {item.idEmetteur.nom + " " + item.idEmetteur.prenom}
         </TableCell>
       );
+    } else if (property === "mission.objetMission") {
+      return (
+        <TableCell
+          key={uuidv4()}
+          align="center"
+          className="tableColumn"
+          onClick={() => handleOnClick(item)}
+        >
+          {item.mission.objetMission}
+        </TableCell>
+      );
     } else if (property === "idEmetteur.structure") {
       return (
         <TableCell
+          key={uuidv4()}
           align="center"
           className="tableColumn"
           onClick={() => handleOnClick(item)}
@@ -309,6 +348,7 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
     } else if (property === "idEmploye.nom + ' ' + idEmploye.prenom") {
       return (
         <TableCell
+          key={uuidv4()}
           align="center"
           className="tableColumn"
           onClick={() => handleOnClick(item)}
@@ -316,10 +356,10 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
           {item.idEmploye.nom + " " + item.idEmploye.prenom}
         </TableCell>
       );
-    }
-    if (property === "createdBy.nom + ' ' + createdBy.prenom") {
+    } else if (property === "createdBy.nom + ' ' + createdBy.prenom") {
       return (
         <TableCell
+          key={uuidv4()}
           align="center"
           className="tableColumn"
           onClick={() => handleOnClick(item)}
@@ -327,9 +367,43 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
           {item.createdBy.nom + " " + item.createdBy.prenom}
         </TableCell>
       );
+    } else if (property === "mission.id") {
+      return (
+        <TableCell
+          key={uuidv4()}
+          align="center"
+          className="tableColumn"
+          onClick={() => handleOnClick(item)}
+        >
+          {item.mission._id}
+        </TableCell>
+      );
+    } else if (property === "employe.nom") {
+      return (
+        <TableCell
+          key={uuidv4()}
+          align="center"
+          className="tableColumn"
+          onClick={() => handleOnClick(item)}
+        >
+          {item.employe.nom}
+        </TableCell>
+      );
+    } else if (property === "employe.prenom") {
+      return (
+        <TableCell
+          key={uuidv4()}
+          align="center"
+          className="tableColumn"
+          onClick={() => handleOnClick(item)}
+        >
+          {item.employe.prenom}
+        </TableCell>
+      );
     } else
       return (
         <TableCell
+          key={uuidv4()}
           align="center"
           className={property === "etat" ? item.etat : "tableColumn"}
           onClick={() => handleOnClick(item)}
@@ -371,6 +445,15 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
           "tDateRet",
           "etat",
           "raisonRefus",
+        ]);
+        break;
+      case "om":
+        setCols([
+          "createdAt",
+          "mission.id",
+          "employe.nom",
+          "employe.prenom",
+          "mission.objetMission",
         ]);
         break;
 
@@ -449,7 +532,7 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
           </TableHead>
           <TableBody>
             {paginatedData.map((item) => {
-              if (colType === "demande" || colType === "db")
+              if (colType === "demande" || colType === "db") {
                 return (
                   <TableRow key={uuidv4()} className="trow">
                     {cols.map((col) => tableCell(item, col))}
@@ -458,7 +541,7 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
                     </TableCell>
                   </TableRow>
                 );
-              if (colType !== "demande" && colType !== "db")
+              } else if (colType !== "demande" && colType !== "db") {
                 return (
                   <TableRow key={uuidv4()} className="trow">
                     {cols.map((col) => tableCell(item, col))}
@@ -467,6 +550,7 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
                     </TableCell>
                   </TableRow>
                 );
+              }
             })}
           </TableBody>
         </Table>

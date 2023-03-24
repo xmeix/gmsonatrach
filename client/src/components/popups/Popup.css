@@ -9,6 +9,8 @@
   box-shadow: 0 0 0 2px rgba(70, 69, 69, 0.034);
   overflow-y: auto;
   transition: all 0.5s ease-in-out;
+  white-space: nowrap;
+  overflow-x: scroll;
 }
 /*--------------------------------------------------*/
 
@@ -53,8 +55,7 @@
 }
 /*--------------------------------------------------*/
 .popup-dm,
-.popup-refuse,
-.popup-om {
+.popup-refuse {
   display: flex;
   flex-direction: column;
   gap: 0.5em;
@@ -72,6 +73,75 @@
   align-self: center;
   font-size: 15px;
 }
+/*--------------------------------------------------*/
+
+.popup-om {
+}
+.popup-om .om-head {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+}
+
+.popup-om .head-img {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1em;
+  text-align: left;
+}
+.popup-om .head-img .logo {
+  height: 60px;
+}
+
+.popup-om .om-direction,
+.popup-om .om-identificateur {
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.popup-om .official {
+  flex: 3;
+  font-weight: 800;
+  font-size: 12px;
+}
+
+.popup-om .om-body {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.popup-om .om-label-line {
+  display: flex;
+  gap: 1em;
+  font-size: 14px;
+}
+
+.popup-om .om-label {
+  font-weight: 600;
+  flex: 1;
+}
+.popup-om .om-content {
+  flex: 3;
+}
+.popup-om .om-signature {
+  text-align: left;
+  margin-top: 3em;
+  font-weight: 500;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+}
+
+.popup-om .om-signature-element {
+}
+
+.popup-om .om-foot {
+}
+
 /*--------------------------------------------------*/
 
 .popup-user {
@@ -118,7 +188,9 @@
 /*---------------------------------------------------*/
 .popup-mission,
 .popup-dc,
-.popup-db {
+.popup-db,
+.popup-om,
+.popup-update {
   display: flex;
   flex-direction: column;
   gap: 1.5em;
@@ -128,7 +200,7 @@
   right: 3em;
   bottom: 3em;
   font-size: 13px;
-  padding: 1.5em;
+  padding: 5em;
 }
 .popup-mission .employes,
 .popup-mission .taches,
@@ -212,19 +284,7 @@
   flex: 1;
 }
 /*---------------------------------------------------*/
-.popup-update {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5em;
 
-  /* border: solid 1px var(--light-gray); */
-  top: 13%;
-  left: 3em;
-  right: 3em;
-  bottom: 3em;
-  font-size: 13px;
-  padding: 1em;
-}
 .popup-update span,
 .popup-mission span,
 .popup-dm span,
