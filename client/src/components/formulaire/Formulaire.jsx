@@ -158,9 +158,10 @@ const Formulaire = ({ title, entries, buttons, type }) => {
                   <input
                     type={entry.inputType}
                     min={
-                      (entry.inputType === "number" && 0) ||
+                      (entry.inputType === "number" && "") ||
                       (entry.inputType === "date" &&
-                        new Date().toISOString().split("T")[0])
+                        new Date().toISOString().split("T")[0]) ||
+                      undefined
                     }
                     onChange={(e) => {
                       if (type === "mission") {

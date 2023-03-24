@@ -10,12 +10,14 @@ import PopupUser from "./popupRefus/PopupUser";
 import PopupDB from "./popupRefus/PopupDB";
 import PopupDC from "./popupRefus/PopupDC";
 import PopupDM from "./popupRefus/PopupDM";
+import PopupOM from "./popupRefus/PopupOM";
 const Popup = ({ item, type, isOpen, closePopup, popupType }) => {
   const [deroulement, setDeroulement] = useState([]);
 
   return (
     <div className={`popup popup-${popupType}`}>
       <CloseRoundedIcon className="icon" onClick={closePopup} />
+      <div className="state"></div>
       {popupType === "update" && <PopupUpdate item={item} close={closePopup} />}
       {popupType === "refuse" && (
         <PopupRefus item={item} type={type} close={closePopup} />
@@ -23,6 +25,7 @@ const Popup = ({ item, type, isOpen, closePopup, popupType }) => {
       {popupType === "mission" && (
         <PopupMission item={item} close={closePopup} />
       )}
+      {popupType === "om" && <PopupOM item={item} close={closePopup} />}
       {popupType === "user" && <PopupUser item={item} close={closePopup} />}
       {popupType === "db" && <PopupDB item={item} close={closePopup} />}
       {popupType === "dc" && <PopupDC item={item} close={closePopup} />}

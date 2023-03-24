@@ -75,6 +75,7 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
     buttons = array.find(
       (btn) => btn.type.toLowerCase() === type.toLowerCase()
     );
+    console.log("buttons: " + JSON.stringify(buttons));
 
     if (!buttons) {
       return null;
@@ -111,7 +112,7 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
                 item.etat === "en-attente")) ||
             (button === "cancel" &&
               type !== "mission" &&
-              item.etat === "en-attente")
+              item.etat === "en-attente") 
           )
             return (
               <button
@@ -262,6 +263,13 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
     page * rowsPerPage,
     page * rowsPerPage + rowsPerPage
   );
+
+    
+
+
+
+
+
   return (
     <div className="table">
       <p className="listTitle">{title ? title : "list"}</p>

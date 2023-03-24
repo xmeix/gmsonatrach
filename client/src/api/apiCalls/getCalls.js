@@ -11,7 +11,11 @@ const fetchData = async (dispatch, endpoint, socketEvent) => {
   try {
     const res = await apiService.user.get(endpoint);
     console.log(`getting ${endpoint}...`);
-    socket.emit("updatedData", res.data, socketEvent);
+    if (socketEvent === "om") {
+      socket.emit("updatedData", res.data.filteredOMissions, socketEvent);
+    } else {
+      socket.emit("updatedData", res.data, socketEvent);
+    }
     dispatch(fetchEnd());
   } catch (err) {
     console.log(`ERROR getting ${endpoint}`);

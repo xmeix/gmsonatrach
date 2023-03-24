@@ -23,8 +23,8 @@ export const EmployeBtns = [
     showBtn: true,
   },
   {
-    type: "OM",
-    btns: [],
+    type: "mission",
+    btns: ["mission order"], //si item.etat en attente + cancel == item.etat == accepté && !==en cours
     showBtn: true,
   },
 ];
@@ -56,7 +56,7 @@ export const SecretaireBtns = [
   },
   {
     type: "mission",
-    btns: ["cancel"], //acceptée mais (pas en cours == date debut mission!= current date)
+    btns: ["cancel", "mission order"], //acceptée mais (pas en cours == date debut mission!= current date)
     showBtn: true,
   },
   {
@@ -94,7 +94,7 @@ export const DirecteurBtns = [
   },
   {
     type: "mission",
-    btns: ["accept", "refuse", "cancel"], //si item.etat en attente
+    btns: ["accept", "refuse", "cancel", "mission order"], //si item.etat en attente
     showBtn: true,
   },
   {
@@ -132,7 +132,7 @@ export const ResponsableBtns = [
   },
   {
     type: "mission",
-    btns: ["accept", "refuse", "cancel"], //si item.etat en attente + cancel == item.etat == accepté && !==en cours
+    btns: ["accept", "refuse", "cancel", "mission order"], //si item.etat en attente + cancel == item.etat == accepté && !==en cours
     showBtn: true,
   },
   {
