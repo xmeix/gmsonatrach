@@ -458,26 +458,7 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
                     </TableCell>
                   </TableRow>
                 );
-              if (colType === "rfm")
-                return (
-                  <TableRow key={uuidv4()} className="trow">
-                    {cols.map((col) => tableCell(item, col))}
-                    <TableCell align="center" className="tableColumn">
-                      {renderConfiguration(item, colType)}
-                    </TableCell>
-                  </TableRow>
-                );
-
-              if (colType === "mission")
-                return (
-                  <TableRow key={uuidv4()} className="trow">
-                    {cols.map((col) => tableCell(item, col))}
-                    <TableCell align="center" className="tableColumn">
-                      {renderConfiguration(item, colType)}
-                    </TableCell>
-                  </TableRow>
-                );
-              if (colType === "user")
+              if (colType !== "demande" && colType !== "db")
                 return (
                   <TableRow key={uuidv4()} className="trow">
                     {cols.map((col) => tableCell(item, col))}
