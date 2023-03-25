@@ -1,11 +1,9 @@
- import { useAxios } from "./useAxios";
+import { useAxios } from "./useAxios";
 
 const useBtn = () => {
   const { callApi } = useAxios();
 
   const handleClick = (btnType, item, type, raison, body) => {
-    console.log(raison);
-    console.log(type);
     const { _id } = item;
     const route = getRoute(type);
 
@@ -15,11 +13,20 @@ const useBtn = () => {
         callApi("patch", `${route}/${_id}`, { etat: etatAccept });
         break;
       case "refuse":
-        const etatRefuse = type === "rfm" ? "créé" : "refusée";
-        callApi("patch", `${route}/${_id}`, {
-          etat: etatRefuse,
-          raisonRefus: raison || "",
-        });
+        let b = {};
+        if (type === "rfm") {
+          b = {
+            etat: "créé",
+            raisonRefus: raison || "",
+            nbRefus: item.nbRefus + 1,
+          };
+        } else
+          b = {
+            etat: "refusée",
+            raisonRefus: raison || "",
+          };
+
+        callApi("patch", `${route}/${_id}`, b);
         break;
       case "cancel":
         callApi("patch", `${route}/${_id}`, { etat: "annulée" });
@@ -28,11 +35,11 @@ const useBtn = () => {
         // do something
         break;
       case "update":
-        callApi("patch", `/${route}/${_id}`, { deroulement: body });
+        callApi("patch", `${route}/${_id}`, { deroulement: body });
 
         break;
       case "send":
-        callApi("patch", `/${route}/${_id}`, { etat: "en-attente" });
+        callApi("patch", `${route}/${_id}`, { etat: "en-attente" });
         break;
       default:
         break;

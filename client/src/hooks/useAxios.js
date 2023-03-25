@@ -7,6 +7,7 @@ import {
   fetchStart,
   setLogin,
   setLogout,
+  setRFMs,
 } from "../store/features/authSlice";
 import {
   getDemandes,
@@ -29,78 +30,95 @@ export const useAxios = () => {
 
     setError("");
     setSuccessMsg("");
+    dispatch(fetchStart());
+
     try {
       let response;
-      dispatch(fetchStart());
+
       switch (method) {
         case "post":
           response = await apiService.user.post(url, body);
-          if (url === "/auth/login") {
-            dispatch(setLogin(response.data));
-            getDemandes(dispatch);
-            if (response.data.user.role === "employe") {
-              getMissions(dispatch);
-              getRFMs(dispatch);
-              getOMs(dispatch);
-              getDepenses(dispatch);
-            } else {
-              getMissions(dispatch);
-              getRFMs(dispatch);
-              getOMs(dispatch);
-              getDepenses(dispatch);
-              getUsers(dispatch);
-            }
-          } else if (url === "/auth/logout") {
-            dispatch(setLogout());
-          } else if (url === "/auth/register") {
-            getUsers(dispatch);
-          } else if (url === "/mission") {
-            getMissions(dispatch);
-          } else if (
-            url === "/demande/DB" ||
-            url === "/demande/DC" ||
-            url === "/demande/DM"
-          ) {
-            getDemandes(dispatch);
-          }
-          console.log("post");
+          handleSuccess(response, url, body);
           break;
         case "delete":
-          console.log("delete");
           response = await apiService.user.delete(url, body);
           getUsers(dispatch);
-
           break;
         case "patch":
-          console.log("patch");
           response = await apiService.user.patch(url, body);
-          getDemandes(dispatch);
-          if (currentUser.role === "employe") {
-            getMissions(dispatch);
-            getRFMs(dispatch);
-            getOMs(dispatch);
-            getDepenses(dispatch);
-          } else {
-            getMissions(dispatch);
-            getRFMs(dispatch);
-            getOMs(dispatch);
-            getDepenses(dispatch);
-            getUsers(dispatch);
-          }
-
+          console.log("url " + url);
+          if (url.includes("/rapportFM")) {
+            handleSuccess(response, "/rapportFM", body);
+          } else if (url.includes("/demande")) {
+            handleSuccess(response, "/demande", body);
+          } else if (url.includes("/mission")) {
+            handleSuccess(response, "/mission", body);
+          } else handleSuccess(response, url, body);
           break;
         default:
           throw new Error(`Invalid HTTP method: ${method}`);
       }
-      dispatch(fetchEnd());
-      setSuccessMsg(response.data.msg);
     } catch (error) {
-      console.log(error);
-      setError(error.response?.data.error || "Something went wrong.");
-      dispatch(fetchFailure());
+      handleError(error);
     }
   };
+  const handleSuccess = (response, url, body) => {
+    dispatch(fetchEnd());
+    setSuccessMsg(response.data.msg);
 
+    switch (url) {
+      case "/auth/login":
+        dispatch(setLogin(response.data));
+        handleUserType(response.data);
+        break;
+      case "/auth/logout":
+        dispatch(setLogout());
+        break;
+      case "/auth/register":
+        getUsers(dispatch);
+        break;
+      case "/mission":
+        getMissions(dispatch);
+        getOMs(dispatch);
+        break;
+      case "/demande/DB":
+      case "/demande/DC":
+      case "/demande/DM":
+      case "/demande":
+        getDemandes(dispatch);
+
+        break;
+      case "/rapportFM":
+        console.log(body);
+        console.log(response.data);
+        if (currentUser.role === "employe" && !body.etat) {
+          console.log("here");
+          getRFMs(dispatch, 1);
+        } else {
+          console.log("inside of here");
+          getRFMs(dispatch);
+        }
+        break;
+      default:
+        handleUserType(currentUser.role);
+    }
+  };
+  const handleError = (error) => {
+    console.log(error);
+    setError(error.response?.data.error || "Something went wrong.");
+    dispatch(fetchFailure());
+  };
+  const handleUserType = (role) => {
+    getMissions(dispatch, 1);
+    getRFMs(dispatch, 1);
+    getOMs(dispatch, 1);
+    getDepenses(dispatch, 1);
+    getDemandes(dispatch, 1);
+
+    if (role !== "employe" && role !== "relex") {
+      getUsers(dispatch, 1);
+    }
+  };
   return {
     isLoading,
     error,

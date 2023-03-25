@@ -5,6 +5,9 @@ const Dashboard = () => {
   return (
     <div className="dashboard">
       <PageName name="Dashboards" />
+      <div className="dash-content">
+        
+      </div>
     </div>
   );
 };

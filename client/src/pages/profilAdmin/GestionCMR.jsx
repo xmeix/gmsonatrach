@@ -17,8 +17,9 @@ const GestionCMR = () => {
   );
 
   const rfms = useSelector((state) => state.auth.rfms);
-  const currentUser = useSelector((state) => state.auth.user);
-  return (
+
+ 
+   return (
     <div className="gestion">
       <PageName name="Leave and reports" />
       <div className="elements">

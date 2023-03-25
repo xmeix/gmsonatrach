@@ -1,14 +1,26 @@
 import { useRef } from "react";
 import html2pdf from "html2pdf.js";
 
-const usePDFGenerator = () => {
+const usePDFGenerator = (filename) => {
   const pdfRef = useRef();
 
   const generatePDF = () => {
     const element = pdfRef.current;
 
     html2pdf()
-      .set({ jsPDF: { unit: "in", format: "letter", orientation: "portrait" } })
+      .set({
+        filename: filename,
+        image: { type: "jpeg", quality: 0.98 },
+        pagebreak: { mode: ["avoid-all"] },
+        html2canvas: { scale: 2 },
+        margin: 2,
+        jsPDF: {
+          orientation: "p",
+          unit: "em",
+          format: "a4",
+           floatPrecision: 16,
+        },
+      })
       .from(element)
       .save();
   };

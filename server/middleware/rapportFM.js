@@ -10,15 +10,13 @@ export const checkUpdateAccessReport = async (req, res, next) => {
     //on doit savoir si someone want to change state or deroulement
     const { deroulement, etat } = req.body;
     if (deroulement) {
-      if (role !== "employe") throw new Error("Unauthorized");
-      else if (
-        Report.etat === "accepté" ||
-        Report.etat === "refusé" 
-      )
+       if (role !== "employe") throw new Error("Unauthorized");
+      else if (Report.etat === "accepté" || Report.etat === "refusé")
         throw new Error("Unauthorized");
     }
 
     if (etat) {
+ 
       if (etat === "en-attente" && role !== "employe")
         throw new Error("Unauthorized");
       if (etat === "accepté" || etat === "refusé") {
@@ -26,7 +24,7 @@ export const checkUpdateAccessReport = async (req, res, next) => {
           throw new Error("Unauthorized");
         else if (role === "responsable" && mission.structure !== structure)
           throw new Error("Unauthorized");
-      } else if (etat === "créé") throw new Error("Unauthorized");
+      } 
     }
     next(); //creation du rapport
   } catch (err) {

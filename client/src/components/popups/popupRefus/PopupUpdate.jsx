@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { Fragment, useEffect, useMemo, useState } from "react";
 import {
   Table,
   TableHead,
@@ -9,6 +9,8 @@ import {
   Radio,
 } from "@material-ui/core";
 import useBtn from "../../../hooks/useBtn";
+import { useSelector } from "react-redux";
+import usePDFGenerator from "../../../hooks/usePDFGenerator";
 
 const useStyles = makeStyles({
   table: {
@@ -36,6 +38,7 @@ const PopupUpdate = ({ item, close }) => {
   const [hebergement, setHebergement] = useState(() =>
     item.deroulement.map((item) => item.hebergement)
   );
+  const currentUser = useSelector((state) => state.auth.user);
   const [diner, setDiner] = useState(() =>
     item.deroulement.map((item) => item.diner)
   );
@@ -44,7 +47,6 @@ const PopupUpdate = ({ item, close }) => {
   );
   const classes = useStyles();
   const [handleClick] = useBtn();
-
   useEffect(() => {
     const generateDates = () => {
       const newDates = [];
@@ -124,247 +126,255 @@ const PopupUpdate = ({ item, close }) => {
       element = dejeuner[index];
     }
     if (type) {
-      return (
-        <Radio
-          value={value}
-          checked={element === value}
-          onChange={handleObservationChange(index, type)}
-          style={{ color: "var(--orange)" }}
-          size="small"
-        />
-      );
+      if (currentUser._id === user._id && item.etat === "créé") {
+        return (
+          <Radio
+            value={value}
+            checked={element === value}
+            onChange={handleObservationChange(index, type)}
+            style={{ color: "var(--orange)" }}
+            size="small"
+          />
+        );
+      } else return <div className="x">{element === value && "X"}</div>;
     }
   }
+
+  const [pdfRef, generatePDF] = usePDFGenerator("compte-rendu-fin-mission");
+
   return (
-    <div className="popup-update">
-      <h3 className="title">Compte Rendu de Mission</h3>
-      <div className="direction">
-        <div>
-          Du{" "}
-          <span>
-            {Intl.DateTimeFormat(["ban", "id"]).format(
-              new Date(item.createdAt)
-            )}
-          </span>
-        </div>
-        <span className="identificateur">
-          N° {item._id}/ SH-ONE/{new Date().getFullYear()}
-        </span>
-        <span>DCG/RH - DAPS</span>
-      </div>
-      <div className="infoEmploye">
-        <div className="matricule">
-          <span>Matricule:</span>
-          {user._id}
-        </div>
-        <div className="nomPrenom">
-          <span>Nom & Prénoms:</span> {user.nom + " " + user.prenom}
-        </div>
-        <div className="fonction">
-          <span>Fonction :</span> {user.fonction}
-        </div>
-        <div className="structure">
-          <span>Structure :</span> {user.structure}
-        </div>
-      </div>
-      <div className="infoMission">
-        <div className="objetMission">
-          <span>Objet de la mission :</span> {mission.objetMission}
-        </div>
-        <div className="itineraire">
-          <span>Itinéraire: </span>
-          {mission.lieuDep +
-            " Alger" +
-            mission.destination +
-            " " +
-            mission.pays}
-        </div>
-        <div className="dates">
-          <span className="subTitle">Début de Mission:</span>
-          <div className="dateContainer">
+    <>
+      <div className="popup-update" ref={pdfRef}>
+        <h3 className="title">Compte Rendu de Mission</h3>
+        <div className="direction">
+          <div>
+            Du{" "}
             <span>
-              Date et heure du départ (du lieu de résidence ou du lieu de
-              travail habituel)
+              {Intl.DateTimeFormat(["ban", "id"]).format(
+                new Date(item.createdAt)
+              )}
             </span>
-            <div className="dateContent">
-              <span>Le </span>:{" "}
-              {mission &&
-                Intl.DateTimeFormat(["ban", "id"]).format(
-                  new Date(mission.tDateDeb)
-                )}
-              , <span>a:</span> __ H __ Mn
-            </div>
+          </div>
+          <span className="identificateur">
+            N° {item._id}/ SH-ONE/{new Date().getFullYear()}
+          </span>
+          <span>DCG/RH - DAPS</span>
+        </div>
+        <div className="infoEmploye">
+          <div className="matricule">
+            <span>Matricule:</span>
+            {user._id}
+          </div>
+          <div className="nomPrenom">
+            <span>Nom & Prénoms:</span> {user.nom + " " + user.prenom}
+          </div>
+          <div className="fonction">
+            <span>Fonction :</span> {user.fonction}
+          </div>
+          <div className="structure">
+            <span>Structure :</span> {user.structure}
+          </div>
+        </div>
+        <div className="infoMission">
+          <div className="objetMission">
+            <span>Objet de la mission :</span> {mission.objetMission}
+          </div>
+          <div className="itineraire">
+            <span>Itinéraire: </span>
+            {mission.lieuDep +
+              " Alger" +
+              mission.destination +
+              " " +
+              mission.pays}
+          </div>
+          <div className="dates">
+            <span className="subTitle">Début de Mission:</span>
             <div className="dateContainer">
               <span>
-                Date et heure d'Arrivée ( au lieu où doit se dérouler la mission
-                )
+                Date et heure du départ (du lieu de résidence ou du lieu de
+                travail habituel)
               </span>
-            </div>
-            <div className="dateContent">
-              <span>Le </span>: __/__/___, <span>a:</span> __ H __ Mn
+              <div className="dateContent">
+                <span>Le </span>:{" "}
+                {mission &&
+                  Intl.DateTimeFormat(["ban", "id"]).format(
+                    new Date(mission.tDateDeb)
+                  )}
+                , <span>a:</span> __ H __ Mn
+              </div>
+              <div className="dateContainer">
+                <span>
+                  Date et heure d'Arrivée ( au lieu où doit se dérouler la
+                  mission )
+                </span>
+              </div>
+              <div className="dateContent">
+                <span>Le </span>: __/__/___, <span>a:</span> __ H __ Mn
+              </div>
             </div>
           </div>
-        </div>
 
-        <div className="deroulement">
-          <div className="subTitle">
-            Compte rendu du déroulement de la mission
-          </div>
-          <Table className={classes.table} size="small">
-            <TableHead>
-              <TableRow>
-                <TableCell align="center" className={classes.tableHeaderCell}>
-                  Date
-                </TableCell>
-                <TableCell
-                  align="center"
-                  colSpan={2}
-                  className={classes.tableHeaderCell}
-                >
-                  Hébergement
-                </TableCell>
-                <TableCell
-                  align="center"
-                  colSpan={2}
-                  className={classes.tableHeaderCell}
-                >
-                  Déjeuner
-                </TableCell>
-                <TableCell
-                  align="center"
-                  colSpan={2}
-                  className={classes.tableHeaderCell}
-                >
-                  Dîner
-                </TableCell>
-                <TableCell align="center" className={classes.tableHeaderCell}>
-                  Observation
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell align="center" />
-                <TableCell align="center" className={classes.tableHeaderCell}>
-                  avec prise en charge
-                </TableCell>
-                <TableCell align="center" className={classes.tableHeaderCell}>
-                  Sans prise en charge
-                </TableCell>
-                <TableCell align="center" className={classes.tableHeaderCell}>
-                  avec prise en charge
-                </TableCell>
-                <TableCell align="center" className={classes.tableHeaderCell}>
-                  Sans prise en charge
-                </TableCell>
-                <TableCell align="center" className={classes.tableHeaderCell}>
-                  avec prise en charge
-                </TableCell>
-                <TableCell align="center" className={classes.tableHeaderCell}>
-                  Sans prise en charge
-                </TableCell>
-                <TableCell align="center" />
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {dates.map((date, index) => (
-                <TableRow key={index}>
-                  <TableCell align="center" className={classes.tableCell}>
-                    {Intl.DateTimeFormat(["ban", "id"]).format(new Date(date))}
+          <div className="deroulement">
+            <div className="subTitle">
+              Compte rendu du déroulement de la mission
+            </div>
+            <Table className={classes.table} size="small">
+              <TableHead>
+                <TableRow>
+                  <TableCell align="center" className={classes.tableHeaderCell}>
+                    Date
                   </TableCell>
-                  <TableCell align="center">
-                    {radioInput("hebergement", index, "avec-prise-en-charge")}
+                  <TableCell
+                    align="center"
+                    colSpan={2}
+                    className={classes.tableHeaderCell}
+                  >
+                    Hébergement
                   </TableCell>
-                  <TableCell align="center">
-                    {radioInput("hebergement", index, "sans-prise-en-charge")}
+                  <TableCell
+                    align="center"
+                    colSpan={2}
+                    className={classes.tableHeaderCell}
+                  >
+                    Déjeuner
                   </TableCell>
-                  <TableCell align="center">
-                    {radioInput("dejeuner", index, "avec-prise-en-charge")}
+                  <TableCell
+                    align="center"
+                    colSpan={2}
+                    className={classes.tableHeaderCell}
+                  >
+                    Dîner
                   </TableCell>
-                  <TableCell align="center">
-                    {radioInput("dejeuner", index, "sans-prise-en-charge")}
-                  </TableCell>
-                  <TableCell align="center">
-                    {radioInput("diner", index, "avec-prise-en-charge")}
-                  </TableCell>
-                  <TableCell align="center">
-                    {radioInput("diner", index, "sans-prise-en-charge")}
-                  </TableCell>
-                  <TableCell align="center">
-                    <input
-                      value={observations[index]}
-                      type="text"
-                      onChange={handleObservationChange(index, "observation")}
-                    />
+                  <TableCell align="center" className={classes.tableHeaderCell}>
+                    Observation
                   </TableCell>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-          <div className="instruction">
-            *cochez la case correspondante à chaque date.
-          </div>
-        </div>
+                <TableRow>
+                  <TableCell align="center" />
+                  <TableCell align="center" className={classes.tableHeaderCell}>
+                    avec prise en charge
+                  </TableCell>
+                  <TableCell align="center" className={classes.tableHeaderCell}>
+                    Sans prise en charge
+                  </TableCell>
+                  <TableCell align="center" className={classes.tableHeaderCell}>
+                    avec prise en charge
+                  </TableCell>
+                  <TableCell align="center" className={classes.tableHeaderCell}>
+                    Sans prise en charge
+                  </TableCell>
+                  <TableCell align="center" className={classes.tableHeaderCell}>
+                    avec prise en charge
+                  </TableCell>
+                  <TableCell align="center" className={classes.tableHeaderCell}>
+                    Sans prise en charge
+                  </TableCell>
+                  <TableCell align="center" />
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {dates.map((date, index) => (
+                  <TableRow key={index}>
+                    <TableCell align="center" className={classes.tableCell}>
+                      {Intl.DateTimeFormat(["ban", "id"]).format(
+                        new Date(date)
+                      )}
+                    </TableCell>
+                    {["hebergement", "dejeuner", "diner"].map((event, i) => {
+                      return (
+                        <Fragment key={i}>
+                          <TableCell align="center">
+                            {radioInput(event, index, "avec-prise-en-charge")}
+                          </TableCell>
+                          <TableCell align="center">
+                            {radioInput(event, index, "sans-prise-en-charge")}
+                          </TableCell>
+                        </Fragment>
+                      );
+                    })}
 
-        <div className="dates">
-          <span className="subTitle">Fin de Mission:</span>
-          <div className="dateContainer">
-            <span>
-              Date et heure du départ "du lieu où avait été déroulée la mission"
-            </span>
-            <div className="dateContent">
-              <span>Le </span>:
-              {Intl.DateTimeFormat(["ban", "id"]).format(
-                new Date(mission.tDateRet)
-              )}
-              , <span>a:</span> __ H __ Mn
+                    <TableCell align="center">
+                      <input
+                        value={observations[index]}
+                        type="text"
+                        onChange={handleObservationChange(index, "observation")}
+                      />
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+            <div className="instruction">
+              *cochez la case correspondante à chaque date.
             </div>
+          </div>
+
+          <div className="dates">
+            <span className="subTitle">Fin de Mission:</span>
             <div className="dateContainer">
               <span>
-                Date et heure d'Arrivée "au lieu de résidence ou au lieu de
-                travail habituel"
+                Date et heure du départ "du lieu où avait été déroulée la
+                mission"
               </span>
-            </div>
-            <div className="dateContent">
-              <span>Le </span>: __/__/___, <span>a:</span> __ H __ Mn
+              <div className="dateContent">
+                <span>Le </span>:
+                {Intl.DateTimeFormat(["ban", "id"]).format(
+                  new Date(mission.tDateRet)
+                )}
+                , <span>a:</span> __ H __ Mn
+              </div>
+              <div className="dateContainer">
+                <span>
+                  Date et heure d'Arrivée "au lieu de résidence ou au lieu de
+                  travail habituel"
+                </span>
+              </div>
+              <div className="dateContent">
+                <span>Le </span>: __/__/___, <span>a:</span> __ H __ Mn
+              </div>
             </div>
           </div>
+          <div className="moyens">
+            <span className="subTitle">Moyens de transport utilisés :</span>{" "}
+            <br />
+            <span>A l'aller:</span> {mission.moyenTransport.join(" - ")}
+            <br />
+            <span>Au retour:</span>
+            {mission.moyenTransportRet.join(" - ")}
+          </div>
         </div>
-        <div className="moyens">
-          <span className="subTitle">Moyens de transport utilisés :</span>{" "}
-          <br />
-          <span>A l'aller:</span> {mission.moyenTransport.join(" - ")}
-          <br />
-          <span>Au retour:</span>
-          {mission.moyenTransportRet.join(" - ")}
+        <div className="signature">
+          Visa du Missionnaire Le Responsable (signataire de l'Ordre de Mission)
+          Signature & griffe
         </div>
-      </div>
-      <div className="signature">
-        Visa du Missionnaire Le Responsable (signataire de l'Ordre de Mission)
-        Signature & griffe
-      </div>
 
-      {item.etat === "créé" && (
-        <div className="buttons">
-          <button
-            className="update"
-            onClick={() => {
-              handleClick("update", item, "rfm", "", body);
-              close();
-            }}
-          >
-            Update
-          </button>
-          <button
-            className="send"
-            onClick={() => {
-              handleClick("send", item, "rfm", "");
-              close();
-            }}
-          >
-            Send
-          </button>
-        </div>
+        {item.etat === "créé" && user._id === currentUser._id && (
+          <div className="buttons">
+            <button
+              className="update"
+              onClick={() => {
+                handleClick("update", item, "rfm", "", body);
+                // close();
+              }}
+            >
+              Update
+            </button>
+            <button
+              className="send"
+              onClick={() => {
+                handleClick("send", item, "rfm", "");
+                //close();
+              }}
+            >
+              Send
+            </button>
+          </div>
+        )}
+      </div>
+      {item.etat === "accepté" && (
+        <button onClick={generatePDF}>Generate PDF</button>
       )}
-    </div>
+    </>
   );
 };
 

@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
 import helmet from "helmet";
+import moment from "moment";
 import morgan from "morgan";
 import authRoutes from "./routes/auth.js";
 import demandeRoutes from "./routes/demande.js";
@@ -28,8 +29,9 @@ const app = express();
 
 // Set up middleware
 app.use(express.json());
-app.use(helmet());
-app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
+// app.use(helmet());
+// app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
+
 app.use(morgan("common"));
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
@@ -40,6 +42,7 @@ app.use(cookieParser());
 const corsOptions = {
   credentials: true,
   origin: ["http://127.0.0.1:5173", "http://localhost:5173"],
+  methods: ["PATCH", "GET", "POST", "DELETE"],
 };
 app.use(cors(corsOptions));
 
@@ -90,51 +93,30 @@ io.on("connection", (socket) => {
 });
 
 /** RUNS EVERY MIDNIGHT */
-cron.schedule("58 10 * * *", async () => {
+cron.schedule("31 14 * * *", async () => {
   console.log("working in index.js");
 
-  // Update missions from accepted to en cours
-  await Mission.updateMany(
-    {
-      tDateDeb: { $lte: new Date() },
-      tDateRet: { $gte: new Date() },
-      etat: "acceptée",
-    },
-    { $set: { etat: "en-cours" } }
-  );
   console.log("here1");
   // Update missions with tDateDeb equal to current time
-  await Mission.updateMany(
-    { tDateDeb: new Date(), etat: "acceptée" },
-    { $set: { etat: "en-cours" } }
+
+  const currentDate = moment().format("YYYY-MM-DD");
+  const missionsEnCours = await Mission.find(
+    {
+      tDateDeb: { $eq: currentDate },
+      etat: "acceptée",
+    },
+    { employes: 2 }
   );
   console.log("here2");
 
-  // Update users associated with missions en cours
-  const missionsEnCours = await Mission.find({
-    etat: "en-cours",
-  });
-  console.log("here3");
-
   for (const mission of missionsEnCours) {
+    mission.etat = "en-cours";
     const employeIds = mission.employes.map((employe) => employe._id);
     await User.updateMany(
       { _id: { $in: employeIds } },
       { $set: { etat: "missionnaire" } }
     );
-  }
-  // Create RFM documents for new missions
-  // const missions = await Mission.find({
-  //   etat: { $in: ["en-cours", "acceptée"] },
-  //   tDateDeb: new Date(),
-  // });
-
-  //pour chaque mission je fais ca
-  console.log("here4");
-
-  for (const mission of missionsEnCours) {
-    const employeIds = mission.employes.map((employe) => employe._id);
-    console.log("mission id : " + mission._id);
+    await mission.save();
 
     for (const employeId of employeIds) {
       console.log("emp id : " + employeId);
@@ -147,8 +129,13 @@ cron.schedule("58 10 * * *", async () => {
       console.log(savedRFM);
     }
   }
+
+  console.log(missionsEnCours);
+
+  //pour chaque mission je fais ca
+
   // Update missions with tDateDeb equal to current time and etat equal to en-attente
-  console.log("here5");
+  console.log("here4");
   await Mission.updateMany(
     { tDateDeb: { $lte: new Date() }, etat: "en-attente" },
     { $set: { etat: "refusée" } }
@@ -157,7 +144,7 @@ cron.schedule("58 10 * * *", async () => {
 
   // Update missions with tDateRet equal to current time and etat equal to en-cours
   await Mission.updateMany(
-    { tDateRet: { $lt: new Date() }, etat: "en-cours" },
+    { tDateRet: { $lt: currentDate }, etat: "en-cours" },
     { $set: { etat: "terminée" } }
   );
   console.log("here7");

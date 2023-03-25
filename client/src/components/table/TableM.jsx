@@ -75,8 +75,7 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
     buttons = array.find(
       (btn) => btn.type.toLowerCase() === type.toLowerCase()
     );
-    console.log("buttons: " + JSON.stringify(buttons));
-
+ 
     if (!buttons) {
       return null;
     }
@@ -176,8 +175,7 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
           } else {
             cellValue = item[column.id].toString().toLowerCase();
           }
-          console.log(column.id);
-          const filterValue = trimmedFilter.toLowerCase();
+           const filterValue = trimmedFilter.toLowerCase();
           return (
             cellValue.includes(filterValue) ||
             ((column.id === "idEmetteur" ||
@@ -266,8 +264,7 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
 
   const handleSort = () => {
     const isAsc = sortOrder.direction === "asc";
-    console.log("sorted" + isAsc);
-
+ 
     setSortOrder({
       column: sortOrder.column,
       direction: isAsc ? "desc" : "asc",

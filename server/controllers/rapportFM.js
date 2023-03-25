@@ -49,9 +49,11 @@ export const getAllRapports = async (req, res) => {
     if (user.role === "relex") throw new Error("Unauthorized");
     else if (user.role === "employe") {
       filteredRapports = rapports.filter(
-        (rapport) => rapport.idEmploye.id === user.id
+        (rapport) => rapport.idEmploye.id === req.user.id
       );
-    } else filteredRapports = rapports;
+    } else {
+      filteredRapports = rapports.filter((rapport) => rapport.etat !== "créé");
+    }
     res.status(200).json(filteredRapports);
   } catch (err) {
     res.status(500).json({ error: err.message });

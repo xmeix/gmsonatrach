@@ -20,6 +20,7 @@ import {
   getRFMs,
   getOMs,
   getMissions,
+  getDepenses,
 } from "./api/apiCalls/getCalls";
 const LoginPage = lazy(() => import("./pages/loginPage/LoginPage"));
 const Dashboard = lazy(() => import("./pages/profilAdmin/Dashboard"));
@@ -44,23 +45,29 @@ function App() {
   const handleSocketData = (data, type) => {
     switch (type) {
       case "demande":
-        dispatch(setDemandes(data));
+        getDemandes(dispatch, 1);
+         
         break;
       case "user":
-        dispatch(setUsers(data));
+        getUsers(dispatch, 1);
+         
         break;
       case "mission":
-        dispatch(setMissions(data));
+        getMissions(dispatch, 1);
+        getOMs(dispatch, 1); 
         break;
       case "rfm":
-        dispatch(setRFMs(data));
+        {
+          getRFMs(dispatch, 1);
+ 
+        }
         break;
       case "om":
-        dispatch(setOMs(data));
-        break;
+        getOMs(dispatch, 1);
+         break;
       case "depense":
-        dispatch(setDepenses(data));
-        break;
+        getDepenses(dispatch, 1);
+         break;
       default:
         break;
     }

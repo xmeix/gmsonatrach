@@ -3,18 +3,37 @@ import {
   fetchEnd,
   fetchFailure,
   fetchStart,
+  setDemandes,
+  setMissions,
+  setOMs,
+  setRFMs,
+  setUsers,
 } from "../../store/features/authSlice";
 import { apiService } from "../apiService";
 
-const fetchData = async (dispatch, endpoint, socketEvent) => {
+const fetchData = async (dispatch, endpoint, socketEvent, num) => {
   dispatch(fetchStart());
   try {
     const res = await apiService.user.get(endpoint);
-    console.log(`getting ${endpoint}...`);
-    if (socketEvent === "om") {
-      socket.emit("updatedData", res.data.filteredOMissions, socketEvent);
+
+    if (!num || num !== 1) {
+      if (socketEvent === "om") {
+        socket.emit("updatedData", res.data.filteredOMissions, socketEvent);
+      } else {
+        socket.emit("updatedData", res.data, socketEvent);
+      }
     } else {
-      socket.emit("updatedData", res.data, socketEvent);
+      if (socketEvent === "mission") {
+        dispatch(setMissions(res.data));
+      } else if (socketEvent === "om") {
+        dispatch(setOMs(res.data.filteredOMissions));
+      } else if (socketEvent === "rfm") {
+        dispatch(setRFMs(res.data));
+      } else if (socketEvent === "demande") {
+        dispatch(setDemandes(res.data));
+      } else if (socketEvent === "user") {
+        dispatch(setUsers(res.data));
+      } else dispatch(setRFMs(res.data));
     }
     dispatch(fetchEnd());
   } catch (err) {
@@ -23,26 +42,26 @@ const fetchData = async (dispatch, endpoint, socketEvent) => {
   }
 };
 
-export const getMissions = async (dispatch) => {
-  await fetchData(dispatch, "/mission/", "mission");
+export const getMissions = async (dispatch, num) => {
+  await fetchData(dispatch, "/mission/", "mission", num);
 };
 
-export const getDemandes = async (dispatch) => {
-  await fetchData(dispatch, "/demande/", "demande");
+export const getDemandes = async (dispatch, num) => {
+  await fetchData(dispatch, "/demande/", "demande", num);
 };
 
-export const getRFMs = async (dispatch) => {
-  await fetchData(dispatch, "/rapportFM/", "rfm");
+export const getRFMs = async (dispatch, num) => {
+  await fetchData(dispatch, "/rapportFM/", "rfm", num);
 };
 
-export const getOMs = async (dispatch) => {
-  await fetchData(dispatch, "/ordremission/", "om");
+export const getOMs = async (dispatch, num) => {
+  await fetchData(dispatch, "/ordremission/", "om", num);
 };
 
-export const getDepenses = async (dispatch) => {
-  await fetchData(dispatch, "/depense/", "depense");
+export const getDepenses = async (dispatch, num) => {
+  await fetchData(dispatch, "/depense/", "depense", num);
 };
 
-export const getUsers = async (dispatch) => {
-  await fetchData(dispatch, "/auth/users", "user");
+export const getUsers = async (dispatch, num) => {
+  await fetchData(dispatch, "/auth/users", "user", num);
 };

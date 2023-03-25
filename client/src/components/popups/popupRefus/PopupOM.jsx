@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import logo from "../../../assets/logo.svg";
 import usePDFGenerator from "../../../hooks/usePDFGenerator";
 const PopupOM = ({ item }) => {
-  const [pdfRef, generatePDF] = usePDFGenerator();
+  const [pdfRef, generatePDF] = usePDFGenerator("ordre-mission");
 
   const {
     _id: missionId,

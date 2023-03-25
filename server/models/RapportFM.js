@@ -47,6 +47,10 @@ const RapportFMSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+    raisonRefus: {
+      type: String,
+      default: "",
+    },
   },
   {
     timestamps: true,

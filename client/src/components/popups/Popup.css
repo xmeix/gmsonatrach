@@ -163,21 +163,39 @@
   gap: 1em;
 }
 /*---------------------------------------------------*/
-.popup-dc .direction {
-  text-align: left;
-  display: flex;
-  justify-content: space-around;
-  font-size: 11px;
-  align-items: center;
-}
-.popup-dc .direction .dir {
+.state {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  width: 150px;
-  text-align: center;
+  align-self: flex-end;
+  gap: 1em;
 }
-
+.state .etat {
+  display: flex;
+  justify-content: space-evenly;
+  gap: 1em;
+}
+.state .etat div {
+}
+.popup-dc .dc-head {
+  display: flex;
+  align-items: center;
+}
+.popup-dc .dc-head .title {
+  flex: 4;
+}
+.popup-dc .dc-head .logo {
+  height: 80px;
+}
+.popup-dc .dc-head .dc-head-description {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  gap: 1em;
+  font-weight: 500;
+  font-size: 12px;
+}
 .popup-dc .before-table {
   margin-top: 2em;
   text-align: left;

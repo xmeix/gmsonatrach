@@ -1,4 +1,5 @@
 import logo from "../../../assets/logo.svg";
+import usePDFGenerator from "../../../hooks/usePDFGenerator";
 
 const PopupDB = ({ item }) => {
   const {
@@ -21,9 +22,10 @@ const PopupDB = ({ item }) => {
     observation,
     motifDep,
   } = item;
+  const [pdfRef, generatePDF] = usePDFGenerator("Fiche-suiveuse");
 
   return (
-    <div className="popup-db">
+    <div className="popup-db" ref={pdfRef}>
       <div className="db-tab">
         <div className="db-row">
           <div className="db-cell">
