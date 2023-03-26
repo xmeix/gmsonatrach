@@ -41,12 +41,13 @@ export const useAxios = () => {
           handleSuccess(response, url, body);
           break;
         case "delete":
-          response = await apiService.user.delete(url, body);
-          getUsers(dispatch);
+          console.log("url " + url);
+          response = await apiService.user.delete(url);
+          console.log(response);
+          handleSuccess(response, "/auth/user");
           break;
         case "patch":
           response = await apiService.user.patch(url, body);
-          console.log("url " + url);
           if (url.includes("/rapportFM")) {
             handleSuccess(response, "/rapportFM", body);
           } else if (url.includes("/demande")) {
@@ -87,6 +88,9 @@ export const useAxios = () => {
       case "/demande":
         getDemandes(dispatch);
 
+        break;
+      case "/auth/user":
+        getUsers(dispatch);
         break;
       case "/rapportFM":
         console.log(body);

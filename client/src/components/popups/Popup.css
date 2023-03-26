@@ -11,6 +11,7 @@
   transition: all 0.5s ease-in-out;
   white-space: nowrap;
   overflow-x: scroll;
+  padding: 3em;
 }
 /*--------------------------------------------------*/
 
@@ -32,20 +33,10 @@
   text-align: left;
 }
 
-.popup-db .db-tab {
-  border-right: solid 1px var(--black);
-  border-bottom: solid 1px var(--black);
-  min-width: 400px;
-}
-.popup-db .db-row {
-  display: flex;
-}
-.popup-db .db-cell {
+.popup-db .logo-image {
+  height: 70px;
+  width: 60px;
   flex: 1;
-  padding: 1em;
-  border-style: solid;
-  border-width: 1px 0px 0px 1px;
-  border-color: var(--black);
 }
 
 .popup-db .db-subtitle {
@@ -65,7 +56,6 @@
   right: 20%;
   bottom: 15%;
   font-size: 13px;
-  padding: 1.5em;
 }
 
 .popup-dm .content {
@@ -107,24 +97,26 @@
   font-size: 12px;
 }
 
-.popup-om .om-body {
+.om-body {
   text-align: left;
   display: flex;
   flex-direction: column;
   gap: 1em;
+  margin-bottom: 0.5em;
 }
 
-.popup-om .om-label-line {
+.om-label-line {
   display: flex;
   gap: 1em;
   font-size: 14px;
 }
 
-.popup-om .om-label {
+.om-label {
   font-weight: 600;
   flex: 1;
+  text-transform: capitalize;
 }
-.popup-om .om-content {
+.om-content {
   flex: 3;
 }
 .popup-om .om-signature {
@@ -144,17 +136,6 @@
 
 /*--------------------------------------------------*/
 
-.popup-user {
-  height: auto;
-  width: auto;
-  top: 50%;
-  font-size: 15px;
-  padding: 1em;
-  gap: 1.5em !important;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
 .popup-refuse .pop-ref {
   display: flex;
   flex-direction: column;
@@ -165,26 +146,28 @@
 /*---------------------------------------------------*/
 .state {
   display: flex;
-  flex-direction: column;
-  align-self: flex-end;
-  gap: 1em;
+  justify-content: space-around;
+  background-color: var(--light-gray);
+  padding: 0.5em;
 }
 .state .etat {
   display: flex;
-  justify-content: space-evenly;
   gap: 1em;
-}
-.state .etat div {
 }
 .popup-dc .dc-head {
   display: flex;
   align-items: center;
+  margin: 0 3em 3em;
+}
+.dc-body {
+  margin-left: 3em;
+  margin-bottom: 2em;
 }
 .popup-dc .dc-head .title {
-  flex: 4;
+  flex: 3;
 }
 .popup-dc .dc-head .logo {
-  height: 80px;
+  height: 60px;
 }
 .popup-dc .dc-head .dc-head-description {
   flex: 1;
@@ -196,12 +179,18 @@
   font-weight: 500;
   font-size: 12px;
 }
-.popup-dc .before-table {
-  margin-top: 2em;
-  text-align: left;
-}
-.popup-dc .before-table * {
-  margin-bottom: 1em;
+/*---------------------------------------------------*/
+
+.popup-user {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5em;
+  top: 13%;
+  left: auto;
+  right: 5em;
+  bottom: 3em;
+  width: 300px;
+  font-size: 13px;
 }
 /*---------------------------------------------------*/
 .popup-mission,
@@ -211,6 +200,7 @@
 .popup-update {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   gap: 1.5em;
   /* border: solid 1px var(--light-gray); */
   top: 13%;
@@ -218,8 +208,8 @@
   right: 3em;
   bottom: 3em;
   font-size: 13px;
-  padding: 5em;
 }
+
 .popup-mission .employes,
 .popup-mission .taches,
 .popup-mission .deplacement,
@@ -306,7 +296,6 @@
 .popup-update span,
 .popup-mission span,
 .popup-dm span,
-.popup-dc span,
 .popup-db span {
   font-weight: 600;
   margin-right: 1em;

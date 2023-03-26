@@ -7,6 +7,8 @@ const useBtn = () => {
     const { _id } = item;
     const route = getRoute(type);
 
+    console.log("route: " + route);
+    console.log("type: " + type);
     switch (btnType.toLowerCase()) {
       case "accept":
         const etatAccept = type === "rfm" ? "accepté" : "acceptée";
@@ -32,7 +34,7 @@ const useBtn = () => {
         callApi("patch", `${route}/${_id}`, { etat: "annulée" });
         break;
       case "delete":
-        // do something
+        callApi("delete", `${route}/${_id}`);
         break;
       case "update":
         callApi("patch", `${route}/${_id}`, { deroulement: body });
@@ -58,6 +60,8 @@ const useBtn = () => {
         return "/demande";
       case "dc":
         return "/demande";
+      case "user":
+        return "/auth/user";
       default:
         return "/";
     }

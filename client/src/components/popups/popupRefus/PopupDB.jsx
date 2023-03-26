@@ -1,7 +1,33 @@
 import logo from "../../../assets/logo.svg";
 import usePDFGenerator from "../../../hooks/usePDFGenerator";
-
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  TablePagination,
+  InputAdornment,
+  makeStyles,
+} from "@material-ui/core";
+export const useStyles = makeStyles({
+  table: {
+    borderCollapse: "separate",
+    borderRight: "solid 1px black",
+    borderTop: "solid 1px black",
+  },
+  tableCell: {
+    padding: "10px",
+    fontWeight: 500,
+    fontSize: 13,
+    borderLeft: "solid 1px black",
+    borderBottom: "solid 1px black",
+  },
+});
 const PopupDB = ({ item }) => {
+  const classes = useStyles();
   const {
     _id,
     createdAt,
@@ -25,186 +51,307 @@ const PopupDB = ({ item }) => {
   const [pdfRef, generatePDF] = usePDFGenerator("Fiche-suiveuse");
 
   return (
-    <div className="popup-db" ref={pdfRef}>
-      <div className="db-tab">
-        <div className="db-row">
-          <div className="db-cell">
-            <img
-              src={logo}
-              alt=""
-              className="logo-image"
-              style={{ height: "70px", width: "60px", flex: 1 }}
-            />
-          </div>
-          <div className="db-cell">
-            <div className="titre">Fiche Suiveuse</div>
-            <div>Budget Exploitation</div>
-          </div>
-          <div className="db-cell">
-            <div>
-              <span>Ordre</span> ....
-            </div>
-            <div>
-              <span>N°</span> {_id}/{new Date(createdAt).getFullYear()}
-            </div>
-            <div>
-              <span>Date:</span> {new Date(createdAt).toLocaleDateString()}
-            </div>
-          </div>
-        </div>
-        <div className="db-row">
-          <div className="db-cell" style={{ flex: 1 }}>
-            Référence budgétaire
-          </div>
-          <div className="db-cell" style={{ flex: 2 }}>
-            <div>
-              <span>N° sous compte:</span> {numSC}
-            </div>
-            <div>
-              <span>Désignation sous compte:</span> {designationSC}
-            </div>
-            <div>
-              <span>Montant engagé:</span> {montantEngage} DA
-            </div>
-          </div>
-        </div>
-      </div>
+    <>
+      <div className="popup-db" ref={pdfRef}>
+        <TableContainer>
+          <Table className={classes.table}>
+            <TableHead>
+              <TableRow>
+                <TableCell className={classes.tableCell}>
+                  <img
+                    src={logo}
+                    alt=""
+                    className="logo-image"
+                    style={{ height: "70px", width: "60px", flex: 1 }}
+                  />
+                </TableCell>
+                <TableCell className={classes.tableCell}>
+                  <div className="titre">Fiche Suiveuse</div>
+                  <div>Budget Exploitation</div>
+                </TableCell>
+                <TableCell className={classes.tableCell}>
+                  <div>
+                    <span>Ordre</span> ....
+                  </div>
+                  <div>
+                    <span>N°</span> {_id}/{new Date(createdAt).getFullYear()}
+                  </div>
+                  <div>
+                    <span>Date:</span>{" "}
+                    {new Date(createdAt)
+                      .toLocaleDateString("en-GB", {
+                        day: "numeric",
+                        month: "numeric",
+                        year: "numeric",
+                      })
+                      .split("/")
+                      .join("-")}
+                  </div>
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              <TableRow>
+                <TableCell className={classes.tableCell}>
+                  Référence budgétaire
+                </TableCell>
+                <TableCell className={classes.tableCell} colSpan={2}>
+                  <div>
+                    <span>N° sous compte:</span> {numSC}
+                  </div>
+                  <div>
+                    <span>Désignation sous compte:</span> {designationSC}
+                  </div>
+                  <div>
+                    <span>Montant engagé:</span> {montantEngage} DA
+                  </div>
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </TableContainer>
 
-      <div className="db-body">
-        <div>
-          <span>Nature:</span>{" "}
-          {nature === "aller-retour"
-            ? `${depart} / ${destination} / ${depart}`
-            : `${depart} / ${destination}`}
-          au profit de:
-          <span>
-            <br />
-            <br />- {employes.length} personnes
-          </span>
-        </div>
-        <div className="db-date">
-          <span>
-            Départ: {new Date(dateDepart).toLocaleDateString()} à{" "}
-            {new Date(dateDepart).toLocaleTimeString([], {
-              hour12: false,
-              hour: "2-digit",
-              minute: "2-digit",
-            })}
-          </span>
+        <div className="db-body">
+          <div>
+            <span>Nature:</span>{" "}
+            {nature === "aller-retour"
+              ? `${depart} / ${destination} / ${depart} `
+              : `${depart} / ${destination} `}
+            au profit de:
+            <span>
+              <br />
+              <br />- {employes.length} personnes
+            </span>
+          </div>
+          <div className="db-date">
+            <span>
+              Départ:{" "}
+              {new Date(dateDepart)
+                .toLocaleDateString("en-GB", {
+                  day: "numeric",
+                  month: "numeric",
+                  year: "numeric",
+                })
+                .split("/")
+                .join("-")}{" "}
+              à{" "}
+              {new Date(dateDepart).toLocaleTimeString([], {
+                hour12: false,
+                hour: "2-digit",
+                minute: "2-digit",
+              })}
+            </span>
 
-          <span>
-            Retour: {new Date(dateRetour).toLocaleDateString()} à{" "}
-            {new Date(dateRetour).toLocaleTimeString([], {
-              hour12: false,
-              hour: "2-digit",
-              minute: "2-digit",
-            })}
-          </span>
+            <span>
+              Retour:{" "}
+              {new Date(dateRetour)
+                .toLocaleDateString("en-GB", {
+                  day: "numeric",
+                  month: "numeric",
+                  year: "numeric",
+                })
+                .split("/")
+                .join("-")}{" "}
+              à{" "}
+              {new Date(dateRetour).toLocaleTimeString([], {
+                hour12: false,
+                hour: "2-digit",
+                minute: "2-digit",
+              })}
+            </span>
+          </div>
         </div>
-      </div>
 
-      <div className="db-tab">
-        <div className="db-row">
-          <div className="db-cell">direction</div>
-          <div className="db-cell">Service section Sous - section</div>
-          <div className="db-cell">division</div>
-          <div className="db-cell">base</div>
-          <div className="db-cell">gisement</div>
+        <TableContainer component={Paper}>
+          <Table className={classes.table}>
+            <TableHead>
+              <TableRow>
+                <TableCell className={classes.tableCell}>direction</TableCell>
+                <TableCell className={classes.tableCell}>
+                  Service section Sous - section
+                </TableCell>
+                <TableCell className={classes.tableCell}>division</TableCell>
+                <TableCell className={classes.tableCell}>base</TableCell>
+                <TableCell className={classes.tableCell}>gisement</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              <TableRow>
+                <TableCell className={classes.tableCell}>
+                  {direction || "projet SH-ONE"}
+                </TableCell>
+                <TableCell className={classes.tableCell}>
+                  {sousSection || "/"}
+                </TableCell>
+                <TableCell className={classes.tableCell}>
+                  {division || "/"}
+                </TableCell>
+                <TableCell className={classes.tableCell}>
+                  {base || "/"}
+                </TableCell>
+                <TableCell className={classes.tableCell}>
+                  {gisement || "/"}
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </TableContainer>
+
+        <div className="db-body">
+          <span>Observations:</span>
+          {observation}
+          <span>Motif du déplacement: </span>
+          {"mission de " + motifDep}
         </div>
-        <div className="db-row">
-          <div className="db-cell">{direction || "projet SH-ONE"}</div>
-          <div className="db-cell">{sousSection || "/"}</div>
-          <div className="db-cell">{division || "/"}</div>{" "}
-          <div className="db-cell">{base || "/"}</div>{" "}
-          <div className="db-cell">{gisement || "/"}</div>{" "}
+        <Table className={classes.table}>
+          <TableBody>
+            <TableRow>
+              <TableCell align="left" className={classes.tableCell}>
+                <p>Date de création:</p> <br />
+                <br />
+                <p>Visa de l'ordonnateur:</p>
+              </TableCell>
+              <TableCell align="left" className={classes.tableCell}>
+                <p>Service du Budget </p>
+                <br /> <br />
+                <p>Controlé le</p>
+                <br /> <br />
+                <p>Visa</p>
+              </TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+        <div className="db-subtitle">Partie réservée à la Trésorerie</div>
+        <TableContainer>
+          <Table className={classes.table}>
+            <TableHead>
+              <TableRow>
+                <TableCell className={classes.tableCell}>
+                  No De la facture:
+                </TableCell>
+                <TableCell className={classes.tableCell}>
+                  +dépassement:
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              <TableRow>
+                <TableCell className={classes.tableCell}>
+                  Montant engagé:
+                </TableCell>
+                <TableCell className={classes.tableCell}>
+                  -insuffisance
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <div className="db-subtitle">Règlements</div>
+        <TableContainer component={Paper}>
+          <Table className={classes.table}>
+            <TableHead>
+              <TableRow>
+                <TableCell className={classes.tableCell}>Date:</TableCell>
+                <TableCell className={classes.tableCell}>Acomptes</TableCell>
+                <TableCell className={classes.tableCell}>Solde</TableCell>
+                <TableCell className={classes.tableCell}>
+                  Observations
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              <TableRow>
+                <TableCell className={classes.tableCell}> </TableCell>
+                <TableCell className={classes.tableCell}> </TableCell>
+                <TableCell className={classes.tableCell}> </TableCell>
+                <TableCell className={classes.tableCell}> </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className={classes.tableCell}> </TableCell>
+                <TableCell className={classes.tableCell}> </TableCell>
+                <TableCell className={classes.tableCell}> </TableCell>
+                <TableCell className={classes.tableCell}> </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <div className="db-subtitle">
+          La liste nominative des missionnaires du{" "}
+          {new Date(dateDepart)
+            .toLocaleDateString("en-GB", {
+              day: "numeric",
+              month: "numeric",
+              year: "numeric",
+            })
+            .split("/")
+            .join("-")}{" "}
+          au{" "}
+          {new Date(dateRetour)
+            .toLocaleDateString("en-GB", {
+              day: "numeric",
+              month: "numeric",
+              year: "numeric",
+            })
+            .split("/")
+            .join("-")}
+        </div>
+        <div className="db-subtitle">
+          BC N° /{direction || "SH-ONE"}/{new Date(createdAt).getFullYear()}
+        </div>
+        <TableContainer component={Paper}>
+          <Table className={classes.table}>
+            <TableHead>
+              <TableRow>
+                <TableCell className={classes.tableCell}></TableCell>
+                <TableCell className={classes.tableCell}>
+                  Nom & Prénom:
+                </TableCell>
+                <TableCell className={classes.tableCell}>Départ</TableCell>
+                <TableCell className={classes.tableCell}>Retour</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {employes.map((emp, i) => (
+                <TableRow key={i}>
+                  <TableCell className={classes.tableCell}>{i}</TableCell>
+                  <TableCell className={classes.tableCell}>
+                    {emp.nom + " " + emp.prenom}
+                  </TableCell>
+                  <TableCell className={classes.tableCell}>
+                    {new Date(dateDepart)
+                      .toLocaleDateString("en-GB", {
+                        day: "numeric",
+                        month: "numeric",
+                        year: "numeric",
+                      })
+                      .split("/")
+                      .join("-")}
+                  </TableCell>
+                  <TableCell className={classes.tableCell}>
+                    {new Date(dateRetour)
+                      .toLocaleDateString("en-GB", {
+                        day: "numeric",
+                        month: "numeric",
+                        year: "numeric",
+                      })
+                      .split("/")
+                      .join("-")}
+                  </TableCell>
+                </TableRow>
+              ))}
+              <TableCell className={classes.tableCell}></TableCell>
+              <TableCell className={classes.tableCell}></TableCell>
+              <TableCell className={classes.tableCell}></TableCell>
+              <TableCell className={classes.tableCell}></TableCell>
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <div className="db-subtitle">
+          Le Directeur projet SH One <br /> A.FELFOUL{" "}
         </div>
       </div>
-      <div className="db-body">
-        <span>Observations:</span>
-        {observation}
-        <span>Motif du déplacement: </span>
-        {"mission de " + motifDep}
-      </div>
-      <div className="db-tab">
-        <div className="db-row">
-          <div className="db-cell" style={{ textAlign: "left" }}>
-            <p>Date de création:</p> <br />
-            <br />
-            <p>Visa de l'ordonnateur:</p>
-          </div>
-          <div className="db-cell" style={{ textAlign: "left" }}>
-            <p>Service du Budget </p>
-            <br /> <br />
-            <p>Controlé le</p>
-            <br /> <br />
-            <p>Visa</p>
-          </div>
-        </div>
-      </div>
-      <div className="db-subtitle">Partie réservée à la Trésorerie</div>
-      <div className="db-tab">
-        <div className="db-row">
-          <div className="db-cell">No De la facture: </div>
-          <div className="db-cell">+dépassement: </div>
-        </div>
-        <div className="db-row">
-          <div className="db-cell">Montant engagé:</div>
-          <div className="db-cell">-insuffisance</div>
-        </div>
-      </div>
-      <div className="db-subtitle">Règlements</div>
-      <div className="db-tab">
-        <div className="db-row">
-          <div className="db-cell">Date:</div>
-          <div className="db-cell">Acomptes </div>
-          <div className="db-cell">Solde </div>
-          <div className="db-cell">observations</div>
-        </div>
-        <div className="db-row">
-          <div className="db-cell"> </div>
-          <div className="db-cell"> </div>
-          <div className="db-cell"> </div>
-          <div className="db-cell"> </div>
-        </div>
-        <div className="db-row">
-          <div className="db-cell"> </div>
-          <div className="db-cell"> </div>
-          <div className="db-cell"> </div>
-          <div className="db-cell"> </div>
-        </div>
-      </div>
-      <div className="db-subtitle">
-        La liste nominative des missionnaires du{" "}
-        {new Date(dateDepart).toLocaleDateString()} au{" "}
-        {new Date(dateRetour).toLocaleDateString()}
-      </div>
-      <div className="db-subtitle">
-        BC N° /{direction || "SH-ONE"}/{new Date(createdAt).getFullYear()}
-      </div>
-      <div className="db-tab">
-        <div className="db-row">
-          <div className="db-cell"></div>
-          <div className="db-cell">Nom & Prénom:</div>
-          <div className="db-cell">Départ </div>
-          <div className="db-cell">Retour </div>
-        </div>
-        {employes.map((emp, i) => (
-          <div className="db-row" key={i}>
-            <div className="db-cell">{i}</div>
-            <div className="db-cell">{emp.nom + " " + emp.prenom}</div>
-            <div className="db-cell">
-              {new Date(dateDepart).toLocaleDateString()}
-            </div>
-            <div className="db-cell">
-              {new Date(dateRetour).toLocaleDateString()}
-            </div>
-          </div>
-        ))}
-      </div>
-      <div className="db-subtitle">
-        Le Directeur projet SH One <br /> A.FELFOUL{" "}
-      </div>
-    </div>
+      <button onClick={generatePDF}>Generate PDF</button>
+    </>
   );
 };
 

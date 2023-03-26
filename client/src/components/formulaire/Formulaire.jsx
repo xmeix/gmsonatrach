@@ -125,6 +125,8 @@ const Formulaire = ({ title, entries, buttons, type }) => {
       default:
         console.log("errrr");
     }
+
+    resetForm();
   };
   return (
     <div className="formulaire">

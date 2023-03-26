@@ -10,15 +10,20 @@ const usePDFGenerator = (filename) => {
     html2pdf()
       .set({
         filename: filename,
-        image: { type: "jpeg", quality: 0.98 },
+        image: { type: "jpeg", quality: 1 },
         pagebreak: { mode: ["avoid-all"] },
-        html2canvas: { scale: 2 },
+        html2canvas: {
+          dpi: 300,
+          letterRendering: true,
+          scale: 2,
+          logging: true,
+        },
         margin: 2,
         jsPDF: {
           orientation: "p",
           unit: "em",
           format: "a4",
-           floatPrecision: 16,
+          floatPrecision: 16,
         },
       })
       .from(element)

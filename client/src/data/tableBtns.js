@@ -137,7 +137,7 @@ export const ResponsableBtns = [
   },
   {
     type: "user",
-    btns: ["delete"],
+    btns: [], //rm delete
     showBtn: true,
   },
 ];

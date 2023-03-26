@@ -17,7 +17,7 @@ const Popup = ({ item, type, isOpen, closePopup, popupType }) => {
   return (
     <div className={`popup popup-${popupType}`}>
       <CloseRoundedIcon className="icon" onClick={closePopup} />
-      <div className="state"></div>
+
       {popupType === "update" && <PopupUpdate item={item} close={closePopup} />}
       {popupType === "refuse" && (
         <PopupRefus item={item} type={type} close={closePopup} />

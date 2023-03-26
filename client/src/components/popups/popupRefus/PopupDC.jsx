@@ -12,39 +12,44 @@ import {
 } from "@mui/material";
 import "./../Popup.css";
 import usePDFGenerator from "../../../hooks/usePDFGenerator";
-const useStyles = makeStyles({
-  table: {
-    minWidth: 200,
-    borderCollapse: "separate",
-    border: "solid 1px var(--light-gray)",
-  },
-  tableHeaderCell: {
-    fontWeight: "bold",
-    backgroundColor: "var(--blue3)",
-    fontSize: "12px",
-    border: "solid 1px var(--light-gray)",
-  },
-  tableCell: {
-    padding: "10px",
-    fontWeight: 500,
-    fontSize: 13,
-    border: "solid 1px var(--light-gray)",
-  },
-});
+import { useStyles } from "./PopupDB";
+
 const PopupDC = ({ item }) => {
   const classes = useStyles();
   const [pdfRef, generatePDF] = usePDFGenerator("demande-congé");
-
+  const {
+    DateDepart,
+    DateRetour,
+    LieuSejour,
+    Nature,
+    createdAt,
+    etat,
+    id,
+    idDestinataire,
+    idEmetteur,
+    motif,
+    nbRefus,
+    raisonRefus,
+    updatedAt,
+    __t,
+    _id,
+  } = item;
+  const OmLabelLine = ({ label, content }) => (
+    <div className="om-label-line">
+      <div className="om-label">{label}</div>
+      <div className="om-content">{content}</div>
+    </div>
+  );
   return (
     <>
       <div className="state">
         <div className="etat">
           <span className="etat-label">Etat:</span>
-          <div className="etat-content">{item.etat}</div>
+          <div className="etat-content">{etat}</div>
         </div>
         <div className="etat">
           <span className="etat-label">Raison de refus:</span>
-          <div className="etat-content">{item.raisonRefus || "/"}</div>
+          <div className="etat-content">{raisonRefus || "/"}</div>
         </div>
       </div>
       <div className="popup-dc" id="DC-Demande" ref={pdfRef}>
@@ -60,47 +65,66 @@ const PopupDC = ({ item }) => {
             <h1 className="title">Demande de congé</h1>
           </div>
 
-          <div className="before-table">
-            <div>
-              <span>Date de création:</span>
-              {Intl.DateTimeFormat(["ban", "id"]).format(
-                new Date(item.createdAt)
-              )}
-            </div>
-            <div>
-              <span>Motif:</span> {item.motif || "/"}
-            </div>
-            <div>
-              <span>Matricule:</span> {item.idEmetteur._id}
-            </div>
-            <div>
-              <span>Nom & Prenom:</span>
-              {item.idEmetteur.nom + " " + item.idEmetteur.prenom}
-            </div>
-            <div>
-              <span>Structure:</span> {item.idEmetteur.structure}
-            </div>
-            <div>
-              <span>Nombre de jours:</span> {item.idEmetteur.structure}
-            </div>
-            <div>
-              <span>Date de départ:</span>
-              {Intl.DateTimeFormat(["ban", "id"]).format(
-                new Date(item.DateDepart)
-              )}
-            </div>
-            <div>
-              <span>Date de retour:</span>
-              {Intl.DateTimeFormat(["ban", "id"]).format(
-                new Date(item.DateRetour)
-              )}
-            </div>
-            <div>
-              <span>Lieu de séjour:</span> {item.LieuSejour}
-            </div>
-            <div>
-              <span>Nature de la demande:</span> {item.Nature}
-            </div>
+          <div className="om-body dc-body">
+            <OmLabelLine
+              label="Date de création"
+              content={
+                ": " +
+                new Date(createdAt)
+                  .toLocaleDateString("en-GB", {
+                    day: "numeric",
+                    month: "numeric",
+                    year: "numeric",
+                  })
+                  .split("/")
+                  .join("-")
+              }
+            />
+            <OmLabelLine label="Motif" content={": " + motif} />
+            <OmLabelLine label="Matricule" content={": " + idEmetteur._id} />
+            <OmLabelLine
+              label="Nom & Prénom"
+              content={": " + `${idEmetteur.nom} ${idEmetteur.prenom}`}
+            />
+
+            <OmLabelLine
+              label="Structure"
+              content={": " + idEmetteur.structure}
+            />
+            <OmLabelLine
+              label="Nombre de jours"
+              content={": " + idEmetteur.structure}
+            />
+            <OmLabelLine
+              label="Date de départ"
+              content={
+                ": " +
+                new Date(DateDepart)
+                  .toLocaleDateString("en-GB", {
+                    day: "numeric",
+                    month: "numeric",
+                    year: "numeric",
+                  })
+                  .split("/")
+                  .join("-")
+              }
+            />
+            <OmLabelLine
+              label="Date de retour"
+              content={
+                ": " +
+                new Date(DateRetour)
+                  .toLocaleDateString("en-GB", {
+                    day: "numeric",
+                    month: "numeric",
+                    year: "numeric",
+                  })
+                  .split("/")
+                  .join("-")
+              }
+            />
+            <OmLabelLine label="Lieu de séjour" content={": " + LieuSejour} />
+            <OmLabelLine label="Nature de la demande" content={": " + Nature} />
           </div>
           <div>
             <div
@@ -116,10 +140,10 @@ const PopupDC = ({ item }) => {
             <Table className={classes.table} size="small">
               <TableHead>
                 <TableRow>
-                  <TableCell align="center" className={classes.tableHeaderCell}>
+                  <TableCell align="center" className={classes.tableCell}>
                     Case réservée au Service Gestion
                   </TableCell>
-                  <TableCell align="center" className={classes.tableHeaderCell}>
+                  <TableCell align="center" className={classes.tableCell}>
                     Accord du Responsable Hiérarchique <br /> Nom et Qualité du
                     Responsable
                   </TableCell>

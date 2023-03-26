@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, Fragment } from "react";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import "./TableM.css";
 import { v4 as uuidv4 } from "uuid";
@@ -47,6 +47,89 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
     setSavedItem(null);
     closePopup();
   };
+  function canAcceptOrRefuse(item, currentUser, button) {
+    return (
+      ((item.etat === "en-attente" &&
+        item.__t === "DB" &&
+        currentUser.role === "relex") ||
+        (item.etat === "en-attente" &&
+          currentUser.role !== "employe" &&
+          currentUser.role !== "secretaire" &&
+          currentUser.role !== "relex")) &&
+      ["accept", "refuse"].includes(button)
+    );
+  }
+
+  function canDelete(item, currentUser, button) {
+    return (
+      (currentUser._id !== item._id ||
+        (currentUser.role === "secretaire" && item.role !== "directeur") ||
+        (currentUser.role === "responsable" && item.role !== "directeur")) &&
+      button === "delete"
+    );
+  }
+
+  function canUpdateOrSend(item, button) {
+    return (
+      item.etat !== "accepté" &&
+      item.etat !== "refusé" &&
+      item.etat !== "en-attente" &&
+      ["update", "send"].includes(button)
+    );
+  }
+  function canCancel(item, type, button) {
+    return (
+      ((type === "mission" &&
+        item.etat === "acceptée" &&
+        item.etat !== "en-cours") ||
+        item.etat === "en-attente") &&
+      button === "cancel"
+    );
+  }
+
+  function canCancelOther(item, type, button) {
+    return (
+      type !== "mission" && item.etat === "en-attente" && button === "cancel"
+    );
+  }
+  function shouldRenderButton(item, type, button) {
+    switch (button) {
+      case "accept":
+      case "refuse":
+        return canAcceptOrRefuse(item, currentUser, button);
+      case "delete":
+        return canDelete(item, currentUser, button);
+      case "update":
+      case "send":
+        return canUpdateOrSend(item, button);
+      case "cancel":
+        return (
+          canCancel(item, type, button) || canCancelOther(item, type, button)
+        );
+      default:
+        return false;
+    }
+  }
+  function renderButton(button, item, type, index) {
+    return (
+      <button
+        className={`bouton ${button}`}
+        key={index}
+        onClick={() => {
+          if (button === "refuse") {
+            openPopup("refuse");
+            setSavedItem(item);
+            setSavedType(type.toLowerCase());
+          } else if (button === "update") {
+            openPopup("update");
+            setSavedItem(item);
+          } else handleClick(button, item, type);
+        }}
+      >
+        {button}
+      </button>
+    );
+  }
 
   const renderConfiguration = (item, type) => {
     let buttons;
@@ -75,7 +158,7 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
     buttons = array.find(
       (btn) => btn.type.toLowerCase() === type.toLowerCase()
     );
- 
+
     if (!buttons) {
       return null;
     }
@@ -83,61 +166,9 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
     return (
       <div>
         {btns.map((button, index) => {
-          if (
-            ((button === "accept" || button === "refuse") &&
-              item.etat === "en-attente" &&
-              item.__t === "DB" &&
-              currentUser.role === "relex") ||
-            ((button === "accept" || button === "refuse") &&
-              item.etat === "en-attente" &&
-              currentUser.role !== "employe" &&
-              currentUser.role !== "secretaire" &&
-              currentUser.role !== "relex") ||
-            (button === "delete" &&
-              (currentUser.role === "directeur" ||
-                (currentUser.role === "responsable" &&
-                  item.role !== "responsable"))) ||
-            (button === "delete" &&
-              currentUser.role === "secretaire" &&
-              item.role !== "responsable" &&
-              item.role !== "directeur") ||
-            ((button === "update" || button === "send") &&
-              item.etat !== "accepté" &&
-              item.etat !== "refusé" &&
-              item.etat !== "en-attente") ||
-            (button === "cancel" &&
-              type === "mission" &&
-              ((item.etat === "acceptée" && item.etat !== "en-cours") ||
-                item.etat === "en-attente")) ||
-            (button === "cancel" &&
-              type !== "mission" &&
-              item.etat === "en-attente")
-          )
-            return (
-              <button
-                className={`bouton ${button}`}
-                key={index}
-                onClick={() => {
-                  if (button === "refuse") {
-                    openPopup("refuse");
-                    setSavedItem(item);
-                    setSavedType(type.toLowerCase());
-                  } else if (button === "update") {
-                    openPopup("update");
-                    setSavedItem(item);
-                  } else handleClick(button, item, type);
-                }}
-              >
-                {button}
-              </button>
-            );
+          if (shouldRenderButton(item, type, button))
+            return renderButton(button, item, type, index);
         })}
-
-        {/* {showBtn && (
-          <button className="btn" onClick={openPopup}>
-            see
-          </button>
-        )} */}
       </div>
     );
   };
@@ -175,7 +206,7 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
           } else {
             cellValue = item[column.id].toString().toLowerCase();
           }
-           const filterValue = trimmedFilter.toLowerCase();
+          const filterValue = trimmedFilter.toLowerCase();
           return (
             cellValue.includes(filterValue) ||
             ((column.id === "idEmetteur" ||
@@ -264,7 +295,7 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
 
   const handleSort = () => {
     const isAsc = sortOrder.direction === "asc";
- 
+
     setSortOrder({
       column: sortOrder.column,
       direction: isAsc ? "desc" : "asc",
@@ -383,7 +414,7 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
           className="tableColumn"
           onClick={() => handleOnClick(item)}
         >
-          {item.employe.nom}
+          {item.employe?.nom}
         </TableCell>
       );
     } else if (property === "employe.prenom") {
@@ -394,7 +425,7 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
           className="tableColumn"
           onClick={() => handleOnClick(item)}
         >
-          {item.employe.prenom}
+          {item.employe?.prenom}
         </TableCell>
       );
     } else
