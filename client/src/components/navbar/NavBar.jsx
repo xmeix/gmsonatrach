@@ -11,7 +11,6 @@ import { useAxios } from "../../hooks/useAxios";
 const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [responsive, setResponsive] = useState(false);
-  const { logout } = useAuth();
   const { callApi } = useAxios();
 
   const user = useSelector((state) => state.auth.user);

@@ -17,3 +17,10 @@ export const employeTitles = [
 export const relexTitles = [
   { id: 1, title: "Relex Service", path: "/" }, //Billetterie table
 ];
+
+export const dashTitles = [
+  { id: 1, title: "mission Analytics", path: "/" },
+  { id: 2, title: "files Analytics", path: "/files-analytics" },
+  { id: 3, title: "cost Analytics", path: "/cost-analytics" },
+  { id: 4, title: "users Analytics", path: "/users-analytics" },
+];

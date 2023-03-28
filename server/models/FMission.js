@@ -2,7 +2,12 @@ import mongoose from "mongoose";
 
 const FMissionSchema = new mongoose.Schema(
   {
+    mission: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+    },
     state: { type: String },
+    day: { type: Date },
     month: { type: Number },
     year: { type: Number },
     structure: { type: String },

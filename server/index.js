@@ -19,8 +19,9 @@ import Mission from "./models/Mission.js";
 import User from "./models/User.js";
 import RapportFM from "./models/RapportFM.js";
 import cron from "node-cron";
+import { missions } from "../client/src/data/data.js";
+import { createOrUpdateFMission } from "./controllers/Kpis.js";
 const toId = mongoose.Types.ObjectId;
-
 // Configure environment variables
 dotenv.config();
 
@@ -76,6 +77,10 @@ mongoose
     server.listen(process.env.PORT || 6001, () => {
       console.log(`Server listening on port ${process.env.PORT || 6001}`);
     });
+    //ADD DATA ONE TIME ONLY
+    //await mongoose.connection.db.dropDatabase(); //ATTENTION DELETES THE WHOOOLE DB
+    // KPI.insertMany(kpis)
+    //Mission.insertMany(missions);
   })
   .catch((error) => {
     console.error(`Failed to connect to MongoDB database: ${error.message}`);
@@ -165,3 +170,13 @@ cron.schedule("31 14 * * *", async () => {
   console.log("finished updating index js ");
   io.emit("cronDataChange");
 });
+
+// cron.schedule("28 17 * * *", async () => {
+//   const missions = await Mission.find();
+
+//   console.log("here");
+//   for (const mission of missions) {
+//     createOrUpdateFMission(mission);
+//   }
+//   console.log("here");
+// });

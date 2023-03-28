@@ -23,7 +23,18 @@ import {
   getDepenses,
 } from "./api/apiCalls/getCalls";
 const LoginPage = lazy(() => import("./pages/loginPage/LoginPage"));
-const Dashboard = lazy(() => import("./pages/profilAdmin/Dashboard"));
+const CostDashboard = lazy(() =>
+  import("./pages/profilAdmin/Dashboards/CostDashboard")
+);
+const FilesDashboard = lazy(() =>
+  import("./pages/profilAdmin/Dashboards/FilesDashboard")
+);
+const UsersDashboard = lazy(() =>
+  import("./pages/profilAdmin/Dashboards/UsersDashboard")
+);
+const MissionDashboard = lazy(() =>
+  import("./pages/profilAdmin/Dashboards/MissionDashboard")
+);
 const GestionMission = lazy(() => import("./pages/profilAdmin/GestionMission"));
 const GestionEmploye = lazy(() => import("./pages/profilAdmin/GestionEmploye"));
 const GestionRelex = lazy(() => import("./pages/profilAdmin/GestionRelex"));
@@ -46,28 +57,27 @@ function App() {
     switch (type) {
       case "demande":
         getDemandes(dispatch, 1);
-         
+
         break;
       case "user":
         getUsers(dispatch, 1);
-         
+
         break;
       case "mission":
         getMissions(dispatch, 1);
-        getOMs(dispatch, 1); 
+        getOMs(dispatch, 1);
         break;
       case "rfm":
         {
           getRFMs(dispatch, 1);
- 
         }
         break;
       case "om":
         getOMs(dispatch, 1);
-         break;
+        break;
       case "depense":
         getDepenses(dispatch, 1);
-         break;
+        break;
       default:
         break;
     }
@@ -132,7 +142,10 @@ function App() {
   ) {
     element = (
       <>
-        <Route exact path="/" element={<Dashboard />} />
+        <Route exact path="/" element={<MissionDashboard />} />
+        <Route exact path="/users-analytics" element={<UsersDashboard />} />
+        <Route exact path="/files-analytics" element={<FilesDashboard />} />
+        <Route exact path="/cost-analytics" element={<CostDashboard />} />
         <Route path="/planification" element={<Planning />} />
         <Route path="/gestion-des-mission" element={<GestionMission />} />
         <Route path="/gestion-des-employes" element={<GestionEmploye />} />
