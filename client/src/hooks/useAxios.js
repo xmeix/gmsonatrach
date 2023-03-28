@@ -12,6 +12,7 @@ import {
 import {
   getDemandes,
   getDepenses,
+  getMissionKPIS,
   getMissions,
   getOMs,
   getRFMs,
@@ -121,6 +122,7 @@ export const useAxios = () => {
 
     if (role !== "employe" && role !== "relex") {
       getUsers(dispatch, 1);
+      getMissionKPIS(dispatch, 1);
     }
   };
   return {

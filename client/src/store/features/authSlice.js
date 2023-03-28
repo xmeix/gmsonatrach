@@ -12,6 +12,7 @@ const initialState = {
   rfms: [],
   depenses: [],
   oms: [],
+  missionKPIS: [],
 };
 
 export const authSlice = createSlice({
@@ -40,6 +41,8 @@ export const authSlice = createSlice({
       state.missions = [];
       state.oms = [];
       state.rfms = [];
+      state.missionKPIS = [];
+
       localStorage.removeItem("jwt");
     },
     setDemandes: (state, action) => {
@@ -78,10 +81,14 @@ export const authSlice = createSlice({
       state.failure = true;
       state.isLoading = false;
     },
+    setMissionKpis: (state, action) => {
+      state.missionKPIS = action.payload;
+    },
   },
 });
 
 export const {
+  setMissionKpis,
   setLogin,
   setLogout,
   setDemandes,

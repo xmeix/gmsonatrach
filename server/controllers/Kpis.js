@@ -20,6 +20,7 @@ export const createOrUpdateFMission = async (mission) => {
     const newFMission = new FMission({
       mission: mission._id,
       state: mission.etat,
+      day: new Date(mission.createdAt).toISOString().slice(0, 10),
       month: startMonth,
       year: startYear,
       structure: mission.structure,
@@ -36,6 +37,17 @@ export const createOrUpdateFMission = async (mission) => {
   }
 
   console.log("outside");
+};
+
+export const getMissionKPIS = async (req, res) => {
+  try {
+    const missionKpis = await FMission.find()
+      .populate("mission")
+      .sort({ year: 1, month: 1 });
+    res.status(200).json(missionKpis);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 };
 
 const calculateSuccessRate = (mission) => {

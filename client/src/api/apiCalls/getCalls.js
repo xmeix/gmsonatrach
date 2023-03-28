@@ -4,6 +4,7 @@ import {
   fetchFailure,
   fetchStart,
   setDemandes,
+  setMissionKpis,
   setMissions,
   setOMs,
   setRFMs,
@@ -33,6 +34,8 @@ const fetchData = async (dispatch, endpoint, socketEvent, num) => {
         dispatch(setDemandes(res.data));
       } else if (socketEvent === "user") {
         dispatch(setUsers(res.data));
+      } else if (socketEvent === "missionkpi") {
+        dispatch(setMissionKpis(res.data));
       } else dispatch(setRFMs(res.data));
     }
     dispatch(fetchEnd());
@@ -64,4 +67,7 @@ export const getDepenses = async (dispatch, num) => {
 
 export const getUsers = async (dispatch, num) => {
   await fetchData(dispatch, "/auth/users", "user", num);
+};
+export const getMissionKPIS = async (dispatch, num) => {
+  await fetchData(dispatch, "/kpis/mission", "missionkpi", num);
 };

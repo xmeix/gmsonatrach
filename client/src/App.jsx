@@ -21,6 +21,7 @@ import {
   getOMs,
   getMissions,
   getDepenses,
+  getMissionKPIS,
 } from "./api/apiCalls/getCalls";
 const LoginPage = lazy(() => import("./pages/loginPage/LoginPage"));
 const CostDashboard = lazy(() =>
@@ -77,6 +78,9 @@ function App() {
         break;
       case "depense":
         getDepenses(dispatch, 1);
+        break;
+      case "missionkpi":
+        getMissionKPIS(dispatch, 1);
         break;
       default:
         break;

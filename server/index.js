@@ -12,6 +12,7 @@ import missionRoutes from "./routes/mission.js";
 import ordreMissionRoutes from "./routes/ordreMission.js";
 import depenseRoutes from "./routes/depense.js";
 import rapportRoutes from "./routes/rapportFM.js";
+import kpisRoutes from "./routes/kpis.js";
 import cookieParser from "cookie-parser";
 import { Server } from "socket.io";
 import http from "http";
@@ -55,6 +56,7 @@ app.use("/mission", missionRoutes);
 app.use("/ordremission", ordreMissionRoutes);
 app.use("/depense", depenseRoutes);
 app.use("/rapportFM", rapportRoutes);
+app.use("/kpis", kpisRoutes);
 // Set up the HTTP server and Socket.IO instance
 const server = http.createServer(app);
 const io = new Server(server, {
@@ -79,8 +81,9 @@ mongoose
     });
     //ADD DATA ONE TIME ONLY
     //await mongoose.connection.db.dropDatabase(); //ATTENTION DELETES THE WHOOOLE DB
-    // KPI.insertMany(kpis)
-    //Mission.insertMany(missions);
+
+    // Mission.insertMany(missions);
+    // console.log("end");
   })
   .catch((error) => {
     console.error(`Failed to connect to MongoDB database: ${error.message}`);
@@ -171,7 +174,7 @@ cron.schedule("31 14 * * *", async () => {
   io.emit("cronDataChange");
 });
 
-// cron.schedule("28 17 * * *", async () => {
+// cron.schedule("23 23 * * *", async () => {
 //   const missions = await Mission.find();
 
 //   console.log("here");

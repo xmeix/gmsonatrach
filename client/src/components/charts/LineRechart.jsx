@@ -1,33 +1,38 @@
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Legend } from "recharts";
-const dataPerDay = [
-  { date: "2022-01-01", visitors: 100 },
-  { date: "2022-01-02", visitors: 120 },
-  { date: "2022-01-03", visitors: 150 },
-  // and so on
-];
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Legend,
+  Tooltip,
+} from "recharts";
 
-const dataPerMonth = [
-  { date: "2022-01", visitors: 3000 },
-  { date: "2022-02", visitors: 3500 },
-  { date: "2022-03", visitors: 4000 },
-  // and so on
-];
-
-const dataPerYear = [
-  { date: "2022", visitors: 50000 },
-  { date: "2023", visitors: 60000 },
-  // and so on
-];
-const LineRechart = () => {
-  const data = [...dataPerDay, ...dataPerMonth, ...dataPerYear];
-
+const LineRechart = ({ xdataKey, data, height, width, dataKey }) => {
   return (
-    <LineChart width={800} height={400} data={data}>
-      <CartesianGrid strokeDasharray="3 3" />
-      <XAxis dataKey="date" />
-      <YAxis />
+    <LineChart
+      width={800}
+      height={400}
+      data={data}
+      margin={{ top: 5, right: 20, bottom: 5, left: 0 }}
+    >
+      <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
+      <XAxis
+        dataKey={xdataKey}
+        label={{ value: "xLabel", position: "insideBottomRight" }}
+      />
+      <YAxis
+        name="nombre missions"
+        label={{ value: "yLabel", position: "insideTopLeft" }}
+      />
       <Legend />
-      <Line type="monotone" dataKey="visitors" stroke="#8884d8" />
+      <Line
+        type="monotone"
+        dataKey={dataKey}
+        stroke="#ff8500"
+        name="nombre de missions"
+      />
+      <Tooltip />
     </LineChart>
   );
 };
