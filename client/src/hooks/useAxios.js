@@ -7,7 +7,6 @@ import {
   fetchStart,
   setLogin,
   setLogout,
-  setRFMs,
 } from "../store/features/authSlice";
 import {
   getDemandes,
@@ -18,6 +17,7 @@ import {
   getRFMs,
   getUsers,
 } from "../api/apiCalls/getCalls";
+import { freeKpis } from "../store/features/statSlice";
 
 export const useAxios = () => {
   const isLoading = useSelector((state) => state.auth.isLoading);
@@ -75,6 +75,7 @@ export const useAxios = () => {
         break;
       case "/auth/logout":
         dispatch(setLogout());
+        dispatch(freeKpis());
         break;
       case "/auth/register":
         getUsers(dispatch);

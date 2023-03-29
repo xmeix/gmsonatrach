@@ -4,12 +4,12 @@ import {
   fetchFailure,
   fetchStart,
   setDemandes,
-  setMissionKpis,
   setMissions,
   setOMs,
   setRFMs,
   setUsers,
 } from "../../store/features/authSlice";
+import { setMissionKpis } from "../../store/features/statSlice";
 import { apiService } from "../apiService";
 
 const fetchData = async (dispatch, endpoint, socketEvent, num) => {

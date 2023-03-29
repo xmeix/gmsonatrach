@@ -1,27 +1,28 @@
 import {
+  Area,
+  AreaChart,
   CartesianGrid,
   Legend,
-  Line,
-  LineChart,
+  ResponsiveContainer,
   Tooltip,
   XAxis,
   YAxis,
-  ResponsiveContainer,
 } from "recharts";
-const LineRechart = ({ xdataKey, data, dataKey, xlabel, ylabel }) => {
+const AreaRechart = ({ xdataKey, data, dataKey, xlabel, ylabel }) => {
   return (
     <ResponsiveContainer width="80%" aspect={2}>
-      <LineChart
+      <AreaChart
         data={data}
-        margin={{ top: 20, right: 10, bottom: 20, left: 10 }}
+        margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
       >
+        <defs>
+          <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8} />
+            <stop offset="95%" stopColor="#8884d8" stopOpacity={0} />
+          </linearGradient>
+        </defs>
         <Legend verticalAlign="top" height={30} align="center" />
-        <CartesianGrid
-          stroke="#ccc"
-          horizontal="true"
-          vertical=""
-          opacity={0.5}
-        />
+
         <XAxis
           padding={{ left: 30, right: 30 }}
           dataKey={xdataKey}
@@ -49,19 +50,11 @@ const LineRechart = ({ xdataKey, data, dataKey, xlabel, ylabel }) => {
             fontWeight: "500",
           }}
         />
-        <Line
-          type="monotone"
-          dataKey={dataKey}
-          stroke="var(--light-orange)"
-          strokeWidth={3}
-          name="nombre de missions"
-          dot={{
-            fill: "var(--white)",
-            stroke: "var(--orange)",
-            strokeWidth: 2,
-            r: 4,
-          }}
-          activeDot={{ r: 6 }}
+        <CartesianGrid
+          stroke="#ccc"
+          horizontal="true"
+          vertical=""
+          opacity={0.5}
         />
         <Tooltip
           contentStyle={{
@@ -76,9 +69,16 @@ const LineRechart = ({ xdataKey, data, dataKey, xlabel, ylabel }) => {
           }}
           cursor={true}
         />
-      </LineChart>
+        <Area
+          type="monotone"
+          dataKey={dataKey}
+          stroke="#8884d8"
+          fillOpacity={1}
+          fill="url(#colorUv)"
+        />
+      </AreaChart>
     </ResponsiveContainer>
   );
 };
 
-export default LineRechart;
+export default AreaRechart;

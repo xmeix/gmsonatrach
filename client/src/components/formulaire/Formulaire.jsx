@@ -11,7 +11,7 @@ const customStyles = {
   control: (provided, state) => ({
     ...provided,
     border: "1px solid var(--light-gray)",
-    boxShadow: "0px 1px 4px rgba(0, 0, 0, 0.1);",
+    boxShadow: "0px 1px 4px rgb(0 0 0 / 40%)",
     "&:hover": {
       border: "1px solid var(--light-gray)",
     },
