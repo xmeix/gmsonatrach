@@ -82,7 +82,7 @@ mongoose
     //ADD DATA ONE TIME ONLY
     //await mongoose.connection.db.dropDatabase(); //ATTENTION DELETES THE WHOOOLE DB
 
-    // Mission.insertMany(missions);
+     //Mission.insertMany(missions);
     // console.log("end");
   })
   .catch((error) => {
@@ -174,7 +174,7 @@ cron.schedule("31 14 * * *", async () => {
   io.emit("cronDataChange");
 });
 
-// cron.schedule("23 23 * * *", async () => {
+// cron.schedule("00 15 * * *", async () => {
 //   const missions = await Mission.find();
 
 //   console.log("here");

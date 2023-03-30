@@ -62,8 +62,8 @@ const useDateFilter = (type, data) => {
       } else if (type === 1) {
         const itemDate = new Date(item.day);
         return (
-          itemDate.getFullYear() >= filterDate.getFullYear() &&
-          itemDate.getFullYear() < filterDate.getFullYear() + 5
+          itemDate.getFullYear() >= filterDate.getFullYear() - 4 &&
+          itemDate.getFullYear() <= filterDate.getFullYear()
         );
       } else if (type === 2) {
         const itemDate = new Date(item.day);
@@ -87,12 +87,10 @@ const useDateFilter = (type, data) => {
 
   const renderButtons = () => (
     <>
-      <button onClick={handlePrevIntervalClick} disabled={isNoData}>
-        Previous
-      </button>
+      <button onClick={handlePrevIntervalClick}>Previous</button>
       <div className="cont">
         {type === 1 &&
-          `${filterDate.getFullYear()} - ${filterDate.getFullYear() + 4}`}
+          `${filterDate.getFullYear() - 4} - ${filterDate.getFullYear()}`}
         {type === 2 && `${filterDate.getFullYear()}`}
 
         {type === 3 &&

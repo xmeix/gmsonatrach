@@ -21,8 +21,7 @@ export const createOrUpdateFMission = async (mission) => {
       mission: mission._id,
       state: mission.etat,
       day: new Date(mission.createdAt).toISOString().slice(0, 10),
-      month: startMonth,
-      year: startYear,
+
       structure: mission.structure,
       type: mission.type,
       country: mission.pays,
@@ -31,7 +30,14 @@ export const createOrUpdateFMission = async (mission) => {
       employee_count: mission.employes.length,
       accomplishedTask_count: calculateAccomplishedTaskCount(mission),
       nonAccomplishedTask_count: calculateNonAccomplishedTaskCount(mission),
-      transport_utilization_rate: calculateTransportUtilizationRate(mission),
+      road_utilization_rate: calculateTransportUtilizationRate(
+        mission,
+        "route"
+      ),
+      airline_utilization_rate: calculateTransportUtilizationRate(
+        mission,
+        "avion"
+      ),
     });
     await newFMission.save();
   }
@@ -70,11 +76,11 @@ const calculateNonAccomplishedTaskCount = (mission) => {
 };
 
 // Calculate transport utilization rate of a mission
-const calculateTransportUtilizationRate = (mission) => {
+const calculateTransportUtilizationRate = (mission, type) => {
   const totalTransport =
     mission.moyenTransport.length + mission.moyenTransportRet.length;
   const usedTransport =
-    mission.moyenTransport.filter((t) => t === "avion").length +
-    mission.moyenTransportRet.filter((t) => t === "avion").length;
+    mission.moyenTransport.filter((t) => t === type).length +
+    mission.moyenTransportRet.filter((t) => t === type).length;
   return usedTransport / totalTransport;
 };

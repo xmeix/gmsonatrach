@@ -10,7 +10,16 @@ import {
 } from "recharts";
 import useDateFilter from "../../hooks/useDateFilter";
 
-const BarRechart = ({ xdataKey, data, dataKey, xlabel, ylabel, type }) => {
+const BarRechart = ({
+  xdataKey,
+  data,
+  dataKey,
+  xlabel,
+  ylabel,
+  type,
+  num,
+  dataKey2,
+}) => {
   const {
     filteredData,
 
@@ -43,6 +52,7 @@ const BarRechart = ({ xdataKey, data, dataKey, xlabel, ylabel, type }) => {
               />
               <Legend />
               <Bar dataKey={dataKey} fill="#8884d8" />
+              {num === 2 && <Bar dataKey={dataKey2} fill="#8854d9" />}
             </BarChart>
           </ResponsiveContainer>
         </>
