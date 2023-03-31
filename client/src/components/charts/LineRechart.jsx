@@ -10,19 +10,16 @@ import {
 } from "recharts";
 import useDateFilter from "../../hooks/useDateFilter";
 const LineRechart = ({ xdataKey, data, dataKey, xlabel, ylabel, type }) => {
-  const { 
-    filteredData, 
-    isNoData,
-    renderButtons,
-  } = useDateFilter(type, data);
+  const { filteredData, isNoData, renderButtons } = useDateFilter(type, data);
   return (
     <>
       {" "}
       {renderButtons()}
       {!isNoData ? (
         <>
-          <ResponsiveContainer width="80%" aspect={2}>
+          <ResponsiveContainer width="100%" aspect={2}>
             <LineChart
+              width="100%"
               data={filteredData}
               margin={{ top: 20, right: 10, bottom: 20, left: 10 }}
             >

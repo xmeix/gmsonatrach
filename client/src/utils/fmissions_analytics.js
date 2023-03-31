@@ -322,3 +322,11 @@ export const groupUtilRatesByDate = (data, type) => {
   groupedData?.forEach(calculateAverageUtilRates);
   return groupedData.sort((a, b) => Date.parse(a.day) - Date.parse(b.day));
 };
+
+export const getTotalSuccessRate = (data) => {
+  const totalSuccessRate = data.reduce((acc, el) => {
+    return acc + el.success_rate;
+  }, 0);
+  const averageSuccessRate = totalSuccessRate / data.length;
+  return averageSuccessRate.toFixed(2);
+};

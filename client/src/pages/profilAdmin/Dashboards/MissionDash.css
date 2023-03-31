@@ -1,0 +1,92 @@
+.missionDashboard {
+  padding: 1em;
+}
+
+.missionDashboard .dash-settings {
+  margin-top: 2em;
+  border: solid 2px black;
+  padding: 1em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+}
+
+.missionDashboard .dash-settings .dash-title {
+  font-size: 13px;
+}
+
+.missionDashboard .dash-settings .chart-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1em;
+}
+
+.chart-btn {
+  font-family: "Montserrat", sans-serif;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease-in;
+  text-transform: capitalize;
+}
+
+.chart-btn:hover {
+  text-decoration: underline;
+  font-weight: 800;
+}
+
+.missionDashboard .dash-content {
+  margin-top: 2em;
+  margin-bottom: 2em;
+  border: solid 1px black;
+  display: grid;
+  grid-auto-columns: 1fr;
+  grid-template-columns: 1.1fr 0.9fr 0.6fr 1.4fr;
+  grid-template-rows: 1fr 1.5fr 1.9fr 1.2fr 2.6fr 0.1fr 0.3fr 2.2fr;
+  gap: 1em 1em;
+  grid-template-areas:
+    "a a b b"
+    "a a b b"
+    "c c c d"
+    "c c c e"
+    "f f g g"
+    "f f i i"
+    "f f i i"
+    "h h i i";
+}
+
+.missionDashboard .chart {
+}
+
+.missionDashboard .box {
+  padding: 2em;
+  background-color: var(--white);
+  border-radius: 5px;
+  box-shadow: 0px 1px 4px rgb(0 0 0 / 40%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.missionDashboard .box .card-title {
+  font-size: 1.2em;
+  font-weight: 700;
+  text-transform: capitalize;
+}
+
+.missionDashboard .box .number {
+  font-size: 2.5em;
+  font-weight: 800;
+}
+@media screen and (max-width: 1200px) {
+  .missionDashboard .dash-content {
+    grid-template-areas: "a" "b" "c" "d" "e" "f", "g", "h", "i";
+    grid-template-columns: 100%;
+  }
+}

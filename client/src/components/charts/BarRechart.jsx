@@ -32,8 +32,8 @@ const BarRechart = ({
       {renderButtons()}
       {!isNoData ? (
         <>
-          <ResponsiveContainer width="80%" aspect={2}>
-            <BarChart width={730} height={250} data={filteredData}>
+          <ResponsiveContainer width="100%" aspect={2}>
+            <BarChart data={filteredData}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey={xdataKey} />
               <YAxis />

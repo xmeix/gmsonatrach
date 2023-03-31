@@ -21,8 +21,9 @@ const AreaRechart = ({ xdataKey, data, dataKey, xlabel, ylabel, type }) => {
       {renderButtons()}
       {!isNoData ? (
         <>
-          <ResponsiveContainer width="80%" aspect={2}>
+          <ResponsiveContainer width="100%" aspect={2}>
             <AreaChart
+              width="100%"
               data={filteredData}
               margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
             >

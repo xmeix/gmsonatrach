@@ -5,6 +5,7 @@ import {
   getEmployeesCountPerStructure,
   getMissionsPer,
   getTasksCount,
+  getTotalSuccessRate,
   groupSuccessRatesByDate,
   groupUtilRatesByDate,
 } from "../../../utils/fmissions_analytics";
@@ -21,7 +22,7 @@ const AreaRechart = lazy(() =>
   import("../../../components/charts/AreaRechart")
 );
 const PieRechart = lazy(() => import("../../../components/charts/PieRechart"));
-
+import "./MissionDash.css";
 const MissionDashboard = () => {
   const fmissionData = useSelector((state) => state.stat.missionKPIS);
   const [chart2Per, setChart2Per] = useState(4);
@@ -54,21 +55,24 @@ const MissionDashboard = () => {
     <div className="missionDashboard">
       <FloatingBar />
       <PageName name="mission Dashboard" />
-      <div className="chart-buttons">
-        <button onClick={() => handleButtonClick(1)} className="chart-btn">
-          année
-        </button>
-        <button onClick={() => handleButtonClick(2)} className="chart-btn">
-          mois
-        </button>
-        <button onClick={() => handleButtonClick(3)} className="chart-btn">
-          jour
-        </button>
+      <div className="dash-settings">
+        <div className="dash-title">choose your overview</div>
+        <div className="chart-buttons">
+          <button onClick={() => handleButtonClick(1)} className="chart-btn">
+            année
+          </button>
+          <button onClick={() => handleButtonClick(2)} className="chart-btn">
+            mois
+          </button>
+          <button onClick={() => handleButtonClick(3)} className="chart-btn">
+            jour
+          </button>
+        </div>
       </div>
+
       <div className="dash-content">
-        {" "}
-        <Suspense fallback={<div>Loading...</div>}>
-          <div className="chart">
+        <div className="box" style={{ gridArea: "a" }}>
+          <Suspense fallback={<div>Loading...</div>}>
             {chartType === "line" && (
               <LineRechart
                 xdataKey={"day"}
@@ -95,30 +99,31 @@ const MissionDashboard = () => {
                 type={chartPer}
               />
             )}
-          </div>
-        </Suspense>{" "}
-        <Suspense fallback={<div>Loading...</div>}>
-          <div className="chart-buttons">
-            <button onClick={() => setChart2Per(4)} className="chart-btn">
-              structure
-            </button>
-            <button onClick={() => setChart2Per(5)} className="chart-btn">
-              type
-            </button>
-            <button onClick={() => setChart2Per(6)} className="chart-btn">
-              etat
-            </button>
-          </div>
-          <div className="chart-container">
+          </Suspense>
+        </div>
+        <div className="box" style={{ gridArea: "b" }}>
+          <Suspense fallback={<div>Loading...</div>}>
+            <div className="chart-buttons">
+              <button onClick={() => setChart2Per(4)} className="chart-btn">
+                structure
+              </button>
+              <button onClick={() => setChart2Per(5)} className="chart-btn">
+                type
+              </button>
+              <button onClick={() => setChart2Per(6)} className="chart-btn">
+                etat
+              </button>
+            </div>
+
             <PieRechart
               xdataKey={x2DataKey}
               data={getMissionsPer(fmissionData, chart2Per)}
               dataKey={"mission_count"}
             />
-          </div>
-        </Suspense>{" "}
-        <Suspense fallback={<div>Loading...</div>}>
-          <div className="chart-container">
+          </Suspense>
+        </div>
+        <div className="box" style={{ gridArea: "c" }}>
+          <Suspense fallback={<div>Loading...</div>}>
             <ComposedRechart
               xdataKey={"day"}
               data={groupSuccessRatesByDate(fmissionData, chartPer)}
@@ -127,10 +132,10 @@ const MissionDashboard = () => {
               ylabel="taux de succés"
               type={chartPer}
             />
-          </div>
-        </Suspense>{" "}
-        <Suspense fallback={<div>Loading...</div>}>
-          <div className="chart-container">
+          </Suspense>
+        </div>
+        <div className="box" style={{ gridArea: "d" }}>
+          <Suspense fallback={<div>Loading...</div>}>
             <RadarRechart
               xdataKey={"employee_count"}
               data={getEmployeesCountPerStructure(fmissionData)}
@@ -139,36 +144,44 @@ const MissionDashboard = () => {
               ylabel="taux de succés"
               type={chartPer}
             />
-          </div>
-        </Suspense>{" "}
-        <Suspense fallback={<div>Loading...</div>}>
-          <div className="chart-container">
-            <div className="chart">
-              <BarRechart
-                xdataKey={"day"}
-                data={getTasksCount(fmissionData, chartPer)}
-                dataKey={"accomplishedTask_count"}
-                type={chartPer}
-                num={2}
-                dataKey2={"nonAccomplishedTask_count"}
-              />
-            </div>
-          </div>
-        </Suspense>
-        <Suspense fallback={<div>Loading...</div>}>
-          <div className="chart-container">
-            <div className="chart">
-              <BarRechart
-                xdataKey={"day"}
-                data={groupUtilRatesByDate(fmissionData, chartPer)}
-                dataKey={"road_utilization_rate"}
-                type={chartPer}
-                num={2}
-                dataKey2={"airline_utilization_rate"}
-              />
-            </div>
-          </div>
-        </Suspense>
+          </Suspense>
+        </div>
+        <div className="box" style={{ gridArea: "e" }}>
+          <span className="card-title">
+            Taux de réussite global des missions:
+          </span>
+          <span className="number">{getTotalSuccessRate(fmissionData)} %</span>
+        </div>
+        <div className="box" style={{ gridArea: "f" }}>
+          <Suspense fallback={<div>Loading...</div>}>
+            <BarRechart
+              xdataKey={"day"}
+              data={getTasksCount(fmissionData, chartPer)}
+              dataKey={"accomplishedTask_count"}
+              type={chartPer}
+              num={2}
+              dataKey2={"nonAccomplishedTask_count"}
+            />
+          </Suspense>
+        </div>
+        <div className="box" style={{ gridArea: "g" }}>
+          card
+        </div>
+        <div className="box" style={{ gridArea: "h" }}>
+          2 pie charts
+        </div>
+        <div className="box" style={{ gridArea: "i" }}>
+          <Suspense fallback={<div>Loading...</div>}>
+            <BarRechart
+              xdataKey={"day"}
+              data={groupUtilRatesByDate(fmissionData, chartPer)}
+              dataKey={"road_utilization_rate"}
+              type={chartPer}
+              num={2}
+              dataKey2={"airline_utilization_rate"}
+            />
+          </Suspense>
+        </div>
       </div>
     </div>
   );

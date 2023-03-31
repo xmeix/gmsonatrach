@@ -6,6 +6,7 @@ import {
   ComposedChart,
   Legend,
   Line,
+  ResponsiveContainer,
   Tooltip,
   XAxis,
   YAxis,
@@ -20,15 +21,18 @@ const ComposedRechart = ({ xdataKey, data, dataKey, xlabel, ylabel, type }) => {
       {renderButtons()}
       {!isNoData ? (
         <>
-          <ComposedChart width={730} height={250} data={filteredData}>
-            <XAxis dataKey={xdataKey} />
-            <YAxis />
-            <Tooltip />
-            <Legend />
-            <CartesianGrid stroke="#f5f5f5" />
-            <Bar dataKey={dataKey} barSize={20} fill="#413ea0" />
-            <Line type="monotone" dataKey={dataKey} stroke="#ff7300" />
-          </ComposedChart>
+          {" "}
+          <ResponsiveContainer width="80%" aspect={2}>
+            <ComposedChart width={730} height={250} data={filteredData}>
+              <XAxis dataKey={xdataKey} />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <CartesianGrid stroke="#f5f5f5" />
+              <Bar dataKey={dataKey} barSize={20} fill="#413ea0" />
+              <Line type="monotone" dataKey={dataKey} stroke="#ff7300" />
+            </ComposedChart>
+          </ResponsiveContainer>
         </>
       ) : (
         <div className="no-data">Pas de données disponible</div>

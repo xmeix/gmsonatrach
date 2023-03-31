@@ -26,8 +26,8 @@ const PieRechart = ({ xdataKey, data, dataKey }) => {
   ];
 
   return (
-    <ResponsiveContainer width="80%" aspect={2}>
-      <PieChart>
+    <ResponsiveContainer width="100%" aspect={2}>
+      <PieChart  >
         <Pie data={data} dataKey={dataKey} nameKey={xdataKey} fill="#8884d8">
           {data.map((entry, index) => (
             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
