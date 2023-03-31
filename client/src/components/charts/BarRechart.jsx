@@ -1,64 +1,36 @@
-import {
-  Bar,
-  BarChart,
-  CartesianGrid,
-  Legend,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis,
-} from "recharts";
 import useDateFilter from "../../hooks/useDateFilter";
+import Nodata from "./Nodata";
+import { Bar } from "react-chartjs-2";
+import { Chart as ChartJS } from "chart.js/auto";
 
-const BarRechart = ({
-  xdataKey,
-  data,
-  dataKey,
-  xlabel,
-  ylabel,
-  type,
-  num,
-  dataKey2,
-}) => {
-  const {
-    filteredData,
-
-    isNoData,
-    renderButtons,
-  } = useDateFilter(type, data);
-
+const BarRechart = ({ data, type, label, labelType, type2, label2, num }) => {
+  const { filteredData, isNoData, renderButtons } = useDateFilter(
+    labelType,
+    data
+  );
   return (
     <>
       {renderButtons()}
-      {!isNoData ? (
-        <>
-          <ResponsiveContainer width="100%" aspect={2}>
-            <BarChart data={filteredData}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey={xdataKey} />
-              <YAxis />
-              <Tooltip
-                contentStyle={{
-                  backgroundColor: "var(--white)",
-                  color: "var(--gray)",
-                  fontSize: "13px",
-                  fontWeight: 600,
-                  border: "solid 1px var(--light-gray)",
-                }}
-                itemStyle={{
-                  fontSize: "15px",
-                }}
-                cursor={true}
-              />
-              <Legend />
-              <Bar dataKey={dataKey} fill="#8884d8" />
-              {num === 2 && <Bar dataKey={dataKey2} fill="#8854d9" />}
-            </BarChart>
-          </ResponsiveContainer>
-        </>
-      ) : (
-        <div className="no-data">Pas de données disponible</div>
-      )}
+      <>
+        <Bar
+        options={{ responsive: true, noDataMessage: "No data to display" }}
+          data={{
+            labels: filteredData.map((d) => d.day),
+            datasets: [
+              {
+                label: label,
+                data: filteredData.map((d) => d[type]),
+                stack: "Stack 0",
+              },
+              num === 2 && {
+                label: label2,
+                data: filteredData.map((d) => d[type2]),
+                stack: "Stack 1",
+              },
+            ],
+          }}
+        />
+      </>
     </>
   );
 };

@@ -2,7 +2,7 @@ import { Pie, PieChart, ResponsiveContainer } from "recharts";
 
 const ThinPieRechart = ({ xdataKey, data, dataKey }) => {
   return (
-    <ResponsiveContainer width="100%" aspect={2}>
+    <ResponsiveContainer width="99%" aspect={1.5}>
       <PieChart>
         <Pie
           data={data}

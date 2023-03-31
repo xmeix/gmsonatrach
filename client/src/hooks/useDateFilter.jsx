@@ -1,7 +1,10 @@
 import { useState } from "react";
-
+import ArrowBackIosRoundedIcon from "@mui/icons-material/ArrowBackIosRounded";
+import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
+import "./../pages/profilAdmin/Dashboards/MissionDash.css";
 const useDateFilter = (type, data) => {
   // initialize state with current month
+  console.log(data);
   const [filterDate, setFilterDate] = useState(new Date());
   const maxDate = new Date();
   const [disablePrev, setDisabledPrev] = useState(false);
@@ -71,7 +74,7 @@ const useDateFilter = (type, data) => {
       }
     })
     .sort((a, b) => a.day - b.day);
-
+  console.log(filteredData);
   // check if current date is same as max date
   const isMaxDate =
     type === 1
@@ -84,10 +87,11 @@ const useDateFilter = (type, data) => {
       : false;
 
   const isNoData = filteredData.length === 0;
-
   const renderButtons = () => (
-    <>
-      <button onClick={handlePrevIntervalClick}>Previous</button>
+    <div className="chart-controls f1">
+      <button onClick={handlePrevIntervalClick}>
+        <ArrowBackIosRoundedIcon />
+      </button>
       <div className="cont">
         {type === 1 &&
           `${filterDate.getFullYear() - 4} - ${filterDate.getFullYear()}`}
@@ -99,9 +103,9 @@ const useDateFilter = (type, data) => {
           })} ${filterDate.getFullYear()}`}
       </div>
       <button onClick={handleNextIntervalClick} disabled={isMaxDate}>
-        Next
+        <ArrowForwardIosRoundedIcon />
       </button>
-    </>
+    </div>
   );
   return {
     filterDate,

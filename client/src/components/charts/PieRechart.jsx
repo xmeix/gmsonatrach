@@ -1,54 +1,42 @@
-import {
-  Cell,
-  Legend,
-  Pie,
-  PieChart,
-  ResponsiveContainer,
-  Tooltip,
-} from "recharts";
+import { Pie } from "react-chartjs-2";
+import { Chart as ChartJS } from "chart.js/auto";
 
-const PieRechart = ({ xdataKey, data, dataKey }) => {
-  const COLORS = [
-    "#6BB7EC", // a medium blue
-    "#FFD966", // a light yellow
-    "#B2DFDB", // a pale blue-green
-    "#F8BBD0", // a light pink
-    "#9FA8DA", // a muted blue
-    "#FFCC80", // a muted orange
-    "#C5E1A5", // a muted green
-    "#80CBC4", // a muted blue-green
-    "#F48FB1", // a medium pink
-    "#FFCCBC", // a pale peach
-    "#B2EBF2", // a light cyan
-    "#FFAB91", // a light salmon
-    "#DCEDC8", // a pale green
-    "#E6EE9C", // a pale lime
-  ];
-
+import useDateFilter from "../../hooks/useDateFilter";
+import Nodata from "./Nodata";
+const PieRechart = ({ data, type, label, labelType }) => {
+  console.log(data);
   return (
-    <ResponsiveContainer width="100%" aspect={2}>
-      <PieChart  >
-        <Pie data={data} dataKey={dataKey} nameKey={xdataKey} fill="#8884d8">
-          {data.map((entry, index) => (
-            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-          ))}
-        </Pie>
-        <Tooltip
-          contentStyle={{
-            backgroundColor: "var(--white)",
-            color: "var(--gray)",
-            fontSize: "13px",
-            fontWeight: 600,
-            border: "solid 1px var(--light-gray)",
-          }}
-          itemStyle={{
-            fontSize: "15px",
-          }}
-          cursor={true}
-        />
-        <Legend />
-      </PieChart>
-    </ResponsiveContainer>
+    <>
+      <Pie
+        options={{ responsive: true, noDataMessage: "No data to display" }}
+        data={{
+          labels: data.map((d) => d[labelType]),
+          datasets: [
+            {
+              fill: true,
+              label: label,
+              data: data.map((d) => d[type]),
+              backgroundColor: [
+                "rgba(255, 99, 132, 0.2)",
+                "rgba(54, 162, 235, 0.2)",
+                "rgba(255, 206, 86, 0.2)",
+                "rgba(75, 192, 192, 0.2)",
+                "rgba(153, 102, 255, 0.2)",
+                "rgba(255, 159, 64, 0.2)",
+              ],
+              borderColor: [
+                "rgba(255, 99, 132, 1)",
+                "rgba(54, 162, 235, 1)",
+                "rgba(255, 206, 86, 1)",
+                "rgba(75, 192, 192, 1)",
+                "rgba(153, 102, 255, 1)",
+                "rgba(255, 159, 64, 1)",
+              ],
+            },
+          ],
+        }}
+      />
+    </>
   );
 };
 

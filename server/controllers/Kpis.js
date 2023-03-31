@@ -30,11 +30,11 @@ export const createOrUpdateFMission = async (mission) => {
       employee_count: mission.employes.length,
       accomplishedTask_count: calculateAccomplishedTaskCount(mission),
       nonAccomplishedTask_count: calculateNonAccomplishedTaskCount(mission),
-      road_utilization_rate: calculateTransportUtilizationRate(
+      road_utilization_count: calculateTransportUtilizationRate(
         mission,
         "route"
       ),
-      airline_utilization_rate: calculateTransportUtilizationRate(
+      airline_utilization_count: calculateTransportUtilizationRate(
         mission,
         "avion"
       ),
@@ -77,10 +77,10 @@ const calculateNonAccomplishedTaskCount = (mission) => {
 
 // Calculate transport utilization rate of a mission
 const calculateTransportUtilizationRate = (mission, type) => {
-  const totalTransport =
-    mission.moyenTransport.length + mission.moyenTransportRet.length;
+  // const totalTransport =
+  //   mission.moyenTransport.length + mission.moyenTransportRet.length;
   const usedTransport =
     mission.moyenTransport.filter((t) => t === type).length +
     mission.moyenTransportRet.filter((t) => t === type).length;
-  return usedTransport / totalTransport;
+  return usedTransport;
 };

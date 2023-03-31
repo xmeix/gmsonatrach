@@ -6,11 +6,11 @@ import {
   getMissionsPer,
   getTasksCount,
   getTotalSuccessRate,
+  getTotalUtilizationRate,
   groupSuccessRatesByDate,
   groupUtilRatesByDate,
 } from "../../../utils/fmissions_analytics";
 import { lazy, Suspense, useEffect, useState } from "react";
-import "./Charts.css";
 import ComposedRechart from "../../../components/charts/ComposedRechart";
 import RadarRechart from "../../../components/charts/RadarRechart";
 import useChartButtons from "../../../hooks/useChartButtons";
@@ -23,6 +23,8 @@ const AreaRechart = lazy(() =>
 );
 const PieRechart = lazy(() => import("../../../components/charts/PieRechart"));
 import "./MissionDash.css";
+import ThinPieRechart from "../../../components/charts/ThinPieRechart";
+
 const MissionDashboard = () => {
   const fmissionData = useSelector((state) => state.stat.missionKPIS);
   const [chart2Per, setChart2Per] = useState(4);
@@ -71,32 +73,147 @@ const MissionDashboard = () => {
       </div>
 
       <div className="dash-content">
-        <div className="box" style={{ gridArea: "a" }}>
+        <div style={{ gridArea: "a" }} className="box">
           <Suspense fallback={<div>Loading...</div>}>
             {chartType === "line" && (
               <LineRechart
-                xdataKey={"day"}
                 data={getMissionsPer(fmissionData, chartPer)}
-                dataKey={"mission_count"}
-                xlabel="années"
-                ylabel="nombre de missions"
-                type={chartPer}
+                type={"mission_count"}
+                label="nombre de missions"
+                labelType={chartPer}
               />
             )}
             {chartType === "bar" && (
               <BarRechart
-                xdataKey={"day"}
                 data={getMissionsPer(fmissionData, chartPer)}
-                dataKey={"mission_count"}
-                type={chartPer}
+                type={"mission_count"}
+                label="nombre de missions"
+                labelType={chartPer}
               />
             )}
             {chartType === "area" && (
-              <AreaRechart
-                xdataKey={"day"}
+              <BarRechart
                 data={getMissionsPer(fmissionData, chartPer)}
-                dataKey={"mission_count"}
-                type={chartPer}
+                type={"mission_count"}
+                label="nombre de missions"
+                labelType={chartPer}
+              />
+            )}
+          </Suspense>
+        </div>
+        <div style={{ gridArea: "b" }} className="box">
+          {" "}
+          <Suspense fallback={<div>Loading...</div>}>
+            <div className="chart-buttons">
+              <button onClick={() => setChart2Per(4)} className="chart-btn">
+                structure
+              </button>
+              <button onClick={() => setChart2Per(5)} className="chart-btn">
+                type
+              </button>
+              <button onClick={() => setChart2Per(6)} className="chart-btn">
+                etat
+              </button>
+            </div>
+
+            <PieRechart
+              data={getMissionsPer(fmissionData, chart2Per)}
+              type={"mission_count"}
+              label="nombre de missions"
+              labelType={x2DataKey}
+            />
+          </Suspense>
+        </div>
+        <div style={{ gridArea: "c" }} className="box">
+          <Suspense fallback={<div>Loading...</div>}>
+            <RadarRechart
+              data={getEmployeesCountPerStructure(fmissionData)}
+              type={"employee_count"}
+              label="nombre de missions"
+              labelType={"structure"}
+            />
+          </Suspense>
+        </div>
+        <div style={{ gridArea: "d" }} className="box">
+          <Suspense fallback={<div>Loading...</div>}>
+            <ComposedRechart
+              data={groupSuccessRatesByDate(fmissionData, chartPer)}
+              type={"success_rate"}
+              label="nombre de missions"
+              labelType={chartPer}
+            />
+          </Suspense>
+        </div>
+        <div style={{ gridArea: "e" }} className="box">
+          card
+        </div>
+        <div style={{ gridArea: "f" }} className="box">
+          card
+        </div>
+        <div style={{ gridArea: "g" }} className="box">
+          card
+        </div>
+        <div style={{ gridArea: "h" }} className="box">
+          <Suspense fallback={<div>Loading...</div>}>
+            <BarRechart
+              data={groupUtilRatesByDate(fmissionData, chartPer)}
+              type={"road_utilization_rate"}
+              label="road_utilization_rate"
+              labelType={chartPer}
+              type2={"airline_utilization_rate"}
+              label2={"airline_utilization_rate"}
+              num={2}
+            />
+          </Suspense>
+        </div>
+        <div style={{ gridArea: "i" }} className="box">
+          card
+        </div>
+        <div style={{ gridArea: "j" }} className="box">
+          card
+        </div>
+        <div style={{ gridArea: "k" }} className="box">
+          card
+        </div>
+        <div style={{ gridArea: "l" }} className="box">
+          <Suspense fallback={<div>Loading...</div>}>
+            <BarRechart
+              data={getTasksCount(fmissionData, chartPer)}
+              type={"accomplishedTask_count"}
+              label="accomplishedTask_count"
+              labelType={chartPer}
+              type2={"nonAccomplishedTask_count"}
+              label2={"nonAccomplishedTask_count"}
+              num={2}
+            />
+          </Suspense>
+        </div>
+      </div>
+      {/* <div className="dash-content">
+        <div className="box" style={{ gridArea: "a" }}>
+          <Suspense fallback={<div>Loading...</div>}>
+            {chartType === "line" && (
+              <LineRechart
+                data={getMissionsPer(fmissionData, chartPer)}
+                type={"mission_count"}
+                label="nombre de missions"
+                labelType={chartPer}
+              />
+            )}
+            {chartType === "bar" && (
+              <BarRechart
+                data={getMissionsPer(fmissionData, chartPer)}
+                type={"mission_count"}
+                label="nombre de missions"
+                labelType={chartPer}
+              />
+            )}
+            {chartType === "area" && (
+              <BarRechart
+                data={getMissionsPer(fmissionData, chartPer)}
+                type={"mission_count"}
+                label="nombre de missions"
+                labelType={chartPer}
               />
             )}
           </Suspense>
@@ -116,33 +233,30 @@ const MissionDashboard = () => {
             </div>
 
             <PieRechart
-              xdataKey={x2DataKey}
               data={getMissionsPer(fmissionData, chart2Per)}
-              dataKey={"mission_count"}
+              type={"mission_count"}
+              label="nombre de missions"
+              labelType={x2DataKey}
             />
           </Suspense>
         </div>
         <div className="box" style={{ gridArea: "c" }}>
           <Suspense fallback={<div>Loading...</div>}>
             <ComposedRechart
-              xdataKey={"day"}
               data={groupSuccessRatesByDate(fmissionData, chartPer)}
-              dataKey={"success_rate"}
-              xlabel="jours"
-              ylabel="taux de succés"
-              type={chartPer}
+              type={"success_rate"}
+              label="nombre de missions"
+              labelType={chartPer}
             />
           </Suspense>
         </div>
         <div className="box" style={{ gridArea: "d" }}>
           <Suspense fallback={<div>Loading...</div>}>
             <RadarRechart
-              xdataKey={"employee_count"}
               data={getEmployeesCountPerStructure(fmissionData)}
-              dataKey={"structure"}
-              xlabel="jours"
-              ylabel="taux de succés"
-              type={chartPer}
+              type={"employee_count"}
+              label="nombre de missions"
+              labelType={"structure"}
             />
           </Suspense>
         </div>
@@ -155,12 +269,13 @@ const MissionDashboard = () => {
         <div className="box" style={{ gridArea: "f" }}>
           <Suspense fallback={<div>Loading...</div>}>
             <BarRechart
-              xdataKey={"day"}
               data={getTasksCount(fmissionData, chartPer)}
-              dataKey={"accomplishedTask_count"}
-              type={chartPer}
+              type={"accomplishedTask_count"}
+              label="accomplishedTask_count"
+              labelType={chartPer}
+              type2={"nonAccomplishedTask_count"}
+              label2={"nonAccomplishedTask_count"}
               num={2}
-              dataKey2={"nonAccomplishedTask_count"}
             />
           </Suspense>
         </div>
@@ -168,21 +283,25 @@ const MissionDashboard = () => {
           card
         </div>
         <div className="box" style={{ gridArea: "h" }}>
-          2 pie charts
+          {"Le taux d'utilisation total des routes pour les voyages d'affaires." +
+            getTotalUtilizationRate(fmissionData, 1)}
+          {"La moyenne d'utilisation totale des compagnies aériennes pour les voyages d'affaires." +
+            getTotalUtilizationRate(fmissionData, 2)}
         </div>
         <div className="box" style={{ gridArea: "i" }}>
           <Suspense fallback={<div>Loading...</div>}>
             <BarRechart
-              xdataKey={"day"}
               data={groupUtilRatesByDate(fmissionData, chartPer)}
-              dataKey={"road_utilization_rate"}
-              type={chartPer}
+              type={"road_utilization_rate"}
+              label="road_utilization_rate"
+              labelType={chartPer}
+              type2={"airline_utilization_rate"}
+              label2={"airline_utilization_rate"}
               num={2}
-              dataKey2={"airline_utilization_rate"}
             />
           </Suspense>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

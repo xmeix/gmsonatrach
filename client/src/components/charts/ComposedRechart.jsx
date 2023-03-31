@@ -1,42 +1,44 @@
-import { useState } from "react";
-import {
-  Area,
-  Bar,
-  CartesianGrid,
-  ComposedChart,
-  Legend,
-  Line,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis,
-} from "recharts";
 import useDateFilter from "../../hooks/useDateFilter";
+import Nodata from "./Nodata";
+import { Chart } from "react-chartjs-2";
+import { Chart as ChartJS } from "chart.js/auto";
 
-const ComposedRechart = ({ xdataKey, data, dataKey, xlabel, ylabel, type }) => {
-  const { filteredData, isNoData, renderButtons } = useDateFilter(type, data);
-
+const ComposedRechart = ({
+  data,
+  type,
+  label,
+  labelType,
+  type2,
+  label2,
+  num,
+}) => {
+  const { filteredData, isNoData, renderButtons } = useDateFilter(
+    labelType,
+    data
+  );
   return (
     <>
       {renderButtons()}
-      {!isNoData ? (
-        <>
-          {" "}
-          <ResponsiveContainer width="80%" aspect={2}>
-            <ComposedChart width={730} height={250} data={filteredData}>
-              <XAxis dataKey={xdataKey} />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <CartesianGrid stroke="#f5f5f5" />
-              <Bar dataKey={dataKey} barSize={20} fill="#413ea0" />
-              <Line type="monotone" dataKey={dataKey} stroke="#ff7300" />
-            </ComposedChart>
-          </ResponsiveContainer>
-        </>
-      ) : (
-        <div className="no-data">Pas de données disponible</div>
-      )}
+      <>
+        <Chart
+          options={{ responsive: true, noDataMessage: "No data to display" }}
+          data={{
+            labels: filteredData.map((d) => d.day),
+            datasets: [
+              {
+                type: "bar",
+                label: label,
+                data: filteredData.map((d) => d[type]),
+              },
+              {
+                type: "line",
+                label: label,
+                data: filteredData.map((d) => d[type]),
+              },
+            ],
+          }}
+        />
+      </>
     </>
   );
 };

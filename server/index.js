@@ -174,7 +174,7 @@ cron.schedule("31 14 * * *", async () => {
   io.emit("cronDataChange");
 });
 
-// cron.schedule("00 15 * * *", async () => {
+// cron.schedule("55 12 * * *", async () => {
 //   const missions = await Mission.find();
 
 //   console.log("here");

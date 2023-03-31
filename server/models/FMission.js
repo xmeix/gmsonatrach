@@ -16,8 +16,8 @@ const FMissionSchema = new mongoose.Schema(
     employee_count: { type: Number },
     accomplishedTask_count: { type: Number },
     nonAccomplishedTask_count: { type: Number },
-    road_utilization_rate: { type: Number },
-    airline_utilization_rate: { type: Number },
+    road_utilization_count: { type: Number },
+    airline_utilization_count: { type: Number },
   },
   {
     timestamps: true,
