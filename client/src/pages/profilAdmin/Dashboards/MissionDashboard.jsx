@@ -25,6 +25,10 @@ const AreaRechart = lazy(() =>
 const PieRechart = lazy(() => import("../../../components/charts/PieRechart"));
 import "./MissionDash.css";
 import ThinPieRechart from "../../../components/charts/ThinPieRechart";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import DoneOutlineRoundedIcon from "@mui/icons-material/DoneOutlineRounded";
+import ThumbUpOffAltRoundedIcon from "@mui/icons-material/ThumbUpOffAltRounded";
+import ThumbDownAltRoundedIcon from "@mui/icons-material/ThumbDownAltRounded";
 
 const MissionDashboard = () => {
   const fmissionData = useSelector((state) => state.stat.missionKPIS);
@@ -59,7 +63,10 @@ const MissionDashboard = () => {
       <FloatingBar />
       <PageName name="mission Dashboard" />
       <div className="dash-settings">
-        <div className="dash-title">choose your overview</div>
+        <div className="dash-title">
+          Basculer entre les vues quotidiennes, mensuelles et annuelles et
+          adapter votre tableau de bord à vos besoins spécifiques.
+        </div>
         <div className="chart-buttons">
           <button onClick={() => handleButtonClick(1)} className="chart-btn">
             année
@@ -108,14 +115,14 @@ const MissionDashboard = () => {
         <div style={{ gridArea: "b" }} className="box">
           {" "}
           <Suspense fallback={<div>Loading...</div>}>
-            <div className="chart-buttons">
-              <button onClick={() => setChart2Per(4)} className="chart-btn">
+            <div className="subchart-buttons">
+              <button onClick={() => setChart2Per(4)} className="subchart-btn">
                 structure
               </button>
-              <button onClick={() => setChart2Per(5)} className="chart-btn">
+              <button onClick={() => setChart2Per(5)} className="subchart-btn">
                 type
               </button>
-              <button onClick={() => setChart2Per(6)} className="chart-btn">
+              <button onClick={() => setChart2Per(6)} className="subchart-btn">
                 etat
               </button>
             </div>
@@ -153,11 +160,22 @@ const MissionDashboard = () => {
             />
           </Suspense>
         </div>
-        <div style={{ gridArea: "e" }} className="box">
+        <div
+          style={{
+            gridArea: "e",
+            display: "flex",
+            gap: "1em",
+          }}
+          className="box"
+        >
           <span className="card-title">
             Taux de réussite global des missions:
           </span>
           <span className="number">{getTotalSuccessRate(fmissionData)} %</span>
+          <CheckCircleIcon
+            className="card-icon"
+            style={{ color: "rgba(185, 233, 185, 0.411)" }}
+          />
         </div>
         <div style={{ gridArea: "f" }} className="box">
           <span className="card-title">
@@ -166,6 +184,10 @@ const MissionDashboard = () => {
           <span className="number">
             {getTotalTasksCount(fmissionData, 1)} taches
           </span>
+          <ThumbUpOffAltRoundedIcon
+            className="card-icon"
+            style={{ color: "rgba(211, 213, 252, 0.411)" }}
+          />
         </div>
         <div style={{ gridArea: "g" }} className="box">
           <span className="card-title">
@@ -174,6 +196,10 @@ const MissionDashboard = () => {
           <span className="number">
             {getTotalTasksCount(fmissionData, 2)} taches
           </span>
+          <ThumbDownAltRoundedIcon
+            className="card-icon"
+            style={{ color: "rgba(240, 177, 152, 0.411)" }}
+          />
         </div>
         <div style={{ gridArea: "h" }} className="box">
           <Suspense fallback={<div>Loading...</div>}>
