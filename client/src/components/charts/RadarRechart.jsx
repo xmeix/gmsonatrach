@@ -3,11 +3,28 @@ import { Chart as ChartJS } from "chart.js/auto";
 
 import useDateFilter from "../../hooks/useDateFilter";
 import Nodata from "./Nodata";
-const RadarRechart = ({ data, type, label, labelType }) => {
+const RadarRechart = ({ data, type, label, labelType, title }) => {
   return (
     <>
       <Radar
-        options={{ responsive: true }}
+        options={{
+          responsive: true,
+          plugins: {
+            title: {
+              display: true,
+              text: title || "Custom Chart Title",
+              padding: {
+                top: 10,
+              },
+              font: {
+                family: "Montserrat",
+                size: 15,
+                weight: 600,
+              },
+              position: "bottom",
+            },
+          },
+        }}
         data={{
           labels: data.map((d) => d[labelType]),
           datasets: [

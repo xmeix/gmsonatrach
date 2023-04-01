@@ -6,6 +6,7 @@ import {
   getMissionsPer,
   getTasksCount,
   getTotalSuccessRate,
+  getTotalTasksCount,
   getTotalUtilizationRate,
   groupSuccessRatesByDate,
   groupUtilRatesByDate,
@@ -81,6 +82,7 @@ const MissionDashboard = () => {
                 type={"mission_count"}
                 label="nombre de missions"
                 labelType={chartPer}
+                title={"Nombre de missions par année,mois et jour"}
               />
             )}
             {chartType === "bar" && (
@@ -89,6 +91,7 @@ const MissionDashboard = () => {
                 type={"mission_count"}
                 label="nombre de missions"
                 labelType={chartPer}
+                title={"Nombre de missions par année,mois et jour"}
               />
             )}
             {chartType === "area" && (
@@ -97,6 +100,7 @@ const MissionDashboard = () => {
                 type={"mission_count"}
                 label="nombre de missions"
                 labelType={chartPer}
+                title={"Nombre de missions par année,mois et jour"}
               />
             )}
           </Suspense>
@@ -121,6 +125,7 @@ const MissionDashboard = () => {
               type={"mission_count"}
               label="nombre de missions"
               labelType={x2DataKey}
+              title={"Répartition des missions par structure/type/état"}
             />
           </Suspense>
         </div>
@@ -131,6 +136,7 @@ const MissionDashboard = () => {
               type={"employee_count"}
               label="nombre de missions"
               labelType={"structure"}
+              title={"Répartition des employés par structure"}
             />
           </Suspense>
         </div>
@@ -141,17 +147,33 @@ const MissionDashboard = () => {
               type={"success_rate"}
               label="nombre de missions"
               labelType={chartPer}
+              title={
+                "Taux de réussite total des missions par année,mois et jour"
+              }
             />
           </Suspense>
         </div>
         <div style={{ gridArea: "e" }} className="box">
-          card
+          <span className="card-title">
+            Taux de réussite global des missions:
+          </span>
+          <span className="number">{getTotalSuccessRate(fmissionData)} %</span>
         </div>
         <div style={{ gridArea: "f" }} className="box">
-          card
+          <span className="card-title">
+            Nombre de taches accomplies global:
+          </span>
+          <span className="number">
+            {getTotalTasksCount(fmissionData, 1)} taches
+          </span>
         </div>
         <div style={{ gridArea: "g" }} className="box">
-          card
+          <span className="card-title">
+            Nombre de taches non accomplies global:
+          </span>
+          <span className="number">
+            {getTotalTasksCount(fmissionData, 2)} taches
+          </span>
         </div>
         <div style={{ gridArea: "h" }} className="box">
           <Suspense fallback={<div>Loading...</div>}>
@@ -163,6 +185,9 @@ const MissionDashboard = () => {
               type2={"airline_utilization_rate"}
               label2={"airline_utilization_rate"}
               num={2}
+              title={
+                "Taux d'utilisation total des moyens de transport par année,mois et jour"
+              }
             />
           </Suspense>
         </div>
@@ -170,10 +195,21 @@ const MissionDashboard = () => {
           card
         </div>
         <div style={{ gridArea: "j" }} className="box">
-          card
+          <span className="card-title">
+            Le taux d'utilisation total des routes pour les voyages d'affaires
+          </span>
+          <span className="number">
+            {getTotalUtilizationRate(fmissionData, 1)}
+          </span>
         </div>
         <div style={{ gridArea: "k" }} className="box">
-          card
+          <span className="card-title">
+            La moyenne d'utilisation totale des compagnies aériennes pour les
+            voyages d'affaires
+          </span>
+          <span className="number">
+            {getTotalUtilizationRate(fmissionData, 2)}
+          </span>
         </div>
         <div style={{ gridArea: "l" }} className="box">
           <Suspense fallback={<div>Loading...</div>}>
@@ -185,123 +221,11 @@ const MissionDashboard = () => {
               type2={"nonAccomplishedTask_count"}
               label2={"nonAccomplishedTask_count"}
               num={2}
+              title={"Taux d'accomplissement des taches par date"}
             />
           </Suspense>
         </div>
       </div>
-      {/* <div className="dash-content">
-        <div className="box" style={{ gridArea: "a" }}>
-          <Suspense fallback={<div>Loading...</div>}>
-            {chartType === "line" && (
-              <LineRechart
-                data={getMissionsPer(fmissionData, chartPer)}
-                type={"mission_count"}
-                label="nombre de missions"
-                labelType={chartPer}
-              />
-            )}
-            {chartType === "bar" && (
-              <BarRechart
-                data={getMissionsPer(fmissionData, chartPer)}
-                type={"mission_count"}
-                label="nombre de missions"
-                labelType={chartPer}
-              />
-            )}
-            {chartType === "area" && (
-              <BarRechart
-                data={getMissionsPer(fmissionData, chartPer)}
-                type={"mission_count"}
-                label="nombre de missions"
-                labelType={chartPer}
-              />
-            )}
-          </Suspense>
-        </div>
-        <div className="box" style={{ gridArea: "b" }}>
-          <Suspense fallback={<div>Loading...</div>}>
-            <div className="chart-buttons">
-              <button onClick={() => setChart2Per(4)} className="chart-btn">
-                structure
-              </button>
-              <button onClick={() => setChart2Per(5)} className="chart-btn">
-                type
-              </button>
-              <button onClick={() => setChart2Per(6)} className="chart-btn">
-                etat
-              </button>
-            </div>
-
-            <PieRechart
-              data={getMissionsPer(fmissionData, chart2Per)}
-              type={"mission_count"}
-              label="nombre de missions"
-              labelType={x2DataKey}
-            />
-          </Suspense>
-        </div>
-        <div className="box" style={{ gridArea: "c" }}>
-          <Suspense fallback={<div>Loading...</div>}>
-            <ComposedRechart
-              data={groupSuccessRatesByDate(fmissionData, chartPer)}
-              type={"success_rate"}
-              label="nombre de missions"
-              labelType={chartPer}
-            />
-          </Suspense>
-        </div>
-        <div className="box" style={{ gridArea: "d" }}>
-          <Suspense fallback={<div>Loading...</div>}>
-            <RadarRechart
-              data={getEmployeesCountPerStructure(fmissionData)}
-              type={"employee_count"}
-              label="nombre de missions"
-              labelType={"structure"}
-            />
-          </Suspense>
-        </div>
-        <div className="box" style={{ gridArea: "e" }}>
-          <span className="card-title">
-            Taux de réussite global des missions:
-          </span>
-          <span className="number">{getTotalSuccessRate(fmissionData)} %</span>
-        </div>
-        <div className="box" style={{ gridArea: "f" }}>
-          <Suspense fallback={<div>Loading...</div>}>
-            <BarRechart
-              data={getTasksCount(fmissionData, chartPer)}
-              type={"accomplishedTask_count"}
-              label="accomplishedTask_count"
-              labelType={chartPer}
-              type2={"nonAccomplishedTask_count"}
-              label2={"nonAccomplishedTask_count"}
-              num={2}
-            />
-          </Suspense>
-        </div>
-        <div className="box" style={{ gridArea: "g" }}>
-          card
-        </div>
-        <div className="box" style={{ gridArea: "h" }}>
-          {"Le taux d'utilisation total des routes pour les voyages d'affaires." +
-            getTotalUtilizationRate(fmissionData, 1)}
-          {"La moyenne d'utilisation totale des compagnies aériennes pour les voyages d'affaires." +
-            getTotalUtilizationRate(fmissionData, 2)}
-        </div>
-        <div className="box" style={{ gridArea: "i" }}>
-          <Suspense fallback={<div>Loading...</div>}>
-            <BarRechart
-              data={groupUtilRatesByDate(fmissionData, chartPer)}
-              type={"road_utilization_rate"}
-              label="road_utilization_rate"
-              labelType={chartPer}
-              type2={"airline_utilization_rate"}
-              label2={"airline_utilization_rate"}
-              num={2}
-            />
-          </Suspense>
-        </div>
-      </div> */}
     </div>
   );
 };

@@ -11,6 +11,7 @@ const ComposedRechart = ({
   type2,
   label2,
   num,
+  title,
 }) => {
   const { filteredData, isNoData, renderButtons } = useDateFilter(
     labelType,
@@ -21,7 +22,24 @@ const ComposedRechart = ({
       {renderButtons()}
       <>
         <Chart
-          options={{ responsive: true, noDataMessage: "No data to display" }}
+          options={{
+            responsive: true,
+            plugins: {
+              title: {
+                display: true,
+                text: title || "Custom Chart Title",
+                padding: {
+                  top: 10,
+                },
+                font: {
+                  family: "Montserrat",
+                  size: 15,
+                  weight: 600,
+                },
+                position: "bottom",
+              },
+            },
+          }}
           data={{
             labels: filteredData.map((d) => d.day),
             datasets: [
