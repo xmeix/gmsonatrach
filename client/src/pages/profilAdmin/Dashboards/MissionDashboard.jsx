@@ -29,7 +29,8 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import DoneOutlineRoundedIcon from "@mui/icons-material/DoneOutlineRounded";
 import ThumbUpOffAltRoundedIcon from "@mui/icons-material/ThumbUpOffAltRounded";
 import ThumbDownAltRoundedIcon from "@mui/icons-material/ThumbDownAltRounded";
-
+import AirplanemodeActiveRoundedIcon from "@mui/icons-material/AirplanemodeActiveRounded";
+import DirectionsCarFilledRoundedIcon from "@mui/icons-material/DirectionsCarFilledRounded";
 const MissionDashboard = () => {
   const fmissionData = useSelector((state) => state.stat.missionKPIS);
   const [chart2Per, setChart2Per] = useState(4);
@@ -227,6 +228,7 @@ const MissionDashboard = () => {
           <span className="number">
             {getTotalUtilizationRate(fmissionData, 1)}
           </span>
+          <DirectionsCarFilledRoundedIcon className="card-icon" />
         </div>
         <div style={{ gridArea: "k" }} className="box">
           <span className="card-title">
@@ -236,6 +238,7 @@ const MissionDashboard = () => {
           <span className="number">
             {getTotalUtilizationRate(fmissionData, 2)}
           </span>
+          <AirplanemodeActiveRoundedIcon className="card-icon" />
         </div>
         <div style={{ gridArea: "l" }} className="box">
           <Suspense fallback={<div>Loading...</div>}>

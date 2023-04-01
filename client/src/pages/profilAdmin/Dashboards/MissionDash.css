@@ -145,12 +145,12 @@
   bottom: 0.2em;
   right: 0.2em;
   font-size: 120px;
-
+  color: var(--gray2);
   opacity: 0.5;
   z-index: 2;
 }
 .missionDashboard .box .number {
-  font-size: 1em;
+  font-size: 2em;
   font-weight: 800;
   color: var(--orange);
 }
