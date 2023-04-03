@@ -36,38 +36,40 @@ const Planning = () => {
           structure,
         }));
     } else {
-      return users.map(({ _id, nom, prenom, structure }) => ({
-        _id,
-        nom,
-        prenom,
-        structure,
-      }));
+      return users
+        .filter((u) => u.role === "employe" || u.role === "responsable")
+        .map(({ _id, nom, prenom, structure }) => ({
+          _id,
+          nom,
+          prenom,
+          structure,
+        }));
     }
   }, [currentUser, users, missions]);
 
   //"#FFF1C1", "#FDE2E2", "#F5E5EA", "#C9E4DE", "#E3F1E4"
   //"#FFE0B2", "#FFD180", "#FFCC80", "#FFB74D", "#FFA726"
   const COLORS = [
-    "#ffe8cc",
-    "#fff3e6",
-    "#fff9e6",
-    "#fff7d4",
-    "#f7e6d1",
-    "#ffd9e6",
-    "#ffccd9",
-    "#e6f9ff",
-    "#ffd1b3",
-    "#fff0e6",
-    "#ffe6ff",
-    "#ffccff",
-    "#ffdb58",
-    "#ffb6c1",
-    "#f5f5dc",
-    "#e0ffff",
-    "#fff5ee",
-    "#fdfd96",
-    "#f0fff0",
-    "#ffdead",
+    "#FF9AA2", // coral red
+    "#FFD700", // gold
+    "#FFA07A", // light salmon
+    "#FF7F50", // coral
+    "#FFB6C1", // pink
+    "#FFE4E1", // misty rose
+    "#FFEFD5", // papaya whip
+    "#FFEBCD", // blanched almond
+    "#FFFACD", // lemon chiffon
+    "#F0FFF0", // honeydew
+    "#E6E6FA", // lavender
+    "#F5DEB3", // wheat
+    "#FFC0CB", // pink
+    "#87CEEB", // sky blue
+    "#ADD8E6", // light blue
+    "#B0C4DE", // light steel blue
+    "#87CEFA", // light sky blue
+    "#AFEEEE", // pale turquoise
+    "#E0FFFF", // light cyan
+    "#FAFAD2", // light goldenrod yellow
   ];
 
   const acceptedMissions = useSelector((state) => {

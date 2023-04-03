@@ -44,12 +44,17 @@ const PopupDC = ({ item }) => {
     <>
       <div className="state">
         <div className="etat">
-          <span className="etat-label">Etat:</span>
-          <div className="etat-content">{etat}</div>
+          <OmLabelLine label="Etat" content={": " + etat || "/"} />
         </div>
         <div className="etat">
-          <span className="etat-label">Raison de refus:</span>
-          <div className="etat-content">{raisonRefus || "/"}</div>
+          <OmLabelLine
+            label="Raison de dernier refus: "
+            content={
+              <span style={{ whiteSpace: "initial" }}>
+                {raisonRefus || "/"}
+              </span>
+            }
+          />
         </div>
       </div>
       <div className="popup-dc" id="DC-Demande" ref={pdfRef}>

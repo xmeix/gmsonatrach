@@ -46,6 +46,16 @@ function App() {
   let element = null;
   const dispatch = useDispatch();
 
+  ///addons
+  // const users = useSelector((state) => state.auth.users);
+
+  // const employeeIds = users
+  //   .filter((user) => user.role === "secretaire" ||user.role === "directeur" ||user.role === "responsable"  )
+  //   .map((employee) => employee._id)
+  //   .join(",");
+  
+  // console.log(employeeIds);
+
   const handleSocketData = (type) => {
     console.log(type);
     switch (type) {

@@ -20,9 +20,12 @@ import Mission from "./models/Mission.js";
 import User from "./models/User.js";
 import RapportFM from "./models/RapportFM.js";
 import cron from "node-cron";
-import { missions } from "../client/src/data/data.js";
+import { dbs, dcs, dms, missions } from "../client/src/data/data.js";
 import { createOrUpdateFMission } from "./controllers/Kpis.js";
 import OrdreMission from "./models/OrdreMission.js";
+import DM from "./models/demandes/DM.js";
+import DB from "./models/demandes/DB.js";
+import DC from "./models/demandes/DC.js";
 const toId = mongoose.Types.ObjectId;
 // Configure environment variables
 dotenv.config();
@@ -83,8 +86,11 @@ mongoose
     //ADD DATA ONE TIME ONLY
     //await mongoose.connection.db.dropDatabase(); //ATTENTION DELETES THE WHOOOLE DB
 
-    //Mission.insertMany(missions);
-    // console.log("end");
+    // Mission.insertMany(missions);
+    // DM.insertMany(dms);
+     //DB.insertMany(dbs);
+    // DC.insertMany(dcs);
+    //console.log("end");
   })
   .catch((error) => {
     console.error(`Failed to connect to MongoDB database: ${error.message}`);
@@ -175,7 +181,7 @@ cron.schedule("31 14 * * *", async () => {
 });
 
 //cron creation RFM+OM
-// cron.schedule("28 00 * * *", async () => {
+// cron.schedule("13 15 * * *", async () => {
 //   //creation auto des RFM + OM
 //   console.log("starting");
 //   //RFM
@@ -221,7 +227,7 @@ cron.schedule("31 14 * * *", async () => {
 //   console.log("finished emmiting");
 // });
 
-// cron.schedule("55 12 * * *", async () => {
+// cron.schedule("15 15 * * *", async () => {
 //   const missions = await Mission.find();
 
 //   console.log("here");
