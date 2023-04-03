@@ -252,7 +252,7 @@ const PopupUpdate = ({ item, close }) => {
         <div className="infoMission">
           <OmLabelLine
             label="Objet de la mission"
-            content={": " + user.objetMission}
+            content={": " + mission.objetMission}
           />
           <OmLabelLine
             label="Itinéraire"
@@ -312,7 +312,9 @@ const PopupUpdate = ({ item, close }) => {
                     onChange={(e) => addToDate(e.target.value, 2)}
                   />
                 ) : (
-                  body2.dateDebA
+                  Intl.DateTimeFormat(["ban", "id"]).format(
+                    new Date(body2.dateDebA)
+                  )
                 )}
                 , <span>a:</span>
                 {item.etat === "créé" ? (
@@ -485,7 +487,9 @@ const PopupUpdate = ({ item, close }) => {
                     onChange={(e) => addToDate(e.target.value, 5)}
                   />
                 ) : (
-                  body2.dateRetA
+                  Intl.DateTimeFormat(["ban", "id"]).format(
+                    new Date(body2.dateRetA)
+                  )
                 )}
                 , <span>a:</span>
                 {item.etat === "créé" ? (
@@ -533,7 +537,7 @@ const PopupUpdate = ({ item, close }) => {
               className="update"
               onClick={() => {
                 handleClick("update", item.idMission, "mission", "", body2);
-                handleClick("update", item, "rfm", "", body);
+                handleClick("update", item, "rfm", "", { deroulement: body });
                 close();
               }}
             >
@@ -543,7 +547,7 @@ const PopupUpdate = ({ item, close }) => {
               className="send"
               onClick={() => {
                 handleClick("update", item.idMission, "mission", "", body2);
-                handleClick("update", item, "rfm", "", body);
+                handleClick("update", item, "rfm", "", { deroulement: body });
                 handleClick("send", item, "rfm", "");
                 close();
               }}

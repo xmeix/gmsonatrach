@@ -36,7 +36,7 @@ const useBtn = () => {
         callApi("delete", `${route}/${_id}`);
         break;
       case "update":
-        callApi("patch", `${route}/${_id}`, { deroulement: body });
+        callApi("patch", `${route}/${_id}`, body);
         break;
       case "send":
         callApi("patch", `${route}/${_id}`, { etat: "en-attente" });
