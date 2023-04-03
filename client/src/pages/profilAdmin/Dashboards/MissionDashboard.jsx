@@ -142,7 +142,7 @@ const MissionDashboard = () => {
             <RadarRechart
               data={getEmployeesCountPerStructure(fmissionData)}
               type={"employee_count"}
-              label="nombre de missions"
+              label="nombre de missions par structure"
               labelType={"structure"}
               title={"Répartition des employés par structure"}
             />
@@ -153,7 +153,7 @@ const MissionDashboard = () => {
             <ComposedRechart
               data={groupSuccessRatesByDate(fmissionData, chartPer)}
               type={"success_rate"}
-              label="nombre de missions"
+              label="Taux de réussite des missions"
               labelType={chartPer}
               title={
                 "Taux de réussite total des missions par année,mois et jour"
@@ -207,10 +207,10 @@ const MissionDashboard = () => {
             <BarRechart
               data={groupUtilRatesByDate(fmissionData, chartPer)}
               type={"road_utilization_rate"}
-              label="road_utilization_rate"
+              label="Taux d'utilisation des moyens de transport 'route'"
               labelType={chartPer}
               type2={"airline_utilization_rate"}
-              label2={"airline_utilization_rate"}
+              label2={"Taux d'utilisation des moyens de transport 'avion'"}
               num={2}
               title={
                 "Taux d'utilisation total des moyens de transport par année,mois et jour"
@@ -245,12 +245,12 @@ const MissionDashboard = () => {
             <BarRechart
               data={getTasksCount(fmissionData, chartPer)}
               type={"accomplishedTask_count"}
-              label="accomplishedTask_count"
+              label="Nombre de taches accomplies"
               labelType={chartPer}
               type2={"nonAccomplishedTask_count"}
-              label2={"nonAccomplishedTask_count"}
+              label2={"Nombre de taches non accomplies"}
               num={2}
-              title={"Taux d'accomplissement des taches par date"}
+              title={"Nombre de taches attribués par date"}
             />
           </Suspense>
         </div>

@@ -22,6 +22,7 @@ import RapportFM from "./models/RapportFM.js";
 import cron from "node-cron";
 import { missions } from "../client/src/data/data.js";
 import { createOrUpdateFMission } from "./controllers/Kpis.js";
+import OrdreMission from "./models/OrdreMission.js";
 const toId = mongoose.Types.ObjectId;
 // Configure environment variables
 dotenv.config();
@@ -31,8 +32,8 @@ const app = express();
 
 // Set up middleware
 app.use(express.json());
-// app.use(helmet());
-// app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
+app.use(helmet());
+app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 
 app.use(morgan("common"));
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
@@ -82,7 +83,7 @@ mongoose
     //ADD DATA ONE TIME ONLY
     //await mongoose.connection.db.dropDatabase(); //ATTENTION DELETES THE WHOOOLE DB
 
-     //Mission.insertMany(missions);
+    //Mission.insertMany(missions);
     // console.log("end");
   })
   .catch((error) => {
@@ -90,13 +91,18 @@ mongoose
   });
 // Set up Socket.IO event listeners
 io.on("connection", (socket) => {
-  console.log(`Socket ${socket.id} connected`);
+  // console.log(`Socket ${socket.id} connected`);
 
-  socket.on("updatedData", async (data, type) => {
-    io.emit("updatedData", data, type);
+  socket.on("updatedData", async (type) => {
+    try {
+      console.log(type);
+      io.emit("updatedData", type);
+    } catch (error) {
+      console.error(error);
+    }
   });
   socket.on("disconnect", () => {
-    console.log(`Socket ${socket.id} disconnected`);
+    // console.log(`Socket ${socket.id} disconnected`);
   });
 });
 
@@ -104,7 +110,6 @@ io.on("connection", (socket) => {
 cron.schedule("31 14 * * *", async () => {
   console.log("working in index.js");
 
-  console.log("here1");
   // Update missions with tDateDeb equal to current time
 
   const currentDate = moment().format("YYYY-MM-DD");
@@ -113,9 +118,8 @@ cron.schedule("31 14 * * *", async () => {
       tDateDeb: { $eq: currentDate },
       etat: "acceptée",
     },
-    { employes: 2 }
+    { employes: 1 }
   );
-  console.log("here2");
 
   for (const mission of missionsEnCours) {
     mission.etat = "en-cours";
@@ -127,18 +131,14 @@ cron.schedule("31 14 * * *", async () => {
     await mission.save();
 
     for (const employeId of employeIds) {
-      console.log("emp id : " + employeId);
       const rfm = new RapportFM({
         idMission: toId(mission._id),
         idEmploye: toId(employeId),
       });
 
       const savedRFM = await rfm.save();
-      console.log(savedRFM);
     }
   }
-
-  console.log(missionsEnCours);
 
   //pour chaque mission je fais ca
 
@@ -173,6 +173,53 @@ cron.schedule("31 14 * * *", async () => {
   console.log("finished updating index js ");
   io.emit("cronDataChange");
 });
+
+//cron creation RFM+OM
+// cron.schedule("28 00 * * *", async () => {
+//   //creation auto des RFM + OM
+//   console.log("starting");
+//   //RFM
+//   const missionsEnCours = await Mission.find({
+//     etat: { $in: ["en-cours", "terminée"] },
+//   });
+
+//   for (const mission of missionsEnCours) {
+//     const employeIds = mission.employes.map((employe) => employe._id);
+
+//     for (const employeId of employeIds) {
+//       const rfm = new RapportFM({
+//         idMission: toId(mission._id),
+//         idEmploye: toId(employeId),
+//       });
+
+//       const savedRFM = await rfm.save();
+//     }
+//   }
+//   console.log("finished rfm");
+
+//   //OM
+
+//   const missionsAccepted = await Mission.find({
+//     etat: { $in: ["acceptée", "en-cours", "terminée"] },
+//   });
+
+//   for (const mission of missionsAccepted) {
+//     const employeIds = mission.employes.map((employe) => employe._id);
+
+//     for (const employeId of employeIds) {
+//       const om = new OrdreMission({
+//         mission: toId(mission._id),
+//         employe: toId(employeId),
+//       });
+
+//       const savedOm = await om.save();
+//     }
+//   }
+//   console.log("finished om");
+//   console.log("emmiting");
+//   io.emit("cronDataChange");
+//   console.log("finished emmiting");
+// });
 
 // cron.schedule("55 12 * * *", async () => {
 //   const missions = await Mission.find();

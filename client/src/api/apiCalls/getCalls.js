@@ -18,16 +18,12 @@ const fetchData = async (dispatch, endpoint, socketEvent, num) => {
     const res = await apiService.user.get(endpoint);
 
     if (!num || num !== 1) {
-      if (socketEvent === "om") {
-        socket.emit("updatedData", res.data.filteredOMissions, socketEvent);
-      } else {
-        socket.emit("updatedData", res.data, socketEvent);
-      }
+       socket.emit("updatedData", socketEvent);
     } else {
       if (socketEvent === "mission") {
-        dispatch(setMissions(res.data));
+         dispatch(setMissions(res.data));
       } else if (socketEvent === "om") {
-        dispatch(setOMs(res.data.filteredOMissions));
+         dispatch(setOMs(res.data.filteredOMissions));
       } else if (socketEvent === "rfm") {
         dispatch(setRFMs(res.data));
       } else if (socketEvent === "demande") {
@@ -46,6 +42,7 @@ const fetchData = async (dispatch, endpoint, socketEvent, num) => {
 };
 
 export const getMissions = async (dispatch, num) => {
+  console.log("inside getMissions");
   await fetchData(dispatch, "/mission/", "mission", num);
 };
 
@@ -58,6 +55,8 @@ export const getRFMs = async (dispatch, num) => {
 };
 
 export const getOMs = async (dispatch, num) => {
+  console.log("inside getOMS");
+
   await fetchData(dispatch, "/ordremission/", "om", num);
 };
 

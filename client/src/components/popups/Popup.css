@@ -128,9 +128,6 @@
   gap: 0.5em;
 }
 
-.popup-om .om-signature-element {
-}
-
 .popup-om .om-foot {
 }
 
@@ -217,8 +214,10 @@
 .popup-mission .info {
   padding: 1em;
   text-align: left;
-  border: solid 1px lightgray;
   border-radius: 2px;
+}
+.popup-mission {
+  padding: 4em;
 }
 .popup-mission .head {
   display: flex;
@@ -226,6 +225,7 @@
   align-items: center;
   font-size: 11px;
   text-align: left;
+  padding: 1em;
 }
 
 .popup-mission .info {
@@ -235,17 +235,19 @@
   gap: 2em;
   justify-content: space-between;
   flex-wrap: wrap;
+  border: solid 1px black;
+  padding: 1em;
 }
 .popup-mission .info * {
   flex: 1;
-  padding: 0.5em 0;
+  margin-top: 0.5em;
 }
 .popup-mission .info .info-mission,
 .popup-mission .info .info-budget {
   text-align: left;
 }
 .popup-mission .employe {
-  margin: 0.5em 1em;
+  margin: 1em 1em;
 }
 
 .popup-mission .deplacement {
@@ -258,27 +260,24 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.5em;
+  text-align: justify;
+  gap: 3em;
+  padding: 1em;
+  white-space: normal;
+  border: solid 1px var(--light-gray);
+  box-shadow: 0px 1px 4px rgb(0 0 0 / 10%);
 }
 .popup-mission .tache .content {
-  font-weight: 700;
-}
-.popup-mission .tache div {
-  flex: 1;
-}
-.popup-mission .tache button {
+  font-weight: 500;
   font-size: 12px;
-}
-.popup-mission .tache button:hover {
-  background-color: var(--blue2);
-}
-.popup-mission .info .info-mission .dates {
-  text-align: left;
+  letter-spacing: 1px;
 }
 .popup-mission .info-creation {
   display: flex;
   flex-direction: column;
-  gap: 1em;
+  gap: 0.5em;
+  border: solid 1px black;
+  padding: 1em;
 }
 
 .popup-mission .info-creation .crea-container {

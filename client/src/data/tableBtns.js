@@ -99,7 +99,7 @@ export const DirecteurBtns = [
   },
   {
     type: "user",
-    btns: ["delete"], // if item.role !== directeur / responsable
+    btns: [""], // if item.role !== directeur / responsable //deleted delete
     showBtn: true,
   },
 ];

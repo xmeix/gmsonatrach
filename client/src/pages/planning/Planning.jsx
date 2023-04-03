@@ -47,7 +47,28 @@ const Planning = () => {
 
   //"#FFF1C1", "#FDE2E2", "#F5E5EA", "#C9E4DE", "#E3F1E4"
   //"#FFE0B2", "#FFD180", "#FFCC80", "#FFB74D", "#FFA726"
-  const COLORS = ["#FFE0B2", "#FFD180", "#FFCC80", "#FFB74D", "#FFA726"];
+  const COLORS = [
+    "#ffe8cc",
+    "#fff3e6",
+    "#fff9e6",
+    "#fff7d4",
+    "#f7e6d1",
+    "#ffd9e6",
+    "#ffccd9",
+    "#e6f9ff",
+    "#ffd1b3",
+    "#fff0e6",
+    "#ffe6ff",
+    "#ffccff",
+    "#ffdb58",
+    "#ffb6c1",
+    "#f5f5dc",
+    "#e0ffff",
+    "#fff5ee",
+    "#fdfd96",
+    "#f0fff0",
+    "#ffdead",
+  ];
 
   const acceptedMissions = useSelector((state) => {
     let count = 0; // initialize count variable

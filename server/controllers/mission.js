@@ -149,28 +149,31 @@ export const updateMissionEtat = async (req, res) => {
     const updatedBy = toId(req.user.id);
     const mission = await Mission.findById(req.params.id);
     const employes = mission.employes;
+  
     const updatedMission = await Mission.findByIdAndUpdate(
       req.params.id,
       { ...req.body, updatedBy: updatedBy },
       { new: true }
-    );
+    ); 
 
-    const operation = req.body.etat;
-    //si la mission est acceptée alors on va creer OM pr ts les employés qui y participent + RFM
-    if (operation === "acceptée" && employes.length > 0) {
-      //on doit générer l'ordre de mission
-      const employeIds = employes.map((employe) => employe._id);
-      for (const employeId of employeIds) {
-        const om = new OrdreMission({
-          mission: updatedMission.id,
-          employe: employeId,
-        });
-        om.save();
+    if (req.body.etat) {
+      const operation = req.body.etat;
+      //si la mission est acceptée alors on va creer OM pr ts les employés qui y participent + RFM
+      if (operation === "acceptée" && employes.length > 0) {
+        //on doit générer l'ordre de mission
+        const employeIds = employes.map((employe) => employe._id);
+        for (const employeId of employeIds) {
+          const om = new OrdreMission({
+            mission: updatedMission.id,
+            employe: employeId,
+          });
+          om.save();
+        }
       }
     }
-    return res.status(200).json({
+    res.status(200).json({
       updatedMission,
-      msg: "mission status has been updated successfully",
+      msg: "mission has been updated successfully",
     });
   } catch (err) {
     res.status(500).json({ error: err.message });

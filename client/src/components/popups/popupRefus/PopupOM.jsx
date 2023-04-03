@@ -1,6 +1,12 @@
 import { useSelector } from "react-redux";
 import logo from "../../../assets/logo.svg";
 import usePDFGenerator from "../../../hooks/usePDFGenerator";
+export const OmLabelLine = ({ label, content }) => (
+  <div className="om-label-line">
+    <div className="om-label">{label}</div>
+    <div className="om-content">{content}</div>
+  </div>
+);
 const PopupOM = ({ item }) => {
   const [pdfRef, generatePDF] = usePDFGenerator("ordre-mission");
 
@@ -16,12 +22,6 @@ const PopupOM = ({ item }) => {
   } = item.mission;
   const { _id: employeeId, nom, prenom, fonction } = item.employe;
 
-  const OmLabelLine = ({ label, content }) => (
-    <div className="om-label-line">
-      <div className="om-label">{label}</div>
-      <div className="om-content">{content}</div>
-    </div>
-  );
   const SignatureElement = ({ text }) => (
     <div className="om-signature-element">{text}</div>
   );

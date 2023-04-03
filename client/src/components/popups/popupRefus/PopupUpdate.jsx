@@ -29,6 +29,12 @@ const useStyles = makeStyles({
     fontSize: 13,
   },
 });
+const OmLabelLine = ({ label, content }) => (
+  <div className="om-label-line">
+    <div className="om-label">{label}</div>
+    <div className="om-content">{content}</div>
+  </div>
+);
 
 const PopupUpdate = ({ item, close }) => {
   const mission = item.idMission || null;
@@ -141,6 +147,80 @@ const PopupUpdate = ({ item, close }) => {
   }
 
   const [pdfRef, generatePDF] = usePDFGenerator("compte-rendu-fin-mission");
+  const [body2, setBody2] = useState({
+    dateDebA: item.idMission.dateDebA || item.idMission.tDateDeb,
+    dateRetA: item.idMission.dateRetA || item.idMission.tDateRet,
+    tDateDeb: item.idMission.tDateDeb,
+    tDateRet: item.idMission.tDateRet,
+  });
+
+  function addToDate(value, type) {
+    let newDate;
+    let [hours, minutes] = value.split(":").map(Number);
+    switch (type) {
+      case 1:
+        newDate = new Date(body2.tDateDeb);
+        newDate.setHours(hours);
+        newDate.setMinutes(minutes);
+
+        console.log(newDate);
+        setBody2({
+          ...body2,
+          tDateDeb: new Date(newDate).toISOString(),
+        });
+        break;
+      case 2:
+        setBody2({
+          ...body2,
+          dateDebA: value,
+        });
+        break;
+      case 3:
+        newDate = new Date(body2.dateDebA);
+        newDate.setHours(hours);
+        newDate.setMinutes(minutes);
+
+        setBody2({
+          ...body2,
+          dateDebA: new Date(newDate).toISOString(),
+        });
+        break;
+      case 4:
+        newDate = new Date(body2.tDateRet);
+        newDate.setHours(hours);
+        newDate.setMinutes(minutes);
+
+        setBody2({
+          ...body2,
+          tDateRet: new Date(newDate).toISOString(),
+        });
+        break;
+      case 5:
+        setBody2({
+          ...body2,
+          dateRetA: value,
+        });
+        break;
+      case 6:
+        newDate = new Date(body2.dateRetA);
+        newDate.setHours(hours);
+        newDate.setMinutes(minutes);
+
+        setBody2({
+          ...body2,
+          dateRetA: new Date(newDate).toISOString(),
+        });
+        break;
+      default:
+        break;
+    }
+  }
+  const formatDate = (date) => {
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+    const day = date.getDate().toString().padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  };
 
   return (
     <>
@@ -148,7 +228,7 @@ const PopupUpdate = ({ item, close }) => {
         <h3 className="title">Compte Rendu de Mission</h3>
         <div className="direction">
           <div>
-            Du{" "}
+            Du
             <span>
               {Intl.DateTimeFormat(["ban", "id"]).format(
                 new Date(item.createdAt)
@@ -161,32 +241,31 @@ const PopupUpdate = ({ item, close }) => {
           <span>DCG/RH - DAPS</span>
         </div>
         <div className="infoEmploye">
-          <div className="matricule">
-            <span>Matricule:</span>
-            {user._id}
-          </div>
-          <div className="nomPrenom">
-            <span>Nom & Prénoms:</span> {user.nom + " " + user.prenom}
-          </div>
-          <div className="fonction">
-            <span>Fonction :</span> {user.fonction}
-          </div>
-          <div className="structure">
-            <span>Structure :</span> {user.structure}
-          </div>
+          <OmLabelLine label="Matricule" content={": " + user._id} />
+          <OmLabelLine
+            label="Nom & Prénoms"
+            content={": " + user.nom + " " + user.prenom}
+          />
+          <OmLabelLine label="fonction" content={": " + user.fonction} />
+          <OmLabelLine label="structure" content={": " + user.structure} />
         </div>
         <div className="infoMission">
-          <div className="objetMission">
-            <span>Objet de la mission :</span> {mission.objetMission}
-          </div>
-          <div className="itineraire">
-            <span>Itinéraire: </span>
-            {mission.lieuDep +
+          <OmLabelLine
+            label="Objet de la mission"
+            content={": " + user.objetMission}
+          />
+          <OmLabelLine
+            label="Itinéraire"
+            content={
+              ": " +
+              mission.lieuDep +
               " Alger" +
               mission.destination +
               " " +
-              mission.pays}
-          </div>
+              mission.pays
+            }
+          />
+
           <div className="dates">
             <span className="subTitle">Début de Mission:</span>
             <div className="dateContainer">
@@ -195,12 +274,28 @@ const PopupUpdate = ({ item, close }) => {
                 travail habituel)
               </span>
               <div className="dateContent">
-                <span>Le </span>:{" "}
+                <span>Le </span>:
                 {mission &&
                   Intl.DateTimeFormat(["ban", "id"]).format(
                     new Date(mission.tDateDeb)
                   )}
-                , <span>a:</span> __ H __ Mn
+                , <span>a:</span>
+                {item.etat === "créé" ? (
+                  <input
+                    type="time"
+                    defaultValue={new Date(body2.tDateDeb).toLocaleTimeString(
+                      [],
+                      { hour: "2-digit", minute: "2-digit", hour12: false }
+                    )}
+                    onChange={(e) => addToDate(e.target.value, 1)}
+                  />
+                ) : (
+                  new Date(body2.tDateDeb).toLocaleTimeString([], {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                    hour12: false,
+                  }) + " H"
+                )}
               </div>
               <div className="dateContainer">
                 <span>
@@ -209,7 +304,33 @@ const PopupUpdate = ({ item, close }) => {
                 </span>
               </div>
               <div className="dateContent">
-                <span>Le </span>: __/__/___, <span>a:</span> __ H __ Mn
+                <span>Le </span>:
+                {item.etat === "créé" ? (
+                  <input
+                    type="date"
+                    defaultValue={formatDate(new Date(body2.dateDebA))}
+                    onChange={(e) => addToDate(e.target.value, 2)}
+                  />
+                ) : (
+                  body2.dateDebA
+                )}
+                , <span>a:</span>
+                {item.etat === "créé" ? (
+                  <input
+                    type="time"
+                    defaultValue={new Date(body2.dateDebA).toLocaleTimeString(
+                      [],
+                      { hour: "2-digit", minute: "2-digit", hour12: false }
+                    )}
+                    onChange={(e) => addToDate(e.target.value, 3)}
+                  />
+                ) : (
+                  new Date(body2.dateDebA).toLocaleTimeString([], {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                    hour12: false,
+                  }) + " H"
+                )}
               </div>
             </div>
           </div>
@@ -294,11 +415,21 @@ const PopupUpdate = ({ item, close }) => {
                     })}
 
                     <TableCell align="center">
-                      <input
-                        value={observations[index]}
-                        type="text"
-                        onChange={handleObservationChange(index, "observation")}
-                      />
+                      {currentUser._id === user._id && item.etat === "créé" && (
+                        <input
+                          value={observations[index]}
+                          type="text"
+                          onChange={handleObservationChange(
+                            index,
+                            "observation"
+                          )}
+                        />
+                      )}
+
+                      {(currentUser._id !== user._id ||
+                        item.etat !== "créé") && (
+                        <div>{observations[index]}</div>
+                      )}
                     </TableCell>
                   </TableRow>
                 ))}
@@ -321,7 +452,23 @@ const PopupUpdate = ({ item, close }) => {
                 {Intl.DateTimeFormat(["ban", "id"]).format(
                   new Date(mission.tDateRet)
                 )}
-                , <span>a:</span> __ H __ Mn
+                , <span>a:</span>
+                {item.etat === "créé" ? (
+                  <input
+                    type="time"
+                    defaultValue={new Date(body2.tDateRet).toLocaleTimeString(
+                      [],
+                      { hour: "2-digit", minute: "2-digit", hour12: false }
+                    )}
+                    onChange={(e) => addToDate(e.target.value, 4)}
+                  />
+                ) : (
+                  new Date(body2.tDateRet).toLocaleTimeString([], {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                    hour12: false,
+                  }) + "H"
+                )}
               </div>
               <div className="dateContainer">
                 <span>
@@ -330,17 +477,49 @@ const PopupUpdate = ({ item, close }) => {
                 </span>
               </div>
               <div className="dateContent">
-                <span>Le </span>: __/__/___, <span>a:</span> __ H __ Mn
+                <span>Le </span>:
+                {item.etat === "créé" ? (
+                  <input
+                    type="date"
+                    defaultValue={formatDate(new Date(body2.dateRetA))}
+                    onChange={(e) => addToDate(e.target.value, 5)}
+                  />
+                ) : (
+                  body2.dateRetA
+                )}
+                , <span>a:</span>
+                {item.etat === "créé" ? (
+                  <input
+                    type="time"
+                    defaultValue={new Date(body2.dateRetA).toLocaleTimeString(
+                      [],
+                      { hour: "2-digit", minute: "2-digit", hour12: false }
+                    )}
+                    onChange={(e) => addToDate(e.target.value, 6)}
+                  />
+                ) : (
+                  new Date(body2.dateRetA).toLocaleTimeString([], {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                    hour12: false,
+                  }) + "H"
+                )}
               </div>
             </div>
           </div>
           <div className="moyens">
-            <span className="subTitle">Moyens de transport utilisés :</span>{" "}
+            <span className="subTitle">Moyens de transport utilisés :</span>
             <br />
-            <span>A l'aller:</span> {mission.moyenTransport.join(" - ")}
-            <br />
-            <span>Au retour:</span>
-            {mission.moyenTransportRet.join(" - ")}
+            <div className="om-body">
+              <OmLabelLine
+                label="A l'aller"
+                content={": " + mission.moyenTransport.join(" - ")}
+              />
+              <OmLabelLine
+                label="A retour"
+                content={": " + mission.moyenTransportRet.join(" - ")}
+              />
+            </div>
           </div>
         </div>
         <div className="signature">
@@ -353,8 +532,9 @@ const PopupUpdate = ({ item, close }) => {
             <button
               className="update"
               onClick={() => {
+                handleClick("update", item.idMission, "mission", "", body2);
                 handleClick("update", item, "rfm", "", body);
-                // close();
+                close();
               }}
             >
               Update
@@ -362,8 +542,10 @@ const PopupUpdate = ({ item, close }) => {
             <button
               className="send"
               onClick={() => {
+                handleClick("update", item.idMission, "mission", "", body2);
+                handleClick("update", item, "rfm", "", body);
                 handleClick("send", item, "rfm", "");
-                //close();
+                close();
               }}
             >
               Send

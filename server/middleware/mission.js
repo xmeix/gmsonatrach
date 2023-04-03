@@ -39,13 +39,14 @@ export const checkUpdateMissionAccess = async (req, res, next) => {
         role === "responsable" &&
         operation === "annulée" &&
         mission.structure !== structure
-      )
+      ) {
         throw new Error("Unauthorized");
-    } else if (operation === "refusée" && !raisonRefus)
-      throw new Error("Unauthorized");
-    next();
+      } else if (operation === "refusée" && !raisonRefus) {
+        throw new Error("Unauthorized");
+      }
+    }
+     next();
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 };
- 

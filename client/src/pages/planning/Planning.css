@@ -69,20 +69,19 @@
   font-size: 13px;
   font-weight: 600;
   background-color: var(--blue3);
+  border: solid 1px var(--light-gray);
 }
-.tab .planning-table .planning-trow {
-}
-
 /***_______________________________________________________________________________________________*/
 
-.tab .planning-table {
-}
-.tab .planning-table .planning-tbody {
-}
 .tab .planning-table .planning-tbody .planning-tbody-row {
   height: 2em;
   border: solid 1px var(--light-gray);
 }
+
+.tab .planning-table .planning-tbody-td {
+  border: solid 1px var(--light-gray);
+}
+
 .planning
   .planning-table
   .planning-tbody
@@ -100,4 +99,5 @@
   .planning-mission {
   cursor: pointer;
   transition: all 0.5s ease-in-out;
+  border-right: solid 1px var(--light-gray);
 }

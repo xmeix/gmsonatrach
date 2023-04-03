@@ -42,12 +42,11 @@ export const useAxios = () => {
           handleSuccess(response, url, body);
           break;
         case "delete":
-          console.log("url " + url);
           response = await apiService.user.delete(url);
-          console.log(response);
           handleSuccess(response, "/auth/user");
           break;
         case "patch":
+ 
           response = await apiService.user.patch(url, body);
           if (url.includes("/rapportFM")) {
             handleSuccess(response, "/rapportFM", body);
@@ -82,7 +81,7 @@ export const useAxios = () => {
         break;
       case "/mission":
         getMissions(dispatch);
-        getOMs(dispatch);
+        //getOMs(dispatch);
         break;
       case "/demande/DB":
       case "/demande/DC":
@@ -95,13 +94,9 @@ export const useAxios = () => {
         getUsers(dispatch);
         break;
       case "/rapportFM":
-        console.log(body);
-        console.log(response.data);
         if (currentUser.role === "employe" && !body.etat) {
-          console.log("here");
           getRFMs(dispatch, 1);
         } else {
-          console.log("inside of here");
           getRFMs(dispatch);
         }
         break;

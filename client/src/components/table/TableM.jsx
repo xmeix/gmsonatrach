@@ -381,7 +381,7 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
           className="tableColumn"
           onClick={() => handleOnClick(item)}
         >
-          {item.idEmploye.nom + " " + item.idEmploye.prenom}
+          {item.idEmploye?.nom + " " + item.idEmploye?.prenom}
         </TableCell>
       );
     } else if (property === "createdBy.nom + ' ' + createdBy.prenom") {

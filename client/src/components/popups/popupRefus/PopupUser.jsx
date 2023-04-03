@@ -40,8 +40,7 @@ const PopupUser = ({ item }) => {
         <OmLabelLine label="email" content={": " + email} />
         <OmLabelLine label="numero de téléphone" content={": " + numTel} />
       </div>
-      <input type="text" />
-    </div>
+     </div>
   );
 };
 

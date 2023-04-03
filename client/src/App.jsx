@@ -7,14 +7,6 @@ import { useEffect } from "react";
 import Loading from "./components/loading/Loading";
 import { io } from "socket.io-client";
 import {
-  setDemandes,
-  setDepenses,
-  setMissions,
-  setOMs,
-  setRFMs,
-  setUsers,
-} from "./store/features/authSlice";
-import {
   getDemandes,
   getUsers,
   getRFMs,
@@ -54,7 +46,8 @@ function App() {
   let element = null;
   const dispatch = useDispatch();
 
-  const handleSocketData = (data, type) => {
+  const handleSocketData = (type) => {
+    console.log(type);
     switch (type) {
       case "demande":
         getDemandes(dispatch, 1);

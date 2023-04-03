@@ -2,8 +2,7 @@ import { useState } from "react";
 
 const useForm = (initialValues) => {
   const [values, setValues] = useState(initialValues);
-  console.log(values);
-  const handleChange = (event) => {
+   const handleChange = (event) => {
     const { name, value } = event.target;
     if (Array.isArray(value)) {
       if (name === "taches") {
@@ -30,8 +29,7 @@ const useForm = (initialValues) => {
         ...prevState,
         [name]: value.value,
       }));
-      console.log("name:" + name + "|| value:" + value.value);
-    } else if (name === "budget")
+     } else if (name === "budget")
       setValues((prevState) => ({
         ...prevState,
         [name]: parseInt(value),

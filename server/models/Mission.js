@@ -5,7 +5,7 @@ const MissionSchema = new mongoose.Schema(
     objetMission: {
       type: String,
       required: true,
-    }, 
+    },
     structure: {
       type: String,
       enum: [
@@ -69,6 +69,12 @@ const MissionSchema = new mongoose.Schema(
     tDateRet: {
       type: Date,
       required: true,
+    },
+    DateDebA: {
+      type: Date,
+    },
+    DateRetA: {
+      type: Date,
     },
     moyenTransport: [
       {

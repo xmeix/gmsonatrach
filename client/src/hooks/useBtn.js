@@ -7,8 +7,7 @@ const useBtn = () => {
     const { _id } = item;
     const route = getRoute(type);
 
-    console.log("route: " + route);
-    console.log("type: " + type);
+    console.log("inside handleClick " + _id + " " + route);
     switch (btnType.toLowerCase()) {
       case "accept":
         const etatAccept = type === "rfm" ? "accepté" : "acceptée";
@@ -38,10 +37,16 @@ const useBtn = () => {
         break;
       case "update":
         callApi("patch", `${route}/${_id}`, { deroulement: body });
-
         break;
       case "send":
         callApi("patch", `${route}/${_id}`, { etat: "en-attente" });
+        break;
+
+      case "check":
+        console.log("check patch " + route + "/" + _id + " " + body);
+        callApi("patch", `${route}/${_id}`, {
+          taches: body,
+        });
         break;
       default:
         break;
