@@ -12,7 +12,7 @@ const FMissionSchema = new mongoose.Schema(
     type: { type: String },
     country: { type: String },
     destination: { type: String },
-    success_rate: { type: Number },
+    success_rate: { type: Number },//success count
     employee_count: { type: Number },
     accomplishedTask_count: { type: Number },
     nonAccomplishedTask_count: { type: Number },

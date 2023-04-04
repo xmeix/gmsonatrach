@@ -2,16 +2,12 @@ import mongoose from "mongoose";
 
 const FDocumentSchema = new mongoose.Schema(
   {
-    month: { type: Number },
-    year: { type: Number },
+    date: { type: Date },
     structure: { type: String },
     etat: { type: String },
-    circulation_count: { type: Number },
-    rfm_count: { type: Number },
-    ticket_demand_count: { type: Number },
-    leave_demand_count: { type: Number },
-    modification_demand_count: { type: Number },
-  },
+    type: { type: String }, //RFM DM DB DC OM
+    circulation_count: { type: Number }, // nombre de documents so without precising the othher docs count because it makes no sense
+   },
   {
     timestamps: true,
   }

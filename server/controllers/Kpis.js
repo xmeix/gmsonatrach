@@ -20,9 +20,8 @@ export const createOrUpdateFMission = async (mission) => {
     const newFMission = new FMission({
       mission: mission._id,
       state: mission.etat,
-      day: new Date(mission.createdAt).toISOString().slice(0, 10),
-
-      structure: mission.structure,
+      day: new Date(mission.createdAt).toISOString().slice(0, 10), //this gonna change ==> new Date()
+      structure: mission.structure, 
       type: mission.type,
       country: mission.pays,
       destination: mission.destination,
