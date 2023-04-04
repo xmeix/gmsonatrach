@@ -3,6 +3,7 @@ import Mission from "../models/Mission.js";
 import mongoose from "mongoose";
 import OrdreMission from "../models/OrdreMission.js";
 import { checkFields } from "../middleware/auth.js";
+import { createOrUpdateFDocument } from "./FilesKpis.js";
 const toId = mongoose.Types.ObjectId;
 
 export const createMission = async (req, res) => {
@@ -101,6 +102,14 @@ export const createMission = async (req, res) => {
           employe: employeId,
         });
         om.save();
+        //______________________________________________________________
+
+        const populatedOM = await OrdreMission.findById(om._id)
+          .populate("mission")
+          .populate("employe");
+
+        createOrUpdateFDocument(populatedOM, "OM", "creation");
+        //______________________________________________________________
       }
     }
     res
@@ -149,12 +158,12 @@ export const updateMissionEtat = async (req, res) => {
     const updatedBy = toId(req.user.id);
     const mission = await Mission.findById(req.params.id);
     const employes = mission.employes;
-  
+
     const updatedMission = await Mission.findByIdAndUpdate(
       req.params.id,
       { ...req.body, updatedBy: updatedBy },
       { new: true }
-    ); 
+    );
 
     if (req.body.etat) {
       const operation = req.body.etat;
@@ -168,6 +177,13 @@ export const updateMissionEtat = async (req, res) => {
             employe: employeId,
           });
           om.save();
+          //______________________________________________________________
+          const populatedOM = await OrdreMission.findById(om._id)
+            .populate("mission")
+            .populate("employe");
+
+          createOrUpdateFDocument(populatedOM, "OM", "creation");
+          //______________________________________________________________
         }
       }
     }

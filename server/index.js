@@ -20,12 +20,23 @@ import Mission from "./models/Mission.js";
 import User from "./models/User.js";
 import RapportFM from "./models/RapportFM.js";
 import cron from "node-cron";
-import { dbs, dcs, dms, missions } from "../client/src/data/data.js";
+import {
+  FDB,
+  FDC,
+  FDM,
+  FOM,
+  FRFM,
+  dbs,
+  dcs,
+  dms,
+  missions,
+} from "../client/src/data/data.js";
 import { createOrUpdateFMission } from "./controllers/Kpis.js";
 import OrdreMission from "./models/OrdreMission.js";
 import DM from "./models/demandes/DM.js";
 import DB from "./models/demandes/DB.js";
 import DC from "./models/demandes/DC.js";
+import FDocument from "./models/FDocument.js";
 const toId = mongoose.Types.ObjectId;
 // Configure environment variables
 dotenv.config();
@@ -87,10 +98,16 @@ mongoose
     //await mongoose.connection.db.dropDatabase(); //ATTENTION DELETES THE WHOOOLE DB
 
     // Mission.insertMany(missions);
+    // FDocument.insertMany(FDM);
+    // FDocument.insertMany(FRFM);
+    // FDocument.insertMany(FDB);
+    // FDocument.insertMany(FDC);
+    // FDocument.insertMany(FOM);
+
     // DM.insertMany(dms);
-     //DB.insertMany(dbs);
+    //DB.insertMany(dbs);
     // DC.insertMany(dcs);
-    //console.log("end");
+    console.log("end");
   })
   .catch((error) => {
     console.error(`Failed to connect to MongoDB database: ${error.message}`);
@@ -143,6 +160,13 @@ cron.schedule("31 14 * * *", async () => {
       });
 
       const savedRFM = await rfm.save();
+      //______________________________________________________________
+      const populatedRFM = await RapportFM.findById(savedRFM._id)
+        .populate("idMission")
+        .populate("idEmploye");
+
+      createOrUpdateFDocument(populatedRFM, "RFM", "creation");
+      //______________________________________________________________
     }
   }
 

@@ -13,6 +13,13 @@ export const updateRapport = async (req, res) => {
       },
       { new: true }
     );
+
+    const populatedRFM = await RapportFM.findById(updatedReport._id)
+      .populate("idMission")
+      .populate("idEmploye");
+
+    createOrUpdateFDocument(populatedRFM, "RFM", "update");
+
     res.status(201).json({ updatedReport, msg: "updated successfully" });
   } catch (err) {
     res.status(500).json({ error: err.message });

@@ -5,6 +5,7 @@ import DB from "../models/demandes/DB.js";
 import Demande from "../models/Demande.js";
 import mongoose from "mongoose";
 import Mission from "../models/Mission.js";
+import { createOrUpdateFDocument } from "./FilesKpis.js";
 const toId = mongoose.Types.ObjectId;
 
 export const createDemande = async (req, res) => {
@@ -128,6 +129,10 @@ export const createDemande = async (req, res) => {
     }
 
     const savedDemande = await newDemande.save();
+    const populatedDemande = await Demande.findById(savedDemande._id)
+      .populate("idEmetteur")
+      .populate("idDestinataire");
+    createOrUpdateFDocument(populatedDemande, populatedDemande.__t, "creation");
 
     return res.status(201).json({ savedDemande, msg: "Demande envoyée" });
   } catch (err) {
@@ -179,6 +184,13 @@ export const updateDemEtat = async (req, res) => {
         demande.etat === "refusée" ? req.body.raisonRefus : demande.raisonRefus;
 
       const updatedDemande = await demande.save();
+      //________________________________________________________________
+      const populatedDemande = await Demande.findById(updatedDemande._id)
+        .populate("idEmetteur")
+        .populate("idDestinataire");
+        
+      createOrUpdateFDocument(populatedDemande, populatedDemande.__t, "update");
+      //________________________________________________________________
 
       // Check if the DC is accepted
       if (updatedDemande.type === "DC" && updatedDemande.etat === "acceptée") {
