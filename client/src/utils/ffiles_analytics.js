@@ -1,9 +1,9 @@
-export const getCountFor = (data, Type, fileType) => {
+export const getCountFor = (data, type, fileType) => {
   const documents = data
     .filter((doc) => doc.type === fileType)
     .sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt));
 
-  const mostRecentDocuments = {};
+  let mostRecentDocuments = {};
 
   for (const document of documents) {
     const { structure, etat, type, nature, motifDep } = document;
@@ -19,96 +19,35 @@ export const getCountFor = (data, Type, fileType) => {
     mostRecentDocuments[key] = document;
   }
 
-  let groupedDataArray;
-  switch (Type) {
+  const getGroupedData = (property) =>
+    Object.values(mostRecentDocuments).reduce((acc, cur) => {
+      const value = cur[property];
+      const index = acc.findIndex((el) => el.label === value);
+      if (index === -1) {
+        acc.push({
+          label: value,
+          circulation_count: cur.circulation_count,
+        });
+      } else {
+        acc[index].circulation_count += cur.circulation_count;
+      }
+      return acc;
+    }, []);
+
+  switch (type) {
     case "structure":
-      groupedDataArray = Object.values(mostRecentDocuments).reduce(
-        (groupedData, document) => {
-          const { structure } = document;
-          if (!groupedData[structure]) {
-            groupedData[structure] = {
-              label: structure,
-              circulation_count: 0,
-            };
-          }
-          groupedData[structure].circulation_count +=
-            document.circulation_count;
-          return groupedData;
-        },
-        {}
-      );
-
-      break;
+      return getGroupedData("structure");
     case "etat":
-      groupedDataArray = Object.values(mostRecentDocuments).reduce(
-        (groupedData, document) => {
-          const { etat } = document;
-          if (!groupedData[etat]) {
-            groupedData[etat] = {
-              label: etat,
-              circulation_count: 0,
-            };
-          }
-          groupedData[etat].circulation_count += document.circulation_count;
-          return groupedData;
-        },
-        {}
-      );
-      break;
+      return getGroupedData("etat");
     case "type":
-      groupedDataArray = Object.values(mostRecentDocuments).reduce(
-        (groupedData, document) => {
-          const { type } = document;
-          if (!groupedData[type]) {
-            groupedData[type] = {
-              label: type,
-              circulation_count: 0,
-            };
-          }
-          groupedData[type].circulation_count += document.circulation_count;
-          return groupedData;
-        },
-        {}
-      );
-      break;
+      return getGroupedData("type");
     case "nature":
-      groupedDataArray = Object.values(mostRecentDocuments).reduce(
-        (groupedData, document) => {
-          const { nature } = document;
-          if (!groupedData[nature]) {
-            groupedData[nature] = {
-              label: nature,
-              circulation_count: 0,
-            };
-          }
-          groupedData[nature].circulation_count += document.circulation_count;
-          return groupedData;
-        },
-        {}
-      );
-      break;
+      return getGroupedData("nature");
     case "motifDep":
-      groupedDataArray = Object.values(mostRecentDocuments).reduce(
-        (groupedData, document) => {
-          const { motifDep } = document;
-          if (!groupedData[motifDep]) {
-            groupedData[motifDep] = {
-              label: motifDep,
-              circulation_count: 0,
-            };
-          }
-          groupedData[motifDep].circulation_count += document.circulation_count;
-          return groupedData;
-        },
-        {}
-      );
-      break;
-
+      return getGroupedData("motifDep");
     default:
-      throw new Error(`Invalid type: ${Type}`);
+      throw new Error(`Invalid type: ${type}`);
   }
-
-  return Object.values(groupedDataArray);
 };
 
 export const getGroupedDataForTime = (data, time, fileType, stack) => {
@@ -116,9 +55,25 @@ export const getGroupedDataForTime = (data, time, fileType, stack) => {
     .filter((doc) => doc.type === fileType)
     .sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt));
   //No need for most recent
+  let mostRecentDocuments = {};
+
+  for (const document of documents) {
+    const { structure, etat, type, nature, motifDep } = document;
+    const date = new Date(document.createdAt).toISOString().slice(0, 10); // get date in YYYY-MM-DD format
+    const key = `${structure}-${etat}-${type}-${nature}-${motifDep}-${date}`;
+
+    if (key in mostRecentDocuments) {
+      const mostRecentDocument = mostRecentDocuments[key];
+      if (document.createdAt <= mostRecentDocument.createdAt) {
+        continue;
+      }
+    }
+
+    mostRecentDocuments[key] = document;
+  }
 
   let groupedDataArray;
-  groupedDataArray = documents.reduce((acc, cur) => {
+  groupedDataArray = Object.values(mostRecentDocuments).reduce((acc, cur) => {
     const yearIndex = acc.findIndex(
       (el) =>
         new Date(el.createdAt).toISOString().slice(0, time) ===
@@ -136,7 +91,6 @@ export const getGroupedDataForTime = (data, time, fileType, stack) => {
     }
     return acc;
   }, []);
- 
+
   return groupedDataArray;
 };
- 

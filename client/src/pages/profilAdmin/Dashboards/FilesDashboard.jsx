@@ -20,20 +20,20 @@ const FilesDashboard = () => {
       <PageName name="files Dashboard" />
 
       <PieRechart
-        data={getCountFor(filesKPISdata, "motifDep", "DB")}
+        data={getCountFor(filesKPISdata, "etat", "RFM")}
         type={"circulation_count"}
         label="nombre de fichiers"
         labelType={"label"}
-        title={"Répartition des documents par structure/type/état"}
+        title={"Répartition des documents par structure/type/état (current data) "}
       />
 
       <StackedBarRechart
-        data={getGroupedDataForTime(filesKPISdata, 4, "DC", "structure")}
+        data={getGroupedDataForTime(filesKPISdata, 4, "RFM", "etat")}
         type={"circulation_count"}
         label="nombre de fichiers"
         labelType={1}
         title={"Nombre de missions par année,mois et jour"}
-       />
+      />
     </div>
   );
 };
