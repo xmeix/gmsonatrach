@@ -6,6 +6,6 @@ import { getFilesKPIS } from "../controllers/FilesKpis.js";
 const router = express.Router();
 
 router.get("/mission", verifyTokenAndResponsable, getMissionKPIS);
-router.get("/files", verifyTokenAndResponsable, getFilesKPIS);
+router.get("/file", verifyTokenAndResponsable, getFilesKPIS);
 
 export default router;
