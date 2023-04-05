@@ -128,7 +128,7 @@ export const createOrUpdateFDocument = async (newFile, fileType, operation) => {
 
 export const getFilesKPIS = async (req, res) => {
   try {
-    const filesKpis = await FDocument.find().sort({ year: 1, month: 1 });
+    const filesKpis = await FDocument.find();
     res.status(200).json(filesKpis);
   } catch (err) {
     res.status(500).json({ error: err.message });

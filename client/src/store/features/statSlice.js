@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   missionKPIS: [],
+  filesKPIS: [],
 };
 
 export const statSlice = createSlice({
@@ -11,12 +12,16 @@ export const statSlice = createSlice({
     setMissionKpis: (state, action) => {
       state.missionKPIS = action.payload;
     },
-    freeKpis: (state, action) => {
+    setFilesKpis: (state, action) => {
+      state.filesKPIS = action.payload;
+    },
+    freeKpis: (state) => {
       state.missionKPIS = [];
+      state.filesKPIS = [];
     },
   },
 });
 
-export const { freeKpis, setMissionKpis } = statSlice.actions;
+export const { freeKpis, setMissionKpis, setFilesKpis } = statSlice.actions;
 
 export default statSlice.reducer;

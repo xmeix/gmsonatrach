@@ -60,8 +60,7 @@ export const getMissionsPer = (data, type) => {
         }
         return acc;
       }, []);
-      console.log(newData);
-      return newData.sort((a, b) => Date.parse(a.day) - Date.parse(b.day));
+       return newData.sort((a, b) => Date.parse(a.day) - Date.parse(b.day));
       break;
     case 4: //structure
       newData = data?.reduce((acc, cur) => {
@@ -133,8 +132,7 @@ const getGroupedData = (data, groupFn) => {
 };
 
 const calculateAverageSuccessRate = (group) => {
-  console.log(group);
-  const { accomplishedTask_counts } = group;
+   const { accomplishedTask_counts } = group;
   const sum = accomplishedTask_counts?.reduce((acc, count) => acc + count, 0);
   const average = sum / accomplishedTask_counts?.length;
   group.success_rate = average;
@@ -303,8 +301,7 @@ const calculateAverageUtilRates = (group) => {
 };
 
 export const groupUtilRatesByDate = (data, type) => {
-  console.log(data);
-  let groupedData;
+   let groupedData;
   switch (type) {
     case 1:
       groupedData = getUGroupedData(data, (day) =>
@@ -324,8 +321,7 @@ export const groupUtilRatesByDate = (data, type) => {
     default:
       break;
   }
-  console.log(groupedData);
-  groupedData?.forEach(calculateAverageUtilRates);
+   groupedData?.forEach(calculateAverageUtilRates);
   return groupedData.sort((a, b) => Date.parse(a.day) - Date.parse(b.day));
 };
 

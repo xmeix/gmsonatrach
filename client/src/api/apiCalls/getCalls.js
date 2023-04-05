@@ -9,7 +9,7 @@ import {
   setRFMs,
   setUsers,
 } from "../../store/features/authSlice";
-import { setMissionKpis } from "../../store/features/statSlice";
+import { setFilesKpis, setMissionKpis } from "../../store/features/statSlice";
 import { apiService } from "../apiService";
 
 const fetchData = async (dispatch, endpoint, socketEvent, num) => {
@@ -18,12 +18,12 @@ const fetchData = async (dispatch, endpoint, socketEvent, num) => {
     const res = await apiService.user.get(endpoint);
 
     if (!num || num !== 1) {
-       socket.emit("updatedData", socketEvent);
+      socket.emit("updatedData", socketEvent);
     } else {
       if (socketEvent === "mission") {
-         dispatch(setMissions(res.data));
+        dispatch(setMissions(res.data));
       } else if (socketEvent === "om") {
-         dispatch(setOMs(res.data.filteredOMissions));
+        dispatch(setOMs(res.data.filteredOMissions));
       } else if (socketEvent === "rfm") {
         dispatch(setRFMs(res.data));
       } else if (socketEvent === "demande") {
@@ -32,6 +32,8 @@ const fetchData = async (dispatch, endpoint, socketEvent, num) => {
         dispatch(setUsers(res.data));
       } else if (socketEvent === "missionkpi") {
         dispatch(setMissionKpis(res.data));
+      } else if (socketEvent === "filekpi") {
+        dispatch(setFilesKpis(res.data));
       } else dispatch(setRFMs(res.data));
     }
     dispatch(fetchEnd());
@@ -69,4 +71,7 @@ export const getUsers = async (dispatch, num) => {
 };
 export const getMissionKPIS = async (dispatch, num) => {
   await fetchData(dispatch, "/kpis/mission", "missionkpi", num);
+};
+export const getFileKPIS = async (dispatch, num) => {
+  await fetchData(dispatch, "/kpis/file", "filekpi", num);
 };

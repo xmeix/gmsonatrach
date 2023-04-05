@@ -57,23 +57,23 @@ const useDateFilter = (type, data) => {
   const filteredData = data
     .filter((item) => {
       if (type === 3) {
-        const itemDate = new Date(item.day);
+        const itemDate = new Date(item.createdAt);
         return (
           itemDate.getMonth() === filterDate.getMonth() &&
           itemDate.getFullYear() === filterDate.getFullYear()
         );
       } else if (type === 1) {
-        const itemDate = new Date(item.day);
+        const itemDate = new Date(item.createdAt);
         return (
           itemDate.getFullYear() >= filterDate.getFullYear() - 4 &&
           itemDate.getFullYear() <= filterDate.getFullYear()
         );
       } else if (type === 2) {
-        const itemDate = new Date(item.day);
+        const itemDate = new Date(item.createdAt);
         return itemDate.getFullYear() === filterDate.getFullYear();
       }
     })
-    .sort((a, b) => a.day - b.day);
+    .sort((a, b) => Date.parse(a.createdAt) - Date.parse(b.createdAt));
   console.log(filteredData);
   // check if current date is same as max date
   const isMaxDate =

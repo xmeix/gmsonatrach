@@ -57,7 +57,7 @@ const BarRechart = ({
             },
           }}
           data={{
-            labels: filteredData.map((d) => d.day),
+            labels: filteredData.map((d) => d.createdAt),
             datasets: datasets,
           }}
         />
