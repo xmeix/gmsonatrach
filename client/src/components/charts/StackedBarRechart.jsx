@@ -12,47 +12,29 @@ const StackedBarRechart = ({
   label2,
   num,
   title,
-  stackType,
 }) => {
   const { filteredData, isNoData, renderButtons } = useDateFilter(
     labelType,
     data
   );
-
-  let DS = [...new Set(filteredData.map((d) => d["stack"]))]
-    .flatMap((stackType) => {
-      return filteredData
-        .filter((d) => d["stack"] === stackType)
-        .reduce((acc, cur) => {
-          const yearIndex = acc.findIndex(
-            (el) =>
-              el["stack"] === cur["stack"] &&
-              el["createdAt"] === cur["createdAt"]
-          );
-          if (yearIndex === -1) {
-            acc.push({
-              createdAt: cur.createdAt,
-              stack: cur["stack"],
-              circulation_count: cur.circulation_count,
-            });
-          } else {
-            acc[yearIndex].circulation_count += cur.circulation_count;
-          }
-          return acc;
-        }, []);
-    })
-    .map((d) => d);
-
-  let datasets = [...new Set(DS.map((d) => d[stackType]))].map((etat, i) => {
-    return {
-      label: etat,
-      data: DS.filter((d) => d[stackType] === etat).map((d) => d[type]),
-      stack: `Stack ${etat}`,
-    };
-  });
-  console.log("DS");
-  console.log(DS);
-  console.log("DS");
+  const createdAtLabels = [...new Set(filteredData.map((d) => d.createdAt))];
+  const datasets = filteredData.reduce((acc, curr) => {
+    const index = acc.findIndex((d) => d.label === curr.stack);
+    if (index !== -1) {
+      acc[index].data.push(curr[type]);
+    } else {
+      const newData = {
+        label: curr.stack,
+        data: createdAtLabels.map((l) =>
+          filteredData
+            .filter((d) => d.stack === curr.stack && d.createdAt === l)
+            .reduce((sum, d) => sum + d[type], 0)
+        ),
+      };
+      acc.push(newData);
+    }
+    return acc;
+  }, []);
 
   return (
     <>
@@ -87,7 +69,7 @@ const StackedBarRechart = ({
             },
           }}
           data={{
-            labels: [...new Set(DS.map((d) => d.createdAt))].sort(),
+            labels: createdAtLabels,
             datasets: datasets,
           }}
         />

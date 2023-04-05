@@ -33,8 +33,7 @@ const FilesDashboard = () => {
         label="nombre de fichiers"
         labelType={1}
         title={"Nombre de missions par année,mois et jour"}
-        stackType="stack"
-      />
+       />
     </div>
   );
 };

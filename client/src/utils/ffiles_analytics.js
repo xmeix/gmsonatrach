@@ -136,7 +136,47 @@ export const getGroupedDataForTime = (data, time, fileType, stack) => {
     }
     return acc;
   }, []);
-
-  console.log(Object.values(groupedDataArray));
-  return Object.values(groupedDataArray);
+ 
+  return groupedDataArray;
 };
+
+// const filterFormatData = (data) => {
+//   let newData = [...new Set(data.map((d) => d["stack"]))]
+//     .flatMap((stackType) => {
+//       return data
+//         .filter((d) => d["stack"] === stackType)
+//         .reduce((acc, cur) => {
+//           const yearIndex = acc.findIndex(
+//             (el) =>
+//               el["stack"] === cur["stack"] &&
+//               el["createdAt"] === cur["createdAt"]
+//           );
+//           if (yearIndex === -1) {
+//             acc.push({
+//               createdAt: cur.createdAt,
+//               stack: cur["stack"],
+//               circulation_count: cur.circulation_count,
+//             });
+//           } else {
+//             acc[yearIndex].circulation_count += cur.circulation_count;
+//           }
+//           return acc;
+//         }, []);
+//     })
+//     .map((d) => d);
+
+//   const formattedData = newData.reduce((acc, curr) => {
+//     const { createdAt, stack, circulation_count } = curr;
+//     const index = acc.findIndex(
+//       (item) => item.stack === stack && item.createdAt === createdAt
+//     );
+//     if (index !== -1) {
+//       acc[index].circulation_count += circulation_count;
+//     } else {
+//       acc.push({ stack, createdAt, circulation_count });
+//     }
+//     return acc;
+//   }, []);
+
+//   return formattedData;
+// };
