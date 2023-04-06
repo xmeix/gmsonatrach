@@ -92,12 +92,10 @@ export const verifyToken = async (req, res, next) => {
         req.user = jwt.decode(newToken).UserInfo;
         next();
       } catch (e) {
-        return res
-          .status(403)
-          .json({ error: "Failed to refresh access token" });
+        res.status(403).json({ error: "Failed to refresh access token" });
       }
     } else {
-      return res.status(403).json({ error: "Invalid access token" });
+      res.status(403).json({ error: "Invalid access token" });
     }
   }
 };

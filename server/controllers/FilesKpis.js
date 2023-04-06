@@ -57,6 +57,7 @@ export const createOrUpdateFDocument = async (newFile, fileType, operation) => {
             break;
           case "accepté":
           case "acceptée":
+            console.log("accepted");
             oldEtat = "en-attente";
             break;
           case "refusé":
@@ -68,6 +69,7 @@ export const createOrUpdateFDocument = async (newFile, fileType, operation) => {
         }
 
         // Find the most recent document with same type, structure, and old etat
+
         const oldDocument = await FDocument.findOne({
           type: fileType,
           structure: struct,
@@ -86,22 +88,23 @@ export const createOrUpdateFDocument = async (newFile, fileType, operation) => {
         }).sort({ date: -1 });
 
         // Duplicate the old document and decrement its circulation_count field
-        if (oldDocument) {
-          const updatedDocument = new FDocument({
-            // date: new Date(),
-            structure: struct,
-            etat: oldEtat,
-            type: fileType,
-            nature: newFile.nature || "",
-            motifDep: newFile.motifDep || "",
-            circulation_count: oldDocument.circulation_count - 1,
-          });
+        console.log(oldDocument.circulation_count);
 
-          await updatedDocument.save();
-        }
+        let updatedDocument = new FDocument({
+          structure: struct,
+          etat: newFile.etat,
+          type: fileType,
+          nature: newFile.nature || "",
+          motifDep: newFile.motifDep || "",
+          circulation_count: oldDocument
+            ? oldDocument.circulation_count + 1
+            : 1,
+        });
+
+        await updatedDocument.save();
 
         // Duplicate the recent document and increment its circulation_count field
-        const updatedDocument = new FDocument({
+        updatedDocument = new FDocument({
           // date: new Date(),
           structure: struct,
           etat: newFile.etat,

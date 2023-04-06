@@ -50,16 +50,18 @@ export const getMissions = async (dispatch, num) => {
 
 export const getDemandes = async (dispatch, num) => {
   await fetchData(dispatch, "/demande/", "demande", num);
+  getFileKPIS(dispatch);
 };
 
 export const getRFMs = async (dispatch, num) => {
   await fetchData(dispatch, "/rapportFM/", "rfm", num);
+  getFileKPIS(dispatch);
 };
 
 export const getOMs = async (dispatch, num) => {
   console.log("inside getOMS");
-
   await fetchData(dispatch, "/ordremission/", "om", num);
+  getFileKPIS(dispatch);
 };
 
 export const getDepenses = async (dispatch, num) => {

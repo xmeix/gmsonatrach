@@ -14,6 +14,7 @@ import {
   getMissions,
   getDepenses,
   getMissionKPIS,
+  getFileKPIS,
 } from "./api/apiCalls/getCalls";
 const LoginPage = lazy(() => import("./pages/loginPage/LoginPage"));
 const CostDashboard = lazy(() =>
@@ -53,7 +54,7 @@ function App() {
   //   .filter((user) => user.role === "secretaire" ||user.role === "directeur" ||user.role === "responsable"  )
   //   .map((employee) => employee._id)
   //   .join(",");
-  
+
   // console.log(employeeIds);
 
   const handleSocketData = (type) => {
@@ -84,6 +85,9 @@ function App() {
         break;
       case "missionkpi":
         getMissionKPIS(dispatch, 1);
+        break;
+      case "filekpi":
+        getFileKPIS(dispatch, 1);
         break;
       default:
         break;
