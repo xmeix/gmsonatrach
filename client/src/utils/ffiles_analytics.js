@@ -66,7 +66,7 @@ export const getGroupedDataForTime = (data, time, fileType, stack) => {
 
   for (const document of documents) {
     const { structure, etat, type, nature, motifDep } = document;
-    const date = new Date(document.createdAt).toISOString().slice(0, 10); // get date in YYYY-MM-DD format
+    const date = new Date(document.createdAt).toISOString().slice(0, time); // get date in YYYY-MM-DD format
     const key = `${structure}-${etat}-${type}-${nature}-${motifDep}-${date}`;
 
     if (key in mostRecentDocuments) {

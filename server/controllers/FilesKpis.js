@@ -16,10 +16,6 @@ export const createOrUpdateFDocument = async (newFile, fileType, operation) => {
   } else if (fileType === "OM") {
     struct = newFile.mission.structure;
   }
-  console.log(operation);
-  console.log(fileType);
-  console.log(newFile);
-  console.log(struct);
   try {
     switch (operation) {
       case "creation":
@@ -34,7 +30,6 @@ export const createOrUpdateFDocument = async (newFile, fileType, operation) => {
 
         // Duplicate the most recent document and increment the circulation_count field
         const newDocument = new FDocument({
-          // date: new Date(),
           structure: struct,
           etat: newFile.etat,
           type: fileType,
@@ -57,7 +52,6 @@ export const createOrUpdateFDocument = async (newFile, fileType, operation) => {
             break;
           case "accepté":
           case "acceptée":
-            console.log("accepted");
             oldEtat = "en-attente";
             break;
           case "refusé":
@@ -76,8 +70,7 @@ export const createOrUpdateFDocument = async (newFile, fileType, operation) => {
           etat: oldEtat,
           nature: newFile.nature || "",
           motifDep: newFile.motifDep || "",
-        }).sort({ date: -1 });
-
+        }).sort({ createdAt: -1 });
         // Find the most recent document with same type, structure, and etat
         const recentDocument = await FDocument.findOne({
           type: fileType,
@@ -85,27 +78,23 @@ export const createOrUpdateFDocument = async (newFile, fileType, operation) => {
           etat: newFile.etat,
           nature: newFile.nature || "",
           motifDep: newFile.motifDep || "",
-        }).sort({ date: -1 });
+        }).sort({ createdAt: -1 });
 
         // Duplicate the old document and decrement its circulation_count field
-        console.log(oldDocument.circulation_count);
-
         let updatedDocument = new FDocument({
           structure: struct,
-          etat: newFile.etat,
+          etat: oldEtat,
           type: fileType,
           nature: newFile.nature || "",
           motifDep: newFile.motifDep || "",
           circulation_count: oldDocument
-            ? oldDocument.circulation_count + 1
-            : 1,
+            ? oldDocument.circulation_count - 1
+            : 0,
         });
 
         await updatedDocument.save();
-
-        // Duplicate the recent document and increment its circulation_count field
+         // Duplicate the recent document and increment its circulation_count field
         updatedDocument = new FDocument({
-          // date: new Date(),
           structure: struct,
           etat: newFile.etat,
           type: fileType,
