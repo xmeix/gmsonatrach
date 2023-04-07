@@ -1,8 +1,8 @@
 import { useState } from "react";
 
 const useChartButtons = () => {
-  const [chartPer, setChartPer] = useState(4);
-  const [chartPerNum, setChartPerNum] = useState(1);
+  const [chartPer, setChartPer] = useState(1);
+  const [chartPerNum, setChartPerNum] = useState(4);
 
   const handleButtonClick = (chartType) => {
     switch (chartType) {

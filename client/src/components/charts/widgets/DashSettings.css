@@ -1,0 +1,24 @@
+.dash-settings {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  margin: 2em;
+  color: var(--gray);
+}
+
+.dash-settings .dash-title {
+  font-size: 12px;
+  letter-spacing: 2px;
+  font-weight: 600;
+  max-width: 80%;
+  text-align: center;
+}
+.dash-settings .chart-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1em;
+  margin: 1em;
+}

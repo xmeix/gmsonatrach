@@ -1,11 +1,11 @@
 export const getCountFor = (data, type, fileType) => {
-  const documents = data
-    .filter((doc) => doc.type === fileType)
-    .sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt));
+  const documents =
+    fileType === "*"
+      ? data.sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt))
+      : data
+          .filter((doc) => doc.type === fileType)
+          .sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt));
 
-  console.log("documents");
-  console.log(documents);
-  console.log("documents");
   let mostRecentDocuments = {};
 
   for (const document of documents) {
@@ -21,11 +21,6 @@ export const getCountFor = (data, type, fileType) => {
 
     mostRecentDocuments[key] = document;
   }
-
-  console.log("mostRecentDocuments");
-  console.log(mostRecentDocuments);
-  console.log("mostRecentDocuments");
-
   const getGroupedData = (property) =>
     Object.values(mostRecentDocuments).reduce((acc, cur) => {
       const value = cur[property];
@@ -58,9 +53,13 @@ export const getCountFor = (data, type, fileType) => {
 };
 
 export const getGroupedDataForTime = (data, time, fileType, stack) => {
-  const documents = data
-    .filter((doc) => doc.type === fileType)
-    .sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt));
+  const documents =
+    fileType === "*"
+      ? data.sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt))
+      : data
+          .filter((doc) => doc.type === fileType)
+          .sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt));
+
   //No need for most recent
   let mostRecentDocuments = {};
 

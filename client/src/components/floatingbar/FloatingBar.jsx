@@ -5,11 +5,9 @@ const FloatingBar = () => {
   return (
     <ol className="floating-bar">
       {dashTitles.map((title, i) => (
-        <li key={title.id}>
-          <NavLink to={title.path} className="link">
-            {title.title}
-          </NavLink>
-        </li>
+        <NavLink to={title.path} className="link" key={title.id}>
+          <li className="link">{title.title}</li>
+        </NavLink>
       ))}
     </ol>
   );

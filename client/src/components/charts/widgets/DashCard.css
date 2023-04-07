@@ -1,0 +1,22 @@
+.dash-card .card-title {
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: capitalize;
+  color: var(--gray);
+  z-index: 3;
+  text-align: center;
+}
+.dash-card .card-icon {
+  position: absolute;
+  bottom: 0.2em;
+  right: 0.2em;
+  font-size: 120px;
+  color: var(--gray2);
+  opacity: 0.5;
+  z-index: 2;
+}
+.dash-card .number {
+  font-size: 2em;
+  font-weight: 800;
+  color: var(--orange);
+}

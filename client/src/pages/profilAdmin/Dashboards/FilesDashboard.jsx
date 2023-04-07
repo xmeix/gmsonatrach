@@ -7,10 +7,11 @@ import {
   getCountFor,
   getGroupedDataForTime,
 } from "../../../utils/ffiles_analytics";
-import BarRechart from "../../../components/charts/BarRechart";
 import StackedBarRechart from "../../../components/charts/StackedBarRechart";
-import LineRechart from "../../../components/charts/LineRechart";
 import useChartButtons from "../../../hooks/useChartButtons";
+import AreaRechart from "../../../components/charts/AreaRechart";
+import DashSettings from "../../../components/charts/widgets/DashSettings";
+import FileSection from "../../../components/charts/widgets/FilesSection";
 
 const FilesDashboard = () => {
   const filesKPISdata = useSelector((state) => state.stat.filesKPIS);
@@ -19,50 +20,62 @@ const FilesDashboard = () => {
   return (
     <div className="filesDashboard">
       <FloatingBar />
-
       <PageName name="files Dashboard" />
-      <div className="dash-settings">
-        <div className="dash-title">
-          Basculer entre les vues quotidiennes, mensuelles et annuelles et
-          adapter votre tableau de bord à vos besoins spécifiques.
-        </div>
-        <div className="chart-buttons">
-          <button onClick={() => handleButtonClick(1)} className="chart-btn">
-            année
-          </button>
-          <button onClick={() => handleButtonClick(2)} className="chart-btn">
-            mois
-          </button>
-          <button onClick={() => handleButtonClick(3)} className="chart-btn">
-            jour
-          </button>
-        </div>
-      </div>
-      <PieRechart
-        data={getCountFor(filesKPISdata, "etat", "DM")}
-        type={"circulation_count"}
-        label="nombre de fichiers"
-        labelType={"label"}
-        title={
-          "Répartition des documents par structure/type/état (current data) "
-        }
-        style={3}
-      />
+      <DashSettings handleButtonClick={handleButtonClick} />
 
-      <StackedBarRechart
-        data={getGroupedDataForTime(filesKPISdata, chartPerNum, "DM", "etat")}
-        type={"circulation_count"}
-        label="nombre de fichiers"
-        labelType={chartPer}
-        title={"Nombre de missions par année,mois et jour"}
+      <FileSection
+        data={filesKPISdata}
+        fileName={"*"}
+        title={"les statistiques sur tous les documents"}
+        fileRadialOptions={["structure", "nature", "motifDep"]}
+        chartsOptions={["structure", "etat"]}
+        chartPer={chartPer}
+        chartPerNum={chartPerNum}
       />
-
-      <LineRechart
-        data={getGroupedDataForTime(filesKPISdata, chartPerNum, "DM", "etat")}
-        type={"circulation_count"}
-        label="nombre de missions"
-        labelType={chartPer}
-        title={"Nombre de missions par année,mois et jour"}
+      <FileSection
+        data={filesKPISdata}
+        fileName={"RFM"}
+        title={"les statistiques sur les rapports de fin de mission"}
+        fileRadialOptions={["structure", "etat"]}
+        chartsOptions={["structure", "etat"]}
+        chartPer={chartPer}
+        chartPerNum={chartPerNum}
+      />
+      <FileSection
+        data={filesKPISdata}
+        fileName={"DB"}
+        title={"les statistiques sur les demandes de billetterie"}
+        fileRadialOptions={["nature", "motifDep", "etat"]}
+        chartsOptions={["nature", "motifDep", "etat"]}
+        chartPer={chartPer}
+        chartPerNum={chartPerNum}
+      />
+      <FileSection
+        data={filesKPISdata}
+        fileName={"DC"}
+        title={"les statistiques sur les demandes de congés"}
+        fileRadialOptions={["structure", "etat", "nature"]}
+        chartsOptions={["structure", "etat", "nature"]}
+        chartPer={chartPer}
+        chartPerNum={chartPerNum}
+      />
+      <FileSection
+        data={filesKPISdata}
+        fileName={"OM"}
+        title={"les statistiques sur les ordres de mission"}
+        fileRadialOptions={["structure"]}
+        chartsOptions={["structure"]}
+        chartPer={chartPer}
+        chartPerNum={chartPerNum}
+      />
+      <FileSection
+        data={filesKPISdata}
+        fileName={"DM"}
+        title={"les statistiques sur les demandes de modifications"}
+        fileRadialOptions={["structure", "etat"]}
+        chartsOptions={["structure", "etat"]}
+        chartPer={chartPer}
+        chartPerNum={chartPerNum}
       />
     </div>
   );

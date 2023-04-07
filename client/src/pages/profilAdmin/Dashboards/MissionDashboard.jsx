@@ -81,7 +81,7 @@ const MissionDashboard = () => {
         </div>
       </div>
 
-      <div className="dash-content">
+      {/* <div className="dash-content">
         <div style={{ gridArea: "a" }} className="box">
           <Suspense fallback={<div>Loading...</div>}>
             {chartType === "line" && (
@@ -254,7 +254,7 @@ const MissionDashboard = () => {
             />
           </Suspense>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };
