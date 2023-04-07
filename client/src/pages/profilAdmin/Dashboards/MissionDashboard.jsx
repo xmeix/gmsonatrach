@@ -1,19 +1,7 @@
 import FloatingBar from "../../../components/floatingbar/FloatingBar";
 import PageName from "../../../components/pageName/PageName";
-import { useSelector } from "react-redux";
-import {
-  getEmployeesCountPerStructure,
-  getMissionsPer,
-  getTasksCount,
-  getTotalSuccessRate,
-  getTotalTasksCount,
-  getTotalUtilizationRate,
-  groupSuccessRatesByDate,
-  groupUtilRatesByDate,
-} from "../../../utils/fmissions_analytics";
-import { lazy, Suspense, useEffect, useState } from "react";
-import ComposedRechart from "../../../components/charts/ComposedRechart";
-import RadarRechart from "../../../components/charts/RadarRechart";
+import { useSelector } from "react-redux"; 
+import { lazy, Suspense, useEffect, useState } from "react"; 
 import useChartButtons from "../../../hooks/useChartButtons";
 const LineRechart = lazy(() =>
   import("../../../components/charts/LineRechart")

@@ -19,8 +19,7 @@ const AreaRechart = ({
     data
   );
   const createdAtLabels = [...new Set(filteredData.map((d) => d.createdAt))];
-  console.log(filteredData);
-  const datasets = filteredData.reduce((acc, curr) => {
+   const datasets = filteredData.reduce((acc, curr) => {
     const index = acc.findIndex((d) => d.label === curr.stack);
     if (index !== -1) {
       acc[index].data.push(curr[type]);

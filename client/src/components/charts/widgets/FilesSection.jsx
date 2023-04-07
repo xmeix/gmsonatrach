@@ -35,8 +35,9 @@ const FileSection = ({
       <div className="file-title">{title} circulants</div>
       <div className="file-section-content">
         <div style={{ gridArea: "a", flexDirection: "row" }} className="box">
-          {chartsOptions.map((option) => (
+          {chartsOptions.map((option, i) => (
             <button
+              key={i}
               className="subchart-btn "
               onClick={() => setChartAction(option)}
             >
