@@ -1,5 +1,14 @@
+import { useState } from "react";
 import "./DashSettings.css";
+
 const DashSettings = ({ handleButtonClick }) => {
+  const [activeButton, setActiveButton] = useState(1);
+
+  const handleButtonClickWithActive = (buttonId) => {
+    setActiveButton(buttonId);
+    handleButtonClick(buttonId);
+  };
+
   return (
     <div className="dash-settings">
       <div className="dash-title">
@@ -7,13 +16,22 @@ const DashSettings = ({ handleButtonClick }) => {
         votre tableau de bord à vos besoins spécifiques.
       </div>
       <div className="chart-buttons">
-        <button onClick={() => handleButtonClick(1)} className="chart-btn">
+        <button
+          onClick={() => handleButtonClickWithActive(1)}
+          className={`chart-btn ${activeButton === 1 ? "btn-active" : ""}`}
+        >
           année
         </button>
-        <button onClick={() => handleButtonClick(2)} className="chart-btn">
+        <button
+          onClick={() => handleButtonClickWithActive(2)}
+          className={`chart-btn ${activeButton === 2 ? "btn-active" : ""}`}
+        >
           mois
         </button>
-        <button onClick={() => handleButtonClick(3)} className="chart-btn">
+        <button
+          onClick={() => handleButtonClickWithActive(3)}
+          className={`chart-btn ${activeButton === 3 ? "btn-active" : ""}`}
+        >
           jour
         </button>
       </div>

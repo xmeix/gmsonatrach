@@ -9,6 +9,12 @@ import { useSelector } from "react-redux";
 import { titles, employeTitles, relexTitles } from "../../data/navdata";
 import { useAxios } from "../../hooks/useAxios";
 const NavBar = () => {
+  const navLinkStyle = ({ isActive }) => {
+    return {
+      color: isActive ? "var(--orange)" : "var(--black)",
+      fontWeight: isActive ? "700" : "600",
+    };
+  };
   const [isOpen, setIsOpen] = useState(false);
   const [responsive, setResponsive] = useState(false);
   const { callApi } = useAxios();
@@ -101,7 +107,7 @@ const NavBar = () => {
           <ul className="sublist">
             {navData.map((title, i) => (
               <li key={title.id}>
-                <NavLink to={title.path} className="link">
+                <NavLink to={title.path} className="link" style={navLinkStyle}>
                   {title.title}
                 </NavLink>
               </li>

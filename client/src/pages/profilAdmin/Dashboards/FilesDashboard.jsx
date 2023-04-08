@@ -3,10 +3,14 @@ import FloatingBar from "../../../components/floatingbar/FloatingBar";
 import PageName from "../../../components/pageName/PageName";
 import { useSelector } from "react-redux";
 import useChartButtons from "../../../hooks/useChartButtons";
-import DashSettings from "../../../components/charts/widgets/DashSettings";
-import FileSection from "../../../components/charts/widgets/FilesSection";
 import { HashLink } from "react-router-hash-link";
 import "./Dashboard.css";
+import { lazy, Suspense } from "react";
+const FileSection = lazy(() =>
+  import("./../../../components/charts/widgets/FilesSection")
+);
+import DashSettings from "../../../components/charts/widgets/DashSettings";
+import Loading from "./../../../components/loading/Loading";
 
 const filesConfig = [
   {
@@ -70,16 +74,18 @@ const FilesDashboard = () => {
       </div>
       {filesConfig.map((config, index) => (
         <div key={index} id={config.fileName}>
-          <FileSection
-            key={index}
-            data={filesKPISdata}
-            fileName={config.fileName}
-            title={config.title}
-            fileRadialOptions={config.fileRadialOptions}
-            chartsOptions={config.chartsOptions}
-            chartPer={chartPer}
-            chartPerNum={chartPerNum}
-          />{" "}
+          <Suspense fallback={<Loading />}>
+            <FileSection
+              key={index}
+              data={filesKPISdata}
+              fileName={config.fileName}
+              title={config.title}
+              fileRadialOptions={config.fileRadialOptions}
+              chartsOptions={config.chartsOptions}
+              chartPer={chartPer}
+              chartPerNum={chartPerNum}
+            />{" "}
+          </Suspense>
         </div>
       ))}
     </div>

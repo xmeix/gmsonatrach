@@ -34,9 +34,9 @@ export const createMission = async (req, res) => {
 
     //verification dates start and end
     if (new Date(tDateDeb).getTime() >= new Date(tDateRet).getTime())
-      throw new Error(
+    {  throw new Error(
         "Dates shouldn't be equal, return date should be greater than departure date"
-      );
+      );}
 
     let etat;
     //si c est le responsable/directeur qui l'a créée alors elle sera automatiquement acceptée

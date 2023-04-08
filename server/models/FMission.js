@@ -2,20 +2,15 @@ import mongoose from "mongoose";
 
 const FMissionSchema = new mongoose.Schema(
   {
-    mission: {
-      type: mongoose.Schema.Types.ObjectId,
-      required: true,
-    },
-    state: { type: String },
-    day: { type: Date }, 
+    etat: { type: String },
     structure: { type: String },
-    type: { type: String },
+    type: { type: String }, //local-etranger
     country: { type: String },
     destination: { type: String },
-    success_rate: { type: Number },//success count
+    mission_count: { type: String },
+    success_count: { type: Number, default: 0 }, //success count
+    fail_count: { type: Number, default: 0 }, //success count
     employee_count: { type: Number },
-    accomplishedTask_count: { type: Number },
-    nonAccomplishedTask_count: { type: Number },
     road_utilization_count: { type: Number },
     airline_utilization_count: { type: Number },
   },

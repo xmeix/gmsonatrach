@@ -2,80 +2,179 @@ import mongoose from "mongoose";
 import FMission from "../models/FMission.js";
 const toId = mongoose.Types.ObjectId;
 
-export const createOrUpdateFMission = async (mission) => {
-  console.log("inside");
-  const startMonth = mission.createdAt.getMonth() + 1;
-  const startYear = mission.createdAt.getFullYear();
+export const createOrUpdateFMission = async (
+  newMission,
+  operation,
+  oldMission,
+  updateType
+) => {
+  //cas creation mission
+  switch (operation) {
+    case "creation": //gonna be the same process for (create mission , update mission etat from en-attente to acceptée or refusée or annulée )
+      const mostRecent = await FMission.findOne({
+        etat: newMission.etat, //en-attente
+        structure: newMission.structure,
+        type: newMission.type,
+        country: newMission.pays,
+        departure: newMission.lieuDep,
+        destination: newMission.destination,
+      }).sort({ createdAt: -1 });
 
-  const existingFMission = await FMission.findOne({
-    mission: mission._id,
-  });
+      // Duplicate the most recent document and increment the circulation_count field
+      const newFMission = new FMission({
+        etat: newMission.etat, //en-attente
+        structure: newMission.structure,
+        type: newMission.type,
+        country: newMission.pays,
+        departure: newMission.lieuDep,
+        destination: newMission.destination,
+        mission_count: mostRecent ? mostRecent.mission_count + 1 : 1,
+        success_count: 0, //for all created missions would be 0
+        fail_count: mostRecent
+          ? mostRecent.fail_count + newMission.taches.length()
+          : newMission.taches.length(),
+        employee_count: mostRecent
+          ? mostRecent.employee_count + newMission.employes.length()
+          : newMission.employes.length(),
+        road_utilization_count: mostRecent
+          ? mostRecent.road_utilization_count +
+            calculateTransportUtilizationCount(newMission, "route")
+          : calculateTransportUtilizationCount(newMission, "route"),
+        airline_utilization_count: mostRecent
+          ? mostRecent.airline_utilization_count +
+            calculateTransportUtilizationCount(newMission, "avion")
+          : calculateTransportUtilizationCount(newMission, "avion"),
+      });
 
-  if (existingFMission) {
-    existingFMission.success_rate = calculateSuccessRate(mission);
-    existingFMission.employee_count = mission.employes.length;
-    // Update other KPIs as needed
-    await existingFMission.save();
-  } else {
-    const newFMission = new FMission({
-      mission: mission._id,
-      state: mission.etat,
-      day: new Date(mission.createdAt).toISOString().slice(0, 10), //this gonna change ==> new Date()
-      structure: mission.structure, 
-      type: mission.type,
-      country: mission.pays,
-      destination: mission.destination,
-      success_rate: calculateSuccessRate(mission),
-      employee_count: mission.employes.length,
-      accomplishedTask_count: calculateAccomplishedTaskCount(mission),
-      nonAccomplishedTask_count: calculateNonAccomplishedTaskCount(mission),
-      road_utilization_count: calculateTransportUtilizationRate(
-        mission,
-        "route"
-      ),
-      airline_utilization_count: calculateTransportUtilizationRate(
-        mission,
-        "avion"
-      ),
-    });
-    await newFMission.save();
+      await newFMission.save();
+      break;
+
+    case "update":
+      // Find the most recent document with same type, structure, and old etat
+      const oldFMission = await FMission.findOne({
+        etat: oldMission.etat,
+        structure: newMission.structure,
+        type: newMission.type,
+        country: newMission.pays,
+        departure: newMission.lieuDep,
+        destination: newMission.destination,
+      }).sort({ createdAt: -1 });
+      // Find the most recent document with same type, structure, and etat
+      const recentFMission = await FMission.findOne({
+        etat: newMission.etat,
+        structure: newMission.structure,
+        type: newMission.type,
+        country: newMission.pays,
+        departure: newMission.lieuDep,
+        destination: newMission.destination,
+      }).sort({ createdAt: -1 });
+
+      switch (updateType) {
+        case "etat":
+          // Duplicate the old document and decrement its circulation_count field
+          let oldUpdatedDocument = new FMission({
+            etat: oldFMission.etat, //en-attente - acceptee -refussee cas annulée
+            structure: oldFMission.structure,
+            type: oldFMission.type,
+            country: oldFMission.pays,
+            departure: oldFMission.lieuDep,
+            destination: oldFMission.destination,
+            mission_count: oldFMission ? oldFMission.mission_count - 1 : 0,
+            success_count: oldFMission ? oldFMission.success_count : 0,
+            fail_count: oldFMission
+              ? oldFMission.fail_count - calculateFailCount(newMission)
+              : 0,
+            employee_count: oldFMission
+              ? oldFMission.employee_count - newMission.employes.length()
+              : 0,
+            road_utilization_count: oldFMission
+              ? oldFMission.road_utilization_count -
+                calculateTransportUtilizationCount(newMission, "route")
+              : 0,
+            airline_utilization_count: oldFMission
+              ? oldFMission.airline_utilization_count -
+                calculateTransportUtilizationCount(newMission, "avion")
+              : 0,
+          });
+          await oldUpdatedDocument.save();
+
+          let newUpdatedDocument = new FMission({
+            etat: recentFMission.etat, //en-attente
+            structure: recentFMission.structure,
+            type: recentFMission.type,
+            country: recentFMission.pays,
+            departure: recentFMission.lieuDep,
+            destination: recentFMission.destination,
+            mission_count: recentFMission
+              ? recentFMission.mission_count + 1
+              : 1,
+            success_count: recentFMission ? recentFMission.success_count : 0,
+            fail_count: recentFMission
+              ? recentFMission.fail_count + calculateFailCount(newMission)
+              : calculateFailCount(newMission),
+            employee_count: recentFMission
+              ? recentFMission.employee_count + newMission.employes.length()
+              : newMission.employes.length(),
+            road_utilization_count: recentFMission
+              ? recentFMission.road_utilization_count +
+                calculateTransportUtilizationCount(newMission, "route")
+              : calculateTransportUtilizationCount(newMission, "route"),
+            airline_utilization_count: recentFMission
+              ? recentFMission.airline_utilization_count +
+                calculateTransportUtilizationCount(newMission, "avion")
+              : calculateTransportUtilizationCount(newMission, "avion"),
+          });
+          await newUpdatedDocument.save();
+
+          break;
+        case "tache":
+          // Duplicate the old document and decrement its circulation_count field
+          const diff = calculateDifferenceAT(oldFMission, newMission);
+          newUpdatedDocument = new FMission({
+            etat: recentFMission.etat, //en cours forcement
+            structure: recentFMission.structure,
+            type: recentFMission.type,
+            country: recentFMission.pays,
+            departure: recentFMission.lieuDep,
+            destination: recentFMission.destination,
+            mission_count: recentFMission.mission_count,
+            success_count:
+              diff > 0
+                ? recentFMission.success_count - diff
+                : recentFMission.success_count + diff, //for all created missions would be 0
+            fail_count:
+              diff < 0
+                ? recentFMission.fail_count - diff
+                : recentFMission.fail_count + diff,
+            employee_count: recentFMission.employee_count,
+            road_utilization_count: recentFMission.road_utilization_count,
+            airline_utilization_count: recentFMission.airline_utilization_count,
+          });
+          await newUpdatedDocument.save();
+          break;
+
+        default:
+          break;
+      }
+
+    default:
+      break;
   }
-
-  console.log("outside");
-};
-
-export const getMissionKPIS = async (req, res) => {
-  try {
-    const missionKpis = await FMission.find()
-      .populate("mission")
-      .sort({ year: 1, month: 1 });
-    res.status(200).json(missionKpis);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-};
-
-const calculateSuccessRate = (mission) => {
-  const totalTasks = mission.taches.length;
-  const accomplishedTasks = mission.taches.filter(
-    (t) => t.state === "accomplie"
-  ).length;
-  return (accomplishedTasks / totalTasks) * 100;
 };
 
 // Calculate the number of accomplished tasks in a mission
-const calculateAccomplishedTaskCount = (mission) => {
-  return mission.taches.filter((tache) => tache.state === "accomplie").length;
+const calculateDifferenceAT = (oldMission, NewMission) => {
+  return (
+    oldMission.taches.filter((tache) => tache.state === "accomplie").length -
+    NewMission.taches.filter((tache) => tache.state === "accomplie").length
+  );
 };
 
-// Calculate the number of non-accomplished tasks in a mission
-const calculateNonAccomplishedTaskCount = (mission) => {
-  return mission.taches.filter((tache) => tache.state === "non-accomplie")
+const calculateFailCount = (NewMission) => {
+  return NewMission.taches.filter((tache) => tache.state === "non-accomplie")
     .length;
 };
-
-// Calculate transport utilization rate of a mission
-const calculateTransportUtilizationRate = (mission, type) => {
+const calculateTransportUtilizationCount = (mission, type) => {
   // const totalTransport =
   //   mission.moyenTransport.length + mission.moyenTransportRet.length;
   const usedTransport =
@@ -83,3 +182,21 @@ const calculateTransportUtilizationRate = (mission, type) => {
     mission.moyenTransportRet.filter((t) => t === type).length;
   return usedTransport;
 };
+export const getMissionKPIS = async (req, res) => {
+  try {
+    const missionKpis = await FMission.find();
+    res.status(200).json(missionKpis);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+// const calculateSuccessRate = (mission) => {
+//   const totalTasks = mission.taches.length;
+//   const accomplishedTasks = mission.taches.filter(
+//     (t) => t.state === "accomplie"
+//   ).length;
+//   return (accomplishedTasks / totalTasks) * 100;
+// };
+
+// // Calculate transport utilization rate of a mission

@@ -22,3 +22,25 @@
   gap: 1em;
   margin: 1em;
 }
+
+.chart-btn {
+  font-family: "Montserrat", sans-serif;
+  background-color: transparent;
+  outline: none;
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.3s ease-in;
+  text-transform: uppercase;
+  border: solid 0.5px gray;
+  padding: 0.5em 1em;
+  color: var(--gray);
+}
+.chart-btn:hover {
+  background-color: var(--light-gray);
+  font-weight: 800;
+}
+.btn-active {
+  background-color: var(--gray);
+  color: white;
+}

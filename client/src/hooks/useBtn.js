@@ -43,8 +43,7 @@ const useBtn = () => {
         break;
 
       case "check":
-        console.log("check patch " + route + "/" + _id + " " + body);
-        callApi("patch", `${route}/${_id}`, {
+         callApi("patch", `${route}/${_id}`, {
           taches: body,
         });
         break;

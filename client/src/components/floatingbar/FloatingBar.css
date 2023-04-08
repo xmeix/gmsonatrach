@@ -14,13 +14,14 @@
   list-style: none;
 }
 
-.floating-bar li {
-  padding: 0.5em 1em;
+.floating-bar .link {
+  padding: 0.8em 1em;
   box-shadow: 0px 1px 4px 0px rgba(180, 176, 176, 0.22);
   border-radius: 15px;
   cursor: pointer;
 }
 
-.floating-bar li:hover {
+.floating-bar .link:hover {
   box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.22);
 }
+ 
