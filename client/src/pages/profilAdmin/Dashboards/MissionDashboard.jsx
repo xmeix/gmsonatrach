@@ -1,15 +1,12 @@
 import FloatingBar from "../../../components/floatingbar/FloatingBar";
 import PageName from "../../../components/pageName/PageName";
-import { useSelector } from "react-redux"; 
-import { lazy, Suspense, useEffect, useState } from "react"; 
+import { useSelector } from "react-redux";
+import { lazy, Suspense, useEffect, useState } from "react";
 import useChartButtons from "../../../hooks/useChartButtons";
-const LineRechart = lazy(() =>
-  import("../../../components/charts/LineRechart")
-);
-const BarRechart = lazy(() => import("../../../components/charts/BarRechart"));
 const AreaRechart = lazy(() =>
   import("../../../components/charts/AreaRechart")
 );
+import DashSettings from "../../../components/charts/widgets/DashSettings";
 const PieRechart = lazy(() => import("../../../components/charts/PieRechart"));
 import "./MissionDash.css";
 import ThinPieRechart from "../../../components/charts/ThinPieRechart";
@@ -19,55 +16,63 @@ import ThumbUpOffAltRoundedIcon from "@mui/icons-material/ThumbUpOffAltRounded";
 import ThumbDownAltRoundedIcon from "@mui/icons-material/ThumbDownAltRounded";
 import AirplanemodeActiveRoundedIcon from "@mui/icons-material/AirplanemodeActiveRounded";
 import DirectionsCarFilledRoundedIcon from "@mui/icons-material/DirectionsCarFilledRounded";
+import {
+  getMissionCountFor,
+  getMissionGroupedDataForTime,
+} from "../../../utils/fmissions_analytics";
+import StackedBarRechart from "../../../components/charts/StackedBarRechart";
 const MissionDashboard = () => {
-  const fmissionData = useSelector((state) => state.stat.missionKPIS);
-  const [chart2Per, setChart2Per] = useState(4);
-  const { chartPer, handleButtonClick } = useChartButtons(1);
+  let fmissionData = useSelector((state) => state.stat.missionKPIS);
 
-  const [x2DataKey, setX2DataKey] = useState("structure");
-  const [chartType, setChartType] = useState("bar");
-  const [chart2Type, setChart2Type] = useState("pie");
-  useEffect(() => {
-    if (chartPer === 1) {
-      setChartType("bar");
-    } else if (chartPer === 2) {
-      setChartType("line");
-    } else if (chartPer === 3) {
-      setChartType("area");
-    }
-    if (chart2Per === 4) {
-      setX2DataKey("structure");
-      setChart2Type("pie");
-    } else if (chart2Per === 5) {
-      setX2DataKey("type");
-      setChart2Type("pie");
-    } else if (chart2Per === 6) {
-      setX2DataKey("state");
-      setChart2Type("pie");
-    }
-  }, [chartPer, chart2Per]);
+  const { chartPer, chartPerNum, handleButtonClick } = useChartButtons();
 
   return (
     <div className="missionDashboard">
       <FloatingBar />
       <PageName name="mission Dashboard" />
-      <div className="dash-settings">
-        <div className="dash-title">
-          Basculer entre les vues quotidiennes, mensuelles et annuelles et
-          adapter votre tableau de bord à vos besoins spécifiques.
-        </div>
-        <div className="chart-buttons">
-          <button onClick={() => handleButtonClick(1)} className="chart-btn">
-            année
-          </button>
-          <button onClick={() => handleButtonClick(2)} className="chart-btn">
-            mois
-          </button>
-          <button onClick={() => handleButtonClick(3)} className="chart-btn">
-            jour
-          </button>
+      <DashSettings handleButtonClick={handleButtonClick} />
+
+      <div className="dash-content">
+        <div style={{ gridArea: "a" }} className="box">
+          {/* type - structure - etat - country*/}
+          {(chartPer === 1 || chartPer === 2) && (
+            <AreaRechart
+              data={getMissionGroupedDataForTime(
+                fmissionData,
+                chartPerNum,
+                "structure"
+              )}
+              type={"mission_count"}
+              label="nombre de missions"
+              labelType={chartPer}
+              title={"Nombre de missions par année,mois et jour"}
+              fill={false}
+            />
+          )}
+          {chartPer === 3 && (
+            <StackedBarRechart
+              data={getMissionGroupedDataForTime(
+                fmissionData,
+                chartPerNum,
+                "structure"
+              )}
+              type={"mission_count"}
+              label="nombre de missions"
+              labelType={chartPer}
+              title={"Nombre de missions par année,mois et jour"}
+            />
+          )}
         </div>
       </div>
+
+      <PieRechart
+        data={getMissionCountFor(fmissionData, "type")}
+        type={"mission_count"}
+        label="nombre de missions"
+        labelType={"label"}
+        title={"Répartition des missions actuelles par structure/type/état"}
+        style={1}
+      />
 
       {/* <div className="dash-content">
         <div style={{ gridArea: "a" }} className="box">

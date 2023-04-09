@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import OrdreMission from "../models/OrdreMission.js";
 import { checkFields } from "../middleware/auth.js";
 import { createOrUpdateFDocument } from "./FilesKpis.js";
+import { createOrUpdateFMission } from "./Kpis.js";
 const toId = mongoose.Types.ObjectId;
 
 export const createMission = async (req, res) => {
@@ -33,10 +34,11 @@ export const createMission = async (req, res) => {
     } else newStructure = structure;
 
     //verification dates start and end
-    if (new Date(tDateDeb).getTime() >= new Date(tDateRet).getTime())
-    {  throw new Error(
+    if (new Date(tDateDeb).getTime() >= new Date(tDateRet).getTime()) {
+      throw new Error(
         "Dates shouldn't be equal, return date should be greater than departure date"
-      );}
+      );
+    }
 
     let etat;
     //si c est le responsable/directeur qui l'a créée alors elle sera automatiquement acceptée
@@ -112,6 +114,14 @@ export const createMission = async (req, res) => {
         //______________________________________________________________
       }
     }
+    //____________________________________________________________________________________
+    createOrUpdateFMission(savedMission, "creation", null, "");
+    if (savedMission.etat === "acceptée") {
+      createOrUpdateFMission(savedMission, "update", null, "etat");
+    }
+
+    //____________________________________________________________________________________
+
     res
       .status(201)
       .json({ savedMission, msg: "mission has been created successfully" });
@@ -186,7 +196,19 @@ export const updateMissionEtat = async (req, res) => {
           //______________________________________________________________
         }
       }
+      //____________________________________________________________________________________
+      //update etat
+      createOrUpdateFMission(updatedMission, "update", mission, "etat");
+      //____________________________________________________________________________________
     }
+
+    if (req.body.taches) {
+      //____________________________________________________________________________________
+      //update tache
+      createOrUpdateFMission(updatedMission, "update", mission, "tache");
+      //____________________________________________________________________________________
+    }
+
     res.status(200).json({
       updatedMission,
       msg: "mission has been updated successfully",

@@ -46,6 +46,7 @@ const fetchData = async (dispatch, endpoint, socketEvent, num) => {
 export const getMissions = async (dispatch, num) => {
   console.log("inside getMissions");
   await fetchData(dispatch, "/mission/", "mission", num);
+  getMissionKPIS(dispatch);
 };
 
 export const getDemandes = async (dispatch, num) => {

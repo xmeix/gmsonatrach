@@ -26,6 +26,7 @@ import {
   FDM,
   FOM,
   FRFM,
+  Fmissions,
   dbs,
   dcs,
   dms,
@@ -37,6 +38,7 @@ import DM from "./models/demandes/DM.js";
 import DB from "./models/demandes/DB.js";
 import DC from "./models/demandes/DC.js";
 import FDocument from "./models/FDocument.js";
+import FMission from "./models/FMission.js";
 const toId = mongoose.Types.ObjectId;
 // Configure environment variables
 dotenv.config();
@@ -107,7 +109,9 @@ mongoose
     // DM.insertMany(dms);
     //DB.insertMany(dbs);
     // DC.insertMany(dcs);
-    console.log("end");
+
+    // FMission.insertMany(Fmissions);
+    // console.log("end");
   })
   .catch((error) => {
     console.error(`Failed to connect to MongoDB database: ${error.message}`);
@@ -145,13 +149,18 @@ cron.schedule("31 14 * * *", async () => {
   );
 
   for (const mission of missionsEnCours) {
-    mission.etat = "en-cours";
     const employeIds = mission.employes.map((employe) => employe._id);
     await User.updateMany(
       { _id: { $in: employeIds } },
       { $set: { etat: "missionnaire" } }
     );
-    await mission.save();
+    let old = mission;
+    mission.etat = "en-cours";
+    let saved = await mission.save();
+    //____________________________________________________________________________________
+    //update etat
+    createOrUpdateFMission(saved, "update", old, "etat");
+    //____________________________________________________________________________________
 
     for (const employeId of employeIds) {
       const rfm = new RapportFM({
@@ -173,25 +182,30 @@ cron.schedule("31 14 * * *", async () => {
   //pour chaque mission je fais ca
 
   // Update missions with tDateDeb equal to current time and etat equal to en-attente
-  console.log("here4");
+
   await Mission.updateMany(
     { tDateDeb: { $lte: new Date() }, etat: "en-attente" },
     { $set: { etat: "refusée" } }
   );
-  console.log("here6");
+  //____________________________________________________________________________________
+  //update etat de en-attente a refusé ... change it
+  // createOrUpdateFMission(saved, "update", old, "etat");
+  //____________________________________________________________________________________
 
   // Update missions with tDateRet equal to current time and etat equal to en-cours
   await Mission.updateMany(
     { tDateRet: { $lt: currentDate }, etat: "en-cours" },
     { $set: { etat: "terminée" } }
   );
-  console.log("here7");
+  //____________________________________________________________________________________
+  //update etat de en-attente a terminée ... change it
+  // createOrUpdateFMission(saved, "update", old, "etat");
+  //____________________________________________________________________________________
 
   // Update users associated with completed missions
   const missionsEnded = await Mission.find({
     etat: "terminée",
   });
-  console.log("here8");
   for (const mission of missionsEnded) {
     const employeIds = mission.employes.map((employe) => employe._id);
     await User.updateMany(

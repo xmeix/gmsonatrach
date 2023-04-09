@@ -12,7 +12,7 @@ export const createOrUpdateFMission = async (
   switch (operation) {
     case "creation": //gonna be the same process for (create mission , update mission etat from en-attente to acceptée or refusée or annulée )
       const mostRecent = await FMission.findOne({
-        etat: newMission.etat, //en-attente
+        etat: "en-attente", //en-attente
         structure: newMission.structure,
         type: newMission.type,
         country: newMission.pays,
@@ -22,7 +22,7 @@ export const createOrUpdateFMission = async (
 
       // Duplicate the most recent document and increment the circulation_count field
       const newFMission = new FMission({
-        etat: newMission.etat, //en-attente
+        etat: "en-attente", //en-attente
         structure: newMission.structure,
         type: newMission.type,
         country: newMission.pays,
@@ -52,7 +52,7 @@ export const createOrUpdateFMission = async (
     case "update":
       // Find the most recent document with same type, structure, and old etat
       const oldFMission = await FMission.findOne({
-        etat: oldMission.etat,
+        etat: oldMission ? oldMission.etat : "en-attente",
         structure: newMission.structure,
         type: newMission.type,
         country: newMission.pays,

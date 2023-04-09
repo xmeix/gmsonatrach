@@ -6,13 +6,14 @@ const FMissionSchema = new mongoose.Schema(
     structure: { type: String },
     type: { type: String }, //local-etranger
     country: { type: String },
+    departure: { type: String },
     destination: { type: String },
-    mission_count: { type: String },
+    mission_count: { type: Number, default: 0 },
     success_count: { type: Number, default: 0 }, //success count
     fail_count: { type: Number, default: 0 }, //success count
-    employee_count: { type: Number },
-    road_utilization_count: { type: Number },
-    airline_utilization_count: { type: Number },
+    employee_count: { type: Number, default: 0 },
+    road_utilization_count: { type: Number, default: 0 },
+    airline_utilization_count: { type: Number, default: 0 },
   },
   {
     timestamps: true,

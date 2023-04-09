@@ -52,7 +52,7 @@ const filesConfig = [
 ];
 
 const FilesDashboard = () => {
-  const filesKPISdata = useSelector((state) => state.stat.filesKPIS);
+  let filesKPISdata = useSelector((state) => state.stat.filesKPIS);
   const { chartPer, chartPerNum, handleButtonClick } = useChartButtons();
 
   return (
