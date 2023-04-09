@@ -23,6 +23,7 @@ import {
   getMissionGroupedDataForTime,
 } from "../../../utils/fmissions_analytics";
 import StackedBarRechart from "../../../components/charts/StackedBarRechart";
+import ComposedRechart from "../../../components/charts/ComposedRechart";
 const MissionDashboard = () => {
   let fmissionData = useSelector((state) => state.stat.missionKPIS);
 
@@ -37,8 +38,8 @@ const MissionDashboard = () => {
       <div className="dash-content">
         <div style={{ gridArea: "a" }} className="box">
           {/* type - structure - etat - country*/}
-          {(chartPer === 1 || chartPer === 2) && (
-            <AreaRechart
+          {
+            <StackedBarRechart
               data={getMissionGroupedDataForTime(
                 fmissionData,
                 chartPerNum,
@@ -48,26 +49,12 @@ const MissionDashboard = () => {
               label="nombre de missions"
               labelType={chartPer}
               title={"Nombre de missions par année,mois et jour"}
-              fill={false}
             />
-          )}
-          {chartPer === 3 && (
-            <StackedBarRechart
-              data={getMissionGroupedDataForTime(
-                fmissionData,
-                chartPerNum,
-                "structure"
-              )}
-              type={"mission_count"}
-              label="nombre de missions"
-              labelType={chartPer}
-              title={"Nombre de missions par année,mois et jour"}
-            />
-          )}
+          }
         </div>
         <div style={{ gridArea: "b" }} className="box">
           <PieRechart
-            data={getMissionCountFor(fmissionData, "type")}
+            data={getMissionCountFor(fmissionData, "etat")}
             type={"mission_count"}
             label="nombre de missions"
             labelType={"label"}
@@ -94,11 +81,11 @@ const MissionDashboard = () => {
             {/* percentages OR numbers */}
             <StackedBarRechart
               data={getMissionGroupedDataForTime(
-                fmissionData, //.filter((e) => e.etat === "terminée") if structure
+                fmissionData.filter((e) => e.etat === "terminée"), //.filter((e) => e.etat === "terminée") if structure
                 chartPerNum,
                 "structure"
               )}
-              type={"successAvg"} //success_count
+              type={"successAvg"}
               label="Taux de réussite"
               labelType={chartPer}
               title={"Taux de réussite des missions par année,mois et jour"}
@@ -150,32 +137,20 @@ const MissionDashboard = () => {
         </div>
         <div style={{ gridArea: "h" }} className="box">
           <Suspense fallback={<div>Loading...</div>}>
-            <StackedBarRechart
+            <ComposedRechart
               data={getMissionGroupedDataForTime(
-                fmissionData,
+                fmissionData.filter((e) => e.etat === "terminée"),
                 chartPerNum,
-                "structure"
+                "etat"
               )}
-              type={"airlineAvg"} //success_count
-              label="nombre de missions"
               labelType={chartPer}
               title={
                 "Taux d'utilisation total des moyens de transport par année,mois et jour"
               }
+              props={["airlineAvg", "roadAvg"]}
+              labels={["Avion", "Route"]}
             />
-            {/* <StackedBarRechart
-              data={getMissionGroupedDataForTime(
-                fmissionData,
-                chartPerNum,
-                "structure"
-              )}
-              type={"roadAvg"} //success_count
-              label="nombre de missions"
-              labelType={chartPer}
-              title={
-                "Taux d'utilisation total des moyens de transport par année,mois et jour"
-              }
-            /> */}
+         
           </Suspense>
         </div>
         <div style={{ gridArea: "i" }} className="box">
@@ -213,16 +188,16 @@ const MissionDashboard = () => {
         <div style={{ gridArea: "l" }} className="box">
           <Suspense fallback={<div>Loading...</div>}>
             {/* normalement accomplies et non accomplies  */}
-            <StackedBarRechart
+            <ComposedRechart
               data={getMissionGroupedDataForTime(
-                fmissionData,
+                fmissionData.filter((e) => e.etat === "terminée"),
                 chartPerNum,
                 "structure"
               )}
-              type={"success_count"}
-              label="Nombre de taches accomplies"
               labelType={chartPer}
               title={"Nombre de taches attribués par date"}
+              props={["success_count", "fail_count"]}
+              labels={["taches accomplies", "taches non accomplies"]}
             />
           </Suspense>
         </div>

@@ -25,11 +25,12 @@ const StackedBarRechart = ({
     } else {
       const newData = {
         label: curr.stack,
-        data: createdAtLabels.map((l) =>
-          filteredData
-            .filter((d) => d.stack === curr.stack && d.createdAt === l)
-            .reduce((sum, d) => sum + d[type], 0)
-        ),
+        data: createdAtLabels.map((l) => {
+          const recentData = filteredData.find(
+            (d) => d.stack === curr.stack && d.createdAt === l
+          );
+          return recentData ? recentData[type] : null;
+        }), 
       };
       acc.push(newData);
     }

@@ -26,14 +26,12 @@ const AreaRechart = ({
     } else {
       const newData = {
         label: curr.stack,
-        data: createdAtLabels.map((l) =>
-          filteredData
-            .filter((d) => d.stack === curr.stack && d.createdAt === l)
-            .reduce((sum, d) => sum + d[type], 0)
-        ),
-        fill: fill,
-        tension: 0.2,
-
+        data: createdAtLabels.map((l) => {
+          const recentData = filteredData.find(
+            (d) => d.stack === curr.stack && d.createdAt === l
+          );
+          return recentData ? recentData[type] : null;
+        }),
         backgroundColor: [
           "rgba(255, 99, 132, 0.2)",
           "rgba(54, 162, 235, 0.2)",
