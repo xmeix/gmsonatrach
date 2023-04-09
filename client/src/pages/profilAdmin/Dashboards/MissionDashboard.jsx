@@ -17,6 +17,8 @@ import ThumbDownAltRoundedIcon from "@mui/icons-material/ThumbDownAltRounded";
 import AirplanemodeActiveRoundedIcon from "@mui/icons-material/AirplanemodeActiveRounded";
 import DirectionsCarFilledRoundedIcon from "@mui/icons-material/DirectionsCarFilledRounded";
 import {
+  currentCount,
+  currentSuccessRate,
   getMissionCountFor,
   getMissionGroupedDataForTime,
 } from "../../../utils/fmissions_analytics";
@@ -40,7 +42,7 @@ const MissionDashboard = () => {
               data={getMissionGroupedDataForTime(
                 fmissionData,
                 chartPerNum,
-                "structure"
+                "etat"
               )}
               type={"mission_count"}
               label="nombre de missions"
@@ -63,16 +65,168 @@ const MissionDashboard = () => {
             />
           )}
         </div>
+        <div style={{ gridArea: "b" }} className="box">
+          <PieRechart
+            data={getMissionCountFor(fmissionData, "type")}
+            type={"mission_count"}
+            label="nombre de missions"
+            labelType={"label"}
+            title={"Répartition des missions actuelles par structure/type/état"}
+            style={1}
+          />
+        </div>
+        <div style={{ gridArea: "c" }} className="box">
+          <Suspense fallback={<div>Loading...</div>}>
+            <PieRechart
+              data={getMissionCountFor(fmissionData, "structure")}
+              type={"employee_count"}
+              label="nombre d'employés"
+              labelType={"label"}
+              title={
+                "Répartition d'employés impliqués dans les missions par structure"
+              }
+              style={3}
+            />
+          </Suspense>
+        </div>
+        <div style={{ gridArea: "d" }} className="box">
+          <Suspense fallback={<div>Loading...</div>}>
+            {/* percentages OR numbers */}
+            <StackedBarRechart
+              data={getMissionGroupedDataForTime(
+                fmissionData, //.filter((e) => e.etat === "terminée") if structure
+                chartPerNum,
+                "structure"
+              )}
+              type={"successAvg"} //success_count
+              label="Taux de réussite"
+              labelType={chartPer}
+              title={"Taux de réussite des missions par année,mois et jour"}
+            />
+          </Suspense>
+        </div>
+        <div
+          style={{
+            gridArea: "e",
+            display: "flex",
+            gap: "1em",
+          }}
+          className="box"
+        >
+          <span className="card-title">
+            Taux de réussite global des missions actuel:
+          </span>
+          <span className="number">
+            {currentSuccessRate(fmissionData, "success_count", "fail_count")} %
+          </span>
+          <CheckCircleIcon
+            className="card-icon"
+            style={{ color: "rgba(185, 233, 185, 0.411)" }}
+          />
+        </div>
+        <div style={{ gridArea: "f" }} className="box">
+          <span className="card-title">
+            Nombre de taches accomplies global:
+          </span>
+          <span className="number">
+            {currentCount(fmissionData, "success_count")} taches
+          </span>
+          <ThumbUpOffAltRoundedIcon
+            className="card-icon"
+            style={{ color: "rgba(211, 213, 252, 0.411)" }}
+          />
+        </div>
+        <div style={{ gridArea: "g" }} className="box">
+          <span className="card-title">
+            Nombre de taches non accomplies global:
+          </span>
+          <span className="number">
+            {currentCount(fmissionData, "fail_count")} taches
+          </span>
+          <ThumbDownAltRoundedIcon
+            className="card-icon"
+            style={{ color: "rgba(240, 177, 152, 0.411)" }}
+          />
+        </div>
+        <div style={{ gridArea: "h" }} className="box">
+          <Suspense fallback={<div>Loading...</div>}>
+            <StackedBarRechart
+              data={getMissionGroupedDataForTime(
+                fmissionData,
+                chartPerNum,
+                "structure"
+              )}
+              type={"airlineAvg"} //success_count
+              label="nombre de missions"
+              labelType={chartPer}
+              title={
+                "Taux d'utilisation total des moyens de transport par année,mois et jour"
+              }
+            />
+            {/* <StackedBarRechart
+              data={getMissionGroupedDataForTime(
+                fmissionData,
+                chartPerNum,
+                "structure"
+              )}
+              type={"roadAvg"} //success_count
+              label="nombre de missions"
+              labelType={chartPer}
+              title={
+                "Taux d'utilisation total des moyens de transport par année,mois et jour"
+              }
+            /> */}
+          </Suspense>
+        </div>
+        <div style={{ gridArea: "i" }} className="box">
+          card
+        </div>
+        <div style={{ gridArea: "j" }} className="box">
+          <span className="card-title">
+            Le taux d'utilisation total des routes pour les voyages d'affaires
+          </span>
+          <span className="number">
+            {currentSuccessRate(
+              fmissionData,
+              "road_utilization_count",
+              "airline_utilization_count"
+            )}
+            %
+          </span>
+          <DirectionsCarFilledRoundedIcon className="card-icon" />
+        </div>
+        <div style={{ gridArea: "k" }} className="box">
+          <span className="card-title">
+            La moyenne d'utilisation totale des compagnies aériennes pour les
+            voyages d'affaires
+          </span>
+          <span className="number">
+            {currentSuccessRate(
+              fmissionData,
+              "airline_utilization_count",
+              "road_utilization_count"
+            )}
+            %
+          </span>
+          <AirplanemodeActiveRoundedIcon className="card-icon" />
+        </div>
+        <div style={{ gridArea: "l" }} className="box">
+          <Suspense fallback={<div>Loading...</div>}>
+            {/* normalement accomplies et non accomplies  */}
+            <StackedBarRechart
+              data={getMissionGroupedDataForTime(
+                fmissionData,
+                chartPerNum,
+                "structure"
+              )}
+              type={"success_count"}
+              label="Nombre de taches accomplies"
+              labelType={chartPer}
+              title={"Nombre de taches attribués par date"}
+            />
+          </Suspense>
+        </div>
       </div>
-
-      <PieRechart
-        data={getMissionCountFor(fmissionData, "type")}
-        type={"mission_count"}
-        label="nombre de missions"
-        labelType={"label"}
-        title={"Répartition des missions actuelles par structure/type/état"}
-        style={1}
-      />
 
       {/* <div className="dash-content">
         <div style={{ gridArea: "a" }} className="box">
@@ -107,7 +261,7 @@ const MissionDashboard = () => {
           </Suspense>
         </div>
         <div style={{ gridArea: "b" }} className="box">
-          {" "}
+          
           <Suspense fallback={<div>Loading...</div>}>
             <div className="subchart-buttons">
               <button onClick={() => setChart2Per(4)} className="subchart-btn">
