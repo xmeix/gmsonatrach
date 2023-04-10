@@ -18,13 +18,12 @@ const GestionCMR = () => {
 
   const rfms = useSelector((state) => state.auth.rfms);
 
- 
-   return (
+  return (
     <div className="gestion">
-      <PageName name="Leave and reports" />
+      <PageName name="Congés et Rapports" />
       <div className="elements">
         <TableM
-          title="Requests List"
+          title="Liste des demandes"
           search={["id", "name"]}
           data={demandesCMR}
           columns={columnsDemandes}
@@ -32,7 +31,7 @@ const GestionCMR = () => {
           colType="demande"
         />
         <TableM
-          title="List of end-of-mission reports"
+          title="Liste des rapports fin de mission"
           search={["id", "name"]}
           filterOptions={filterRFMOptions}
           columns={columnsRFM}

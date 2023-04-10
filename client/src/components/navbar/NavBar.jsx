@@ -37,19 +37,19 @@ const NavBar = () => {
   const [profileTitle] = useState(() => {
     switch (user?.role) {
       case "directeur":
-        return "Director Account";
+        return "Directeur";
         break;
       case "responsable":
-        return "sub Director Account";
+        return "Sous-directeur";
         break;
       case "secretaire":
-        return "Secretaire Account";
+        return "Secrétaire";
         break;
       case "relex":
-        return "Relex Account";
+        return "Service Relex";
         break;
       case "employe":
-        return "Employe Account";
+        return "Employé";
         break;
       default:
         "";

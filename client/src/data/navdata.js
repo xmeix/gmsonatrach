@@ -1,26 +1,27 @@
 export const titles = [
-  { id: 1, title: "Dashboard", path: "/" },
-  { id: 2, title: "Schedule", path: "/planification" },
-  { id: 3, title: "Employees", path: "/gestion-des-employes" }, // Table user + form
-  { id: 4, title: "Relex Service", path: "/gestion-service-relex" }, //Billetterie table + form
-  { id: 5, title: "Missions", path: "/gestion-des-mission" }, // Table missions + form
-  { id: 6, title: "Leave and reports ", path: "/gestion-c-m-rfm" }, //RFM and Congé , Modif tables +
+  { id: 1, title: "Tableau de bord", path: "/" },
+  { id: 2, title: "Planification", path: "/planification" },
+  { id: 3, title: "Employés", path: "/gestion-des-employes" }, // Tableau utilisateur + formulaire
+  { id: 4, title: "Service Relex", path: "/gestion-service-relex" }, //Tableau de billetterie + formulaire
+  { id: 5, title: "Missions", path: "/gestion-des-mission" }, // Tableau des missions + formulaire
+  { id: 6, title: "Congé et Rapports", path: "/gestion-c-m-rfm" }, //Tableaux de RFM et Congé, formulaires de modification
 ];
 
 export const employeTitles = [
-  { id: 1, title: "Schedule", path: "/" },
-  { id: 2, title: "Mission Reports ", path: "/gestion-des-mission" }, // Table missions
-  { id: 3, title: "Modification Reports ", path: "/gestion-modification" }, //TABLES + FORMS
-  { id: 4, title: "Absence Requests ", path: "/gestion-conge" }, //TABLES + FORMS
-  // { id: 5, title: "Personnal Expenses", path: "/gestion-depenses" }, //TABLES + FORMS
+  { id: 1, title: "Planification", path: "/" },
+  { id: 2, title: "Missions", path: "/gestion-des-mission" }, // Tableau des missions
+  { id: 3, title: "Rapports de modification", path: "/gestion-modification" }, //Tableaux et formulaires
+  { id: 4, title: "Demandes de congé", path: "/gestion-conge" }, //Tableaux et formulaires
+  // { id: 5, title: "Dépenses personnelles", path: "/gestion-depenses" }, //Tableaux et formulaires
 ];
+
 export const relexTitles = [
-  { id: 1, title: "Relex Service", path: "/" }, //Billetterie table
+  { id: 1, title: "Service Relex", path: "/" }, //Tableau de billetterie
 ];
 
 export const dashTitles = [
-  { id: 1, title: "mission Analytics", path: "/" },
-  { id: 2, title: "files Analytics", path: "/files-analytics" },
-  { id: 3, title: "cost Analytics", path: "/cost-analytics" },
-  { id: 4, title: "users Analytics", path: "/users-analytics" },
+  { id: 1, title: "Analyse des missions", path: "/" },
+  { id: 2, title: "Analyse des fichiers", path: "/files-analytics" },
+  { id: 3, title: "Analyse des coûts", path: "/cost-analytics" },
+  { id: 4, title: "Analyse des utilisateurs", path: "/users-analytics" },
 ];

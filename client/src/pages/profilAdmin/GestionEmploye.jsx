@@ -1,11 +1,11 @@
- import PageName from "../../components/pageName/PageName";
+import PageName from "../../components/pageName/PageName";
 import "./../../css/Gestion.css";
 import TableM from "../../components/table/TableM";
 import Formulaire from "../../components/formulaire/Formulaire";
 import {
   userEntries as entries,
   userButtons as buttons,
- } from "../../data/formData";
+} from "../../data/formData";
 import { useSelector } from "react-redux";
 import { columnsUsersEmp, filterUserOptions } from "../../data/tableCols";
 const GestionEmploye = () => {
@@ -20,10 +20,10 @@ const GestionEmploye = () => {
           type="user"
           entries={entries}
           buttons={buttons}
-          title="Add user form"
+          title="Formulaire d'ajout d'utilisateur"
         />
         <TableM
-          title="Employees List"
+          title="Liste des employés ajoutés"
           filterOptions={filterUserOptions}
           columns={columnsUsersEmp}
           data={usersEmp}

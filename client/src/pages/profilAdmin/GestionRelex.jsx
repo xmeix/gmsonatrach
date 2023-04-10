@@ -21,11 +21,11 @@ const GestionRelex = () => {
             type="DB"
             entries={entries}
             buttons={buttons}
-            title="Ticket Request Form"
+            title="Formulaire de demande de billetterie"
           />
         )}
         <TableM
-          title="Ticket Requests List"
+          title="Liste de demandes de billetterie"
           search={["id"]}
           filterOptions={filterDBOptions}
           columns={columnsDemandes}

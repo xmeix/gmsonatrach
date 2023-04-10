@@ -12,17 +12,17 @@ const GestionModification = () => {
   const currentUser = useSelector((state) => state.auth.user);
   return (
     <div className="gestion">
-      <PageName name="Modification Reports" />
+      <PageName name="modification" />
       <div className="elements">
         <Formulaire
           type="DM"
           entries={DMEntries}
           buttons={userButtons}
-          title="Leave a change request"
+          title="Formulaire de demande de modification"
         />
 
         <TableM
-          title="Modification Requests"
+          title="Mes demandes de modification"
           search={["id", "name"]}
           data={demandesM}
           columns={columnsDemandes}

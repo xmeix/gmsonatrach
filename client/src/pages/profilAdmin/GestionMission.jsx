@@ -44,13 +44,13 @@ const GestionMission = () => {
             type="mission"
             entries={entries}
             buttons={buttons}
-            title="Add mission form"
+            title="Formulaire d'ajout d'une mission"
           />
         )}
 
         {currentUser.role === "employe" && (
           <TableM
-            title="List of end-of-mission reports"
+            title="Liste de rapports de fin de mission"
             search={["id", "name"]}
             filterOptions={filterRFMOptions}
             columns={columnsRFM}
@@ -60,7 +60,7 @@ const GestionMission = () => {
         )}
 
         <TableM
-          title="Business travels list"
+          title="Listes des missions de travail"
           search={["id"]}
           filterOptions={filterMissionsOptions}
           columns={columnsMissions}
@@ -68,7 +68,7 @@ const GestionMission = () => {
           colType="mission"
         />
         <TableM
-          title="employees Mission orders"
+          title="Ordres de mission des employés"
           search={["id"]}
           filterOptions={filterMissionsOptions}
           columns={columnsOM}

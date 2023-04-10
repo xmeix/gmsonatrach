@@ -12,17 +12,17 @@ const GestionConge = () => {
   const currentUser = useSelector((state) => state.auth.user);
   return (
     <div className="gestion">
-      <PageName name="Absence Requests" />
+      <PageName name="Congés" />
       <div className="elements">
         <Formulaire
           type="DC"
           entries={DCEntries}
           buttons={userButtons}
-          title="request a leave of absence form"
+          title="Formulaire de demande de congés"
         />
 
         <TableM
-          title="Absence Requests List"
+          title="Mes demandes de congés"
           search={["id", "name"]}
           data={demandesC}
           columns={columnsDemandes}
