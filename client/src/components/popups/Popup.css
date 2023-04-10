@@ -58,11 +58,6 @@
   font-size: 13px;
 }
 
-.popup-dm .content {
-  text-align: left;
-  align-self: center;
-  font-size: 15px;
-}
 /*--------------------------------------------------*/
 
 .popup-om {
@@ -337,9 +332,11 @@
   align-items: flex-start;
   gap: 0.8em;
   margin-top: 1em;
+  font-weight: 500;
+  font-size: 14px;
 }
 .popup-update .subTitle {
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 600;
   text-transform: capitalize;
 }
@@ -394,4 +391,90 @@
 
 .popup button:hover {
   background-color: var(--red2);
+}
+
+/*________________________________________________*/
+.popup-survey,
+.popup-dm {
+  font-family: "Montserrat";
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1em;
+  position: fixed;
+  z-index: 998;
+  background-color: var(--white);
+  box-shadow: 0 0 0 2px rgba(70, 69, 69, 0.034);
+  transition: all 0.5s ease-in-out;
+
+  border-radius: 10px;
+  padding: 20px;
+  /* border: solid 1px var(--light-gray); */
+  top: 15%;
+  left: 20%;
+  right: 20%;
+  bottom: 15%;
+}
+
+.popup-survey .title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  white-space: initial;
+}
+.popup-dm .title {
+  white-space: initial;
+}
+
+.popup-survey .popup-survey-content,
+.popup-dm .content {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+.popup-dm .content {
+  padding: 1em;
+  margin-top: 1em;
+}
+.popup-survey .feedback-option {
+  background-color: #f5f5f5;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 10px;
+  padding: 10px;
+  text-align: center;
+  outline: none;
+  border: none;
+}
+
+.popup-survey .feedback-option:hover {
+  background-color: #e2e2e2;
+}
+
+.popup-survey .note {
+  font-size: 14px;
+  text-align: center;
+  color: #999;
+}
+
+.pop-input {
+  border: none;
+  padding: 0 0 0 1em;
+  box-shadow: none;
+}
+
+/*___________________________________________*/
+
+.popup-user .title {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.popup-user .om-label-line {
+  margin-bottom: 10px;
+}
+
+.popup-user .om-label {
+  color: var(--gray);
 }

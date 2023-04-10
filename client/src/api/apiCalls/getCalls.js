@@ -25,6 +25,7 @@ const fetchData = async (dispatch, endpoint, socketEvent, num) => {
       } else if (socketEvent === "om") {
         dispatch(setOMs(res.data.filteredOMissions));
       } else if (socketEvent === "rfm") {
+        console.log(res.data);
         dispatch(setRFMs(res.data));
       } else if (socketEvent === "demande") {
         dispatch(setDemandes(res.data));

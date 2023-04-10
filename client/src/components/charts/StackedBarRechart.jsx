@@ -30,13 +30,14 @@ const StackedBarRechart = ({
             (d) => d.stack === curr.stack && d.createdAt === l
           );
           return recentData ? recentData[type] : null;
-        }), 
+        }),
       };
       acc.push(newData);
     }
     return acc;
   }, []);
 
+  console.log(datasets);
   return (
     <>
       {renderButtons()}

@@ -48,12 +48,14 @@ const AreaRechart = ({
           "rgba(153, 102, 255, 1)",
           "rgba(255, 159, 64, 1)",
         ],
+        borderWidth: 2.5,
+        tension: 0.2,
       };
       acc.push(newData);
     }
     return acc;
   }, []);
-
+ 
   return (
     <>
       {renderButtons()}

@@ -3,32 +3,26 @@ import Nodata from "./Nodata";
 import { Chart } from "react-chartjs-2";
 import { Chart as ChartJS } from "chart.js/auto";
 
-const ComposedRechart = ({
-  data, 
-  labelType, 
-  title,
-  props,
-  labels,
-}) => {
+const ComposedRechart = ({ data, labelType, title, props, labels }) => {
   const { filteredData, isNoData, renderButtons } = useDateFilter(
     labelType,
     data
   );
 
   const createdAtLabels = [...new Set(filteredData.map((d) => d.createdAt))];
-  console.log(filteredData);
+ 
   const successData = createdAtLabels.map((date) => {
-    const successCount = filteredData
+    const mostRecentSuccess = filteredData
       .filter((d) => d.createdAt === date && d[props[0]])
-      .reduce((sum, d) => sum + d[props[0]], 0);
-    return successCount;
+      .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))[0];
+    return mostRecentSuccess ? mostRecentSuccess[props[0]] : 0;
   });
 
   const failData = createdAtLabels.map((date) => {
-    const failCount = filteredData
+    const mostRecentFail = filteredData
       .filter((d) => d.createdAt === date && d[props[1]])
-      .reduce((sum, d) => sum + d[props[1]], 0);
-    return failCount;
+      .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))[0];
+    return mostRecentFail ? mostRecentFail[props[1]] : 0;
   });
 
   return (

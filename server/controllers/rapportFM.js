@@ -1,7 +1,7 @@
 import RapportFM from "../models/RapportFM.js";
 import User from "../models/User.js";
 import mongoose from "mongoose";
-
+import {createOrUpdateFDocument} from "./FilesKpis.js"
 const toId = mongoose.Types.ObjectId;
 
 export const updateRapport = async (req, res) => {

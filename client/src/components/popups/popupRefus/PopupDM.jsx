@@ -24,7 +24,7 @@ const PopupDM = ({ item }) => {
               </span>
             }
           />
-          <br />
+          
         </div>
         <div className="om-body" style={{ whiteSpace: "initial" }}>
           <OmLabelLine
@@ -34,16 +34,16 @@ const PopupDM = ({ item }) => {
           <OmLabelLine
             label="Le"
             content={
-              ": " +
+              ": " +(
                 Intl.DateTimeFormat(["ban", "id"]).format(
                   new Date(item.createdAt)
-                ) || "/"
+                ) || "/")
             }
           />
-          <OmLabelLine label="Motif" content={": " + item.motif || "/"} />
+          <OmLabelLine label="Motif" content={": " + (item.motif || "/")} />
           <OmLabelLine
-            label="Raison de refus"
-            content={": " + item.raisonRefus || "/"}
+            label="Raison refus"
+            content={": " + (item.raisonRefus || " /")}
           />
         </div>
       </div>

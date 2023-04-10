@@ -4,7 +4,7 @@ import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRound
 import "./../pages/profilAdmin/Dashboards/MissionDash.css";
 const useDateFilter = (type, data) => {
   // initialize state with current month
-   const [filterDate, setFilterDate] = useState(new Date());
+  const [filterDate, setFilterDate] = useState(new Date());
   const maxDate = new Date();
   const [disablePrev, setDisabledPrev] = useState(false);
 
@@ -73,7 +73,7 @@ const useDateFilter = (type, data) => {
       }
     })
     .sort((a, b) => Date.parse(a.createdAt) - Date.parse(b.createdAt));
-   // check if current date is same as max date
+  // check if current date is same as max date
   const isMaxDate =
     type === 1
       ? filterDate.getFullYear() + 5 > maxDate.getFullYear()

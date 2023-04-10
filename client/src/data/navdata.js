@@ -12,7 +12,7 @@ export const employeTitles = [
   { id: 2, title: "Mission Reports ", path: "/gestion-des-mission" }, // Table missions
   { id: 3, title: "Modification Reports ", path: "/gestion-modification" }, //TABLES + FORMS
   { id: 4, title: "Absence Requests ", path: "/gestion-conge" }, //TABLES + FORMS
-  { id: 5, title: "Personnal Expenses", path: "/gestion-depenses" }, //TABLES + FORMS
+  // { id: 5, title: "Personnal Expenses", path: "/gestion-depenses" }, //TABLES + FORMS
 ];
 export const relexTitles = [
   { id: 1, title: "Relex Service", path: "/" }, //Billetterie table

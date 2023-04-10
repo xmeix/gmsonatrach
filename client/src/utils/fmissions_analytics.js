@@ -1,6 +1,7 @@
 export const getMissionGroupedDataForTime = (data, time, stack) => {
   const documents = data
     .slice()
+    .filter((d) => new Date(d.createdAt) <= new Date())
     .sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt));
   //No need for most recent
   let mostRecentDocuments = {};
@@ -21,8 +22,7 @@ export const getMissionGroupedDataForTime = (data, time, stack) => {
   }
 
   let groupedDataArray = {};
-  groupedDataArray = Object.values(mostRecentDocuments)
-  .reduce((acc, cur) => {
+  groupedDataArray = Object.values(mostRecentDocuments).reduce((acc, cur) => {
     const yearIndex = acc.findIndex(
       (el) =>
         new Date(el.createdAt).toISOString().slice(0, time) ===
@@ -44,22 +44,17 @@ export const getMissionGroupedDataForTime = (data, time, stack) => {
         road_utilization_count: cur.road_utilization_count,
         successAvg:
           totalSuccessFail > 0
-            ? ((cur.success_count * 100) / totalSuccessFail).toFixed(2)
+            ? (cur.success_count * 100) / totalSuccessFail
             : 0,
         failAvg:
-          totalSuccessFail > 0
-            ? ((cur.fail_count * 100) / totalSuccessFail).toFixed(2)
-            : 0,
+          totalSuccessFail > 0 ? (cur.fail_count * 100) / totalSuccessFail : 0,
         airlineAvg:
           totalAirlineRoad > 0
-            ? (
-                (cur.airline_utilization_count * 100) /
-                totalAirlineRoad
-              ).toFixed(2)
+            ? (cur.airline_utilization_count * 100) / totalAirlineRoad
             : 0,
         roadAvg:
           totalAirlineRoad > 0
-            ? ((cur.road_utilization_count * 100) / totalAirlineRoad).toFixed(2)
+            ? (cur.road_utilization_count * 100) / totalAirlineRoad
             : 0,
       });
     } else {
@@ -75,24 +70,16 @@ export const getMissionGroupedDataForTime = (data, time, stack) => {
         acc[yearIndex].airline_utilization_count +
         acc[yearIndex].road_utilization_count;
       if (totalSuccessFail > 0) {
-        acc[yearIndex].successAvg = (
-          (acc[yearIndex].success_count * 100) /
-          totalSuccessFail
-        ).toFixed(2);
-        acc[yearIndex].failAvg = (
-          (acc[yearIndex].fail_count * 100) /
-          totalSuccessFail
-        ).toFixed(2);
+        acc[yearIndex].successAvg =
+          (acc[yearIndex].success_count * 100) / totalSuccessFail;
+        acc[yearIndex].failAvg =
+          (acc[yearIndex].fail_count * 100) / totalSuccessFail;
       }
       if (totalAirlineRoad > 0) {
-        acc[yearIndex].airlineAvg = (
-          (acc[yearIndex].airline_utilization_count * 100) /
-          totalAirlineRoad
-        ).toFixed(2);
-        acc[yearIndex].roadAvg = (
-          (acc[yearIndex].road_utilization_count * 100) /
-          totalAirlineRoad
-        ).toFixed(2);
+        acc[yearIndex].airlineAvg =
+          (acc[yearIndex].airline_utilization_count * 100) / totalAirlineRoad;
+        acc[yearIndex].roadAvg =
+          (acc[yearIndex].road_utilization_count * 100) / totalAirlineRoad;
       }
     }
     return acc;
@@ -103,6 +90,8 @@ export const getMissionGroupedDataForTime = (data, time, stack) => {
 export const getMissionCountFor = (data, type) => {
   const documents = data
     .slice()
+    .filter((d) => new Date(d.createdAt) <= new Date())
+
     .sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt));
 
   let mostRecentDocuments = {};
@@ -164,6 +153,7 @@ export const currentSuccessRate = (data, property1, property2) => {
   const docs = getMissionCountFor(data, "etat").filter(
     (e) => e.label === "terminée"
   );
+
   let A = 0;
   let B = 0;
 

@@ -18,7 +18,8 @@
   width: 95vw;
   border-radius: 5px;
   text-align: left;
-  margin-bottom: 3em;
+  margin: 3em 0;
+  background-color: white;
 }
 
 .tab .schedule-head {
@@ -54,6 +55,7 @@
 .tab .planning-table {
   border-collapse: collapse;
   position: relative;
+  width: 100%;
 }
 
 .tab .planning-table .planning-thead {
@@ -91,6 +93,8 @@
   font-size: 14px;
   background-color: var(--blue3);
   border: solid 1px white;
+  font-weight: 500;
+  text-transform: uppercase;
 }
 .planning
   .planning-table

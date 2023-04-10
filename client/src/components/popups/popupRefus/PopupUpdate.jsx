@@ -11,6 +11,7 @@ import {
 import useBtn from "../../../hooks/useBtn";
 import { useSelector } from "react-redux";
 import usePDFGenerator from "../../../hooks/usePDFGenerator";
+import PopupSurvey from "./PopupSurvey";
 
 const useStyles = makeStyles({
   table: {
@@ -36,7 +37,7 @@ const OmLabelLine = ({ label, content }) => (
   </div>
 );
 
-const PopupUpdate = ({ item, close }) => {
+const PopupUpdate = ({ item, close, setSurvey }) => {
   const mission = item.idMission || null;
   const user = item.idEmploye || null;
   const [dates, setDates] = useState([]);
@@ -222,341 +223,389 @@ const PopupUpdate = ({ item, close }) => {
     return `${year}-${month}-${day}`;
   };
 
+  const [justSent, setJustSent] = useState(false);
   return (
     <>
-      <div className="popup-update" ref={pdfRef}>
-        <h3 className="title">Compte Rendu de Mission</h3>
-        <div className="direction">
-          <div>
-            Du
-            <span>
-              {Intl.DateTimeFormat(["ban", "id"]).format(
-                new Date(item.createdAt)
-              )}
-            </span>
-          </div>
-          <span className="identificateur">
-            N° {item._id}/ SH-ONE/{new Date().getFullYear()}
-          </span>
-          <span>DCG/RH - DAPS</span>
-        </div>
-        <div className="infoEmploye">
-          <OmLabelLine label="Matricule" content={": " + user._id} />
-          <OmLabelLine
-            label="Nom & Prénoms"
-            content={": " + user.nom + " " + user.prenom}
-          />
-          <OmLabelLine label="fonction" content={": " + user.fonction} />
-          <OmLabelLine label="structure" content={": " + user.structure} />
-        </div>
-        <div className="infoMission">
-          <OmLabelLine
-            label="Objet de la mission"
-            content={": " + mission.objetMission}
-          />
-          <OmLabelLine
-            label="Itinéraire"
-            content={
-              ": " +
-              mission.lieuDep +
-              " Alger" +
-              mission.destination +
-              " " +
-              mission.pays
-            }
-          />
-
-          <div className="dates">
-            <span className="subTitle">Début de Mission:</span>
-            <div className="dateContainer">
+      {!justSent && (
+        <div className="popup-update" ref={pdfRef}>
+          <h3 className="title">Compte Rendu de Mission</h3>
+          <div className="direction">
+            <div>
+              Du
               <span>
-                Date et heure du départ (du lieu de résidence ou du lieu de
-                travail habituel)
-              </span>
-              <div className="dateContent">
-                <span>Le </span>:
-                {mission &&
+                {" " +
                   Intl.DateTimeFormat(["ban", "id"]).format(
-                    new Date(mission.tDateDeb)
+                    new Date(item.createdAt)
                   )}
-                , <span>a:</span>
-                {item.etat === "créé" ? (
-                  <input
-                    type="time"
-                    defaultValue={new Date(body2.tDateDeb).toLocaleTimeString(
-                      [],
-                      { hour: "2-digit", minute: "2-digit", hour12: false }
-                    )}
-                    onChange={(e) => addToDate(e.target.value, 1)}
-                  />
-                ) : (
-                  new Date(body2.tDateDeb).toLocaleTimeString([], {
-                    hour: "2-digit",
-                    minute: "2-digit",
-                    hour12: false,
-                  }) + " H"
-                )}
-              </div>
+              </span>
+            </div>
+            <span className="identificateur">
+              N° {item._id}/ SH-ONE/{new Date().getFullYear()}
+            </span>
+            <span>DCG/RH - DAPS</span>
+          </div>
+          <div className="infoEmploye">
+            <OmLabelLine label="Matricule" content={": " + user._id} />
+            <OmLabelLine
+              label="Nom & Prénoms"
+              content={": " + user.nom + " " + user.prenom}
+            />
+            <OmLabelLine label="fonction" content={": " + user.fonction} />
+            <OmLabelLine label="structure" content={": " + user.structure} />
+          </div>
+          <div className="infoMission">
+            <OmLabelLine
+              label="Objet de la mission"
+              content={": " + mission.objetMission}
+            />
+            <OmLabelLine
+              label="Itinéraire"
+              content={
+                ": " +
+                mission.lieuDep +
+                " Alger" +
+                mission.destination +
+                " " +
+                mission.pays
+              }
+            />
+
+            <div className="dates">
+              <span className="subTitle">Début de Mission:</span>
               <div className="dateContainer">
                 <span>
-                  Date et heure d'Arrivée ( au lieu où doit se dérouler la
-                  mission )
+                  Date et heure du départ (du lieu de résidence ou du lieu de
+                  travail habituel)
                 </span>
-              </div>
-              <div className="dateContent">
-                <span>Le </span>:
-                {item.etat === "créé" ? (
-                  <input
-                    type="date"
-                    defaultValue={formatDate(new Date(body2.dateDebA))}
-                    onChange={(e) => addToDate(e.target.value, 2)}
-                  />
-                ) : (
-                  Intl.DateTimeFormat(["ban", "id"]).format(
-                    new Date(body2.dateDebA)
-                  )
-                )}
-                , <span>a:</span>
-                {item.etat === "créé" ? (
-                  <input
-                    type="time"
-                    defaultValue={new Date(body2.dateDebA).toLocaleTimeString(
-                      [],
-                      { hour: "2-digit", minute: "2-digit", hour12: false }
-                    )}
-                    onChange={(e) => addToDate(e.target.value, 3)}
-                  />
-                ) : (
-                  new Date(body2.dateDebA).toLocaleTimeString([], {
-                    hour: "2-digit",
-                    minute: "2-digit",
-                    hour12: false,
-                  }) + " H"
-                )}
-              </div>
-            </div>
-          </div>
-
-          <div className="deroulement">
-            <div className="subTitle">
-              Compte rendu du déroulement de la mission
-            </div>
-            <Table className={classes.table} size="small">
-              <TableHead>
-                <TableRow>
-                  <TableCell align="center" className={classes.tableHeaderCell}>
-                    Date
-                  </TableCell>
-                  <TableCell
-                    align="center"
-                    colSpan={2}
-                    className={classes.tableHeaderCell}
-                  >
-                    Hébergement
-                  </TableCell>
-                  <TableCell
-                    align="center"
-                    colSpan={2}
-                    className={classes.tableHeaderCell}
-                  >
-                    Déjeuner
-                  </TableCell>
-                  <TableCell
-                    align="center"
-                    colSpan={2}
-                    className={classes.tableHeaderCell}
-                  >
-                    Dîner
-                  </TableCell>
-                  <TableCell align="center" className={classes.tableHeaderCell}>
-                    Observation
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell align="center" />
-                  <TableCell align="center" className={classes.tableHeaderCell}>
-                    avec prise en charge
-                  </TableCell>
-                  <TableCell align="center" className={classes.tableHeaderCell}>
-                    Sans prise en charge
-                  </TableCell>
-                  <TableCell align="center" className={classes.tableHeaderCell}>
-                    avec prise en charge
-                  </TableCell>
-                  <TableCell align="center" className={classes.tableHeaderCell}>
-                    Sans prise en charge
-                  </TableCell>
-                  <TableCell align="center" className={classes.tableHeaderCell}>
-                    avec prise en charge
-                  </TableCell>
-                  <TableCell align="center" className={classes.tableHeaderCell}>
-                    Sans prise en charge
-                  </TableCell>
-                  <TableCell align="center" />
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {dates.map((date, index) => (
-                  <TableRow key={index}>
-                    <TableCell align="center" className={classes.tableCell}>
-                      {Intl.DateTimeFormat(["ban", "id"]).format(
-                        new Date(date)
+                <div className="dateContent">
+                  <span>Le </span>:
+                  {mission &&
+                    " " +
+                      Intl.DateTimeFormat(["ban", "id"]).format(
+                        new Date(mission.tDateDeb)
                       )}
+                  , <span>a:</span>
+                  {item.etat === "créé" ? (
+                    <input
+                      className="pop-input"
+                      type="time"
+                      defaultValue={new Date(body2.tDateDeb).toLocaleTimeString(
+                        [],
+                        { hour: "2-digit", minute: "2-digit", hour12: false }
+                      )}
+                      onChange={(e) => addToDate(e.target.value, 1)}
+                    />
+                  ) : (
+                    new Date(body2.tDateDeb).toLocaleTimeString([], {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                      hour12: false,
+                    }) + " H"
+                  )}
+                </div>
+                <div className="dateContainer">
+                  <span>
+                    Date et heure d'Arrivée ( au lieu où doit se dérouler la
+                    mission )
+                  </span>
+                </div>
+                <div className="dateContent">
+                  <span>Le </span>:
+                  {item.etat === "créé" ? (
+                    <input
+                      className="pop-input"
+                      type="date"
+                      defaultValue={formatDate(new Date(body2.dateDebA))}
+                      onChange={(e) => addToDate(e.target.value, 2)}
+                    />
+                  ) : (
+                    " " +
+                    Intl.DateTimeFormat(["ban", "id"]).format(
+                      new Date(body2.dateDebA)
+                    )
+                  )}
+                  , <span>a:</span>
+                  {item.etat === "créé" ? (
+                    <input
+                      className="pop-input"
+                      type="time"
+                      defaultValue={new Date(body2.dateDebA).toLocaleTimeString(
+                        [],
+                        { hour: "2-digit", minute: "2-digit", hour12: false }
+                      )}
+                      onChange={(e) => addToDate(e.target.value, 3)}
+                    />
+                  ) : (
+                    new Date(body2.dateDebA).toLocaleTimeString([], {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                      hour12: false,
+                    }) + " H"
+                  )}
+                </div>
+              </div>
+            </div>
+
+            <div className="deroulement">
+              <div className="subTitle">
+                Compte rendu du déroulement de la mission
+              </div>
+              <Table className={classes.table} size="small">
+                <TableHead>
+                  <TableRow>
+                    <TableCell
+                      align="center"
+                      className={classes.tableHeaderCell}
+                    >
+                      Date
                     </TableCell>
-                    {["hebergement", "dejeuner", "diner"].map((event, i) => {
-                      return (
-                        <Fragment key={i}>
-                          <TableCell align="center">
-                            {radioInput(event, index, "avec-prise-en-charge")}
-                          </TableCell>
-                          <TableCell align="center">
-                            {radioInput(event, index, "sans-prise-en-charge")}
-                          </TableCell>
-                        </Fragment>
-                      );
-                    })}
-
-                    <TableCell align="center">
-                      {currentUser._id === user._id && item.etat === "créé" && (
-                        <input
-                          value={observations[index]}
-                          type="text"
-                          onChange={handleObservationChange(
-                            index,
-                            "observation"
-                          )}
-                        />
-                      )}
-
-                      {(currentUser._id !== user._id ||
-                        item.etat !== "créé") && (
-                        <div>{observations[index]}</div>
-                      )}
+                    <TableCell
+                      align="center"
+                      colSpan={2}
+                      className={classes.tableHeaderCell}
+                    >
+                      Hébergement
+                    </TableCell>
+                    <TableCell
+                      align="center"
+                      colSpan={2}
+                      className={classes.tableHeaderCell}
+                    >
+                      Déjeuner
+                    </TableCell>
+                    <TableCell
+                      align="center"
+                      colSpan={2}
+                      className={classes.tableHeaderCell}
+                    >
+                      Dîner
+                    </TableCell>
+                    <TableCell
+                      align="center"
+                      className={classes.tableHeaderCell}
+                    >
+                      Observation
                     </TableCell>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-            <div className="instruction">
-              *cochez la case correspondante à chaque date.
-            </div>
-          </div>
+                  <TableRow>
+                    <TableCell align="center" />
+                    <TableCell
+                      align="center"
+                      className={classes.tableHeaderCell}
+                    >
+                      avec prise en charge
+                    </TableCell>
+                    <TableCell
+                      align="center"
+                      className={classes.tableHeaderCell}
+                    >
+                      Sans prise en charge
+                    </TableCell>
+                    <TableCell
+                      align="center"
+                      className={classes.tableHeaderCell}
+                    >
+                      avec prise en charge
+                    </TableCell>
+                    <TableCell
+                      align="center"
+                      className={classes.tableHeaderCell}
+                    >
+                      Sans prise en charge
+                    </TableCell>
+                    <TableCell
+                      align="center"
+                      className={classes.tableHeaderCell}
+                    >
+                      avec prise en charge
+                    </TableCell>
+                    <TableCell
+                      align="center"
+                      className={classes.tableHeaderCell}
+                    >
+                      Sans prise en charge
+                    </TableCell>
+                    <TableCell align="center" />
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {dates.map((date, index) => (
+                    <TableRow key={index}>
+                      <TableCell align="center" className={classes.tableCell}>
+                        {" " +
+                          Intl.DateTimeFormat(["ban", "id"]).format(
+                            new Date(date)
+                          )}
+                      </TableCell>
+                      {["hebergement", "dejeuner", "diner"].map((event, i) => {
+                        return (
+                          <Fragment key={i}>
+                            <TableCell align="center">
+                              {radioInput(event, index, "avec-prise-en-charge")}
+                            </TableCell>
+                            <TableCell align="center">
+                              {radioInput(event, index, "sans-prise-en-charge")}
+                            </TableCell>
+                          </Fragment>
+                        );
+                      })}
 
-          <div className="dates">
-            <span className="subTitle">Fin de Mission:</span>
-            <div className="dateContainer">
-              <span>
-                Date et heure du départ "du lieu où avait été déroulée la
-                mission"
-              </span>
-              <div className="dateContent">
-                <span>Le </span>:
-                {Intl.DateTimeFormat(["ban", "id"]).format(
-                  new Date(mission.tDateRet)
-                )}
-                , <span>a:</span>
-                {item.etat === "créé" ? (
-                  <input
-                    type="time"
-                    defaultValue={new Date(body2.tDateRet).toLocaleTimeString(
-                      [],
-                      { hour: "2-digit", minute: "2-digit", hour12: false }
-                    )}
-                    onChange={(e) => addToDate(e.target.value, 4)}
-                  />
-                ) : (
-                  new Date(body2.tDateRet).toLocaleTimeString([], {
-                    hour: "2-digit",
-                    minute: "2-digit",
-                    hour12: false,
-                  }) + "H"
-                )}
+                      <TableCell align="center">
+                        {currentUser._id === user._id &&
+                          item.etat === "créé" && (
+                            <input
+                              className="pop-input"
+                              value={observations[index]}
+                              type="text"
+                              onChange={handleObservationChange(
+                                index,
+                                "observation"
+                              )}
+                            />
+                          )}
+
+                        {(currentUser._id !== user._id ||
+                          item.etat !== "créé") && (
+                          <div>{observations[index]}</div>
+                        )}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+              <div className="instruction">
+                *cochez la case correspondante à chaque date.
               </div>
+            </div>
+
+            <div className="dates">
+              <span className="subTitle">Fin de Mission:</span>
               <div className="dateContainer">
                 <span>
-                  Date et heure d'Arrivée "au lieu de résidence ou au lieu de
-                  travail habituel"
+                  Date et heure du départ "du lieu où avait été déroulée la
+                  mission"
                 </span>
-              </div>
-              <div className="dateContent">
-                <span>Le </span>:
-                {item.etat === "créé" ? (
-                  <input
-                    type="date"
-                    defaultValue={formatDate(new Date(body2.dateRetA))}
-                    onChange={(e) => addToDate(e.target.value, 5)}
-                  />
-                ) : (
-                  Intl.DateTimeFormat(["ban", "id"]).format(
-                    new Date(body2.dateRetA)
-                  )
-                )}
-                , <span>a:</span>
-                {item.etat === "créé" ? (
-                  <input
-                    type="time"
-                    defaultValue={new Date(body2.dateRetA).toLocaleTimeString(
-                      [],
-                      { hour: "2-digit", minute: "2-digit", hour12: false }
+                <div className="dateContent">
+                  <span>Le </span>:
+                  {" " +
+                    Intl.DateTimeFormat(["ban", "id"]).format(
+                      new Date(mission.tDateRet)
                     )}
-                    onChange={(e) => addToDate(e.target.value, 6)}
-                  />
-                ) : (
-                  new Date(body2.dateRetA).toLocaleTimeString([], {
-                    hour: "2-digit",
-                    minute: "2-digit",
-                    hour12: false,
-                  }) + "H"
-                )}
+                  , <span>a:</span>
+                  {item.etat === "créé" ? (
+                    <input
+                      className="pop-input"
+                      type="time"
+                      defaultValue={new Date(body2.tDateRet).toLocaleTimeString(
+                        [],
+                        { hour: "2-digit", minute: "2-digit", hour12: false }
+                      )}
+                      onChange={(e) => addToDate(e.target.value, 4)}
+                    />
+                  ) : (
+                    new Date(body2.tDateRet).toLocaleTimeString([], {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                      hour12: false,
+                    }) + "H"
+                  )}
+                </div>
+                <div className="dateContainer">
+                  <span>
+                    Date et heure d'Arrivée "au lieu de résidence ou au lieu de
+                    travail habituel"
+                  </span>
+                </div>
+                <div className="dateContent">
+                  <span>Le </span>:
+                  {item.etat === "créé" ? (
+                    <input
+                      className="pop-input"
+                      type="date"
+                      defaultValue={formatDate(new Date(body2.dateRetA))}
+                      onChange={(e) => addToDate(e.target.value, 5)}
+                    />
+                  ) : (
+                    " " +
+                    Intl.DateTimeFormat(["ban", "id"]).format(
+                      new Date(body2.dateRetA)
+                    )
+                  )}
+                  , <span>a:</span>
+                  {item.etat === "créé" ? (
+                    <input
+                      className="pop-input"
+                      type="time"
+                      defaultValue={new Date(body2.dateRetA).toLocaleTimeString(
+                        [],
+                        { hour: "2-digit", minute: "2-digit", hour12: false }
+                      )}
+                      onChange={(e) => addToDate(e.target.value, 6)}
+                    />
+                  ) : (
+                    new Date(body2.dateRetA).toLocaleTimeString([], {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                      hour12: false,
+                    }) + "H"
+                  )}
+                </div>
+              </div>
+            </div>
+            <div className="moyens">
+              <span className="subTitle">Moyens de transport utilisés :</span>
+              <br />
+              <div className="om-body">
+                <OmLabelLine
+                  label="A l'aller"
+                  content={": " + mission.moyenTransport.join(" - ")}
+                />
+                <OmLabelLine
+                  label="A retour"
+                  content={": " + mission.moyenTransportRet.join(" - ")}
+                />
               </div>
             </div>
           </div>
-          <div className="moyens">
-            <span className="subTitle">Moyens de transport utilisés :</span>
-            <br />
-            <div className="om-body">
-              <OmLabelLine
-                label="A l'aller"
-                content={": " + mission.moyenTransport.join(" - ")}
-              />
-              <OmLabelLine
-                label="A retour"
-                content={": " + mission.moyenTransportRet.join(" - ")}
-              />
-            </div>
+          <div className="signature">
+            Visa du Missionnaire Le Responsable (signataire de l'Ordre de
+            Mission) Signature & griffe
           </div>
-        </div>
-        <div className="signature">
-          Visa du Missionnaire Le Responsable (signataire de l'Ordre de Mission)
-          Signature & griffe
-        </div>
 
-        {item.etat === "créé" && user._id === currentUser._id && (
-          <div className="buttons">
-            <button
-              className="update"
-              onClick={() => {
-                handleClick("update", item.idMission, "mission", "", body2);
-                handleClick("update", item, "rfm", "", { deroulement: body });
-                close();
-              }}
-            >
-              Update
-            </button>
-            <button
-              className="send"
-              onClick={() => {
-                handleClick("update", item.idMission, "mission", "", body2);
-                handleClick("update", item, "rfm", "", { deroulement: body });
-                handleClick("send", item, "rfm", "");
-                close();
-              }}
-            >
-              Send
-            </button>
-          </div>
-        )}
-      </div>
+          {item.etat === "créé" && user._id === currentUser._id && (
+            <div className="buttons">
+              <button
+                className="update"
+                onClick={() => {
+                  handleClick("update", item.idMission, "mission", "", body2);
+                  handleClick("update", item, "rfm", "", { deroulement: body });
+                  close();
+                }}
+              >
+                Update
+              </button>
+              <button
+                className="send"
+                onClick={() => {
+                  handleClick("update", item.idMission, "mission", "", body2);
+                  handleClick("update", item, "rfm", "", { deroulement: body });
+                  handleClick("send", item, "rfm", "");
+                  if (item.nbRefus === 0 && item.etat !== "accepté") {
+                    setSurvey(true);
+                  } else {
+                    close();
+                  }
+                }}
+              >
+                Send
+              </button>
+            </div>
+          )}
+        </div>
+      )}
+      {/* {justSent && item.nbRefus === 0 && item.etat !== "accepté" && (
+        <PopupSurvey item={item} close={close} />
+      )} */}
       {item.etat === "accepté" && (
         <button onClick={generatePDF}>Generate PDF</button>
       )}

@@ -11,14 +11,19 @@ import PopupDB from "./popupRefus/PopupDB";
 import PopupDC from "./popupRefus/PopupDC";
 import PopupDM from "./popupRefus/PopupDM";
 import PopupOM from "./popupRefus/PopupOM";
+import PopupSurvey from "./popupRefus/PopupSurvey";
 const Popup = ({ item, type, isOpen, closePopup, popupType }) => {
   const [deroulement, setDeroulement] = useState([]);
-
+  const [survey, setSurvey] = useState(false);
+  console.log(survey);
   return (
-    <div className={`popup popup-${popupType}`}>
-      <CloseRoundedIcon className="icon" onClick={closePopup} />
+    <div className={survey ? "popup-survey" : `popup popup-${popupType}`}>
+      {!survey && <CloseRoundedIcon className="icon" onClick={closePopup} />}
 
-      {popupType === "update" && <PopupUpdate item={item} close={closePopup} />}
+      {!survey && popupType === "update" && (
+        <PopupUpdate item={item} close={closePopup} setSurvey={setSurvey} />
+      )}
+      {survey && <PopupSurvey item={item} close={closePopup} />}
       {popupType === "refuse" && (
         <PopupRefus item={item} type={type} close={closePopup} />
       )}
