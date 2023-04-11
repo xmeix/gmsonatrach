@@ -10,15 +10,16 @@ import {
 } from "../store/features/authSlice";
 import {
   getDemandes,
-  getDepenses,
   getFileKPIS,
   getMissionKPIS,
   getMissions,
+  getNotifications,
   getOMs,
   getRFMs,
   getUsers,
 } from "../api/apiCalls/getCalls";
 import { freeKpis } from "../store/features/statSlice";
+import { socket } from "../App";
 
 export const useAxios = () => {
   const isLoading = useSelector((state) => state.auth.isLoading);
@@ -71,6 +72,14 @@ export const useAxios = () => {
       case "/auth/login":
         dispatch(setLogin(response.data));
         handleUserType(response.data);
+        if (
+          response.data.user.role !== "employe" &&
+          response.data.user.role !== "relex"
+        ) {
+          getMissionKPIS(dispatch, 1);
+          getFileKPIS(dispatch, 1);
+          getUsers(dispatch, 1);
+        }
         break;
       case "/auth/logout":
         dispatch(setLogout());
@@ -81,23 +90,35 @@ export const useAxios = () => {
         break;
       case "/mission":
         getMissions(dispatch);
-        //getOMs(dispatch);
+        getOMs(dispatch);
+        if (currentUser.role !== "employe" && currentUser.role !== "relex") {
+          getMissionKPIS(dispatch, 1);
+          getFileKPIS(dispatch, 1);
+        }
         break;
       case "/demande/DB":
       case "/demande/DC":
       case "/demande/DM":
       case "/demande":
         getDemandes(dispatch);
-
+        if (currentUser.role !== "employe" && currentUser.role !== "relex") {
+          getFileKPIS(dispatch, 1);
+        }
         break;
       case "/auth/user":
-        getUsers(dispatch);
+        if (currentUser.role !== "employe" && currentUser.role !== "relex") {
+          getUsers(dispatch);
+        }
         break;
       case "/rapportFM":
         if (currentUser.role === "employe" && !body.etat) {
           getRFMs(dispatch, 1);
         } else {
           getRFMs(dispatch);
+        }
+
+        if (currentUser.role !== "employe" && currentUser.role !== "relex") {
+          getFileKPIS(dispatch, 1);
         }
         break;
       default:
@@ -109,18 +130,13 @@ export const useAxios = () => {
     setError(error.response?.data.error || "Something went wrong.");
     dispatch(fetchFailure());
   };
-  const handleUserType = (role) => {
+  const handleUserType = (data) => {
     getMissions(dispatch, 1);
     getRFMs(dispatch, 1);
     getOMs(dispatch, 1);
-    getDepenses(dispatch, 1);
+    // getDepenses(dispatch, 1);
     getDemandes(dispatch, 1);
-
-    if (role !== "employe" && role !== "relex") {
-      getUsers(dispatch, 1);
-      getMissionKPIS(dispatch, 1);
-      getFileKPIS(dispatch, 1);
-    }
+    getNotifications(dispatch, 1);
   };
   return {
     isLoading,

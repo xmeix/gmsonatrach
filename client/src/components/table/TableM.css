@@ -96,6 +96,7 @@
   border: solid 1px var(--light-gray) !important;
   font-size: 13px !important;
   font-weight: 500 !important;
+  white-space: nowrap !important;
 }
 
 /*_______________________________________________________________*/
@@ -130,7 +131,7 @@
   background-color: var(--white);
   border-radius: 3px;
   box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
-} 
+}
 
 .bouton {
   outline: none;

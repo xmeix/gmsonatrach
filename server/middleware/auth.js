@@ -18,49 +18,6 @@ export const generateJWT = (user, exp, secret) => {
   return jwt.sign(payload, secret, options);
 };
 
-// export const verifyToken = async (req, res, next) => {
-//   const authHeader = req.headers.authorization || req.headers.Authorization;
-//   if (!authHeader) {
-//     return res.status(401).json({ error: "Authorization header missing" });
-//   }
-
-//   if (!authHeader.startsWith("Bearer ")) {
-//     return res
-//       .status(401)
-//       .json({ error: "Authorization header must start with 'Bearer '" });
-//   }
-
-//   const token = authHeader.split(" ")[1];
-//   if (!token) {
-//     return res.status(401).json({ message: "Access token not provided" });
-//   }
-
-//   // jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
-//   //   if (err) {
-//   //     if (err.name === "TokenExpiredError") {
-//   //       // If access token is expired, try to refresh it
-//   //       return refresh(req, res, next);
-//   //     }
-//   //     return res
-//   //       .status(403)
-//   //       .json({ error: "access token error(Invalid or expired)" });
-//   //   }
-//   //   req.user = decoded.UserInfo;
-//   //   next();
-//   // });
-
-//   try {
-//     const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
-//     req.user = decoded.UserInfo;
-//     next();
-//   } catch (err) {
-//     if (err.name === "TokenExpiredError") {
-//       return res.status(403).json({ error: "Access token has expired" });
-//     }
-//     return res.status(403).json({ error: "Invalid access token" });
-//   }
-// };
-
 export const verifyToken = async (req, res, next) => {
   const authHeader = req.headers.authorization || req.headers.Authorization;
 

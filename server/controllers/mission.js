@@ -5,6 +5,7 @@ import OrdreMission from "../models/OrdreMission.js";
 import { checkFields } from "../middleware/auth.js";
 import { createOrUpdateFDocument } from "./FilesKpis.js";
 import { createOrUpdateFMission } from "./Kpis.js";
+import { createNotification } from "./Notification.js";
 const toId = mongoose.Types.ObjectId;
 
 export const createMission = async (req, res) => {
@@ -106,19 +107,27 @@ export const createMission = async (req, res) => {
         om.save();
         //______________________________________________________________
 
-        const populatedOM = await OrdreMission.findById(om._id)
-          .populate("mission")
-          .populate("employe");
+        // const populatedOM = await OrdreMission.findById(om._id)
+        //   .populate("mission")
+        //   .populate("employe");
 
-        createOrUpdateFDocument(populatedOM, "OM", "creation");
+        // createOrUpdateFDocument(populatedOM, "OM", "creation");
         //______________________________________________________________
       }
     }
+
+    await createNotification(req, res, {
+      users: newEmployes,
+      message: "Vous avez été affecté(e) à une nouvelle mission de travail",
+      path: "",
+      type: "",
+    });
+
     //____________________________________________________________________________________
-    createOrUpdateFMission(savedMission, "creation", null, "");
-    if (savedMission.etat === "acceptée") {
-      createOrUpdateFMission(savedMission, "update", null, "etat");
-    }
+    // createOrUpdateFMission(savedMission, "creation", null, "");
+    // if (savedMission.etat === "acceptée") {
+    //   createOrUpdateFMission(savedMission, "update", null, "etat");
+    // }
 
     //____________________________________________________________________________________
 

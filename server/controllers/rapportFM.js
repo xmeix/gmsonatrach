@@ -1,7 +1,7 @@
 import RapportFM from "../models/RapportFM.js";
 import User from "../models/User.js";
 import mongoose from "mongoose";
-import {createOrUpdateFDocument} from "./FilesKpis.js"
+import { createOrUpdateFDocument } from "./FilesKpis.js";
 const toId = mongoose.Types.ObjectId;
 
 export const updateRapport = async (req, res) => {
@@ -18,7 +18,7 @@ export const updateRapport = async (req, res) => {
       .populate("idMission")
       .populate("idEmploye");
 
-    createOrUpdateFDocument(populatedRFM, "RFM", "update");
+    // createOrUpdateFDocument(populatedRFM, "RFM", "update");
 
     res.status(201).json({ updatedReport, msg: "updated successfully" });
   } catch (err) {
@@ -39,6 +39,13 @@ export const createRapport = async (req, res) => {
     });
     const savedRapport = await newRapport.save();
 
+    // await createNotification(req, res, {
+    //   users: [idEmploye],
+    //   message:
+    //     "Votre rapport de fin de mission à été créé , vous devez le remplir ",
+    //   path: "",
+    //   type: "",
+    // });
     res.status(201).json({ savedRapport, msg: "created successfully" });
   } catch (err) {
     res.status(500).json({ error: err.message });

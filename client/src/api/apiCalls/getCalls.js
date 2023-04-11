@@ -5,6 +5,7 @@ import {
   fetchStart,
   setDemandes,
   setMissions,
+  setNotifications,
   setOMs,
   setRFMs,
   setUsers,
@@ -17,25 +18,22 @@ const fetchData = async (dispatch, endpoint, socketEvent, num) => {
   try {
     const res = await apiService.user.get(endpoint);
 
+    const eventToActionMap = {
+      mission: setMissions,
+      om: (data) => setOMs(data.filteredOMissions),
+      rfm: setRFMs,
+      demande: setDemandes,
+      user: setUsers,
+      missionkpi: setMissionKpis,
+      filekpi: setFilesKpis,
+      notification: setNotifications,
+    };
+
     if (!num || num !== 1) {
       socket.emit("updatedData", socketEvent);
     } else {
-      if (socketEvent === "mission") {
-        dispatch(setMissions(res.data));
-      } else if (socketEvent === "om") {
-        dispatch(setOMs(res.data.filteredOMissions));
-      } else if (socketEvent === "rfm") {
-        console.log(res.data);
-        dispatch(setRFMs(res.data));
-      } else if (socketEvent === "demande") {
-        dispatch(setDemandes(res.data));
-      } else if (socketEvent === "user") {
-        dispatch(setUsers(res.data));
-      } else if (socketEvent === "missionkpi") {
-        dispatch(setMissionKpis(res.data));
-      } else if (socketEvent === "filekpi") {
-        dispatch(setFilesKpis(res.data));
-      } else dispatch(setRFMs(res.data));
+      const setDataFunc = eventToActionMap[socketEvent];
+      dispatch(setDataFunc(res.data));
     }
     dispatch(fetchEnd());
   } catch (err) {
@@ -45,30 +43,21 @@ const fetchData = async (dispatch, endpoint, socketEvent, num) => {
 };
 
 export const getMissions = async (dispatch, num) => {
-  console.log("inside getMissions");
   await fetchData(dispatch, "/mission/", "mission", num);
-  getMissionKPIS(dispatch);
 };
 
 export const getDemandes = async (dispatch, num) => {
   await fetchData(dispatch, "/demande/", "demande", num);
-  getFileKPIS(dispatch);
 };
 
 export const getRFMs = async (dispatch, num) => {
   await fetchData(dispatch, "/rapportFM/", "rfm", num);
-  getFileKPIS(dispatch);
 };
 
 export const getOMs = async (dispatch, num) => {
-  console.log("inside getOMS");
   await fetchData(dispatch, "/ordremission/", "om", num);
-  getFileKPIS(dispatch);
 };
-
-export const getDepenses = async (dispatch, num) => {
-  await fetchData(dispatch, "/depense/", "depense", num);
-};
+ 
 
 export const getUsers = async (dispatch, num) => {
   await fetchData(dispatch, "/auth/users", "user", num);
@@ -78,4 +67,7 @@ export const getMissionKPIS = async (dispatch, num) => {
 };
 export const getFileKPIS = async (dispatch, num) => {
   await fetchData(dispatch, "/kpis/file", "filekpi", num);
+};
+export const getNotifications = async (dispatch, num) => {
+  await fetchData(dispatch, "/notification/", "notification", num);
 };

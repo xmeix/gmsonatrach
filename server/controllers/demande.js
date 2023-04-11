@@ -6,6 +6,7 @@ import Demande from "../models/Demande.js";
 import mongoose from "mongoose";
 import Mission from "../models/Mission.js";
 import { createOrUpdateFDocument } from "./FilesKpis.js";
+import { createNotification } from "./Notification.js";
 const toId = mongoose.Types.ObjectId;
 
 export const createDemande = async (req, res) => {
@@ -129,12 +130,43 @@ export const createDemande = async (req, res) => {
     }
 
     const savedDemande = await newDemande.save();
-    const populatedDemande = await Demande.findById(savedDemande._id)
-      .populate("idEmetteur")
-      .populate("idDestinataire");
-    createOrUpdateFDocument(populatedDemande, populatedDemande.__t, "creation");
+    //__________________________________________________
+    let newMsg;
+    let destinataires;
+    if (type === "DB") {
+      newMsg = "Vous avez une nouvelle demande de billetterie.";
+      destinataires = [destinataire];
+    } else if (type === "DC") {
+      newMsg = "Vous avez une nouvelle demande de congés.";
+      destinataires = await User.find({
+        $or: [
+          { role: "responsable", structure: structure },
+          { role: { $in: ["secretaire", "directeur"] } },
+        ],
+      });
+    } else if (type === "DM") {
+      newMsg = "Vous avez une nouvelle demande de modification.";
+      destinataires = await User.find({
+        $or: [
+          { role: "responsable", structure: structure },
+          { role: { $in: ["secretaire", "directeur"] } },
+        ],
+      });
+    }
 
-    return res.status(201).json({ savedDemande, msg: "Demande envoyée" });
+     await createNotification(req, res, {
+      users: destinataires,
+      message: newMsg,
+      path: "",
+      type: "",
+    });
+    //__________________________________________________
+    // const populatedDemande = await Demande.findById(savedDemande._id)
+    //   .populate("idEmetteur")
+    //   .populate("idDestinataire");
+    // createOrUpdateFDocument(populatedDemande,  populatedDemande.__t, "creation");
+
+    res.status(201).json({ savedDemande, msg: "Demande envoyée" });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -188,7 +220,7 @@ export const updateDemEtat = async (req, res) => {
       const populatedDemande = await Demande.findById(updatedDemande._id)
         .populate("idEmetteur")
         .populate("idDestinataire");
-        
+
       createOrUpdateFDocument(populatedDemande, populatedDemande.__t, "update");
       //________________________________________________________________
 

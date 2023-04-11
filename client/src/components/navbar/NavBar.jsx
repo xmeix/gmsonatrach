@@ -1,14 +1,40 @@
 import "./NavBar.css";
 import { NavLink } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import MenuRoundedIcon from "@mui/icons-material/Menu";
 import MenuBar from "../menuBar/MenuBar";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
-import { useAuth } from "../../hooks/useAuth";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { titles, employeTitles, relexTitles } from "../../data/navdata";
 import { useAxios } from "../../hooks/useAxios";
+import { v4 as uuidv4 } from "uuid";
+import NotificationsActiveRoundedIcon from "@mui/icons-material/NotificationsActiveRounded";
+import NotificationsNoneRoundedIcon from "@mui/icons-material/NotificationsNoneRounded";
+import { socket } from "../../App";
+import { getNotifications } from "../../api/apiCalls/getCalls";
 const NavBar = () => {
+  const user = useSelector((state) => state.auth.user);
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  /**_______________________________________________________________________________ */
+  const [showNotifications, setShowNotifications] = useState(false);
+  const notifications = useSelector((state) => state.auth.notifications);
+  const dispatch = useDispatch();
+  const handleNotification = () => {
+    socket.on("notification", async () => {
+      getNotifications(dispatch, 1);
+    });
+  };
+  useEffect(() => {
+    if (isLoggedIn) {
+      handleNotification();
+    }
+  }, [isLoggedIn]);
+
+  useEffect(() => {
+    console.log(notifications);
+  }, [notifications]);
+  /**_______________________________________________________________________________ */
+
   const navLinkStyle = ({ isActive }) => {
     return {
       color: isActive ? "var(--orange)" : "var(--black)",
@@ -19,7 +45,6 @@ const NavBar = () => {
   const [responsive, setResponsive] = useState(false);
   const { callApi } = useAxios();
 
-  const user = useSelector((state) => state.auth.user);
   const [navData] = useState(() => {
     switch (user?.role) {
       case "directeur":
@@ -65,7 +90,6 @@ const NavBar = () => {
   //____________________________________________________
   function getWindowSize() {
     const { innerWidth, innerHeight } = window;
-    console.log(innerWidth);
     return { innerWidth, innerHeight };
   }
   //____________________________________________________
@@ -93,6 +117,21 @@ const NavBar = () => {
   };
   return (
     <div className="navbar">
+      {showNotifications && (
+        <div className="notification-list">
+          {notifications.length === 0 ? (
+            <div className="empty">Pas de nouvelles notifications</div>
+          ) : (
+            <div className="notifications">
+              {notifications.map((notification, index) => (
+                <div key={index} className="notification">
+                  {notification.message}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
       <div className="list">
         {isOpen && (
           <CloseRoundedIcon className="icon" onClick={handleHideMenu} />
@@ -115,9 +154,33 @@ const NavBar = () => {
           </ul>
         )}
       </div>
-      <button type="button" className="logoutBtn" onClick={handleLogout}>
-        logout
-      </button>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          gap: "2em",
+        }}
+      >
+        {notifications?.length === 0 || notifications ? (
+          <NotificationsNoneRoundedIcon
+            className="icon"
+            onClick={() => {
+              setShowNotifications(!showNotifications);
+            }}
+          />
+        ) : (
+          <NotificationsActiveRoundedIcon
+            onClick={() => {
+              // socket.emit("notification", { id: uuidv4(), message: "hello" });
+              setShowNotifications(!showNotifications);
+            }}
+          />
+        )}
+        <button type="button" className="logoutBtn" onClick={handleLogout}>
+          logout
+        </button>
+      </div>
     </div>
   );
 };

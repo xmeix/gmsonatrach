@@ -12,9 +12,9 @@ import {
   getRFMs,
   getOMs,
   getMissions,
-  getDepenses,
   getMissionKPIS,
   getFileKPIS,
+  getNotifications,
 } from "./api/apiCalls/getCalls";
 const LoginPage = lazy(() => import("./pages/loginPage/LoginPage"));
 const CostDashboard = lazy(() =>
@@ -47,18 +47,7 @@ function App() {
   let element = null;
   const dispatch = useDispatch();
 
-  ///addons
-  // const users = useSelector((state) => state.auth.users);
-
-  // const employeeIds = users
-  //   .filter((user) => user.role === "secretaire" ||user.role === "directeur" ||user.role === "responsable"  )
-  //   .map((employee) => employee._id)
-  //   .join(",");
-
-  // console.log(employeeIds);
-
   const handleSocketData = (type) => {
-    console.log(type);
     switch (type) {
       case "demande":
         getDemandes(dispatch, 1);
@@ -80,14 +69,14 @@ function App() {
       case "om":
         getOMs(dispatch, 1);
         break;
-      case "depense":
-        getDepenses(dispatch, 1);
-        break;
       case "missionkpi":
         getMissionKPIS(dispatch, 1);
         break;
       case "filekpi":
         getFileKPIS(dispatch, 1);
+        break;
+      case "notification":
+        getNotifications(dispatch, 1);
         break;
       default:
         break;
@@ -113,20 +102,13 @@ function App() {
 
   useEffect(() => {
     if (isLoggedIn) {
+      socket.emit("login", currentUser);
       handleSocketConnection();
       return handleSocketDisconnection;
+    } else {
+      socket.emit("logout");
     }
   }, [isLoggedIn]);
-
-  // useEffect(() => {
-  //   const intervalId = setInterval(() => {
-  //     console.log("client side working now");
-  //     getMissions(dispatch);
-  //     getRFMs(dispatch);
-  //   }, 60 * 1000); // 10000 milliseconds = 10 seconds
-
-  //   return () => clearInterval(intervalId);
-  // }, []);
 
   if (!isLoggedIn) {
     element = (
@@ -142,7 +124,6 @@ function App() {
         <Route path="/gestion-des-mission" element={<GestionMission />} />
         <Route path="/gestion-modification" element={<GestionModification />} />
         <Route path="/gestion-conge" element={<GestionConge />} />
-        <Route path="/gestion-depenses" element={<div>TODO</div>} />
         <Route path="*" element={<Navigate to="/" />} />
       </>
     );
@@ -160,7 +141,6 @@ function App() {
         <Route path="/planification" element={<Planning />} />
         <Route path="/gestion-des-mission" element={<GestionMission />} />
         <Route path="/gestion-des-employes" element={<GestionEmploye />} />
-        <Route path="/gestion-depenses" element={<GestionCMR />} />
         <Route path="/gestion-service-relex" element={<GestionRelex />} />
         <Route path="/gestion-c-m-rfm" element={<GestionCMR />} />
         <Route path="*" element={<Navigate to="/" />} />

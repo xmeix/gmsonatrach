@@ -2,6 +2,7 @@ import bcrypt from "bcrypt";
 import { generateJWT } from "../middleware/auth.js";
 import User from "../models/User.js";
 import jwt from "jsonwebtoken";
+import { io } from "../index.js";
 
 /** REGISTER USER */
 export const register = async (req, res) => {
@@ -49,6 +50,7 @@ export const register = async (req, res) => {
     });
 
     const savedUser = await newUser.save();
+
     res.status(201).json({ savedUser, msg: "Registered Successfully" });
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -92,6 +94,7 @@ export const login = async (req, res) => {
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
     delete user.password;
+
     res.status(200).json({ token: jwtToken, user, msg: "Login successful" });
   } catch (err) {
     res.status(500).json({ error: err.message });

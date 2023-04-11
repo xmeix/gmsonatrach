@@ -13,6 +13,7 @@ import ordreMissionRoutes from "./routes/ordreMission.js";
 import depenseRoutes from "./routes/depense.js";
 import rapportRoutes from "./routes/rapportFM.js";
 import kpisRoutes from "./routes/kpis.js";
+import notificationRoutes from "./routes/notification.js";
 import cookieParser from "cookie-parser";
 import { Server } from "socket.io";
 import http from "http";
@@ -20,6 +21,7 @@ import Mission from "./models/Mission.js";
 import User from "./models/User.js";
 import RapportFM from "./models/RapportFM.js";
 import cron from "node-cron";
+import jwt from "jsonwebtoken";
 import {
   FDB,
   FDC,
@@ -39,6 +41,7 @@ import DB from "./models/demandes/DB.js";
 import DC from "./models/demandes/DC.js";
 import FDocument from "./models/FDocument.js";
 import FMission from "./models/FMission.js";
+import { verifyToken } from "./middleware/auth.js";
 const toId = mongoose.Types.ObjectId;
 // Configure environment variables
 dotenv.config();
@@ -74,9 +77,10 @@ app.use("/ordremission", ordreMissionRoutes);
 app.use("/depense", depenseRoutes);
 app.use("/rapportFM", rapportRoutes);
 app.use("/kpis", kpisRoutes);
+app.use("/notification", notificationRoutes);
 // Set up the HTTP server and Socket.IO instance
 const server = http.createServer(app);
-const io = new Server(server, {
+export const io = new Server(server, {
   cors: {
     origin: ["http://127.0.0.1:5173", "http://localhost:5173"],
   },
@@ -116,10 +120,20 @@ mongoose
   .catch((error) => {
     console.error(`Failed to connect to MongoDB database: ${error.message}`);
   });
-// Set up Socket.IO event listeners
+let connectedUsers = {};
 io.on("connection", (socket) => {
-  // console.log(`Socket ${socket.id} connected`);
-
+  socket.on("login", async (user) => {
+    socket.user = user;
+    connectedUsers[socket.id] = user;
+    console.log(`User ${user._id} connected`);
+  });
+  socket.on("logout", () => {
+    const user = connectedUsers[socket.id];
+    if (user) {
+      console.log(`User ${connectedUsers[socket.id]._id} logged out`);
+      delete connectedUsers[socket.id];
+    }
+  });
   socket.on("updatedData", async (type) => {
     try {
       console.log(type);
@@ -128,8 +142,9 @@ io.on("connection", (socket) => {
       console.error(error);
     }
   });
+
   socket.on("disconnect", () => {
-    // console.log(`Socket ${socket.id} disconnected`);
+    console.log(`Socket ${socket.id} disconnected`);
   });
 });
 
@@ -173,7 +188,6 @@ cron.schedule("31 14 * * *", async () => {
       const populatedRFM = await RapportFM.findById(savedRFM._id)
         .populate("idMission")
         .populate("idEmploye");
-
       createOrUpdateFDocument(populatedRFM, "RFM", "creation");
       //______________________________________________________________
     }

@@ -12,6 +12,7 @@ const initialState = {
   rfms: [],
   depenses: [],
   oms: [],
+  notifications: [],
 };
 
 export const authSlice = createSlice({
@@ -40,8 +41,7 @@ export const authSlice = createSlice({
       state.missions = [];
       state.oms = [];
       state.rfms = [];
-      state.missionKPIS = [];
-
+      state.notifications = [];
       localStorage.removeItem("jwt");
     },
     setDemandes: (state, action) => {
@@ -80,6 +80,10 @@ export const authSlice = createSlice({
       state.failure = true;
       state.isLoading = false;
     },
+    setNotifications: (state, action) => {
+      console.log(action.payload);
+      state.notifications = action.payload;
+    },
   },
 });
 
@@ -99,6 +103,7 @@ export const {
   setUsers,
   getTokenFromState,
   setToken,
+  setNotifications,
 } = authSlice.actions;
 
 export default authSlice.reducer;
