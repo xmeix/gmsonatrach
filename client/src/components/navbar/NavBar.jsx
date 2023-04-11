@@ -1,6 +1,6 @@
 import "./NavBar.css";
 import { NavLink } from "react-router-dom";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import MenuRoundedIcon from "@mui/icons-material/Menu";
 import MenuBar from "../menuBar/MenuBar";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
@@ -13,26 +13,34 @@ import NotificationsNoneRoundedIcon from "@mui/icons-material/NotificationsNoneR
 import { socket } from "../../App";
 import { getNotifications } from "../../api/apiCalls/getCalls";
 const NavBar = () => {
-  const user = useSelector((state) => state.auth.user);
-  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  const { user, isLoggedIn, notifications } = useSelector(
+    (state) => state.auth
+  );
   /**_______________________________________________________________________________ */
   const [showNotifications, setShowNotifications] = useState(false);
-  const notifications = useSelector((state) => state.auth.notifications);
   const dispatch = useDispatch();
-  const handleNotification = () => {
-    socket.on("notification", async () => {
-      getNotifications(dispatch, 1);
-    });
-  };
-  useEffect(() => {
-    if (isLoggedIn) {
-      handleNotification();
-    }
-  }, [isLoggedIn]);
+  const notificationsRef = useRef(null);
 
   useEffect(() => {
-    console.log(notifications);
-  }, [notifications]);
+    function handleClickOutside(event) {
+      if (
+        notificationsRef.current &&
+        !notificationsRef.current.contains(event.target)
+      ) {
+        setShowNotifications(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    if (isLoggedIn) {
+      socket.on("notification", async () => {
+        getNotifications(dispatch, 1);
+      });
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [dispatch, isLoggedIn, notificationsRef]);
+
   /**_______________________________________________________________________________ */
 
   const navLinkStyle = ({ isActive }) => {
@@ -118,14 +126,15 @@ const NavBar = () => {
   return (
     <div className="navbar">
       {showNotifications && (
-        <div className="notification-list">
+        <div className="notification-list" ref={notificationsRef}>
           {notifications.length === 0 ? (
             <div className="empty">Pas de nouvelles notifications</div>
           ) : (
             <div className="notifications">
               {notifications.map((notification, index) => (
                 <div key={index} className="notification">
-                  {notification.message}
+                  <div className="message">{notification.message}</div>{" "}
+                  <div className="date">{notification.createdAt}</div>
                 </div>
               ))}
             </div>
@@ -162,7 +171,7 @@ const NavBar = () => {
           gap: "2em",
         }}
       >
-        {notifications?.length === 0 || notifications ? (
+        {notifications?.length === 0 || !notifications ? (
           <NotificationsNoneRoundedIcon
             className="icon"
             onClick={() => {
@@ -171,6 +180,7 @@ const NavBar = () => {
           />
         ) : (
           <NotificationsActiveRoundedIcon
+            className="icon"
             onClick={() => {
               // socket.emit("notification", { id: uuidv4(), message: "hello" });
               setShowNotifications(!showNotifications);
