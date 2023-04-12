@@ -105,14 +105,14 @@ export const createMission = async (req, res) => {
           employe: employeId,
         });
         om.save();
-        //______________________________________________________________
+        ______________________________________________________________;
 
-        // const populatedOM = await OrdreMission.findById(om._id)
-        //   .populate("mission")
-        //   .populate("employe");
+        const populatedOM = await OrdreMission.findById(om._id)
+          .populate("mission")
+          .populate("employe");
 
-        // createOrUpdateFDocument(populatedOM, "OM", "creation");
-        //______________________________________________________________
+        createOrUpdateFDocument(populatedOM, "OM", "creation");
+        ______________________________________________________________;
       }
     }
 
@@ -123,13 +123,13 @@ export const createMission = async (req, res) => {
       type: "",
     });
 
-    //____________________________________________________________________________________
-    // createOrUpdateFMission(savedMission, "creation", null, "");
-    // if (savedMission.etat === "acceptée") {
-    //   createOrUpdateFMission(savedMission, "update", null, "etat");
-    // }
+    ____________________________________________________________________________________;
+    createOrUpdateFMission(savedMission, "creation", null, "");
+    if (savedMission.etat === "acceptée") {
+      createOrUpdateFMission(savedMission, "update", null, "etat");
+    }
 
-    //____________________________________________________________________________________
+    ____________________________________________________________________________________;
 
     res
       .status(201)
@@ -205,6 +205,15 @@ export const updateMissionEtat = async (req, res) => {
           //______________________________________________________________
         }
       }
+       if (operation === "acceptée" || operation === "refusée") {
+        await createNotification(req, res, {
+          users: [updatedMission.createdBy],
+          message: `Votre demande de mission a été ${operation}.`,
+          path: "",
+          type: "",
+        });
+      }
+
       //____________________________________________________________________________________
       //update etat
       createOrUpdateFMission(updatedMission, "update", mission, "etat");

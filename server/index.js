@@ -43,6 +43,7 @@ import FDocument from "./models/FDocument.js";
 import FMission from "./models/FMission.js";
 import { verifyToken } from "./middleware/auth.js";
 import { createNotification } from "./controllers/Notification.js";
+import { createOrUpdateFDocument } from "./controllers/FilesKpis.js";
 const toId = mongoose.Types.ObjectId;
 // Configure environment variables
 dotenv.config();
