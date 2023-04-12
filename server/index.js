@@ -42,6 +42,7 @@ import DC from "./models/demandes/DC.js";
 import FDocument from "./models/FDocument.js";
 import FMission from "./models/FMission.js";
 import { verifyToken } from "./middleware/auth.js";
+import { createNotification } from "./controllers/Notification.js";
 const toId = mongoose.Types.ObjectId;
 // Configure environment variables
 dotenv.config();
@@ -148,7 +149,6 @@ io.on("connection", (socket) => {
   });
 });
 
-/** RUNS EVERY MIDNIGHT */
 cron.schedule("31 14 * * *", async () => {
   console.log("working in index.js");
 
@@ -165,10 +165,14 @@ cron.schedule("31 14 * * *", async () => {
 
   for (const mission of missionsEnCours) {
     const employeIds = mission.employes.map((employe) => employe._id);
-    await User.updateMany(
-      { _id: { $in: employeIds } },
-      { $set: { etat: "missionnaire" } }
-    );
+
+    for (const employeId of employeIds) {
+      await User.updateOne(
+        { _id: employeId },
+        { $set: { etat: "missionnaire" } }
+      );
+    }
+
     let old = mission;
     mission.etat = "en-cours";
     let saved = await mission.save();
@@ -191,46 +195,182 @@ cron.schedule("31 14 * * *", async () => {
       createOrUpdateFDocument(populatedRFM, "RFM", "creation");
       //______________________________________________________________
     }
+
+    //______________________________________________________________
+    await createNotification(req, res, {
+      users: [employeIds],
+      message:
+        "Votre rapport de fin de mission a été créé et doit être rempli dans les délais impartis. Merci de prendre les mesures nécessaires pour le compléter.",
+      path: "",
+      type: "",
+    });
+    //__________________________________________________
   }
 
   //pour chaque mission je fais ca
-
   // Update missions with tDateDeb equal to current time and etat equal to en-attente
-
-  await Mission.updateMany(
-    { tDateDeb: { $lte: new Date() }, etat: "en-attente" },
-    { $set: { etat: "refusée" } }
-  );
-  //____________________________________________________________________________________
-  //update etat de en-attente a refusé ... change it
-  // createOrUpdateFMission(saved, "update", old, "etat");
-  //____________________________________________________________________________________
+  const missionsEnAttente = await Mission.find({
+    tDateDeb: { $lte: new Date() },
+    etat: "en-attente",
+  });
+  
+  for (const mission of missionsEnAttente) {
+    const employeIds = mission.employes.map((employe) => employe._id);
+    let old = mission;
+    mission.etat = "refusée";
+    let saved = await mission.save();
+    //____________________________________________________________________________________
+    //update etat de en-attente a refusé ... change it
+    createOrUpdateFMission(saved, "update", old, "etat");
+    //____________________________________________________________________________________
+    await createNotification(req, res, {
+      users: [employeIds],
+      message:
+        "votre demande de mission a été automatiquement rejetée en raison d'une absence de réponse.",
+      path: "",
+      type: "",
+    });
+    //____________________________________________________________________________________
+  }
 
   // Update missions with tDateRet equal to current time and etat equal to en-cours
-  await Mission.updateMany(
-    { tDateRet: { $lt: currentDate }, etat: "en-cours" },
-    { $set: { etat: "terminée" } }
-  );
-  //____________________________________________________________________________________
-  //update etat de en-attente a terminée ... change it
-  // createOrUpdateFMission(saved, "update", old, "etat");
-  //____________________________________________________________________________________
+  const missionsEnCours2 = await Mission.find({
+    tDateRet: { $lt: currentDate },
+    etat: "en-cours",
+  });
+
+  for (const mission of missionsEnCours2) {
+    const employeIds = mission.employes.map((employe) => employe._id);
+    let old = mission;
+    mission.etat = "terminée";
+    let saved = await mission.save();
+    //____________________________________________________________________________________
+    //update etat de en-attente a terminée ... change it
+    createOrUpdateFMission(saved, "update", old, "etat");
+    //____________________________________________________________________________________
+    await createNotification(req, res, {
+      users: [employeIds],
+      message:
+        "Nous avons le plaisir de vous informer que votre mission s'est terminée avec succès. Nous vous rappelons de nous envoyer le Rapport Fin de Mission dûment rempli. Merci de votre collaboration.",
+      path: "",
+      type: "",
+    });
+    //____________________________________________________________________________________
+  }
 
   // Update users associated with completed missions
   const missionsEnded = await Mission.find({
     etat: "terminée",
   });
+
   for (const mission of missionsEnded) {
     const employeIds = mission.employes.map((employe) => employe._id);
-    await User.updateMany(
-      { _id: { $in: employeIds } },
-      { $set: { etat: "non-missionnaire" } }
-    );
+
+    for (const employeId of employeIds) {
+      await User.updateOne(
+        { _id: employeId },
+        { $set: { etat: "non-missionnaire" } }
+      );
+    }
   }
 
   console.log("finished updating index js ");
   io.emit("cronDataChange");
 });
+
+/** RUNS EVERY MIDNIGHT */
+// cron.schedule("31 14 * * *", async () => {
+//   console.log("working in index.js");
+
+//   // Update missions with tDateDeb equal to current time
+
+//   const currentDate = moment().format("YYYY-MM-DD");
+//   const missionsEnCours = await Mission.find(
+//     {
+//       tDateDeb: { $eq: currentDate },
+//       etat: "acceptée",
+//     },
+//     { employes: 1 }
+//   );
+
+//   for (const mission of missionsEnCours) {
+//     const employeIds = mission.employes.map((employe) => employe._id);
+//     await User.updateMany(
+//       { _id: { $in: employeIds } },
+//       { $set: { etat: "missionnaire" } }
+//     );
+//     let old = mission;
+//     mission.etat = "en-cours";
+//     let saved = await mission.save();
+//     //____________________________________________________________________________________
+//     //update etat
+//     createOrUpdateFMission(saved, "update", old, "etat");
+//     //____________________________________________________________________________________
+
+//     for (const employeId of employeIds) {
+//       const rfm = new RapportFM({
+//         idMission: toId(mission._id),
+//         idEmploye: toId(employeId),
+//       });
+
+//       const savedRFM = await rfm.save();
+//       //______________________________________________________________
+//       const populatedRFM = await RapportFM.findById(savedRFM._id)
+//         .populate("idMission")
+//         .populate("idEmploye");
+//       createOrUpdateFDocument(populatedRFM, "RFM", "creation");
+//       //______________________________________________________________
+//     }
+
+//     //______________________________________________________________
+//     await createNotification(req, res, {
+//       users: [employeIds],
+//       message:
+//         "Votre rapport de fin de mission a été créé et doit être rempli dans les délais impartis. Merci de prendre les mesures nécessaires pour le compléter.",
+//       path: "",
+//       type: "",
+//     });
+//     //__________________________________________________
+//   }
+
+//   //pour chaque mission je fais ca
+
+//   // Update missions with tDateDeb equal to current time and etat equal to en-attente
+
+//   await Mission.updateMany(
+//     { tDateDeb: { $lte: new Date() }, etat: "en-attente" },
+//     { $set: { etat: "refusée" } }
+//   );
+//   //____________________________________________________________________________________
+//   //update etat de en-attente a refusé ... change it
+//   // createOrUpdateFMission(saved, "update", old, "etat");
+//   //____________________________________________________________________________________
+
+//   // Update missions with tDateRet equal to current time and etat equal to en-cours
+//   await Mission.updateMany(
+//     { tDateRet: { $lt: currentDate }, etat: "en-cours" },
+//     { $set: { etat: "terminée" } }
+//   );
+//   //____________________________________________________________________________________
+//   //update etat de en-attente a terminée ... change it
+//   // createOrUpdateFMission(saved, "update", old, "etat");
+//   //____________________________________________________________________________________
+
+//   // Update users associated with completed missions
+//   const missionsEnded = await Mission.find({
+//     etat: "terminée",
+//   });
+//   for (const mission of missionsEnded) {
+//     const employeIds = mission.employes.map((employe) => employe._id);
+//     await User.updateMany(
+//       { _id: { $in: employeIds } },
+//       { $set: { etat: "non-missionnaire" } }
+//     );
+//   }
+
+//   console.log("finished updating index js ");
+//   io.emit("cronDataChange");
+// });
 
 //cron creation RFM+OM
 // cron.schedule("13 15 * * *", async () => {

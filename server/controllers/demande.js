@@ -154,7 +154,7 @@ export const createDemande = async (req, res) => {
       });
     }
 
-     await createNotification(req, res, {
+    await createNotification(req, res, {
       users: destinataires,
       message: newMsg,
       path: "",
@@ -171,6 +171,7 @@ export const createDemande = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+
 export const getDemandes = async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
@@ -207,9 +208,8 @@ export const updateDemEtat = async (req, res) => {
     const demande = await Demande.findById(req.params.id);
 
     if (demande.etat === "en-attente" && req.body.etat !== "en-attente") {
-      console.log(req.body);
-
       demande.etat = req.body.etat;
+
       demande.nbRefus =
         demande.etat === "refusée" ? demande.nbRefus + 1 : demande.nbRefus;
       demande.raisonRefus =
@@ -219,25 +219,81 @@ export const updateDemEtat = async (req, res) => {
       //________________________________________________________________
       const populatedDemande = await Demande.findById(updatedDemande._id)
         .populate("idEmetteur")
-        .populate("idDestinataire");
+        .populate("idDestinataire")
+        ?.populate("employes");
 
       createOrUpdateFDocument(populatedDemande, populatedDemande.__t, "update");
       //________________________________________________________________
-
+      let destinataires = await User.find({
+        $or: [
+          { role: "responsable", structure: structure },
+          { role: { $in: ["secretaire", "directeur"] } },
+        ],
+      });
       // Check if the DC is accepted
       if (updatedDemande.type === "DC" && updatedDemande.etat === "acceptée") {
         const missions = await Mission.find({
-          employes: updatedDemande.createdBy,
+          employes: { $in: [updatedDemande.createdBy] },
           tDateDeb: { $lte: updatedDemande.DateRetour },
           tDateRet: { $gte: updatedDemande.DateDepart },
           etat: { $ne: "annulée" },
         });
 
         for (const mission of missions) {
-          mission.etat = "annulée";
-          await mission.save();
+          if (
+            mission.employes.length === 1 &&
+            mission.employes[0]._id.equals(updatedDemande.createdBy)
+          ) {
+            mission.etat = "annulée";
+            await mission.save();
+
+            await createNotification(req, res, {
+              users: [...destinataires, updatedDemande.createdBy],
+              message: `le voyage d'affaires prévu entre le ${mission.tDateDeb} et le ${mission.tDateRet} a été annulé`,
+              path: "",
+              type: "",
+            });
+          } else if (mission.employes.length > 1) {
+            const employeId = updatedDemande.createdBy;
+            mission.employes = mission.employes.filter(
+              (employe) => !employe._id.equals(employeId)
+            );
+            await mission.save();
+
+            await createNotification(req, res, {
+              users: [updatedDemande.createdBy],
+              message: `le voyage d'affaires prévu entre le ${mission.tDateDeb} et le ${mission.tDateRet} a été annulé`,
+              path: "",
+              type: "",
+            });
+          }
+          const employeId = updatedDemande.createdBy;
+          await User.updateOne(
+            { _id: employeId },
+            { $set: { etat: "non-missionnaire" } }
+          );
         }
       }
+
+      //____________________________________________________________________________________
+      let nomDem;
+      if (updatedDemande.__t === "DC") {
+        nomDem = "congés";
+      } else if (updatedDemande.__t === "DB") {
+        nomDem = "billetterie";
+      } else if (updatedDemande.__t === "DM") {
+        nomDem = "modification";
+      }
+
+      let newMsg = `Votre demande de ${nomDem} a été ${updatedDemande.etat}.`;
+
+      await createNotification(req, res, {
+        users: [updatedDemande.idEmetteur],
+        message: newMsg,
+        path: "",
+        type: "",
+      });
+      //____________________________________________________________________________________
 
       res.status(200).json({ updatedDemande, msg: "Modifié avec succés" });
     } else {

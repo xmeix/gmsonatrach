@@ -26,31 +26,31 @@ export const updateRapport = async (req, res) => {
   }
 };
 
-export const createRapport = async (req, res) => {
-  try {
-    let newRapport;
-    const user = req.user;
-    let missionnaire = toId(user.id);
-    const { deroulement, idMission } = req.body;
-    newRapport = new RapportFM({
-      deroulement: deroulement,
-      idMission: idMission,
-      idEmploye: missionnaire,
-    });
-    const savedRapport = await newRapport.save();
+// export const createRapport = async (req, res) => {
+//   try {
+//     let newRapport;
+//     const user = req.user;
+//     let missionnaire = toId(user.id);
+//     const { deroulement, idMission } = req.body;
+//     newRapport = new RapportFM({
+//       deroulement: deroulement,
+//       idMission: idMission,
+//       idEmploye: missionnaire,
+//     });
+//     const savedRapport = await newRapport.save();
 
-    // await createNotification(req, res, {
-    //   users: [idEmploye],
-    //   message:
-    //     "Votre rapport de fin de mission à été créé , vous devez le remplir ",
-    //   path: "",
-    //   type: "",
-    // });
-    res.status(201).json({ savedRapport, msg: "created successfully" });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-};
+//     // await createNotification(req, res, {
+//     //   users: [idEmploye],
+//     //   message:
+//     //     "Votre rapport de fin de mission à été créé , vous devez le remplir ",
+//     //   path: "",
+//     //   type: "",
+//     // });
+//     res.status(201).json({ savedRapport, msg: "created successfully" });
+//   } catch (err) {
+//     res.status(500).json({ error: err.message });
+//   }
+// };
 
 export const getAllRapports = async (req, res) => {
   try {

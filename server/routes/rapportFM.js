@@ -2,7 +2,7 @@ import express from "express";
 import { verifyToken } from "../middleware/auth.js";
 import { checkUpdateAccessReport } from "../middleware/rapportFM.js";
 import {
-  createRapport,
+  // createRapport,
   getAllRapports,
   updateRapport,
 } from "../controllers/rapportFM.js";
