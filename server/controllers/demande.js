@@ -37,13 +37,13 @@ export const createDemande = async (req, res) => {
 
         if (new Date(DateDepart).getTime() < new Date().getTime()) {
           throw new Error(
-            "Departure date should be greater than the current date"
+            "La date de départ doit être postérieure à la date actuelle."
           );
         } else if (
           new Date(DateDepart).getTime() >= new Date(DateRetour).getTime()
         ) {
           throw new Error(
-            "Dates shouldn't be equal, return date should be greater than departure date"
+            "Les dates ne doivent pas être identiques, la date de retour doit être postérieure à la date de départ."
           );
         }
 
@@ -93,13 +93,13 @@ export const createDemande = async (req, res) => {
 
         if (new Date(dateDepart).getTime() < new Date().getTime()) {
           throw new Error(
-            "Departure date should be greater than the current date"
+            "La date de départ doit être postérieure à la date actuelle."
           );
         } else if (
           new Date(dateDepart).getTime() >= new Date(dateRetour).getTime()
         ) {
           throw new Error(
-            "Dates shouldn't be equal, return date should be greater than departure date"
+            "Les dates ne doivent pas être identiques, la date de retour doit être postérieure à la date de départ."
           );
         }
 
@@ -134,10 +134,10 @@ export const createDemande = async (req, res) => {
     let newMsg;
     let destinataires;
     if (type === "DB") {
-      newMsg = "Vous avez une nouvelle demande de billetterie.";
+      newMsg = "Vous avez reçu une nouvelle demande de billetterie.";
       destinataires = [destinataire];
     } else if (type === "DC") {
-      newMsg = "Vous avez une nouvelle demande de congés.";
+      newMsg = "Vous avez reçu une nouvelle demande de congés.";
       destinataires = await User.find({
         $or: [
           { role: "responsable", structure: structure },
@@ -145,7 +145,7 @@ export const createDemande = async (req, res) => {
         ],
       });
     } else if (type === "DM") {
-      newMsg = "Vous avez une nouvelle demande de modification.";
+      newMsg = "Vous avez reçu une nouvelle demande de modification.";
       destinataires = await User.find({
         $or: [
           { role: "responsable", structure: structure },
@@ -226,10 +226,15 @@ export const updateDemEtat = async (req, res) => {
       //________________________________________________________________
       let destinataires = await User.find({
         $or: [
-          { role: "responsable", structure: structure },
+          {
+            role: "responsable",
+            structure: populatedDemande.idEmetteur.structure,
+          },
           { role: { $in: ["secretaire", "directeur"] } },
         ],
       });
+      let relex = await User.find({ role: "relex" });
+
       // Check if the DC is accepted
       if (updatedDemande.type === "DC" && updatedDemande.etat === "acceptée") {
         const missions = await Mission.find({
@@ -248,7 +253,7 @@ export const updateDemEtat = async (req, res) => {
             await mission.save();
 
             await createNotification(req, res, {
-              users: [...destinataires, updatedDemande.createdBy],
+              users: [...destinataires, updatedDemande.createdBy, relex],
               message: `le voyage d'affaires prévu entre le ${mission.tDateDeb} et le ${mission.tDateRet} a été annulé`,
               path: "",
               type: "",
@@ -276,23 +281,37 @@ export const updateDemEtat = async (req, res) => {
       }
 
       //____________________________________________________________________________________
-      let nomDem;
-      if (updatedDemande.__t === "DC") {
-        nomDem = "congés";
-      } else if (updatedDemande.__t === "DB") {
-        nomDem = "billetterie";
-      } else if (updatedDemande.__t === "DM") {
-        nomDem = "modification";
+      if (req.body.etat) {
+        let users;
+        let nomDem;
+        if (updatedDemande.__t === "DC") {
+          nomDem = "congés";
+          users = [updatedDemande.idEmetteur];
+        } else if (updatedDemande.__t === "DB") {
+          nomDem = "billetterie";
+          users = await User.find({
+            $or: [
+              {
+                role: "responsable",
+                structure: populatedDemande.idEmetteur.structure,
+              },
+              { role: { $in: ["secretaire", "directeur", "relex"] } },
+            ],
+          });
+        } else if (updatedDemande.__t === "DM") {
+          nomDem = "modification";
+          users = [updatedDemande.idEmetteur];
+        }
+
+        let newMsg = `Votre demande de ${nomDem} a été ${updatedDemande.etat}.`;
+
+        await createNotification(req, res, {
+          users: users,
+          message: newMsg,
+          path: "",
+          type: "",
+        });
       }
-
-      let newMsg = `Votre demande de ${nomDem} a été ${updatedDemande.etat}.`;
-
-      await createNotification(req, res, {
-        users: [updatedDemande.idEmetteur],
-        message: newMsg,
-        path: "",
-        type: "",
-      });
       //____________________________________________________________________________________
 
       res.status(200).json({ updatedDemande, msg: "Modifié avec succés" });

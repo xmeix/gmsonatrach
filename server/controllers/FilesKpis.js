@@ -50,6 +50,9 @@ export const createOrUpdateFDocument = async (newFile, fileType, operation) => {
           case "en-attente":
             oldEtat = "créé";
             break;
+          case "annulée":
+            oldEtat = "en-attente";
+            break;
           case "accepté":
           case "acceptée":
             oldEtat = "en-attente";
@@ -93,7 +96,7 @@ export const createOrUpdateFDocument = async (newFile, fileType, operation) => {
         });
 
         await updatedDocument.save();
-         // Duplicate the recent document and increment its circulation_count field
+        // Duplicate the recent document and increment its circulation_count field
         updatedDocument = new FDocument({
           structure: struct,
           etat: newFile.etat,

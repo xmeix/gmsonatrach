@@ -37,7 +37,7 @@ export const createMission = async (req, res) => {
     //verification dates start and end
     if (new Date(tDateDeb).getTime() >= new Date(tDateRet).getTime()) {
       throw new Error(
-        "Dates shouldn't be equal, return date should be greater than departure date"
+        "Les dates ne doivent pas être identiques, la date de retour doit être postérieure à la date de départ."
       );
     }
 
@@ -94,7 +94,6 @@ export const createMission = async (req, res) => {
       createdBy,
       updatedBy,
     });
-
     const savedMission = await mission.save();
     if (etat === "acceptée" && newEmployes.length > 0) {
       //on doit générer l'ordre de mission et rfm
@@ -105,31 +104,44 @@ export const createMission = async (req, res) => {
           employe: employeId,
         });
         om.save();
-        ______________________________________________________________;
+        //______________________________________________________________;
 
         const populatedOM = await OrdreMission.findById(om._id)
           .populate("mission")
           .populate("employe");
 
         createOrUpdateFDocument(populatedOM, "OM", "creation");
-        ______________________________________________________________;
+        //______________________________________________________________;
       }
+    }
+    // ____________________________________________________________________________________;
+    let newMsg;
+    let users = [];
+    if (etat !== "acceptée") {
+      newMsg = "Vous avez reçu une nouvelle demande de mission.";
+      users = await User.find({
+        $or: [
+          { role: "responsable", structure: savedMission.structure },
+          { role: "directeur" },
+        ],
+      });
+    } else {
+      newMsg = "Vous avez été affecté(e) à une nouvelle mission de travail";
+      users = newEmployes;
     }
 
     await createNotification(req, res, {
-      users: newEmployes,
-      message: "Vous avez été affecté(e) à une nouvelle mission de travail",
+      users: users,
+      message: newMsg,
       path: "",
       type: "",
     });
-
-    ____________________________________________________________________________________;
+    // ____________________________________________________________________________________;
     createOrUpdateFMission(savedMission, "creation", null, "");
     if (savedMission.etat === "acceptée") {
       createOrUpdateFMission(savedMission, "update", null, "etat");
     }
-
-    ____________________________________________________________________________________;
+    //____________________________________________________________________________________;
 
     res
       .status(201)
@@ -205,9 +217,16 @@ export const updateMissionEtat = async (req, res) => {
           //______________________________________________________________
         }
       }
-       if (operation === "acceptée" || operation === "refusée") {
+      if (operation === "acceptée" || operation === "refusée") {
         await createNotification(req, res, {
           users: [updatedMission.createdBy],
+          message: `Votre demande de mission a été ${operation}.`,
+          path: "",
+          type: "",
+        });
+      } else if (operation === "annulée") {
+        await createNotification(req, res, {
+          users: updatedMission.employes,
           message: `Votre demande de mission a été ${operation}.`,
           path: "",
           type: "",

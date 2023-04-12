@@ -2,6 +2,7 @@ import express from "express";
 import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import cors from "cors";
+import bcrypt from "bcrypt";
 import dotenv from "dotenv";
 import helmet from "helmet";
 import moment from "moment";
@@ -33,6 +34,7 @@ import {
   dcs,
   dms,
   missions,
+  users,
 } from "../client/src/data/data.js";
 import { createOrUpdateFMission } from "./controllers/Kpis.js";
 import OrdreMission from "./models/OrdreMission.js";
@@ -214,7 +216,7 @@ cron.schedule("31 14 * * *", async () => {
     tDateDeb: { $lte: new Date() },
     etat: "en-attente",
   });
-  
+
   for (const mission of missionsEnAttente) {
     const employeIds = mission.employes.map((employe) => employe._id);
     let old = mission;
@@ -252,7 +254,7 @@ cron.schedule("31 14 * * *", async () => {
     await createNotification(req, res, {
       users: [employeIds],
       message:
-        "Nous avons le plaisir de vous informer que votre mission s'est terminée avec succès. Nous vous rappelons de nous envoyer le Rapport Fin de Mission dûment rempli. Merci de votre collaboration.",
+        "Mission réussie ! Merci de nous envoyer votre rapport de fin de mission dûment rempli.",
       path: "",
       type: "",
     });
@@ -279,102 +281,39 @@ cron.schedule("31 14 * * *", async () => {
   io.emit("cronDataChange");
 });
 
-/** RUNS EVERY MIDNIGHT */
-// cron.schedule("31 14 * * *", async () => {
-//   console.log("working in index.js");
+//cron to add users to db
+cron.schedule("31 07 * * *", async () => {
+  console.log("start");
 
-//   // Update missions with tDateDeb equal to current time
+  try {
+    for (const user of users) {
+      const { nom, prenom, fonction, numTel, email, role, etat, structure } =
+        user;
+      const salt = await bcrypt.genSalt();
+      const passwordHash = await bcrypt.hash(user.password, salt);
 
-//   const currentDate = moment().format("YYYY-MM-DD");
-//   const missionsEnCours = await Mission.find(
-//     {
-//       tDateDeb: { $eq: currentDate },
-//       etat: "acceptée",
-//     },
-//     { employes: 1 }
-//   );
-
-//   for (const mission of missionsEnCours) {
-//     const employeIds = mission.employes.map((employe) => employe._id);
-//     await User.updateMany(
-//       { _id: { $in: employeIds } },
-//       { $set: { etat: "missionnaire" } }
-//     );
-//     let old = mission;
-//     mission.etat = "en-cours";
-//     let saved = await mission.save();
-//     //____________________________________________________________________________________
-//     //update etat
-//     createOrUpdateFMission(saved, "update", old, "etat");
-//     //____________________________________________________________________________________
-
-//     for (const employeId of employeIds) {
-//       const rfm = new RapportFM({
-//         idMission: toId(mission._id),
-//         idEmploye: toId(employeId),
-//       });
-
-//       const savedRFM = await rfm.save();
-//       //______________________________________________________________
-//       const populatedRFM = await RapportFM.findById(savedRFM._id)
-//         .populate("idMission")
-//         .populate("idEmploye");
-//       createOrUpdateFDocument(populatedRFM, "RFM", "creation");
-//       //______________________________________________________________
-//     }
-
-//     //______________________________________________________________
-//     await createNotification(req, res, {
-//       users: [employeIds],
-//       message:
-//         "Votre rapport de fin de mission a été créé et doit être rempli dans les délais impartis. Merci de prendre les mesures nécessaires pour le compléter.",
-//       path: "",
-//       type: "",
-//     });
-//     //__________________________________________________
-//   }
-
-//   //pour chaque mission je fais ca
-
-//   // Update missions with tDateDeb equal to current time and etat equal to en-attente
-
-//   await Mission.updateMany(
-//     { tDateDeb: { $lte: new Date() }, etat: "en-attente" },
-//     { $set: { etat: "refusée" } }
-//   );
-//   //____________________________________________________________________________________
-//   //update etat de en-attente a refusé ... change it
-//   // createOrUpdateFMission(saved, "update", old, "etat");
-//   //____________________________________________________________________________________
-
-//   // Update missions with tDateRet equal to current time and etat equal to en-cours
-//   await Mission.updateMany(
-//     { tDateRet: { $lt: currentDate }, etat: "en-cours" },
-//     { $set: { etat: "terminée" } }
-//   );
-//   //____________________________________________________________________________________
-//   //update etat de en-attente a terminée ... change it
-//   // createOrUpdateFMission(saved, "update", old, "etat");
-//   //____________________________________________________________________________________
-
-//   // Update users associated with completed missions
-//   const missionsEnded = await Mission.find({
-//     etat: "terminée",
-//   });
-//   for (const mission of missionsEnded) {
-//     const employeIds = mission.employes.map((employe) => employe._id);
-//     await User.updateMany(
-//       { _id: { $in: employeIds } },
-//       { $set: { etat: "non-missionnaire" } }
-//     );
-//   }
-
-//   console.log("finished updating index js ");
-//   io.emit("cronDataChange");
-// });
+      const newUser = new User({
+        nom,
+        prenom,
+        fonction,
+        numTel,
+        email,
+        password: passwordHash,
+        role,
+        etat,
+        structure,
+      });
+      console.log(newUser);
+      const savedUser = await newUser.save();
+    }
+  } catch (error) {
+    console.log(error);
+  }
+  console.log("end");
+});
 
 //cron creation RFM+OM
-// cron.schedule("13 15 * * *", async () => {
+// cron.schedule("10 8 * * *", async () => {
 //   //creation auto des RFM + OM
 //   console.log("starting");
 //   //RFM
@@ -419,7 +358,8 @@ cron.schedule("31 14 * * *", async () => {
 //   io.emit("cronDataChange");
 //   console.log("finished emmiting");
 // });
-
+//_______________________________________________________________________
+//Creation FMission
 // cron.schedule("15 15 * * *", async () => {
 //   const missions = await Mission.find();
 

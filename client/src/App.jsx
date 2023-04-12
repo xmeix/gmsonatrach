@@ -46,6 +46,13 @@ function App() {
   const currentUser = useSelector((state) => state.auth.user);
   let element = null;
   const dispatch = useDispatch();
+  // const users = useSelector((state) => state.auth.users);
+  // console.log(
+  //   users
+  //     .filter((e) => e.role === "employe")
+  //     .map((e) => e._id)
+  //     .join(",")
+  // );
 
   const handleSocketData = (type) => {
     switch (type) {
@@ -154,20 +161,6 @@ function App() {
       </>
     );
   }
-  // useEffect(() => {
-  //   const interval = setInterval(async () => {
-  //     try {
-  //       if (isLoggedIn) {
-  //         const res = await apiService.user.get("/auth/refresh");
-  //         dispatch(setToken(res.data.token));
-  //       }
-  //     } catch (error) {
-  //       console.error(error);
-  //     }
-  //   }, 5 * 60 * 1000);
-
-  //   return () => clearInterval(interval);
-  // }, []);
 
   return (
     <div className="app">
