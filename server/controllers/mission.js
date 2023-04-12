@@ -204,12 +204,12 @@ export const updateMissionEtat = async (req, res) => {
         const employeIds = employes.map((employe) => employe._id);
         for (const employeId of employeIds) {
           const om = new OrdreMission({
-            mission: updatedMission.id,
+            mission: toId(req.params.id),
             employe: employeId,
           });
-          om.save();
-          //______________________________________________________________
-          const populatedOM = await OrdreMission.findById(om._id)
+
+          await om.save();
+          const populatedOM = await OrdreMission.findById(om.id)
             .populate("mission")
             .populate("employe");
 
@@ -228,6 +228,36 @@ export const updateMissionEtat = async (req, res) => {
         await createNotification(req, res, {
           users: updatedMission.employes,
           message: `Votre demande de mission a été ${operation}.`,
+          path: "",
+          type: "",
+        });
+      }
+
+      if (
+        operation === "acceptée" ||
+        operation === "refusée" ||
+        operation === "annulée"
+      ) {
+        //ne : updatedMission.createdBy
+        await createNotification(req, res, {
+          users: await User.find({
+            $or: [
+              { role: "responsable", structure: savedMission.structure },
+              { role: "directeur" },
+            ],
+          }),
+          message: `Une demande de mission a été ${operation}.`,
+          path: "",
+          type: "",
+        });
+      }
+
+      //_________________________
+
+      if (etat === "acceptée") {
+        await createNotification(req, res, {
+          users: employes,
+          message: "Vous avez été affecté(e) à une nouvelle mission de travail",
           path: "",
           type: "",
         });

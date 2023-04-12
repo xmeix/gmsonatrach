@@ -10,9 +10,9 @@ export const createOrUpdateFMission = async (
 ) => {
   //cas creation mission
   switch (operation) {
-    case "creation": //gonna be the same process for (create mission , update mission etat from en-attente to acceptée or refusée or annulée )
+    case "creation":
       const mostRecent = await FMission.findOne({
-        etat: "en-attente", //en-attente
+        etat: "en-attente",
         structure: newMission.structure,
         type: newMission.type,
         country: newMission.pays,
@@ -22,20 +22,20 @@ export const createOrUpdateFMission = async (
 
       // Duplicate the most recent document and increment the circulation_count field
       const newFMission = new FMission({
-        etat: "en-attente", //en-attente
+        etat: "en-attente",
         structure: newMission.structure,
         type: newMission.type,
         country: newMission.pays,
         departure: newMission.lieuDep,
         destination: newMission.destination,
         mission_count: mostRecent ? mostRecent.mission_count + 1 : 1,
-        success_count: 0, //for all created missions would be 0
+        success_count: 0,
         fail_count: mostRecent
-          ? mostRecent.fail_count + newMission.taches.length()
-          : newMission.taches.length(),
+          ? mostRecent.fail_count + newMission.taches.length
+          : newMission.taches.length,
         employee_count: mostRecent
-          ? mostRecent.employee_count + newMission.employes.length()
-          : newMission.employes.length(),
+          ? mostRecent.employee_count + newMission.employes.length
+          : newMission.employes.length,
         road_utilization_count: mostRecent
           ? mostRecent.road_utilization_count +
             calculateTransportUtilizationCount(newMission, "route")
@@ -73,19 +73,19 @@ export const createOrUpdateFMission = async (
         case "etat":
           // Duplicate the old document and decrement its circulation_count field
           let oldUpdatedDocument = new FMission({
-            etat: oldFMission.etat, //en-attente - acceptee -refussee cas annulée
-            structure: oldFMission.structure,
-            type: oldFMission.type,
-            country: oldFMission.pays,
-            departure: oldFMission.lieuDep,
-            destination: oldFMission.destination,
+            etat: oldMission.etat,
+            structure: oldMission.structure,
+            type: oldMission.type,
+            country: oldMission.pays,
+            departure: oldMission.lieuDep,
+            destination: oldMission.destination,
             mission_count: oldFMission ? oldFMission.mission_count - 1 : 0,
             success_count: oldFMission ? oldFMission.success_count : 0,
             fail_count: oldFMission
               ? oldFMission.fail_count - calculateFailCount(newMission)
               : 0,
             employee_count: oldFMission
-              ? oldFMission.employee_count - newMission.employes.length()
+              ? oldFMission.employee_count - newMission.employes.length
               : 0,
             road_utilization_count: oldFMission
               ? oldFMission.road_utilization_count -
@@ -99,12 +99,12 @@ export const createOrUpdateFMission = async (
           await oldUpdatedDocument.save();
 
           let newUpdatedDocument = new FMission({
-            etat: recentFMission.etat, //en-attente
-            structure: recentFMission.structure,
-            type: recentFMission.type,
-            country: recentFMission.pays,
-            departure: recentFMission.lieuDep,
-            destination: recentFMission.destination,
+            etat: newMission.etat,
+            structure: newMission.structure,
+            type: newMission.type,
+            country: newMission.pays,
+            departure: newMission.lieuDep,
+            destination: newMission.destination,
             mission_count: recentFMission
               ? recentFMission.mission_count + 1
               : 1,
@@ -113,8 +113,8 @@ export const createOrUpdateFMission = async (
               ? recentFMission.fail_count + calculateFailCount(newMission)
               : calculateFailCount(newMission),
             employee_count: recentFMission
-              ? recentFMission.employee_count + newMission.employes.length()
-              : newMission.employes.length(),
+              ? recentFMission.employee_count + newMission.employes.length
+              : newMission.employes.length,
             road_utilization_count: recentFMission
               ? recentFMission.road_utilization_count +
                 calculateTransportUtilizationCount(newMission, "route")
@@ -131,17 +131,17 @@ export const createOrUpdateFMission = async (
           // Duplicate the old document and decrement its circulation_count field
           const diff = calculateDifferenceAT(oldFMission, newMission);
           newUpdatedDocument = new FMission({
-            etat: recentFMission.etat, //en cours forcement
-            structure: recentFMission.structure,
-            type: recentFMission.type,
-            country: recentFMission.pays,
-            departure: recentFMission.lieuDep,
-            destination: recentFMission.destination,
+            etat: newMission.etat,
+            structure: newMission.structure,
+            type: newMission.type,
+            country: newMission.pays,
+            departure: newMission.lieuDep,
+            destination: newMission.destination,
             mission_count: recentFMission.mission_count,
             success_count:
               diff > 0
                 ? recentFMission.success_count - diff
-                : recentFMission.success_count + diff, //for all created missions would be 0
+                : recentFMission.success_count + diff,
             fail_count:
               diff < 0
                 ? recentFMission.fail_count - diff

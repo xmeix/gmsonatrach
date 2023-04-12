@@ -20,7 +20,7 @@ export const getNotifications = async (req, res) => {
     const user = req.user.id;
     const notifications = await Notification.find({
       users: { $in: [user] },
-    });
+    }).sort({ createdAt: -1 });
     res.json(notifications);
   } catch (err) {
     console.error(err);

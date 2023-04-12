@@ -233,7 +233,7 @@ export const updateDemEtat = async (req, res) => {
           { role: { $in: ["secretaire", "directeur"] } },
         ],
       });
-      let relex = await User.find({ role: "relex" });
+      const relex = await User.find({ role: "relex" });
 
       // Check if the DC is accepted
       if (updatedDemande.type === "DC" && updatedDemande.etat === "acceptée") {
@@ -253,7 +253,7 @@ export const updateDemEtat = async (req, res) => {
             await mission.save();
 
             await createNotification(req, res, {
-              users: [...destinataires, updatedDemande.createdBy, relex],
+              users: [...destinataires, updatedDemande.createdBy, ...relex],
               message: `le voyage d'affaires prévu entre le ${mission.tDateDeb} et le ${mission.tDateRet} a été annulé`,
               path: "",
               type: "",
@@ -288,6 +288,15 @@ export const updateDemEtat = async (req, res) => {
           nomDem = "congés";
           users = [updatedDemande.idEmetteur];
         } else if (updatedDemande.__t === "DB") {
+          if (updatedDemande.etat === "annulée") {
+            await createNotification(req, res, {
+              users: relex,
+              message: `une demande de billetterie a été annulée.`,
+              path: "",
+              type: "",
+            });
+          }
+
           nomDem = "billetterie";
           users = await User.find({
             $or: [
@@ -295,7 +304,7 @@ export const updateDemEtat = async (req, res) => {
                 role: "responsable",
                 structure: populatedDemande.idEmetteur.structure,
               },
-              { role: { $in: ["secretaire", "directeur", "relex"] } },
+              { role: { $in: ["secretaire", "directeur"] } },
             ],
           });
         } else if (updatedDemande.__t === "DM") {

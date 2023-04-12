@@ -15,7 +15,7 @@ import { getNotifications } from "../../api/apiCalls/getCalls";
 const NavBar = () => {
   const { user, isLoggedIn, notifications } = useSelector(
     (state) => state.auth
-  );
+  ); 
   /**_______________________________________________________________________________ */
   const [showNotifications, setShowNotifications] = useState(false);
   const dispatch = useDispatch();
