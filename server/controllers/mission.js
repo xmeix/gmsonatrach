@@ -115,26 +115,10 @@ export const createMission = async (req, res) => {
       }
     }
     // ____________________________________________________________________________________;
-    let newMsg;
-    let users = [];
-    if (etat !== "acceptée") {
-      newMsg = "Vous avez reçu une nouvelle demande de mission.";
-      users = await User.find({
-        $or: [
-          { role: "responsable", structure: savedMission.structure },
-          { role: "directeur" },
-        ],
-      });
-    } else {
-      newMsg = "Vous avez été affecté(e) à une nouvelle mission de travail";
-      users = newEmployes;
-    }
-
-    await createNotification(req, res, {
-      users: users,
-      message: newMsg,
-      path: "",
-      type: "",
+    sendNotification(savedMission, {
+      mission: savedMission,
+      employes: newEmployes,
+      user,
     });
     // ____________________________________________________________________________________;
     createOrUpdateFMission(savedMission, "creation", null, "");
@@ -217,51 +201,14 @@ export const updateMissionEtat = async (req, res) => {
           //______________________________________________________________
         }
       }
-      if (operation === "acceptée" || operation === "refusée") {
-        await createNotification(req, res, {
-          users: [updatedMission.createdBy],
-          message: `Votre demande de mission a été ${operation}.`,
-          path: "",
-          type: "",
-        });
-      } else if (operation === "annulée") {
-        await createNotification(req, res, {
-          users: updatedMission.employes,
-          message: `Votre demande de mission a été ${operation}.`,
-          path: "",
-          type: "",
-        });
-      }
 
-      if (
-        operation === "acceptée" ||
-        operation === "refusée" ||
-        operation === "annulée"
-      ) {
-        //ne : updatedMission.createdBy
-        await createNotification(req, res, {
-          users: await User.find({
-            $or: [
-              { role: "responsable", structure: savedMission.structure },
-              { role: "directeur" },
-            ],
-          }),
-          message: `Une demande de mission a été ${operation}.`,
-          path: "",
-          type: "",
-        });
-      }
-
-      //_________________________
-
-      if (etat === "acceptée") {
-        await createNotification(req, res, {
-          users: employes,
-          message: "Vous avez été affecté(e) à une nouvelle mission de travail",
-          path: "",
-          type: "",
-        });
-      }
+      sendNotification("update", {
+        mission,
+        etat: updatedMission.etat,
+        employes,
+        createdBy: updatedMission.createdBy,
+        updatedBy,
+      });
 
       //____________________________________________________________________________________
       //update etat
@@ -282,5 +229,104 @@ export const updateMissionEtat = async (req, res) => {
     });
   } catch (err) {
     res.status(500).json({ error: err.message });
+  }
+};
+
+const sendNotification = async (operation, body) => {
+  let users;
+  let message;
+  let path = "";
+  let type = "";
+  switch (operation) {
+    case "creation":
+      {
+        const { mission, employes, user } = body;
+
+        if (user.role === "directeur" || user.role === "responsable") {
+          users = employes;
+          message = `Vous avez été affecté(e) à une nouvelle mission de travail de ${mission.tDateDeb} a ${mission.tDateRet}`;
+          await createNotification(req, res, { users, message, path, type });
+
+          users = await User.find({
+            $and: [
+              {
+                $or: [
+                  { role: "responsable", structure: mission.structure },
+                  { role: "directeur" },
+                  { role: "secretaire" },
+                ],
+              },
+              { _id: { $ne: user._id } },
+            ],
+          });
+          message = `une nouvelle mission de ${mission.tDateDeb} a ${mission.tDateRet} a été créé par ${user.nom} ${user.prenom}`;
+          await createNotification(req, res, { users, message, path, type });
+        } else {
+          //tous les responsable avec meme mission structure , et les directeurs
+          const query = {
+            $or: [
+              { role: "responsable", structure: mission.structure },
+              { role: "directeur" },
+            ],
+          };
+          users = await User.find(query);
+          message = `Vous avez reçu une nouvelle demande de mission de la part de  ${user.nom} ${user.prenom}`;
+          await createNotification(req, res, { users, message, path, type });
+        }
+      }
+      break;
+    case "update":
+      {
+        const { mission, etat, employes, createdBy, updatedBy } = body;
+
+        if (etat === "annulée") {
+          if (mission.etat === "acceptée") {
+            message = `Votre mission prévu pour ${mission.tDateDeb} a ${mission.tDateRet} a été ${etat}.`;
+            users = employes;
+            await createNotification(req, res, { users, message, path, type });
+          }
+        } else if (etat === "acceptée") {
+          //envoyer a tous les employés
+          users = employes;
+          message = `Vous avez été affecté(e) à une nouvelle mission de travail de ${mission.tDateDeb} a ${mission.tDateRet}`;
+          await createNotification(req, res, { users, message, path, type });
+        }
+
+        //on envoie pas de notification pour celui qui a créer la mission et l as annuler (created it === updatedit)
+        //on envoie aux autres pour leurs dire que leurs mission a ete annulée par qqn  (those who created IT )
+        //on envoie aux autres pour leurs dire qu'UNE mission de .. a .. a ete annulée par qqn (those who didnt create and didnt update ? )
+
+        message = `La ${
+          mission.etat === "acceptée" ? "" : "demande"
+        } mission prévue pour ${mission.tDateDeb} a ${
+          mission.tDateRet
+        } a été ${etat} par ${updatedBy.nom} ${updatedBy.prenom}.`;
+
+        if (updatedBy._id !== createdBy._id) {
+          // Send notification to the creator of the mission
+          users = [createdBy];
+          await createNotification(req, res, { users, message, path, type });
+        }
+
+        // Send notification to all other employees assigned to the mission
+
+        users = await User.find({
+          $and: [
+            {
+              $or: [
+                { role: "responsable", structure: mission.structure },
+                { role: "directeur" },
+                { role: "secretaire" },
+              ],
+            },
+            { _id: { $ne: createdBy._id } },
+            { _id: { $ne: updatedBy._id } },
+          ],
+        });
+        await createNotification(req, res, { users, message, path, type });
+      }
+      break;
+    default:
+      break;
   }
 };
