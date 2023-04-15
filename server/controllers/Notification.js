@@ -3,23 +3,27 @@ import Notification from "./../models/Notification.js";
 import { connectedUsers, io } from "../index.js";
 
 export const createNotification = async (body) => {
-  const { users, message, path, type } = body;
+  try {
+    const { users, message, path, type } = body;
 
-  const newNotification = new Notification({
-    users,
-    message,
-    path,
-    type,
-  });
-  await newNotification.save();
-  // emit a notification event to all sockets associated with the user id
-
-  users.forEach((user) => {
-    const socketId = connectedUsers[user._id];
-    if (socketId) {
-      io.to(socketId).emit("notification");
-    }
-  });
+    const newNotification = new Notification({
+      users,
+      message,
+      path,
+      type,
+    });
+    await newNotification.save();
+    // Emit the notification event to each socket ID associated with the user ID
+    console.log("____________________________________________________")
+    console.log(connectedUsers)
+    console.log("____________________________________________________")
+    connectedUsers.forEach((item) => {
+      const { userId, socketId } = item; 
+        io.to(socketId).emit("notification"); 
+    });
+  } catch (error) {
+    console.log(error);
+  }
 };
 export const getNotifications = async (req, res) => {
   try {

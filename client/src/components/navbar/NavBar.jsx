@@ -32,10 +32,12 @@ const NavBar = () => {
     }
     document.addEventListener("mousedown", handleClickOutside);
     if (isLoggedIn) {
-      socket.on("notification", async () => {
-        console.log("new notification received");
-        getNotifications(dispatch, 1);
-      });
+      if (socket) {
+        socket.on("notification", async () => {
+          console.log("new notification received");
+          getNotifications(dispatch, 1);
+        });
+      }
     }
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
@@ -173,22 +175,13 @@ const NavBar = () => {
           gap: "2em",
         }}
       >
-        {notifications?.length === 0 || !notifications ? (
-          <NotificationsNoneRoundedIcon
-            className="icon"
-            onClick={() => {
-              setShowNotifications(!showNotifications);
-            }}
-          />
-        ) : (
-          <NotificationsActiveRoundedIcon
-            className="icon"
-            onClick={() => {
-              // socket.emit("notification", { id: uuidv4(), message: "hello" });
-              setShowNotifications(!showNotifications);
-            }}
-          />
-        )}
+        <NotificationsNoneRoundedIcon
+          className="icon"
+          onClick={() => {
+            setShowNotifications(!showNotifications);
+          }}
+        />
+        {notifications.length}
         <button type="button" className="logoutBtn" onClick={handleLogout}>
           logout
         </button>

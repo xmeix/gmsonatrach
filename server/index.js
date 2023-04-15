@@ -124,19 +124,29 @@ mongoose
   .catch((error) => {
     console.error(`Failed to connect to MongoDB database: ${error.message}`);
   });
-export let connectedUsers = {};
+export let connectedUsers = [];
 io.on("connection", (socket) => {
+  console.log(connectedUsers);
+
   socket.on("login", async (user) => {
     socket.user = user;
     const userId = user._id;
-    connectedUsers[userId] = socket.id; // Store the socket ID for the user ID
-    console.log(`User ${userId} connected`);
+    const existingUser = connectedUsers.find((u) => u.userId === userId);
+
+    if (!existingUser) {
+      connectedUsers.push({ userId, socketId: socket.id }); // Store the user ID and socket ID in the array
+      console.log(`User ${userId} connected`);
+      //console.log(connectedUsers);
+    } else {
+      console.log(`User ${userId} already connected`);
+    }
   });
+
   socket.on("logout", () => {
-    const userId = socket.user._id;
-    if (userId) {
+    if (socket.user) {
+      const userId = socket.user._id;
       console.log(`User ${userId} logged out`);
-      delete connectedUsers[userId]; // Remove the socket ID for the user ID
+      connectedUsers = connectedUsers.filter((user) => user.userId !== userId); // Remove the user from the array
     }
   });
   socket.on("updatedData", async (type) => {
@@ -148,15 +158,10 @@ io.on("connection", (socket) => {
     }
   });
 
-  socket.on("disconnect", () => {
-    const userId = socket.user._id;
-    if (userId) {
-      console.log(`User ${userId} disconnected`);
-      delete connectedUsers[userId]; // Remove the socket ID for the user ID
-    } 
-    console.log(`Socket ${socket.id} disconnected`);
-  }); 
-}); 
+  socket.on("disconnect", () => { 
+    console.log(connectedUsers);
+  });
+});
 
 cron.schedule("31 14 * * *", async () => {
   console.log("working in index.js");

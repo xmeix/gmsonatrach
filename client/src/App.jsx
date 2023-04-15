@@ -46,13 +46,6 @@ function App() {
   const currentUser = useSelector((state) => state.auth.user);
   let element = null;
   const dispatch = useDispatch();
-  // const users = useSelector((state) => state.auth.users);
-  // console.log(
-  //   users
-  //     .filter((e) => e.role === "employe")
-  //     .map((e) => e._id)
-  //     .join(",")
-  // );
 
   const handleSocketData = (type) => {
     switch (type) {
@@ -111,11 +104,20 @@ function App() {
     if (isLoggedIn) {
       socket.emit("login", currentUser);
       handleSocketConnection();
-      return handleSocketDisconnection;
     } else {
       socket.emit("logout");
     }
-  }, [isLoggedIn]);
+
+    return () => {
+      handleSocketDisconnection();
+    };
+  }, [isLoggedIn, currentUser]);
+
+  useEffect(() => {
+    return () => {
+      handleSocketDisconnection();
+    };
+  }, []);
 
   if (!isLoggedIn) {
     element = (
