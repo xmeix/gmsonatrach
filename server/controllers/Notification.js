@@ -2,9 +2,9 @@ import mongoose from "mongoose";
 import Notification from "./../models/Notification.js";
 import { io } from "../index.js";
 
-export const createNotification = async (req, res, body) => {
+export const createNotification = async (body) => {
   const { users, message, path, type } = body;
-
+  
   const newNotification = new Notification({
     users,
     message,

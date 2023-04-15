@@ -28,8 +28,10 @@ const fetchData = async (dispatch, endpoint, socketEvent, num) => {
       filekpi: setFilesKpis,
       notification: setNotifications,
     };
-
+   console.log("here");
     if (!num || num !== 1) {
+   
+
       socket.emit("updatedData", socketEvent);
     } else {
       const setDataFunc = eventToActionMap[socketEvent];
@@ -57,7 +59,6 @@ export const getRFMs = async (dispatch, num) => {
 export const getOMs = async (dispatch, num) => {
   await fetchData(dispatch, "/ordremission/", "om", num);
 };
- 
 
 export const getUsers = async (dispatch, num) => {
   await fetchData(dispatch, "/auth/users", "user", num);

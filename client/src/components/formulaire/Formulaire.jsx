@@ -36,7 +36,7 @@ const Formulaire = ({ title, entries, buttons, type }) => {
   });
 
   /***----------------------------------------------------------- */
-  const missions = useSelector((state) => state.auth.missions);
+  const missions = useSelector((state) => state.auth.missions || []);
   const users = useSelector((state) => state.auth.users);
   const [start, setStart] = useState(null);
   const [end, setEnd] = useState(null);
@@ -126,7 +126,14 @@ const Formulaire = ({ title, entries, buttons, type }) => {
         console.log("errrr");
     }
 
-    resetForm();
+    // resetForm(() => {
+    //   const vals = {};
+    //   entries.forEach((entry) => {
+    //     vals[entry.id] = "";
+    //   });
+    //   delete vals[""]; // remove empty string key
+    //   return vals;
+    // });
   };
   return (
     <div className="formulaire">

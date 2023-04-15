@@ -9,6 +9,13 @@ export const createOrUpdateFMission = async (
   updateType
 ) => {
   //cas creation mission
+  console.log(
+    "_________________________________________________________________"
+  );
+  console.log(newMission.taches);
+  console.log(
+    "_________________________________________________________________"
+  );
   switch (operation) {
     case "creation":
       const mostRecent = await FMission.findOne({
@@ -61,7 +68,7 @@ export const createOrUpdateFMission = async (
       }).sort({ createdAt: -1 });
       // Find the most recent document with same type, structure, and etat
       const recentFMission = await FMission.findOne({
-        etat: newMission.etat,
+        etat: newMission ? newMission.etat : "",
         structure: newMission.structure,
         type: newMission.type,
         country: newMission.pays,
@@ -69,6 +76,9 @@ export const createOrUpdateFMission = async (
         destination: newMission.destination,
       }).sort({ createdAt: -1 });
 
+      console.log("Mission___________________________________");
+      console.log(oldMission);
+      console.log("_________________________________________");
       switch (updateType) {
         case "etat":
           // Duplicate the old document and decrement its circulation_count field

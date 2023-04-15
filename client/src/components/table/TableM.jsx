@@ -1,5 +1,5 @@
 import axios from "axios";
-
+import Empty from "./../Empty/Empty";
 import { useState, useEffect, useMemo, Fragment } from "react";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import "./TableM.css";
@@ -403,7 +403,7 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
           className="tableColumn"
           onClick={() => handleOnClick(item)}
         >
-          {item.mission._id}
+          {item.mission?._id}
         </TableCell>
       );
     } else if (property === "employe.nom") {
@@ -496,7 +496,7 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
   }, [colType]);
 
   /**_______________________________________________________________________________________________________________________________ */
-
+ 
   return (
     <div className="table">
       <p className="listTitle">{title ? title : "list"}</p>
@@ -559,27 +559,31 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {paginatedData.map((item) => {
-              if (colType === "demande" || colType === "db") {
-                return (
-                  <TableRow key={uuidv4()} className="trow">
-                    {cols.map((col) => tableCell(item, col))}
-                    <TableCell align="center" className="tableColumn">
-                      {renderConfiguration(item, item.__t.toLowerCase())}
-                    </TableCell>
-                  </TableRow>
-                );
-              } else if (colType !== "demande" && colType !== "db") {
-                return (
-                  <TableRow key={uuidv4()} className="trow">
-                    {cols.map((col) => tableCell(item, col))}
-                    <TableCell align="center" className="tableColumn">
-                      {renderConfiguration(item, colType)}
-                    </TableCell>
-                  </TableRow>
-                );
-              }
-            })}
+            {paginatedData.length !== 0 ? (
+              paginatedData.map((item) => {
+                if (colType === "demande" || colType === "db") {
+                  return (
+                    <TableRow key={uuidv4()} className="trow">
+                      {cols.map((col) => tableCell(item, col))}
+                      <TableCell align="center" className="tableColumn">
+                        {renderConfiguration(item, item.__t.toLowerCase())}
+                      </TableCell>
+                    </TableRow>
+                  );
+                } else if (colType !== "demande" && colType !== "db") {
+                  return (
+                    <TableRow key={uuidv4()} className="trow">
+                      {cols.map((col) => tableCell(item, col))}
+                      <TableCell align="center" className="tableColumn">
+                        {renderConfiguration(item, colType)}
+                      </TableCell>
+                    </TableRow>
+                  );
+                }
+              })
+            ) : (
+              <Empty cols={cols.length} />
+            )}
           </TableBody>
         </Table>
       </TableContainer>

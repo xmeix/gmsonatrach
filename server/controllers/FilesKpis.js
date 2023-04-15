@@ -20,21 +20,22 @@ export const createOrUpdateFDocument = async (newFile, fileType, operation) => {
     switch (operation) {
       case "creation":
         // Find the most recent (using date) document with same type, structure, and etat === 'créé' || etat === 'en-attente'
+
         const mostRecent = await FDocument.findOne({
           type: fileType,
           structure: struct,
-          etat: newFile.etat || "créé", //RFM : en attente
-          nature: newFile.nature || "",
-          motifDep: newFile.motifDep || "",
+          etat: newFile.etat ? newFile.etat : "créé", //RFM : en attente
+          nature: newFile.nature ? newFile.nature : "",
+          motifDep: newFile.motifDep ? newFile.motifDep : "",
         }).sort({ createdAt: -1 });
-
+   
         // Duplicate the most recent document and increment the circulation_count field
         const newDocument = new FDocument({
           structure: struct,
-          etat: newFile.etat,
+          etat: newFile.etat ? newFile.etat : "créé",
           type: fileType,
-          nature: newFile.nature || "",
-          motifDep: newFile.motifDep || "",
+          nature: newFile.nature ? newFile.nature : "",
+          motifDep: newFile.motifDep ? newFile.motifDep : "",
           circulation_count: mostRecent ? mostRecent.circulation_count + 1 : 1,
         });
 

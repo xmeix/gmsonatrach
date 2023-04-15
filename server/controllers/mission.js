@@ -103,7 +103,7 @@ export const createMission = async (req, res) => {
           mission: savedMission.id,
           employe: employeId,
         });
-        om.save();
+        await om.save();
         //______________________________________________________________;
 
         const populatedOM = await OrdreMission.findById(om._id)
@@ -114,16 +114,38 @@ export const createMission = async (req, res) => {
         //______________________________________________________________;
       }
     }
-    // ____________________________________________________________________________________;
-    sendNotification(savedMission, {
+    //____________________________________________________________________________________;
+    const userObj = await User.findById(user.id);
+    sendNotification("creation", {
       mission: savedMission,
       employes: newEmployes,
-      user,
+      user: userObj,
     });
+    const query = {
+      objetMission: objetMission,
+      structure: newStructure,
+      type,
+      budget,
+      pays,
+      employes: newEmployes,
+      taches,
+      tDateDeb,
+      tDateRet,
+      moyenTransport,
+      moyenTransportRet,
+      lieuDep,
+      destination,
+      observation,
+      etat: "en-attente",
+      circonscriptionAdm,
+      createdBy,
+      updatedBy,
+    };
     // ____________________________________________________________________________________;
-    createOrUpdateFMission(savedMission, "creation", null, "");
+    createOrUpdateFMission(query, "creation", null, "");
+
     if (savedMission.etat === "acceptée") {
-      createOrUpdateFMission(savedMission, "update", null, "etat");
+      createOrUpdateFMission(savedMission, "update", query, "etat");
     }
     //____________________________________________________________________________________;
 
@@ -169,16 +191,18 @@ export const getAllMissions = async (req, res) => {
 };
 
 export const updateMissionEtat = async (req, res) => {
+  console.log("__________________Updating___________________");
   try {
     const updatedBy = toId(req.user.id);
     const mission = await Mission.findById(req.params.id);
     const employes = mission.employes;
-
+    console.log("here1");
     const updatedMission = await Mission.findByIdAndUpdate(
       req.params.id,
       { ...req.body, updatedBy: updatedBy },
       { new: true }
     );
+    console.log("here2");
 
     if (req.body.etat) {
       const operation = req.body.etat;
@@ -201,13 +225,18 @@ export const updateMissionEtat = async (req, res) => {
           //______________________________________________________________
         }
       }
+      console.log("here3");
+
+      const populatedMission = await Mission.findById(updatedMission.id)
+        .populate("createdBy")
+        .populate("updatedBy");
 
       sendNotification("update", {
         mission,
         etat: updatedMission.etat,
         employes,
-        createdBy: updatedMission.createdBy,
-        updatedBy,
+        createdBy: populatedMission.createdBy,
+        updatedBy: populatedMission.updatedBy,
       });
 
       //____________________________________________________________________________________
@@ -245,7 +274,7 @@ const sendNotification = async (operation, body) => {
         if (user.role === "directeur" || user.role === "responsable") {
           users = employes;
           message = `Vous avez été affecté(e) à une nouvelle mission de travail de ${mission.tDateDeb} a ${mission.tDateRet}`;
-          await createNotification(req, res, { users, message, path, type });
+          await createNotification({ users, message, path, type });
 
           users = await User.find({
             $and: [
@@ -256,11 +285,11 @@ const sendNotification = async (operation, body) => {
                   { role: "secretaire" },
                 ],
               },
-              { _id: { $ne: user._id } },
+              { _id: { $ne: toId(user.id) } },
             ],
           });
           message = `une nouvelle mission de ${mission.tDateDeb} a ${mission.tDateRet} a été créé par ${user.nom} ${user.prenom}`;
-          await createNotification(req, res, { users, message, path, type });
+          await createNotification({ users, message, path, type });
         } else {
           //tous les responsable avec meme mission structure , et les directeurs
           const query = {
@@ -271,7 +300,7 @@ const sendNotification = async (operation, body) => {
           };
           users = await User.find(query);
           message = `Vous avez reçu une nouvelle demande de mission de la part de  ${user.nom} ${user.prenom}`;
-          await createNotification(req, res, { users, message, path, type });
+          await createNotification({ users, message, path, type });
         }
       }
       break;
@@ -283,13 +312,13 @@ const sendNotification = async (operation, body) => {
           if (mission.etat === "acceptée") {
             message = `Votre mission prévu pour ${mission.tDateDeb} a ${mission.tDateRet} a été ${etat}.`;
             users = employes;
-            await createNotification(req, res, { users, message, path, type });
+            await createNotification({ users, message, path, type });
           }
         } else if (etat === "acceptée") {
           //envoyer a tous les employés
           users = employes;
           message = `Vous avez été affecté(e) à une nouvelle mission de travail de ${mission.tDateDeb} a ${mission.tDateRet}`;
-          await createNotification(req, res, { users, message, path, type });
+          await createNotification({ users, message, path, type });
         }
 
         //on envoie pas de notification pour celui qui a créer la mission et l as annuler (created it === updatedit)
@@ -302,10 +331,10 @@ const sendNotification = async (operation, body) => {
           mission.tDateRet
         } a été ${etat} par ${updatedBy.nom} ${updatedBy.prenom}.`;
 
-        if (updatedBy._id !== createdBy._id) {
+        if (updatedBy.id !== createdBy.id) {
           // Send notification to the creator of the mission
           users = [createdBy];
-          await createNotification(req, res, { users, message, path, type });
+          await createNotification({ users, message, path, type });
         }
 
         // Send notification to all other employees assigned to the mission
@@ -319,11 +348,11 @@ const sendNotification = async (operation, body) => {
                 { role: "secretaire" },
               ],
             },
-            { _id: { $ne: createdBy._id } },
-            { _id: { $ne: updatedBy._id } },
+            { _id: { $ne: toId(createdBy.id) } },
+            { _id: { $ne: toId(updatedBy.id) } },
           ],
         });
-        await createNotification(req, res, { users, message, path, type });
+        await createNotification({ users, message, path, type });
       }
       break;
     default:

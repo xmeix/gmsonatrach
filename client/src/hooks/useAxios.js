@@ -90,8 +90,7 @@ export const useAxios = () => {
         break;
       case "/mission":
         getMissions(dispatch);
-        getOMs(dispatch);
-        if (currentUser.role !== "employe" && currentUser.role !== "relex") {
+         if (currentUser.role !== "employe" && currentUser.role !== "relex") {
           getMissionKPIS(dispatch, 1);
           getFileKPIS(dispatch, 1);
         }
