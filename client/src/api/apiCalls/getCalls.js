@@ -14,7 +14,7 @@ import { setFilesKpis, setMissionKpis } from "../../store/features/statSlice";
 import { apiService } from "../apiService";
 
 const fetchData = async (dispatch, endpoint, socketEvent, num) => {
-  dispatch(fetchStart());
+  dispatch(fetchStart()); 
   try {
     const res = await apiService.user.get(endpoint);
 
@@ -28,10 +28,7 @@ const fetchData = async (dispatch, endpoint, socketEvent, num) => {
       filekpi: setFilesKpis,
       notification: setNotifications,
     };
-   console.log("here");
     if (!num || num !== 1) {
-   
-
       socket.emit("updatedData", socketEvent);
     } else {
       const setDataFunc = eventToActionMap[socketEvent];

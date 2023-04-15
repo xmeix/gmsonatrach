@@ -21,11 +21,16 @@ const useBtn = () => {
             raisonRefus: raison || "",
             nbRefus: item.nbRefus + 1,
           };
-        } else
+        } else if (type === "mission" && raison !== "") {
           b = {
             etat: "refusée",
-            raisonRefus: raison || "",
+            raisonRefus: raison,
           };
+        } else if (type === "mission" && raison === "") {
+          b = {
+            etat: "refusée",
+          };
+        }
 
         callApi("patch", `${route}/${_id}`, b);
         break;
@@ -43,7 +48,7 @@ const useBtn = () => {
         break;
 
       case "check":
-         callApi("patch", `${route}/${_id}`, {
+        callApi("patch", `${route}/${_id}`, {
           taches: body,
         });
         break;

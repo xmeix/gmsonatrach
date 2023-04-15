@@ -124,6 +124,7 @@ mongoose
   .catch((error) => {
     console.error(`Failed to connect to MongoDB database: ${error.message}`);
   });
+  //it works fine , just whenn we restart the server we need to refresh all the browsers 
 export let connectedUsers = [];
 io.on("connection", (socket) => {
   console.log(connectedUsers);
@@ -179,7 +180,7 @@ cron.schedule("31 14 * * *", async () => {
     {
       tDateDeb: { $eq: currentDate },
       etat: "acceptée",
-    },
+    }, 
     { employes: 1 }
   );
 

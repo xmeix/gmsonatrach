@@ -9,8 +9,7 @@ export const checkUpdateMissionAccess = async (req, res, next) => {
     const mission = await Mission.findById(req.params.id);
     const operation = req.body.etat;
     const role = req.user.role;
-    const structure = req.user.structure;
-    const raisonRefus = req.body.raisonRefus;
+    const structure = req.user.structure; 
     if (operation) {
       if (operation === "en-attente") throw new Error("Unauthorized");
       if (operation === mission.etat) throw new Error("Unauthorized");
@@ -41,9 +40,7 @@ export const checkUpdateMissionAccess = async (req, res, next) => {
         mission.structure !== structure
       ) {
         throw new Error("Unauthorized");
-      } else if (operation === "refusée" && !raisonRefus) {
-        throw new Error("Unauthorized");
-      }
+      }  
     }
      next();
   } catch (err) {

@@ -44,8 +44,7 @@ const NavBar = () => {
     };
   }, [dispatch, isLoggedIn, notificationsRef]);
 
-  console.log(notifications);
-  /**_______________________________________________________________________________ */
+   /**_______________________________________________________________________________ */
 
   const navLinkStyle = ({ isActive }) => {
     return {

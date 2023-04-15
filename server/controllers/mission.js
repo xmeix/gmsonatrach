@@ -197,6 +197,7 @@ export const updateMissionEtat = async (req, res) => {
     const mission = await Mission.findById(req.params.id);
     const employes = mission.employes;
     console.log("here1");
+    console.log(req.body)
     const updatedMission = await Mission.findByIdAndUpdate(
       req.params.id,
       { ...req.body, updatedBy: updatedBy },

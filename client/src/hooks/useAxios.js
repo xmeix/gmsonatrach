@@ -30,7 +30,6 @@ export const useAxios = () => {
 
   const callApi = async (method, url, body) => {
     console.log("making a call...");
-
     setError("");
     setSuccessMsg("");
     dispatch(fetchStart());
@@ -48,6 +47,7 @@ export const useAxios = () => {
           handleSuccess(response, "/auth/user");
           break;
         case "patch":
+          console.log(url, body);
           response = await apiService.user.patch(url, body);
           if (url.includes("/rapportFM")) {
             handleSuccess(response, "/rapportFM", body);
