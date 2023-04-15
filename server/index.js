@@ -136,12 +136,11 @@ io.on("connection", (socket) => {
     if (!existingUser) {
       connectedUsers.push({ userId, socketId: socket.id }); // Store the user ID and socket ID in the array
       console.log(`User ${userId} connected`);
-      //console.log(connectedUsers);
     } else {
       console.log(`User ${userId} already connected`);
+      existingUser.socketId = socket.id; // Replace the old socket ID with the new socket ID
     }
   });
-
   socket.on("logout", () => {
     if (socket.user) {
       const userId = socket.user._id;
@@ -158,8 +157,15 @@ io.on("connection", (socket) => {
     }
   });
 
-  socket.on("disconnect", () => { 
-    console.log(connectedUsers);
+  socket.on("disconnect", () => {
+    if (socket.user) {
+      const userId = socket.user._id;
+      console.log(`User ${userId} disconnected`);
+      const disconnectedUser = connectedUsers.find((u) => u.userId === userId);
+      if (disconnectedUser) {
+        disconnectedUser.socketId = null; // Set the socket ID to null to mark it as disconnected
+      }
+    }
   });
 });
 
