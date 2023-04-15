@@ -124,18 +124,19 @@ mongoose
   .catch((error) => {
     console.error(`Failed to connect to MongoDB database: ${error.message}`);
   });
-let connectedUsers = {};
+export let connectedUsers = {};
 io.on("connection", (socket) => {
   socket.on("login", async (user) => {
     socket.user = user;
-    connectedUsers[socket.id] = user;
-    console.log(`User ${user._id} connected`);
+    const userId = user._id;
+    connectedUsers[userId] = socket.id; // Store the socket ID for the user ID
+    console.log(`User ${userId} connected`);
   });
   socket.on("logout", () => {
-    const user = connectedUsers[socket.id];
-    if (user) {
-      console.log(`User ${connectedUsers[socket.id]._id} logged out`);
-      delete connectedUsers[socket.id];
+    const userId = socket.user._id;
+    if (userId) {
+      console.log(`User ${userId} logged out`);
+      delete connectedUsers[userId]; // Remove the socket ID for the user ID
     }
   });
   socket.on("updatedData", async (type) => {
@@ -148,9 +149,14 @@ io.on("connection", (socket) => {
   });
 
   socket.on("disconnect", () => {
+    const userId = socket.user._id;
+    if (userId) {
+      console.log(`User ${userId} disconnected`);
+      delete connectedUsers[userId]; // Remove the socket ID for the user ID
+    } 
     console.log(`Socket ${socket.id} disconnected`);
-  });
-});
+  }); 
+}); 
 
 cron.schedule("31 14 * * *", async () => {
   console.log("working in index.js");

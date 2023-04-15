@@ -274,9 +274,14 @@ const sendNotification = async (operation, body) => {
         if (user.role === "directeur" || user.role === "responsable") {
           users = employes;
           message = `Vous avez été affecté(e) à une nouvelle mission de travail de ${mission.tDateDeb} a ${mission.tDateRet}`;
-          await createNotification({ users, message, path, type });
+          await createNotification({
+            users: users,
+            message: message,
+            path,
+            type,
+          });
 
-          users = await User.find({
+          let users2 = await User.find({
             $and: [
               {
                 $or: [
@@ -288,8 +293,13 @@ const sendNotification = async (operation, body) => {
               { _id: { $ne: toId(user.id) } },
             ],
           });
-          message = `une nouvelle mission de ${mission.tDateDeb} a ${mission.tDateRet} a été créé par ${user.nom} ${user.prenom}`;
-          await createNotification({ users, message, path, type });
+          let message2 = `une nouvelle mission de ${mission.tDateDeb} a ${mission.tDateRet} a été créé par ${user.nom} ${user.prenom}`;
+          await createNotification({
+            users: users2,
+            message: message2,
+            path,
+            type,
+          });
         } else {
           //tous les responsable avec meme mission structure , et les directeurs
           const query = {

@@ -1,10 +1,10 @@
 import mongoose from "mongoose";
 import Notification from "./../models/Notification.js";
-import { io } from "../index.js";
+import { connectedUsers, io } from "../index.js";
 
 export const createNotification = async (body) => {
   const { users, message, path, type } = body;
-  
+
   const newNotification = new Notification({
     users,
     message,
@@ -13,7 +13,13 @@ export const createNotification = async (body) => {
   });
   await newNotification.save();
   // emit a notification event to all sockets associated with the user id
-  io.emit("notification");
+
+  users.forEach((user) => {
+    const socketId = connectedUsers[user._id];
+    if (socketId) {
+      io.to(socketId).emit("notification");
+    }
+  });
 };
 export const getNotifications = async (req, res) => {
   try {

@@ -15,7 +15,7 @@ import { getNotifications } from "../../api/apiCalls/getCalls";
 const NavBar = () => {
   const { user, isLoggedIn, notifications } = useSelector(
     (state) => state.auth
-  ); 
+  );
   /**_______________________________________________________________________________ */
   const [showNotifications, setShowNotifications] = useState(false);
   const dispatch = useDispatch();
@@ -33,6 +33,7 @@ const NavBar = () => {
     document.addEventListener("mousedown", handleClickOutside);
     if (isLoggedIn) {
       socket.on("notification", async () => {
+        console.log("new notification received");
         getNotifications(dispatch, 1);
       });
     }
@@ -41,6 +42,7 @@ const NavBar = () => {
     };
   }, [dispatch, isLoggedIn, notificationsRef]);
 
+  console.log(notifications);
   /**_______________________________________________________________________________ */
 
   const navLinkStyle = ({ isActive }) => {

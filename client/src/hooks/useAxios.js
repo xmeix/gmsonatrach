@@ -90,10 +90,11 @@ export const useAxios = () => {
         break;
       case "/mission":
         getMissions(dispatch);
-         if (currentUser.role !== "employe" && currentUser.role !== "relex") {
+        if (currentUser.role !== "employe" && currentUser.role !== "relex") {
           getMissionKPIS(dispatch, 1);
           getFileKPIS(dispatch, 1);
         }
+ 
         break;
       case "/demande/DB":
       case "/demande/DC":
@@ -103,7 +104,7 @@ export const useAxios = () => {
         if (currentUser.role !== "employe" && currentUser.role !== "relex") {
           getFileKPIS(dispatch, 1);
         }
-        break;
+         break;
       case "/auth/user":
         if (currentUser.role !== "employe" && currentUser.role !== "relex") {
           getUsers(dispatch);
@@ -119,7 +120,7 @@ export const useAxios = () => {
         if (currentUser.role !== "employe" && currentUser.role !== "relex") {
           getFileKPIS(dispatch, 1);
         }
-        break;
+         break;
       default:
         handleUserType(currentUser.role);
     }
