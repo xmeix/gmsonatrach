@@ -14,7 +14,7 @@ const GestionEmploye = () => {
 
   return (
     <div className="gestion">
-      <PageName name="gestion Employés" />
+      {/* <PageName name="gestion Employés" /> */}
       <div className="elements">
         <Formulaire
           type="user"

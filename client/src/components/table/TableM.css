@@ -1,5 +1,6 @@
 .table {
   margin-bottom: 2em;
+  padding: 0 2em;
 }
 
 .table .search {
@@ -15,11 +16,9 @@
   font-size: 13px;
 }
 .table .listTitle {
-  padding: 1em;
   font-weight: 800;
-  text-transform: capitalize;
+  text-transform: uppercase;
   text-align: center;
-  background-color: var(--light-gray);
   letter-spacing: 1px;
 }
 .table .search::placeholder {
@@ -79,9 +78,8 @@
 }
 /*_________________________________________________________________________*/
 .table .tableContainer {
-  border: solid 1px var(--light-gray) !important;
   box-shadow: none !important;
-  min-height: 50vh;
+  height: 50vh;
 }
 
 .table .tableContainer .tableRow {
@@ -90,25 +88,26 @@
   font-family: "Montserrat", sans-serif !important;
   font-size: 11px !important;
   height: 10px !important;
+  text-transform: capitalize;
 }
 .table .tableContainer .tableColumn {
   font-family: "Montserrat", sans-serif !important;
   border: solid 1px var(--light-gray) !important;
-  font-size: 13px !important;
+  font-size: 11px !important;
   font-weight: 500 !important;
   white-space: nowrap !important;
-}
+ }
 
 /*_______________________________________________________________*/
 .table .pagination .MuiTypography-body2 {
-  font-size: 12px;
+  font-size: 10px;
   font-weight: 600;
   font-family: "Montserrat", sans-serif;
 }
 .table .pagination {
   margin: 0;
   float: right;
-  font-size: 15px !important;
+  font-size: 11px !important;
 }
 
 .trow {

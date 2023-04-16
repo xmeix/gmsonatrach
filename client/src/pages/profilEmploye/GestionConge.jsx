@@ -12,7 +12,7 @@ const GestionConge = () => {
   const currentUser = useSelector((state) => state.auth.user);
   return (
     <div className="gestion">
-      <PageName name="Congés" />
+      {/* <PageName name="Congés" /> */}
       <div className="elements">
         <Formulaire
           type="DC"

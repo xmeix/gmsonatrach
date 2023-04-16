@@ -56,9 +56,9 @@ const FilesDashboard = () => {
   const { chartPer, chartPerNum, handleButtonClick } = useChartButtons();
 
   return (
-    <div className="filesDashboard">
+    <div className="filesDashboard missionDashboard">
       <FloatingBar />
-      <PageName name="files Dashboard" />
+      {/* <PageName name="files Dashboard" /> */}
       <DashSettings handleButtonClick={handleButtonClick} />
       <div className="files-control-nav">
         {filesConfig.map((config, index) => (

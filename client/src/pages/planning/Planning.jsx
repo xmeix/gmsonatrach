@@ -3,7 +3,10 @@ import { useCallback, useMemo, useState } from "react";
 import usePopup from "../../hooks/usePopup";
 import Popup from "../../components/popups/Popup";
 import "./Planning.css";
-import PageName from "../../components/pageName/PageName";
+
+import ArrowBackIosRoundedIcon from "@mui/icons-material/ArrowBackIosRounded";
+import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
+
 const Planning = () => {
   const [monthOffset, setMonthOffset] = useState(0);
   const [savedItem, setSavedItem] = useState(null);
@@ -144,19 +147,27 @@ const Planning = () => {
 
   return (
     <div className="planning">
-      <PageName name="Planification" />
-      <div className="departmentName">Projet SH-ONE</div>
-      <div className="planningTitle">Planning de mobilisation des missions</div>
+      {/* <PageName name="Planification" /> */}
       <div className="tab">
+        {" "}
+        <span className="departmentName">
+          Projet SH-ONE : Planning de mobilisation des missions
+        </span>
         <div className="schedule-head">
-          <button onClick={handlePreviousMonth}>Previous Month</button>
+          <button onClick={handlePreviousMonth} className="planning-btn">
+            {" "}
+            <ArrowBackIosRoundedIcon />
+          </button>
           <p>
             {date.toLocaleDateString("en-US", {
               month: "long",
               year: "numeric",
             })}
           </p>
-          <button onClick={handleNextMonth}>Next Month</button>
+          <button onClick={handleNextMonth} className="planning-btn">
+            {" "}
+            <ArrowForwardIosRoundedIcon />
+          </button>
         </div>
         <div className="ov" style={{ overflowX: "scroll", height: 450 }}>
           <table

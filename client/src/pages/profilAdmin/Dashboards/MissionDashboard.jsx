@@ -30,7 +30,7 @@ const MissionDashboard = () => {
   return (
     <div className="missionDashboard">
       <FloatingBar />
-      <PageName name="mission Dashboard" />
+      {/* <PageName name="mission Dashboard" /> */}
       <DashSettings handleButtonClick={handleButtonClick} />
 
       <div className="dash-content">

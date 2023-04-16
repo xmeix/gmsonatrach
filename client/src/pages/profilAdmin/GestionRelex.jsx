@@ -14,7 +14,7 @@ const GestionRelex = () => {
   const demandesDB = demandes.filter((dem) => dem.__t === "DB");
   return (
     <div className="gestion">
-      <PageName name="gestion RELEX" />
+      {/* <PageName name="gestion RELEX" /> */}
       <div className="elements">
         {currentUser.role !== "relex" && (
           <Formulaire

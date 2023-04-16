@@ -1,42 +1,60 @@
 .formulaire {
-  padding: 6em;
+  padding: 1em 0;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
   align-items: center;
   gap: 1em;
+   border-radius: 5px;
+  /* background-color: var(--light-gray); */
 }
 .formulaire .inputs {
   display: flex;
+  justify-content: center;
   flex-wrap: wrap;
-  justify-content: space-evenly;
-  gap: 1.5em;
+  gap: 1em;
 }
 .formulaire .inputs .inputGroup {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 0.3em;
   width: 290px;
 
   text-align: left;
 }
 label {
-  margin-left: 0.5em;
-  font-weight: 500;
+  margin-left: 3.5em;
+  font-weight: 600;
   color: var(--gray);
+  font-size: 13px;
+  align-self: start;
+  white-space: nowrap;
 }
 
 input,
 textarea {
   background-color: var(--white);
   border-radius: 4px;
-  box-shadow: 0px 1px 4px rgb(0 0 0 / 40%);
+  box-shadow: 0px 1px 4px rgb(0 0 0 / 20%);
   border: 1px solid var(--light-gray);
-  padding: 0.6em;
-  font-size: 15px;
+  padding: 0.8em;
+  font-size: 13px;
   outline: none;
+  width: 230px;
+  box-sizing: border-box;
+  font-weight: 500;
 }
 
+.css-b62m3t-container,
+.css-3iigni-container {
+  font-size: 12px;
+  width: 230px;
+  white-space: nowrap;
+  font-weight: 500;
+}
+.css-1ow3sjv-control {
+  box-shadow: 0px 1px 4px rgb(0 0 0 / 20%);
+}
 textarea {
   max-width: 80%;
   max-height: 60%;
@@ -51,31 +69,36 @@ textarea {
 }
 .formulaire .buttons .formBtn {
   background-color: var(--white);
-  border-radius: 15px;
-  box-shadow: 0px 1px 4px rgb(0 0 0 / 40%);
-  border: 1px solid var(--light-gray);
+  box-shadow: 0px 1px 4px rgb(0 0 0 / 20%);
+
+  border-radius: 5px;
+  border: none;
   padding: 0.6em 1.5em;
-  font-size: 15px;
+  font-size: 13px;
   outline: none;
   cursor: pointer;
   font-weight: 700;
   color: var(--gray);
 }
 .formulaire .buttons .formBtn:hover {
-  background-color: rgba(211, 211, 211, 0.623);
+  background-color: rgba(211, 211, 211, 0.3);
   box-shadow: 0px 1px 4px rgb(0 0 0 / 30%);
   color: black;
+}
+.formulaire .buttons .formBtn:last-of-type {
+  background-color: var(--orange);
+  color: white;
 }
 .formulaire .listTitle {
   margin-bottom: 1.5em;
   padding: 1em;
   font-weight: 800;
-  text-transform: capitalize;
+  text-transform: uppercase;
   text-align: center;
-  background-color: var(--light-gray);
   letter-spacing: 1px;
   width: 100%;
   transition: all 0.3s ease-in-out;
+  border-radius: 10px;
 }
 
 .error-message {

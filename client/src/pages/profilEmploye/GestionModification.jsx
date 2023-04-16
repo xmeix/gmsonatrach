@@ -12,7 +12,7 @@ const GestionModification = () => {
   const currentUser = useSelector((state) => state.auth.user);
   return (
     <div className="gestion">
-      <PageName name="modification" />
+      {/* <PageName name="modification" /> */}
       <div className="elements">
         <Formulaire
           type="DM"

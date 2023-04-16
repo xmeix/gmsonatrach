@@ -17,14 +17,9 @@
   cursor: pointer;
 }
 .missionDashboard {
+  margin-top: 4em;
   padding: 1em;
 }
-/* .fcol {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-} */
 
 .subchart-buttons {
   margin: 2em;

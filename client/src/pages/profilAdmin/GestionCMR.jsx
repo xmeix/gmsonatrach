@@ -20,7 +20,7 @@ const GestionCMR = () => {
 
   return (
     <div className="gestion">
-      <PageName name="Congés et Rapports" />
+      {/* <PageName name="Congés et Rapports" /> */}
       <div className="elements">
         <TableM
           title="Liste des demandes"

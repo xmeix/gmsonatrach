@@ -29,7 +29,8 @@ const NavBar = () => {
       ) {
         setShowNotifications(false);
       }
-    }
+
+     }
     document.addEventListener("mousedown", handleClickOutside);
     if (isLoggedIn) {
       if (socket) {
@@ -43,8 +44,10 @@ const NavBar = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [dispatch, isLoggedIn, notificationsRef]);
-
-   /**_______________________________________________________________________________ */
+  function handleNotificationsClick() {
+    setShowNotifications((prev) => !prev);
+  }
+  /**_______________________________________________________________________________ */
 
   const navLinkStyle = ({ isActive }) => {
     return {
@@ -174,13 +177,13 @@ const NavBar = () => {
           gap: "2em",
         }}
       >
-        <NotificationsNoneRoundedIcon
-          className="icon"
-          onClick={() => {
-            setShowNotifications(!showNotifications);
-          }}
-        />
-        {notifications.length}
+        <div className="notif">
+          <NotificationsNoneRoundedIcon
+            className="icon"
+            onClick={handleNotificationsClick}
+          />
+          <div className="notif-number">{notifications.length}</div>
+        </div>
         <button type="button" className="logoutBtn" onClick={handleLogout}>
           logout
         </button>

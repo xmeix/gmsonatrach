@@ -15,6 +15,7 @@ import {
   Paper,
   TablePagination,
   InputAdornment,
+  makeStyles,
 } from "@material-ui/core";
 import { useSelector } from "react-redux";
 import useBtn from "../../hooks/useBtn";
@@ -26,8 +27,15 @@ import {
 } from "../../data/tableBtns";
 import Popup from "../popups/Popup";
 import usePopup from "../../hooks/usePopup";
-
+const useStyles = makeStyles({
+  table: {
+    border: "solid 1px var(--gray2)",
+    boxShadow: "none !important",
+  },
+});
 const TableM = ({ title, filterOptions, columns, data, colType }) => {
+  const classes = useStyles();
+
   const [filter, setFilter] = useState("");
   const [filterOption, setFilterOption] = useState("");
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -496,7 +504,7 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
   }, [colType]);
 
   /**_______________________________________________________________________________________________________________________________ */
- 
+
   return (
     <div className="table">
       <p className="listTitle">{title ? title : "list"}</p>

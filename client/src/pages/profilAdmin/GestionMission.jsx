@@ -37,7 +37,7 @@ const GestionMission = () => {
 
   return (
     <div className="gestion">
-      <PageName name="gestion Missions" />
+      {/* <PageName name="gestion Missions" /> */}
       <div className="elements">
         {currentUser.role !== "employe" && currentUser.role !== "relex" && (
           <Formulaire

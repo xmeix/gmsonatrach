@@ -16,6 +16,7 @@
   font-weight: 700;
   margin-left: 1em;
   transition: all 0.3s ease-in-out;
+  font-size: 14px;
 }
 .hideDiv {
   position: absolute;
@@ -27,10 +28,15 @@
   z-index: 998;
 }
 .navbar .icon {
-  font-size: 25px;
+  font-size: 20px;
+
   color: var(--black);
   cursor: pointer;
   transition: all 0.8s ease-in-out;
+}
+.notif {
+  display: flex;
+  align-items: center;
 }
 .navbar .list {
   display: flex;
@@ -40,16 +46,6 @@
   line-height: 0;
   /* add width */
 }
-.navbar .list .tb {
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
-  text-decoration: none;
-  color: var(--black);
-  font-weight: 700;
-  font-size: 14px;
-  text-transform: capitalize;
-}
 .navbar .list .sublist {
   display: flex;
   align-items: center;
@@ -57,13 +53,9 @@
   list-style: none;
   gap: 1em;
 }
-/* .navbar .list .sublist li .link {
-  text-decoration: none;
-  color: black;
-  font-weight:600;
-  font-size: 12px; 
-    
-} */
+.navbar .list .sublist .link {
+  font-size: 11px;
+}
 .navbar .list .sublist li:hover a {
   color: #f08100;
   font-weight: 800;
@@ -74,11 +66,11 @@
   border: 1px solid transparent;
   border-radius: 2px;
   font-size: 13px;
-  font-weight: 700;
+  font-weight: 600;
   color: var(--white);
   background-color: var(--orange);
   transition: background-color 0.2s ease-in-out 0s, opacity 0.2s ease-in-out 0s;
-  padding: 7px 12px;
+  padding: 5px 10px;
 }
 .navbar .logoutBtn:hover {
   background-color: var(--light-orange);
@@ -90,7 +82,7 @@
   right: 4em;
   height: fit-content;
   max-height: 60vh;
-  width: 500px;
+  width: 350px;
   z-index: 888;
   background-color: white;
   border-top: none;
@@ -127,7 +119,7 @@
   background-color: var(--light-gray);
 }
 .navbar .notification-list .notifications .notification .message {
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 600;
   line-height: 20px;
 }
@@ -135,6 +127,21 @@
 .navbar .notification-list .notifications .notification .date {
   font-size: 10px;
   color: var(--gray);
+}
+
+.navbar .notif {
+  position: relative;
+}
+.navbar .notif .notif-number {
+  position: absolute;
+  top: -0.5em;
+  right: -1em;
+  background-color: var(--orange1);
+  border-radius: 30px;
+  padding: 1px 5px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--black);
 }
 
 @media screen and (max-width: 700px) {
