@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import logo from "../../../assets/logo.svg";
-import usePDFGenerator from "../../../hooks/usePDFGenerator";
+import useFileGenerator from "../../../hooks/useFileGenerator";
 export const OmLabelLine = ({ label, content }) => (
   <div className="om-label-line">
     <div className="om-label">{label}</div>
@@ -8,8 +8,6 @@ export const OmLabelLine = ({ label, content }) => (
   </div>
 );
 const PopupOM = ({ item }) => {
-  const [pdfRef, generatePDF] = usePDFGenerator("ordre-mission");
-
   const {
     _id: missionId,
     lieuDep,
@@ -21,13 +19,38 @@ const PopupOM = ({ item }) => {
     moyenTransport,
   } = item.mission;
   const { _id: employeeId, nom, prenom, fonction } = item.employe;
-
+  const FileItem = {
+    date: new Date(tDateRet).toISOString().slice(0, 10),
+    year: new Date(item.createdAt).toISOString().slice(0, 4),
+    _id: missionId,
+    id: employeeId,
+    nom,
+    prenom,
+    fonction,
+    parcours:
+      lieuDep +
+      " Alger " +
+      destination +
+      " " +
+      pays +
+      " " +
+      lieuDep +
+      " Alger ",
+    datedepart: new Date(tDateDeb).toISOString().slice(0, 10),
+    dateretour: new Date(tDateRet).toISOString().slice(0, 10),
+    moyenTransport: moyenTransport.join("-"),
+  };
+  const [generateDocument] = useFileGenerator(
+    FileItem,
+    "/my-template-OM.docx",
+    `OrdreMission-${missionId}.docx`
+  );
   const SignatureElement = ({ text }) => (
     <div className="om-signature-element">{text}</div>
   );
   return (
     <>
-      <div className="popup-om" ref={pdfRef}>
+      <div className="popup-om">
         <div className="om-head">
           <div className="head-img">
             <img src={logo} alt="" className="logo" />
@@ -37,7 +60,7 @@ const PopupOM = ({ item }) => {
             </div>
             <div className="om-identificateur">
               N° {missionId} /SH-ONE/
-              {new Date(item.createdAt).toISOString().slice(0, 4)}
+              {FileItem.date}
             </div>
           </div>
           <div className="official">
@@ -57,27 +80,22 @@ const PopupOM = ({ item }) => {
             content={": " + `${nom} ${prenom}`}
           />
           <OmLabelLine label="Fonction" content={": " + fonction} />
-          <OmLabelLine
-            label="Parcours"
-            content={
-              ": " + `${lieuDep} Alger ${destination} ${pays} ${lieuDep} Alger`
-            }
-          />
+          <OmLabelLine label="Parcours" content={": " + FileItem.parcours} />
           <OmLabelLine
             label="Objet de la mission"
             content={": " + objetMission}
           />
           <OmLabelLine
             label="Date de depart"
-            content={": " + new Date(tDateDeb).toISOString().slice(0, 10)}
+            content={": " + FileItem.datedepart}
           />
           <OmLabelLine
             label="Date de retour"
-            content={": " + new Date(tDateRet).toISOString().slice(0, 10)}
+            content={": " + FileItem.dateretour}
           />
           <OmLabelLine
             label="Moyen de transport"
-            content={": " + moyenTransport.join("-")}
+            content={": " + FileItem.moyenTransport}
           />
         </div>
         <div className="om-signature">
@@ -88,7 +106,7 @@ const PopupOM = ({ item }) => {
         <hr />
         <div className="om-foot"></div>
       </div>
-      <button onClick={generatePDF}>Generate PDF</button>
+      <button onClick={generateDocument}>Generate PDF</button>
     </>
   );
 };

@@ -10,8 +10,8 @@ import {
 } from "@material-ui/core";
 import useBtn from "../../../hooks/useBtn";
 import { useSelector } from "react-redux";
-import usePDFGenerator from "../../../hooks/usePDFGenerator";
 import PopupSurvey from "./PopupSurvey";
+import useFileGenerator from "../../../hooks/useFileGenerator";
 
 const useStyles = makeStyles({
   table: {
@@ -38,10 +38,13 @@ const OmLabelLine = ({ label, content }) => (
 );
 
 const PopupUpdate = ({ item, close, setSurvey }) => {
-  const mission = item.idMission || null;
-  const user = item.idEmploye || null;
+  const { createdAt, _id, idEmploye, idMission, deroulement } = item;
+
+  const mission = idMission || null;
+  const user = idEmploye || null;
   const [dates, setDates] = useState([]);
   const [body, setBody] = useState([]);
+  const [bodyFile, setBodyFile] = useState([]);
   const [hebergement, setHebergement] = useState(() =>
     item.deroulement.map((item) => item.hebergement)
   );
@@ -105,6 +108,7 @@ const PopupUpdate = ({ item, close, setSurvey }) => {
   useMemo(() => {
     try {
       let newBody = [];
+      let newBodyFile = [];
 
       for (let i = 0; i < dates.length; i++) {
         newBody.push({
@@ -114,12 +118,26 @@ const PopupUpdate = ({ item, close, setSurvey }) => {
           diner: diner[i] || "avec-prise-en-charge",
           observation: observations[i] || "",
         });
+        newBodyFile.push({
+          IdDate: dates[i],
+          hebergementA:
+            hebergement[i] !== "sans-prise-en-charge" ? true : false,
+          hebergementB:
+            hebergement[i] === "sans-prise-en-charge" ? true : false,
+          dejeunerA: dejeuner[i] !== "sans-prise-en-charge" ? true : false,
+          dejeunerB: dejeuner[i] === "sans-prise-en-charge" ? true : false,
+          dinerA: diner[i] !== "sans-prise-en-charge" ? true : false,
+          dinerB: diner[i] === "sans-prise-en-charge" ? true : false,
+          observation: observations[i] || "",
+        });
       }
 
       setBody(newBody);
+      setBodyFile(newBodyFile);
     } catch (error) {
       console.error(error);
       setBody([]);
+      setBodyFile([]);
     }
   }, [dates, observations, hebergement, diner, dejeuner]);
 
@@ -133,7 +151,7 @@ const PopupUpdate = ({ item, close, setSurvey }) => {
       element = dejeuner[index];
     }
     if (type) {
-      if (currentUser._id === user._id && item.etat === "créé") {
+      if (idEmploye._id === idEmploye._id && item.etat === "créé") {
         return (
           <Radio
             value={value}
@@ -147,7 +165,6 @@ const PopupUpdate = ({ item, close, setSurvey }) => {
     }
   }
 
-  const [pdfRef, generatePDF] = usePDFGenerator("compte-rendu-fin-mission");
   const [body2, setBody2] = useState({
     dateDebA: item.idMission.dateDebA || item.idMission.tDateDeb,
     dateRetA: item.idMission.dateRetA || item.idMission.tDateRet,
@@ -222,12 +239,72 @@ const PopupUpdate = ({ item, close, setSurvey }) => {
     const day = date.getDate().toString().padStart(2, "0");
     return `${year}-${month}-${day}`;
   };
-
   const [justSent, setJustSent] = useState(false);
+  const FileItem = {
+    deroulement: bodyFile,
+    moyenTransport: mission.moyenTransport.join(" - "),
+    moyenTransportRet: mission.moyenTransportRet.join(" - "),
+
+    timeretourA:
+      new Date(body2.dateRetA).toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false,
+      }) || "",
+    dateretourA: Intl.DateTimeFormat(["ban", "id"]).format(
+      new Date(body2.dateRetA)
+    ),
+
+    timetDateRet: new Date(body2.tDateRet).toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: false,
+    }),
+
+    tDateRet: Intl.DateTimeFormat(["ban", "id"]).format(
+      new Date(mission.tDateRet)
+    ),
+    timedebutA:
+      new Date(body2.dateDebA).toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false,
+      }) || "",
+    dateDebA: Intl.DateTimeFormat(["ban", "id"]).format(
+      new Date(body2.dateDebA)
+    ),
+
+    timetDateDeb: new Date(body2.tDateDeb).toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: false,
+    }),
+    tDateDeb: Intl.DateTimeFormat(["ban", "id"]).format(
+      new Date(mission.tDateDeb)
+    ),
+    parcours:
+      mission.lieuDep + " Alger " + mission.destination + " " + mission.pays,
+    pays: mission.pays,
+    objetMission: mission.objetMission,
+    structure: idEmploye.structure,
+    fonction: idEmploye.fonction,
+    nom: idEmploye.nom,
+    prenom: idEmploye.prenom,
+    idEmp: idEmploye._id,
+    year: new Date().getFullYear(),
+    id: item._id,
+    date: Intl.DateTimeFormat(["ban", "id"]).format(new Date(item.createdAt)),
+  };
+
+  const [generateDocument] = useFileGenerator(
+    FileItem,
+    "/my-template-RFM.docx",
+    `Compte-Rendu-${_id}.docx`
+  );
   return (
     <>
       {!justSent && (
-        <div className="popup-update" ref={pdfRef}>
+        <div className="popup-update">
           <h3 className="title">Compte Rendu de Mission</h3>
           <div className="direction">
             <div>
@@ -245,13 +322,16 @@ const PopupUpdate = ({ item, close, setSurvey }) => {
             <span>DCG/RH - DAPS</span>
           </div>
           <div className="infoEmploye">
-            <OmLabelLine label="Matricule" content={": " + user._id} />
+            <OmLabelLine label="Matricule" content={": " + idEmploye._id} />
             <OmLabelLine
               label="Nom & Prénoms"
-              content={": " + user.nom + " " + user.prenom}
+              content={": " + idEmploye.nom + " " + idEmploye.prenom}
             />
-            <OmLabelLine label="fonction" content={": " + user.fonction} />
-            <OmLabelLine label="structure" content={": " + user.structure} />
+            <OmLabelLine label="fonction" content={": " + idEmploye.fonction} />
+            <OmLabelLine
+              label="structure"
+              content={": " + idEmploye.structure}
+            />
           </div>
           <div className="infoMission">
             <OmLabelLine
@@ -451,7 +531,7 @@ const PopupUpdate = ({ item, close, setSurvey }) => {
                       })}
 
                       <TableCell align="center">
-                        {currentUser._id === user._id &&
+                        {idEmploye._id === idEmploye._id &&
                           item.etat === "créé" && (
                             <input
                               className="pop-input"
@@ -464,7 +544,7 @@ const PopupUpdate = ({ item, close, setSurvey }) => {
                             />
                           )}
 
-                        {(currentUser._id !== user._id ||
+                        {(idEmploye._id !== idEmploye._id ||
                           item.etat !== "créé") && (
                           <div>{observations[index]}</div>
                         )}
@@ -572,7 +652,7 @@ const PopupUpdate = ({ item, close, setSurvey }) => {
             Mission) Signature & griffe
           </div>
 
-          {item.etat === "créé" && user._id === currentUser._id && (
+          {item.etat === "créé" && idEmploye._id === idEmploye._id && (
             <div className="buttons">
               <button
                 className="update"
@@ -607,7 +687,7 @@ const PopupUpdate = ({ item, close, setSurvey }) => {
         <PopupSurvey item={item} close={close} />
       )} */}
       {item.etat === "accepté" && (
-        <button onClick={generatePDF}>Generate PDF</button>
+        <button onClick={generateDocument}>Generate PDF</button>
       )}
     </>
   );

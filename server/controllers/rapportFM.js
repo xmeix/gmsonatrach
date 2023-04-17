@@ -69,6 +69,7 @@ export const getAllRapports = async (req, res) => {
     const rapports = await RapportFM.find()
       .populate("idEmploye")
       .populate("idMission");
+
     let filteredRapports;
     if (user.role === "relex") throw new Error("Unauthorized");
     else if (user.role === "employe") {
@@ -78,7 +79,8 @@ export const getAllRapports = async (req, res) => {
     } else {
       filteredRapports = rapports.filter((rapport) => rapport.etat !== "créé");
     }
-    res.status(200).json(filteredRapports);
+
+     res.status(200).json(filteredRapports);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

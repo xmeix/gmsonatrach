@@ -61,6 +61,7 @@
 /*--------------------------------------------------*/
 
 .popup-om {
+  padding: 2em 5em;
 }
 .popup-om .om-head {
   display: flex;
@@ -103,7 +104,7 @@
 .om-label-line {
   display: flex;
   gap: 1em;
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .om-label {

@@ -331,7 +331,7 @@ cron.schedule("31 07 * * *", async () => {
 });
 
 //cron creation RFM+OM
-// cron.schedule("10 8 * * *", async () => {
+// cron.schedule("51 10 * * *", async () => {
 //   //creation auto des RFM + OM
 //   console.log("starting");
 //   //RFM
@@ -376,8 +376,8 @@ cron.schedule("31 07 * * *", async () => {
 //   io.emit("cronDataChange");
 //   console.log("finished emmiting");
 // });
-//_______________________________________________________________________
-//Creation FMission
+// _______________________________________________________________________
+// Creation FMission
 // cron.schedule("15 15 * * *", async () => {
 //   const missions = await Mission.find();
 
