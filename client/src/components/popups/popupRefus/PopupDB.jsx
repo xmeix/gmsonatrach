@@ -1,5 +1,5 @@
+import useFileGenerator from "../../../hooks/useFileGenerator";
 import logo from "../../../assets/logo.svg";
-import usePDFGenerator from "../../../hooks/usePDFGenerator";
 import {
   Table,
   TableBody,
@@ -26,6 +26,7 @@ export const useStyles = makeStyles({
     borderBottom: "solid 1px black",
   },
 });
+
 const PopupDB = ({ item }) => {
   const classes = useStyles();
   const {
@@ -48,11 +49,69 @@ const PopupDB = ({ item }) => {
     observation,
     motifDep,
   } = item;
-  const [pdfRef, generatePDF] = usePDFGenerator("Fiche-suiveuse");
+  const FileItem = {
+    id: _id,
+    year: new Date(createdAt).getFullYear(),
+    date: new Date(createdAt)
+      .toLocaleDateString("en-GB", {
+        day: "numeric",
+        month: "numeric",
+        year: "numeric",
+      })
+      .split("/")
+      .join("-"),
+    numSC,
+    designationSC,
+    montantEngage,
+    nature:
+      nature === "aller-retour"
+        ? `${depart} / ${destination} / ${depart} `
+        : `${depart} / ${destination} `,
+    employes,
+    nbEmployes: employes.length,
+    datedepart: new Date(dateDepart)
+      .toLocaleDateString("en-GB", {
+        day: "numeric",
+        month: "numeric",
+        year: "numeric",
+      })
+      .split("/")
+      .join("-"),
+    timedepart: new Date(dateDepart).toLocaleTimeString([], {
+      hour12: false,
+      hour: "2-digit",
+      minute: "2-digit",
+    }),
+    dateretour: new Date(dateRetour)
+      .toLocaleDateString("en-GB", {
+        day: "numeric",
+        month: "numeric",
+        year: "numeric",
+      })
+      .split("/")
+      .join("-"),
+    timeretour: new Date(dateRetour).toLocaleTimeString([], {
+      hour12: false,
+      hour: "2-digit",
+      minute: "2-digit",
+    }),
+    direction,
+    sousSection,
+    division,
+    base,
+    gisement,
+    observation,
+    motifDep,
+  };
 
+  const [generateDocument] = useFileGenerator(
+    FileItem,
+    "/my-template-DB.docx",
+    `FicheSuiveuse-${date}.docx`
+  );
   return (
     <>
-      <div className="popup-db" ref={pdfRef}>
+      <div className="popup-db">
         <TableContainer>
           <Table className={classes.table}>
             <TableHead>
@@ -74,18 +133,10 @@ const PopupDB = ({ item }) => {
                     <span>Ordre</span> ....
                   </div>
                   <div>
-                    <span>N°</span> {_id}/{new Date(createdAt).getFullYear()}
+                    <span>N°</span> {FileItem.id}/{FileItem.year}
                   </div>
                   <div>
-                    <span>Date:</span>{" "}
-                    {new Date(createdAt)
-                      .toLocaleDateString("en-GB", {
-                        day: "numeric",
-                        month: "numeric",
-                        year: "numeric",
-                      })
-                      .split("/")
-                      .join("-")}
+                    <span>Date:</span> {FileItem.date}
                   </div>
                 </TableCell>
               </TableRow>
@@ -97,13 +148,14 @@ const PopupDB = ({ item }) => {
                 </TableCell>
                 <TableCell className={classes.tableCell} colSpan={2}>
                   <div>
-                    <span>N° sous compte:</span> {numSC}
+                    <span>N° sous compte:</span> {FileItem.numSC}
                   </div>
                   <div>
-                    <span>Désignation sous compte:</span> {designationSC}
+                    <span>Désignation sous compte:</span>
+                    {FileItem.designationSC}
                   </div>
                   <div>
-                    <span>Montant engagé:</span> {montantEngage} DA
+                    <span>Montant engagé:</span> {FileItem.montantEngage}
                   </div>
                 </TableCell>
               </TableRow>
@@ -120,44 +172,15 @@ const PopupDB = ({ item }) => {
             au profit de:
             <span>
               <br />
-              <br />- {employes.length} personnes
+              <br />- {FileItem.nbEmployes} personnes
             </span>
           </div>
           <div className="db-date">
             <span>
-              Départ:{" "}
-              {new Date(dateDepart)
-                .toLocaleDateString("en-GB", {
-                  day: "numeric",
-                  month: "numeric",
-                  year: "numeric",
-                })
-                .split("/")
-                .join("-")}{" "}
-              à{" "}
-              {new Date(dateDepart).toLocaleTimeString([], {
-                hour12: false,
-                hour: "2-digit",
-                minute: "2-digit",
-              })}
+              Départ: {FileItem.datedepart + " "} à {" " + FileItem.timedepart}
             </span>
-
             <span>
-              Retour:{" "}
-              {new Date(dateRetour)
-                .toLocaleDateString("en-GB", {
-                  day: "numeric",
-                  month: "numeric",
-                  year: "numeric",
-                })
-                .split("/")
-                .join("-")}{" "}
-              à{" "}
-              {new Date(dateRetour).toLocaleTimeString([], {
-                hour12: false,
-                hour: "2-digit",
-                minute: "2-digit",
-              })}
+              Retour:{FileItem.dateretour + " "} à {" " + FileItem.timeretour}
             </span>
           </div>
         </div>
@@ -350,7 +373,7 @@ const PopupDB = ({ item }) => {
           Le Directeur projet SH One <br /> A.FELFOUL{" "}
         </div>
       </div>
-      <button onClick={generatePDF}>Generate PDF</button>
+      <button onClick={generateDocument}>Generate Document</button>
     </>
   );
 };

@@ -29,6 +29,7 @@ const usePDFGenerator = (filename) => {
       .from(element)
       .save();
   };
+  
 
   return [pdfRef, generatePDF];
 };

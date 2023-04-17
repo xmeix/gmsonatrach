@@ -1,7 +1,5 @@
 import { makeStyles } from "@material-ui/core";
 import logo from "../../../assets/logo.svg";
-import jsPDF from "jspdf";
-import html2pdf from "html2pdf.js";
 
 import {
   Table,
@@ -11,12 +9,11 @@ import {
   TableRow,
 } from "@mui/material";
 import "./../Popup.css";
-import usePDFGenerator from "../../../hooks/usePDFGenerator";
 import { useStyles } from "./PopupDB";
+import useFileGenerator from "../../../hooks/useFileGenerator";
 
 const PopupDC = ({ item }) => {
   const classes = useStyles();
-  const [pdfRef, generatePDF] = usePDFGenerator("demande-congé");
   const {
     DateDepart,
     DateRetour,
@@ -34,6 +31,53 @@ const PopupDC = ({ item }) => {
     __t,
     _id,
   } = item;
+  const FileItem = {
+    id: _id,
+    date: new Date(createdAt)
+      .toLocaleDateString("en-GB", {
+        day: "numeric",
+        month: "numeric",
+        year: "numeric",
+      })
+      .split("/")
+      .join("-"),
+    year:
+      new Date(createdAt).getFullYear() -
+      1 +
+      "/" +
+      new Date(createdAt).getFullYear(),
+    nom: idEmetteur.nom,
+    prenom: idEmetteur.prenom,
+    structure: idEmetteur.structure,
+    datedepart: new Date(DateDepart)
+      .toLocaleDateString("en-GB", {
+        day: "numeric",
+        month: "numeric",
+        year: "numeric",
+      })
+      .split("/")
+      .join("-"),
+    dateretour: new Date(DateRetour)
+      .toLocaleDateString("en-GB", {
+        day: "numeric",
+        month: "numeric",
+        year: "numeric",
+      })
+      .split("/")
+      .join("-"),
+    LieuSejour,
+    fonction: idEmetteur.fonction,
+    nbJours: Math.ceil(
+      Math.abs(new Date(DateRetour) - new Date(DateDepart)) /
+        (1000 * 60 * 60 * 24)
+    ), 
+    Nature,
+  };
+  const [generateDocument] = useFileGenerator(
+    FileItem,
+    "/my-template-DC.docx",
+    `Demande-de-congés-${createdAt}.docx`
+  );
   const OmLabelLine = ({ label, content }) => (
     <div className="om-label-line">
       <div className="om-label">{label}</div>
@@ -57,7 +101,7 @@ const PopupDC = ({ item }) => {
           />
         </div>
       </div>
-      <div className="popup-dc" id="DC-Demande" ref={pdfRef}>
+      <div className="popup-dc" id="DC-Demande">
         <div>
           <div className="dc-head">
             <div className="dc-head-description">
@@ -73,60 +117,31 @@ const PopupDC = ({ item }) => {
           <div className="om-body dc-body">
             <OmLabelLine
               label="Date de création"
-              content={
-                ": " +
-                new Date(createdAt)
-                  .toLocaleDateString("en-GB", {
-                    day: "numeric",
-                    month: "numeric",
-                    year: "numeric",
-                  })
-                  .split("/")
-                  .join("-")
-              }
+              content={": " + FileItem.date}
             />
             <OmLabelLine label="Motif" content={": " + motif} />
-            <OmLabelLine label="Matricule" content={": " + idEmetteur._id} />
+            <OmLabelLine label="Matricule" content={": " + FileItem.id} />
             <OmLabelLine
               label="Nom & Prénom"
-              content={": " + `${idEmetteur.nom} ${idEmetteur.prenom}`}
+              content={": " + `${FileItem.nom} ${FileItem.prenom}`}
             />
 
             <OmLabelLine
               label="Structure"
-              content={": " + idEmetteur.structure}
+              content={": " + FileItem.structure}
             />
+            <OmLabelLine label="Fonction" content={": " + FileItem.fonction} />
             <OmLabelLine
               label="Nombre de jours"
-              content={": " + idEmetteur.structure}
+              content={": " + FileItem.nbJours}
             />
             <OmLabelLine
               label="Date de départ"
-              content={
-                ": " +
-                new Date(DateDepart)
-                  .toLocaleDateString("en-GB", {
-                    day: "numeric",
-                    month: "numeric",
-                    year: "numeric",
-                  })
-                  .split("/")
-                  .join("-")
-              }
+              content={": " + FileItem.datedepart}
             />
             <OmLabelLine
               label="Date de retour"
-              content={
-                ": " +
-                new Date(DateRetour)
-                  .toLocaleDateString("en-GB", {
-                    day: "numeric",
-                    month: "numeric",
-                    year: "numeric",
-                  })
-                  .split("/")
-                  .join("-")
-              }
+              content={": " + FileItem.dateretour}
             />
             <OmLabelLine label="Lieu de séjour" content={": " + LieuSejour} />
             <OmLabelLine label="Nature de la demande" content={": " + Nature} />
@@ -190,7 +205,7 @@ const PopupDC = ({ item }) => {
           </div>
         </div>
       </div>
-      <button onClick={generatePDF}>Generate PDF</button>
+      <button onClick={generateDocument}>Generate PDF</button>
     </>
   );
 };
