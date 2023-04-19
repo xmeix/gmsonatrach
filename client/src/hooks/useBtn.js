@@ -30,6 +30,15 @@ const useBtn = () => {
           b = {
             etat: "refusée",
           };
+        } else if (
+          item.__t === "DC" ||
+          item.__t === "DB" ||
+          item.__t === "DM"
+        ) {
+          b = {
+            etat: "refusée",
+            raisonRefus: raison,
+          };
         }
 
         callApi("patch", `${route}/${_id}`, b);

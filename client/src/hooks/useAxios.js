@@ -49,6 +49,7 @@ export const useAxios = () => {
         case "patch":
           console.log(url, body);
           response = await apiService.user.patch(url, body);
+          console.log(response)
           if (url.includes("/rapportFM")) {
             
             handleSuccess(response, "/rapportFM", body);

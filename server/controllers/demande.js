@@ -130,41 +130,15 @@ export const createDemande = async (req, res) => {
     }
 
     const savedDemande = await newDemande.save();
-    //__________________________________________________
-    let newMsg;
-    let destinataires;
-    if (type === "DB") {
-      newMsg = "Vous avez reçu une nouvelle demande de billetterie.";
-      destinataires = [destinataire];
-    } else if (type === "DC") {
-      newMsg = "Vous avez reçu une nouvelle demande de congés.";
-      destinataires = await User.find({
-        $or: [
-          { role: "responsable", structure: structure },
-          { role: { $in: ["secretaire", "directeur"] } },
-        ],
-      });
-    } else if (type === "DM") {
-      newMsg = "Vous avez reçu une nouvelle demande de modification.";
-      destinataires = await User.find({
-        $or: [
-          { role: "responsable", structure: structure },
-          { role: { $in: ["secretaire", "directeur"] } },
-        ],
-      });
-    }
+    const populatedDemande = await Demande.findById(savedDemande.id)
+      .populate("idEmetteur")
+      .populate("idDestinataire");
 
-    await createNotification(req, res, {
-      users: destinataires,
-      message: newMsg,
-      path: "",
-      type: "",
+    sendRequestNotification("creation", {
+      demande: populatedDemande,
     });
-    //__________________________________________________
-    // const populatedDemande = await Demande.findById(savedDemande._id)
-    //   .populate("idEmetteur")
-    //   .populate("idDestinataire");
-    // createOrUpdateFDocument(populatedDemande,  populatedDemande.__t, "creation");
+
+    createOrUpdateFDocument(populatedDemande, populatedDemande.__t, "creation");
 
     res.status(201).json({ savedDemande, msg: "Demande envoyée" });
   } catch (err) {
@@ -206,6 +180,9 @@ export const getDemandes = async (req, res) => {
 export const updateDemEtat = async (req, res) => {
   try {
     const demande = await Demande.findById(req.params.id);
+    console.log("DEMANDE__________________________________________");
+    console.log(req.body.etat);
+    console.log("______________________________________________");
 
     if (demande.etat === "en-attente" && req.body.etat !== "en-attente") {
       demande.etat = req.body.etat;
@@ -216,8 +193,11 @@ export const updateDemEtat = async (req, res) => {
         demande.etat === "refusée" ? req.body.raisonRefus : demande.raisonRefus;
 
       const updatedDemande = await demande.save();
+      console.log("DEMANDE__________________________________________");
+      console.log(updatedDemande.etat);
+      console.log("______________________________________________");
       //________________________________________________________________
-      const populatedDemande = await Demande.findById(updatedDemande._id)
+      const populatedDemande = await Demande.findById(updatedDemande.id)
         .populate("idEmetteur")
         .populate("idDestinataire")
         ?.populate("employes");
@@ -282,43 +262,14 @@ export const updateDemEtat = async (req, res) => {
 
       //____________________________________________________________________________________
       if (req.body.etat) {
-        let users;
-        let nomDem;
-        if (updatedDemande.__t === "DC") {
-          nomDem = "congés";
-          users = [updatedDemande.idEmetteur];
-        } else if (updatedDemande.__t === "DB") {
-          if (updatedDemande.etat === "annulée") {
-            await createNotification(req, res, {
-              users: relex,
-              message: `une demande de billetterie a été annulée.`,
-              path: "",
-              type: "",
-            });
-          }
-
-          nomDem = "billetterie";
-          users = await User.find({
-            $or: [
-              {
-                role: "responsable",
-                structure: populatedDemande.idEmetteur.structure,
-              },
-              { role: { $in: ["secretaire", "directeur"] } },
-            ],
-          });
-        } else if (updatedDemande.__t === "DM") {
-          nomDem = "modification";
-          users = [updatedDemande.idEmetteur];
-        }
-
-        let newMsg = `Votre demande de ${nomDem} a été ${updatedDemande.etat}.`;
-
-        await createNotification(req, res, {
-          users: users,
-          message: newMsg,
-          path: "",
-          type: "",
+        const updatedBy = await User.findById(req.user.id);
+        console.log("______________________________________________");
+        console.log(updatedBy);
+        console.log("______________________________________________");
+        sendRequestNotification("update", {
+          oldDemande: populatedDemande,
+          etat: req.body.etat,
+          updatedBy: updatedBy,
         });
       }
       //____________________________________________________________________________________
@@ -329,5 +280,158 @@ export const updateDemEtat = async (req, res) => {
     }
   } catch (err) {
     res.status(500).json({ error: err.message });
+  }
+};
+const sendRequestNotification = async (operation, body) => {
+  let path = "";
+  let type = "";
+  let users;
+  let message;
+  let users2;
+  let message2;
+
+  switch (operation) {
+    case "creation":
+      let { demande } = body;
+      let { idEmetteur, __t: typeD } = demande;
+
+      switch (typeD) {
+        case "DB":
+          users = await User.find({
+            $and: [
+              {
+                $or: [
+                  { role: "responsable" },
+                  { role: "directeur" },
+                  { role: "secretaire" },
+                ],
+              },
+              { _id: { $ne: idEmetteur._id } },
+            ],
+          });
+          console.log("users ============>", users);
+          message = `une demande de billetterie a été créé par ${idEmetteur.nom} ${idEmetteur.prenom}`;
+          await createNotification({
+            users: users,
+            message: message,
+            path,
+            type,
+          });
+
+          //trouver les relex et leurs informer de la demande
+          users2 = await User.find({ role: "relex" });
+          message2 = `Vous avez reçu une nouvelle demande de billetterie de la part de ${idEmetteur.nom} ${idEmetteur.prenom}`;
+
+          await createNotification({
+            users: users2,
+            message: message2,
+            path,
+            type,
+          });
+
+          break;
+
+        case "DC":
+        case "DM":
+          users = await User.find({
+            $and: [
+              {
+                $or: [
+                  { role: "responsable", structure: idEmetteur.structure },
+                  { role: "directeur" },
+                ],
+              },
+              { _id: { $ne: idEmetteur._id } },
+            ],
+          });
+
+          message = `Vous avez reçu une nouvelle demande de ${
+            type === "DM" ? "modification" : "congés"
+          } de la part de ${idEmetteur.nom} ${idEmetteur.prenom}`;
+          await createNotification({
+            users: users,
+            message: message,
+            path,
+            type,
+          });
+          break;
+
+        default:
+          break;
+      }
+
+      break;
+    case "update":
+      const { oldDemande, etat, updatedBy } = body;
+      const { __t: typeDemande, idEmetteur: emetteur } = oldDemande;
+
+      let nomDemande;
+      let roles;
+      let roles2;
+
+      if (typeDemande === "DB") {
+        nomDemande = "billetterie";
+        roles = ["responsable", "secretaire", "directeur", "relex"];
+        roles2 = ["responsable", "secretaire", "directeur"];
+      } else if (typeDemande === "DC") {
+        nomDemande = "congés";
+        roles = ["responsable", "directeur"]; //annuler
+        roles2 = ["responsable", "directeur"]; //accepter refuser
+      } else if (typeDemande === "DM") {
+        nomDemande = "modification";
+        roles = ["responsable", "directeur"]; //annuler
+        roles2 = ["responsable", "directeur"]; //accepter refuser
+      }
+      if (etat === "annulée") {
+        //celui qui l as annulée c est pas celui quui l as envoyer
+        if (updatedBy.id !== emetteur.id) {
+          users = [emetteur.id];
+          message = `Votre demande de ${nomDemande} a été ${etat} par ${updatedBy.nom} ${updatedBy.prenom}`;
+          await createNotification({ users, message, path, type });
+        }
+        users2 = await User.find({
+          $and: [
+            { role: { $in: roles } },
+            { _id: { $ne: updatedBy._id } },
+            { _id: { $ne: emetteur._id } },
+          ],
+        });
+
+        message2 = `La demande de  ${nomDemande}  créée par ${emetteur.nom} ${emetteur.prenom} a été ${etat} par ${updatedBy.nom} ${updatedBy.prenom}`;
+        await createNotification({
+          users: users2,
+          message: message2,
+          path,
+          type,
+        });
+      } else {
+        users = [emetteur.id];
+        message = `Votre demande de  ${nomDemande}  a été ${etat} par ${updatedBy.nom} ${updatedBy.prenom}.`;
+        await createNotification({
+          users: users,
+          message: message,
+          path,
+          type,
+        });
+
+        users2 = await User.find({
+          $and: [
+            { role: { $in: roles2 } },
+            { _id: { $ne: emetteur._id } },
+            { _id: { $ne: updatedBy._id } },
+          ],
+        });
+        message2 = `La demande de  ${nomDemande}  créée par ${emetteur.nom} ${emetteur.prenom} a été ${etat} par ${updatedBy.nom} ${updatedBy.prenom}`;
+        await createNotification({
+          users: users2,
+          message: message2,
+          path,
+          type,
+        });
+      }
+
+      break;
+    default:
+      break;
   }
 };

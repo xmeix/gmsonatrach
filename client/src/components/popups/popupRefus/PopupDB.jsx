@@ -107,7 +107,7 @@ const PopupDB = ({ item }) => {
   const [generateDocument] = useFileGenerator(
     FileItem,
     "/my-template-DB.docx",
-    `FicheSuiveuse-${date}.docx`
+    `FicheSuiveuse-${FileItem.date}.docx`
   );
   return (
     <>

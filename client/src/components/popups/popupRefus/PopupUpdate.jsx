@@ -12,6 +12,7 @@ import useBtn from "../../../hooks/useBtn";
 import { useSelector } from "react-redux";
 import PopupSurvey from "./PopupSurvey";
 import useFileGenerator from "../../../hooks/useFileGenerator";
+import { convertLength } from "@mui/material/styles/cssUtils";
 
 const useStyles = makeStyles({
   table: {
@@ -166,8 +167,8 @@ const PopupUpdate = ({ item, close, setSurvey }) => {
   }
 
   const [body2, setBody2] = useState({
-    dateDebA: item.idMission.dateDebA || item.idMission.tDateDeb,
-    dateRetA: item.idMission.dateRetA || item.idMission.tDateRet,
+    dateDebA: item.idMission.DateDebA || item.idMission.tDateDeb,
+    dateRetA: item.idMission.DateRetA || item.idMission.tDateRet,
     tDateDeb: item.idMission.tDateDeb,
     tDateRet: item.idMission.tDateRet,
   });
@@ -246,41 +247,41 @@ const PopupUpdate = ({ item, close, setSurvey }) => {
     moyenTransportRet: mission.moyenTransportRet.join(" - "),
 
     timeretourA:
-      new Date(body2.dateRetA).toLocaleTimeString([], {
+      new Date(idMission.DateRetA).toLocaleTimeString([], {
         hour: "2-digit",
         minute: "2-digit",
         hour12: false,
       }) || "",
     dateretourA: Intl.DateTimeFormat(["ban", "id"]).format(
-      new Date(body2.dateRetA)
+      new Date(idMission.DateRetA)
     ),
 
-    timetDateRet: new Date(body2.tDateRet).toLocaleTimeString([], {
+    timetDateRet: new Date(idMission.tDateRet).toLocaleTimeString([], {
       hour: "2-digit",
       minute: "2-digit",
       hour12: false,
     }),
 
     tDateRet: Intl.DateTimeFormat(["ban", "id"]).format(
-      new Date(mission.tDateRet)
+      new Date(idMission.tDateRet)
     ),
     timedebutA:
-      new Date(body2.dateDebA).toLocaleTimeString([], {
+      new Date(idMission.DateDebA).toLocaleTimeString([], {
         hour: "2-digit",
         minute: "2-digit",
         hour12: false,
       }) || "",
     dateDebA: Intl.DateTimeFormat(["ban", "id"]).format(
-      new Date(body2.dateDebA)
+      new Date(idMission.DateDebA)
     ),
 
-    timetDateDeb: new Date(body2.tDateDeb).toLocaleTimeString([], {
+    timetDateDeb: new Date(idMission.tDateDeb).toLocaleTimeString([], {
       hour: "2-digit",
       minute: "2-digit",
       hour12: false,
     }),
     tDateDeb: Intl.DateTimeFormat(["ban", "id"]).format(
-      new Date(mission.tDateDeb)
+      new Date(idMission.tDateDeb)
     ),
     parcours:
       mission.lieuDep + " Alger " + mission.destination + " " + mission.pays,
@@ -309,15 +310,10 @@ const PopupUpdate = ({ item, close, setSurvey }) => {
           <div className="direction">
             <div>
               Du
-              <span>
-                {" " +
-                  Intl.DateTimeFormat(["ban", "id"]).format(
-                    new Date(item.createdAt)
-                  )}
-              </span>
+              <span>{" " + FileItem.date}</span>
             </div>
             <span className="identificateur">
-              N° {item._id}/ SH-ONE/{new Date().getFullYear()}
+              N° {FileItem.id}/ SH-ONE/{FileItem.year}
             </span>
             <span>DCG/RH - DAPS</span>
           </div>
@@ -325,29 +321,22 @@ const PopupUpdate = ({ item, close, setSurvey }) => {
             <OmLabelLine label="Matricule" content={": " + idEmploye._id} />
             <OmLabelLine
               label="Nom & Prénoms"
-              content={": " + idEmploye.nom + " " + idEmploye.prenom}
+              content={": " + FileItem.nom + " " + FileItem.prenom}
             />
-            <OmLabelLine label="fonction" content={": " + idEmploye.fonction} />
+            <OmLabelLine label="fonction" content={": " + FileItem.fonction} />
             <OmLabelLine
               label="structure"
-              content={": " + idEmploye.structure}
+              content={": " + FileItem.structure}
             />
           </div>
           <div className="infoMission">
             <OmLabelLine
               label="Objet de la mission"
-              content={": " + mission.objetMission}
+              content={": " + FileItem.objetMission}
             />
             <OmLabelLine
               label="Itinéraire"
-              content={
-                ": " +
-                mission.lieuDep +
-                " Alger" +
-                mission.destination +
-                " " +
-                mission.pays
-              }
+              content={": " + FileItem.parcours}
             />
 
             <div className="dates">
@@ -358,29 +347,17 @@ const PopupUpdate = ({ item, close, setSurvey }) => {
                   travail habituel)
                 </span>
                 <div className="dateContent">
-                  <span>Le </span>:
-                  {mission &&
-                    " " +
-                      Intl.DateTimeFormat(["ban", "id"]).format(
-                        new Date(mission.tDateDeb)
-                      )}
-                  , <span>a:</span>
+                  <span>Le </span>:{mission && " " + idMission.tDateDeb},{" "}
+                  <span>a:</span>
                   {item.etat === "créé" ? (
                     <input
                       className="pop-input"
                       type="time"
-                      defaultValue={new Date(body2.tDateDeb).toLocaleTimeString(
-                        [],
-                        { hour: "2-digit", minute: "2-digit", hour12: false }
-                      )}
+                      defaultValue={FileItem.timetDateDeb}
                       onChange={(e) => addToDate(e.target.value, 1)}
                     />
                   ) : (
-                    new Date(body2.tDateDeb).toLocaleTimeString([], {
-                      hour: "2-digit",
-                      minute: "2-digit",
-                      hour12: false,
-                    }) + " H"
+                    FileItem.timetDateDeb + " H"
                   )}
                 </div>
                 <div className="dateContainer">
@@ -395,32 +372,22 @@ const PopupUpdate = ({ item, close, setSurvey }) => {
                     <input
                       className="pop-input"
                       type="date"
-                      defaultValue={formatDate(new Date(body2.dateDebA))}
+                      defaultValue={idMission.DateDebA}
                       onChange={(e) => addToDate(e.target.value, 2)}
                     />
                   ) : (
-                    " " +
-                    Intl.DateTimeFormat(["ban", "id"]).format(
-                      new Date(body2.dateDebA)
-                    )
+                    " " + FileItem.dateDebA
                   )}
                   , <span>a:</span>
                   {item.etat === "créé" ? (
                     <input
                       className="pop-input"
                       type="time"
-                      defaultValue={new Date(body2.dateDebA).toLocaleTimeString(
-                        [],
-                        { hour: "2-digit", minute: "2-digit", hour12: false }
-                      )}
+                      defaultValue={FileItem.timedebutA}
                       onChange={(e) => addToDate(e.target.value, 3)}
                     />
                   ) : (
-                    new Date(body2.dateDebA).toLocaleTimeString([], {
-                      hour: "2-digit",
-                      minute: "2-digit",
-                      hour12: false,
-                    }) + " H"
+                    FileItem.timedebutA + " H"
                   )}
                 </div>
               </div>
@@ -566,28 +533,16 @@ const PopupUpdate = ({ item, close, setSurvey }) => {
                   mission"
                 </span>
                 <div className="dateContent">
-                  <span>Le </span>:
-                  {" " +
-                    Intl.DateTimeFormat(["ban", "id"]).format(
-                      new Date(mission.tDateRet)
-                    )}
-                  , <span>a:</span>
+                  <span>Le </span>:{" " + FileItem.tDateRet}, <span>a:</span>
                   {item.etat === "créé" ? (
                     <input
                       className="pop-input"
                       type="time"
-                      defaultValue={new Date(body2.tDateRet).toLocaleTimeString(
-                        [],
-                        { hour: "2-digit", minute: "2-digit", hour12: false }
-                      )}
+                      defaultValue={FileItem.timetDateRet}
                       onChange={(e) => addToDate(e.target.value, 4)}
                     />
                   ) : (
-                    new Date(body2.tDateRet).toLocaleTimeString([], {
-                      hour: "2-digit",
-                      minute: "2-digit",
-                      hour12: false,
-                    }) + "H"
+                    FileItem.timetDateRet + "H"
                   )}
                 </div>
                 <div className="dateContainer">
@@ -602,32 +557,22 @@ const PopupUpdate = ({ item, close, setSurvey }) => {
                     <input
                       className="pop-input"
                       type="date"
-                      defaultValue={formatDate(new Date(body2.dateRetA))}
+                      defaultValue={FileItem.dateretourA}
                       onChange={(e) => addToDate(e.target.value, 5)}
                     />
                   ) : (
-                    " " +
-                    Intl.DateTimeFormat(["ban", "id"]).format(
-                      new Date(body2.dateRetA)
-                    )
+                    " " + FileItem.dateretourA
                   )}
                   , <span>a:</span>
                   {item.etat === "créé" ? (
                     <input
                       className="pop-input"
                       type="time"
-                      defaultValue={new Date(body2.dateRetA).toLocaleTimeString(
-                        [],
-                        { hour: "2-digit", minute: "2-digit", hour12: false }
-                      )}
+                      defaultValue={FileItem.timeretourA}
                       onChange={(e) => addToDate(e.target.value, 6)}
                     />
                   ) : (
-                    new Date(body2.dateRetA).toLocaleTimeString([], {
-                      hour: "2-digit",
-                      minute: "2-digit",
-                      hour12: false,
-                    }) + "H"
+                    FileItem.timeretourA + "H"
                   )}
                 </div>
               </div>
@@ -638,11 +583,11 @@ const PopupUpdate = ({ item, close, setSurvey }) => {
               <div className="om-body">
                 <OmLabelLine
                   label="A l'aller"
-                  content={": " + mission.moyenTransport.join(" - ")}
+                  content={": " + FileItem.moyenTransport}
                 />
                 <OmLabelLine
                   label="A retour"
-                  content={": " + mission.moyenTransportRet.join(" - ")}
+                  content={": " + FileItem.moyenTransportRet}
                 />
               </div>
             </div>
@@ -657,7 +602,13 @@ const PopupUpdate = ({ item, close, setSurvey }) => {
               <button
                 className="update"
                 onClick={() => {
-                  handleClick("update", item.idMission, "mission", "", body2);
+                  //console.log(item.idMission);
+                  handleClick("update", item.idMission, "mission", "", {
+                    DateDebA: new Date(body2.dateDebA),
+                    DateRetA: new Date(body2.dateRetA),
+                    tDateDeb: new Date(body2.tDateDeb),
+                    tDateRet: new Date(body2.tDateRet),
+                  });
                   handleClick("update", item, "rfm", "", { deroulement: body });
                   close();
                 }}
@@ -667,7 +618,12 @@ const PopupUpdate = ({ item, close, setSurvey }) => {
               <button
                 className="send"
                 onClick={() => {
-                  handleClick("update", item.idMission, "mission", "", body2);
+                  handleClick("update", item.idMission, "mission", "", {
+                    DateDebA: body2.dateDebA,
+                    DateRetA: body2.dateRetA,
+                    tDateDeb: body2.tDateDeb,
+                    tDateRet: body2.tDateRet,
+                  });
                   handleClick("update", item, "rfm", "", { deroulement: body });
                   handleClick("send", item, "rfm", "");
                   if (item.nbRefus === 0 && item.etat !== "accepté") {
@@ -686,9 +642,9 @@ const PopupUpdate = ({ item, close, setSurvey }) => {
       {/* {justSent && item.nbRefus === 0 && item.etat !== "accepté" && (
         <PopupSurvey item={item} close={close} />
       )} */}
-      {item.etat === "accepté" && (
-        <button onClick={generateDocument}>Generate PDF</button>
-      )}
+      {/* {item.etat === "accepté" && ( */}
+      <button onClick={generateDocument}>Generate PDF</button>
+      {/* )} */}
     </>
   );
 };

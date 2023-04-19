@@ -14,6 +14,7 @@ const PopupRefus = ({ type, item, close }) => {
         <button
           onClick={() => {
             handleClick("refuse", item, type, raison, {});
+            
             close();
           }}
         >
