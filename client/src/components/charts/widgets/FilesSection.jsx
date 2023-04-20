@@ -56,7 +56,7 @@ const FileSection = ({
             type={"circulation_count"}
             label="nombre de fichiers"
             labelType={chartPer}
-            title={"Nombre de missions par année,mois et jour"}
+            title={"Nombre de fichiers par année,mois et jour"}
           />
         </div>
         <div style={{ gridArea: "c" }} className="box">
@@ -68,9 +68,9 @@ const FileSection = ({
               chartAction
             )}
             type={"circulation_count"}
-            label="nombre de missions"
+            label="nombre de fichiers"
             labelType={chartPer}
-            title={"Nombre de missions par année,mois et jour"}
+            title={"Nombre de fichiers par année,mois et jour"}
             fill={false}
           />
         </div>
@@ -105,9 +105,9 @@ const FileSection = ({
               chartAction
             )}
             type={"circulation_count"}
-            label="nombre de missions"
+            label="nombre de fichiers"
             labelType={chartPer}
-            title={"Nombre de missions par année,mois et jour"}
+            title={"Nombre de fichiers par année,mois et jour"}
             fill={true}
           />
         </div>

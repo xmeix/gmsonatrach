@@ -9,7 +9,7 @@ const PieRechart = ({ data, type, label, labelType, title, style }) => {
   else if (style === 2) Component = Pie;
   else if (style === 3) Component = Radar;
   return (
-    <div style={{ maxWidth: "600px", minWidth: "300px" }}>
+    <div  >
       <Component
         options={{
           responsive: true,

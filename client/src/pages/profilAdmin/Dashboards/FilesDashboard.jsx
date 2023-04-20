@@ -1,6 +1,5 @@
 import { useState } from "react";
 import FloatingBar from "../../../components/floatingbar/FloatingBar";
-import PageName from "../../../components/pageName/PageName";
 import { useSelector } from "react-redux";
 import useChartButtons from "../../../hooks/useChartButtons";
 import { HashLink } from "react-router-hash-link";
@@ -11,83 +10,34 @@ const FileSection = lazy(() =>
 );
 import DashSettings from "../../../components/charts/widgets/DashSettings";
 import Loading from "./../../../components/loading/Loading";
-
-const filesConfig = [
-  {
-    fileName: "*",
-    title: "les statistiques sur tous les documents",
-    fileRadialOptions: ["structure", "nature", "motifDep"],
-    chartsOptions: ["structure", "etat"],
-  },
-  {
-    fileName: "RFM",
-    title: "les statistiques sur les rapports de fin de mission",
-    fileRadialOptions: ["structure", "etat"],
-    chartsOptions: ["structure", "etat"],
-  },
-  {
-    fileName: "DB",
-    title: "les statistiques sur les demandes de billetterie",
-    fileRadialOptions: ["nature", "motifDep", "etat"],
-    chartsOptions: ["nature", "motifDep", "etat"],
-  },
-  {
-    fileName: "DC",
-    title: "les statistiques sur les demandes de congés",
-    fileRadialOptions: ["structure", "etat", "nature"],
-    chartsOptions: ["structure", "etat", "nature"],
-  },
-  {
-    fileName: "OM",
-    title: "les statistiques sur les ordres de mission",
-    fileRadialOptions: ["structure"],
-    chartsOptions: ["structure"],
-  },
-  {
-    fileName: "DM",
-    title: "les statistiques sur les demandes de modifications",
-    fileRadialOptions: ["structure", "etat"],
-    chartsOptions: ["structure", "etat"],
-  },
-];
+import useFile from "../../../hooks/useFile";
+import Settings from "../../../components/charts/widgets/Settings";
 
 const FilesDashboard = () => {
   let filesKPISdata = useSelector((state) => state.stat.filesKPIS);
   const { chartPer, chartPerNum, handleButtonClick } = useChartButtons();
+  const { file, handleFileChange } = useFile();
 
   return (
     <div className="filesDashboard missionDashboard">
-      <FloatingBar />
-      {/* <PageName name="files Dashboard" /> */}
-      <DashSettings handleButtonClick={handleButtonClick} />
-      <div className="files-control-nav">
-        {filesConfig.map((config, index) => (
-          <HashLink
-            key={index}
-            smooth
-            to={`#${config.fileName}`}
-            className={`hashlink hashlink${config.fileName}`}
-          >
-            {config.fileName !== "*" ? config.fileName : "tous"}
-          </HashLink>
-        ))}
+      <Settings
+        handleButtonClick={handleButtonClick}
+        handleFileChange={handleFileChange}
+        file={file}
+      />
+      <div id={file.fileName}>
+        <Suspense fallback={<Loading />}>
+          <FileSection
+            data={filesKPISdata}
+            fileName={file.fileName}
+            title={file.title}
+            fileRadialOptions={file.fileRadialOptions}
+            chartsOptions={file.chartsOptions}
+            chartPer={chartPer}
+            chartPerNum={chartPerNum}
+          />{" "}
+        </Suspense>
       </div>
-      {filesConfig.map((config, index) => (
-        <div key={index} id={config.fileName}>
-          <Suspense fallback={<Loading />}>
-            <FileSection
-              key={index}
-              data={filesKPISdata}
-              fileName={config.fileName}
-              title={config.title}
-              fileRadialOptions={config.fileRadialOptions}
-              chartsOptions={config.chartsOptions}
-              chartPer={chartPer}
-              chartPerNum={chartPerNum}
-            />{" "}
-          </Suspense>
-        </div>
-      ))}
     </div>
   );
 };

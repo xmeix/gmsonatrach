@@ -20,8 +20,8 @@ export const relexTitles = [
 ];
 
 export const dashTitles = [
-  { id: 1, title: "Analyse des missions", path: "/" },
-  { id: 2, title: "Analyse des fichiers", path: "/files-analytics" },
-  { id: 3, title: "Analyse des coûts", path: "/cost-analytics" },
-  { id: 4, title: "Analyse des utilisateurs", path: "/users-analytics" },
+  { id: 1, title: "missions", path: "/" },
+  { id: 2, title: "fichiers", path: "/files-analytics" },
+  { id: 3, title: "coûts", path: "/cost-analytics" },
+  { id: 4, title: "utilisateurs", path: "/users-analytics" },
 ];

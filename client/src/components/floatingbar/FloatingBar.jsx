@@ -1,26 +1,29 @@
 import { dashTitles } from "../../data/navdata";
 import { NavLink } from "react-router-dom";
-import "./FloatingBar.css";
+import "./../charts/widgets/Settings.css";
 const FloatingBar = () => {
   const navLinkStyle = ({ isActive }) => {
     return {
-      boxShadow: isActive
-        ? "0px 1px 4px 0px rgba(0, 0, 0, 0.22)"
-        : "0px 1px 4px 0px rgba(180, 176, 176, 0.22)",
+      backgroundColor: isActive ? "var(--gray)" : "transparent",
+      color: isActive ? "var(--white)" : "var(--gray)",
     };
   };
+ 
   return (
-    <ol className="floating-bar">
-      {dashTitles.map((title, i) => (
-        <NavLink
-          to={title.path}
-          className="link"
-          key={title.id}
-          style={navLinkStyle}
-        >
-          {title.title}
-        </NavLink>
-      ))}
+    <ol className="setting-box">
+      <div className="setting-box-title">choisir votre analyse</div>
+      <div className="links">
+        {dashTitles.map((title, i) => (
+          <NavLink
+            to={title.path}
+            className="link"
+            key={title.id}
+            style={navLinkStyle}
+          >
+            {title.title}
+          </NavLink>
+        ))}
+      </div>
     </ol>
   );
 };

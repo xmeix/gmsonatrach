@@ -1,16 +1,13 @@
-.fileSection {
-  margin-top: 2em;
+.fileSection { 
   margin-bottom: 1em;
 }
 
-
 .fileSection .file-title {
-  margin: 1em;
-  background-color: var(--light-gray);
-  padding: 1.5em;
-  font-weight: 700;
-  font-size: 17px;
+   padding: 1.5em;
+  font-weight: 600;
+  font-size: 15px;
   text-align: center;
+  text-transform: uppercase;
 }
 
 .fileSection .file-section-content .box {
@@ -53,11 +50,6 @@
     grid-template-rows: auto;
     grid-template-areas: "a" "b" "c" "d" "e" "f";
     grid-auto-rows: initial;
-    margin: 2em 6vw;
+    margin: 0 6vw;
   }
-}
-@media screen and (max-width: 700px) {
-  .fileSection .file-section-content {
-    margin: 2em 1em;
-  }
-}
+} 

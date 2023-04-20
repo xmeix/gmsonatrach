@@ -1,6 +1,6 @@
 export const getCountFor = (data, type, fileType) => {
   const documents =
-    fileType === "*"
+    fileType === "tous"
       ? data
           .slice()
           .sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt))
@@ -47,7 +47,7 @@ export const getCountFor = (data, type, fileType) => {
 };
 // export const getCountFor = (data, type, fileType) => {
 //   const documents =
-//     fileType === "*"
+//     fileType === "tous"
 //       ? data
 //           .slice()
 //           .sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt))
@@ -104,7 +104,7 @@ export const getCountFor = (data, type, fileType) => {
 
 export const getGroupedDataForTime = (data, time, fileType, stack) => {
   let documents =
-    fileType === "*"
+    fileType === "tous"
       ? data
           .slice()
           .sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt))

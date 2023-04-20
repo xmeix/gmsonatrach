@@ -1,6 +1,5 @@
 import { useState } from "react";
-import "./DashSettings.css";
-
+import "./Settings.css";
 const DashSettings = ({ handleButtonClick }) => {
   const [activeButton, setActiveButton] = useState(1);
 
@@ -10,29 +9,31 @@ const DashSettings = ({ handleButtonClick }) => {
   };
 
   return (
-    <div className="dash-settings">
-      <div className="dash-title">
+    <div className="setting-box">
+      {/* <div className="dash-title">
         Basculer entre les vues quotidiennes, mensuelles et annuelles et adapter
         votre tableau de bord à vos besoins spécifiques.
-      </div>
+      </div> */}
+      <div className="setting-box-title">choisir votre vue</div>
+
       <div className="chart-buttons">
         <button
           onClick={() => handleButtonClickWithActive(1)}
           className={`chart-btn ${activeButton === 1 ? "btn-active" : ""}`}
         >
-          année
+          annuelle
         </button>
         <button
           onClick={() => handleButtonClickWithActive(2)}
           className={`chart-btn ${activeButton === 2 ? "btn-active" : ""}`}
         >
-          mois
+          mensuelle
         </button>
         <button
           onClick={() => handleButtonClickWithActive(3)}
           className={`chart-btn ${activeButton === 3 ? "btn-active" : ""}`}
         >
-          jour
+          quotidienne
         </button>
       </div>
     </div>

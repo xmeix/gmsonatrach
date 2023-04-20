@@ -112,19 +112,19 @@ mongoose
     // FDocument.insertMany(FRFM);
     // FDocument.insertMany(FDB);
     // FDocument.insertMany(FDC);
-    // FDocument.insertMany(FOM);
+    // FDocument.insertMany(FOM); 
 
     // DM.insertMany(dms);
     //DB.insertMany(dbs);
     // DC.insertMany(dcs);
 
     // FMission.insertMany(Fmissions);
-    // console.log("end");
+    console.log("end");
   })
   .catch((error) => {
     console.error(`Failed to connect to MongoDB database: ${error.message}`);
   });
-  //it works fine , just whenn we restart the server we need to refresh all the browsers 
+//it works fine , just whenn we restart the server we need to refresh all the browsers
 export let connectedUsers = [];
 io.on("connection", (socket) => {
   console.log(connectedUsers);
@@ -174,13 +174,12 @@ cron.schedule("01 21 * * *", async () => {
   console.log("working in index.js");
 
   // Update missions with tDateDeb equal to current time
-
   const currentDate = moment().format("YYYY-MM-DD");
   const missionsEnCours = await Mission.find(
     {
       tDateDeb: { $eq: currentDate },
       etat: "acceptée",
-    }, 
+    },
     { employes: 1 }
   );
 
@@ -218,7 +217,7 @@ cron.schedule("01 21 * * *", async () => {
     }
 
     //______________________________________________________________
-    await createNotification(req, res, {
+    await createNotification({
       users: [employeIds],
       message:
         "Votre rapport de fin de mission a été créé et doit être rempli dans les délais impartis. Merci de prendre les mesures nécessaires pour le compléter.",
@@ -244,7 +243,7 @@ cron.schedule("01 21 * * *", async () => {
     //update etat de en-attente a refusé ... change it
     createOrUpdateFMission(saved, "update", old, "etat");
     //____________________________________________________________________________________
-    await createNotification(req, res, {
+    await createNotification({
       users: [employeIds],
       message:
         "votre demande de mission a été automatiquement rejetée en raison d'une absence de réponse.",
@@ -269,7 +268,7 @@ cron.schedule("01 21 * * *", async () => {
     //update etat de en-attente a terminée ... change it
     createOrUpdateFMission(saved, "update", old, "etat");
     //____________________________________________________________________________________
-    await createNotification(req, res, {
+    await createNotification({
       users: [employeIds],
       message:
         "Mission réussie ! Merci de nous envoyer votre rapport de fin de mission dûment rempli.",
@@ -300,35 +299,35 @@ cron.schedule("01 21 * * *", async () => {
 });
 
 //cron to add users to db
-cron.schedule("31 07 * * *", async () => {
-  console.log("start");
+// cron.schedule("31 07 * * *", async () => {
+//   console.log("start");
 
-  try {
-    for (const user of users) {
-      const { nom, prenom, fonction, numTel, email, role, etat, structure } =
-        user;
-      const salt = await bcrypt.genSalt();
-      const passwordHash = await bcrypt.hash(user.password, salt);
+//   try {
+//     for (const user of users) {
+//       const { nom, prenom, fonction, numTel, email, role, etat, structure } =
+//         user;
+//       const salt = await bcrypt.genSalt();
+//       const passwordHash = await bcrypt.hash(user.password, salt);
 
-      const newUser = new User({
-        nom,
-        prenom,
-        fonction,
-        numTel,
-        email,
-        password: passwordHash,
-        role,
-        etat,
-        structure,
-      });
-      console.log(newUser);
-      const savedUser = await newUser.save();
-    }
-  } catch (error) {
-    console.log(error);
-  }
-  console.log("end");
-});
+//       const newUser = new User({
+//         nom,
+//         prenom,
+//         fonction,
+//         numTel,
+//         email,
+//         password: passwordHash,
+//         role,
+//         etat,
+//         structure,
+//       });
+//       console.log(newUser);
+//       const savedUser = await newUser.save();
+//     }
+//   } catch (error) {
+//     console.log(error);
+//   }
+//   console.log("end");
+// });
 
 //cron creation RFM+OM
 // cron.schedule("51 10 * * *", async () => {

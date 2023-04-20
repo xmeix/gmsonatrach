@@ -22,6 +22,7 @@ import {
 } from "../../../utils/fmissions_analytics";
 import StackedBarRechart from "../../../components/charts/StackedBarRechart";
 import ComposedRechart from "../../../components/charts/ComposedRechart";
+import Settings from "../../../components/charts/widgets/Settings";
 const MissionDashboard = () => {
   let fmissionData = useSelector((state) => state.stat.missionKPIS);
 
@@ -29,10 +30,7 @@ const MissionDashboard = () => {
 
   return (
     <div className="missionDashboard">
-      <FloatingBar />
-      {/* <PageName name="mission Dashboard" /> */}
-      <DashSettings handleButtonClick={handleButtonClick} />
-
+      <Settings handleButtonClick={handleButtonClick} />
       <div className="dash-content">
         <div style={{ gridArea: "a" }} className="box">
           {/* type - structure - etat - country*/}
