@@ -8,9 +8,9 @@ const FloatingBar = () => {
       color: isActive ? "var(--white)" : "var(--gray)",
     };
   };
- 
+
   return (
-    <ol className="setting-box">
+    <ol className="setting-box ">
       <div className="setting-box-title">choisir votre analyse</div>
       <div className="links">
         {dashTitles.map((title, i) => (

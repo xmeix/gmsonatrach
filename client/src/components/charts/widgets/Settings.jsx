@@ -22,7 +22,6 @@ const Settings = ({ handleButtonClick, handleFileChange, file }) => {
             {file && (
               <div className="setting-box">
                 <div className="setting-box-title">choisir votre fichier</div>
-                
                 <select
                   value={file.fileName}
                   onChange={(event) => handleFileChange(event)}

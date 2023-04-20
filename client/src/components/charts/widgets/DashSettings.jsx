@@ -9,11 +9,7 @@ const DashSettings = ({ handleButtonClick }) => {
   };
 
   return (
-    <div className="setting-box">
-      {/* <div className="dash-title">
-        Basculer entre les vues quotidiennes, mensuelles et annuelles et adapter
-        votre tableau de bord à vos besoins spécifiques.
-      </div> */}
+    <div className="setting-box ">
       <div className="setting-box-title">choisir votre vue</div>
 
       <div className="chart-buttons">
