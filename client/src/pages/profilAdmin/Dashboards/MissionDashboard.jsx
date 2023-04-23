@@ -27,7 +27,7 @@ const MissionDashboard = () => {
   let fmissionData = useSelector((state) => state.stat.missionKPIS);
 
   const { chartPer, chartPerNum, handleButtonClick } = useChartButtons();
-
+  
   return (
     <div className="missionDashboard">
       <Settings handleButtonClick={handleButtonClick} />
@@ -41,7 +41,7 @@ const MissionDashboard = () => {
                 chartPerNum,
                 "structure"
               )}
-              type={"mission_count"}
+              type={"success_count"}
               label="nombre de missions"
               labelType={chartPer}
               title={"Nombre de missions par année,mois et jour"}
@@ -61,6 +61,7 @@ const MissionDashboard = () => {
             />
           )}
         </div>
+
         <div style={{ gridArea: "b" }} className="box">
           <PieRechart
             data={getMissionCountFor(fmissionData, "etat")}

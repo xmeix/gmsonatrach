@@ -88,6 +88,18 @@ const AreaRechart = ({
                 },
                 position: "bottom",
               },
+              ticks: {
+                beginAtZero: true,
+                callback: function (value, index, values) {
+                  if (num === "percentage") {
+                    return value + "%";
+                  } else if (num === "currency") {
+                    return "$" + value;
+                  } else {
+                    return value;
+                  }
+                },
+              },
               tooltip: {
                 mode: "index",
                 intersect: false,
@@ -99,6 +111,7 @@ const AreaRechart = ({
             datasets: datasets,
           }}
           type="area"
+          connectNulls={true}
         />
       </>
     </>

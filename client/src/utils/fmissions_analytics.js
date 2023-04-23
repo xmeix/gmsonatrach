@@ -27,7 +27,7 @@ export const getMissionGroupedDataForTime = (data, time, stack) => {
     mostRecentDocuments[key] = document;
   }
 
-  // console.log("mostRecentDocuments", mostRecentDocuments);
+  console.log("mostRecentDocuments", mostRecentDocuments);
 
   let groupedDataArray;
   groupedDataArray = Object.values(mostRecentDocuments).reduce((acc, cur) => {
@@ -190,6 +190,7 @@ export const getMissionCountFor = (data, type) => {
 
     const reducedData = groupedData.reduce((acc, cur) => {
       const key = cur.label;
+      console.log(cur);
       if (key in acc) {
         acc[key].mission_count += cur.mission_count;
         acc[key].employee_count += cur.employee_count;
@@ -254,7 +255,7 @@ export const currentSuccessRate = (data, property1, property2) => {
   }, 0);
 
   const value = ((A * 100) / (A + B)).toFixed(2);
-  return value;
+  return isNaN(value) ? 0 : value;
 };
 
 export const currentCount = (data, property1) => {
