@@ -5,7 +5,7 @@ import Formulaire from "../../components/formulaire/Formulaire";
 import {
   MissionEntries as entries,
   userButtons as buttons,
-} from "../../data/formData";
+} from "../../data/formData"; 
 import { useSelector } from "react-redux";
 import {
   columnsMissions,

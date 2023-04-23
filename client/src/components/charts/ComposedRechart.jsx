@@ -10,7 +10,7 @@ const ComposedRechart = ({ data, labelType, title, props, labels }) => {
   );
 
   const createdAtLabels = [...new Set(filteredData.map((d) => d.createdAt))];
- 
+
   const successData = createdAtLabels.map((date) => {
     const mostRecentSuccess = filteredData
       .filter((d) => d.createdAt === date && d[props[0]])
@@ -66,6 +66,7 @@ const ComposedRechart = ({ data, labelType, title, props, labels }) => {
                 backgroundColor: "rgba(75, 192, 192, 0.2)",
                 borderColor: "rgba(75, 192, 192, 1)",
                 borderWidth: 2,
+                barThickness: 50,
               },
               {
                 type: "bar",
@@ -74,6 +75,7 @@ const ComposedRechart = ({ data, labelType, title, props, labels }) => {
                 backgroundColor: "rgba(255, 99, 132, 0.2)",
                 borderColor: "rgba(255, 99, 132, 1)",
                 borderWidth: 2,
+                barThickness: 50,
               },
             ],
           }}

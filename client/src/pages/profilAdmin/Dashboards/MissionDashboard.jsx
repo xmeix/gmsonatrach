@@ -27,7 +27,7 @@ const MissionDashboard = () => {
   let fmissionData = useSelector((state) => state.stat.missionKPIS);
 
   const { chartPer, chartPerNum, handleButtonClick } = useChartButtons();
-  
+
   return (
     <div className="missionDashboard">
       <Settings handleButtonClick={handleButtonClick} />
@@ -41,7 +41,7 @@ const MissionDashboard = () => {
                 chartPerNum,
                 "structure"
               )}
-              type={"success_count"}
+              type={"mission_count"}
               label="nombre de missions"
               labelType={chartPer}
               title={"Nombre de missions par année,mois et jour"}
@@ -64,7 +64,7 @@ const MissionDashboard = () => {
 
         <div style={{ gridArea: "b" }} className="box">
           <PieRechart
-            data={getMissionCountFor(fmissionData, "etat")}
+            data={getMissionCountFor(fmissionData, "structure")}
             type={"mission_count"}
             label="nombre de missions"
             labelType={"label"}
@@ -95,7 +95,7 @@ const MissionDashboard = () => {
                 chartPerNum,
                 "structure"
               )}
-              type={"failAvg"}
+              type={"successAvg"}
               label="Taux de réussite"
               labelType={chartPer}
               title={"Taux de réussite des missions par année,mois et jour"}
@@ -151,7 +151,7 @@ const MissionDashboard = () => {
               data={getMissionGroupedDataForTime(
                 fmissionData.filter((e) => e.etat === "terminée"),
                 chartPerNum,
-                "etat"
+                "structure"
               )}
               labelType={chartPer}
               title={

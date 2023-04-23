@@ -121,7 +121,7 @@ mongoose
 
     // FMission.insertMany(Fmissions);
     // addMissionsData();
-    // console.log("end");
+    console.log("end");
   })
   .catch((error) => {
     console.error(`Failed to connect to MongoDB database: ${error.message}`);
@@ -153,7 +153,7 @@ io.on("connection", (socket) => {
   });
   socket.on("updatedData", async (type) => {
     try {
-      console.log(type);
+      // console.log(type);
       io.emit("updatedData", type);
     } catch (error) {
       console.error(error);
@@ -378,8 +378,8 @@ cron.schedule("01 21 * * *", async () => {
 //   console.log("finished emmiting");
 // });
 // _______________________________________________________________________
-// Creation FMission
-// cron.schedule("15 15 * * *", async () => {
+//Creation FMission
+// cron.schedule("21 21 * * *", async () => {
 //   const missions = await Mission.find();
 
 //   console.log("here");

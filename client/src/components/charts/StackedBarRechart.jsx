@@ -31,6 +31,8 @@ const StackedBarRechart = ({
           );
           return recentData ? recentData[type] : null;
         }),
+        barThickness: 50,
+        borderWidth: 2,
       };
       acc.push(newData);
     }
