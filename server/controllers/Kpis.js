@@ -51,6 +51,7 @@ export const createOrUpdateFMission = async (
           ? mostRecent.airline_utilization_count +
             calculateTransportUtilizationCount(newMission, "avion")
           : calculateTransportUtilizationCount(newMission, "avion"),
+        // createdAt: newMission.createdAt,
       });
 
       await newFMission.save();

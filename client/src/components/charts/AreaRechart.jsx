@@ -50,18 +50,20 @@ const AreaRechart = ({
         ],
         borderWidth: 2.5,
         tension: 0.2,
+        fill: fill,
       };
       acc.push(newData);
     }
     return acc;
   }, []);
- 
+
   return (
     <>
       {renderButtons()}
       <>
         <Line
           options={{
+            spanGaps: true,
             responsive: true,
             scales: {
               x: {

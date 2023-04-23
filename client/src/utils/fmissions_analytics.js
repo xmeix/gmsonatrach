@@ -1,19 +1,25 @@
 export const getMissionGroupedDataForTime = (data, time, stack) => {
-  const documents = data
+  let documents = data
     .slice()
     .filter((d) => new Date(d.createdAt) <= new Date())
     .sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt));
-  //No need for most recent
+  // console.log("documents =>", documents);
+
   let mostRecentDocuments = {};
 
   for (const document of documents) {
-    const { structure, etat, type, destination, departure, country } = document;
+    const { structure, etat, type, country, departure, destination } = document;
     const date = new Date(document.createdAt).toISOString().slice(0, time); // get date in YYYY-MM-DD format
-    const key = `${structure}-${etat}-${type}-${destination}-${departure}-${country}-${date}`;
+    const key = `${structure}-${etat}-${type}-${country}-${departure}-${destination}-${date}`;
 
     if (key in mostRecentDocuments) {
       const mostRecentDocument = mostRecentDocuments[key];
       if (document.createdAt <= mostRecentDocument.createdAt) {
+        continue;
+      }
+      // Merge the documents with the same stack and createdAt and sum their circulation_count
+      if (mostRecentDocument[stack] === document[stack]) {
+        mostRecentDocument.mission_count += document.mission_count;
         continue;
       }
     }
@@ -21,7 +27,9 @@ export const getMissionGroupedDataForTime = (data, time, stack) => {
     mostRecentDocuments[key] = document;
   }
 
-  let groupedDataArray = {};
+  // console.log("mostRecentDocuments", mostRecentDocuments);
+
+  let groupedDataArray;
   groupedDataArray = Object.values(mostRecentDocuments).reduce((acc, cur) => {
     const yearIndex = acc.findIndex(
       (el) =>
@@ -85,55 +93,139 @@ export const getMissionGroupedDataForTime = (data, time, stack) => {
     return acc;
   }, []);
 
+  // console.log("groupedDataArray before merging", groupedDataArray);
+
+  // Merge objects in groupedDataArray with the same stack and createdAt and sum their circulation_count
+  groupedDataArray = Object.values(
+    groupedDataArray.reduce((acc, cur) => {
+      const key =
+        cur.stack + "-" + new Date(cur.createdAt).toISOString().slice(0, time);
+      console.log(acc);
+      if (key in acc) {
+        acc[key].mission_count += cur.mission_count;
+        acc[key].success_count += cur.success_count;
+        acc[key].fail_count += cur.fail_count;
+        acc[key].employee_count += cur.employee_count;
+        acc[key].airline_utilization_count += cur.airline_utilization_count;
+        acc[key].road_utilization_count += cur.road_utilization_count;
+        const totalSuccessFail = acc[key].success_count + acc[key].fail_count;
+        const totalAirlineRoad =
+          acc[key].airline_utilization_count + acc[key].road_utilization_count;
+        if (totalSuccessFail > 0) {
+          acc[key].successAvg =
+            (acc[key].success_count * 100) / totalSuccessFail;
+          acc[key].failAvg = (acc[key].fail_count * 100) / totalSuccessFail;
+        }
+        if (totalAirlineRoad > 0) {
+          acc[key].airlineAvg =
+            (acc[key].airline_utilization_count * 100) / totalAirlineRoad;
+          acc[key].roadAvg =
+            (acc[key].road_utilization_count * 100) / totalAirlineRoad;
+        }
+      } else {
+        acc[key] = cur;
+      }
+      return acc;
+    }, {})
+  );
+
+  // console.log("groupedDataArray after merging", groupedDataArray);
+
   return groupedDataArray;
 };
 export const getMissionCountFor = (data, type) => {
   const documents = data
-    .slice()
     .filter((d) => new Date(d.createdAt) <= new Date())
-
     .sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt));
 
-  let mostRecentDocuments = {};
-
+  const mostRecentDocuments = {};
   for (const document of documents) {
-    const docType = document[type];
+    const {
+      structure,
+      etat,
+      type: docType,
+      country,
+      departure,
+      destination,
+      createdAt,
+      mission_count,
+      employee_count,
+      success_count,
+      fail_count,
+      airline_utilization_count,
+      road_utilization_count,
+    } = document;
+    const key = `${structure}-${etat}-${docType}-${country}-${departure}-${destination}`;
 
-    if (docType in mostRecentDocuments) {
-      const mostRecentDocument = mostRecentDocuments[docType];
-      if (document.createdAt <= mostRecentDocument.createdAt) {
+    if (key in mostRecentDocuments) {
+      const mostRecentDocument = mostRecentDocuments[key];
+      if (new Date(createdAt) <= new Date(mostRecentDocument.createdAt)) {
         continue;
       }
     }
 
-    mostRecentDocuments[docType] = document;
+    mostRecentDocuments[key] = {
+      ...document,
+      mission_count,
+      employee_count,
+      success_count,
+      fail_count,
+      airline_utilization_count,
+      road_utilization_count,
+    };
   }
 
-  const getGroupedData = (property) =>
-    Object.values(mostRecentDocuments).map((doc) => ({
-      label: doc[property],
+  console.log("mostRecentDocuments", mostRecentDocuments);
+
+  const getGroupedData = (prop) => {
+    const groupedData = Object.values(mostRecentDocuments).map((doc) => ({
+      label: doc[prop],
       mission_count: doc.mission_count,
       employee_count: doc.employee_count,
       success_count: doc.success_count,
       fail_count: doc.fail_count,
-      successAvg:
-        (doc.success_count * 100) / (doc.success_count + doc.fail_count),
-      failAvg: (doc.fail_count * 100) / (doc.success_count + doc.fail_count),
-
       airline_utilization_count: doc.airline_utilization_count,
       road_utilization_count: doc.road_utilization_count,
-      airlineAvg:
-        (doc.airline_utilization_count * 100) /
-        (doc.airline_utilization_count + doc.road_utilization_count),
-      roadAvg:
-        (doc.road_utilization_count * 100) /
-        (doc.airline_utilization_count + doc.road_utilization_count),
     }));
+
+    const reducedData = groupedData.reduce((acc, cur) => {
+      const key = cur.label;
+      if (key in acc) {
+        acc[key].mission_count += cur.mission_count;
+        acc[key].employee_count += cur.employee_count;
+        acc[key].success_count += cur.success_count;
+        acc[key].fail_count += cur.fail_count;
+        acc[key].airline_utilization_count += cur.airline_utilization_count;
+        acc[key].road_utilization_count += cur.road_utilization_count;
+        const totalSuccessFail = acc[key].success_count + acc[key].fail_count;
+        const totalAirlineRoad =
+          acc[key].airline_utilization_count + acc[key].road_utilization_count;
+        if (totalSuccessFail > 0) {
+          acc[key].successAvg =
+            (acc[key].success_count * 100) / totalSuccessFail;
+          acc[key].failAvg = (acc[key].fail_count * 100) / totalSuccessFail;
+        }
+        if (totalAirlineRoad > 0) {
+          acc[key].airlineAvg =
+            (acc[key].airline_utilization_count * 100) / totalAirlineRoad;
+          acc[key].roadAvg =
+            (acc[key].road_utilization_count * 100) / totalAirlineRoad;
+        }
+      } else {
+        acc[key] = { ...cur };
+      }
+      return acc;
+    }, {});
+
+    return Object.values(reducedData);
+  };
 
   switch (type) {
     case "structure":
+      console.log("getGroupedData", getGroupedData("structure"));
       return getGroupedData("structure");
     case "etat":
+      console.log("getGroupedData", getGroupedData("etat"));
       return getGroupedData("etat");
     case "type":
       return getGroupedData("type");
@@ -147,7 +239,6 @@ export const getMissionCountFor = (data, type) => {
       throw new Error(`Invalid type: ${type}`);
   }
 };
-
 //que l etat terminée car il determine les statistiques globales actuelles
 export const currentSuccessRate = (data, property1, property2) => {
   const docs = getMissionCountFor(data, "etat").filter(
@@ -162,7 +253,8 @@ export const currentSuccessRate = (data, property1, property2) => {
     B += e[property2];
   }, 0);
 
-  return ((A * 100) / (A + B)).toFixed(2);
+  const value = ((A * 100) / (A + B)).toFixed(2);
+  return value;
 };
 
 export const currentCount = (data, property1) => {

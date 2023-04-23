@@ -25,7 +25,7 @@ const FilesDashboard = () => {
         handleFileChange={handleFileChange}
         file={file}
       />
-      <div id={file.fileName}>
+      <div id={file.fileName}> 
         <Suspense fallback={<Loading />}>
           <FileSection
             data={filesKPISdata}

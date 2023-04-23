@@ -46,6 +46,7 @@ import FMission from "./models/FMission.js";
 import { verifyToken } from "./middleware/auth.js";
 import { createNotification } from "./controllers/Notification.js";
 import { createOrUpdateFDocument } from "./controllers/FilesKpis.js";
+import { createMission } from "./controllers/mission.js";
 const toId = mongoose.Types.ObjectId;
 // Configure environment variables
 dotenv.config();
@@ -72,7 +73,7 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 
-// ____________________________________________________________________________
+// ____________________________________________________ ________________________
 // Set up API routes
 app.use("/auth", authRoutes);
 app.use("/demande", demandeRoutes);
@@ -112,14 +113,15 @@ mongoose
     // FDocument.insertMany(FRFM);
     // FDocument.insertMany(FDB);
     // FDocument.insertMany(FDC);
-    // FDocument.insertMany(FOM); 
+    // FDocument.insertMany(FOM);
 
     // DM.insertMany(dms);
     //DB.insertMany(dbs);
     // DC.insertMany(dcs);
 
     // FMission.insertMany(Fmissions);
-    console.log("end");
+    // addMissionsData();
+    // console.log("end");
   })
   .catch((error) => {
     console.error(`Failed to connect to MongoDB database: ${error.message}`);
@@ -386,3 +388,56 @@ cron.schedule("01 21 * * *", async () => {
 //   }
 //   console.log("here");
 // });
+
+const addMissionsData = async () => {
+  //grab missions array from data file loop through it and insert each element into db using createMission function
+  missions.map(async (mission) => {
+    const {
+      objetMission,
+      structure,
+      type,
+      budget,
+      pays,
+      employes,
+      taches,
+      tDateDeb,
+      tDateRet,
+      moyenTransport,
+      moyenTransportRet,
+      lieuDep,
+      destination,
+      observation,
+      circonscriptionAdm,
+      createdBy,
+      updatedBy,
+      createdAt,
+      updatedAt,
+    } = mission;
+    const query = {
+      objetMission,
+      structure,
+      type,
+      budget,
+      pays,
+      employes,
+      taches,
+      tDateDeb,
+      tDateRet,
+      moyenTransport,
+      moyenTransportRet,
+      lieuDep,
+      destination,
+      observation,
+      etat: "en-attente",
+      circonscriptionAdm,
+      createdAt,
+      createdBy,
+      updatedBy,
+      updatedAt,
+    };
+    const miss = new Mission(query);
+    const savedMission = await miss.save();
+
+    createOrUpdateFMission(savedMission, "creation", null, "");
+  });
+};

@@ -346,7 +346,7 @@ const sendRequestNotification = async (operation, body) => {
           });
 
           message = `Vous avez reçu une nouvelle demande de ${
-            type === "DM" ? "modification" : "congés"
+            typeD === "DM" ? "modification" : "congés"
           } de la part de ${idEmetteur.nom} ${idEmetteur.prenom}`;
           await createNotification({
             users: users,

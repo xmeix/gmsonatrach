@@ -29,8 +29,7 @@ const NavBar = () => {
       ) {
         setShowNotifications(false);
       }
-
-     }
+    }
     document.addEventListener("mousedown", handleClickOutside);
     if (isLoggedIn) {
       if (socket) {

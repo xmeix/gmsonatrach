@@ -77,14 +77,14 @@ const MissionSchema = new mongoose.Schema(
       type: Date,
     },
     moyenTransport: [
-      { 
+      {
         type: String,
         enum: ["avion", "route"],
         required: true,
       },
     ],
     moyenTransportRet: [
-      { 
+      {
         type: String,
         enum: ["avion", "route"],
         required: true,

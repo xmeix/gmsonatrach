@@ -14,7 +14,7 @@ import { setFilesKpis, setMissionKpis } from "../../store/features/statSlice";
 import { apiService } from "../apiService";
 
 const fetchData = async (dispatch, endpoint, socketEvent, num) => {
-  dispatch(fetchStart()); 
+  dispatch(fetchStart());
   try {
     const res = await apiService.user.get(endpoint);
 
@@ -43,18 +43,22 @@ const fetchData = async (dispatch, endpoint, socketEvent, num) => {
 
 export const getMissions = async (dispatch, num) => {
   await fetchData(dispatch, "/mission/", "mission", num);
+  getMissionKPIS(dispatch, 1);
 };
 
 export const getDemandes = async (dispatch, num) => {
   await fetchData(dispatch, "/demande/", "demande", num);
+  getFileKPIS(dispatch, 1);
 };
 
 export const getRFMs = async (dispatch, num) => {
   await fetchData(dispatch, "/rapportFM/", "rfm", num);
+  getFileKPIS(dispatch, 1);
 };
 
 export const getOMs = async (dispatch, num) => {
   await fetchData(dispatch, "/ordremission/", "om", num);
+  getFileKPIS(dispatch, 1);
 };
 
 export const getUsers = async (dispatch, num) => {

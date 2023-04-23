@@ -39,7 +39,7 @@ const MissionDashboard = () => {
               data={getMissionGroupedDataForTime(
                 fmissionData,
                 chartPerNum,
-                "type"
+                "structure"
               )}
               type={"mission_count"}
               label="nombre de missions"
@@ -52,7 +52,7 @@ const MissionDashboard = () => {
               data={getMissionGroupedDataForTime(
                 fmissionData,
                 chartPerNum,
-                "type"
+                "structure"
               )}
               type={"mission_count"}
               label="nombre de missions"
@@ -94,7 +94,7 @@ const MissionDashboard = () => {
                 chartPerNum,
                 "structure"
               )}
-              type={"successAvg"}
+              type={"failAvg"}
               label="Taux de réussite"
               labelType={chartPer}
               title={"Taux de réussite des missions par année,mois et jour"}

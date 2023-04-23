@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import Notification from "./../models/Notification.js";
-import { connectedUsers, io } from "../index.js";
+import { emitData } from "./utils.js";
 
 export const createNotification = async (body) => {
   try {
@@ -13,14 +13,7 @@ export const createNotification = async (body) => {
       type,
     });
     await newNotification.save();
-    // Emit the notification event to each socket ID associated with the user ID
-    console.log("____________________________________________________")
-    console.log(connectedUsers)
-    console.log("____________________________________________________")
-    connectedUsers.forEach((item) => {
-      const { userId, socketId } = item; 
-        io.to(socketId).emit("notification"); 
-    });
+    emitData("notification");
   } catch (error) {
     console.log(error);
   }
