@@ -46,7 +46,7 @@ const MissionDashboard = () => {
               labelType={chartPer}
               title={"Nombre de missions par année,mois et jour"}
             />
-          )}{" "}
+          )}
           {(chartPer === 2 || chartPer === 3) && (
             <StackedBarRechart
               data={getMissionGroupedDataForTime(
@@ -60,8 +60,7 @@ const MissionDashboard = () => {
               title={"Nombre de missions par année,mois et jour"}
             />
           )}
-        </div>
-
+        </div>{" "}
         <div style={{ gridArea: "b" }} className="box">
           <PieRechart
             data={getMissionCountFor(fmissionData, "structure")}
@@ -72,6 +71,7 @@ const MissionDashboard = () => {
             style={1}
           />
         </div>
+        {/*  
         <div style={{ gridArea: "c" }} className="box">
           <Suspense fallback={<div>Loading...</div>}>
             <PieRechart
@@ -88,7 +88,7 @@ const MissionDashboard = () => {
         </div>
         <div style={{ gridArea: "d" }} className="box">
           <Suspense fallback={<div>Loading...</div>}>
-            {/* percentages OR numbers */}
+            {/* percentages OR numbers 
             <StackedBarRechart
               data={getMissionGroupedDataForTime(
                 fmissionData.filter((e) => e.etat === "terminée"), //.filter((e) => e.etat === "terminée") if structure
@@ -196,7 +196,7 @@ const MissionDashboard = () => {
         </div>
         <div style={{ gridArea: "l" }} className="box">
           <Suspense fallback={<div>Loading...</div>}>
-            {/* normalement accomplies et non accomplies  */}
+            {/* normalement accomplies et non accomplies  
             <ComposedRechart
               data={getMissionGroupedDataForTime(
                 fmissionData.filter((e) => e.etat === "terminée"),
@@ -209,7 +209,7 @@ const MissionDashboard = () => {
               labels={["taches accomplies", "taches non accomplies"]}
             />
           </Suspense>
-        </div>
+        </div> */}
       </div>
     </div>
   );

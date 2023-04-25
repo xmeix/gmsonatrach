@@ -367,7 +367,7 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
           className="tableColumn"
           onClick={() => handleOnClick(item)}
         >
-          {item.mission.objetMission}
+          {item?.mission?.objetMission}
         </TableCell>
       );
     } else if (property === "idEmetteur.structure") {
@@ -568,7 +568,7 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
           </TableHead>
           <TableBody>
             {paginatedData.length !== 0 ? (
-              paginatedData.map((item) => {
+              paginatedData?.map((item) => {
                 if (colType === "demande" || colType === "db") {
                   return (
                     <TableRow key={uuidv4()} className="trow">

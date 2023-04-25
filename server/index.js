@@ -63,7 +63,7 @@ app.use(morgan("common"));
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(cookieParser());
-
+  
 // ____________________________________________________________________________
 // Enable CORS for API calls
 const corsOptions = {
@@ -72,7 +72,7 @@ const corsOptions = {
   methods: ["PATCH", "GET", "POST", "DELETE"],
 };
 app.use(cors(corsOptions));
-
+ 
 // ____________________________________________________ ________________________
 // Set up API routes
 app.use("/auth", authRoutes);

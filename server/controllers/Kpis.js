@@ -26,7 +26,7 @@ export const createOrUpdateFMission = async (
         departure: newMission.lieuDep,
         destination: newMission.destination,
       }).sort({ createdAt: -1 });
-
+ 
       // Duplicate the most recent document and increment the circulation_count field
       const newFMission = new FMission({
         etat: "en-attente",
