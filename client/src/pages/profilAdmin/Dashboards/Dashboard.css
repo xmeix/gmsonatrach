@@ -3,11 +3,10 @@
   right: 0;
   top: 40vh;
   z-index: 88;
-
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 0.5em; 
+  gap: 0.5em;
 }
 
 .files-control-nav .hashlink {
@@ -26,4 +25,11 @@
 
 .files-control-nav .hashlink:hover {
   padding: 0.5em 1.5em;
+}
+
+.custom-options {
+  display: flex;
+  justify-content: center;
+  gap: 2em;
+  margin: 1em;
 }

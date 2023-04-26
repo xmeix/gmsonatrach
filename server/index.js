@@ -51,7 +51,7 @@ import { createMission } from "./controllers/mission.js";
 const toId = mongoose.Types.ObjectId;
 // Configure environment variables
 dotenv.config();
-
+ 
 // Create an instance of express
 const app = express();
 
@@ -59,7 +59,7 @@ const app = express();
 app.use(express.json());
 app.use(helmet());
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
-
+ 
 app.use(morgan("common"));
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
@@ -120,7 +120,7 @@ mongoose
     //DB.insertMany(dbs);
     // DC.insertMany(dcs);
  
-    // FMission.insertMany(testMission);
+    // FMission.insertMany(Fmissions);
     // addMissionsData();
     console.log("end");
   })

@@ -23,10 +23,38 @@ import {
 import StackedBarRechart from "../../../components/charts/StackedBarRechart";
 import ComposedRechart from "../../../components/charts/ComposedRechart";
 import Settings from "../../../components/charts/widgets/Settings";
+import useChartSettings from "../../../hooks/useChartSettings";
 const MissionDashboard = () => {
   let fmissionData = useSelector((state) => state.stat.missionKPIS);
 
   const { chartPer, chartPerNum, handleButtonClick } = useChartButtons();
+
+  const {
+    option1: option1a,
+    option2: option2a,
+    customSelect: customSelecta,
+  } = useChartSettings(
+    [
+      { label: "type", value: "type" },
+      { label: "structure", value: "structure" },
+      { label: "etat", value: "etat" },
+      { label: "country", value: "country" },
+    ],
+    [
+      { label: "nombre de missions", value: "mission_count" },
+      { label: "nombre d'employés", value: "employee_count" },
+    ]
+  );
+  const { option1: option1b, customSelect: customSelectb } = useChartSettings([
+    { label: "type", value: "type" },
+    { label: "structure", value: "structure" },
+    { label: "etat", value: "etat" },
+  ]);
+  const { option1: option1c, customSelect: customSelectc } = useChartSettings([
+    { label: "type", value: "type" },
+    { label: "structure", value: "structure" },
+    { label: "etat", value: "etat" },
+  ]);
 
   return (
     <div className="missionDashboard">
@@ -34,36 +62,23 @@ const MissionDashboard = () => {
       <div className="dash-content">
         <div style={{ gridArea: "a" }} className="box">
           {/* type - structure - etat - country*/}
-          {chartPer === 1 && (
-            <AreaRechart
-              data={getMissionGroupedDataForTime(
-                fmissionData,
-                chartPerNum,
-                "etat"
-              )}
-              type={"mission_count"}
-              label="nombre de missions"
-              labelType={chartPer}
-              title={"Nombre de missions par année,mois et jour"}
-            />
-          )}
-          {(chartPer === 2 || chartPer === 3) && (
-            <StackedBarRechart
-              data={getMissionGroupedDataForTime(
-                fmissionData,
-                chartPerNum,
-                "etat"
-              )}
-              type={"mission_count"}
-              label="nombre de missions"
-              labelType={chartPer}
-              title={"Nombre de missions par année,mois et jour"}
-            />
-          )}
+          {customSelecta()}
+          <StackedBarRechart
+            data={getMissionGroupedDataForTime(
+              fmissionData,
+              chartPerNum,
+              option1a.value
+            )}
+            type={option2a.value}
+            label="nombre de missions"
+            labelType={chartPer}
+            title={"Nombre de missions par année,mois et jour"}
+          />
         </div>{" "}
         <div style={{ gridArea: "b" }} className="box">
+          {customSelectb()}
           <PieRechart
-            data={getMissionCountFor(fmissionData, "etat")}
+            data={getMissionCountFor(fmissionData, option1b.value)}
             type={"mission_count"}
             label="nombre de missions"
             labelType={"label"}
@@ -71,11 +86,11 @@ const MissionDashboard = () => {
             style={1}
           />
         </div>
-        {/*  
         <div style={{ gridArea: "c" }} className="box">
           <Suspense fallback={<div>Loading...</div>}>
+            {customSelectc()}
             <PieRechart
-              data={getMissionCountFor(fmissionData, "etat")}
+              data={getMissionCountFor(fmissionData, option1c.value)}
               type={"employee_count"}
               label="nombre d'employés"
               labelType={"label"}
@@ -88,7 +103,7 @@ const MissionDashboard = () => {
         </div>
         <div style={{ gridArea: "d" }} className="box">
           <Suspense fallback={<div>Loading...</div>}>
-            {/* percentages OR numbers 
+            {/* percentages OR numbers */}
             <StackedBarRechart
               data={getMissionGroupedDataForTime(
                 fmissionData.filter((e) => e.etat === "terminée"), //.filter((e) => e.etat === "terminée") if structure
@@ -196,7 +211,7 @@ const MissionDashboard = () => {
         </div>
         <div style={{ gridArea: "l" }} className="box">
           <Suspense fallback={<div>Loading...</div>}>
-            {/* normalement accomplies et non accomplies  
+            {/* normalement accomplies et non accomplies  */}
             <ComposedRechart
               data={getMissionGroupedDataForTime(
                 fmissionData.filter((e) => e.etat === "terminée"),
@@ -209,7 +224,7 @@ const MissionDashboard = () => {
               labels={["taches accomplies", "taches non accomplies"]}
             />
           </Suspense>
-        </div> */}
+        </div>
       </div>
     </div>
   );
