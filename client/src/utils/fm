@@ -734,3 +734,15 @@ export const currentCount = (data, property1) => {
 
 //   return S;
 // };
+
+
+
+/**
+ 2023-04-26-DATA-refusée-etranger-Algeria-Mission-Mission' 1, 
+'2023-04-26-DATA-en-attente-etranger-Algeria-Mission-Mission' 0, 
+'2023-04-25-DATA-acceptée-local-Algeria-Mission-Mission' 1, 
+'2023-04-25-DATA-en-attente-local-Algeria-Mission-Mission' 1, 
+'2023-04-25-DATA-refusée-local-Algeria-Mission-Mission' 0, 
+'2023-04-25-HCM-en-attente-etranger-Algeria-Mission-Mission' 1, 
+'2023-04-25-DATA-en-attente-etranger-Algeria-Mission-Mission 1
+ */

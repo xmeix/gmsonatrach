@@ -61,11 +61,11 @@ export const createOrUpdateFMission = async (
       // Find the most recent document with same type, structure, and old etat
       const oldFMission = await FMission.findOne({
         etat: oldMission ? oldMission.etat : "en-attente",
-        structure: newMission.structure,
-        type: newMission.type,
-        country: newMission.pays,
-        departure: newMission.lieuDep,
-        destination: newMission.destination,
+        structure: oldMission.structure,
+        type: oldMission.type,
+        country: oldMission.pays,
+        departure: oldMission.lieuDep,
+        destination: oldMission.destination,
       }).sort({ createdAt: -1 });
       // Find the most recent document with same type, structure, and etat
       const recentFMission = await FMission.findOne({

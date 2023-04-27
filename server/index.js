@@ -34,6 +34,7 @@ import {
   dcs,
   dms,
   missions,
+
   users,
 } from "../client/src/data/data.js";
 import { createOrUpdateFMission } from "./controllers/Kpis.js";
@@ -100,7 +101,7 @@ mongoose
   })
   .then(() => {
     console.log("Connected to MongoDB database");
-
+    
     // Start listening for HTTP requests
     server.listen(process.env.PORT || 6001, () => {
       console.log(`Server listening on port ${process.env.PORT || 6001}`);
@@ -119,7 +120,7 @@ mongoose
     //DB.insertMany(dbs);
     // DC.insertMany(dcs);
  
-    // FMission.insertMany(Fmissions);
+    // FMission.insertMany(testMission);
     // addMissionsData();
     console.log("end");
   })

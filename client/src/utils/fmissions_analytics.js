@@ -1,99 +1,92 @@
 export const getMissionGroupedDataForTime = (data, time, stack) => {
-  // Filter the data for documents with a createdAt date before or equal to the current date
-  // and sort them in descending order of createdAt date
-  let documents = data
+  const documents = data
     .slice()
-    .filter((d) => {
-      return new Date(d.createdAt) <= new Date();
-    })
+    .filter((d) => new Date(d.createdAt) <= new Date())
     .sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt));
-
-  // console.log("documents", documents);
-
-  // Create an object to store the most recent document for each combination of stack, date, and other properties
-  // Sum the mission_counts for combinations with the same stack and date
+  //No need for most recent
   let mostRecentDocuments = {};
 
   for (const document of documents) {
-    // Extract the properties needed to create the key
-    const { structure, etat, type, country, departure, destination } = document;
-    // Get the date in YYYY-MM-DD format
-    const date = new Date(document.createdAt).toISOString().slice(0, time);
-    // Create the key using the stack, date, and other properties
-    const key = `${date}-${structure}-${etat}-${type}-${country}-${departure}-${destination}`;
+    const { structure, etat, type, destination, departure, country } = document;
+    const date = new Date(document.createdAt).toISOString().slice(0, time); // get date in YYYY-MM-DD format
+    const key = `${structure}-${etat}-${type}-${destination}-${departure}-${country}-${date}`;
 
-    // If the key already exists in mostRecentDocuments, check if the current document is more recent
-    // If it is not more recent, skip to the next iteration
     if (key in mostRecentDocuments) {
       const mostRecentDocument = mostRecentDocuments[key];
       if (document.createdAt <= mostRecentDocument.createdAt) {
-        continue; // Go to the next iteration
+        continue;
       }
     }
 
-    // If the key does not exist in mostRecentDocuments or the current document is more recent,
-    // add the document to mostRecentDocuments using the key
     mostRecentDocuments[key] = document;
   }
 
-  console.log("mostRecentDocuments", JSON.stringify(mostRecentDocuments));
-
-  //we need for each element in mostRecentDocuments to look for all the previous elements that has the same stack but not the same object
-  //and each time we summ their mission counts and then we replace that current element ( in another array of course to not mess up the data we already have)
-  console.log("-----------------------------------------");
-
-  const groupedData = {};
-  const mostRecentDocumentsValues = Object.values(mostRecentDocuments);
-  const mostRecentDocumentsKeys = Object.keys(mostRecentDocuments);
-
-  for (let i = 0; i < mostRecentDocumentsValues.length; i++) {
-    const currentElement = mostRecentDocumentsValues[i];
-    const remainingElements = mostRecentDocumentsValues
-      .slice(i + 1)
-      .sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt));
-    const date = new Date(currentElement.createdAt)
-      .toISOString()
-      .slice(0, time);
-    const { structure, etat, type, country, departure, destination } =
-      currentElement;
-    const key = `${date}-${structure}-${etat}-${type}-${country}-${departure}-${destination}`;
-
-    if (!(key in groupedData)) {
-      groupedData[key] = {
-        createdAt: date,
-        stack: currentElement[stack],
-        structure: currentElement.structure,
-        etat: currentElement.etat,
-        type: currentElement.type,
-        departure: currentElement.departure,
-        destination: currentElement.destination,
-        country: currentElement.country,
-        mission_count: currentElement.mission_count,
-      };
-    }
-
-    remainingElements.forEach((currentElement2) => {
-      if (
-        currentElement.structure === currentElement2.structure &&
-        currentElement.etat === currentElement2.etat &&
-        currentElement.type === currentElement2.type &&
-        currentElement.departure === currentElement2.departure &&
-        currentElement.destination === currentElement2.destination &&
-        currentElement.country === currentElement2.country
-      ) {
-        return; // skip this iteration if the elements match
-      } else if (currentElement[stack] !== currentElement2[stack]) {
-        return;
-      } else if (currentElement2.mission_count > 0) {
-        groupedData[key].mission_count += currentElement2.mission_count;
+  let groupedDataArray = {};
+  groupedDataArray = Object.values(mostRecentDocuments).reduce((acc, cur) => {
+    const yearIndex = acc.findIndex(
+      (el) =>
+        new Date(el.createdAt).toISOString().slice(0, time) ===
+          new Date(cur.createdAt).toISOString().slice(0, time) &&
+        el.stack === cur[stack]
+    );
+    if (yearIndex === -1) {
+      const totalSuccessFail = cur.success_count + cur.fail_count;
+      const totalAirlineRoad =
+        cur.airline_utilization_count + cur.road_utilization_count;
+      acc.push({
+        createdAt: new Date(cur.createdAt).toISOString().slice(0, time),
+        stack: cur[stack],
+        mission_count: cur.mission_count,
+        success_count: cur.success_count,
+        employee_count: cur.employee_count,
+        fail_count: cur.fail_count,
+        airline_utilization_count: cur.airline_utilization_count,
+        road_utilization_count: cur.road_utilization_count,
+        successAvg:
+          totalSuccessFail > 0
+            ? (cur.success_count * 100) / totalSuccessFail
+            : 0,
+        failAvg:
+          totalSuccessFail > 0 ? (cur.fail_count * 100) / totalSuccessFail : 0,
+        airlineAvg:
+          totalAirlineRoad > 0
+            ? (cur.airline_utilization_count * 100) / totalAirlineRoad
+            : 0,
+        roadAvg:
+          totalAirlineRoad > 0
+            ? (cur.road_utilization_count * 100) / totalAirlineRoad
+            : 0,
+      });
+    } else {
+      acc[yearIndex].mission_count += cur.mission_count;
+      acc[yearIndex].success_count += cur.success_count;
+      acc[yearIndex].fail_count += cur.fail_count;
+      acc[yearIndex].employee_count += cur.employee_count;
+      acc[yearIndex].airline_utilization_count += cur.airline_utilization_count;
+      acc[yearIndex].road_utilization_count += cur.road_utilization_count;
+      const totalSuccessFail =
+        acc[yearIndex].success_count + acc[yearIndex].fail_count;
+      const totalAirlineRoad =
+        acc[yearIndex].airline_utilization_count +
+        acc[yearIndex].road_utilization_count;
+      if (totalSuccessFail > 0) {
+        acc[yearIndex].successAvg =
+          (acc[yearIndex].success_count * 100) / totalSuccessFail;
+        acc[yearIndex].failAvg =
+          (acc[yearIndex].fail_count * 100) / totalSuccessFail;
       }
-    });
-  }
+      if (totalAirlineRoad > 0) {
+        acc[yearIndex].airlineAvg =
+          (acc[yearIndex].airline_utilization_count * 100) / totalAirlineRoad;
+        acc[yearIndex].roadAvg =
+          (acc[yearIndex].road_utilization_count * 100) / totalAirlineRoad;
+      }
+    }
+    return acc;
+  }, []);
 
-  console.log(groupedData);
-
-  // console.log(groupedData);
-  return Object.values(groupedData);
+  console.log(JSON.stringify(groupedDataArray));
+  return groupedDataArray;
 };
 
 export const getMissionCountFor = (data, type) => {
