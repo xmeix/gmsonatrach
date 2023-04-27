@@ -18,6 +18,7 @@ const AreaRechart = ({
     labelType,
     data
   );
+
   const createdAtLabels = [...new Set(filteredData.map((d) => d.createdAt))];
   const datasets = filteredData.reduce((acc, curr) => {
     const index = acc.findIndex((d) => d.label === curr.stack);
@@ -111,7 +112,7 @@ const AreaRechart = ({
             datasets: datasets,
           }}
           type="area"
-          connectNulls={true}
+          // connectNulls={true}
         />
       </>
     </>

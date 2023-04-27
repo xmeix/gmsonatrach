@@ -17,6 +17,7 @@ const StackedBarRechart = ({
     labelType,
     data
   );
+ 
   const createdAtLabels = [...new Set(filteredData.map((d) => d.createdAt))];
   const datasets = filteredData.reduce((acc, curr) => {
     const index = acc.findIndex((d) => d.label === curr.stack);
@@ -39,7 +40,7 @@ const StackedBarRechart = ({
     return acc;
   }, []);
 
-  console.log(datasets);
+  // console.log("datasets", datasets);
   return (
     <>
       {renderButtons()}

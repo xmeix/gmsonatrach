@@ -114,18 +114,18 @@ mongoose
     // FDocument.insertMany(FDB);
     // FDocument.insertMany(FDC);
     // FDocument.insertMany(FOM);
-
-    // DM.insertMany(dms);
+ 
+    // DM.insertMany(dms); 
     //DB.insertMany(dbs);
     // DC.insertMany(dcs);
-
+ 
     // FMission.insertMany(Fmissions);
     // addMissionsData();
     console.log("end");
   })
   .catch((error) => {
     console.error(`Failed to connect to MongoDB database: ${error.message}`);
-  });
+  }); 
 //it works fine , just whenn we restart the server we need to refresh all the browsers
 export let connectedUsers = [];
 io.on("connection", (socket) => {

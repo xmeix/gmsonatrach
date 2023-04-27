@@ -76,10 +76,7 @@ export const createOrUpdateFMission = async (
         departure: newMission.lieuDep,
         destination: newMission.destination,
       }).sort({ createdAt: -1 });
-
-      console.log("Mission___________________________________");
-      console.log(oldMission);
-      console.log("_________________________________________");
+ 
       switch (updateType) {
         case "etat":
           // Duplicate the old document and decrement its circulation_count field

@@ -39,7 +39,7 @@ const MissionDashboard = () => {
               data={getMissionGroupedDataForTime(
                 fmissionData,
                 chartPerNum,
-                "structure"
+                "etat"
               )}
               type={"mission_count"}
               label="nombre de missions"
@@ -52,7 +52,7 @@ const MissionDashboard = () => {
               data={getMissionGroupedDataForTime(
                 fmissionData,
                 chartPerNum,
-                "structure"
+                "etat"
               )}
               type={"mission_count"}
               label="nombre de missions"
@@ -63,7 +63,7 @@ const MissionDashboard = () => {
         </div>{" "}
         <div style={{ gridArea: "b" }} className="box">
           <PieRechart
-            data={getMissionCountFor(fmissionData, "structure")}
+            data={getMissionCountFor(fmissionData, "etat")}
             type={"mission_count"}
             label="nombre de missions"
             labelType={"label"}
@@ -75,7 +75,7 @@ const MissionDashboard = () => {
         <div style={{ gridArea: "c" }} className="box">
           <Suspense fallback={<div>Loading...</div>}>
             <PieRechart
-              data={getMissionCountFor(fmissionData, "structure")}
+              data={getMissionCountFor(fmissionData, "etat")}
               type={"employee_count"}
               label="nombre d'employés"
               labelType={"label"}
@@ -93,7 +93,7 @@ const MissionDashboard = () => {
               data={getMissionGroupedDataForTime(
                 fmissionData.filter((e) => e.etat === "terminée"), //.filter((e) => e.etat === "terminée") if structure
                 chartPerNum,
-                "structure"
+                "etat"
               )}
               type={"successAvg"}
               label="Taux de réussite"
@@ -151,7 +151,7 @@ const MissionDashboard = () => {
               data={getMissionGroupedDataForTime(
                 fmissionData.filter((e) => e.etat === "terminée"),
                 chartPerNum,
-                "structure"
+                "etat"
               )}
               labelType={chartPer}
               title={
@@ -201,7 +201,7 @@ const MissionDashboard = () => {
               data={getMissionGroupedDataForTime(
                 fmissionData.filter((e) => e.etat === "terminée"),
                 chartPerNum,
-                "structure"
+                "etat"
               )}
               labelType={chartPer}
               title={"Nombre de taches attribués par date"}
