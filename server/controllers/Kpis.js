@@ -26,7 +26,7 @@ export const createOrUpdateFMission = async (
         departure: newMission.lieuDep,
         destination: newMission.destination,
       }).sort({ createdAt: -1 });
- 
+
       // Duplicate the most recent document and increment the circulation_count field
       const newFMission = new FMission({
         etat: "en-attente",
@@ -76,7 +76,7 @@ export const createOrUpdateFMission = async (
         departure: newMission.lieuDep,
         destination: newMission.destination,
       }).sort({ createdAt: -1 });
- 
+
       switch (updateType) {
         case "etat":
           // Duplicate the old document and decrement its circulation_count field
@@ -136,29 +136,38 @@ export const createOrUpdateFMission = async (
 
           break;
         case "tache":
-          // Duplicate the old document and decrement its circulation_count field
-          const diff = calculateDifferenceAT(oldFMission, newMission);
-          newUpdatedDocument = new FMission({
+          const diff = calculateDifferenceAT(oldMission, newMission);
+          let newDocument = new FMission({
             etat: newMission.etat,
             structure: newMission.structure,
             type: newMission.type,
             country: newMission.pays,
             departure: newMission.lieuDep,
             destination: newMission.destination,
-            mission_count: recentFMission.mission_count,
-            success_count:
-              diff > 0
+            mission_count: recentFMission ? recentFMission.mission_count : 1,
+            success_count: recentFMission
+              ? diff > 0
                 ? recentFMission.success_count - diff
-                : recentFMission.success_count + diff,
-            fail_count:
-              diff < 0
+                : recentFMission.success_count + diff
+              : diff > 0
+              ? 0
+              : diff,
+            fail_count: recentFMission
+              ? diff < 0
                 ? recentFMission.fail_count - diff
-                : recentFMission.fail_count + diff,
-            employee_count: recentFMission.employee_count,
-            road_utilization_count: recentFMission.road_utilization_count,
-            airline_utilization_count: recentFMission.airline_utilization_count,
+                : recentFMission.fail_count + diff
+              : diff < 0
+              ? 0
+              : diff,
+            employee_count: recentFMission ? recentFMission.employee_count : 0,
+            road_utilization_count: recentFMission
+              ? recentFMission.road_utilization_count
+              : 0,
+            airline_utilization_count: recentFMission
+              ? recentFMission.airline_utilization_count
+              : 0,
           });
-          await newUpdatedDocument.save();
+          await newDocument.save();
           break;
 
         default:

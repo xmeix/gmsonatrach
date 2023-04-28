@@ -79,7 +79,7 @@ export const createMission = async (req, res) => {
       structure: newStructure,
       type,
       budget,
-      pays,
+      pays,  
       employes: newEmployes,
       taches,
       tDateDeb,
