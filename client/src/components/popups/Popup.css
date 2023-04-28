@@ -305,7 +305,7 @@
 }
 .popup-update .infoEmploye,
 .popup-update .infoMission .dates {
-  border: solid 1px lightgray;
+  border: solid 1px var(--gray);
   padding: 1.5em;
 }
 .popup-update .infoEmploye {

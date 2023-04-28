@@ -1,6 +1,4 @@
-import { useState } from "react";
-import { useSelector } from "react-redux";
-import useBtn from "../../hooks/useBtn";
+import { useState } from "react"; 
 import "./Popup.css";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import PopupRefus from "./popupRefus/PopupRefus";
@@ -8,7 +6,7 @@ import PopupUpdate from "./popupRefus/PopupUpdate";
 import PopupMission from "./popupRefus/PopupMission";
 import PopupUser from "./popupRefus/PopupUser";
 import PopupDB from "./popupRefus/PopupDB";
-import PopupDC from "./popupRefus/PopupDC";
+import PopupDC from "./popupRefus/PopupDC"; 
 import PopupDM from "./popupRefus/PopupDM";
 import PopupOM from "./popupRefus/PopupOM";
 import PopupSurvey from "./popupRefus/PopupSurvey";

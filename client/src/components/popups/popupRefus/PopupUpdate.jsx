@@ -13,6 +13,7 @@ import { useSelector } from "react-redux";
 import PopupSurvey from "./PopupSurvey";
 import useFileGenerator from "../../../hooks/useFileGenerator";
 import { convertLength } from "@mui/material/styles/cssUtils";
+import { TableContainer } from "@material-ui/core";
 
 const useStyles = makeStyles({
   table: {
@@ -29,6 +30,18 @@ const useStyles = makeStyles({
     padding: "10px",
     fontWeight: 500,
     fontSize: 13,
+  },
+  table2: {
+    borderCollapse: "separate",
+    borderRight: "solid 1px black",
+    borderTop: "solid 1px black",
+  },
+  tableCell2: {
+    padding: "10px",
+    fontWeight: 500,
+    fontSize: 13,
+    borderLeft: "solid 1px black",
+    borderBottom: "solid 1px black",
   },
 });
 const OmLabelLine = ({ label, content }) => (
@@ -348,11 +361,8 @@ const PopupUpdate = ({ item, close, setSurvey }) => {
                   travail habituel)
                 </span>
                 <div className="dateContent">
-                  <span>Le </span>:
-                  {mission &&
-                    " " +
-                      FileItem.tDateDeb}
-                  , <span>a:</span>
+                  <span>Le </span>:{mission && " " + FileItem.tDateDeb},{" "}
+                  <span>a:</span>
                   {item.etat === "créé" ? (
                     <input
                       className="pop-input"
@@ -403,88 +413,64 @@ const PopupUpdate = ({ item, close, setSurvey }) => {
               <div className="subTitle">
                 Compte rendu du déroulement de la mission
               </div>
-              <Table className={classes.table} size="small">
+              <Table className={classes.table2} size="small">
                 <TableHead>
                   <TableRow>
-                    <TableCell
-                      align="center"
-                      className={classes.tableHeaderCell}
-                    >
+                    <TableCell align="center" className={classes.tableCell2}>
                       Date
                     </TableCell>
                     <TableCell
                       align="center"
                       colSpan={2}
-                      className={classes.tableHeaderCell}
+                      className={classes.tableCell2}
                     >
                       Hébergement
                     </TableCell>
                     <TableCell
                       align="center"
                       colSpan={2}
-                      className={classes.tableHeaderCell}
+                      className={classes.tableCell2}
                     >
                       Déjeuner
                     </TableCell>
                     <TableCell
                       align="center"
                       colSpan={2}
-                      className={classes.tableHeaderCell}
+                      className={classes.tableCell2}
                     >
                       Dîner
                     </TableCell>
-                    <TableCell
-                      align="center"
-                      className={classes.tableHeaderCell}
-                    >
+                    <TableCell align="center" className={classes.tableCell2}>
                       Observation
                     </TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell align="center" />
-                    <TableCell
-                      align="center"
-                      className={classes.tableHeaderCell}
-                    >
+                    <TableCell align="center" className={classes.tableCell2} />
+                    <TableCell align="center" className={classes.tableCell2}>
                       avec prise en charge
                     </TableCell>
-                    <TableCell
-                      align="center"
-                      className={classes.tableHeaderCell}
-                    >
+                    <TableCell align="center" className={classes.tableCell2}>
                       Sans prise en charge
                     </TableCell>
-                    <TableCell
-                      align="center"
-                      className={classes.tableHeaderCell}
-                    >
+                    <TableCell align="center" className={classes.tableCell2}>
                       avec prise en charge
                     </TableCell>
-                    <TableCell
-                      align="center"
-                      className={classes.tableHeaderCell}
-                    >
+                    <TableCell align="center" className={classes.tableCell2}>
                       Sans prise en charge
                     </TableCell>
-                    <TableCell
-                      align="center"
-                      className={classes.tableHeaderCell}
-                    >
+                    <TableCell align="center" className={classes.tableCell2}>
                       avec prise en charge
                     </TableCell>
-                    <TableCell
-                      align="center"
-                      className={classes.tableHeaderCell}
-                    >
+                    <TableCell align="center" className={classes.tableCell2}>
                       Sans prise en charge
                     </TableCell>
-                    <TableCell align="center" />
+                    <TableCell align="center" className={classes.tableCell2} />
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   {dates.map((date, index) => (
                     <TableRow key={index}>
-                      <TableCell align="center" className={classes.tableCell}>
+                      <TableCell align="center" className={classes.tableCell2}>
                         {" " +
                           Intl.DateTimeFormat(["ban", "id"]).format(
                             new Date(date)
@@ -493,17 +479,23 @@ const PopupUpdate = ({ item, close, setSurvey }) => {
                       {["hebergement", "dejeuner", "diner"].map((event, i) => {
                         return (
                           <Fragment key={i}>
-                            <TableCell align="center">
+                            <TableCell
+                              align="center"
+                              className={classes.tableCell2}
+                            >
                               {radioInput(event, index, "avec-prise-en-charge")}
                             </TableCell>
-                            <TableCell align="center">
+                            <TableCell
+                              align="center"
+                              className={classes.tableCell2}
+                            >
                               {radioInput(event, index, "sans-prise-en-charge")}
                             </TableCell>
                           </Fragment>
                         );
                       })}
 
-                      <TableCell align="center">
+                      <TableCell align="center" className={classes.tableCell2}>
                         {idEmploye._id === idEmploye._id &&
                           item.etat === "créé" && (
                             <input
@@ -563,7 +555,9 @@ const PopupUpdate = ({ item, close, setSurvey }) => {
                     <input
                       className="pop-input"
                       type="date"
-                      defaultValue={new Date(mission.DateRetA).toISOString().split("T")[0]}
+                      defaultValue={
+                        new Date(mission.DateRetA).toISOString().split("T")[0]
+                      }
                       onChange={(e) => addToDate(e.target.value, 5)}
                     />
                   ) : (
@@ -598,12 +592,31 @@ const PopupUpdate = ({ item, close, setSurvey }) => {
               </div>
             </div>
           </div>
-          <div className="signature">
-            Visa du Missionnaire Le Responsable (signataire de l'Ordre de
-            Mission) Signature & griffe
+          <div>
+            <TableContainer>
+              <Table className={classes.table2}>
+                <TableHead>
+                  <TableRow>
+                    <TableCell className={classes.tableCell2}>
+                      Visa du Missionnaire
+                    </TableCell>
+                    <TableCell className={classes.tableCell2}>
+                      Le Responsable (signataire de l'Ordre de Mission)
+                      Signature & griffe
+                    </TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  <TableRow>
+                    <TableCell className={classes.tableCell2}></TableCell>
+                    <TableCell className={classes.tableCell2}></TableCell>
+                  </TableRow>
+                </TableBody>
+              </Table>
+            </TableContainer>
           </div>
 
-          {item.etat === "créé" && idEmploye._id === idEmploye._id && (
+          {item.etat === "créé" && currentUser.role === "employe" && (
             <div className="buttons">
               <button
                 className="update"
@@ -645,12 +658,10 @@ const PopupUpdate = ({ item, close, setSurvey }) => {
           )}
         </div>
       )}
-      {/* {justSent && item.nbRefus === 0 && item.etat !== "accepté" && (
-        <PopupSurvey item={item} close={close} />
-      )} */}
-      {/* {item.etat === "accepté" && ( */}
-      <button onClick={generateDocument}>Generate PDF</button>
-      {/* )} */}
+
+      {item.etat === "accepté" && (
+        <button onClick={generateDocument}>Generate PDF</button>
+      )}
     </>
   );
 };

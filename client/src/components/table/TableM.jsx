@@ -233,7 +233,7 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
                   .toLowerCase()
                   .includes(filterValue) ||
                 (item[column.id].nom + " " + item[column.id].prenom)
-                  .toString()
+                  .toString() 
                   .toLowerCase()
                   .includes(filterValue) ||
                 item[column.id].structure
