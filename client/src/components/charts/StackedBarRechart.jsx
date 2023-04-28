@@ -17,7 +17,7 @@ const StackedBarRechart = ({
     labelType,
     data
   );
- 
+
   const createdAtLabels = [...new Set(filteredData.map((d) => d.createdAt))];
   const datasets = filteredData.reduce((acc, curr) => {
     const index = acc.findIndex((d) => d.label === curr.stack);
@@ -32,7 +32,8 @@ const StackedBarRechart = ({
           );
           return recentData ? recentData[type] : null;
         }),
-        barThickness: 50,
+        maxBarThickness: 50,
+
         borderWidth: 2,
       };
       acc.push(newData);
@@ -51,9 +52,25 @@ const StackedBarRechart = ({
             scales: {
               x: {
                 stacked: true,
+                title: {
+                  display: true,
+                  text: label[0],
+                  font: {
+                    family: "Montserrat",
+                    weight: "bold",
+                  },
+                },
               },
               y: {
                 stacked: true,
+                title: {
+                  display: true,
+                  text: label[1],
+                  font: {
+                    family: "Montserrat",
+                    weight: "bold",
+                  },
+                },
               },
             },
             plugins: {

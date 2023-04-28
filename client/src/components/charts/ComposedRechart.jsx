@@ -3,7 +3,7 @@ import Nodata from "./Nodata";
 import { Chart } from "react-chartjs-2";
 import { Chart as ChartJS } from "chart.js/auto";
 
-const ComposedRechart = ({ data, labelType, title, props, labels }) => {
+const ComposedRechart = ({ data, labelType, title, props, labels, label }) => {
   const { filteredData, isNoData, renderButtons } = useDateFilter(
     labelType,
     data
@@ -50,9 +50,25 @@ const ComposedRechart = ({ data, labelType, title, props, labels }) => {
             scales: {
               x: {
                 stacked: false,
+                title: {
+                  display: true,
+                  text: label[0],
+                  font: {
+                    family: "Montserrat",
+                    weight: "bold",
+                  },
+                },
               },
               y: {
                 stacked: false,
+                title: {
+                  display: true,
+                  text: label[1],
+                  font: {
+                    family: "Montserrat",
+                    weight: "bold",
+                  },
+                },
               },
             },
           }}
@@ -66,7 +82,8 @@ const ComposedRechart = ({ data, labelType, title, props, labels }) => {
                 backgroundColor: "rgba(75, 192, 192, 0.2)",
                 borderColor: "rgba(75, 192, 192, 1)",
                 borderWidth: 2,
-                barThickness: 50,
+                maxBarThickness: 50,
+                minBarThickness: 20,
               },
               {
                 type: "bar",
@@ -75,7 +92,8 @@ const ComposedRechart = ({ data, labelType, title, props, labels }) => {
                 backgroundColor: "rgba(255, 99, 132, 0.2)",
                 borderColor: "rgba(255, 99, 132, 1)",
                 borderWidth: 2,
-                barThickness: 50,
+                maxBarThickness: 50,
+                minBarThickness: 20,
               },
             ],
           }}

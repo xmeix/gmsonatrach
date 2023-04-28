@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Select from "react-select";
 import "./../pages/profilAdmin/Dashboards/Dashboard.css";
-
+import SettingsIcon from "@mui/icons-material/Settings";
 const customStyles = {
   control: (provided, state) => ({
     ...provided,
@@ -34,12 +34,11 @@ const useChartSettings = (options1, options2, options3) => {
   const [option1, setOption1] = useState(options1 ? options1[0] : "");
   const [option2, setOption2] = useState(options2 ? options2[0] : "");
   const [option3, setOption3] = useState(options3 ? options3[0] : "");
-  const [activeButton, setActiveButton] = useState(1);
-
-  const handleButtonClickWithActive = (buttonId) => {
-    setActiveButton(buttonId);
-    handleButtonClick(buttonId);
+  const [showOptions, setShowOptions] = useState(false);
+  const toggleOptions = () => {
+    setShowOptions(!showOptions);
   };
+
   const handleOption1 = (option) => {
     setOption1(option);
   };
@@ -53,39 +52,44 @@ const useChartSettings = (options1, options2, options3) => {
   const customSelect = () => {
     return (
       <>
-        <div>setting icon</div>
-        <div className="custom-options">
-          {options1 && (
-            <Select
-              className="select"
-              value={option1}
-              options={options1}
-              placeholder="{entry.placeholder}"
-              styles={customStyles}
-              onChange={handleOption1}
-            />
-          )}
-          {options2 && (
-            <Select
-              className="select"
-              value={option2}
-              options={options2}
-              placeholder="{entry.placeholder}"
-              styles={customStyles}
-              onChange={handleOption2}
-            />
-          )}
-          {options3 && (
-            <Select
-              value={option3}
-              className="select"
-              options={options3}
-              placeholder="{entry.placeholder}"
-              styles={customStyles}
-              onChange={handleOption3}
-            />
-          )}
+        <div onClick={toggleOptions} className="sett-div-icon">
+          <SettingsIcon className="icn" style={{ color: "gray" }} />
         </div>
+
+        {showOptions && (
+          <div className="custom-options">
+            {options1 && (
+              <Select
+                className="select"
+                value={option1}
+                options={options1}
+                placeholder="{entry.placeholder}"
+                styles={customStyles}
+                onChange={handleOption1}
+              />
+            )}
+            {options2 && (
+              <Select
+                className="select"
+                value={option2}
+                options={options2}
+                placeholder="{entry.placeholder}"
+                styles={customStyles}
+                onChange={handleOption2}
+              />
+            )}
+            {options3 && (
+              <Select
+                value={option3}
+                className="select"
+                options={options3}
+                placeholder="{entry.placeholder}"
+                styles={customStyles}
+                onChange={handleOption3}
+              />
+            )}
+          </div>
+        )}
       </>
     );
   };

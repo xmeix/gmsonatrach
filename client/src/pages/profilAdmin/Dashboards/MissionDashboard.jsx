@@ -51,10 +51,25 @@ const MissionDashboard = () => {
     { label: "etat", value: "etat" },
   ]);
   const { option1: option1c, customSelect: customSelectc } = useChartSettings([
-    { label: "type", value: "type" },
     { label: "structure", value: "structure" },
     { label: "etat", value: "etat" },
   ]);
+  const {
+    option1: option1d,
+    option2: option2d,
+    customSelect: customSelectd,
+  } = useChartSettings(
+    [
+      { label: "type", value: "type" },
+      { label: "structure", value: "structure" },
+      { label: "etat", value: "etat" },
+    ],
+    [
+      { label: "Taux de réussite", value: "successAvg" },
+      { label: "Taux d'échec", value: "failAvg" },
+    ]
+  );
+  const xlabel = chartPer === 1 ? "années" : chartPer === 2 ? "mois" : "jours";
 
   return (
     <div className="missionDashboard">
@@ -70,7 +85,7 @@ const MissionDashboard = () => {
               option1a.value
             )}
             type={option2a.value}
-            label="nombre de missions"
+            label={[xlabel, option2a.label]}
             labelType={chartPer}
             title={"Nombre de missions par année,mois et jour"}
           />
@@ -104,14 +119,15 @@ const MissionDashboard = () => {
         <div style={{ gridArea: "d" }} className="box">
           <Suspense fallback={<div>Loading...</div>}>
             {/* percentages OR numbers */}
+            {customSelectd()}
             <StackedBarRechart
               data={getMissionGroupedDataForTime(
                 fmissionData.filter((e) => e.etat === "terminée"), //.filter((e) => e.etat === "terminée") if structure
                 chartPerNum,
-                "etat"
+                option1d.value
               )}
-              type={"successAvg"}
-              label="Taux de réussite"
+              type={option2d.value}
+              label={[xlabel, option2d.label]}
               labelType={chartPer}
               title={"Taux de réussite des missions par année,mois et jour"}
             />
@@ -174,6 +190,7 @@ const MissionDashboard = () => {
               }
               props={["airlineAvg", "roadAvg"]}
               labels={["Avion", "Route"]}
+              label={[xlabel, "Taux d'utilisation total"]}
             />
           </Suspense>
         </div>
@@ -222,6 +239,7 @@ const MissionDashboard = () => {
               title={"Nombre de taches attribués par date"}
               props={["success_count", "fail_count"]}
               labels={["taches accomplies", "taches non accomplies"]}
+              label={[xlabel, "Nombre de taches attribués"]}
             />
           </Suspense>
         </div>

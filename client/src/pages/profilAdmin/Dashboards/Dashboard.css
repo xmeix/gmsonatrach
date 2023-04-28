@@ -31,5 +31,15 @@
   display: flex;
   justify-content: center;
   gap: 2em;
-  margin: 1em;
+  flex-wrap: wrap;
+  position: absolute;
+  top: 1em;
+  z-index: 88;
+}
+
+.sett-div-icon {
+  position: absolute;
+  top: 1.5em;
+  left: 1.5em;
+  z-index: 88;
 }

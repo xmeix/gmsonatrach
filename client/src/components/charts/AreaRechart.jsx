@@ -69,9 +69,25 @@ const AreaRechart = ({
             scales: {
               x: {
                 stacked: true,
+                title: {
+                  display: true,
+                  text: label[0],
+                  font: {
+                    family: "Montserrat",
+                    weight: "bold",
+                  },
+                },
               },
               y: {
                 stacked: false,
+                title: {
+                  display: true,
+                  text: label[1],
+                  font: {
+                    family: "Montserrat",
+                    weight: "bold",
+                  },
+                },
               },
             },
             plugins: {

@@ -9,6 +9,7 @@ import StackedBarRechart from "../StackedBarRechart";
 import "./FileSection.css";
 import AreaRechart from "../AreaRechart";
 import DashCard from "./dashCard";
+import useChartSettings from "../../../hooks/useChartSettings";
 const FileSection = ({
   data,
   fileName,
@@ -19,6 +20,7 @@ const FileSection = ({
   chartPerNum,
 }) => {
   const [chartAction, setChartAction] = useState("structure");
+  const xlabel = chartPer === 1 ? "années" : chartPer === 2 ? "mois" : "jours";
 
   const pieType = (option) => {
     if (["structure"].includes(option)) {
@@ -29,13 +31,25 @@ const FileSection = ({
       return 1;
     }
   };
+  const xarray = chartsOptions.map((option, i) => {
+    if (option === "motifDep") {
+      return { label: "motif de déplacement", value: option };
+    } else return { label: option, value: option };
+  });
+
+  const { option1: option1a, customSelect: customSelecta } =
+    useChartSettings(xarray);
+  const { option1: option1b, customSelect: customSelectb } =
+    useChartSettings(xarray);
+  const { option1: option1c, customSelect: customSelectc } =
+    useChartSettings(xarray);
 
   return (
     <div className="fileSection">
       <div className="file-title">{title} circulants</div>
       <div className="file-section-content">
         <div style={{ gridArea: "a", flexDirection: "row" }} className="box">
-          {chartsOptions.map((option, i) => (
+          {/* {chartsOptions.map((option, i) => (
             <button
               key={i}
               className="subchart-btn "
@@ -43,32 +57,34 @@ const FileSection = ({
             >
               {option}
             </button>
-          ))}
+          ))} */}
         </div>
         <div style={{ gridArea: "b" }} className="box">
+          {customSelecta()}
           <StackedBarRechart
             data={getGroupedDataForTime(
               data,
               chartPerNum,
               fileName,
-              chartAction
+              option1a.value
             )}
             type={"circulation_count"}
-            label="nombre de fichiers"
+            label={[xlabel, "nombre de fichiers"]}
             labelType={chartPer}
             title={"Nombre de fichiers par année,mois et jour"}
           />
         </div>
         <div style={{ gridArea: "c" }} className="box">
+          {customSelectb()}
           <AreaRechart
             data={getGroupedDataForTime(
               data,
               chartPerNum,
               fileName,
-              chartAction
+              option1b.value
             )}
             type={"circulation_count"}
-            label="nombre de fichiers"
+            label={[xlabel, "nombre de fichiers"]}
             labelType={chartPer}
             title={"Nombre de fichiers par année,mois et jour"}
             fill={false}
@@ -96,16 +112,16 @@ const FileSection = ({
           {/* <DashCard title={"helll"} number={10} /> */}
         </div>
         <div style={{ gridArea: "f" }} className="box">
-          {" "}
+          {customSelectc()}
           <AreaRechart
             data={getGroupedDataForTime(
               data,
               chartPerNum,
               fileName,
-              chartAction
+              option1c.value
             )}
             type={"circulation_count"}
-            label="nombre de fichiers"
+            label={[xlabel, "nombre de fichiers"]}
             labelType={chartPer}
             title={"Nombre de fichiers par année,mois et jour"}
             fill={true}

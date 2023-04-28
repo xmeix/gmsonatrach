@@ -104,6 +104,7 @@
   font-size: 2em;
   font-weight: 800;
   color: var(--orange);
+  z-index: 3;
 }
 /* 
 .missionDashboard .box canvas {
@@ -117,9 +118,9 @@
     grid-auto-rows: initial;
     margin: 2em 6em;
   }
-  .missionDashboard .box {
+  /* .missionDashboard .box {
     max-height: 500px;
-  }
+  } */
 }
 @media screen and (max-width: 700px) {
   .missionDashboard .dash-content {
