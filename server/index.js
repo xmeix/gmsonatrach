@@ -332,52 +332,52 @@ cron.schedule("01 21 * * *", async () => {
 //   console.log("end");
 // });
 
-//cron creation RFM+OM
-// cron.schedule("51 10 * * *", async () => {
-//   //creation auto des RFM + OM
-//   console.log("starting");
-//   //RFM
-//   const missionsEnCours = await Mission.find({
-//     etat: { $in: ["en-cours", "terminée"] },
-//   });
+// cron creation RFM+OM
+cron.schedule("12 11 * * *", async () => {
+  //creation auto des RFM + OM
+  console.log("starting");
+  //RFM
+  const missionsEnCours = await Mission.find({
+    etat: { $in: ["en-cours", "terminée"] },
+  });
 
-//   for (const mission of missionsEnCours) {
-//     const employeIds = mission.employes.map((employe) => employe._id);
+  for (const mission of missionsEnCours) {
+    const employeIds = mission.employes.map((employe) => employe._id);
 
-//     for (const employeId of employeIds) {
-//       const rfm = new RapportFM({
-//         idMission: toId(mission._id),
-//         idEmploye: toId(employeId),
-//       });
+    for (const employeId of employeIds) {
+      const rfm = new RapportFM({
+        idMission: toId(mission._id),
+        idEmploye: toId(employeId),
+      });
 
-//       const savedRFM = await rfm.save();
-//     }
-//   }
-//   console.log("finished rfm");
+      const savedRFM = await rfm.save();
+    }
+  }
+  console.log("finished rfm");
 
-//   //OM
+  //OM
 
-//   const missionsAccepted = await Mission.find({
-//     etat: { $in: ["acceptée", "en-cours", "terminée"] },
-//   });
+  const missionsAccepted = await Mission.find({
+    etat: { $in: ["acceptée", "en-cours", "terminée"] },
+  });
 
-//   for (const mission of missionsAccepted) {
-//     const employeIds = mission.employes.map((employe) => employe._id);
+  for (const mission of missionsAccepted) {
+    const employeIds = mission.employes.map((employe) => employe._id);
 
-//     for (const employeId of employeIds) {
-//       const om = new OrdreMission({
-//         mission: toId(mission._id),
-//         employe: toId(employeId),
-//       });
+    for (const employeId of employeIds) {
+      const om = new OrdreMission({
+        mission: toId(mission._id),
+        employe: toId(employeId),
+      });
 
-//       const savedOm = await om.save();
-//     }
-//   }
-//   console.log("finished om");
-//   console.log("emmiting");
-//   io.emit("cronDataChange");
-//   console.log("finished emmiting");
-// });
+      const savedOm = await om.save();
+    }
+  }
+  console.log("finished om");
+  console.log("emmiting");
+  io.emit("cronDataChange");
+  console.log("finished emmiting");
+});
 // _______________________________________________________________________
 //Creation FMission
 // cron.schedule("21 21 * * *", async () => {

@@ -172,6 +172,7 @@ const PopupUpdate = ({ item, close, setSurvey }) => {
     tDateDeb: item.idMission.tDateDeb,
     tDateRet: item.idMission.tDateRet,
   });
+  console.log(mission.DateRetA);
 
   function addToDate(value, type) {
     let newDate;
@@ -247,13 +248,13 @@ const PopupUpdate = ({ item, close, setSurvey }) => {
     moyenTransportRet: mission.moyenTransportRet.join(" - "),
 
     timeretourA:
-      new Date(idMission.DateRetA).toLocaleTimeString([], {
+      new Date(body2.dateRetA).toLocaleTimeString([], {
         hour: "2-digit",
         minute: "2-digit",
         hour12: false,
       }) || "",
     dateretourA: Intl.DateTimeFormat(["ban", "id"]).format(
-      new Date(idMission.DateRetA)
+      new Date(body2.dateRetA)
     ),
 
     timetDateRet: new Date(idMission.tDateRet).toLocaleTimeString([], {
@@ -266,13 +267,13 @@ const PopupUpdate = ({ item, close, setSurvey }) => {
       new Date(idMission.tDateRet)
     ),
     timedebutA:
-      new Date(idMission.DateDebA).toLocaleTimeString([], {
+      new Date(body2.dateDebA).toLocaleTimeString([], {
         hour: "2-digit",
         minute: "2-digit",
         hour12: false,
       }) || "",
     dateDebA: Intl.DateTimeFormat(["ban", "id"]).format(
-      new Date(idMission.DateDebA)
+      new Date(body2.dateDebA)
     ),
 
     timetDateDeb: new Date(idMission.tDateDeb).toLocaleTimeString([], {
@@ -347,8 +348,11 @@ const PopupUpdate = ({ item, close, setSurvey }) => {
                   travail habituel)
                 </span>
                 <div className="dateContent">
-                  <span>Le </span>:{mission && " " + idMission.tDateDeb},{" "}
-                  <span>a:</span>
+                  <span>Le </span>:
+                  {mission &&
+                    " " +
+                      FileItem.tDateDeb}
+                  , <span>a:</span>
                   {item.etat === "créé" ? (
                     <input
                       className="pop-input"
@@ -372,7 +376,9 @@ const PopupUpdate = ({ item, close, setSurvey }) => {
                     <input
                       className="pop-input"
                       type="date"
-                      defaultValue={idMission.DateDebA}
+                      defaultValue={
+                        new Date(mission.DateDebA).toISOString().split("T")[0]
+                      }
                       onChange={(e) => addToDate(e.target.value, 2)}
                     />
                   ) : (
@@ -557,7 +563,7 @@ const PopupUpdate = ({ item, close, setSurvey }) => {
                     <input
                       className="pop-input"
                       type="date"
-                      defaultValue={FileItem.dateretourA}
+                      defaultValue={new Date(mission.DateRetA).toISOString().split("T")[0]}
                       onChange={(e) => addToDate(e.target.value, 5)}
                     />
                   ) : (
