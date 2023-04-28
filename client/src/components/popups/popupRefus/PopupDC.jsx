@@ -70,7 +70,7 @@ const PopupDC = ({ item }) => {
     nbJours: Math.ceil(
       Math.abs(new Date(DateRetour) - new Date(DateDepart)) /
         (1000 * 60 * 60 * 24)
-    ), 
+    ),
     Nature,
   };
   const [generateDocument] = useFileGenerator(
@@ -88,18 +88,33 @@ const PopupDC = ({ item }) => {
     <>
       <div className="state">
         <div className="etat">
-          <OmLabelLine label="Etat" content={": " + etat || "/"} />
-        </div>
-        <div className="etat">
           <OmLabelLine
-            label="Raison de dernier refus: "
+            label="Etat"
             content={
-              <span style={{ whiteSpace: "initial" }}>
-                {raisonRefus || "/"}
+              <span
+                style={{
+                  color:
+                    item.etat === "en-attente"
+                      ? "var(--orange)"
+                      : item.etat === "acceptée"
+                      ? "var(--success)"
+                      : "var(--error)",
+                  fontWeight: "600",
+                }}
+              >
+                {item.etat}
               </span>
             }
           />
         </div>
+        <OmLabelLine
+          label="Raison de refus: "
+          content={
+            <span style={{ whiteSpace: "initial" }}>
+              {item.raisonRefus || "/"}
+            </span>
+          }
+        />
       </div>
       <div className="popup-dc" id="DC-Demande">
         <div>

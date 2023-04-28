@@ -12,6 +12,7 @@ import {
   InputAdornment,
   makeStyles,
 } from "@material-ui/core";
+import { OmLabelLine } from "./PopupOM";
 export const useStyles = makeStyles({
   table: {
     borderCollapse: "separate",
@@ -111,6 +112,36 @@ const PopupDB = ({ item }) => {
   );
   return (
     <>
+      <div className="state">
+        <div className="etat">
+          <OmLabelLine
+            label="Etat"
+            content={
+              <span
+                style={{
+                  color:
+                    item.etat === "en-attente"
+                      ? "var(--orange)"
+                      : item.etat === "acceptée"
+                      ? "var(--success)"
+                      : "var(--error)",
+                  fontWeight: "600",
+                }}
+              >
+                {item.etat}
+              </span>
+            }
+          />
+        </div>
+        <OmLabelLine
+          label="Raison de refus: "
+          content={
+            <span style={{ whiteSpace: "initial" }}>
+              {item.raisonRefus || "/"}
+            </span>
+          }
+        />
+      </div>
       <div className="popup-db">
         <TableContainer>
           <Table className={classes.table}>

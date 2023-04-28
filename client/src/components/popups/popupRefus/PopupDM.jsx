@@ -2,10 +2,9 @@ import "../Popup.css";
 import { OmLabelLine } from "./PopupOM";
 const PopupDM = ({ item }) => {
   return (
-    <div className="popup-dm">
-      <div className="content">
-        <div className="title">Demande de modification</div>
-        <div className="om-body">
+    <>
+      <div className="state">
+        <div className="etat">
           <OmLabelLine
             label="Etat"
             content={
@@ -24,30 +23,41 @@ const PopupDM = ({ item }) => {
               </span>
             }
           />
-          
         </div>
-        <div className="om-body" style={{ whiteSpace: "initial" }}>
-          <OmLabelLine
-            label="Créé par"
-            content={": " + item.idEmetteur.nom + " " + item.idEmetteur.prenom}
-          />
-          <OmLabelLine
-            label="Le"
-            content={
-              ": " +(
-                Intl.DateTimeFormat(["ban", "id"]).format(
+        <OmLabelLine
+          label="Raison de refus: "
+          content={
+            <span style={{ whiteSpace: "initial" }}>
+              {item.raisonRefus || "/"}
+            </span>
+          }
+        />
+      </div>
+      <div className="popup-dm">
+        <div className="content">
+          <div className="title">Demande de modification</div>
+          <div className="om-body"></div>
+          <div className="om-body" style={{ whiteSpace: "initial" }}>
+            <OmLabelLine
+              label="Créé par"
+              content={
+                ": " + item.idEmetteur.nom + " " + item.idEmetteur.prenom
+              }
+            />
+            <OmLabelLine
+              label="Le"
+              content={
+                ": " +
+                (Intl.DateTimeFormat(["ban", "id"]).format(
                   new Date(item.createdAt)
                 ) || "/")
-            }
-          />
-          <OmLabelLine label="Motif" content={": " + (item.motif || "/")} />
-          <OmLabelLine
-            label="Raison refus"
-            content={": " + (item.raisonRefus || " /")}
-          />
+              }
+            />
+            <OmLabelLine label="Motif" content={": " + (item.motif || "/")} />
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

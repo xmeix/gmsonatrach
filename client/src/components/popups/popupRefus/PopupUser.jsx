@@ -1,4 +1,45 @@
+import {
+  Table,
+  TableHead,
+  TableBody,
+  TableRow,
+  TableCell,
+  makeStyles,
+  Radio,
+  TableContainer,
+} from "@material-ui/core";
+const useStyles = makeStyles({
+  table: {
+    minWidth: 650,
+    borderCollapse: "separate",
+    border: "solid 1px var(--light-gray)",
+  },
+  tableHeaderCell: {
+    fontWeight: "bold",
+    backgroundColor: "var(--blue3)",
+    fontSize: "12px",
+  },
+  tableCell: {
+    padding: "10px",
+    fontWeight: 500,
+    fontSize: 13,
+  },
+  table2: {
+    borderCollapse: "separate",
+    borderRight: "solid 1px black",
+    borderTop: "solid 1px black",
+  },
+  tableCell2: {
+    padding: "10px",
+    fontWeight: 500,
+    fontSize: 13,
+    borderLeft: "solid 1px black",
+    borderBottom: "solid 1px black",
+  },
+});
+
 const PopupUser = ({ item }) => {
+  const classes = useStyles();
   const {
     createdAt,
     _id,
@@ -11,6 +52,7 @@ const PopupUser = ({ item }) => {
     role,
     structure,
   } = item;
+
   const OmLabelLine = ({ label, content }) => (
     <div className="om-label-line">
       <div className="om-label">{label}</div>
@@ -19,28 +61,57 @@ const PopupUser = ({ item }) => {
       </div>
     </div>
   );
+  const data = [
+    { label: "Matricule", content: `${_id}` },
+    { label: "role", content: `${role}` },
+    { label: "etat", content: `${etat || "/"}` },
+    { label: "Nom & Prénom", content: `${nom} ${prenom}` },
+    { label: "structure", content: structure },
+    { label: "fonction", content: fonction },
+    { label: "email", content: email },
+    { label: "numero de téléphone", content: numTel },
+  ];
+
   return (
     <div className="popup-user">
       <div className="title">User profile</div>
-      <div className="om-body">
-        {" "}
-        <OmLabelLine label="Matricule" content={": " + _id} />
-      </div>
-      <div className="om-body">
-        <OmLabelLine label="role" content={": " + role} />
-        {role === "employe" && (
-          <OmLabelLine label="etat" content={": " + etat} />
-        )}
-      </div>
-      <div className="om-body">
-        <OmLabelLine label="Nom & Prénom" content={": " + `${nom} ${prenom}`} />
-        <OmLabelLine label="structure" content={": " + structure} />
-        <OmLabelLine label="fonction" content={": " + fonction} />
 
-        <OmLabelLine label="email" content={": " + email} />
-        <OmLabelLine label="numero de téléphone" content={": " + numTel} />
-      </div>
-     </div>
+      <TableContainer>
+        <Table className={classes.table2}>
+          <TableBody>
+            {data.map((el, i) => {
+              if (el.label === "etat") {
+                if (role === "employe") {
+                  return null;
+                } else
+                  return (
+                    <TableRow key={i}>
+                      <TableCell className={classes.tableCell2}>
+                        {el.label}
+                      </TableCell>
+                      <TableCell className={classes.tableCell2}>
+                        {el.content}
+                      </TableCell>
+                    </TableRow>
+                  );
+              }
+              if (el.label !== "etat") {
+                return (
+                  <TableRow key={i}>
+                    <TableCell className={classes.tableCell2}>
+                      {el.label}
+                    </TableCell>
+                    <TableCell className={classes.tableCell2}>
+                      {el.content}
+                    </TableCell>
+                  </TableRow>
+                );
+              }
+            })}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </div>
   );
 };
 

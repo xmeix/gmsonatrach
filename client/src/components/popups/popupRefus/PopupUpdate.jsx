@@ -608,8 +608,14 @@ const PopupUpdate = ({ item, close, setSurvey }) => {
                 </TableHead>
                 <TableBody>
                   <TableRow>
-                    <TableCell className={classes.tableCell2}></TableCell>
-                    <TableCell className={classes.tableCell2}></TableCell>
+                    <TableCell className={classes.tableCell2}>
+                      {" "}
+                      <div style={{ height: "50px" }}></div>
+                    </TableCell>
+                    <TableCell className={classes.tableCell2}>
+                      {" "}
+                      <div style={{ height: "50px" }}></div>
+                    </TableCell>
                   </TableRow>
                 </TableBody>
               </Table>

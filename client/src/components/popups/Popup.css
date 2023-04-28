@@ -181,9 +181,9 @@
   gap: 1.5em;
   top: 13%;
   left: auto;
-  right: 5em;
+  right: 2em;
   bottom: 3em;
-  width: 300px;
+  width: 350px;
   font-size: 13px;
 }
 /*---------------------------------------------------*/
@@ -395,8 +395,7 @@
 }
 
 /*________________________________________________*/
-.popup-survey,
-.popup-dm {
+.popup-survey {
   font-family: "Montserrat";
   display: flex;
   flex-direction: column;
