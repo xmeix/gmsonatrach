@@ -9,32 +9,15 @@ import {
   TableContainer,
 } from "@material-ui/core";
 const useStyles = makeStyles({
-  table: {
-    minWidth: 650,
-    borderCollapse: "separate",
-    border: "solid 1px var(--light-gray)",
-  },
-  tableHeaderCell: {
-    fontWeight: "bold",
-    backgroundColor: "var(--blue3)",
-    fontSize: "12px",
-  },
-  tableCell: {
-    padding: "10px",
-    fontWeight: 500,
-    fontSize: 13,
-  },
   table2: {
     borderCollapse: "separate",
-    borderRight: "solid 1px black",
-    borderTop: "solid 1px black",
+    border: "none",
   },
   tableCell2: {
     padding: "10px",
     fontWeight: 500,
     fontSize: 13,
-    borderLeft: "solid 1px black",
-    borderBottom: "solid 1px black",
+    border: "none",
   },
 });
 
@@ -62,14 +45,14 @@ const PopupUser = ({ item }) => {
     </div>
   );
   const data = [
-    { label: "Matricule", content: `${_id}` },
-    { label: "role", content: `${role}` },
-    { label: "etat", content: `${etat || "/"}` },
-    { label: "Nom & Prénom", content: `${nom} ${prenom}` },
-    { label: "structure", content: structure },
-    { label: "fonction", content: fonction },
-    { label: "email", content: email },
-    { label: "numero de téléphone", content: numTel },
+    { label: "Matricule", content: `: ${_id}` },
+    { label: "role", content: `: ${role}` },
+    { label: "etat", content: `: ${etat || "/"}` },
+    { label: "Nom & Prénom", content: `: ${nom} ${prenom}` },
+    { label: "structure", content: `: ${structure}` },
+    { label: "fonction", content: `: ${fonction}` },
+    { label: "email", content: `: ${email}` },
+    { label: "numero de téléphone", content: `: ${numTel}` },
   ];
 
   return (

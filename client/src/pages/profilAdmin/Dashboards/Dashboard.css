@@ -30,16 +30,21 @@
 .custom-options {
   display: flex;
   justify-content: center;
-  gap: 2em;
+  align-items: center;
+  gap: 1em;
   flex-wrap: wrap;
-  position: absolute;
-  top: 1em;
-  z-index: 88;
+  background-color: var(--white);
+  border-radius: 5px;
+  justify-self: flex-start;
 }
 
 .sett-div-icon {
   position: absolute;
-  top: 1.5em;
+  top: 2.5em;
   left: 1.5em;
-  z-index: 88;
+  z-index: 89;
+}
+
+.selects {
+  width: auto !important;
 }

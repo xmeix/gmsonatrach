@@ -80,20 +80,23 @@ const MissionSchema = new mongoose.Schema(
       {
         type: String,
         enum: ["avion", "route"],
-        required: true,
+        default: "pas-défini",
+        // required: true,
       },
     ],
     moyenTransportRet: [
       {
         type: String,
         enum: ["avion", "route"],
-        required: true,
+        default: "pas-défini",
+        // required: true,
       },
     ],
     //moyen de transport aller + retour
     lieuDep: {
       type: String,
-      required: true,
+      default: "Alger",
+      // required: true,
     },
     destination: {
       type: String,
@@ -120,11 +123,11 @@ const MissionSchema = new mongoose.Schema(
       type: String,
       default: "",
     },
-    circonscriptionAdm: {
-      //a supprimer
-      type: String,
-      // required: true,
-    },
+    // circonscriptionAdm: {
+    //   //a supprimer
+    //   type: String,
+    //   // required: true,
+    // },
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",

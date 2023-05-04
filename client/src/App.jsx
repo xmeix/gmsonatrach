@@ -44,8 +44,13 @@ export const socket = io("http://localhost:3001");
 function App() {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const currentUser = useSelector((state) => state.auth.user);
+  // const users = useSelector((state) => state.auth.users);
   let element = null;
   const dispatch = useDispatch();
+
+  // const employees = users.map((u) =>
+  //   console.log(u._id, " ", u.nom, " ", u.prenom, " ", u.structure)
+  // );
 
   const handleSocketData = (type) => {
     switch (type) {

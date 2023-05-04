@@ -25,7 +25,7 @@ export const createMission = async (req, res) => {
       lieuDep,
       destination,
       observation,
-      circonscriptionAdm,
+      // circonscriptionAdm,
     } = req.body;
     const user = req.user;
     let newStructure;
@@ -47,26 +47,26 @@ export const createMission = async (req, res) => {
       etat = "acceptée";
     }
 
-    //check
-    const fields = [
-      objetMission,
-      newStructure,
-      type,
-      budget,
-      pays,
-      employes,
-      taches,
-      tDateDeb,
-      tDateRet,
-      moyenTransport,
-      moyenTransportRet,
-      lieuDep,
-      destination,
-    ];
+    // //check
+    // const fields = [
+    //   objetMission,
+    //   newStructure,
+    //   type,
+    //   budget,
+    //   pays,
+    //   employes,
+    //   taches,
+    //   tDateDeb,
+    //   tDateRet,
+    //   moyenTransport,
+    //   moyenTransportRet,
+    //   lieuDep,
+    //   destination,
+    // ];
 
-    if (!checkFields(fields)) {
-      throw new Error("empty fields");
-    }
+    // if (!checkFields(fields)) {
+    //   throw new Error("empty fields");
+    // }
 
     //const newTaches = taches.map((tache) => toId(tache));
     const newEmployes = employes.map((employe) => toId(employe));
@@ -90,7 +90,7 @@ export const createMission = async (req, res) => {
       destination,
       observation,
       etat,
-      circonscriptionAdm,
+      // circonscriptionAdm,
       createdBy,
       updatedBy,
     });
@@ -137,7 +137,7 @@ export const createMission = async (req, res) => {
       destination,
       observation,
       etat: "en-attente",
-      circonscriptionAdm,
+      // circonscriptionAdm,
       createdBy,
       updatedBy,
     };

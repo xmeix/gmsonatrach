@@ -1,5 +1,3 @@
-import { Component, useState } from "react";
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import {
   getCountFor,
   getGroupedDataForTime,
@@ -19,8 +17,7 @@ const FileSection = ({
   chartPer,
   chartPerNum,
 }) => {
-  const [chartAction, setChartAction] = useState("structure");
-  const xlabel = chartPer === 1 ? "années" : chartPer === 2 ? "mois" : "jours";
+   const xlabel = chartPer === 1 ? "années" : chartPer === 2 ? "mois" : "jours";
 
   const pieType = (option) => {
     if (["structure"].includes(option)) {

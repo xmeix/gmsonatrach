@@ -967,14 +967,14 @@ export const MissionEntries = [
     ],
     required: true,
   },
-  {
-    id: "circonscriptionAdm",
-    label: "Administrative District",
-    inputType: "text",
-    width: "230px",
-    placeholder: "Enter an administrative district value",
-    required: true,
-  },
+  // {
+  //   id: "circonscriptionAdm",
+  //   label: "Administrative District",
+  //   inputType: "text",
+  //   width: "230px",
+  //   placeholder: "Enter an administrative district value",
+  //   required: true,
+  // },
 
   {
     id: "taches",
@@ -983,7 +983,7 @@ export const MissionEntries = [
     width: "230px",
     placeholder: "Entrez les tâches de la mission",
     isMulti: true,
-    required: true,
+    required: false,
   },
   {
     id: "tDateDeb",
@@ -1009,19 +1009,19 @@ export const MissionEntries = [
     placeholder: "Sélectionnez les employés pour la mission , cela change ",
     isMulti: true,
     disabled: true,
-    // options: employeesNonMissionnaires,required: true,
-  },
-  {
-    id: "lieuDep",
-    label: "Departure Location",
-    inputType: "text",
-    width: "230px",
-    placeholder: "Enter the departure location",
     required: true,
   },
   {
+    id: "lieuDep",
+    label: "lieu de départ",
+    inputType: "text",
+    width: "230px",
+    placeholder: "Enter the departure location",
+    required: false,
+  },
+  {
     id: "destination",
-    label: "Destination",
+    label: "Circonscription administrative",
     inputType: "text",
     width: "230px",
     placeholder: "Enter the destination",
@@ -1034,11 +1034,11 @@ export const MissionEntries = [
     width: "230px",
     placeholder: "Select a means of transport",
     options: [
-      { label: "Airplane", value: "avion" },
-      { label: "Road", value: "route" },
+      { label: "Avion", value: "avion" },
+      { label: "Route", value: "route" },
     ],
     isMulti: true,
-    required: true,
+    required: false,
   },
   {
     id: "moyenTransportRet",
@@ -1047,11 +1047,11 @@ export const MissionEntries = [
     width: "230px",
     placeholder: "Select a means of transport",
     options: [
-      { label: "Airplane", value: "avion" },
-      { label: "Road", value: "route" },
+      { label: "Avion", value: "avion" },
+      { label: "Route", value: "route" },
     ],
     isMulti: true,
-    required: true,
+    required: false,
   },
   {
     id: "observation",
@@ -1059,6 +1059,6 @@ export const MissionEntries = [
     inputType: "textarea",
     width: "230px",
     placeholder: "Enter any observations",
-    required: true,
+    required: false,
   },
 ];

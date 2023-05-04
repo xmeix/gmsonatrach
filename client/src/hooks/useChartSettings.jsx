@@ -6,8 +6,8 @@ const customStyles = {
   control: (provided, state) => ({
     ...provided,
     width: 150, // Add this line to set the width
+    height: "30px",
     borderRadius: 5,
-    backgroundColor: "var(--gray3)",
     color: "var(--white)",
     border: "1px solid var(--light-gray)",
     boxShadow: "none",
@@ -56,40 +56,41 @@ const useChartSettings = (options1, options2, options3) => {
           <SettingsIcon className="icn" style={{ color: "gray" }} />
         </div>
 
-        {showOptions && (
-          <div className="custom-options">
-            {options1 && (
-              <Select
-                className="select"
-                value={option1}
-                options={options1}
-                placeholder="{entry.placeholder}"
-                styles={customStyles}
-                onChange={handleOption1}
-              />
-            )}
-            {options2 && (
-              <Select
-                className="select"
-                value={option2}
-                options={options2}
-                placeholder="{entry.placeholder}"
-                styles={customStyles}
-                onChange={handleOption2}
-              />
-            )}
-            {options3 && (
-              <Select
-                value={option3}
-                className="select"
-                options={options3}
-                placeholder="{entry.placeholder}"
-                styles={customStyles}
-                onChange={handleOption3}
-              />
-            )}
-          </div>
-        )}
+        <div
+          className="custom-options"
+          style={{ display: showOptions ? "flex" : "none" }}
+        >
+          {options1 && (
+            <Select
+              className="selects"
+              value={option1}
+              options={options1}
+              placeholder="{entry.placeholder}"
+              styles={customStyles}
+              onChange={handleOption1}
+            />
+          )}
+          {options2 && (
+            <Select
+              className="selects"
+              value={option2}
+              options={options2}
+              placeholder="{entry.placeholder}"
+              styles={customStyles}
+              onChange={handleOption2}
+            />
+          )}
+          {options3 && (
+            <Select
+              value={option3}
+              className="selects"
+              options={options3}
+              placeholder="{entry.placeholder}"
+              styles={customStyles}
+              onChange={handleOption3}
+            />
+          )}
+        </div>
       </>
     );
   };
