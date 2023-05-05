@@ -80,6 +80,7 @@ const UsersDashboard = () => {
       let dateDeb;
       let dateFin;
       let employees = [];
+      let missionObject = {};
 
       // loop through employees(planning)
       // get employee-ids for each mission
@@ -117,21 +118,22 @@ const UsersDashboard = () => {
         }
 
         if (dateDeb && dateFin) {
-          console.log(
-            "mission ",
-            mission[0],
-            " date debut",
-            dateDeb,
-            " date fin",
-            dateFin
-          );
+          missionObject = { 
+            objetMission: mission[1],
+            type: mission[2],
+            pays: mission[3],
+            destination: mission[4],
+            tDateDeb: dateDeb,
+            tDateRet: dateFin,
+            budget: mission[7],
+            moyenTransport: mission[5],
+            moyenTransportRet: mission[6],
+            employees: employees,
+          };
+          // console.log(missionObject);
           break;
         }
       }
-
-      // console.log(employees);
-
-      // console.log(mission);
     }
   };
 
@@ -200,11 +202,11 @@ const UsersDashboard = () => {
     else {
       const dates = planningData[0]
         ?.map((el, i) => {
-          let k  ;
+          let k;
           if (el !== "empty") {
             k = planningData[1][i];
             const [month, year] = el.split("/");
-            const date = new Date(year, month-1, 1);
+            const date = new Date(year, month - 1, 1);
             date.setHours(-1); // Sets the date to the last day of the previous month
 
             const numDays = date.getDate();
