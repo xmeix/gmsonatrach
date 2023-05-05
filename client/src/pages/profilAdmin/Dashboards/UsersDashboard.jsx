@@ -73,14 +73,6 @@ const UsersDashboard = () => {
   }, [planningData]);
 
   const createMissions = () => {
-    // console.log(planningDates);
-    // console.log(planningData);
-    // console.log(missionData);
-
-    //first we will loop through mission data and we will collect all its info ,
-    // and then we will look for all the dates availables and then for each dateDeb ,
-    // dateFin we will look for all employees that have the same misions the same dates
-
     const allMissions = [];
     // loop through mission
     for (let i = 1; i < missionData.length; i++) {
@@ -102,23 +94,38 @@ const UsersDashboard = () => {
       //get dates for each mission
       for (let i = 2; i < planningData.length; i++) {
         const element = planningData[i];
+        // verifier si la ligne i dans le planning contient le id mission
         if (element.includes(mission[0])) {
+          // si elle contient id mission , on trouve le premier on garde son index et le jour equiv
           const indDeb = element.indexOf(mission[0]);
           const jD = planningData[1][indDeb];
+          dateDeb = getDay(jD, indDeb).toLocaleString();
+          // console.log([mission[0], dateDeb]);
 
-          console.log([mission[0], getDay(jD, indDeb)]);
           for (let r = indDeb; r < element.length; r++) {
-            let s = element[r];
+            const s = element[r];
 
-            if (s !== mission[0]) {
-              console.log(s);
+            // console.log(mission[0], s);
+            if (s === "empty" || s !== mission[0]) {
               const indFin = r - 1;
               const jF = planningData[1][indFin];
-              console.log(jF, indFin, getDay(jF, indFin));
-              console.log([mission[0], jF, indFin]);
+              dateFin = getDay(jF, indFin).toLocaleString();
+
               break;
             }
           }
+        }
+
+        if (dateDeb && dateFin) {
+          console.log(
+            "mission ",
+            mission[0],
+            " date debut",
+            dateDeb,
+            " date fin",
+            dateFin
+          );
+          break;
         }
       }
 
@@ -129,15 +136,18 @@ const UsersDashboard = () => {
   };
 
   const getDay = (j, ind) => {
+    // console.log(planningDates, j, ind);
     const d = planningDates
-      ?.filter((e) => e[1] <= ind && ind <= e[2])
-      ?.map((e) => e);
-    // console.log(d[0]);
-    // const [month, year] = d[0][0]?.split("/");
-    // const date = new Date(year, month, j);
-    return d[0][0];
+      .filter((e) => (e[1] < ind && ind < e[2]) || e[1] === ind || e[2] === ind)
+      .map((e) => e);
+    if (d.length === 0) {
+      return null;
+    }
+    const [month, year] = d[0][0].split("/");
+    // console.log(month, year);
+    const date = new Date(year, month - 1, j);
+    return date;
   };
-
   const extractMissionData = () => {
     const subset = jsonData
       .slice(1)
@@ -190,18 +200,18 @@ const UsersDashboard = () => {
     else {
       const dates = planningData[0]
         ?.map((el, i) => {
-          let k = 0;
+          let k  ;
           if (el !== "empty") {
             k = planningData[1][i];
             const [month, year] = el.split("/");
-            const date = new Date(year, month, 1);
+            const date = new Date(year, month-1, 1);
             date.setHours(-1); // Sets the date to the last day of the previous month
 
             const numDays = date.getDate();
-
+            // console.log(k);
             // return [date, indexDebut, indexFin];
-            console.log([el, i, numDays - k + i]);
-            return [el, i, numDays - i];
+            // console.log([el, i, numDays - k + i + 1]);
+            return [el, i, numDays - k + i + 1];
           } else return [0, 0, 0, 0];
         })
         .filter((e) => !e.includes(0))
