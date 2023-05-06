@@ -9,6 +9,8 @@ import {
   makeStyles,
 } from "@material-ui/core";
 import TableM from "./../../../components/table/TableM";
+import { useAxios } from "../../../hooks/useAxios";
+import { useSelector } from "react-redux";
 const useStyles = makeStyles({
   table2: {
     borderCollapse: "separate",
@@ -29,7 +31,8 @@ const UsersDashboard = () => {
   const [missionData, setMissionData] = useState([]);
   const [planningData, setPlanningData] = useState([]);
   const [planningDates, setPlanningDates] = useState([]);
-
+  const { callApi, error, isLoading, successMsg } = useAxios();
+  const users = useSelector((state) => state.auth.users);
   const handleFileChange = useCallback((e) => {
     const file = e.target.files[0];
     if (!file || !/\.xlsx?$/.test(file.name)) {
@@ -88,6 +91,8 @@ const UsersDashboard = () => {
         const element = planningData[j];
         if (element.includes(mission[0])) {
           // console.log({ idUser: element[0], mission: mission });
+          // here we have to look for all the users and push them to the array
+
           employees.push(element[0].trim());
         }
       }
@@ -100,7 +105,7 @@ const UsersDashboard = () => {
           // si elle contient id mission , on trouve le premier on garde son index et le jour equiv
           const indDeb = element.indexOf(mission[0]);
           const jD = planningData[1][indDeb];
-          dateDeb = getDay(jD, indDeb).toLocaleString();
+          dateDeb = getDay(jD, indDeb);
           // console.log([mission[0], dateDeb]);
 
           for (let r = indDeb; r < element.length; r++) {
@@ -110,7 +115,7 @@ const UsersDashboard = () => {
             if (s === "empty" || s !== mission[0]) {
               const indFin = r - 1;
               const jF = planningData[1][indFin];
-              dateFin = getDay(jF, indFin).toLocaleString();
+              dateFin = getDay(jF, indFin);
 
               break;
             }
@@ -118,19 +123,30 @@ const UsersDashboard = () => {
         }
 
         if (dateDeb && dateFin) {
-          missionObject = { 
-            objetMission: mission[1],
-            type: mission[2],
-            pays: mission[3],
-            destination: mission[4],
+          missionObject = {
+            objetMission: mission[1].trim(),
+            type: mission[2].toLowerCase().trim(),
+            pays: mission[3].toLowerCase().trim(),
+            destination: mission[4].toLowerCase().trim(),
             tDateDeb: dateDeb,
             tDateRet: dateFin,
             budget: mission[7],
-            moyenTransport: mission[5],
-            moyenTransportRet: mission[6],
-            employees: employees,
+            moyenTransport: mission[5]
+              .split("-")
+              .map((item) => item.toLowerCase().trim()),
+            moyenTransportRet: mission[6]
+              .split("-")
+              .map((item) => item.toLowerCase().trim()),
+            employes: employees,
+            structure: mission[8].toUpperCase().trim(),
           };
-          // console.log(missionObject);
+          console.log(mission);
+
+          console.log(JSON.stringify(missionObject));
+          // here we have to create missions
+          callApi("post", "/mission", missionObject);
+          console.log("mission sent");
+
           break;
         }
       }
@@ -154,7 +170,7 @@ const UsersDashboard = () => {
     const subset = jsonData
       .slice(1)
       .filter((row) => row.length > 0 && row[0])
-      .map((row) => row.slice(0, 8));
+      .map((row) => row.slice(0, 9));
 
     setMissionData(subset);
 
@@ -210,9 +226,6 @@ const UsersDashboard = () => {
             date.setHours(-1); // Sets the date to the last day of the previous month
 
             const numDays = date.getDate();
-            // console.log(k);
-            // return [date, indexDebut, indexFin];
-            // console.log([el, i, numDays - k + i + 1]);
             return [el, i, numDays - k + i + 1];
           } else return [0, 0, 0, 0];
         })

@@ -38,8 +38,11 @@ export const createOrUpdateFMission = async (
         mission_count: mostRecent ? mostRecent.mission_count + 1 : 1,
         success_count: 0,
         fail_count: mostRecent
-          ? mostRecent.fail_count + newMission.taches.length
-          : newMission.taches.length,
+          ? mostRecent.fail_count +
+            (newMission.taches ? newMission.taches.length : 0)
+          : newMission.taches
+          ? newMission.taches.length
+          : 0,
         employee_count: mostRecent
           ? mostRecent.employee_count + newMission.employes.length
           : newMission.employes.length,

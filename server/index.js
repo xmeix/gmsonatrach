@@ -114,11 +114,11 @@ mongoose
     // FDocument.insertMany(FRFM);
     // FDocument.insertMany(FDB);
     // FDocument.insertMany(FDC);
-    // FDocument.insertMany(FOM);
- 
+    // FDocument.insertMany(FOM); 
+   
     // DM.insertMany(dms); 
     // DB.insertMany(dbs);
-    // DC.insertMany(dcs);
+    // DC.insertMany(dcs); 
  
     // FMission.insertMany(Fmissions);
     // addMissionsData();
