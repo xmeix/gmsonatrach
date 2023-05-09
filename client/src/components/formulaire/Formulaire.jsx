@@ -5,8 +5,9 @@ import useForm from "../../hooks/useForm";
 import ErrorIcon from "@mui/icons-material/Error";
 import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useAxios } from "../../hooks/useAxios";
+import validateMission from "../../utils/formFieldsVerifications";
 const customStyles = {
   control: (provided, state) => ({
     ...provided,
@@ -22,6 +23,7 @@ const customStyles = {
 };
 
 const Formulaire = ({ title, entries, buttons, type }) => {
+  const selectInputRef = useRef();
   const { callApi, error, isLoading, successMsg } = useAxios();
   const currentUser = useSelector((state) => state.auth.user);
   const [selectedRole, setSelectedRole] = useState("");
@@ -34,7 +36,10 @@ const Formulaire = ({ title, entries, buttons, type }) => {
     delete vals[""]; // remove empty string key
     return vals;
   });
-
+  const [errors, setErrors] = useState({});
+  const onClear = () => {
+    selectInputRef.current.setValue(null);
+  };
   /***----------------------------------------------------------- */
   const missions = useSelector((state) => state.auth.missions || []);
   const users = useSelector((state) => state.auth.users);
@@ -66,14 +71,18 @@ const Formulaire = ({ title, entries, buttons, type }) => {
       let newEntries;
       if (type === "mission") {
         newEntries = entries.map((entry) => {
-          if (entry.id === "employes")
+          if (entry.id === "employes") {
             entry.options = newEmployeesNonMissionnaires;
+            onClear();
+          }
           return entry;
         });
       } else if (type === "DB") {
         newEntries = entries.map((entry) => {
-          if (entry.id === "employes")
+          if (entry.id === "employes") {
             entry.options = newEmployeesNonMissionnaires;
+            onClear();
+          }
           return entry;
         });
       }
@@ -86,7 +95,14 @@ const Formulaire = ({ title, entries, buttons, type }) => {
       }
     }
   }, [start, end, entries, missions, type, users]);
-
+  // resetForm(() => {
+  //   const vals = {};
+  //   entries.forEach((entry) => {
+  //     vals[entry.id] = "";
+  //   });
+  //   delete vals[""]; // remove empty string key
+  //   return vals;
+  // });
   /***-----------------------------------------------------------*/
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -101,7 +117,12 @@ const Formulaire = ({ title, entries, buttons, type }) => {
       case "mission":
         {
           //register(values);
-          callApi("post", "/mission", values);
+          if (!validateMission(values, currentUser))
+            callApi("post", "/mission", values);
+          else {
+            onClear();
+            setErrors(validateMission(values, currentUser));
+          }
         }
         break;
       case "DB":
@@ -125,15 +146,6 @@ const Formulaire = ({ title, entries, buttons, type }) => {
       default:
         console.log("errrr");
     }
-
-    // resetForm(() => {
-    //   const vals = {};
-    //   entries.forEach((entry) => {
-    //     vals[entry.id] = "";
-    //   });
-    //   delete vals[""]; // remove empty string key
-    //   return vals;
-    // });
   };
   return (
     <div className="formulaire">
@@ -225,6 +237,7 @@ const Formulaire = ({ title, entries, buttons, type }) => {
                   type === "user"
                 ) && (
                   <Select
+                    ref={entry.id === "employes" ? selectInputRef : null}
                     className="select"
                     options={
                       entry.id === "role" &&
@@ -268,6 +281,9 @@ const Formulaire = ({ title, entries, buttons, type }) => {
                   onChange={handleChange}
                   name={entry.id}
                 />
+              )}
+              {errors[entry.id] && (
+                <div className="input-error">{errors[entry.id]}</div>
               )}
             </div>
           );

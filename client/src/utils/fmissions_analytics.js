@@ -85,7 +85,7 @@ export const getMissionGroupedDataForTime = (data, time, stack) => {
     return acc;
   }, []);
 
-  console.log(JSON.stringify(groupedDataArray));
+  // console.log(JSON.stringify(groupedDataArray));
   return groupedDataArray;
 };
 

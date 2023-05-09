@@ -34,7 +34,7 @@ const NavBar = () => {
     if (isLoggedIn) {
       if (socket) {
         socket.on("notification", async () => {
-          console.log("new notification received");
+          // console.log("new notification received");
           getNotifications(dispatch, 1);
         });
       }

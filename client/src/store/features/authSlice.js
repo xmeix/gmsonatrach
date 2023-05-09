@@ -81,7 +81,7 @@ export const authSlice = createSlice({
       state.isLoading = false;
     },
     setNotifications: (state, action) => {
-      console.log(action.payload);
+      // console.log(action.payload);
       state.notifications = action.payload;
     },
   },

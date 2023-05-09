@@ -49,9 +49,9 @@ function App() {
   const dispatch = useDispatch();
 
   // const employees = users.map((u) =>
-  //   console.log(u._id, " ", u.nom, " ", u.prenom, " ", u.structure)
-  // );
-
+  //   u._id
+//   );
+// console.log(JSON.stringify(employees))
   const handleSocketData = (type) => {
     switch (type) {
       case "demande":

@@ -123,6 +123,9 @@ const UsersDashboard = () => {
         }
 
         if (dateDeb && dateFin) {
+
+
+
           missionObject = {
             objetMission: mission[1].trim(),
             type: mission[2].toLowerCase().trim(),
@@ -141,6 +144,8 @@ const UsersDashboard = () => {
             structure: mission[8].toUpperCase().trim(),
           };
           console.log(mission);
+          //verify the mission fields 
+
 
           console.log(JSON.stringify(missionObject));
           // here we have to create missions
@@ -152,6 +157,8 @@ const UsersDashboard = () => {
       }
     }
   };
+
+  
 
   const getDay = (j, ind) => {
     // console.log(planningDates, j, ind);
