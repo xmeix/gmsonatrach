@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect } from "react";
-import { read, utils, writeFile } from "xlsx";
+
 import {
   Table,
   TableBody,
@@ -7,11 +7,11 @@ import {
   TableHead,
   TableRow,
   makeStyles,
-} from "@material-ui/core";
-import TableM from "./../../../components/table/TableM";
+} from "@material-ui/core"; 
 import { useAxios } from "../../../hooks/useAxios";
 import { useSelector } from "react-redux";
 import { validateMission } from "../../../utils/formFieldsVerifications";
+import { useUpload } from "../../../hooks/useUpload";
 const useStyles = makeStyles({
   table2: {
     borderCollapse: "separate",
@@ -28,7 +28,7 @@ const useStyles = makeStyles({
 });
 const UsersDashboard = () => {
   const classes = useStyles();
-  const [jsonData, setJsonData] = useState(null);
+  // const [jsonData, setJsonData] = useState(null);
   const [missionData, setMissionData] = useState([]);
   const [planningData, setPlanningData] = useState([]);
   const [planningDates, setPlanningDates] = useState([]);
@@ -38,29 +38,8 @@ const UsersDashboard = () => {
   const users = useSelector((state) => state.auth.users);
   const currentUser = useSelector((state) => state.auth.user);
   const [success, setSuccess] = useState(false);
-  const handleFileChange = useCallback((e) => {
-    const file = e.target.files[0];
-    if (!file || !/\.xlsx?$/.test(file.name)) {
-      alert("Please select a valid Excel file.");
-      return;
-    }
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      try {
-        const data = event.target.result;
-        const workbook = read(data);
-        const sheetName = workbook.SheetNames[0];
-        const worksheet = workbook.Sheets[sheetName];
-        const newJsonData = utils.sheet_to_json(worksheet, { header: 1 });
-        setJsonData(newJsonData);
-        // console.log(newJsonData);
-      } catch (error) {
-        console.log("Error processing the file. Please try again.", error);
-      }
-    };
-    reader.readAsArrayBuffer(file);
-  }, []);
-
+  const {jsonData,handleFileChange} = useUpload();
+   
   useEffect(() => {
     if (!jsonData) return;
     else {
