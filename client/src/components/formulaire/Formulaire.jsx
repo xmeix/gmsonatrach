@@ -7,7 +7,7 @@ import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useRef, useState } from "react";
 import { useAxios } from "../../hooks/useAxios";
-import validateMission from "../../utils/formFieldsVerifications";
+import { validateMission } from "../../utils/formFieldsVerifications";
 const customStyles = {
   control: (provided, state) => ({
     ...provided,
@@ -57,10 +57,11 @@ const Formulaire = ({ title, entries, buttons, type }) => {
             user.role === "employe" &&
             !missions.some(
               (mission) =>
-                mission.employes.some((u) => u._id === user._id) &&
-                (mission.etat === "en-cours" || mission.etat === "acceptée") &&
-                mission.tDateRet > start &&
-                mission.tDateDeb < end
+                (mission.employes.some((u) => u._id === user._id) &&
+                  (mission.etat === "en-cours" ||
+                    mission.etat === "acceptée") &&
+                  mission.tDateRet > start &&
+                  mission.tDateDeb < end )
             )
         )
         .map((user) => ({
@@ -117,11 +118,18 @@ const Formulaire = ({ title, entries, buttons, type }) => {
       case "mission":
         {
           //register(values);
-          if (!validateMission(values, currentUser))
+          let object = {
+            type: "form",
+            users,
+            missions,
+          };
+          setErrors(validateMission(values, currentUser, object));
+          if (
+            Object.keys(validateMission(values, currentUser, object)).length ===
+            0
+          ) {
             callApi("post", "/mission", values);
-          else {
-            onClear();
-            setErrors(validateMission(values, currentUser));
+            setErrors({});
           }
         }
         break;

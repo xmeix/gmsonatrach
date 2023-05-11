@@ -74,8 +74,8 @@ const PopupUpdate = ({ item, close, setSurvey }) => {
   useEffect(() => {
     const generateDates = () => {
       const newDates = [];
-      let start = new Date(mission.tDateDeb);
-      let end = new Date(mission.tDateRet);
+      let start = new Date(mission?.tDateDeb);
+      let end = new Date(mission?.tDateRet);
 
       // loop through dates from start to end date
       while (start <= end) {
@@ -86,7 +86,7 @@ const PopupUpdate = ({ item, close, setSurvey }) => {
     };
     // call generateDates when component mounts
     generateDates();
-  }, [mission.tDateDeb, mission.tDateRet]);
+  }, [mission?.tDateDeb, mission?.tDateRet]);
 
   const [observations, setObservations] = useState(() =>
     item.deroulement.map((item) => item.observation)
@@ -180,19 +180,19 @@ const PopupUpdate = ({ item, close, setSurvey }) => {
   }
 
   const [body2, setBody2] = useState({
-    dateDebA: item.idMission.DateDebA || item.idMission.tDateDeb,
-    dateRetA: item.idMission.DateRetA || item.idMission.tDateRet,
-    tDateDeb: item.idMission.tDateDeb,
-    tDateRet: item.idMission.tDateRet,
+    dateDebA: item.idMission?.DateDebA || item.idMission?.tDateDeb,
+    dateRetA: item.idMission?.DateRetA || item.idMission?.tDateRet,
+    tDateDeb: item.idMission?.tDateDeb,
+    tDateRet: item.idMission?.tDateRet,
   });
-  console.log(mission.DateRetA);
+  console.log(mission?.DateRetA);
 
   function addToDate(value, type) {
     let newDate;
     let [hours, minutes] = value.split(":").map(Number);
     switch (type) {
       case 1:
-        newDate = new Date(body2.tDateDeb);
+        newDate = new Date(body2?.tDateDeb);
         newDate.setHours(hours);
         newDate.setMinutes(minutes);
 
@@ -209,7 +209,7 @@ const PopupUpdate = ({ item, close, setSurvey }) => {
         });
         break;
       case 3:
-        newDate = new Date(body2.dateDebA);
+        newDate = new Date(body2?.dateDebA);
         newDate.setHours(hours);
         newDate.setMinutes(minutes);
 
@@ -219,7 +219,7 @@ const PopupUpdate = ({ item, close, setSurvey }) => {
         });
         break;
       case 4:
-        newDate = new Date(body2.tDateRet);
+        newDate = new Date(body2?.tDateRet);
         newDate.setHours(hours);
         newDate.setMinutes(minutes);
 
@@ -235,7 +235,7 @@ const PopupUpdate = ({ item, close, setSurvey }) => {
         });
         break;
       case 6:
-        newDate = new Date(body2.dateRetA);
+        newDate = new Date(body2?.dateRetA);
         newDate.setHours(hours);
         newDate.setMinutes(minutes);
 
@@ -257,45 +257,45 @@ const PopupUpdate = ({ item, close, setSurvey }) => {
   const [justSent, setJustSent] = useState(false);
   const FileItem = {
     deroulement: bodyFile,
-    moyenTransport: mission.moyenTransport.join(" - "),
-    moyenTransportRet: mission.moyenTransportRet.join(" - "),
+    moyenTransport: mission?.moyenTransport.join(" - "),
+    moyenTransportRet: mission?.moyenTransportRet.join(" - "),
 
     timeretourA:
-      new Date(body2.dateRetA).toLocaleTimeString([], {
+      new Date(body2?.dateRetA).toLocaleTimeString([], {
         hour: "2-digit",
         minute: "2-digit",
         hour12: false,
       }) || "",
     dateretourA: Intl.DateTimeFormat(["ban", "id"]).format(
-      new Date(body2.dateRetA)
+      new Date(body2?.dateRetA)
     ),
 
-    timetDateRet: new Date(idMission.tDateRet).toLocaleTimeString([], {
+    timetDateRet: new Date(idMission?.tDateRet).toLocaleTimeString([], {
       hour: "2-digit",
       minute: "2-digit",
       hour12: false,
     }),
 
     tDateRet: Intl.DateTimeFormat(["ban", "id"]).format(
-      new Date(idMission.tDateRet)
+      new Date(idMission?.tDateRet)
     ),
     timedebutA:
-      new Date(body2.dateDebA).toLocaleTimeString([], {
+      new Date(body2?.dateDebA).toLocaleTimeString([], {
         hour: "2-digit",
         minute: "2-digit",
         hour12: false,
       }) || "",
     dateDebA: Intl.DateTimeFormat(["ban", "id"]).format(
-      new Date(body2.dateDebA)
+      new Date(body2?.dateDebA)
     ),
 
-    timetDateDeb: new Date(idMission.tDateDeb).toLocaleTimeString([], {
+    timetDateDeb: new Date(idMission?.tDateDeb).toLocaleTimeString([], {
       hour: "2-digit",
       minute: "2-digit",
       hour12: false,
     }),
     tDateDeb: Intl.DateTimeFormat(["ban", "id"]).format(
-      new Date(idMission.tDateDeb)
+      new Date(idMission?.tDateDeb)
     ),
     parcours:
       mission.lieuDep + " Alger " + mission.destination + " " + mission.pays,
@@ -361,7 +361,7 @@ const PopupUpdate = ({ item, close, setSurvey }) => {
                   travail habituel)
                 </span>
                 <div className="dateContent">
-                  <span>Le </span>:{mission && " " + FileItem.tDateDeb},{" "}
+                  <span>Le </span>:{mission && " " + FileItem?.tDateDeb},{" "}
                   <span>a:</span>
                   {item.etat === "créé" ? (
                     <input
@@ -387,12 +387,12 @@ const PopupUpdate = ({ item, close, setSurvey }) => {
                       className="pop-input"
                       type="date"
                       defaultValue={
-                        new Date(mission.DateDebA).toISOString().split("T")[0]
+                        new Date(mission?.DateDebA).toISOString().split("T")[0]
                       }
                       onChange={(e) => addToDate(e.target.value, 2)}
                     />
                   ) : (
-                    " " + FileItem.dateDebA
+                    " " + FileItem?.dateDebA
                   )}
                   , <span>a:</span>
                   {item.etat === "créé" ? (
@@ -531,7 +531,7 @@ const PopupUpdate = ({ item, close, setSurvey }) => {
                   mission"
                 </span>
                 <div className="dateContent">
-                  <span>Le </span>:{" " + FileItem.tDateRet}, <span>a:</span>
+                  <span>Le </span>:{" " + FileItem?.tDateRet}, <span>a:</span>
                   {item.etat === "créé" ? (
                     <input
                       className="pop-input"
@@ -556,7 +556,7 @@ const PopupUpdate = ({ item, close, setSurvey }) => {
                       className="pop-input"
                       type="date"
                       defaultValue={
-                        new Date(mission.DateRetA).toISOString().split("T")[0]
+                        new Date(mission?.DateRetA).toISOString().split("T")[0]
                       }
                       onChange={(e) => addToDate(e.target.value, 5)}
                     />
@@ -583,11 +583,11 @@ const PopupUpdate = ({ item, close, setSurvey }) => {
               <div className="om-body">
                 <OmLabelLine
                   label="A l'aller"
-                  content={": " + FileItem.moyenTransport}
+                  content={": " + FileItem?.moyenTransport}
                 />
                 <OmLabelLine
                   label="A retour"
-                  content={": " + FileItem.moyenTransportRet}
+                  content={": " + FileItem?.moyenTransportRet}
                 />
               </div>
             </div>
@@ -629,10 +629,10 @@ const PopupUpdate = ({ item, close, setSurvey }) => {
                 onClick={() => {
                   //console.log(item.idMission);
                   handleClick("update", item.idMission, "mission", "", {
-                    DateDebA: new Date(body2.dateDebA),
-                    DateRetA: new Date(body2.dateRetA),
-                    tDateDeb: new Date(body2.tDateDeb),
-                    tDateRet: new Date(body2.tDateRet),
+                    DateDebA: new Date(body2?.dateDebA),
+                    DateRetA: new Date(body2?.dateRetA),
+                    tDateDeb: new Date(body2?.tDateDeb),
+                    tDateRet: new Date(body2?.tDateRet),
                   });
                   handleClick("update", item, "rfm", "", { deroulement: body });
                   close();
@@ -644,10 +644,10 @@ const PopupUpdate = ({ item, close, setSurvey }) => {
                 className="send"
                 onClick={() => {
                   handleClick("update", item.idMission, "mission", "", {
-                    DateDebA: body2.dateDebA,
-                    DateRetA: body2.dateRetA,
-                    tDateDeb: body2.tDateDeb,
-                    tDateRet: body2.tDateRet,
+                    DateDebA: body2?.dateDebA,
+                    DateRetA: body2?.dateRetA,
+                    tDateDeb: body2?.tDateDeb,
+                    tDateRet: body2?.tDateRet,
                   });
                   handleClick("update", item, "rfm", "", { deroulement: body });
                   handleClick("send", item, "rfm", "");

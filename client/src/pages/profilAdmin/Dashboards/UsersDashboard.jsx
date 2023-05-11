@@ -11,6 +11,7 @@ import {
 import TableM from "./../../../components/table/TableM";
 import { useAxios } from "../../../hooks/useAxios";
 import { useSelector } from "react-redux";
+import { validateMission } from "../../../utils/formFieldsVerifications";
 const useStyles = makeStyles({
   table2: {
     borderCollapse: "separate",
@@ -32,7 +33,11 @@ const UsersDashboard = () => {
   const [planningData, setPlanningData] = useState([]);
   const [planningDates, setPlanningDates] = useState([]);
   const { callApi, error, isLoading, successMsg } = useAxios();
+  const missions = useSelector((state) => state.auth.missions);
+  const [errors, setErrors] = useState([]);
   const users = useSelector((state) => state.auth.users);
+  const currentUser = useSelector((state) => state.auth.user);
+  const [success, setSuccess] = useState(false);
   const handleFileChange = useCallback((e) => {
     const file = e.target.files[0];
     if (!file || !/\.xlsx?$/.test(file.name)) {
@@ -54,7 +59,6 @@ const UsersDashboard = () => {
       }
     };
     reader.readAsArrayBuffer(file);
-    // e.target.files[0] = null;
   }, []);
 
   useEffect(() => {
@@ -65,10 +69,10 @@ const UsersDashboard = () => {
     }
   }, [jsonData]);
 
-  useEffect(() => {
+  const handleUpload = () => {
     if (!planningData || !planningDates || !missionData) return;
     else createMissions();
-  }, [missionData, planningData, planningDates]);
+  };
 
   useEffect(() => {
     if (!planningData) return;
@@ -76,7 +80,8 @@ const UsersDashboard = () => {
   }, [planningData]);
 
   const createMissions = () => {
-    const allMissions = [];
+    let allMissions = [];
+    let errs = [];
     // loop through mission
     for (let i = 1; i < missionData.length; i++) {
       let mission = missionData[i];
@@ -123,42 +128,63 @@ const UsersDashboard = () => {
         }
 
         if (dateDeb && dateFin) {
-
-
-
           missionObject = {
-            objetMission: mission[1].trim(),
-            type: mission[2].toLowerCase().trim(),
-            pays: mission[3].toLowerCase().trim(),
-            destination: mission[4].toLowerCase().trim(),
+            objetMission: mission[1]?.trim(),
+            type: mission[2]?.toLowerCase()?.trim(),
+            pays: mission[3]?.toLowerCase()?.trim(),
+            destination: mission[4]?.toLowerCase()?.trim(),
             tDateDeb: dateDeb,
             tDateRet: dateFin,
             budget: mission[7],
             moyenTransport: mission[5]
-              .split("-")
-              .map((item) => item.toLowerCase().trim()),
+              ?.split("-")
+              .map((item) => item?.toLowerCase()?.trim()),
             moyenTransportRet: mission[6]
-              .split("-")
-              .map((item) => item.toLowerCase().trim()),
+              ?.split("-")
+              .map((item) => item?.toLowerCase()?.trim()),
             employes: employees,
-            structure: mission[8].toUpperCase().trim(),
+            structure: mission[8]?.toUpperCase()?.trim(),
           };
-          console.log(mission);
-          //verify the mission fields 
-
-
-          console.log(JSON.stringify(missionObject));
+          // console.log(missionObject);
+          //verify the mission fields
+          //each time we find errors we push to the errors array
+          let object = {
+            type: "import",
+            users,
+            missions,
+          };
+          validateMission(missionObject, currentUser, object);
+          if (
+            Object.keys(validateMission(missionObject, currentUser, object))
+              .length !== 0
+          ) {
+            errs.push([
+              ...errors,
+              validateMission(missionObject, currentUser, object),
+            ]);
+          } else allMissions.push(missionObject);
           // here we have to create missions
-          callApi("post", "/mission", missionObject);
-          console.log("mission sent");
+          // callApi("post", "/mission", missionObject);
+          // console.log("mission sent");
 
           break;
         }
       }
     }
-  };
 
-  
+    setErrors(errs);
+    if (errs.length !== 0) {
+      setSuccess(false);
+    } else {
+      console.log("jerer");
+      allMissions.map((m) => {
+        callApi("post", "/mission", m);
+      });
+      allMissions = [];
+      setErrors([]);
+      setSuccess(true);
+    }
+  };
 
   const getDay = (j, ind) => {
     // console.log(planningDates, j, ind);
@@ -247,53 +273,80 @@ const UsersDashboard = () => {
     <div className="usersDashboard" style={{ overflow: "scroll" }}>
       <div>
         <input type="file" onChange={handleFileChange} />
-
-        <div>Informations sur les missions</div>
-        <Table className={missionData.length > 0 ? classes.table2 : ""}>
-          <TableHead>
-            <TableRow>
-              {missionData[0]?.map((item, i) => (
-                <TableCell key={i} className={classes.tableCell2}>
-                  {item}
-                </TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {missionData?.slice(1).map((subArray, i) => (
-              <TableRow key={i}>
-                {subArray.map((item, j) => (
-                  <TableCell key={j} className={classes.tableCell2}>
-                    {item}
-                  </TableCell>
+        <button onClick={handleUpload}>Importer</button>
+        {success && (
+          <div className="file-success-message">
+            Chargement de données avec succés
+          </div>
+        )}
+        {errors.length > 0 && (
+          <div className="file-error-message">
+            Désolé, votre fichier de données contient des erreurs. Veuillez
+            vérifier les points suivants:
+            <ul>
+              <li>
+                Assurez-vous que tous les champs obligatoires sont remplis.
+                Certains champs peuvent manquer.{" "}
+              </li>
+              <li>
+                Vérifiez qu'aucun des missionnaires n'a déjà des missions
+                prévues à la même période. Il y a peut-être un conflit
+                d'horaire.{" "}
+              </li>
+              <li>Corrigez les erreurs et importer à nouveau le fichier.</li>
+            </ul>
+          </div>
+        )}
+        {errors.length === 0 && missionData.length > 0 && (
+          <>
+            <div>Informations sur les missions</div>
+            <Table className={missionData.length > 0 ? classes.table2 : ""}>
+              <TableHead>
+                <TableRow>
+                  {missionData[0]?.map((item, i) => (
+                    <TableCell key={i} className={classes.tableCell2}>
+                      {item}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {missionData?.slice(1).map((subArray, i) => (
+                  <TableRow key={i}>
+                    {subArray.map((item, j) => (
+                      <TableCell key={j} className={classes.tableCell2}>
+                        {item}
+                      </TableCell>
+                    ))}
+                  </TableRow>
                 ))}
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+              </TableBody>
+            </Table>
 
-        <Table className={missionData.length > 0 ? classes.table2 : ""}>
-          <TableHead>
-            <TableRow>
-              {planningData[0]?.map((item, i) => (
-                <TableCell key={i} className={classes.tableCell2}>
-                  {item}
-                </TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {planningData?.slice(1).map((subArray, i) => (
-              <TableRow key={i}>
-                {subArray.flatMap((item, j) => (
-                  <TableCell key={j} className={classes.tableCell2}>
-                    {item !== "empty" ? item : ""}
-                  </TableCell>
+            <Table className={missionData.length > 0 ? classes.table2 : ""}>
+              <TableHead>
+                <TableRow>
+                  {planningData[0]?.map((item, i) => (
+                    <TableCell key={i} className={classes.tableCell2}>
+                      {item}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {planningData?.slice(1).map((subArray, i) => (
+                  <TableRow key={i}>
+                    {subArray.flatMap((item, j) => (
+                      <TableCell key={j} className={classes.tableCell2}>
+                        {item !== "empty" ? item : ""}
+                      </TableCell>
+                    ))}
+                  </TableRow>
                 ))}
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+              </TableBody>
+            </Table>
+          </>
+        )}
       </div>
     </div>
   );
