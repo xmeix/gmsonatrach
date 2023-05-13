@@ -5,7 +5,7 @@ import Formulaire from "../../components/formulaire/Formulaire";
 import {
   MissionEntries as entries,
   userButtons as buttons,
-} from "../../data/formData"; 
+} from "../../data/formData";
 import { useSelector } from "react-redux";
 import {
   columnsMissions,
@@ -14,6 +14,7 @@ import {
   filterMissionsOptions,
   filterRFMOptions,
 } from "../../data/tableCols";
+import UploadMissions from "./UploadMissions";
 const customStyles = {
   control: (provided, state) => ({
     ...provided,
@@ -39,15 +40,6 @@ const GestionMission = () => {
     <div className="gestion">
       {/* <PageName name="gestion Missions" /> */}
       <div className="elements">
-        {currentUser.role !== "employe" && currentUser.role !== "relex" && (
-          <Formulaire
-            type="mission"
-            entries={entries}
-            buttons={buttons}
-            title="Formulaire d'ajout d'une mission"
-          />
-        )}
-
         {currentUser.role === "employe" && (
           <TableM
             title="Liste de rapports de fin de mission"
@@ -75,6 +67,20 @@ const GestionMission = () => {
           data={oms}
           colType="om"
         />
+
+        <div>
+          {currentUser.role !== "employe" && currentUser.role !== "relex" && (
+            <Formulaire
+              type="mission"
+              entries={entries}
+              buttons={buttons}
+              title="Formulaire d'ajout d'une mission"
+            />
+          )}
+          {currentUser.role !== "employe" && currentUser.role !== "relex" && (
+            <UploadMissions />
+          )}
+        </div>
       </div>
     </div>
   );

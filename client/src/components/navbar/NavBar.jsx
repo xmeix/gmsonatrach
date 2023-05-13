@@ -155,7 +155,18 @@ const NavBar = () => {
           <MenuRoundedIcon className="icon" onClick={handleMenu} />
         )}
         {isOpen && <div className="hideDiv" onClick={handleHideMenu}></div>}
-        <div className="profileTitle">{profileTitle}</div>
+        <div className="profileTitle">
+          {/* {profileTitle} :{" "} */}
+          <span
+            style={{
+              fontSize: "13px",
+              color: "var(--black)",
+              textTransform: "capitalize",
+            }}
+          >
+            {user.nom + " " + user.prenom}
+          </span>
+        </div>
         {!responsive && (
           <ul className="sublist">
             {navData.map((title, i) => (

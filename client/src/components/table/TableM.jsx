@@ -233,7 +233,7 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
                   .toLowerCase()
                   .includes(filterValue) ||
                 (item[column.id].nom + " " + item[column.id].prenom)
-                  .toString() 
+                  .toString()
                   .toLowerCase()
                   .includes(filterValue) ||
                 item[column.id].structure
@@ -550,7 +550,9 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
 
       <TableContainer
         component={Paper}
-        style={{ width: "80vw" }}
+        style={{
+          width: "80vw",
+        }}
         aria-label="simple table"
       >
         <Table className="tableContainer" stickyHeader size="small">

@@ -8,6 +8,7 @@ import {
 } from "../../data/formData";
 import { useSelector } from "react-redux";
 import { columnsDemandes, filterDBOptions } from "../../data/tableCols";
+import UploadDB from "./UploadDB";
 const GestionRelex = () => {
   const demandes = useSelector((state) => state.auth.demandes);
   const currentUser = useSelector((state) => state.auth.user);
@@ -16,14 +17,6 @@ const GestionRelex = () => {
     <div className="gestion">
       {/* <PageName name="gestion RELEX" /> */}
       <div className="elements">
-        {currentUser.role !== "relex" && (
-          <Formulaire
-            type="DB"
-            entries={entries}
-            buttons={buttons}
-            title="Formulaire de demande de billetterie"
-          />
-        )}
         <TableM
           title="Liste de demandes de billetterie"
           search={["id"]}
@@ -32,6 +25,17 @@ const GestionRelex = () => {
           data={demandesDB}
           colType="demande"
         />
+        <div>
+          {currentUser.role !== "relex" && (
+            <Formulaire
+              type="DB"
+              entries={entries}
+              buttons={buttons}
+              title="Formulaire de demande de billetterie"
+            />
+          )}
+          {currentUser.role !== "relex" && <UploadDB />}
+        </div>
       </div>
     </div>
   );

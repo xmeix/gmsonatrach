@@ -5,10 +5,12 @@ const DBSchema = new mongoose.Schema(
   {
     numSC: {
       type: Number,
+      default: "",
       //required: true,
     },
     designationSC: {
       type: String,
+      default: "",
       //required: true,
     },
     montantEngage: {
@@ -42,6 +44,7 @@ const DBSchema = new mongoose.Schema(
     },
     observation: {
       type: String,
+      default: "",
     },
     dateDepart: {
       type: Date,
@@ -57,15 +60,19 @@ const DBSchema = new mongoose.Schema(
     },
     sousSection: {
       type: String,
+      default: "",
     },
     division: {
       type: String,
+      default: "",
     },
     base: {
       type: String,
+      default: "",
     },
     gisement: {
       type: String,
+      default: "",
     },
     employes: [
       {

@@ -1,23 +1,23 @@
 export const validateMission = (mission, user, object) => {
-  console.log(mission);
+  // console.log(mission);
   const errors = {};
 
   if (!mission?.objetMission.trim()) {
     errors.objetMission = "obligatoire";
   }
-  if (mission?.budget <= 0) {
+
+  if (!mission?.budget) {
+    errors.budget = "obligatoire";
+  } else if (mission?.budget <= 0) {
     errors.budget = "le budget doit être supérieur à 0";
   }
+
   if (!mission?.structure && user.role !== "responsable") {
     errors.structure = "obligatoire";
   }
 
   if (!mission?.type) {
     errors.type = "obligatoire";
-  }
-
-  if (!mission?.budget) {
-    errors.budget = "obligatoire";
   }
 
   if (!mission?.pays) {
@@ -74,7 +74,7 @@ export const validateMission = (mission, user, object) => {
         })
         .map((f) => f);
 
-      console.log("____________________________________________________");
+      // console.log("____________________________________________________");
       // console.log(filteredMissions);
       // Vérifier si l'employé spécifié est affecté à l'une des missions filtrées
       const isEmployeeAssignedToMission = filteredMissions.some((mission) => {
@@ -83,7 +83,7 @@ export const validateMission = (mission, user, object) => {
         });
       });
 
-      console.log("isEmployeeAssignedToMission", isEmployeeAssignedToMission);
+      // console.log("isEmployeeAssignedToMission", isEmployeeAssignedToMission);
 
       if (isEmployeeAssignedToMission) {
         errors.employes =
@@ -105,4 +105,169 @@ export const verifyInclusion = (st, en, start, end) => {
   }
 
   return false;
+};
+
+export const validateDB = (db, user, object) => {
+  const errors = {};
+
+  if (!db.nature) {
+    errors.nature = "La nature de la demande est obligatoire";
+  } else if (!["aller-retour", "retour", "aller"].includes(db.nature)) {
+    errors.nature =
+      "La nature de la demande doit être 'aller-retour', 'retour' ou 'aller'";
+  }
+
+  if (!db.depart) {
+    errors.depart = "Le lieu de départ est obligatoire";
+  }
+
+  if (!db.destination) {
+    errors.destination = "Le lieu de destination est obligatoire";
+  }
+
+  if (!db.paysDestination) {
+    errors.paysDestination = "Le pays de destination est obligatoire";
+  }
+
+  if (!db.motifDep) {
+    errors.motifDep = "Le motif de la demande est obligatoire";
+  } else if (!["travail", "formation"].includes(db.motifDep)) {
+    errors.motifDep =
+      "Le motif de la demande doit être 'travail' ou 'formation'";
+  }
+
+  if (!db.dateDepart) {
+    errors.dateDepart =
+      "La date de départ est obligatoire et doit être une date valide";
+  }
+
+  if (!db.dateRetour) {
+    errors.dateRetour =
+      "La date de retour est obligatoire et doit être une date valide";
+  }
+
+  if (new Date(db.dateDepart).getTime() >= new Date(db.dateRetour).getTime()) {
+    errors.dateRetour =
+      "Les dates ne doivent pas être identiques, la date de retour doit être postérieure à la date de départ.";
+    errors.dateDepart =
+      "Les dates ne doivent pas être identiques, la date de retour doit être postérieure à la date de départ.";
+  }
+
+  if (!db.employes || db.employes.length === 0) {
+    errors.employes =
+      "Au moins un employé doit être assigné à la demande de billetterie";
+  }
+
+  if (db.montantEngage && db.montantEngage <= 0) {
+    errors.montantEngage = "Le montant engagé doit être supérieur à 0";
+  }
+
+  if (object?.type === "import") {
+    //we need to verify the employees
+    if (db.employes.length > 0) {
+      let employes = db.employes;
+      let start = new Date(db.dateDepart);
+      let end = new Date(db.dateRetour);
+
+      //verifier s'il existe deja une demande de billetterie pour la meme date
+      // date depart et de retour ,  et au moins un des employes dans db existe dans cette demande qui se trouve dans objet.demandes
+      const filteredDemandes = object.demandes
+        .filter((demande) => {
+          return verifyInclusion(
+            new Date(demande.dateDepart),
+            new Date(demande.dateRetour),
+            start,
+            end
+          );
+        })
+        .map((f) => f);
+
+      // console.log("____________________________________________________");
+      // console.log(filteredDemandes);
+      // Vérifier si l'employé spécifié est affecté à l'une des missions filtrées
+      const isEmployeeAssignedToMission = filteredDemandes.some((dem) => {
+        return dem.employes.map((employee) => {
+          employes.includes(employee);
+        });
+      });
+
+      // console.log("isEmployeeAssignedToMission", isEmployeeAssignedToMission);
+
+      if (isEmployeeAssignedToMission) {
+        errors.employes =
+          "Les employées ne doivent pas avoir des demandes entre date de début et date de fin introduites";
+      }
+    }
+  }
+
+  return errors;
+};
+
+export const verifyInclusionDB = (st, en, start, end) => {
+  if (
+    (en >= start && st <= start && en <= end) ||
+    (st >= start && en <= end && st <= end && en > start) ||
+    (st <= end && st > start && en >= end) ||
+    (st > start && en > end)
+  ) {
+    return true;
+  }
+
+  return false;
+};
+export const verifyDuplicates = (data) => {
+  const duplicates = [];
+
+  // create a copy of the data array and sort it by dateDepart
+  const sortedData = data
+    .slice()
+    .sort((a, b) => new Date(a.dateDepart) - new Date(b.dateDepart));
+
+  for (let i = 0; i < sortedData.length; i++) {
+    const { dateDepart, dateRetour, employes, index } = sortedData[i];
+
+    // find the first reservation with a dateDepart value greater than dateRetour
+    const nextIndex = sortedData.findIndex(
+      (reservation) => new Date(reservation.dateDepart) > new Date(dateRetour)
+    );
+    const endIndex = nextIndex === -1 ? sortedData.length : nextIndex;
+
+    // verify inclusion and employe overlap
+    for (let j = i + 1; j < endIndex; j++) {
+      const {
+        dateDepart: dateDepart2,
+        dateRetour: dateRetour2,
+        employes: employes2,
+        index: index2,
+      } = sortedData[j];
+
+      if (
+        verifyInclusionDB(
+          new Date(dateDepart2).getTime(),
+          new Date(dateRetour2).getTime(),
+          new Date(dateDepart).getTime(),
+          new Date(dateRetour).getTime()
+        )
+      ) {
+        if (employes.some((employe) => employes2.includes(employe))) {
+          duplicates.push("line " + index + " and line " + index2);
+          break;
+        }
+      }
+    }
+  }
+
+  return duplicates;
+};
+
+export const ExcelDateToJSDate = (excelDate) => {
+  const utcDays = Math.floor(excelDate - 25569);
+  const utcValue = utcDays * 86400;
+  const dateInfo = new Date(utcValue * 1000);
+
+  const year = dateInfo.getFullYear();
+  const month = dateInfo.getMonth() + 1;
+  const day = dateInfo.getDate();
+
+  return new Date(Date.UTC(year, month - 1, day));
 };

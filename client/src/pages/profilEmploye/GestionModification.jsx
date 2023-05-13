@@ -14,13 +14,6 @@ const GestionModification = () => {
     <div className="gestion">
       {/* <PageName name="modification" /> */}
       <div className="elements">
-        <Formulaire
-          type="DM"
-          entries={DMEntries}
-          buttons={userButtons}
-          title="Formulaire de demande de modification"
-        />
-
         <TableM
           title="Mes demandes de modification"
           search={["id", "name"]}
@@ -28,6 +21,12 @@ const GestionModification = () => {
           columns={columnsDemandes}
           filterOptions={filterDemOptions}
           colType="demande"
+        />
+        <Formulaire
+          type="DM"
+          entries={DMEntries}
+          buttons={userButtons}
+          title="Formulaire de demande de modification"
         />
       </div>
     </div>

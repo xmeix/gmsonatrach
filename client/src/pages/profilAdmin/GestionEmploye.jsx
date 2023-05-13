@@ -16,18 +16,18 @@ const GestionEmploye = () => {
     <div className="gestion">
       {/* <PageName name="gestion Employés" /> */}
       <div className="elements">
-        <Formulaire
-          type="user"
-          entries={entries}
-          buttons={buttons}
-          title="Formulaire d'ajout d'utilisateur"
-        />
         <TableM
           title="Liste des employés ajoutés"
           filterOptions={filterUserOptions}
           columns={columnsUsersEmp}
           data={usersEmp}
           colType="user"
+        />
+        <Formulaire
+          type="user"
+          entries={entries}
+          buttons={buttons}
+          title="Formulaire d'ajout d'utilisateur"
         />
       </div>
     </div>

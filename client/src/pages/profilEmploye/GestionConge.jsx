@@ -14,13 +14,6 @@ const GestionConge = () => {
     <div className="gestion">
       {/* <PageName name="Congés" /> */}
       <div className="elements">
-        <Formulaire
-          type="DC"
-          entries={DCEntries}
-          buttons={userButtons}
-          title="Formulaire de demande de congés"
-        />
-
         <TableM
           title="Mes demandes de congés"
           search={["id", "name"]}
@@ -28,6 +21,12 @@ const GestionConge = () => {
           columns={columnsDemandes}
           filterOptions={filterDemOptions}
           colType="demande"
+        />
+        <Formulaire
+          type="DC"
+          entries={DCEntries}
+          buttons={userButtons}
+          title="Formulaire de demande de congés"
         />
       </div>
     </div>

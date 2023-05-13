@@ -180,9 +180,9 @@ export const getDemandes = async (req, res) => {
 export const updateDemEtat = async (req, res) => {
   try {
     const demande = await Demande.findById(req.params.id);
-    console.log("DEMANDE__________________________________________");
-    console.log(req.body.etat);
-    console.log("______________________________________________");
+    // console.log("DEMANDE__________________________________________");
+    // console.log(req.body.etat);
+    // console.log("______________________________________________");
 
     if (demande.etat === "en-attente" && req.body.etat !== "en-attente") {
       demande.etat = req.body.etat;
@@ -193,9 +193,9 @@ export const updateDemEtat = async (req, res) => {
         demande.etat === "refusée" ? req.body.raisonRefus : demande.raisonRefus;
 
       const updatedDemande = await demande.save();
-      console.log("DEMANDE__________________________________________");
-      console.log(updatedDemande.etat);
-      console.log("______________________________________________");
+      // console.log("DEMANDE__________________________________________");
+      // console.log(updatedDemande.etat);
+      // console.log("______________________________________________");
       //________________________________________________________________
       const populatedDemande = await Demande.findById(updatedDemande.id)
         .populate("idEmetteur")
@@ -263,9 +263,9 @@ export const updateDemEtat = async (req, res) => {
       //____________________________________________________________________________________
       if (req.body.etat) {
         const updatedBy = await User.findById(req.user.id);
-        console.log("______________________________________________");
-        console.log(updatedBy);
-        console.log("______________________________________________");
+        // console.log("______________________________________________");
+        // console.log(updatedBy);
+        // console.log("______________________________________________");
         sendRequestNotification("update", {
           oldDemande: populatedDemande,
           etat: req.body.etat,
@@ -309,7 +309,7 @@ const sendRequestNotification = async (operation, body) => {
               { _id: { $ne: idEmetteur._id } },
             ],
           });
-          console.log("users ============>", users);
+          // console.log("users ============>", users);
           message = `une demande de billetterie a été créé par ${idEmetteur.nom} ${idEmetteur.prenom}`;
           await createNotification({
             users: users,

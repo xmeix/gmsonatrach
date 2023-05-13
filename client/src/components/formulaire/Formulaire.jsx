@@ -7,7 +7,10 @@ import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useRef, useState } from "react";
 import { useAxios } from "../../hooks/useAxios";
-import { validateMission } from "../../utils/formFieldsVerifications";
+import {
+  validateDB,
+  validateMission,
+} from "../../utils/formFieldsVerifications";
 const customStyles = {
   control: (provided, state) => ({
     ...provided,
@@ -41,7 +44,7 @@ const Formulaire = ({ title, entries, buttons, type }) => {
     selectInputRef.current.setValue(null);
   };
   /***----------------------------------------------------------- */
-  const missions = useSelector((state) => state.auth.missions || []);
+  const { missions, demandes } = useSelector((state) => state.auth || []);
   const users = useSelector((state) => state.auth.users);
   const [start, setStart] = useState(null);
   const [end, setEnd] = useState(null);
@@ -57,11 +60,10 @@ const Formulaire = ({ title, entries, buttons, type }) => {
             user.role === "employe" &&
             !missions.some(
               (mission) =>
-                (mission.employes.some((u) => u._id === user._id) &&
-                  (mission.etat === "en-cours" ||
-                    mission.etat === "acceptée") &&
-                  mission.tDateRet > start &&
-                  mission.tDateDeb < end )
+                mission.employes.some((u) => u._id === user._id) &&
+                (mission.etat === "en-cours" || mission.etat === "acceptée") &&
+                mission.tDateRet > start &&
+                mission.tDateDeb < end
             )
         )
         .map((user) => ({
@@ -136,7 +138,17 @@ const Formulaire = ({ title, entries, buttons, type }) => {
       case "DB":
         {
           //register(values);
-          callApi("post", "/demande/DB", values);
+          let object = {
+            type: "form",
+            users,
+            demandes: demandes.filter((d) => d.__t === "DB").map((d) => d),
+          };
+          setErrors(validateDB(values, currentUser, object));
+          if (
+            Object.keys(validateDB(values, currentUser, object)).length === 0
+          ) {
+            callApi("post", "/demande/DB", values);
+          }
         }
         break;
       case "DC":

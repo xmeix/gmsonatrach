@@ -89,17 +89,7 @@ textarea {
   background-color: var(--orange);
   color: white;
 }
-.formulaire .listTitle {
-  margin-bottom: 1.5em;
-  padding: 1em;
-  font-weight: 800;
-  text-transform: uppercase;
-  text-align: center;
-  letter-spacing: 1px;
-  width: 100%;
-  transition: all 0.3s ease-in-out;
-  border-radius: 10px;
-}
+
 
 .error-message {
   background-color: var(--error);
