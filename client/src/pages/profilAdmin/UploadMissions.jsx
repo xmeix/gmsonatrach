@@ -131,7 +131,7 @@ const UploadMissions = () => {
             users,
             missions,
           };
-          validateMission(missionObject, currentUser, object);
+          // validateMission(missionObject, currentUser, object);
           if (
             Object.keys(validateMission(missionObject, currentUser, object))
               .length !== 0
