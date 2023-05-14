@@ -89,8 +89,8 @@ export const login = async (req, res) => {
 
     res.cookie("jwt", refreshToken, {
       httpOnly: true, //accessible only by web server
-      secure: false, // should be true in production https
-      sameSite: "none", //cross-site cookie
+      secure: true, // should be true in production https
+      sameSite: "None", //cross-site cookie
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
     delete user.password;
@@ -106,7 +106,7 @@ export const logout = async (req, res) => {
   const cookies = req.cookies;
   if (!cookies?.jwt) return res.status(204).send();
 
-  res.clearCookie("jwt", { httpOnly: true, sameSite: "none", secure: false });
+  res.clearCookie("jwt", { httpOnly: true, sameSite: "None", secure: true });
   res.json({ msg: "Logged out successfully and Cookie cleared" });
 };
 

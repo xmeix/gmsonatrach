@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import "./UploadMissions.css";
 import {
   Table,
@@ -15,6 +15,7 @@ import {
   ExcelDateToJSDate,
   validateDB,
   verifyDuplicates,
+  verifyWithRD,
 } from "../../utils/formFieldsVerifications";
 
 const useStyles = makeStyles({
@@ -61,78 +62,110 @@ const UploadDB = () => {
   const { jsonData, handleFileChange, clearData } = useUpload();
   const [dbs, setDbs] = useState([]);
 
-  const handleUpload = () => {
+  const resetState = () => {
     setErrors([]);
-    const subset = jsonData
-      .slice(1)
-      .filter((row) => row.length > 0 && row[0])
-      .map((row) => row.slice(0, 19));
-    let arr = [];
-    for (let index = 0; index < subset.length; index++) {
-      const element = subset[index];
-      let n = [];
-      let j;
-      for (j = 0; j < element.length; j++) {
-        const e = element[j];
-        if (e) {
-          n.push(e);
-        } else n.push("empty");
+    setSuccess(false);
+    setDbs([]);
+  };
+  const handleUpload = () => {
+    resetState();
+    if (jsonData) {
+      const subset = jsonData
+        .slice(1)
+        .filter((row) => row.length > 0 && row[0])
+        .map((row) => row.slice(0, 19));
+      let arr = [];
+      for (let index = 0; index < subset.length; index++) {
+        const element = subset[index];
+        let n = [];
+        let j;
+        for (j = 0; j < element.length; j++) {
+          const e = element[j];
+          if (e) {
+            n.push(e);
+          } else n.push("empty");
+        }
+        arr = [...arr, n];
       }
-      arr = [...arr, n];
-    }
 
-    const data = arr.slice(1).map((e) => {
-      let dbObject = {
-        index: e[0],
-        motif: e[1] !== "empty" ? e[1] : "",
-        numSC: e[18] !== "empty" ? e[18] : "",
-        designationSC: e[17] !== "empty" ? e[17] : "",
-        montantEngage: e[16] !== "empty" ? e[16] : "",
-        nature: e[15],
-        motifDep: e[11],
-        observation: e[10] !== "empty" ? e[10] : "",
-        dateDepart: ExcelDateToJSDate(e[2]),
-        dateRetour: ExcelDateToJSDate(e[3]),
-        depart: e[14],
-        destination: e[13],
-        paysDestination: e[12],
-        direction: e[9] !== "empty" ? e[9] : "",
-        sousSection: e[8] !== "empty" ? e[8] : "",
-        division: e[7] !== "empty" ? e[7] : "",
-        base: e[6] !== "empty" ? e[6] : "",
-        gisement: e[5] !== "empty" ? e[5] : "",
-        employes: [...new Set(e[4]?.replace(/#/g, "")?.split(","))],
-      };
-      return dbObject;
-    });
-    
-    // const object = {
-    //   type: "import",
-    //   users,
-    //   demandes: demandes
-    //     .filter((d) => d.etat !== "annulée" || d.etat !== "refusée")
-    //     .map((d) => d),
-    // };
+      const data = arr.slice(1).map((e) => {
+        let dbObject = {
+          index: e[0],
+          motif: e[1] !== "empty" ? e[1] : "",
+          numSC: e[18] !== "empty" ? e[18] : "",
+          designationSC: e[17] !== "empty" ? e[17] : "",
+          montantEngage: e[16] !== "empty" ? e[16] : "",
+          nature: e[15],
+          motifDep: e[11],
+          observation: e[10] !== "empty" ? e[10] : "",
+          dateDepart: ExcelDateToJSDate(e[2]),
+          dateRetour: ExcelDateToJSDate(e[3]),
+          depart: e[14],
+          destination: e[13],
+          paysDestination: e[12],
+          direction: e[9] !== "empty" ? e[9] : "",
+          sousSection: e[8] !== "empty" ? e[8] : "",
+          division: e[7] !== "empty" ? e[7] : "",
+          base: e[6] !== "empty" ? e[6] : "",
+          gisement: e[5] !== "empty" ? e[5] : "",
+          employes: [...new Set(e[4]?.replace(/#/g, "")?.split(","))],
+        };
+        return dbObject;
+      });
 
+      console.log("_______________________________");
 
-    // const duplicateErrors = verifyDuplicates(data);
-    // const errs = [];
-    // data.flatMap((d) => {
-    //   const validationErrors = validateDB(d, user, object);
-    //   if (Object.keys(validationErrors).length !== 0) {
-    //     errs.push(validationErrors);
-    //   }
-    // });
-    // if (duplicateErrors.length > 0 || errs.length > 0) {
-    //   const errors = [...duplicateErrors, ...errs];
-    //   setErrors(errors);
-    //   setSuccess(false);
-    // } else {
-    //   data.forEach((d) => callApi("post", "/demande/DB", d));
-    //   setErrors([]);
-    //   setSuccess(true);
-    //   setDbs(arr);
-    // }
+      //first we verify missing fields from the imported data
+      let errs = [];
+      data.map((d) => {
+        const validationErrors = validateDB(d);
+        if (Object.keys(validationErrors).length !== 0) {
+          errs.push(validationErrors);
+        }
+      });
+      // console.log(errs);
+      if (errs.length > 0) {
+        setErrors(errs);
+        setSuccess(false);
+      } else if (Object.keys(verifyDuplicates(data)).length !== 0) {
+        setErrors(verifyDuplicates(data));
+        setSuccess(false);
+      } else {
+        //here we verify if theres fields errors from the db
+        // check for errors from the database
+        data.map((d) => {
+          const validationErrors = verifyWithRD(
+            d,
+            demandes.filter(
+              (d) =>
+                d.etat !== "annulée" && d.etat !== "refusée" && d.__t === "DB"
+            )
+          );
+
+          if (Object.keys(validationErrors).length !== 0) {
+            console.log("validationErrors", validationErrors);
+            errs.push(validationErrors);
+          }
+        });
+
+        // set errors and success flag based on whether there are errors
+      }
+
+      if (errs.some((e) => Object.keys(e).length !== 0)) {
+        setErrors(errs);
+        setSuccess(false);
+      } else {
+        // insert the data into the DB
+        data.forEach((d) => callApi("post", "/demande/DB", d));
+        setErrors([]);
+        setSuccess(true);
+        errs = [];
+        setDbs(arr);
+      }
+
+      console.log("errs", errs);
+      console.log("success", success);
+    } else alert("Vous n'avez pas sélectionné de fichier");
   };
 
   return (
