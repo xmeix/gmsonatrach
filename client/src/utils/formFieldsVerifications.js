@@ -162,43 +162,43 @@ export const validateDB = (db, user, object) => {
     errors.montantEngage = "Le montant engagé doit être supérieur à 0";
   }
 
-  if (object?.type === "import") {
-    //we need to verify the employees
-    if (db.employes.length > 0) {
-      let employes = db.employes;
-      let start = new Date(db.dateDepart);
-      let end = new Date(db.dateRetour);
+  // if (object?.type === "import") {
+  //   //we need to verify the employees
+  //   if (db.employes.length > 0) {
+  //     let employes = db.employes;
+  //     let start = new Date(db.dateDepart);
+  //     let end = new Date(db.dateRetour);
 
-      //verifier s'il existe deja une demande de billetterie pour la meme date
-      // date depart et de retour ,  et au moins un des employes dans db existe dans cette demande qui se trouve dans objet.demandes
-      const filteredDemandes = object.demandes
-        .filter((demande) => {
-          return verifyInclusion(
-            new Date(demande.dateDepart),
-            new Date(demande.dateRetour),
-            start,
-            end
-          );
-        })
-        .map((f) => f);
+  //     //verifier s'il existe deja une demande de billetterie pour la meme date
+  //     // date depart et de retour ,  et au moins un des employes dans db existe dans cette demande qui se trouve dans objet.demandes
+  //     const filteredDemandes = object.demandes
+  //       .filter((demande) => {
+  //         return verifyInclusion(
+  //           new Date(demande.dateDepart),
+  //           new Date(demande.dateRetour),
+  //           start,
+  //           end
+  //         );
+  //       })
+  //       .map((f) => f);
 
-      // console.log("____________________________________________________");
-      // console.log(filteredDemandes);
-      // Vérifier si l'employé spécifié est affecté à l'une des missions filtrées
-      const isEmployeeAssignedToMission = filteredDemandes.some((dem) => {
-        return dem.employes.map((employee) => {
-          employes.includes(employee);
-        });
-      });
+  //     // console.log("____________________________________________________");
+  //     // console.log(filteredDemandes);
+  //     // Vérifier si l'employé spécifié est affecté à l'une des missions filtrées
+  //     const isEmployeeAssignedToMission = filteredDemandes.some((dem) => {
+  //       return dem.employes.map((employee) => {
+  //         employes.includes(employee);
+  //       });
+  //     });
 
-      // console.log("isEmployeeAssignedToMission", isEmployeeAssignedToMission);
+  //     // console.log("isEmployeeAssignedToMission", isEmployeeAssignedToMission);
 
-      if (isEmployeeAssignedToMission) {
-        errors.employes =
-          "Les employées ne doivent pas avoir des demandes entre date de début et date de fin introduites";
-      }
-    }
-  }
+  //     if (isEmployeeAssignedToMission) {
+  //       errors.employes =
+  //         "Les employées ne doivent pas avoir des demandes entre date de début et date de fin introduites";
+  //     }
+  //   }
+  // }
 
   return errors;
 };
@@ -217,40 +217,38 @@ export const verifyInclusionDB = (st, en, start, end) => {
 };
 export const verifyDuplicates = (data) => {
   const duplicates = [];
-
-  // create a copy of the data array and sort it by dateDepart
-  const sortedData = data
-    .slice()
-    .sort((a, b) => new Date(a.dateDepart) - new Date(b.dateDepart));
-
+  
+  // create a new array of objects with necessary properties for sorting
+  const sortedData = data.map((reservation, index) => ({
+    ...reservation,
+    index,
+    dateDepart: new Date(reservation.dateDepart).getTime(),
+    dateRetour: new Date(reservation.dateRetour).getTime(),
+    employeSet: new Set(reservation.employes),
+  })).sort((a, b) => a.dateDepart - b.dateDepart);
+  
   for (let i = 0; i < sortedData.length; i++) {
-    const { dateDepart, dateRetour, employes, index } = sortedData[i];
+    const { dateDepart, dateRetour, employeSet, index } = sortedData[i];
 
     // find the first reservation with a dateDepart value greater than dateRetour
     const nextIndex = sortedData.findIndex(
-      (reservation) => new Date(reservation.dateDepart) > new Date(dateRetour)
+      (reservation) => reservation.dateDepart > dateRetour
     );
     const endIndex = nextIndex === -1 ? sortedData.length : nextIndex;
-
+    
     // verify inclusion and employe overlap
     for (let j = i + 1; j < endIndex; j++) {
       const {
         dateDepart: dateDepart2,
         dateRetour: dateRetour2,
-        employes: employes2,
+        employeSet: employeSet2,
         index: index2,
       } = sortedData[j];
 
-      if (
-        verifyInclusionDB(
-          new Date(dateDepart2).getTime(),
-          new Date(dateRetour2).getTime(),
-          new Date(dateDepart).getTime(),
-          new Date(dateRetour).getTime()
-        )
-      ) {
-        if (employes.some((employe) => employes2.includes(employe))) {
-          duplicates.push("line " + index + " and line " + index2);
+      if (verifyInclusionDB(dateDepart2, dateRetour2, dateDepart, dateRetour)) {
+        const employeOverlap = Array.from(new Set([...employeSet].filter(e => employeSet2.has(e))));
+        if (employeOverlap.length > 0) {
+          duplicates.push(`line ${index} and line ${index2}`);
           break;
         }
       }

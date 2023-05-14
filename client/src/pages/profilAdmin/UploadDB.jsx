@@ -80,55 +80,59 @@ const UploadDB = () => {
       }
       arr = [...arr, n];
     }
+
     const data = arr.slice(1).map((e) => {
-      const dbObject = {
+      let dbObject = {
         index: e[0],
-        motif: e[1] ?? "",
-        numSC: e[18] ?? "",
-        designationSC: e[17] ?? "",
-        montantEngage: e[16] ?? "",
+        motif: e[1] !== "empty" ? e[1] : "",
+        numSC: e[18] !== "empty" ? e[18] : "",
+        designationSC: e[17] !== "empty" ? e[17] : "",
+        montantEngage: e[16] !== "empty" ? e[16] : "",
         nature: e[15],
         motifDep: e[11],
-        observation: e[10] ?? "",
+        observation: e[10] !== "empty" ? e[10] : "",
         dateDepart: ExcelDateToJSDate(e[2]),
         dateRetour: ExcelDateToJSDate(e[3]),
         depart: e[14],
         destination: e[13],
         paysDestination: e[12],
-        direction: e[9] ?? "",
-        sousSection: e[8] ?? "",
-        division: e[7] ?? "",
-        base: e[6] ?? "",
-        gisement: e[5] ?? "",
+        direction: e[9] !== "empty" ? e[9] : "",
+        sousSection: e[8] !== "empty" ? e[8] : "",
+        division: e[7] !== "empty" ? e[7] : "",
+        base: e[6] !== "empty" ? e[6] : "",
+        gisement: e[5] !== "empty" ? e[5] : "",
         employes: [...new Set(e[4]?.replace(/#/g, "")?.split(","))],
       };
       return dbObject;
     });
-    const object = {
-      type: "import",
-      users,
-      demandes: demandes
-        .filter((d) => d.etat !== "annulée" || d.etat !== "refusée")
-        .map((d) => d),
-    };
-    const duplicateErrors = verifyDuplicates(data);
-    const errs = [];
-    data.flatMap((d) => {
-      const validationErrors = validateDB(d, user, object);
-      if (Object.keys(validationErrors).length !== 0) {
-        errs.push(validationErrors);
-      }
-    });
-    if (duplicateErrors.length > 0 || errs.length > 0) {
-      const errors = [...duplicateErrors, ...errs];
-      setErrors(errors);
-      setSuccess(false);
-    } else {
-      data.forEach((d) => callApi("post", "/demande/DB", d));
-      setErrors([]);
-      setSuccess(true);
-      setDbs(arr);
-    }
+    
+    // const object = {
+    //   type: "import",
+    //   users,
+    //   demandes: demandes
+    //     .filter((d) => d.etat !== "annulée" || d.etat !== "refusée")
+    //     .map((d) => d),
+    // };
+
+
+    // const duplicateErrors = verifyDuplicates(data);
+    // const errs = [];
+    // data.flatMap((d) => {
+    //   const validationErrors = validateDB(d, user, object);
+    //   if (Object.keys(validationErrors).length !== 0) {
+    //     errs.push(validationErrors);
+    //   }
+    // });
+    // if (duplicateErrors.length > 0 || errs.length > 0) {
+    //   const errors = [...duplicateErrors, ...errs];
+    //   setErrors(errors);
+    //   setSuccess(false);
+    // } else {
+    //   data.forEach((d) => callApi("post", "/demande/DB", d));
+    //   setErrors([]);
+    //   setSuccess(true);
+    //   setDbs(arr);
+    // }
   };
 
   return (
