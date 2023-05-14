@@ -257,16 +257,21 @@ export const verifyWithRD = (db, demandes) => {
       })
       .map((f) => f);
 
+    console.log(filteredDemandes);
+    console.log("employee", employes);
     // console.log("____________________________________________________");
     // console.log(filteredDemandes);
     // Vérifier si l'employé spécifié est affecté à l'une des missions filtrées
     // console.log("filteredDEMANDES: ", filteredDemandes);
     const isEmployeeAssignedAlreadyToDemand = filteredDemandes.some((dem) => {
-      return dem.employes.map((employee) => {
-        employes.includes(employee);
-      });
+      return dem.employes.some((employee) => employes.includes(employee._id));
     });
-    if (isEmployeeAssignedAlreadyToDemand) {
+
+    console.log(
+      "isEmployeeAssignedAlreadyToDemand: ",
+      isEmployeeAssignedAlreadyToDemand
+    );
+    if (isEmployeeAssignedAlreadyToDemand === true) {
       errors.employes =
         "Les employées ne doivent pas avoir des demandes entre date de début et date de fin introduites";
       return errors;
