@@ -116,14 +116,19 @@ const UploadDB = () => {
       console.log("_______________________________");
 
       //first we verify missing fields from the imported data
+      let object = {
+        user,
+        users,
+        type: "import",
+      };
       let errs = [];
       data.map((d) => {
-        const validationErrors = validateDB(d);
+        const validationErrors = validateDB(d, object);
         if (Object.keys(validationErrors).length !== 0) {
           errs.push(validationErrors);
         }
       });
-      // console.log(errs);
+      console.log(errs);
       if (errs.length > 0) {
         setErrors(errs);
         setSuccess(false);
@@ -143,7 +148,7 @@ const UploadDB = () => {
           );
 
           if (Object.keys(validationErrors).length !== 0) {
-            console.log("validationErrors", validationErrors);
+            // console.log("validationErrors", validationErrors);
             errs.push(validationErrors);
           }
         });

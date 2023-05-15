@@ -107,7 +107,7 @@ export const verifyInclusion = (st, en, start, end) => {
   return false;
 };
 
-export const validateDB = (db) => {
+export const validateDB = (db, object) => {
   const errors = {};
 
   if (!db.nature) {
@@ -168,6 +168,18 @@ export const validateDB = (db) => {
     errors.montantEngage = "Le montant engagé doit être supérieur à 0";
   }
   // console.log("errs : ", errors);
+  if (object.type === "import" && object.user.role === "responsable") {
+    // Verify if the employees in data have the same structure as the user; otherwise, set errors.employesStructure to "not the same".
+    // Get the data employes structures from the users variable using the id from data.
+
+    const hasSameStructureAndEmployee = object.users.some((u) => {
+      const employee = db.employes.find((emp) => emp === u._id);
+      return employee && employee.structure !== object.user.structure;
+    });
+    if (!hasSameStructureAndEmployee) {
+      errors.employesStructure = "not the same";
+    }
+  }
   return errors;
 };
 
