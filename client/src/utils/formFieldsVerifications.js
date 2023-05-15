@@ -304,3 +304,5 @@ export const ExcelDateToJSDate = (excelDate) => {
 
   return new Date(Date.UTC(year, month - 1, day));
 };
+
+export const validateUser = () => {};

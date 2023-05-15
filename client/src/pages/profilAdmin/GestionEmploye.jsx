@@ -8,6 +8,7 @@ import {
 } from "../../data/formData";
 import { useSelector } from "react-redux";
 import { columnsUsersEmp, filterUserOptions } from "../../data/tableCols";
+import UploadUsers from "./UploadUsers";
 const GestionEmploye = () => {
   const users = useSelector((state) => state.auth.users);
   const usersEmp = users.filter((user) => user.role !== "relex");
@@ -29,6 +30,7 @@ const GestionEmploye = () => {
           buttons={buttons}
           title="Formulaire d'ajout d'utilisateur"
         />
+        <UploadUsers />
       </div>
     </div>
   );
