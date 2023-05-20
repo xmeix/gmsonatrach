@@ -43,6 +43,13 @@ export const validateMission = (mission, user, object) => {
     errors.destination = "obligatoire";
   }
 
+  if (!mission?.moyenTransport) {
+    errors.moyenTransport = "obligatoire";
+  }
+  if (!mission?.moyenTransportRet) {
+    errors.moyenTransportRet = "obligatoire";
+  }
+
   if (
     new Date(mission?.tDateDeb).getTime() >=
     new Date(mission?.tDateRet).getTime()
@@ -305,4 +312,77 @@ export const ExcelDateToJSDate = (excelDate) => {
   return new Date(Date.UTC(year, month - 1, day));
 };
 
-export const validateUser = () => {};
+export const validateUser = (user) => {
+  const errors = {};
+
+  if (!user.nom) {
+    errors.nom = "obligatoire.";
+  }
+
+  if (!user.prenom) {
+    errors.prenom = "obligatoire.";
+  }
+
+  if (!user.fonction) {
+    errors.fonction = "obligatoire.";
+  }
+
+  if (!user.numTel) {
+    errors.numTel = "obligatoire.";
+  } else if (!/^(0)(5|6|7)[0-9]{8}$/.test(user.numTel)) {
+    errors.numTel = "Le numéro de téléphone doit être valide.";
+  }
+
+  if (!user.email) {
+    errors.email = "obligatoire.";
+  } else if (/\s/.test(user.email)) {
+    errors.email = "L'email ne doit pas contenir d'espaces.";
+  } else if (
+    !/^[a-zA-Z0-9]+([.][a-zA-Z0-9]+)*@sonatrach\.dz$/.test(user.email)
+  ) {
+    errors.email = "L'email doit être valide.";
+  }
+
+  if (!user.password) {
+    errors.password = "obligatoire.";
+  }
+  if (!user.structure) {
+    errors.structure = "obligatoire";
+  }
+
+  return errors;
+};
+
+export const checkRoles = (user, currentUser) => {
+  //from the data
+  const errors = {};
+  if (currentUser.role === "secretaire") {
+    if (!["employe"].includes(user.role)) {
+      errors.role =
+        "Seuls les employés peuvent être ajoutés par un secrétaire.";
+    }
+  } else if (currentUser.role === "responsable") {
+    if (!["employe", "secretaire"].includes(user.role)) {
+      errors.role =
+        "Seuls les employés, et les secrétaires peuvent être ajoutés par un responsable.";
+    } else if (![currentUser.structure].includes(user.structure)) {
+      errors.structure =
+        "Vous ne pouvez ajouter que des employés appartenant à la même structure.";
+    }
+  }
+
+  return errors;
+};
+
+export const checkUserRD = (user, users) => {
+  //from database
+  const errors = {};
+  //find an object within data that has the same email
+  const found = users.find((u) => u.email === user.email);
+  if (found) {
+    console.log(found);
+    errors.email = "l'un des utilisateurs existe déjà.";
+  }
+
+  return errors;
+};

@@ -214,7 +214,8 @@
   border-radius: 2px;
 }
 .popup-mission {
-  padding: 4em;
+  padding: 2em;
+  padding-top: 4em;
 }
 .popup-mission .head {
   display: flex;
@@ -232,13 +233,12 @@
   gap: 2em;
   justify-content: space-between;
   flex-wrap: wrap;
-  border: solid 1px black;
+  /* border-top: solid 1px lightgray; */
+  border-bottom: solid 1px lightgray;
+  overflow: scroll;
   padding: 1em;
 }
-.popup-mission .info * {
-  flex: 1;
-  margin-top: 0.5em;
-}
+
 .popup-mission .info .info-mission,
 .popup-mission .info .info-budget {
   text-align: left;
@@ -252,29 +252,30 @@
   flex-direction: column;
   gap: 0.5em;
 }
+
 .popup-mission .tache {
   margin: 0.5em 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
   text-align: justify;
-  gap: 3em;
-  padding: 1em;
+  gap: 2em;
+  padding: 0.5em 1.5em;
   white-space: normal;
-  border: solid 1px var(--light-gray);
+  /* border: solid 1px var(--light-gray); */
   box-shadow: 0px 1px 4px rgb(0 0 0 / 10%);
 }
 .popup-mission .tache .content {
-  font-weight: 500;
   font-size: 12px;
-  letter-spacing: 1px;
+  line-height: 18px;
 }
 .popup-mission .info-creation {
   display: flex;
   flex-direction: column;
   gap: 0.5em;
-  border: solid 1px black;
+  /* border-top: solid 1px lightgray; */
   padding: 1em;
+  overflow-x: scroll;
 }
 
 .popup-mission .info-creation .crea-container {
@@ -286,6 +287,47 @@
 
 .popup-mission .info-creation .crea-container div {
   flex: 1;
+}
+.popup-mission input {
+  /* border: none;
+  outline: none; */
+}
+.popup-mission button {
+  padding: 0.3em !important;
+  font-size: 14px !important;
+  border-radius: 30px !important;
+}
+.itemDiv {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 4em;
+  padding: 0.3em;
+}
+.itemDiv .item-label {
+  /* flex: 1; */
+  font-weight: 500;
+}
+
+.itemDiv .item-content {
+  /* flex: 2; */
+  border: solid 1px lightgray;
+  border-radius: 5px;
+  padding: 0.5em 1em;
+  position: relative; /* add a relative position to the item-content div */
+  /* width: 200px; */
+  max-width: 200px;
+  min-width: 100px;
+}
+
+.itemDiv .item-content::before {
+  content: ":";
+  position: absolute; /* set a absolute position for the pseudo-element */
+  top: 0;
+  left: -1em; /* move the pseudo-element to the left of the item-content div */
+  height: 100%;
+  width: 1em;
+  border-right: solid 1px lightgray; /* create a border on the pseudo-element */
 }
 /*---------------------------------------------------*/
 

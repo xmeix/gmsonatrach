@@ -3,7 +3,6 @@ import Checkbox from "@mui/material/Checkbox";
 import { useEffect, useState } from "react";
 import useBtn from "../../../hooks/useBtn";
 import { useSelector } from "react-redux";
-import { OmLabelLine } from "./PopupOM";
 
 const PopupMission = ({ item }) => {
   const [tasks, setTasks] = useState(item.taches);
@@ -26,6 +25,16 @@ const PopupMission = ({ item }) => {
     handleClick("check", item, "mission", "", newTasks);
     setTasks(newTasks);
   };
+
+  const ItemDiv = ({ label, content }) => {
+    return (
+      <div className="itemDiv">
+        <div className="item-label">{label}</div>
+        <div className="item-content">{content}</div>
+      </div>
+    );
+  };
+
   return (
     <div className="popup-mission">
       <div className="title">Information mission</div>
@@ -58,35 +67,30 @@ const PopupMission = ({ item }) => {
         )} */}
         </div>
       </div>
-      <div className="info">
+      <div className="info-creation">
         <div>
-          <OmLabelLine
+          <ItemDiv
             label="Date debut mission"
-            content={
-              ": " +
-              Intl.DateTimeFormat(["ban", "id"]).format(new Date(item.tDateDeb))
-            }
+            content={Intl.DateTimeFormat(["ban", "id"]).format(
+              new Date(item.tDateDeb)
+            )}
           />{" "}
-          <OmLabelLine
+          <ItemDiv
             label="Date fin mission"
-            content={
-              ": " +
-              Intl.DateTimeFormat(["ban", "id"]).format(new Date(item.tDateRet))
-            }
+            content={Intl.DateTimeFormat(["ban", "id"]).format(
+              new Date(item.tDateRet)
+            )}
           />
-          <OmLabelLine label="Structure" content={": " + item.structure} />{" "}
-          <OmLabelLine label="Type" content={": " + item.type} />{" "}
-          <OmLabelLine
-            label="Observation"
-            content={": " + (item.observation || " / ")}
-          />{" "}
+          <ItemDiv label="Structure" content={item.structure} />{" "}
+          <ItemDiv label="Type" content={item.type} />{" "}
+          <ItemDiv label="Observation" content={item.observation || " / "} />{" "}
         </div>
         <div>
-          <OmLabelLine label="Budget" content={": " + item.budget + " DA"} />{" "}
-          <OmLabelLine
-            label="Budget Consomme"
-            content={
-              ": " + item.budgetConsome === 0 ? (
+          <ItemDiv label="Budget" content={item.budget + " DA"} />{" "}
+          {item.budgetConsome === 0 ? (
+            <div className="itemDiv">
+              <div className="item-label">Budget consommé</div>
+              <div className="bgt">
                 <input
                   type="number"
                   style={{
@@ -95,11 +99,15 @@ const PopupMission = ({ item }) => {
                   }}
                   min={0}
                 />
-              ) : (
-                ": " + item.budgetConsome + " DA"
-              )
-            }
-          />
+                <button>OK</button>
+              </div>
+            </div>
+          ) : (
+            <ItemDiv
+              label="Budget Consomme"
+              content={item.budgetConsome + " DA"}
+            />
+          )}
         </div>
       </div>
 
@@ -134,53 +142,43 @@ const PopupMission = ({ item }) => {
       </div>
 
       <div className="info-creation">
-        <OmLabelLine label="Pays" content={": " + item.pays} />{" "}
-        <OmLabelLine
+        <ItemDiv label="Pays" content={item.pays} />{" "}
+        <ItemDiv
           label="Moyen de transport aller"
-          content={": " + item.moyenTransport.join(" - ")}
+          content={item.moyenTransport.join(" - ")}
         />
-        <OmLabelLine
+        <ItemDiv
           label="Moyen de transport retour"
-          content={": " + item.moyenTransportRet.join(" - ")}
+          content={item.moyenTransportRet.join(" - ")}
         />
-        <OmLabelLine label="Lieu de depart" content={": " + item.lieuDep} />
-        <OmLabelLine label="Destination" content={": " + item.destination} />
-        <OmLabelLine
-          label="Circonscription Administrative"
-          content={": " + (item.circonscriptionAdm || " / ")}
-        />
+        <ItemDiv label="Lieu de depart" content={item.lieuDep || "Alger"} />
+        <ItemDiv label="lieu de destination" content={item.destination} />
       </div>
 
       <div className="info-creation">
         <div className="crea-container">
-          <OmLabelLine
+          <ItemDiv
             label="Créé le"
-            content={
-              ": " +
-              Intl.DateTimeFormat(["ban", "id"]).format(
-                new Date(item.createdAt)
-              )
-            }
+            content={Intl.DateTimeFormat(["ban", "id"]).format(
+              new Date(item.createdAt)
+            )}
           />
-          <OmLabelLine
+          <ItemDiv
             label="par"
-            content={": " + item.createdBy.nom + " " + item.createdBy.prenom}
+            content={item.createdBy.nom + " " + item.createdBy.prenom}
           />
         </div>
 
         <div className="crea-container">
-          <OmLabelLine
+          <ItemDiv
             label="Dernière modification le"
-            content={
-              ": " +
-              Intl.DateTimeFormat(["ban", "id"]).format(
-                new Date(item.updatedAt)
-              )
-            }
+            content={Intl.DateTimeFormat(["ban", "id"]).format(
+              new Date(item.updatedAt)
+            )}
           />
-          <OmLabelLine
+          <ItemDiv
             label="par"
-            content={": " + item.updatedBy.nom + " " + item.updatedBy.prenom}
+            content={item.updatedBy.nom + " " + item.updatedBy.prenom}
           />
         </div>
       </div>

@@ -11,7 +11,11 @@ import {
 import { useSelector } from "react-redux";
 import { useUpload } from "../../hooks/useUpload";
 import { useAxios } from "../../hooks/useAxios";
-import { validateUser } from "../../utils/formFieldsVerifications";
+import {
+  checkRoles,
+  checkUserRD,
+  validateUser,
+} from "../../utils/formFieldsVerifications";
 
 const useStyles = makeStyles({
   table2: {
@@ -68,7 +72,7 @@ const UploadUsers = () => {
       const subset = jsonData
         .slice(1)
         .filter((row) => row.length > 0 && row[0])
-        .map((row) => row.slice(0, 6));
+        .map((row) => row.slice(0, 8));
       let arr = [];
       for (let index = 0; index < subset.length; index++) {
         const element = subset[index];
@@ -82,8 +86,51 @@ const UploadUsers = () => {
         }
         arr = [...arr, n];
       }
+      const data = arr.slice(1).map((e) => {
+        let dbObject = {
+          nom: e[0],
+          prenom: e[1],
+          fonction: e[2],
+          numTel: "0" + e[7],
+          email: e[3],
+          password: e[4],
+          role: e[5],
+          structure: e[6],
+        };
+        return dbObject;
+      });
 
-      console.log(subset);
+      // console.log(data);
+      let errs = [];
+      data.map((u) => {
+        const validationErrors = validateUser(u);
+
+        if (Object.keys(validationErrors).length !== 0) {
+          errs.push(validationErrors);
+        } else if (Object.keys(checkRoles(u, user)).length !== 0) {
+          errs.push(checkRoles(u, user));
+        }
+      });
+      if (errs.length > 0) {
+        setErrors(errs);
+        setSuccess(false);
+      } else {
+        data.map((u) => {
+          const validationErrors = checkUserRD(u, users);
+
+          if (Object.keys(validationErrors).length !== 0) {
+            errs.push(validationErrors);
+          }
+        });
+        if (errs.length > 0) {
+          setErrors(errs);
+          setSuccess(false);
+        } else {
+          setErrors([]);
+          setSuccess(true);
+        }
+      }
+      console.log(errs);
       setUsersData(arr);
     } else alert("Vous n'avez pas sélectionné de fichier");
   };

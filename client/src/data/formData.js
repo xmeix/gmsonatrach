@@ -1,6 +1,6 @@
-// import { useSelector } from "react-redux";
+// import { usesélectionneror } from "react-redux";
 
-// const users = useSelector((state) => state.auth.users);
+// const users = usesélectionneror((state) => state.auth.users);
 // const employeesNonMissionnaires = users.filter(
 //   (user) => user.role === "employe" && user.etat === "non-missionnaire"
 // );
@@ -8,13 +8,13 @@
 export const userButtons = [
   {
     id: 1,
-    title: "Cancel",
+    title: "Annuler",
     onClick: "",
     type: "reset",
   },
   {
     id: 2,
-    title: "Add",
+    title: "Ajouter",
     onClick: "",
     type: "submit",
   },
@@ -25,7 +25,7 @@ export const userEntries = [
     label: "Nom",
     inputType: "text",
     width: "230px",
-    placeholder: "Entrez votre nom",
+    placeholder: "entrer nom de famille",
     required: true,
   },
   {
@@ -33,7 +33,7 @@ export const userEntries = [
     label: "Prénom",
     inputType: "text",
     width: "230px",
-    placeholder: "Entrez votre prénom",
+    placeholder: "entrer prénom",
     required: true,
   },
   {
@@ -41,7 +41,7 @@ export const userEntries = [
     label: "Fonction",
     inputType: "text",
     width: "230px",
-    placeholder: "Entrez votre fonction",
+    placeholder: "entrer poste",
     required: true,
   },
   {
@@ -49,7 +49,7 @@ export const userEntries = [
     label: "Numéro de téléphone",
     inputType: "tel",
     width: "230px",
-    placeholder: "Entrez votre numéro de téléphone",
+    placeholder: "entrer numéro de téléphone",
     required: true,
   },
   {
@@ -57,7 +57,7 @@ export const userEntries = [
     label: "Email",
     inputType: "email",
     width: "230px",
-    placeholder: "Entrez votre adresse email",
+    placeholder: "entrer adresse email",
     required: true,
   },
   {
@@ -65,7 +65,7 @@ export const userEntries = [
     label: "Mot de passe",
     inputType: "password",
     width: "230px",
-    placeholder: "Entrez votre mot de passe",
+    placeholder: "entrer mot de passe",
     required: true,
   },
   {
@@ -73,7 +73,7 @@ export const userEntries = [
     label: "Rôle",
     inputType: "select",
     width: "230px",
-    placeholder: "Sélectionnez votre rôle",
+    placeholder: "sélectionner rôle",
     options: [
       { label: "Secrétaire", value: "secretaire" },
       { label: "Employé", value: "employe" },
@@ -88,7 +88,7 @@ export const userEntries = [
     label: "Structure",
     inputType: "select",
     width: "230px",
-    placeholder: "Sélectionnez votre structure",
+    placeholder: "sélectionner structure",
     options: [
       { label: "PMO", value: "PMO" },
       { label: "FIN", value: "FIN" },
@@ -110,26 +110,26 @@ export const userEntries = [
 export const DBEntries = [
   {
     id: "numSC",
-    label: "Num SC",
+    label: "Numéro sous-compte",
     inputType: "number",
     width: "230px",
-    placeholder: "Enter the SC number",
+    placeholder: "entrer numéro sous-compte",
     required: true,
   },
   {
     id: "designationSC",
-    label: "Designation SC",
+    label: "Designation sous-compte",
     inputType: "text",
     width: "230px",
-    placeholder: "Enter the SC designation",
+    placeholder: "entrer désignation sous-compte",
     required: true,
   },
   {
     id: "montantEngage",
-    label: "Montant Engage",
+    label: "Montant Engagé",
     inputType: "number",
     width: "230px",
-    placeholder: "Enter the amount engaged",
+    placeholder: "entrer le montant engagé",
     required: true,
   },
   {
@@ -137,7 +137,7 @@ export const DBEntries = [
     label: "Nature",
     inputType: "select",
     width: "230px",
-    placeholder: "Select nature",
+    placeholder: "sélectionner nature",
     options: [
       { label: "Aller-retour", value: "aller-retour" },
       { label: "Retour", value: "retour" },
@@ -148,26 +148,26 @@ export const DBEntries = [
   },
   {
     id: "depart",
-    label: "Departure",
+    label: "lieu de départ",
     inputType: "text",
     width: "230px",
-    placeholder: "Enter the departure",
+    placeholder: "entrer lieu de départ",
     required: true,
   },
   {
     id: "destination",
-    label: "Destination",
+    label: "lieu de destination",
     inputType: "text",
     width: "230px",
-    placeholder: "Enter the destination",
+    placeholder: "entrer lieu de destination",
     required: true,
   },
   {
     id: "paysDestination",
-    label: "Destination Country",
+    label: "pays de destination",
     inputType: "select",
     width: "230px",
-    placeholder: "Enter the destination country",
+    placeholder: "entrer pays de destination",
     options: [
       { label: "Afghanistan", value: "Afghanistan" },
       { label: "Åland Islands", value: "Åland Islands" },
@@ -465,10 +465,10 @@ export const DBEntries = [
   },
   {
     id: "motifDep",
-    label: "Mission",
+    label: "motif de déplacement",
     inputType: "select",
     width: "230px",
-    placeholder: "Select mission",
+    placeholder: "sélectionner motif de déplacement",
     options: [
       { label: "Mission travail", value: "travail" },
       { label: "Mission formation", value: "formation" },
@@ -478,42 +478,42 @@ export const DBEntries = [
   },
   {
     id: "observation",
-    label: "Observation",
+    label: "observation",
     inputType: "textarea",
     width: "230px",
-    placeholder: "Enter the observation",
+    placeholder: "entrer observation",
     required: true,
   },
   {
     id: "dateDepart",
-    label: "Departure Date",
+    label: "date de départ",
     inputType: "date",
     width: "230px",
-    placeholder: "Select departure date",
+    placeholder: "sélectionner date de départ",
     required: true,
   },
   {
     id: "dateRetour",
-    label: "Return Date",
+    label: "date de retour",
     inputType: "date",
     width: "230px",
-    placeholder: "Select return date",
+    placeholder: "sélectionner date de retour",
     required: true,
   },
   {
     id: "direction",
-    label: "Direction",
+    label: "direction",
     inputType: "text",
     width: "230px",
-    placeholder: "Enter the direction",
+    placeholder: "entrer direction",
     required: true,
   },
   {
     id: "sousSection",
-    label: "Sous-Section",
+    label: "sous-section",
     inputType: "text",
     width: "230px",
-    placeholder: "Enter the sub-section",
+    placeholder: "entrer sous-section",
     required: true,
   },
   {
@@ -521,7 +521,7 @@ export const DBEntries = [
     label: "Division",
     inputType: "text",
     width: "230px",
-    placeholder: "Enter the division",
+    placeholder: "entrer division",
     required: true,
   },
   {
@@ -529,7 +529,7 @@ export const DBEntries = [
     label: "Base",
     inputType: "text",
     width: "230px",
-    placeholder: "Enter the base",
+    placeholder: "entrer base",
     required: true,
   },
   {
@@ -537,15 +537,15 @@ export const DBEntries = [
     label: "Gisement",
     inputType: "text",
     width: "230px",
-    placeholder: "Enter Gisement",
+    placeholder: "entrer gisement",
     required: true,
   },
   {
     id: "employes",
-    label: "Employees",
+    label: "Employés impliqués",
     inputType: "select",
     width: "230px",
-    placeholder: "Select Employés",
+    placeholder: "sélectionner employés",
     options: [], // options will be dynamically populated based on data from the backend
     isMulti: true,
     required: true,
@@ -555,34 +555,34 @@ export const DBEntries = [
 export const DCEntries = [
   {
     id: "motif",
-    label: "Reason",
+    label: "Motif",
     inputType: "text",
     width: "230px",
-    placeholder: "Enter the reason for the request",
+    placeholder: "entrer motif",
     required: true,
   },
   {
     id: "DateDepart",
-    label: "Departure Date",
+    label: "date de départ",
     inputType: "date",
     width: "230px",
-    placeholder: "Select departure date",
+    placeholder: "sélectionner date de départ",
     required: true,
   },
   {
     id: "DateRetour",
-    label: "Return Date",
+    label: "date de retour",
     inputType: "date",
     width: "230px",
-    placeholder: "Select return date",
+    placeholder: "sélectionner date de retour",
     required: true,
   },
   {
     id: "LieuSejour",
-    label: "Stay location",
+    label: "lieu de séjour",
     inputType: "text",
     width: "230px",
-    placeholder: "Enter stay location",
+    placeholder: "entrer lieu de séjour",
     required: true,
   },
   {
@@ -590,7 +590,7 @@ export const DCEntries = [
     label: "Nature",
     inputType: "select",
     width: "230px",
-    placeholder: "Select nature",
+    placeholder: "sélectionner nature",
     options: [
       { label: "Reliquat", value: "reliquat" },
       { label: "Annuel", value: "annuel" },
@@ -606,10 +606,10 @@ export const DCEntries = [
 export const DMEntries = [
   {
     id: "motif",
-    label: "Reason",
+    label: "motif",
     inputType: "text",
     width: "230px",
-    placeholder: "Enter the reason for the request",
+    placeholder: "entrer motif",
     required: true,
   },
 ];
@@ -620,7 +620,7 @@ export const MissionEntries = [
     label: "Objet de la mission",
     inputType: "text",
     width: "230px",
-    placeholder: "Entrez l'objet de la mission",
+    placeholder: "entrer objet de la mission",
     required: true,
   },
   {
@@ -628,7 +628,7 @@ export const MissionEntries = [
     label: "Structure",
     inputType: "select",
     width: "230px",
-    placeholder: "Sélectionnez la structure",
+    placeholder: "sélectionner structure",
     options: [
       { label: "PMO", value: "PMO" },
       { label: "FIN", value: "FIN" },
@@ -650,7 +650,7 @@ export const MissionEntries = [
     label: "Type de mission",
     inputType: "select",
     width: "230px",
-    placeholder: "Sélectionnez le type de mission",
+    placeholder: "sélectionner type de mission",
     options: [
       { label: "Local", value: "local" },
       { label: "Etranger", value: "etranger" },
@@ -660,10 +660,10 @@ export const MissionEntries = [
   },
   {
     id: "budget",
-    label: "Budget",
+    label: "Budget engagé",
     inputType: "number",
     width: "230px",
-    placeholder: "Entrez le budget de la mission",
+    placeholder: "entrer budget de la mission",
     required: true,
   },
   {
@@ -671,7 +671,7 @@ export const MissionEntries = [
     label: "Pays",
     inputType: "select",
     width: "230px",
-    placeholder: "Entrez le pays de la mission",
+    placeholder: "entrer pays de destination",
     options: [
       { label: "Afghanistan", value: "Afghanistan" },
       { label: "Åland Islands", value: "Åland Islands" },
@@ -972,7 +972,7 @@ export const MissionEntries = [
   //   label: "Administrative District",
   //   inputType: "text",
   //   width: "230px",
-  //   placeholder: "Enter an administrative district value",
+  //   placeholder: "entrer an administrative district value",
   //   required: true,
   // },
 
@@ -981,32 +981,32 @@ export const MissionEntries = [
     label: "Tâches",
     inputType: "create-select",
     width: "230px",
-    placeholder: "Entrez les tâches de la mission",
+    placeholder: "entrer tâches de la mission",
     isMulti: true,
     required: false,
   },
   {
     id: "tDateDeb",
-    label: "Departure date",
+    label: "date de début mission",
     inputType: "date",
     width: "230px",
-    placeholder: "Sélectionnez la date de début de la mission",
+    placeholder: "sélectionner date début mission",
     required: true,
   },
   {
     id: "tDateRet",
-    label: "Return date",
+    label: "date de fin",
     inputType: "date",
     width: "230px",
-    placeholder: "Sélectionnez la date de début de la mission",
+    placeholder: "sélectionner date fin mission",
     required: true,
   },
   {
     id: "employes",
-    label: "Employés",
+    label: "missionnaires",
     inputType: "select",
     width: "230px",
-    placeholder: "Sélectionnez les employés pour la mission , cela change ",
+    placeholder: "sélectionner missionnaires",
     isMulti: true,
     disabled: true,
     required: true,
@@ -1016,7 +1016,7 @@ export const MissionEntries = [
     label: "lieu de départ",
     inputType: "text",
     width: "230px",
-    placeholder: "Enter the departure location",
+    placeholder: "entrer lieu de départ",
     required: false,
   },
   {
@@ -1024,15 +1024,15 @@ export const MissionEntries = [
     label: "Circonscription administrative",
     inputType: "text",
     width: "230px",
-    placeholder: "Enter the destination",
+    placeholder: "entrer lieu de destination",
     required: true,
   },
   {
     id: "moyenTransport",
-    label: "Moyen De Transport Utilisés A l'aller",
+    label: "Moyen De Transport (aller)",
     inputType: "select",
     width: "230px",
-    placeholder: "Select a means of transport",
+    placeholder: "sélectionner moyen de transport",
     options: [
       { label: "Avion", value: "avion" },
       { label: "Route", value: "route" },
@@ -1042,10 +1042,10 @@ export const MissionEntries = [
   },
   {
     id: "moyenTransportRet",
-    label: "Moyen De Transport Utilisés au retour ",
+    label: "Moyen De Transport (retour) ",
     inputType: "select",
     width: "230px",
-    placeholder: "Select a means of transport",
+    placeholder: "sélectionner moyen de transport",
     options: [
       { label: "Avion", value: "avion" },
       { label: "Route", value: "route" },
@@ -1058,7 +1058,7 @@ export const MissionEntries = [
     label: "Observation",
     inputType: "textarea",
     width: "230px",
-    placeholder: "Enter any observations",
+    placeholder: "entrer observation",
     required: false,
   },
 ];

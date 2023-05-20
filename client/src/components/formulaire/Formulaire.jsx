@@ -10,6 +10,7 @@ import { useAxios } from "../../hooks/useAxios";
 import {
   validateDB,
   validateMission,
+  validateUser,
 } from "../../utils/formFieldsVerifications";
 const customStyles = {
   control: (provided, state) => ({
@@ -114,7 +115,12 @@ const Formulaire = ({ title, entries, buttons, type }) => {
       case "user":
         {
           //register(values);
-          callApi("post", "/auth/register", values);
+
+          setErrors(validateUser(values));
+          if (Object.keys(validateUser(values)).length === 0) {
+            callApi("post", "/auth/register", values);
+            setErrors({});
+          }
         }
         break;
       case "mission":
@@ -193,10 +199,11 @@ const Formulaire = ({ title, entries, buttons, type }) => {
                   type === "user"
                 ) && <label htmlFor={entry.label}>{entry.label}</label>}
 
-              {entry.inputType !== "textArea" &&
+              {entry.inputType !== "textarea" &&
                 entry.inputType !== "select" &&
                 entry.inputType !== "create-select" && (
                   <input
+                    placeholder={entry.placeholder}
                     type={entry.inputType}
                     min={
                       (entry.inputType === "number" && "") ||
@@ -294,8 +301,9 @@ const Formulaire = ({ title, entries, buttons, type }) => {
                   />
                 )}
 
-              {entry.inputType === "textArea" && (
+              {entry.inputType === "textarea" && (
                 <textarea
+                  placeholder={entry.placeholder}
                   rows={5}
                   cols={7}
                   onChange={handleChange}
@@ -336,7 +344,7 @@ const Formulaire = ({ title, entries, buttons, type }) => {
         </div>
       )}
     </div>
-  );
+  ); 
 };
 
 export default Formulaire;

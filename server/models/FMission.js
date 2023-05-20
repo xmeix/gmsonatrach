@@ -5,7 +5,7 @@ const FMissionSchema = new mongoose.Schema(
     etat: { type: String },
     structure: { type: String },
     type: { type: String }, //local-etranger
-    country: { type: String },
+    country: { type: String }, //country destination
     departure: { type: String },
     destination: { type: String },
     mission_count: { type: Number, default: 0 },
