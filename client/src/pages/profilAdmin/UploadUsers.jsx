@@ -39,14 +39,13 @@ const ErrorMessages = ({ errors }) => (
         Assurez-vous que tous les champs obligatoires sont remplis. Certains
         champs peuvent manquer.
       </li>
-      <li>
-        Vérifiez qu'il n'y a pas déja des demandes soumises prévues à une même
-        période pour les memes employés. Il y a peut-être un conflit.
-      </li>
+      <li>Vérifiez qu'il n'y a pas déja des utilisateurs déja inscrits.</li>
       <li>Corrigez les erreurs et importer à nouveau le fichier.</li>
-      {/* {errors.map((error, index) => (
-        <li key={index}>{JSON.stringify(error)}</li>
-      ))} */}
+      {/* {[...new Set(errors.flatMap((obj) => Object.values(obj)))].map(
+        (error, index) => (
+          <li key={index}>{error}</li>
+        )
+      )} */}
     </ul>
   </div>
 );
@@ -60,7 +59,6 @@ const UploadUsers = () => {
   const [success, setSuccess] = useState(false);
   const { jsonData, handleFileChange, clearData } = useUpload();
   const [usersData, setUsersData] = useState([]);
-
   const resetState = () => {
     setErrors([]);
     setSuccess(false);
@@ -104,7 +102,7 @@ const UploadUsers = () => {
       let errs = [];
       data.map((u) => {
         const validationErrors = validateUser(u);
-
+        console.log(validationErrors);
         if (Object.keys(validationErrors).length !== 0) {
           errs.push(validationErrors);
         } else if (Object.keys(checkRoles(u, user)).length !== 0) {
@@ -126,12 +124,14 @@ const UploadUsers = () => {
           setErrors(errs);
           setSuccess(false);
         } else {
+          data.forEach((u) => callApi("post", "/auth/register", u));
           setErrors([]);
           setSuccess(true);
+          errs = [];
+          setUsersData(arr);
         }
       }
       console.log(errs);
-      setUsersData(arr);
     } else alert("Vous n'avez pas sélectionné de fichier");
   };
 
@@ -154,7 +154,7 @@ const UploadUsers = () => {
         <div className="success-message">Chargement de données avec succés</div>
       )}
       {errors.length > 0 && <ErrorMessages errors={errors} />}
-      {errors.length === 0 && usersData.length > 0 && (
+      {/* {errors.length === 0 && usersData.length > 0 && (
         <div style={{ overflow: "scroll", width: "80vw" }}>
           <Table className={usersData.length > 0 ? classes.table2 : ""}>
             <TableHead>
@@ -183,7 +183,7 @@ const UploadUsers = () => {
             </TableBody>
           </Table>
         </div>
-      )}
+      )} */}
     </div>
   );
 };

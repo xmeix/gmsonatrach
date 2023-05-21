@@ -22,7 +22,8 @@ import { freeKpis } from "../store/features/statSlice";
 import { socket } from "../App";
 
 export const useAxios = () => {
-  const isLoading = useSelector((state) => state.auth.isLoading);
+  // const isLoading = useSelector((state) => state.auth.isLoading);
+  const [isLoading, setIsLoading] = useState(false);
   const currentUser = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
   const [error, setError] = useState("");
@@ -33,7 +34,7 @@ export const useAxios = () => {
     setError("");
     setSuccessMsg("");
     dispatch(fetchStart());
-
+    setIsLoading(true);
     try {
       let response;
 
@@ -49,9 +50,8 @@ export const useAxios = () => {
         case "patch":
           console.log(url, body);
           response = await apiService.user.patch(url, body);
-          console.log(response)
+          console.log(response);
           if (url.includes("/rapportFM")) {
-            
             handleSuccess(response, "/rapportFM", body);
           } else if (url.includes("/demande")) {
             handleSuccess(response, "/demande", body);
@@ -65,6 +65,7 @@ export const useAxios = () => {
     } catch (error) {
       handleError(error);
     }
+    setIsLoading(false);
   };
   const handleSuccess = (response, url, body) => {
     dispatch(fetchEnd());

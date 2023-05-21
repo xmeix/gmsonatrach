@@ -110,7 +110,7 @@ const Formulaire = ({ title, entries, buttons, type }) => {
   /***-----------------------------------------------------------*/
   const handleSubmit = (e) => {
     e.preventDefault();
-    setSelectedRole("");
+    // setSelectedRole("");
     switch (type) {
       case "user":
         {
@@ -319,16 +319,37 @@ const Formulaire = ({ title, entries, buttons, type }) => {
       </div>
       <div className="buttons">
         {buttons.map((btn, index) => {
-          return (
-            <button
-              className="formBtn"
-              key={index}
-              onClick={handleSubmit}
-              disabled={isLoading}
-            >
-              {btn.title}
-            </button>
-          );
+          if (btn.title === "Annuler") {
+            return (
+              <button
+                className="formBtn"
+                key={index}
+                onClick={() =>
+                  resetForm(() => {
+                    const vals = {};
+                    entries.forEach((entry) => {
+                      vals[entry.id] = "";
+                    });
+                    delete vals[""]; // remove empty string key
+                    return vals;
+                  })
+                }
+                disabled={isLoading}
+              >
+                {btn.title}
+              </button>
+            );
+          } else
+            return (
+              <button
+                className="formBtn"
+                key={index}
+                onClick={handleSubmit}
+                disabled={isLoading}
+              >
+                {btn.title}
+              </button>
+            );
         })}
       </div>
       {error !== "" && (
@@ -344,7 +365,7 @@ const Formulaire = ({ title, entries, buttons, type }) => {
         </div>
       )}
     </div>
-  ); 
+  );
 };
 
 export default Formulaire;

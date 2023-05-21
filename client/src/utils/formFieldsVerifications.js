@@ -315,25 +315,25 @@ export const ExcelDateToJSDate = (excelDate) => {
 export const validateUser = (user) => {
   const errors = {};
 
-  if (!user.nom) {
+  if (!user.nom || user.nom === "empty") {
     errors.nom = "obligatoire.";
   }
 
-  if (!user.prenom) {
+  if (!user.prenom || user.prenom === "empty") {
     errors.prenom = "obligatoire.";
   }
 
-  if (!user.fonction) {
+  if (!user.fonction || user.fonction === "empty") {
     errors.fonction = "obligatoire.";
   }
 
-  if (!user.numTel) {
+  if (!user.numTel || user.numTel === "empty") {
     errors.numTel = "obligatoire.";
   } else if (!/^(0)(5|6|7)[0-9]{8}$/.test(user.numTel)) {
     errors.numTel = "Le numéro de téléphone doit être valide.";
   }
 
-  if (!user.email) {
+  if (!user.email || user.email === "empty") {
     errors.email = "obligatoire.";
   } else if (/\s/.test(user.email)) {
     errors.email = "L'email ne doit pas contenir d'espaces.";
@@ -342,11 +342,11 @@ export const validateUser = (user) => {
   ) {
     errors.email = "L'email doit être valide.";
   }
-
-  if (!user.password) {
+  console.log(user.password);
+  if (!user.password || user.password === "empty") {
     errors.password = "obligatoire.";
   }
-  if (!user.structure) {
+  if (!user.structure || user.structure === "empty") {
     errors.structure = "obligatoire";
   }
 
@@ -379,8 +379,9 @@ export const checkUserRD = (user, users) => {
   const errors = {};
   //find an object within data that has the same email
   const found = users.find((u) => u.email === user.email);
+  console.log(found);
+
   if (found) {
-    console.log(found);
     errors.email = "l'un des utilisateurs existe déjà.";
   }
 
