@@ -11,6 +11,7 @@ const PopupMission = ({ item }) => {
   const belongs = () => {
     return item.employes.some((employee) => employee._id === currentUser._id);
   };
+  const [budgetConsome, setBudgetConsomme] = useState(0);
   const handleCheck = (check, id) => {
     const newTasks = tasks.map((task) => {
       if (task._id === id) {
@@ -87,27 +88,47 @@ const PopupMission = ({ item }) => {
         </div>
         <div>
           <ItemDiv label="Budget" content={item.budget + " DA"} />{" "}
-          {item.budgetConsome === 0 ? (
-            <div className="itemDiv">
-              <div className="item-label">Budget consommé</div>
-              <div className="bgt">
-                <input
-                  type="number"
-                  style={{
-                    width: "100px",
-                    height: "10px",
-                  }}
-                  min={0}
-                />
-                <button>OK</button>
+          {item.etat === "terminée" &&
+            ["secretaire", "directeur", "responsable"].includes(
+              currentUser.role
+            ) &&
+            (item.budgetConsome === 0 || item.budgetConsome === null ? (
+              <div className="itemDiv">
+                <div className="item-label">Budget consommé</div>
+                <div className="bgt">
+                  <input
+                    type="number"
+                    style={{
+                      width: "100px",
+                      height: "10px",
+                    }}
+                    min={0}
+                    onChange={(e) => setBudgetConsomme(e.target.value)}
+                  />
+                  {["secretaire", "directeur", "responsable"].includes(
+                    currentUser.role
+                  ) && (
+                    <button
+                      onClick={() => {
+                        //handle update budget consomme
+                        if (budgetConsome) {
+                          handleClick("update", item, "mission", "", {
+                            budgetConsome: budgetConsome,
+                          });
+                        }
+                      }}
+                    >
+                      OK
+                    </button>
+                  )}
+                </div>
               </div>
-            </div>
-          ) : (
-            <ItemDiv
-              label="Budget Consomme"
-              content={item.budgetConsome + " DA"}
-            />
-          )}
+            ) : (
+              <ItemDiv
+                label="Budget Consomme"
+                content={item.budgetConsome + " DA"}
+              />
+            ))}
         </div>
       </div>
 

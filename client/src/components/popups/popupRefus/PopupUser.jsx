@@ -8,6 +8,7 @@ import {
   Radio,
   TableContainer,
 } from "@material-ui/core";
+import { useState } from "react";
 const useStyles = makeStyles({
   table2: {
     borderCollapse: "separate",
@@ -36,6 +37,17 @@ const PopupUser = ({ item }) => {
     structure,
   } = item;
 
+  const [newItem, setNewItem] = useState({
+    email,
+    fonction,
+    nom,
+    numTel,
+    prenom,
+    role,
+    structure,
+  });
+
+  console.log(newItem);
   const OmLabelLine = ({ label, content }) => (
     <div className="om-label-line">
       <div className="om-label">{label}</div>
@@ -85,7 +97,14 @@ const PopupUser = ({ item }) => {
                       {el.label}
                     </TableCell>
                     <TableCell className={classes.tableCell2}>
-                      {el.content}
+                      <input
+                        onChange={(e) => {
+                          setNewItem({
+                            ...newItem,
+                            [el.label]: e.target.value,
+                          });
+                        }}
+                      />
                     </TableCell>
                   </TableRow>
                 );
@@ -94,6 +113,7 @@ const PopupUser = ({ item }) => {
           </TableBody>
         </Table>
       </TableContainer>
+      <button>Sauvegarder</button>
     </div>
   );
 };
