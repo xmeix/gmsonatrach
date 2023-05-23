@@ -100,18 +100,18 @@
 }
 
 /*_______________________________________________________________*/
-.MuiPaper-root,
-.MuiTableContainer-root {
-  height: 300px !important;
+/* .table .MuiPaper-root,
+.table .MuiTableContainer-root {
+  height: 330px !important;
 }
-.MuiTableCell-body {
+.table .MuiTableCell-body {
   font-family: "Montserrat", sans-serif !important;
   font-weight: 500 !important;
   font-size: 12px !important;
   white-space: nowrap;
 }
-.MuiTableCell-head,
-.MuiTableCell-stickyHeader {
+.table .MuiTableCell-head,
+.table .MuiTableCell-stickyHeader {
   font-family: "Montserrat", sans-serif !important;
   font-weight: 700 !important;
   font-size: 12px !important;
@@ -119,10 +119,10 @@
   text-transform: capitalize;
 }
 
-.MuiTableRow-root {
+.table .MuiTableRow-root {
   max-height: 50px !important;
   height: 50px !important;
-}
+} */
 .table .pagination {
   margin: 0;
   float: right;

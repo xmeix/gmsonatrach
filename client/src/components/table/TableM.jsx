@@ -30,8 +30,31 @@ import usePopup from "../../hooks/usePopup";
 // import { useStyles } from "../popups/popupRefus/PopupUpdate";
 const useStyles = makeStyles({
   table: {
+    "& .MuiPaper-root, & .MuiTableContainer-root": {
+      height: "330px !important",
+      maxHeight: "330px !important",
+    },
+    "& .MuiTableCell-body": {
+      fontFamily: "Montserrat, sans-serif !important",
+      fontWeight: 500,
+      fontSize: "12px !important",
+      whiteSpace: "nowrap",
+    },
+    "& .MuiTableCell-head, & .MuiTableCell-stickyHeader": {
+      fontFamily: "Montserrat, sans-serif !important",
+      fontWeight: 700,
+      fontSize: "12px !important",
+      whiteSpace: "nowrap",
+      textTransform: "capitalize",
+    },
+    "& .MuiTableRow-root": {
+      maxHeight: "50px !important",
+      height: "50px !important",
+    },
+    tableLayout: "fixed",
     borderCollapse: "collapse",
     border: "1px solid #e0e0e0",
+    width: "100%",
   },
   tableHeader: {
     background: "#f5f5f5",
@@ -39,11 +62,15 @@ const useStyles = makeStyles({
     fontSize: 14,
     padding: "10px",
     border: "1px solid #e0e0e0",
+    // display: "flex",
   },
   tableCell: {
+    flexBasis: "30%",
     padding: "10px",
     border: "1px solid #e0e0e0",
     fontSize: 13,
+    overflow: "hidden",
+    textOverflow: "ellipsis",
   },
   tableRow: {
     "&:nth-of-type(even)": {
@@ -575,11 +602,11 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
         style={{
           width: "80vw",
         }}
-        aria-label="simple table"
+        aria-label="table"
       >
         <Table className={classes.table} stickyHeader size="small">
           <TableHead className={classes.tableHeader}>
-            <TableRow className={classes.tableRow}>
+            <TableRow className={`${classes.tableRow} trow`}>
               {columns.map((column) => (
                 <TableCell
                   className={classes.tableCell}
@@ -599,7 +626,10 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
               paginatedData?.map((item) => {
                 if (colType === "demande" || colType === "db") {
                   return (
-                    <TableRow key={uuidv4()} className={classes.tableRow}>
+                    <TableRow
+                      key={uuidv4()}
+                      className={`${classes.tableRow} trow`}
+                    >
                       {cols.map((col) => tableCell(item, col))}
                       <TableCell align="center" className={classes.tableCell}>
                         {renderConfiguration(item, item.__t.toLowerCase())}
@@ -608,7 +638,10 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
                   );
                 } else if (colType !== "demande" && colType !== "db") {
                   return (
-                    <TableRow key={uuidv4()} className={classes.tableRow}>
+                    <TableRow
+                      key={uuidv4()}
+                      className={`${classes.tableRow} trow`}
+                    >
                       {cols.map((col) => tableCell(item, col))}
                       <TableCell align="center" className={classes.tableCell}>
                         {renderConfiguration(item, colType)}
