@@ -70,7 +70,7 @@ export const columnsMissions = [
   { id: "tDateRet", label: "date fin", minWidth: "20px" },
   { id: "etat", label: "état", minWidth: "20px" },
 
-  { id: "raisonRefus", label: "Reason for refusal", minWidth: "20px" },
+  { id: "raisonRefus", label: "Raison de refus", minWidth: "20px" },
 ];
 export const filterMissionsOptions = [
   "PMO",

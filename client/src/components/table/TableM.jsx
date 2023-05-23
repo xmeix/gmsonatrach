@@ -37,15 +37,17 @@ const useStyles = makeStyles({
     "& .MuiTableCell-body": {
       fontFamily: "Montserrat, sans-serif !important",
       fontWeight: 500,
-      fontSize: "12px !important",
+      fontSize: "12px",
       whiteSpace: "nowrap",
     },
     "& .MuiTableCell-head, & .MuiTableCell-stickyHeader": {
       fontFamily: "Montserrat, sans-serif !important",
       fontWeight: 700,
-      fontSize: "12px !important",
+      fontSize: "11px !important",
       whiteSpace: "nowrap",
       textTransform: "capitalize",
+      backgroundColor: "var(--light-gray)",
+      // color: "white",
     },
     "& .MuiTableRow-root": {
       maxHeight: "50px !important",
@@ -57,12 +59,7 @@ const useStyles = makeStyles({
     width: "100%",
   },
   tableHeader: {
-    background: "#f5f5f5",
-    fontWeight: 500,
-    fontSize: 14,
-    padding: "10px",
     border: "1px solid #e0e0e0",
-    // display: "flex",
   },
   tableCell: {
     flexBasis: "30%",
@@ -72,13 +69,29 @@ const useStyles = makeStyles({
     overflow: "hidden",
     textOverflow: "ellipsis",
   },
+  lastTableCell: {
+    padding: "10px",
+    fontSize: 13,
+    width: "200px",
+    // overflow: "scroll",
+  },
   tableRow: {
     "&:nth-of-type(even)": {
-      background: "var(--blue3) !important",
+      background: "white !important",
     },
   },
   tableBody: {
     fontSize: 11,
+  },
+  title: {
+    fontWeight: 700,
+    fontSize: "18px",
+    marginBottom: "10px",
+    textTransform: "uppercase",
+    letterSpacing: "1px",
+    color: "var(--gray)",
+    paddingLeft: "1em",
+    borderLeft: "solid 4px var(--gray)",
   },
 });
 
@@ -556,10 +569,10 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
 
   return (
     <div className="table">
-      <p className="listTitle">{title ? title : "list"}</p>
+      <p className={classes.title}>{title ? title : "list"}</p>
       <form className="control">
-        <div style={{ display: "flex", alignItems: "center", gap: "1em" }}>
-          <div style={{ position: "relative" }}>
+        <div className="control-search">
+          <div style={{ position: "relative", flex: 3 }}>
             {" "}
             <InputAdornment
               position="start"
@@ -575,12 +588,24 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
               onChange={handleFilterChange}
             />
           </div>
-          <SortRoundedIcon
-            className={sortOrder.direction === "asc" ? "icon" : "icon rotate"}
-            onClick={handleSort}
-          />
+          <div
+            style={{
+              flex: 1.5,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <label>trier</label>
+            <SortRoundedIcon
+              className={
+                sortOrder.direction === "asc" ? "icon sort" : "icon sort rotate"
+              }
+              onClick={handleSort}
+            />
+          </div>
         </div>
-        <div className="countControl">{filteredData.length} items</div>
+        <div className="countControl">{filteredData.length} lignes</div>
 
         <select
           value={filterOption}
@@ -616,7 +641,7 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
                   {column.label}
                 </TableCell>
               ))}
-              <TableCell className={classes.tableCell} align="center">
+              <TableCell className={classes.lastTableCell} align="center">
                 Configuration
               </TableCell>
             </TableRow>
@@ -631,7 +656,10 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
                       className={`${classes.tableRow} trow`}
                     >
                       {cols.map((col) => tableCell(item, col))}
-                      <TableCell align="center" className={classes.tableCell}>
+                      <TableCell
+                        align="center"
+                        className={classes.lastTableCell}
+                      >
                         {renderConfiguration(item, item.__t.toLowerCase())}
                       </TableCell>
                     </TableRow>
@@ -643,7 +671,10 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
                       className={`${classes.tableRow} trow`}
                     >
                       {cols.map((col) => tableCell(item, col))}
-                      <TableCell align="center" className={classes.tableCell}>
+                      <TableCell
+                        align="center"
+                        className={classes.lastTableCell}
+                      >
                         {renderConfiguration(item, colType)}
                       </TableCell>
                     </TableRow>

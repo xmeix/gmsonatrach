@@ -140,10 +140,13 @@ select {
 .annulée,
 .annulé,
 .en-attente,
-.créé {
+.créé,
+.en-cours {
   font-family: "Montserrat", sans-serif !important;
   font-weight: 600 !important;
   font-size: 11px !important;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .acceptée,
@@ -162,6 +165,9 @@ select {
 .en-attente,
 .créé {
   color: var(--light-orange) !important;
+}
+.en-cours {
+  color: var(--orange1) !important;
 }
 
 /**_____________________________________________________________________________________*/

@@ -1,29 +1,24 @@
 .table {
-  margin-bottom: 2em;
-  padding: 0 2em;
+  /* margin-bottom: 2em; */
+  /* padding: 0 2em; */
 }
 
 .table .search {
   outline: none;
-  border: solid 1px var(--light-gray);
   border-radius: 5px;
-  padding-left: 2.5em !important;
-  padding: 5px;
+  padding: 5px 0;
   font-weight: 500;
   position: relative;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.055);
-  width: 120px;
+  width: 100%;
+  min-width: 90px;
   font-size: 13px;
+  box-shadow: 0px 1px 4px rgb(0 0 0 / 10%);
 }
-/* .table .listTitle {
-  font-weight: 800;
-  text-transform: uppercase;
-  text-align: center;
-  letter-spacing: 1px;
-} */
+
 .table .search::placeholder {
   text-transform: lowercase;
   color: var(--dark-gray);
+  padding-left: 2.5em;
 }
 
 .table .searchIcon {
@@ -40,32 +35,44 @@
 /*_________________________________________________________________________*/
 
 .table .control {
-  padding: 0.5em 1em 1em;
+  padding: 1em 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 1em;
+  /* background-color: yellow; */
 }
 
 .table .control .countControl {
   font-size: 12px;
   font-weight: 600;
-  color: var(--orange);
+  color: var(--gray);
+  flex: 1;
+  white-space: nowrap;
+}
+.table .control .control-search {
+  flex: 4;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 1em;
 }
 /*_________________________________________________________________________*/
 .table select {
-  border: none;
-  padding: 5px;
-  font-family: "Montserrat", sans-serif;
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--gray);
-  background-color: var(--white);
+  flex: 2;
+  outline: none;
+  /* border: solid 1px var(--light-gray); */
   border-radius: 5px;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.055);
-  transition: all 0.2s ease;
+  /* padding-left: 2.5em !important; */
+  padding: 5px 0;
+  font-weight: 500;
+  position: relative;
+  box-shadow: 0px 1px 4px rgb(0 0 0 / 10%);
+  border: 1px solid var(--light-gray);
+  width: 100%;
+  min-width: 90px;
+  font-size: 13px;
   text-align: center;
-  cursor: pointer;
 }
 
 .table select:focus {
@@ -99,35 +106,17 @@
   white-space: nowrap !important;
 }
 
-/*_______________________________________________________________*/
-/* .table .MuiPaper-root,
-.table .MuiTableContainer-root {
-  height: 330px !important;
-}
-.table .MuiTableCell-body {
-  font-family: "Montserrat", sans-serif !important;
+.MuiTablePagination-caption {
+  font-size: 12px !important;
   font-weight: 500 !important;
-  font-size: 12px !important;
-  white-space: nowrap;
-}
-.table .MuiTableCell-head,
-.table .MuiTableCell-stickyHeader {
-  font-family: "Montserrat", sans-serif !important;
-  font-weight: 700 !important;
-  font-size: 12px !important;
-  white-space: nowrap;
-  text-transform: capitalize;
+  color: var(--gray) !important;
 }
 
-.table .MuiTableRow-root {
-  max-height: 50px !important;
-  height: 50px !important;
-} */
-.table .pagination {
+/* .table .pagination {
   margin: 0;
   float: right;
-  font-size: 11px !important;
-}
+  font-size: 12px !important;
+} */
 
 .trow {
   transition: 0.3s ease-in-out;
@@ -157,7 +146,7 @@
   background-color: var(--white);
   padding: 0.7em 0.8em;
   border-radius: 5px;
-  margin: 0.5em;
+  /* margin: 0.5em; */
   cursor: pointer;
   text-transform: uppercase;
   font-size: 10px;
