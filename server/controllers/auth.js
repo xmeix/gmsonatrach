@@ -205,3 +205,18 @@ export const deleteUser = async (req, res) => {
     res.status(500).json({ message: "Server Error" });
   }
 };
+
+export const alterUser = async (req, res) => {
+  try {
+    const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
+    res.status(200).json({
+      updatedUser,
+      msg: "user has been updated successfully",
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server Error" });
+  }
+};

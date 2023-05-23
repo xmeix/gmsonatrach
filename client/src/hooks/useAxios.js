@@ -57,6 +57,9 @@ export const useAxios = () => {
             handleSuccess(response, "/demande", body);
           } else if (url.includes("/mission")) {
             handleSuccess(response, "/mission", body);
+          } else if (url.includes("/auth/user")) {
+            console.log("its here");
+            handleSuccess(response, "/auth/user", body);
           } else handleSuccess(response, url, body);
           break;
         default:
@@ -112,7 +115,7 @@ export const useAxios = () => {
         if (currentUser.role !== "employe" && currentUser.role !== "relex") {
           getUsers(dispatch);
         }
-        break;
+        break; 
       case "/rapportFM":
         if (currentUser.role === "employe" && !body.etat) {
           getRFMs(dispatch, 1);

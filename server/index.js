@@ -34,7 +34,6 @@ import {
   dcs,
   dms,
   missions,
-
   users,
 } from "../client/src/data/data.js";
 import { createOrUpdateFMission } from "./controllers/Kpis.js";
@@ -51,7 +50,7 @@ import { createMission } from "./controllers/mission.js";
 const toId = mongoose.Types.ObjectId;
 // Configure environment variables
 dotenv.config();
- 
+
 // Create an instance of express
 const app = express();
 
@@ -59,12 +58,12 @@ const app = express();
 app.use(express.json());
 app.use(helmet());
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
- 
+
 app.use(morgan("common"));
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(cookieParser());
-  
+
 // ____________________________________________________________________________
 // Enable CORS for API calls
 const corsOptions = {
@@ -73,7 +72,7 @@ const corsOptions = {
   methods: ["PATCH", "GET", "POST", "DELETE"],
 };
 app.use(cors(corsOptions));
- 
+
 // ____________________________________________________ ________________________
 // Set up API routes
 app.use("/auth", authRoutes);
@@ -94,6 +93,7 @@ export const io = new Server(server, {
 
 // ____________________________________________________________________________
 // Connect to the MongoDB database
+mongoose.set("strictQuery", false);
 mongoose
   .connect(process.env.MONGO_URL, {
     useNewUrlParser: true,
@@ -101,7 +101,7 @@ mongoose
   })
   .then(() => {
     console.log("Connected to MongoDB database");
-    
+
     // Start listening for HTTP requests
     server.listen(process.env.PORT || 6001, () => {
       console.log(`Server listening on port ${process.env.PORT || 6001}`);
@@ -114,19 +114,19 @@ mongoose
     // FDocument.insertMany(FRFM);
     // FDocument.insertMany(FDB);
     // FDocument.insertMany(FDC);
-    // FDocument.insertMany(FOM); 
-   
-    // DM.insertMany(dms); 
+    // FDocument.insertMany(FOM);
+
+    // DM.insertMany(dms);
     // DB.insertMany(dbs);
-    // DC.insertMany(dcs); 
- 
+    // DC.insertMany(dcs);
+
     // FMission.insertMany(Fmissions);
     // addMissionsData();
     console.log("end");
   })
   .catch((error) => {
     console.error(`Failed to connect to MongoDB database: ${error.message}`);
-  }); 
+  });
 //it works fine , just whenn we restart the server we need to refresh all the browsers
 export let connectedUsers = [];
 io.on("connection", (socket) => {

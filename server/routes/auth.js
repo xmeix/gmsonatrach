@@ -6,6 +6,7 @@ import {
   getAllUsers,
   refresh,
   deleteUser,
+  alterUser,
 } from "../controllers/auth.js";
 import { verifyToken, verifyTokenAndResponsable } from "../middleware/auth.js";
 
@@ -17,4 +18,5 @@ router.post("/login", login);
 router.post("/logout", logout);
 router.get("/refresh", refresh);
 router.delete("/user/:id", verifyToken, deleteUser);
+router.patch("/user/:id", verifyToken, alterUser);
 export default router;

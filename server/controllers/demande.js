@@ -282,6 +282,7 @@ export const updateDemEtat = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+
 const sendRequestNotification = async (operation, body) => {
   let path = "";
   let type = "";
