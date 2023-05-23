@@ -29,6 +29,10 @@ const useStyles = makeStyles({
   select: {
     // Add your select styles here
   },
+  error: {
+    color: "red",
+    fontSize: 12,
+  },
 });
 
 const PopupUser = ({ item, close }) => {
@@ -38,26 +42,17 @@ const PopupUser = ({ item, close }) => {
   const [newItem, setNewItem] = useState({});
   const [updatedItem, setUpdatedItem] = useState(item);
   const [editMode, setEditMode] = useState(false);
-
-  const OmLabelLine = ({ label, content }) => (
-    <div className="om-label-line">
-      <div className="om-label">{label}</div>
-      <div className="om-content" style={{ flex: 1 }}>
-        {content}
-      </div>
-    </div>
-  );
-
+  const [errors, setErrors] = useState({});
   const data = [
     { label: "matricule", content: `${updatedItem._id}` },
     { label: "role", content: `${updatedItem.role}` },
     { label: "etat", content: `${updatedItem.etat || "/"}` },
     { label: "nom", content: `${updatedItem.nom}` },
-    { label: "prénom", content: `${updatedItem.prenom}` },
+    { label: "prenom", content: `${updatedItem.prenom}` },
     { label: "structure", content: `${updatedItem.structure}` },
     { label: "fonction", content: `${updatedItem.fonction}` },
     { label: "email", content: `${updatedItem.email}` },
-    { label: "numero de téléphone", content: `${updatedItem.numTel}` },
+    { label: "numTel", content: `${updatedItem.numTel}` },
   ];
 
   const handleEditMode = (label) => {
@@ -99,21 +94,50 @@ const PopupUser = ({ item, close }) => {
     return false;
   });
 
-  // const handleInputChange = (label, value) => {
-  //   setNewItem({ ...newItem, [label]: value });
-  // };
   const handleInputChange = (label, value) => {
-    setNewItem((prevItem) => ({ ...prevItem, [label]: value }));
+    setNewItem({ ...newItem, [label]: value });
+    console.log(newItem);
   };
 
-  const handleOkClick = () => {
-    console.log("altering");
-    handleClick("update", item, "user", "", newItem);
-    const [[key, value]] = Object.entries(newItem);
-    console.log(key);
-    console.log(value);
-    setUpdatedItem({ ...item, [key]: value });
-    setEditMode((prev) => (prev === key ? true : key));
+  const handleOkClick = (e) => {
+    e.preventDefault();
+    if (Object.keys(newItem).length > 0) {
+      const [[key, value]] = Object.entries(newItem);
+      const errs = handleVerification(key, value);
+      //errors is an object
+      if (Object.keys(errs).length <= 0) {
+        setUpdatedItem({ ...item, [key]: value });
+        setEditMode((prev) => (prev === key ? true : key));
+        handleClick("update", item, "user", "", newItem);
+        setErrors({});
+      } else {
+        setErrors(errs);
+      }
+    }
+  };
+
+  const handleVerification = (label, content) => {
+    //check for empty fields and also if they have any special caracters
+    //if its email or numtel : verify regex
+    const errs = {};
+    //if content is empty or contains special caracters (email allowed to have @ and . other than that no) then return err
+    if (
+      content === "" ||
+      (content.match(/[^a-zA-Z0-9 ]/) &&
+        label !== "numTel" &&
+        label !== "email")
+    ) {
+      errs[label] = "Veuillez renseigner un champ valide";
+    } else if (
+      label === "email" &&
+      !/^[a-zA-Z0-9]+([.][a-zA-Z0-9]+)*@sonatrach\.dz$/.test(content)
+    ) {
+      errs.email = "L'email doit être valide.";
+    } else if (label === "numTel" && !/^(0)(5|6|7)[0-9]{8}$/.test(content)) {
+      errs.numTel = "Le numéro de téléphone doit être valide.";
+    }
+
+    return errs;
   };
 
   useEffect(() => {
@@ -137,7 +161,11 @@ const PopupUser = ({ item, close }) => {
                 return (
                   <TableRow key={i}>
                     <TableCell className={classes.tableCell2}>
-                      {el.label}
+                      {el.label === "numTel"
+                        ? "numero de téléphone"
+                        : el.label === "prenom"
+                        ? "prénom"
+                        : el.label}
                     </TableCell>
                     <TableCell className={classes.tableCell2}>
                       {el.label !== "matricule" &&
@@ -156,9 +184,14 @@ const PopupUser = ({ item, close }) => {
                                   onChange={(e) =>
                                     handleInputChange(el.label, e.target.value)
                                   }
-                                  onBlur={() => handleEditMode(false)}
+                                  // onBlur={() => handleEditMode(false)}
                                 />{" "}
-                                <button onClick={handleOkClick}>OK</button>
+                                <button onClick={handleOkClick}>OK</button>{" "}
+                                {errors[el.label] && (
+                                  <div className={classes.error}>
+                                    {errors[el.label]}
+                                  </div>
+                                )}
                               </>
                             ) : (
                               <>
@@ -179,6 +212,11 @@ const PopupUser = ({ item, close }) => {
                                   }
                                 />
                                 <button onClick={handleOkClick}>OK</button>
+                                {errors[el.label] && (
+                                  <div className={classes.error}>
+                                    {errors[el.label]}
+                                  </div>
+                                )}
                               </>
                             )
                           ) : (
