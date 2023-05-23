@@ -1,6 +1,6 @@
-// import { usesélectionneror } from "react-redux";
+// import { user } from "react-redux";
 
-// const users = usesélectionneror((state) => state.auth.users);
+// const users = user((state) => state.auth.users);
 // const employeesNonMissionnaires = users.filter(
 //   (user) => user.role === "employe" && user.etat === "non-missionnaire"
 // );
@@ -25,7 +25,7 @@ export const userEntries = [
     label: "Nom",
     inputType: "text",
     width: "230px",
-    placeholder: "entrer nom de famille",
+    placeholder: "Nom",
     required: true,
   },
   {
@@ -33,7 +33,7 @@ export const userEntries = [
     label: "Prénom",
     inputType: "text",
     width: "230px",
-    placeholder: "entrer prénom",
+    placeholder: "Prénom",
     required: true,
   },
   {
@@ -41,7 +41,7 @@ export const userEntries = [
     label: "Fonction",
     inputType: "text",
     width: "230px",
-    placeholder: "entrer poste",
+    placeholder: "ex: Ingénieur",
     required: true,
   },
   {
@@ -49,7 +49,7 @@ export const userEntries = [
     label: "Numéro de téléphone",
     inputType: "tel",
     width: "230px",
-    placeholder: "entrer numéro de téléphone",
+    placeholder: "ex: 05xxxxxx77",
     required: true,
   },
   {
@@ -57,7 +57,7 @@ export const userEntries = [
     label: "Email",
     inputType: "email",
     width: "230px",
-    placeholder: "entrer adresse email",
+    placeholder: "ex: email@sonatrach.dz",
     required: true,
   },
   {
@@ -65,7 +65,7 @@ export const userEntries = [
     label: "Mot de passe",
     inputType: "password",
     width: "230px",
-    placeholder: "entrer mot de passe",
+    placeholder: "*****",
     required: true,
   },
   {
@@ -73,7 +73,7 @@ export const userEntries = [
     label: "Rôle",
     inputType: "select",
     width: "230px",
-    placeholder: "sélectionner rôle",
+    placeholder: "ex: Employé",
     options: [
       { label: "Secrétaire", value: "secretaire" },
       { label: "Employé", value: "employe" },
@@ -88,7 +88,7 @@ export const userEntries = [
     label: "Structure",
     inputType: "select",
     width: "230px",
-    placeholder: "sélectionner structure",
+    placeholder: "ex: TECH",
     options: [
       { label: "PMO", value: "PMO" },
       { label: "FIN", value: "FIN" },
@@ -113,7 +113,7 @@ export const DBEntries = [
     label: "Numéro sous-compte",
     inputType: "number",
     width: "230px",
-    placeholder: "entrer numéro sous-compte",
+    placeholder: "ex: 21456478",
     required: true,
   },
   {
@@ -121,7 +121,7 @@ export const DBEntries = [
     label: "Designation sous-compte",
     inputType: "text",
     width: "230px",
-    placeholder: "entrer désignation sous-compte",
+    placeholder: "ex: Achat de billet",
     required: true,
   },
   {
@@ -129,7 +129,7 @@ export const DBEntries = [
     label: "Montant Engagé",
     inputType: "number",
     width: "230px",
-    placeholder: "entrer le montant engagé",
+    placeholder: "ex: 500000",
     required: true,
   },
   {
@@ -137,7 +137,7 @@ export const DBEntries = [
     label: "Nature",
     inputType: "select",
     width: "230px",
-    placeholder: "sélectionner nature",
+    placeholder: "ex: Retour",
     options: [
       { label: "Aller-retour", value: "aller-retour" },
       { label: "Retour", value: "retour" },
@@ -151,7 +151,7 @@ export const DBEntries = [
     label: "lieu de départ",
     inputType: "text",
     width: "230px",
-    placeholder: "entrer lieu de départ",
+    placeholder: "ex: Alger",
     required: true,
   },
   {
@@ -159,7 +159,7 @@ export const DBEntries = [
     label: "lieu de destination",
     inputType: "text",
     width: "230px",
-    placeholder: "entrer lieu de destination",
+    placeholder: "ex: Oran",
     required: true,
   },
   {
@@ -167,7 +167,7 @@ export const DBEntries = [
     label: "pays de destination",
     inputType: "select",
     width: "230px",
-    placeholder: "entrer pays de destination",
+    placeholder: "ex:: Algérie",
     options: [
       { label: "Afghanistan", value: "Afghanistan" },
       { label: "Åland Islands", value: "Åland Islands" },
@@ -468,7 +468,7 @@ export const DBEntries = [
     label: "motif de déplacement",
     inputType: "select",
     width: "230px",
-    placeholder: "sélectionner motif de déplacement",
+    placeholder: "ex: travail",
     options: [
       { label: "Mission travail", value: "travail" },
       { label: "Mission formation", value: "formation" },
@@ -481,7 +481,7 @@ export const DBEntries = [
     label: "observation",
     inputType: "textarea",
     width: "230px",
-    placeholder: "entrer observation",
+    placeholder: "observation",
     required: true,
   },
   {
@@ -489,7 +489,7 @@ export const DBEntries = [
     label: "date de départ",
     inputType: "date",
     width: "230px",
-    placeholder: "sélectionner date de départ",
+    placeholder: "date de départ",
     required: true,
   },
   {
@@ -497,7 +497,7 @@ export const DBEntries = [
     label: "date de retour",
     inputType: "date",
     width: "230px",
-    placeholder: "sélectionner date de retour",
+    placeholder: "date de retour",
     required: true,
   },
   {
@@ -505,7 +505,7 @@ export const DBEntries = [
     label: "direction",
     inputType: "text",
     width: "230px",
-    placeholder: "entrer direction",
+    placeholder: "ex: DC-DSI",
     required: true,
   },
   {
@@ -513,7 +513,7 @@ export const DBEntries = [
     label: "sous-section",
     inputType: "text",
     width: "230px",
-    placeholder: "entrer sous-section",
+    placeholder: "sous-section",
     required: true,
   },
   {
@@ -521,7 +521,7 @@ export const DBEntries = [
     label: "Division",
     inputType: "text",
     width: "230px",
-    placeholder: "entrer division",
+    placeholder: "division",
     required: true,
   },
   {
@@ -529,7 +529,7 @@ export const DBEntries = [
     label: "Base",
     inputType: "text",
     width: "230px",
-    placeholder: "entrer base",
+    placeholder: "base",
     required: true,
   },
   {
@@ -537,7 +537,7 @@ export const DBEntries = [
     label: "Gisement",
     inputType: "text",
     width: "230px",
-    placeholder: "entrer gisement",
+    placeholder: "gisement",
     required: true,
   },
   {
@@ -545,7 +545,7 @@ export const DBEntries = [
     label: "Employés impliqués",
     inputType: "select",
     width: "230px",
-    placeholder: "sélectionner employés",
+    placeholder: "employés",
     options: [], // options will be dynamically populated based on data from the backend
     isMulti: true,
     required: true,
@@ -558,7 +558,7 @@ export const DCEntries = [
     label: "Motif",
     inputType: "text",
     width: "230px",
-    placeholder: "entrer motif",
+    placeholder: "motif",
     required: true,
   },
   {
@@ -566,7 +566,7 @@ export const DCEntries = [
     label: "date de départ",
     inputType: "date",
     width: "230px",
-    placeholder: "sélectionner date de départ",
+    placeholder: "date de départ",
     required: true,
   },
   {
@@ -574,7 +574,7 @@ export const DCEntries = [
     label: "date de retour",
     inputType: "date",
     width: "230px",
-    placeholder: "sélectionner date de retour",
+    placeholder: "date de retour",
     required: true,
   },
   {
@@ -582,7 +582,7 @@ export const DCEntries = [
     label: "lieu de séjour",
     inputType: "text",
     width: "230px",
-    placeholder: "entrer lieu de séjour",
+    placeholder: "lieu de séjour",
     required: true,
   },
   {
@@ -590,7 +590,7 @@ export const DCEntries = [
     label: "Nature",
     inputType: "select",
     width: "230px",
-    placeholder: "sélectionner nature",
+    placeholder: "ex: annuel",
     options: [
       { label: "Reliquat", value: "reliquat" },
       { label: "Annuel", value: "annuel" },
@@ -609,7 +609,7 @@ export const DMEntries = [
     label: "motif",
     inputType: "text",
     width: "230px",
-    placeholder: "entrer motif",
+    placeholder: "motif",
     required: true,
   },
 ];
@@ -620,7 +620,7 @@ export const MissionEntries = [
     label: "Objet de la mission",
     inputType: "text",
     width: "230px",
-    placeholder: "entrer objet de la mission",
+    placeholder: "objet de la mission",
     required: true,
   },
   {
@@ -628,7 +628,7 @@ export const MissionEntries = [
     label: "Structure",
     inputType: "select",
     width: "230px",
-    placeholder: "sélectionner structure",
+    placeholder: "ex: PMO",
     options: [
       { label: "PMO", value: "PMO" },
       { label: "FIN", value: "FIN" },
@@ -646,11 +646,29 @@ export const MissionEntries = [
     required: true,
   },
   {
+    id: "taches",
+    label: "Tâches",
+    inputType: "create-select",
+    width: "230px",
+    placeholder: "ex: former une équipe",
+    isMulti: true,
+    required: false,
+  },
+
+  {
+    id: "budget",
+    label: "Budget engagé",
+    inputType: "number",
+    width: "230px",
+    placeholder: "ex: 50000",
+    required: true,
+  },
+  {
     id: "type",
     label: "Type de mission",
     inputType: "select",
     width: "230px",
-    placeholder: "sélectionner type de mission",
+    placeholder: "ex: Local",
     options: [
       { label: "Local", value: "local" },
       { label: "Etranger", value: "etranger" },
@@ -659,19 +677,11 @@ export const MissionEntries = [
     required: true,
   },
   {
-    id: "budget",
-    label: "Budget engagé",
-    inputType: "number",
-    width: "230px",
-    placeholder: "entrer budget de la mission",
-    required: true,
-  },
-  {
     id: "pays",
     label: "Pays",
     inputType: "select",
     width: "230px",
-    placeholder: "entrer pays de destination",
+    placeholder: "ex: Algérie",
     options: [
       { label: "Afghanistan", value: "Afghanistan" },
       { label: "Åland Islands", value: "Åland Islands" },
@@ -967,30 +977,13 @@ export const MissionEntries = [
     ],
     required: true,
   },
-  // {
-  //   id: "circonscriptionAdm",
-  //   label: "Administrative District",
-  //   inputType: "text",
-  //   width: "230px",
-  //   placeholder: "entrer an administrative district value",
-  //   required: true,
-  // },
 
-  {
-    id: "taches",
-    label: "Tâches",
-    inputType: "create-select",
-    width: "230px",
-    placeholder: "entrer tâches de la mission",
-    isMulti: true,
-    required: false,
-  },
   {
     id: "tDateDeb",
     label: "date de début mission",
     inputType: "date",
     width: "230px",
-    placeholder: "sélectionner date début mission",
+    placeholder: "date début mission",
     required: true,
   },
   {
@@ -998,25 +991,16 @@ export const MissionEntries = [
     label: "date de fin",
     inputType: "date",
     width: "230px",
-    placeholder: "sélectionner date fin mission",
+    placeholder: "date fin mission",
     required: true,
   },
-  {
-    id: "employes",
-    label: "missionnaires",
-    inputType: "select",
-    width: "230px",
-    placeholder: "sélectionner missionnaires",
-    isMulti: true,
-    disabled: true,
-    required: true,
-  },
+
   {
     id: "lieuDep",
     label: "lieu de départ",
     inputType: "text",
     width: "230px",
-    placeholder: "entrer lieu de départ",
+    placeholder: "ex: Alger",
     required: false,
   },
   {
@@ -1024,7 +1008,7 @@ export const MissionEntries = [
     label: "Circonscription administrative",
     inputType: "text",
     width: "230px",
-    placeholder: "entrer lieu de destination",
+    placeholder: "ex: Oran",
     required: true,
   },
   {
@@ -1032,7 +1016,7 @@ export const MissionEntries = [
     label: "Moyen De Transport (aller)",
     inputType: "select",
     width: "230px",
-    placeholder: "sélectionner moyen de transport",
+    placeholder: "ex: Avion",
     options: [
       { label: "Avion", value: "avion" },
       { label: "Route", value: "route" },
@@ -1045,7 +1029,7 @@ export const MissionEntries = [
     label: "Moyen De Transport (retour) ",
     inputType: "select",
     width: "230px",
-    placeholder: "sélectionner moyen de transport",
+    placeholder: "ex: Avion",
     options: [
       { label: "Avion", value: "avion" },
       { label: "Route", value: "route" },
@@ -1054,11 +1038,21 @@ export const MissionEntries = [
     required: false,
   },
   {
+    id: "employes",
+    label: "missionnaires",
+    inputType: "select",
+    width: "230px",
+    placeholder: "missionnaires",
+    isMulti: true,
+    disabled: true,
+    required: true,
+  },
+  {
     id: "observation",
     label: "Observation",
     inputType: "textarea",
     width: "230px",
-    placeholder: "entrer observation",
+    placeholder: "observation",
     required: false,
   },
 ];

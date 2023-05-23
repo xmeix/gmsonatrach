@@ -27,12 +27,34 @@ import {
 } from "../../data/tableBtns";
 import Popup from "../popups/Popup";
 import usePopup from "../../hooks/usePopup";
+// import { useStyles } from "../popups/popupRefus/PopupUpdate";
 const useStyles = makeStyles({
   table: {
-    border: "solid 1px var(--gray2)",
-    boxShadow: "none !important",
+    borderCollapse: "collapse",
+    border: "1px solid #e0e0e0",
+  },
+  tableHeader: {
+    background: "#f5f5f5",
+    fontWeight: 500,
+    fontSize: 14,
+    padding: "10px",
+    border: "1px solid #e0e0e0",
+  },
+  tableCell: {
+    padding: "10px",
+    border: "1px solid #e0e0e0",
+    fontSize: 13,
+  },
+  tableRow: {
+    "&:nth-of-type(even)": {
+      background: "var(--blue3) !important",
+    },
+  },
+  tableBody: {
+    fontSize: 11,
   },
 });
+
 const TableM = ({ title, filterOptions, columns, data, colType }) => {
   const classes = useStyles();
 
@@ -342,7 +364,7 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
         <TableCell
           key={uuidv4()}
           align="center"
-          className="tableColumn"
+          className={classes.tableCell}
           onClick={() => handleOnClick(item)}
         >
           {new Date(item[property]).toISOString().slice(0, 10)}
@@ -353,7 +375,7 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
         <TableCell
           key={uuidv4()}
           align="center"
-          className="tableColumn"
+          className={classes.tableCell}
           onClick={() => handleOnClick(item)}
         >
           {item.idEmetteur.nom + " " + item.idEmetteur.prenom}
@@ -364,7 +386,7 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
         <TableCell
           key={uuidv4()}
           align="center"
-          className="tableColumn"
+          className={classes.tableCell}
           onClick={() => handleOnClick(item)}
         >
           {item?.mission?.objetMission}
@@ -375,7 +397,7 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
         <TableCell
           key={uuidv4()}
           align="center"
-          className="tableColumn"
+          className={classes.tableCell}
           onClick={() => handleOnClick(item)}
         >
           {item.idEmetteur.structure}
@@ -386,7 +408,7 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
         <TableCell
           key={uuidv4()}
           align="center"
-          className="tableColumn"
+          className={classes.tableCell}
           onClick={() => handleOnClick(item)}
         >
           {item.idEmploye?.nom + " " + item.idEmploye?.prenom}
@@ -397,7 +419,7 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
         <TableCell
           key={uuidv4()}
           align="center"
-          className="tableColumn"
+          className={classes.tableCell}
           onClick={() => handleOnClick(item)}
         >
           {item.createdBy.nom + " " + item.createdBy.prenom}
@@ -408,7 +430,7 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
         <TableCell
           key={uuidv4()}
           align="center"
-          className="tableColumn"
+          className={classes.tableCell}
           onClick={() => handleOnClick(item)}
         >
           {item.mission?._id}
@@ -419,7 +441,7 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
         <TableCell
           key={uuidv4()}
           align="center"
-          className="tableColumn"
+          className={classes.tableCell}
           onClick={() => handleOnClick(item)}
         >
           {item.employe?.nom}
@@ -430,7 +452,7 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
         <TableCell
           key={uuidv4()}
           align="center"
-          className="tableColumn"
+          className={classes.tableCell}
           onClick={() => handleOnClick(item)}
         >
           {item.employe?.prenom}
@@ -441,7 +463,7 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
         <TableCell
           key={uuidv4()}
           align="center"
-          className={property === "etat" ? item.etat : "tableColumn"}
+          className={property === "etat" ? item.etat : classes.tableCell}
           onClick={() => handleOnClick(item)}
         >
           {item[property]}
@@ -555,36 +577,40 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
         }}
         aria-label="simple table"
       >
-        <Table className="tableContainer" stickyHeader size="small">
-          <TableHead>
-            <TableRow>
+        <Table className={classes.table} stickyHeader size="small">
+          <TableHead className={classes.tableHeader}>
+            <TableRow className={classes.tableRow}>
               {columns.map((column) => (
-                <TableCell className="tableRow" key={column.id} align="center">
+                <TableCell
+                  className={classes.tableCell}
+                  key={column.id}
+                  align="center"
+                >
                   {column.label}
                 </TableCell>
               ))}
-              <TableCell className="tableRow" align="center">
+              <TableCell className={classes.tableCell} align="center">
                 Configuration
               </TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>
+          <TableBody className={classes.tableBody}>
             {paginatedData.length !== 0 ? (
               paginatedData?.map((item) => {
                 if (colType === "demande" || colType === "db") {
                   return (
-                    <TableRow key={uuidv4()} className="trow">
+                    <TableRow key={uuidv4()} className={classes.tableRow}>
                       {cols.map((col) => tableCell(item, col))}
-                      <TableCell align="center" className="tableColumn">
+                      <TableCell align="center" className={classes.tableCell}>
                         {renderConfiguration(item, item.__t.toLowerCase())}
                       </TableCell>
                     </TableRow>
                   );
                 } else if (colType !== "demande" && colType !== "db") {
                   return (
-                    <TableRow key={uuidv4()} className="trow">
+                    <TableRow key={uuidv4()} className={classes.tableRow}>
                       {cols.map((col) => tableCell(item, col))}
-                      <TableCell align="center" className="tableColumn">
+                      <TableCell align="center" className={classes.tableCell}>
                         {renderConfiguration(item, colType)}
                       </TableCell>
                     </TableRow>
