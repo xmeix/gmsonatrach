@@ -14,7 +14,7 @@ export const updateRapport = async (req, res) => {
       },
       { new: true }
     );
-    const populatedRFM = await RapportFM.findById(updatedReport.id)
+    const populatedRFM = await RapportFM.findById(updatedReport._id)
       .populate("idMission")
       .populate("idEmploye");
 
@@ -61,9 +61,9 @@ const sendRFMNotification = async (body) => {
   let path = "";
   let type = "";
   let users;
-  let message; 
+  let message;
   const { rfm, etat } = body;
- 
+
   //idEmploye
   if (etat === "créé") {
     //refusé

@@ -47,6 +47,7 @@ import { verifyToken } from "./middleware/auth.js";
 import { createNotification } from "./controllers/Notification.js";
 import { createOrUpdateFDocument } from "./controllers/FilesKpis.js";
 import { createMission } from "./controllers/mission.js";
+import { generateCustomId } from "./controllers/utils.js";
 const toId = mongoose.Types.ObjectId;
 // Configure environment variables
 dotenv.config();
@@ -93,7 +94,7 @@ export const io = new Server(server, {
 
 // ____________________________________________________________________________
 // Connect to the MongoDB database
-// mongoose.set("strictQuery", false);
+mongoose.set("strictQuery", false);
 mongoose
   .connect(process.env.MONGO_URL, {
     useNewUrlParser: true,
@@ -105,7 +106,7 @@ mongoose
     // Start listening for HTTP requests
     server.listen(process.env.PORT || 6001, () => {
       console.log(`Server listening on port ${process.env.PORT || 6001}`);
-    });
+    }); 
     //ADD DATA ONE TIME ONLY
     //await mongoose.connection.db.dropDatabase(); //ATTENTION DELETES THE WHOOOLE DB
 
@@ -205,8 +206,11 @@ cron.schedule("01 21 * * *", async () => {
     //____________________________________________________________________________________
 
     for (const employeId of employeIds) {
+      
+      let customId = await generateCustomId(mission.structure, "rapportfms");
       const rfm = new RapportFM({
-        idMission: toId(mission._id),
+        _id: customId,
+        idMission: mission._id,
         idEmploye: toId(employeId),
       });
 
@@ -349,12 +353,9 @@ cron.schedule("12 11 * * *", async () => {
     const employeIds = mission.employes.map((employe) => employe._id);
 
     for (const employeId of employeIds) {
-      let customId = await generateCustomId(
-        mission.structure,
-        "rapportfms"
-      );
+      let customId = await generateCustomId(mission.structure, "rapportfms");
       const rfm = new RapportFM({
-        
+        _id: customId,
         idMission: mission._id,
         idEmploye: toId(employeId),
       });
@@ -366,16 +367,21 @@ cron.schedule("12 11 * * *", async () => {
 
   //OM
 
-  const missionsAccepted = await Mission.find({
-    etat: { $in: ["acceptée", "en-cours", "terminée"] },
-  });
+  // const missionsAccepted = await Mission.find({
+  //   etat: { $in: ["acceptée", "en-cours", "terminée"] },
+  // });
 
+  const missionsAccepted = await Mission.find({
+    etat: { $in: ["acceptée"] },
+  });
   for (const mission of missionsAccepted) {
     const employeIds = mission.employes.map((employe) => employe._id);
+    let customId = await generateCustomId(mission.structure, "ordremissions");
 
     for (const employeId of employeIds) {
       const om = new OrdreMission({
-        mission: toId(mission._id),
+        _id: customId,
+        mission: mission._id,
         employe: toId(employeId),
       });
 
