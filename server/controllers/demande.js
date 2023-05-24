@@ -6,8 +6,8 @@ import Demande from "../models/Demande.js";
 import mongoose from "mongoose";
 import Mission from "../models/Mission.js";
 import { createOrUpdateFDocument } from "./FilesKpis.js";
-import { createNotification } from "./Notification.js";
 import { generateCustomId } from "./utils.js";
+import { createNotification } from "./Notification.js";
 const toId = mongoose.Types.ObjectId;
 
 export const createDemande = async (req, res) => {
@@ -36,7 +36,6 @@ export const createDemande = async (req, res) => {
       case "DC": {
         const { motif, DateDepart, DateRetour, LieuSejour, Nature } = req.body;
         const customId = await generateCustomId(structure, "demandes");
-
         if (new Date(DateDepart).getTime() < new Date().getTime()) {
           throw new Error(
             "La date de départ doit être postérieure à la date actuelle."
@@ -50,7 +49,7 @@ export const createDemande = async (req, res) => {
         }
 
         newDemande = new DC({
-          _id: customId,
+          uid: customId,
           motif,
           DateDepart,
           DateRetour,
@@ -67,7 +66,7 @@ export const createDemande = async (req, res) => {
         const customId = await generateCustomId(structure, "demandes");
 
         newDemande = new DM({
-          _id: customId,
+          uid: customId,
           motif,
           idEmetteur: emetteur,
           idDestinataire: destinataire,
@@ -111,7 +110,7 @@ export const createDemande = async (req, res) => {
         }
 
         newDemande = new DB({
-          _id: customId,
+          uid: customId,
           motif,
           idEmetteur: emetteur,
           idDestinataire: destinataire,

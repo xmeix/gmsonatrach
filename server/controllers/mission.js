@@ -7,6 +7,7 @@ import { createOrUpdateFDocument } from "./FilesKpis.js";
 import { createOrUpdateFMission } from "./Kpis.js";
 import { createNotification } from "./Notification.js";
 import { generateCustomId } from "./utils.js";
+
 const toId = mongoose.Types.ObjectId;
 
 export const createMission = async (req, res) => {
@@ -77,7 +78,7 @@ export const createMission = async (req, res) => {
     let newId = await generateCustomId(newStructure, "missions");
 
     const mission = new Mission({
-      _id: newId,
+      uid: newId,
       objetMission: objetMission,
       structure: newStructure,
       type,
@@ -97,18 +98,15 @@ export const createMission = async (req, res) => {
       createdBy,
       updatedBy,
     });
-
     const savedMission = await mission.save();
     if (etat === "acceptée" && newEmployes.length > 0) {
       //on doit générer l'ordre de mission et rfm
       const employeIds = newEmployes.map((employe) => employe._id);
-
       for (const employeId of employeIds) {
         let customId = await generateCustomId(newStructure, "ordremissions");
-
         const om = new OrdreMission({
-          _id: customId,
-          mission: savedMission._id,
+          uid: customId,
+          mission: savedMission.id,
           employe: employeId,
         });
         await om.save();
@@ -130,6 +128,7 @@ export const createMission = async (req, res) => {
       user: userObj,
     });
     const query = {
+      uid: newId,
       objetMission: objetMission,
       structure: newStructure,
       type,
@@ -202,8 +201,7 @@ export const updateMissionEtat = async (req, res) => {
   console.log("__________________Updating___________________");
   try {
     const updatedBy = toId(req.user.id);
-    const mission = await Mission.findOne({ _id: req.params.id });
-    console.log(mission);
+    const mission = await Mission.findById(req.params.id);
     const employes = mission.employes;
     console.log("here1");
     console.log(req.body);
@@ -220,21 +218,19 @@ export const updateMissionEtat = async (req, res) => {
       if (operation === "acceptée" && employes.length > 0) {
         //on doit générer l'ordre de mission
         const employeIds = employes.map((employe) => employe._id);
-
         for (const employeId of employeIds) {
           let customId = await generateCustomId(
             mission.structure,
             "ordremissions"
           );
-
           const om = new OrdreMission({
-            _id: customId,
-            mission: req.params.id,
+            uid: customId,
+            mission: toId(req.params.id),
             employe: employeId,
           });
 
           await om.save();
-          const populatedOM = await OrdreMission.findById(om._id)
+          const populatedOM = await OrdreMission.findById(om.id)
             .populate("mission")
             .populate("employe");
 
@@ -244,7 +240,7 @@ export const updateMissionEtat = async (req, res) => {
       }
       console.log("here3");
 
-      const populatedMission = await Mission.findById(updatedMission._id)
+      const populatedMission = await Mission.findById(updatedMission.id)
         .populate("createdBy")
         .populate("updatedBy");
 

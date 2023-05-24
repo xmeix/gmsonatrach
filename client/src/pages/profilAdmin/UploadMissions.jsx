@@ -39,7 +39,7 @@ const UploadMissions = () => {
   const currentUser = useSelector((state) => state.auth.user);
   const [success, setSuccess] = useState(false);
   const { jsonData, handleFileChange } = useUpload();
-  console.log(errors);
+
   useEffect(() => {
     if (!jsonData) return;
     else {

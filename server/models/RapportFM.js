@@ -2,10 +2,6 @@ import mongoose from "mongoose";
 
 const RapportFMSchema = new mongoose.Schema(
   {
-    _id: {
-      type: String,
-      required: true,
-    },
     deroulement: [
       {
         IdDate: {

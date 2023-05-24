@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const MissionSchema = new mongoose.Schema(
   {
-    _id: {
+    uid: {
       type: String,
       required: true,
     },

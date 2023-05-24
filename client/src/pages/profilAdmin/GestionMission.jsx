@@ -63,8 +63,7 @@ const GestionMission = () => {
         <TableM
           title="Ordres de mission des employés"
           search={["id"]}
-          filterOptions={filterOMOptions}
-          columns={columnsOM}
+          filterOptions={filterOMOptions}          columns={columnsOM}
           data={oms}
           colType="om"
         />

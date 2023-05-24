@@ -11,6 +11,7 @@ export const emitData = async (link, data) => {
     io.to(socketId).emit(link, data);
   });
 };
+
 // Function to generate a custom ID
 export const generateCustomId = async (structure, collectionName) => {
   // Retrieve the counter document for the given structure and collection

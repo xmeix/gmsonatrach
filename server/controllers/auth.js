@@ -38,10 +38,9 @@ export const register = async (req, res) => {
     //   const user = await User.findOne({ email: email });
     //   if (user) throw new Error("user already exists");
     // }
-
     const customId = await generateCustomId(structure, "users");
     const newUser = new User({
-      _id: customId,
+      uid: customId,
       nom,
       prenom,
       fonction,
@@ -212,9 +211,12 @@ export const deleteUser = async (req, res) => {
 
 export const alterUser = async (req, res) => {
   try {
+    // const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, {
+    //   new: true,
+    // });
     const { structure } = req.body;
     const updateOptions = structure
-      ? { ...req.body, _id: await generateCustomId(structure, "users") }
+      ? { ...req.body, uid: await generateCustomId(structure, "users") }
       : req.body;
 
     const updatedUser = await User.findByIdAndUpdate(
@@ -224,7 +226,6 @@ export const alterUser = async (req, res) => {
         new: true,
       }
     );
-
     res.status(200).json({
       updatedUser,
       msg: "User has been updated successfully",

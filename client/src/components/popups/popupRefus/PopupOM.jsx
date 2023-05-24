@@ -10,7 +10,6 @@ export const OmLabelLine = ({ label, content }) => (
 const PopupOM = ({ item }) => {
   const {
     _id: missionId,
-
     lieuDep,
     destination,
     pays,
@@ -23,7 +22,7 @@ const PopupOM = ({ item }) => {
   const FileItem = {
     date: new Date(tDateRet).toISOString().slice(0, 10),
     year: new Date(item.createdAt).toISOString().slice(0, 4),
-    _id: item._id,
+    _id: item.uid,
     missionid: missionId,
     id: employeeId,
     nom,
@@ -31,13 +30,14 @@ const PopupOM = ({ item }) => {
     fonction,
     parcours:
       lieuDep +
-      " Alger " +
+      " Algérie " +
       destination +
       " " +
       pays +
       " " +
       lieuDep +
-      " Alger ",
+      " Algérie ",
+    objetMission,
     datedepart: new Date(tDateDeb).toISOString().slice(0, 10),
     dateretour: new Date(tDateRet).toISOString().slice(0, 10),
     moyenTransport: moyenTransport.join("-"),
@@ -61,7 +61,7 @@ const PopupOM = ({ item }) => {
               La direction projet SH-ONE{" "}
             </div>
             <div className="om-identificateur">
-              N° {item._id} /SH-ONE/
+              N° {item.uid} /SH-ONE/
               {FileItem.date}
             </div>
           </div>

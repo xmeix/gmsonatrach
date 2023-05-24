@@ -56,12 +56,10 @@ export const filterUserOptions = [
 ];
 export const columnsOM = [
   { id: "createdAt", label: "date de création", minWidth: "20px" },
-  { id: "_id", label: "ID ORDRE", minWidth: "20px" },
+  { id: "uid", label: "ID ORDRE", minWidth: "20px" },
   { id: "employe.nom", label: "Nom", minWidth: "20px" },
   { id: "employe.prenom", label: "prénom", minWidth: "20px" },
-  { id: "mission.id", label: "ID MISSION", minWidth: "20px" },
-
-  // { id: "mission.objetMission", label: "Objet mission", minWidth: "20px" },
+  { id: "mission.uid", label: "ID MISSION", minWidth: "20px" },
 ];
 export const columnsMissions = [
   { id: "createdAt", label: "date de création", minWidth: "20px" },
@@ -97,7 +95,6 @@ export const filterMissionsOptions = [
   "annulée",
   "terminée",
 ];
-
 export const filterOMOptions = [
   "PMO",
   "FIN",

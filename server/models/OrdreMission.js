@@ -2,12 +2,12 @@ import mongoose from "mongoose";
 
 const OrdreMissionSchema = new mongoose.Schema(
   {
-    _id: {
+    uid: {
       type: String,
       required: true,
     },
     mission: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "Mission",
     },
     employe: {

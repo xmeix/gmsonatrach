@@ -48,9 +48,9 @@ export const useAxios = () => {
           handleSuccess(response, "/auth/user");
           break;
         case "patch":
-          // console.log(url, body);
+          console.log(url, body);
           response = await apiService.user.patch(url, body);
-          // console.log(response);
+          console.log(response);
           if (url.includes("/rapportFM")) {
             handleSuccess(response, "/rapportFM", body);
           } else if (url.includes("/demande")) {
@@ -58,7 +58,7 @@ export const useAxios = () => {
           } else if (url.includes("/mission")) {
             handleSuccess(response, "/mission", body);
           } else if (url.includes("/auth/user")) {
-            // console.log("its here");
+            console.log("its here");
             handleSuccess(response, "/auth/user", body);
           } else handleSuccess(response, url, body);
           break;
