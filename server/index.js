@@ -337,16 +337,25 @@ cron.schedule("12 11 * * *", async () => {
   //creation auto des RFM + OM
   console.log("starting");
   //RFM
+  // const missionsEnCours = await Mission.find({
+  //   etat: { $in: ["en-cours", "terminée"] },
+  // });
+
   const missionsEnCours = await Mission.find({
-    etat: { $in: ["en-cours", "terminée"] },
+    etat: { $in: ["en-cours"] },
   });
 
   for (const mission of missionsEnCours) {
     const employeIds = mission.employes.map((employe) => employe._id);
 
     for (const employeId of employeIds) {
+      let customId = await generateCustomId(
+        mission.structure,
+        "rapportfms"
+      );
       const rfm = new RapportFM({
-        idMission: toId(mission._id),
+        
+        idMission: mission._id,
         idEmploye: toId(employeId),
       });
 
