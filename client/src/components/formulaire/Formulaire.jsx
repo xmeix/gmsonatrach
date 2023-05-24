@@ -117,6 +117,7 @@ const Formulaire = ({ title, entries, buttons, type }) => {
           //register(values);
 
           setErrors(validateUser(values));
+          console.log(values);
           if (Object.keys(validateUser(values)).length === 0) {
             callApi("post", "/auth/register", values);
             setErrors({});

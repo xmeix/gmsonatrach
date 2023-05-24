@@ -93,7 +93,7 @@ export const io = new Server(server, {
 
 // ____________________________________________________________________________
 // Connect to the MongoDB database
-mongoose.set("strictQuery", false);
+// mongoose.set("strictQuery", false);
 mongoose
   .connect(process.env.MONGO_URL, {
     useNewUrlParser: true,

@@ -3,6 +3,7 @@ import { generateJWT } from "../middleware/auth.js";
 import User from "../models/User.js";
 import jwt from "jsonwebtoken";
 import { io } from "../index.js";
+import { generateCustomId } from "./utils.js";
 
 /** REGISTER USER */
 export const register = async (req, res) => {
@@ -20,24 +21,27 @@ export const register = async (req, res) => {
     } = req.body;
     const salt = await bcrypt.genSalt();
     const passwordHash = await bcrypt.hash(password, salt);
-    const numTelRegex = /^(0)(5|6|7)[0-9]{8}$/;
-    if (
-      nom === "" ||
-      prenom === "" ||
-      fonction === "" ||
-      numTel === "" ||
-      email === "" ||
-      password === "" ||
-      structure === ""
-    )
-      throw new Error("empty fields");
-    else if (!numTelRegex.test(numTel)) {
-      throw new Error("Invalid phone number");
-    } else {
-      const user = await User.findOne({ email: email });
-      if (user) throw new Error("user already exists");
-    }
+    // const numTelRegex = /^(0)(5|6|7)[0-9]{8}$/;
+    // if (
+    //   nom === "" ||
+    //   prenom === "" ||
+    //   fonction === "" ||
+    //   numTel === "" ||
+    //   email === "" ||
+    //   password === "" ||
+    //   structure === ""
+    // )
+    //   throw new Error("empty fields");
+    // else if (!numTelRegex.test(numTel)) {
+    //   throw new Error("Invalid phone number");
+    // } else {
+    //   const user = await User.findOne({ email: email });
+    //   if (user) throw new Error("user already exists");
+    // }
+
+    const customId = await generateCustomId(structure, "users");
     const newUser = new User({
+      _id: customId,
       nom,
       prenom,
       fonction,
@@ -208,12 +212,22 @@ export const deleteUser = async (req, res) => {
 
 export const alterUser = async (req, res) => {
   try {
-    const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-    });
+    const { structure } = req.body;
+    const updateOptions = structure
+      ? { ...req.body, _id: await generateCustomId(structure, "users") }
+      : req.body;
+
+    const updatedUser = await User.findByIdAndUpdate(
+      req.params.id,
+      updateOptions,
+      {
+        new: true,
+      }
+    );
+
     res.status(200).json({
       updatedUser,
-      msg: "user has been updated successfully",
+      msg: "User has been updated successfully",
     });
   } catch (error) {
     console.error(error);

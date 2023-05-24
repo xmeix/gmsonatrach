@@ -367,7 +367,7 @@ const PopupDB = ({ item }) => {
             <TableBody>
               {employes.map((emp, i) => (
                 <TableRow key={i}>
-                  <TableCell className={classes.tableCell}>{i}</TableCell>
+                  <TableCell className={classes.tableCell}>{emp._id}</TableCell>
                   <TableCell className={classes.tableCell}>
                     {emp.nom + " " + emp.prenom}
                   </TableCell>

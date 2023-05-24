@@ -257,7 +257,9 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
     if (!hasFilter) {
       return data;
     }
+
     const trimmedFilter = filter.trim(); // remove leading/trailing spaces
+    // console.log(trimmedFilter);
     return data.filter((item) => {
       let result = true;
       if (trimmedFilter) {
@@ -268,15 +270,18 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
           }
           let cellValue;
           if (
-            item[column.id] === "createdBy" ||
-            item[column.id] === "tDateDeb" ||
-            item[column.id] === "tDateRet"
+            item[column.id] !== "createdBy" &&
+            item[column.id] !== "tDateDeb" &&
+            item[column.id] !== "tDateRet"
           ) {
-            cellValue = item[column.id];
-          } else {
             cellValue = item[column.id].toString().toLowerCase();
+          } else {
+            cellValue = item[column.id];
           }
           const filterValue = trimmedFilter.toLowerCase();
+          console.log(filterValue);
+          console.log(cellValue);
+          console.log(column.id);
           return (
             cellValue.includes(filterValue) ||
             ((column.id === "idEmetteur" ||
@@ -325,19 +330,22 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
             (item["employe"]?.nom + " " + item["employe"]?.prenom)
               .toString()
               .toLowerCase()
-              .includes(filterValue)
+              .includes(filterValue) ||
+            item["_id"]?.toString().toLowerCase().includes(filterValue)
           );
         });
       }
+      // console.log(filterOption);
       if (filterOption) {
         result =
-          result &&
-          (item?.__t === filterOption.toString() ||
-            item?.etat === filterOption.toString() ||
-            item?.structure === filterOption.toString() ||
-            item?.role === filterOption.toString() ||
-            item?.moyenTransport === filterOption.toString() ||
-            item?.type === filterOption.toString());
+          (result &&
+            (item?.__t === filterOption.toString() ||
+              item?.etat === filterOption.toString() ||
+              item?.structure === filterOption.toString() ||
+              item?.role === filterOption.toString() ||
+              item?.moyenTransport === filterOption.toString() ||
+              item?.type === filterOption.toString())) ||
+          item?.mission?.structure === filterOption.toString();
       }
       return result;
     });
@@ -548,10 +556,10 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
       case "om":
         setCols([
           "createdAt",
-          "mission.id",
+          "_id",
           "employe.nom",
           "employe.prenom",
-          "mission.objetMission",
+          "mission.id",
         ]);
         break;
 

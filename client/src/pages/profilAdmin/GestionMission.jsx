@@ -12,6 +12,7 @@ import {
   columnsOM,
   columnsRFM,
   filterMissionsOptions,
+  filterOMOptions,
   filterRFMOptions,
 } from "../../data/tableCols";
 import UploadMissions from "./UploadMissions";
@@ -62,7 +63,7 @@ const GestionMission = () => {
         <TableM
           title="Ordres de mission des employés"
           search={["id"]}
-          filterOptions={filterMissionsOptions}
+          filterOptions={filterOMOptions}
           columns={columnsOM}
           data={oms}
           colType="om"

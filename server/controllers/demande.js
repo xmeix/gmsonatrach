@@ -7,6 +7,7 @@ import mongoose from "mongoose";
 import Mission from "../models/Mission.js";
 import { createOrUpdateFDocument } from "./FilesKpis.js";
 import { createNotification } from "./Notification.js";
+import { generateCustomId } from "./utils.js";
 const toId = mongoose.Types.ObjectId;
 
 export const createDemande = async (req, res) => {
@@ -34,6 +35,7 @@ export const createDemande = async (req, res) => {
     switch (type) {
       case "DC": {
         const { motif, DateDepart, DateRetour, LieuSejour, Nature } = req.body;
+        const customId = await generateCustomId(structure, "demandes");
 
         if (new Date(DateDepart).getTime() < new Date().getTime()) {
           throw new Error(
@@ -48,6 +50,7 @@ export const createDemande = async (req, res) => {
         }
 
         newDemande = new DC({
+          _id: customId,
           motif,
           DateDepart,
           DateRetour,
@@ -61,7 +64,10 @@ export const createDemande = async (req, res) => {
 
       case "DM": {
         const { motif } = req.body;
+        const customId = await generateCustomId(structure, "demandes");
+
         newDemande = new DM({
+          _id: customId,
           motif,
           idEmetteur: emetteur,
           idDestinataire: destinataire,
@@ -90,6 +96,7 @@ export const createDemande = async (req, res) => {
           gisement,
           employes,
         } = req.body;
+        const customId = await generateCustomId("RELEX", "demandes");
 
         if (new Date(dateDepart).getTime() < new Date().getTime()) {
           throw new Error(
@@ -104,6 +111,7 @@ export const createDemande = async (req, res) => {
         }
 
         newDemande = new DB({
+          _id: customId,
           motif,
           idEmetteur: emetteur,
           idDestinataire: destinataire,

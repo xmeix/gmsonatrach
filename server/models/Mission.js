@@ -2,6 +2,10 @@ import mongoose from "mongoose";
 
 const MissionSchema = new mongoose.Schema(
   {
+    _id: {
+      type: String,
+      required: true,
+    },
     objetMission: {
       type: String,
       required: true,
@@ -53,7 +57,7 @@ const MissionSchema = new mongoose.Schema(
       {
         content: {
           type: String,
-          required: true,
+          // required: true,
         },
         state: {
           type: String,

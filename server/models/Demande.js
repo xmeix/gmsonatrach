@@ -2,6 +2,10 @@ import mongoose from "mongoose";
 
 const DemandeSchema = new mongoose.Schema(
   {
+    _id: {
+      type: String,
+      required: true,
+    },
     motif: {
       type: String,
       default: "",

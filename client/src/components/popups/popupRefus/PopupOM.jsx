@@ -10,6 +10,7 @@ export const OmLabelLine = ({ label, content }) => (
 const PopupOM = ({ item }) => {
   const {
     _id: missionId,
+
     lieuDep,
     destination,
     pays,
@@ -22,7 +23,8 @@ const PopupOM = ({ item }) => {
   const FileItem = {
     date: new Date(tDateRet).toISOString().slice(0, 10),
     year: new Date(item.createdAt).toISOString().slice(0, 4),
-    _id: missionId,
+    _id: item._id,
+    missionid: missionId,
     id: employeeId,
     nom,
     prenom,
@@ -59,7 +61,7 @@ const PopupOM = ({ item }) => {
               La direction projet SH-ONE{" "}
             </div>
             <div className="om-identificateur">
-              N° {missionId} /SH-ONE/
+              N° {item._id} /SH-ONE/
               {FileItem.date}
             </div>
           </div>

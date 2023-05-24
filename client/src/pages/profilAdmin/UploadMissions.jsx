@@ -39,7 +39,7 @@ const UploadMissions = () => {
   const currentUser = useSelector((state) => state.auth.user);
   const [success, setSuccess] = useState(false);
   const { jsonData, handleFileChange } = useUpload();
-
+  console.log(errors);
   useEffect(() => {
     if (!jsonData) return;
     else {
@@ -129,7 +129,12 @@ const UploadMissions = () => {
           let object = {
             type: "import",
             users,
-            missions,
+            missions: missions.filter(
+              (mission) =>
+                mission.etat !== "annulée" &&
+                mission.etat !== "terminée" &&
+                mission.etat !== "refusée"
+            ),
           };
           // validateMission(missionObject, currentUser, object);
           if (
