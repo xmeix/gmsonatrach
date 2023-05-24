@@ -9,6 +9,8 @@ import { useEffect, useRef, useState } from "react";
 import { useAxios } from "../../hooks/useAxios";
 import {
   validateDB,
+  validateDC,
+  validateDM,
   validateMission,
   validateUser,
 } from "../../utils/formFieldsVerifications";
@@ -160,13 +162,20 @@ const Formulaire = ({ title, entries, buttons, type }) => {
       case "DC":
         {
           //register(values);
-          callApi("post", "/demande/DC", values);
+          setErrors(validateDC(values));
+          if (Object.keys(validateDC(values)).length === 0) {
+            //register(values);
+            callApi("post", "/demande/DC", values);
+          }
         }
         break;
       case "DM":
         {
-          //register(values);
-          callApi("post", "/demande/DM", values);
+          setErrors(validateDM(values));
+          if (Object.keys(validateDM(values)).length === 0) {
+            //register(values);
+            callApi("post", "/demande/DM", values);
+          }
         }
         break;
       default:

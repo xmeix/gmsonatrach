@@ -5,7 +5,7 @@ const DBSchema = new mongoose.Schema(
   {
     numSC: {
       type: Number,
-      default: "",
+      // default: "",
       //required: true,
     },
     designationSC: {

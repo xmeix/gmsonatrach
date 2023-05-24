@@ -31,6 +31,7 @@ export const useStyles = makeStyles({
 const PopupDB = ({ item }) => {
   const classes = useStyles();
   const {
+    uid,
     _id,
     createdAt,
     numSC,
@@ -51,7 +52,7 @@ const PopupDB = ({ item }) => {
     motifDep,
   } = item;
   const FileItem = {
-    id: _id,
+    id: uid,
     year: new Date(createdAt).getFullYear(),
     date: new Date(createdAt)
       .toLocaleDateString("en-GB", {
@@ -61,9 +62,9 @@ const PopupDB = ({ item }) => {
       })
       .split("/")
       .join("-"),
-    numSC,
-    designationSC,
-    montantEngage,
+    numSC: numSC ? numSC : "",
+    designationSC: designationSC ? designationSC : "",
+    montantEngage: montantEngage ? montantEngage : "",
     nature:
       nature === "aller-retour"
         ? `${depart} / ${destination} / ${depart} `

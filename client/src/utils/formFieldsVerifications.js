@@ -387,3 +387,47 @@ export const checkUserRD = (user, users) => {
 
   return errors;
 };
+
+export const validateDM = (dm) => {
+  const errors = {};
+
+  if (!dm.motif) {
+    errors.motif = "obligatoire";
+  }
+
+  return errors;
+};
+
+export const validateDC = (dc) => {
+  const errors = {};
+
+  if (!dc.motif) {
+    errors.motif = "obligatoire";
+  }
+  if (!dc?.DateDepart) {
+    errors.DateDepart = "obligatoire";
+  }
+
+  if (!dc?.DateRetour) {
+    errors.DateRetour = "obligatoire";
+  }
+
+  if (
+    new Date(dc?.DateDepart).getTime() >= new Date(dc?.DateRetour).getTime()
+  ) {
+    errors.DateRetour =
+      "Les dates ne doivent pas être identiques, la date de retour doit être postérieure à la date de départ.";
+    errors.DateDepart =
+      "Les dates ne doivent pas être identiques, la date de retour doit être postérieure à la date de départ.";
+  }
+
+  if (!dc?.Nature) {
+    errors.Nature = "obligatoire";
+  }
+
+  if (!dc?.LieuSejour) {
+    errors.LieuSejour = "obligatoire";
+  }
+
+  return errors;
+};
