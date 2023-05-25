@@ -47,6 +47,7 @@ import { verifyToken } from "./middleware/auth.js";
 import { createNotification } from "./controllers/Notification.js";
 import { createOrUpdateFDocument } from "./controllers/FilesKpis.js";
 import { createMission } from "./controllers/mission.js";
+import { generateCustomId } from "./controllers/utils.js";
 const toId = mongoose.Types.ObjectId;
 // Configure environment variables
 dotenv.config();
@@ -173,7 +174,7 @@ io.on("connection", (socket) => {
   });
 });
 
-cron.schedule("01 21 * * *", async () => {
+cron.schedule("25 00 * * *", async () => {
   console.log("working in index.js");
 
   // Update missions with tDateDeb equal to current time
@@ -182,8 +183,7 @@ cron.schedule("01 21 * * *", async () => {
     {
       tDateDeb: { $eq: currentDate },
       etat: "acceptée",
-    },
-    { employes: 1 }
+    } 
   );
 
   for (const mission of missionsEnCours) {
@@ -203,9 +203,12 @@ cron.schedule("01 21 * * *", async () => {
     //update etat
     createOrUpdateFMission(saved, "update", old, "etat");
     //____________________________________________________________________________________
-
+    console.log(saved.structure);
     for (const employeId of employeIds) {
+      let customId = await generateCustomId(saved.structure, "rapportfms");
+      console.log(customId);
       const rfm = new RapportFM({
+        uid: customId,
         idMission: toId(mission._id),
         idEmploye: toId(employeId),
       });
@@ -345,7 +348,9 @@ cron.schedule("12 11 * * *", async () => {
     const employeIds = mission.employes.map((employe) => employe._id);
 
     for (const employeId of employeIds) {
+      let customId = await generateCustomId(mission.structure, "rapportfms");
       const rfm = new RapportFM({
+        uid: customId,
         idMission: toId(mission._id),
         idEmploye: toId(employeId),
       });
@@ -365,7 +370,9 @@ cron.schedule("12 11 * * *", async () => {
     const employeIds = mission.employes.map((employe) => employe._id);
 
     for (const employeId of employeIds) {
+      let customId = await generateCustomId(mission.structure, "rapportfms");
       const om = new OrdreMission({
+        uid: customId,
         mission: toId(mission._id),
         employe: toId(employeId),
       });
@@ -394,6 +401,7 @@ const addMissionsData = async () => {
   //grab missions array from data file loop through it and insert each element into db using createMission function
   missions.map(async (mission) => {
     const {
+      uid,
       objetMission,
       structure,
       type,
@@ -415,6 +423,7 @@ const addMissionsData = async () => {
       updatedAt,
     } = mission;
     const query = {
+      uid,
       objetMission,
       structure,
       type,

@@ -185,21 +185,23 @@ export const createOrUpdateFMission = async (
 // Calculate the number of accomplished tasks in a mission
 const calculateDifferenceAT = (oldMission, NewMission) => {
   return (
-    oldMission.taches.filter((tache) => tache.state === "accomplie").length -
-    NewMission.taches.filter((tache) => tache.state === "accomplie").length
+    (oldMission.taches?.filter((tache) => tache.state === "accomplie").length -
+    NewMission.taches?.filter((tache) => tache.state === "accomplie").length) || 0
   );
 };
 
 const calculateFailCount = (NewMission) => {
-  return NewMission.taches.filter((tache) => tache.state === "non-accomplie")
-    .length;
+  return (
+    NewMission.taches?.filter((tache) => tache.state === "non-accomplie")
+      .length || 0
+  );
 };
 const calculateTransportUtilizationCount = (mission, type) => {
   // const totalTransport =
   //   mission.moyenTransport.length + mission.moyenTransportRet.length;
   const usedTransport =
-    mission.moyenTransport.filter((t) => t === type).length +
-    mission.moyenTransportRet.filter((t) => t === type).length;
+    mission.moyenTransport?.filter((t) => t === type).length +
+    mission.moyenTransportRet?.filter((t) => t === type).length;
   return usedTransport;
 };
 export const getMissionKPIS = async (req, res) => {

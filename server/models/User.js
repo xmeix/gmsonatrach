@@ -2,6 +2,10 @@ import mongoose from "mongoose";
 
 const UserSchema = new mongoose.Schema(
   {
+    uid: {
+      type: String,
+      required: true,
+    },
     nom: {
       type: String,
       required: true,
@@ -12,7 +16,7 @@ const UserSchema = new mongoose.Schema(
       type: String,
       required: true,
       min: 2,
-      max: 50, 
+      max: 50,
     },
     fonction: {
       type: String,

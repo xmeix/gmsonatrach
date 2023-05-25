@@ -52,7 +52,7 @@ const OmLabelLine = ({ label, content }) => (
 );
 
 const PopupUpdate = ({ item, close, setSurvey }) => {
-  const { createdAt, _id, idEmploye, idMission, deroulement } = item;
+  const { createdAt, _id, uid, idEmploye, idMission, deroulement } = item;
 
   const mission = idMission || null;
   const user = idEmploye || null;
@@ -126,14 +126,14 @@ const PopupUpdate = ({ item, close, setSurvey }) => {
 
       for (let i = 0; i < dates.length; i++) {
         newBody.push({
-          IdDate: dates[i],
+          IdDate: new Date(dates[i]).toISOString().split("T")[0],
           hebergement: hebergement[i] || "avec-prise-en-charge",
           dejeuner: dejeuner[i] || "avec-prise-en-charge",
           diner: diner[i] || "avec-prise-en-charge",
           observation: observations[i] || "",
         });
         newBodyFile.push({
-          IdDate: dates[i],
+          IdDate: new Date(dates[i]).toISOString().split("T")[0],
           hebergementA:
             hebergement[i] !== "sans-prise-en-charge" ? true : false,
           hebergementB:
@@ -180,12 +180,12 @@ const PopupUpdate = ({ item, close, setSurvey }) => {
   }
 
   const [body2, setBody2] = useState({
-    dateDebA: item.idMission?.DateDebA || item.idMission?.tDateDeb,
-    dateRetA: item.idMission?.DateRetA || item.idMission?.tDateRet,
+    dateDebA: item.idMission.DateDebA || item.idMission?.tDateDeb,
+    dateRetA: item.idMission.DateRetA || item.idMission?.tDateRet,
     tDateDeb: item.idMission?.tDateDeb,
     tDateRet: item.idMission?.tDateRet,
   });
-  console.log(mission?.DateRetA);
+  console.log(body2);
 
   function addToDate(value, type) {
     let newDate;
@@ -307,14 +307,14 @@ const PopupUpdate = ({ item, close, setSurvey }) => {
     prenom: idEmploye.prenom,
     idEmp: idEmploye._id,
     year: new Date().getFullYear(),
-    id: item._id,
+    id: uid,
     date: Intl.DateTimeFormat(["ban", "id"]).format(new Date(item.createdAt)),
   };
 
   const [generateDocument] = useFileGenerator(
     FileItem,
     "/my-template-RFM.docx",
-    `Compte-Rendu-${_id}.docx`
+    `Compte-Rendu-${uid}.docx`
   );
   return (
     <>
@@ -387,7 +387,11 @@ const PopupUpdate = ({ item, close, setSurvey }) => {
                       className="pop-input"
                       type="date"
                       defaultValue={
-                        new Date(mission?.DateDebA).toISOString().split("T")[0]
+                        mission?.DateDebA
+                          ? new Date(mission.DateDebA)
+                              .toISOString()
+                              .split("T")[0]
+                          : ""
                       }
                       onChange={(e) => addToDate(e.target.value, 2)}
                     />
@@ -471,10 +475,7 @@ const PopupUpdate = ({ item, close, setSurvey }) => {
                   {dates.map((date, index) => (
                     <TableRow key={index}>
                       <TableCell align="center" className={classes.tableCell2}>
-                        {" " +
-                          Intl.DateTimeFormat(["ban", "id"]).format(
-                            new Date(date)
-                          )}
+                        {" " + new Date(date).toISOString().split("T")[0]}
                       </TableCell>
                       {["hebergement", "dejeuner", "diner"].map((event, i) => {
                         return (
@@ -556,7 +557,11 @@ const PopupUpdate = ({ item, close, setSurvey }) => {
                       className="pop-input"
                       type="date"
                       defaultValue={
-                        new Date(mission?.DateRetA).toISOString().split("T")[0]
+                        mission?.DateRetA
+                          ? new Date(mission.DateRetA)
+                              .toISOString()
+                              .split("T")[0]
+                          : ""
                       }
                       onChange={(e) => addToDate(e.target.value, 5)}
                     />
