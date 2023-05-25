@@ -268,7 +268,7 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
           }
           let cellValue;
           if (
-            item[column.id] === "createdBy" ||
+            item[column.id] === "createdAt" ||
             item[column.id] === "tDateDeb" ||
             item[column.id] === "tDateRet"
           ) {
@@ -303,6 +303,10 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
                   .toLowerCase()
                   .includes(filterValue))) ||
             item["mission"]?.uid
+              .toString()
+              .toLowerCase()
+              .includes(filterValue) ||
+            item["idMission"]?.uid
               .toString()
               .toLowerCase()
               .includes(filterValue) ||
@@ -478,6 +482,17 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
           {item.mission?.uid}
         </TableCell>
       );
+    } else if (property === "idMission.uid") {
+      return (
+        <TableCell
+          key={uuidv4()}
+          align="center"
+          className={classes.tableCell}
+          onClick={() => handleOnClick(item)}
+        >
+          {item.idMission?.uid}
+        </TableCell>
+      );
     } else if (property === "employe.nom") {
       return (
         <TableCell
@@ -505,7 +520,11 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
         <TableCell
           key={uuidv4()}
           align="center"
-          className={property === "etat" ? item.etat : classes.tableCell}
+          className={
+            property === "etat"
+              ? `${item.etat} ${classes.tableCell}`
+              : classes.tableCell
+          }
           onClick={() => handleOnClick(item)}
         >
           {item[property]}
@@ -520,9 +539,9 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
       case "db":
         setCols([
           "createdAt",
+          "uid",
           "idEmetteur.nom + ' ' + idEmetteur.prenom",
-          "motif",
-          "idEmetteur.structure",
+          // "motif",
           "etat",
         ]);
         break;
@@ -531,6 +550,7 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
         setCols([
           "createdAt",
           "idEmploye.nom + ' ' + idEmploye.prenom",
+          "idMission.uid",
           "etat",
         ]);
         break;
@@ -538,13 +558,10 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
       case "mission":
         setCols([
           "createdAt",
+          "uid",
           "createdBy.nom + ' ' + createdBy.prenom",
-          "objetMission",
-          "budget",
           "tDateDeb",
-          "tDateRet",
           "etat",
-          "raisonRefus",
         ]);
         break;
       case "om":
@@ -558,7 +575,7 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
         break;
 
       case "user":
-        setCols(["createdAt", "nom", "prenom", "fonction", "email", "role"]);
+        setCols(["createdAt", "_id", "nom", "prenom"]);
         break;
 
       default:
@@ -643,9 +660,11 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
                   {column.label}
                 </TableCell>
               ))}
-              <TableCell className={classes.lastTableCell} align="center">
-                Configuration
-              </TableCell>
+              {colType !== "user" && (
+                <TableCell className={classes.lastTableCell} align="center">
+                  Configuration
+                </TableCell>
+              )}
             </TableRow>
           </TableHead>
           <TableBody className={classes.tableBody}>
@@ -673,12 +692,14 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
                       className={`${classes.tableRow} trow`}
                     >
                       {cols.map((col) => tableCell(item, col))}
-                      <TableCell
-                        align="center"
-                        className={classes.lastTableCell}
-                      >
-                        {renderConfiguration(item, colType)}
-                      </TableCell>
+                      {colType !== "user" && (
+                        <TableCell
+                          align="center"
+                          className={classes.lastTableCell}
+                        >
+                          {renderConfiguration(item, colType)}
+                        </TableCell>
+                      )}
                     </TableRow>
                   );
                 }

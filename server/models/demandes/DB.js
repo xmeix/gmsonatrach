@@ -22,7 +22,7 @@ const DBSchema = new mongoose.Schema(
       //Aller ret/aller
       type: String,
       enum: ["aller-retour", "retour", "aller"],
-      required: true,
+      required: true, 
     },
     depart: {
       type: String,
