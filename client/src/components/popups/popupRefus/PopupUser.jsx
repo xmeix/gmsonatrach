@@ -7,6 +7,7 @@ import {
   TableRow,
   makeStyles,
 } from "@material-ui/core";
+import CheckRoundedIcon from "@mui/icons-material/CheckRounded";
 import Select from "react-select";
 import ModeEditRoundedIcon from "@mui/icons-material/ModeEditRounded";
 import { useSelector } from "react-redux";
@@ -22,6 +23,12 @@ const useStyles = makeStyles({
     fontWeight: 500,
     fontSize: 13,
     border: "none",
+    flexBasis: "50%",
+  },
+  tableRow: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
   },
   inputField: {
     // Add your input field styles here
@@ -29,10 +36,11 @@ const useStyles = makeStyles({
   select: {
     // Add your select styles here
   },
-  error: {
-    color: "red",
-    fontSize: 12,
-  },
+  // error: {
+  //   color: "red",
+  //   fontSize: 12,
+  //   textAlign: "center",
+  // },
 });
 
 const PopupUser = ({ item, close }) => {
@@ -131,27 +139,27 @@ const PopupUser = ({ item, close }) => {
         label !== "numTel" &&
         label !== "email")
     ) {
-      errs[label] = "Veuillez renseigner un champ valide";
+      errs[label] = "non valide";
     } else if (
       label === "email" &&
       !/^[a-zA-Z0-9]+([.][a-zA-Z0-9]+)*@sonatrach\.dz$/.test(content)
     ) {
-      errs.email = "L'email doit être valide.";
+      errs.email = "non valide.";
     } else if (label === "numTel" && !/^(0)(5|6|7)[0-9]{8}$/.test(content)) {
-      errs.numTel = "Le numéro de téléphone doit être valide.";
+      errs.numTel = "non valide.";
     }
 
     return errs;
   };
 
-  useEffect(() => {
-    console.log(updatedItem);
-  }, [updatedItem]);
+  // useEffect(() => {
+  //   console.log(updatedItem);
+  // }, [updatedItem]);
 
   return (
     <div className="popup-user">
       <div className="title">
-        Profile: {updatedItem.nom} {updatedItem.prenom}
+        Profile{/* : {updatedItem.nom} {updatedItem.prenom} */}
       </div>
 
       <TableContainer>
@@ -162,16 +170,17 @@ const PopupUser = ({ item, close }) => {
                 return null;
               }
               if (
-                (item.role === "secretaire" || item.role === "relex") &&
+                (updatedItem.role === "secretaire" ||
+                  updatedItem.role === "relex") &&
                 el.label === "structure"
               )
                 return null;
               if (el.label !== "etat") {
                 return (
-                  <TableRow key={i}>
+                  <TableRow key={i} className={classes.tableRow}>
                     <TableCell className={classes.tableCell2}>
                       {el.label === "numTel"
-                        ? "numero de téléphone"
+                        ? "tel"
                         : el.label === "prenom"
                         ? "prénom"
                         : el.label}
@@ -185,53 +194,66 @@ const PopupUser = ({ item, close }) => {
                         <>
                           {editMode === el.label ? (
                             el.label !== "structure" && el.label !== "role" ? (
-                              <>
-                                {" "}
-                                <input
-                                  className={classes.inputField}
-                                  defaultValue={el.content}
-                                  onChange={(e) =>
-                                    handleInputChange(el.label, e.target.value)
-                                  }
-                                  // onBlur={() => handleEditMode(false)}
-                                />{" "}
-                                <button onClick={handleOkClick}>OK</button>{" "}
-                                {errors[el.label] && (
-                                  <div className={classes.error}>
-                                    {errors[el.label]}
-                                  </div>
-                                )}
-                              </>
+                              <div className="user-form-box">
+                                <div className="user-input-box">
+                                  <input
+                                    className={`${classes.inputField} user-input`}
+                                    defaultValue={el.content}
+                                    onChange={(e) =>
+                                      handleInputChange(
+                                        el.label,
+                                        e.target.value
+                                      )
+                                    }
+                                    // onBlur={() => handleEditMode(false)}
+                                  />
+                                  {errors[el.label] && (
+                                    <div className="input-error">
+                                      {errors[el.label]}
+                                    </div>
+                                  )}
+                                </div>
+                                <button onClick={handleOkClick}>
+                                  <CheckRoundedIcon />
+                                </button>
+                              </div>
                             ) : (
-                              <>
-                                <Select
-                                  className={classes.select}
-                                  options={
-                                    el.label === "structure"
-                                      ? allowedStructures
-                                      : el.label === "role"
-                                      ? allowedRoles
-                                      : []
-                                  }
-                                  onChange={(selectedOption) =>
-                                    handleInputChange(
-                                      el.label,
-                                      selectedOption.value
-                                    )
-                                  }
-                                />
-                                <button onClick={handleOkClick}>OK</button>
-                                {errors[el.label] && (
-                                  <div className={classes.error}>
-                                    {errors[el.label]}
-                                  </div>
-                                )}
-                              </>
+                              <div className="user-form-box">
+                                <div className="user-input-box">
+                                  <Select
+                                    className={`${classes.select} select`}
+                                    options={
+                                      el.label === "structure"
+                                        ? allowedStructures
+                                        : el.label === "role"
+                                        ? allowedRoles
+                                        : []
+                                    }
+                                    onChange={(selectedOption) =>
+                                      handleInputChange(
+                                        el.label,
+                                        selectedOption.value
+                                      )
+                                    }
+                                  />
+                                  {errors[el.label] && (
+                                    <div className="input-error">
+                                      {errors[el.label]}
+                                    </div>
+                                  )}
+                                </div>
+                                <button onClick={handleOkClick}>
+                                  <CheckRoundedIcon className="icon" />
+                                </button>
+                              </div>
                             )
                           ) : (
-                            <div onClick={() => handleEditMode(el.label)}>
+                            <div
+                              onClick={() => handleEditMode(el.label)}
+                              className="edit-box"
+                            >
                               {el.content}
-                              <ModeEditRoundedIcon className="icn" />
+                              <ModeEditRoundedIcon className="icon" />
                             </div>
                           )}
                         </>

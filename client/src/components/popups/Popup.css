@@ -7,11 +7,14 @@
   background-color: var(--white);
   border-radius: 3px;
   box-shadow: 0 0 0 2px rgba(70, 69, 69, 0.034);
+  transition: all 0.5s ease-in-out;
+  padding: 3em;
   overflow-y: auto;
+  /*overflow-y: auto;
   transition: all 0.5s ease-in-out;
   white-space: nowrap;
-  overflow-x: scroll;
-  padding: 3em;
+ 
+  */
 }
 /*--------------------------------------------------*/
 
@@ -185,6 +188,7 @@
   bottom: 3em;
   width: 370px;
   font-size: 13px;
+  /* overflow: hidden; */
 }
 /*---------------------------------------------------*/
 .popup-mission,
@@ -519,4 +523,39 @@
 
 .popup-user .om-label {
   color: var(--gray);
+}
+
+.popup-user .edit-box {
+  display: flex;
+  justify-content: space-between;
+}
+
+.popup-user .icon {
+  font-size: 20px;
+}
+.popup-user .user-form-box {
+  display: flex !important;
+  gap: 1em;
+  align-items: center;
+}
+
+.popup-user .user-form-box button {
+  padding: 0 0.3em;
+  border: 0;
+  box-shadow: none;
+}
+.popup-user .user-form-box button:hover {
+  background-color: var(--green4);
+}
+.popup-user .user-form-box .user-input-box {
+  display: flex !important;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.popup-user .user-form-box .user-input-box input,
+.popup-user .user-form-box .user-input-box .select {
+  width: 210px;
+  /* height: 30px; */
 }
