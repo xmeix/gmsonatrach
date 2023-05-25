@@ -18,6 +18,7 @@ export const register = async (req, res) => {
       role,
       etat,
       structure,
+      user,
     } = req.body;
     const salt = await bcrypt.genSalt();
     const passwordHash = await bcrypt.hash(password, salt);
@@ -38,7 +39,13 @@ export const register = async (req, res) => {
     //   const user = await User.findOne({ email: email });
     //   if (user) throw new Error("user already exists");
     // }
-    const customId = await generateCustomId(structure, "users");
+    console.log(user.role);
+    let customId;
+    if (user.role === "relex") {
+      customId = await generateCustomId("RELEX", "users");
+    } else if (user.role === "responsable") {
+      customId = await generateCustomId(user.structure, "users");
+    } else customId = await generateCustomId(structure, "users");
     const newUser = new User({
       uid: customId,
       nom,

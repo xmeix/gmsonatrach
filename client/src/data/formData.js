@@ -607,7 +607,7 @@ export const DMEntries = [
   {
     id: "motif",
     label: "motif",
-    inputType: "text",
+    inputType: "textarea",
     width: "230px",
     placeholder: "motif",
     required: true,

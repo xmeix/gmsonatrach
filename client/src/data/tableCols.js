@@ -36,7 +36,7 @@ export const filterRFMOptions = ["créé", "en-attente", "accepté", "refusé"];
 // ];
 export const columnsUsersEmp = [
   { id: "createdAt", label: "date d'adhésion", minWidth: "20px" },
-  { id: "_id", label: "Identifiant", minWidth: "20px" },
+  { id: "uid", label: "Identifiant", minWidth: "20px" },
   { id: "nom", label: "Nom", minWidth: "20px" },
   { id: "prenom", label: "prénom", minWidth: "20px" },
 ];

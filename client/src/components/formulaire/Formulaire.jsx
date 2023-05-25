@@ -120,7 +120,7 @@ const Formulaire = ({ title, entries, buttons, type }) => {
 
           setErrors(validateUser(values));
           if (Object.keys(validateUser(values)).length === 0) {
-            callApi("post", "/auth/register", values);
+            callApi("post", "/auth/register", { ...values, user: currentUser });
             setErrors({});
           }
         }

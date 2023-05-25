@@ -575,7 +575,7 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
         break;
 
       case "user":
-        setCols(["createdAt", "_id", "nom", "prenom"]);
+        setCols(["createdAt", "uid", "nom", "prenom"]);
         break;
 
       default:
