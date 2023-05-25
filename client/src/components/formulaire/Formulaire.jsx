@@ -118,8 +118,22 @@ const Formulaire = ({ title, entries, buttons, type }) => {
         {
           //register(values);
 
-          setErrors(validateUser(values));
-          if (Object.keys(validateUser(values)).length === 0) {
+          setErrors(
+            validateUser({
+              ...values,
+              user: currentUser,
+              selectedRole: selectedRole,
+            })
+          );
+          if (
+            Object.keys(
+              validateUser({
+                ...values,
+                user: currentUser,
+                selectedRole: selectedRole,
+              })
+            ).length === 0
+          ) {
             callApi("post", "/auth/register", { ...values, user: currentUser });
             setErrors({});
           }
@@ -322,7 +336,7 @@ const Formulaire = ({ title, entries, buttons, type }) => {
                   name={entry.id}
                 />
               )}
-              {errors[entry.id] && (
+              {errors[entry.id] && allowField(entry.id) && (
                 <div className="input-error">{errors[entry.id]}</div>
               )}
             </div>

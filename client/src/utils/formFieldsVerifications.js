@@ -346,8 +346,20 @@ export const validateUser = (user) => {
   if (!user.password || user.password === "empty") {
     errors.password = "obligatoire.";
   }
-  if (!user.structure || user.structure === "empty") {
-    errors.structure = "obligatoire";
+
+  if (user.user?.role !== "secretaire") {
+    if (!user.role) {
+      errors.role = "obligatoire.";
+    }
+  }
+
+  if (
+    user.user?.role !== "responsable" &&
+    user.selectedRole !== "secretaire" &&
+    user.selectedRole !== "relex" &&
+    !user.structure
+  ) {
+    errors.structure = "obligatoire.";
   }
 
   return errors;
