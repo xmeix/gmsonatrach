@@ -30,9 +30,10 @@ const PopupDC = ({ item }) => {
     updatedAt,
     __t,
     _id,
+    uid,
   } = item;
   const FileItem = {
-    id: _id,
+    id: uid,
     date: new Date(createdAt)
       .toLocaleDateString("en-GB", {
         day: "numeric",
@@ -220,7 +221,9 @@ const PopupDC = ({ item }) => {
           </div>
         </div>
       </div>
-      <button onClick={generateDocument}>Generate PDF</button>
+      {etat === "acceptée" && (
+        <button onClick={generateDocument}>Generate PDF</button>
+      )}
     </>
   );
 };

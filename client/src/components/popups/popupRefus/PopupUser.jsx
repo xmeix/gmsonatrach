@@ -43,8 +43,9 @@ const PopupUser = ({ item, close }) => {
   const [updatedItem, setUpdatedItem] = useState(item);
   const [editMode, setEditMode] = useState(false);
   const [errors, setErrors] = useState({});
+  const [selectedRole, setSelectedRole] = useState(item.role);
   const data = [
-    { label: "matricule", content: `${updatedItem._id}` },
+    { label: "matricule", content: `${updatedItem.uid}` },
     { label: "role", content: `${updatedItem.role}` },
     { label: "etat", content: `${updatedItem.etat || "/"}` },
     { label: "nom", content: `${updatedItem.nom}` },
@@ -61,18 +62,21 @@ const PopupUser = ({ item, close }) => {
   };
 
   const allowedRoles = [
-    { label: "employe", value: "employe" },
-    { label: "secretaire", value: "secretaire" },
-    { label: "responsable", value: "responsable" },
-    { label: "directeur", value: "directeur" },
+    { value: "employe", label: "Employe" },
+    { value: "secretaire", label: "Secretaire" },
+    { value: "responsable", label: "Responsable" },
+    { value: "directeur", label: "Directeur" },
   ].filter((role) => {
-    if (user.role === "secretaire" && role.value === "employe") return true;
-    if (
-      user.role === "responsable" &&
-      (role.value === "secretaire" || role.value === "employe")
-    )
-      return true;
-    if (user.role === "directeur") return true;
+    if (user.role === "responsable") {
+      return role.value === "employe" || role.value === "secretaire";
+    } else if (user.role === "directeur") {
+      return (
+        role.value === "employe" ||
+        role.value === "secretaire" ||
+        role.value === "responsable" ||
+        role.value === "relex"
+      );
+    }
     return false;
   });
 
@@ -157,6 +161,11 @@ const PopupUser = ({ item, close }) => {
               if (el.label === "etat" && updatedItem.role === "employe") {
                 return null;
               }
+              if (
+                (item.role === "secretaire" || item.role === "relex") &&
+                el.label === "structure"
+              )
+                return null;
               if (el.label !== "etat") {
                 return (
                   <TableRow key={i}>

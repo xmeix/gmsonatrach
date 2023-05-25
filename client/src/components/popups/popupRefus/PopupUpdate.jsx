@@ -305,7 +305,7 @@ const PopupUpdate = ({ item, close, setSurvey }) => {
     fonction: idEmploye.fonction,
     nom: idEmploye.nom,
     prenom: idEmploye.prenom,
-    idEmp: idEmploye._id,
+    idEmp: idEmploye.uid,
     year: new Date().getFullYear(),
     id: uid,
     date: Intl.DateTimeFormat(["ban", "id"]).format(new Date(item.createdAt)),
@@ -332,7 +332,7 @@ const PopupUpdate = ({ item, close, setSurvey }) => {
             <span>DCG/RH - DAPS</span>
           </div>
           <div className="infoEmploye">
-            <OmLabelLine label="Matricule" content={": " + idEmploye._id} />
+            <OmLabelLine label="Matricule" content={": " + idEmploye.uid} />
             <OmLabelLine
               label="Nom & Prénoms"
               content={": " + FileItem.nom + " " + FileItem.prenom}

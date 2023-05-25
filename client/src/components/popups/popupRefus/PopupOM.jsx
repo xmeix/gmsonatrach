@@ -9,7 +9,7 @@ export const OmLabelLine = ({ label, content }) => (
 );
 const PopupOM = ({ item }) => {
   const {
-    _id: missionId,
+    uid: missionId,
     lieuDep,
     destination,
     pays,
@@ -18,7 +18,7 @@ const PopupOM = ({ item }) => {
     objetMission,
     moyenTransport,
   } = item.mission;
-  const { _id: employeeId, nom, prenom, fonction } = item.employe;
+  const { uid: employeeId, nom, prenom, fonction } = item.employe;
   const FileItem = {
     date: new Date(tDateRet).toISOString().slice(0, 10),
     year: new Date(item.createdAt).toISOString().slice(0, 4),
