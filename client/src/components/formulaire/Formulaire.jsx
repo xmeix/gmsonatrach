@@ -182,6 +182,51 @@ const Formulaire = ({ title, entries, buttons, type }) => {
         console.log("errrr");
     }
   };
+
+  const allowField = (input) => {
+    switch (input) {
+      case "role":
+        if (currentUser.role === "secretaire") return false;
+        break;
+      case "structure":
+        if (currentUser.role === "responsable") return false;
+        else if (selectedRole === "relex" || selectedRole === "secretaire")
+          return false;
+        break;
+    }
+
+    return true;
+  };
+
+  const allowedOptions = (input) => {
+    //for each user type we return roles or structures
+
+    switch (input.id) {
+      case "role":
+        if (currentUser.role === "responsable") {
+          return [
+            { value: "employe", label: "Employe" },
+            { value: "secretaire", label: "Secretaire" },
+          ];
+        } else if (currentUser.role === "directeur") {
+          return [
+            { value: "employe", label: "Employe" },
+            { value: "secretaire", label: "Secretaire" },
+            { value: "responsable", label: "responsable" },
+            { value: "relex", label: "relex" },
+          ];
+        }
+        break;
+      case "structure":
+        return input.options;
+        break;
+
+      default:
+        break;
+    }
+
+    return input.options;
+  };
   return (
     <div className="formulaire">
       <div className="listTitle">{title}</div>
@@ -189,24 +234,9 @@ const Formulaire = ({ title, entries, buttons, type }) => {
         {updatedEntries.map((entry, i) => {
           return (
             <div className="inputGroup" key={i}>
-              {!(
-                currentUser.role === "secretaire" &&
-                entry.id === "role" &&
-                type === "user"
-              ) &&
-                !(
-                  currentUser.role === "responsable" &&
-                  entry.id === "structure" &&
-                  type === "mission"
-                ) &&
-                !(
-                  (currentUser.role === "responsable" ||
-                    currentUser.role === "directeur") &&
-                  entry.id === "structure" &&
-                  selectedRole !== "employe" &&
-                  selectedRole !== "responsable" &&
-                  type === "user"
-                ) && <label htmlFor={entry.label}>{entry.label}</label>}
+              {allowField(entry.id) && (
+                <label htmlFor={entry.label}>{entry.label}</label>
+              )}
 
               {entry.inputType !== "textarea" &&
                 entry.inputType !== "select" &&
@@ -253,62 +283,35 @@ const Formulaire = ({ title, entries, buttons, type }) => {
                   }
                 />
               )}
-              {entry.inputType === "select" &&
-                !(
-                  currentUser.role === "secretaire" &&
-                  entry.id === "role" &&
-                  type === "user"
-                ) &&
-                !(
-                  currentUser.role === "responsable" &&
-                  entry.id === "structure" &&
-                  type === "mission"
-                ) &&
-                !(
-                  (currentUser.role === "responsable" ||
-                    currentUser.role === "directeur") &&
-                  entry.id === "structure" &&
-                  selectedRole !== "employe" &&
-                  selectedRole !== "responsable" &&
-                  type === "user"
-                ) && (
-                  <Select
-                    ref={entry.id === "employes" ? selectInputRef : null}
-                    className="select"
-                    options={
+              {entry.inputType === "select" && allowField(entry.id) && (
+                <Select
+                  ref={entry.id === "employes" ? selectInputRef : null}
+                  className="select"
+                  options={allowedOptions(entry)}
+                  isMulti={entry.isMulti}
+                  placeholder={entry.placeholder}
+                  styles={customStyles}
+                  isDisabled={entry.id === "employes" && disabled}
+                  onChange={(selectedOption) => {
+                    if (
+                      (currentUser.role === "responsable" ||
+                        currentUser.role === "directeur") &&
                       entry.id === "role" &&
-                      currentUser.role === "responsable" &&
-                      type === "user"
-                        ? [
-                            { value: "employe", label: "Employe" },
-                            { value: "secretaire", label: "Secretaire" },
-                          ]
-                        : entry.options
+                      type === "user" &&
+                      (selectedOption.value === "employe" ||
+                        selectedOption.value === "directeur" ||
+                        selectedOption.value === "responsable" ||
+                        selectedOption.value === "relex" ||
+                        selectedOption.value === "secretaire")
+                    ) {
+                      setSelectedRole(selectedOption.value);
                     }
-                    isMulti={entry.isMulti}
-                    placeholder={entry.placeholder}
-                    styles={customStyles}
-                    isDisabled={entry.id === "employes" && disabled}
-                    onChange={(selectedOption) => {
-                      if (
-                        (currentUser.role === "responsable" ||
-                          currentUser.role === "directeur") &&
-                        entry.id === "role" &&
-                        type === "user" &&
-                        (selectedOption.value === "employe" ||
-                          selectedOption.value === "directeur" ||
-                          selectedOption.value === "responsable" ||
-                          selectedOption.value === "relex" ||
-                          selectedOption.value === "secretaire")
-                      ) {
-                        setSelectedRole(selectedOption.value);
-                      }
-                      handleChange({
-                        target: { name: entry.id, value: selectedOption },
-                      });
-                    }}
-                  />
-                )}
+                    handleChange({
+                      target: { name: entry.id, value: selectedOption },
+                    });
+                  }}
+                />
+              )}
 
               {entry.inputType === "textarea" && (
                 <textarea
