@@ -591,7 +591,7 @@ const PopupUpdate = ({ item, close, setSurvey }) => {
                   content={": " + FileItem?.moyenTransport}
                 />
                 <OmLabelLine
-                  label="A retour"
+                  label="Au retour"
                   content={": " + FileItem?.moyenTransportRet}
                 />
               </div>
@@ -671,7 +671,9 @@ const PopupUpdate = ({ item, close, setSurvey }) => {
       )}
 
       {item.etat === "accepté" && (
-        <button onClick={generateDocument}>Generate PDF</button>
+        <div className="generate-btn">
+          <button onClick={generateDocument}>Télécharger document</button>
+        </div>
       )}
     </>
   );

@@ -6,11 +6,15 @@ import "./Planning.css";
 
 import ArrowBackIosRoundedIcon from "@mui/icons-material/ArrowBackIosRounded";
 import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
+import { v4 as uuidv4 } from "uuid";
 
 const Planning = () => {
   const [monthOffset, setMonthOffset] = useState(0);
   const [savedItem, setSavedItem] = useState(null);
   const [isOpen, openPopup, closePopup, popupType] = usePopup();
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filter, setFilter] = useState("");
+
   const date = useMemo(() => {
     const today = new Date();
     return new Date(today.getFullYear(), today.getMonth() + monthOffset, 1);
@@ -24,31 +28,31 @@ const Planning = () => {
   ).getDate();
 
   const currentUser = useSelector((state) => state.auth.user);
-  const resources = useMemo(() => {
-    if (currentUser.role === "employe") {
-      return missions
-        .filter(
-          (mission) =>
-            mission.etat === "acceptée" ||
-            mission.etat === "en-cours" ||
-            mission.etat === "terminée"
-        )
-        .map(({ _id, objetMission, structure }) => ({
-          _id,
-          objetMission,
-          structure,
-        }));
-    } else {
-      return users
-        .filter((u) => u.role === "employe" || u.role === "responsable")
-        .map(({ _id, nom, prenom, structure }) => ({
-          _id,
-          nom,
-          prenom,
-          structure,
-        }));
-    }
-  }, [currentUser, users, missions]);
+  // const resources = useMemo(() => {
+  //   if (currentUser.role === "employe") {
+  //     return missions
+  //       .filter(
+  //         (mission) =>
+  //           mission.etat === "acceptée" ||
+  //           mission.etat === "en-cours" ||
+  //           mission.etat === "terminée"
+  //       )
+  //       .map(({ _id, objetMission, structure }) => ({
+  //         _id,
+  //         objetMission,
+  //         structure,
+  //       }));
+  //   } else {
+  //     return users
+  //       .filter((u) => u.role === "employe" || u.role === "responsable")
+  //       .map(({ _id, nom, prenom, structure }) => ({
+  //         _id,
+  //         nom,
+  //         prenom,
+  //         structure,
+  //       }));
+  //   }
+  // }, [currentUser, users, missions]);
 
   //"#FFF1C1", "#FDE2E2", "#F5E5EA", "#C9E4DE", "#E3F1E4"
   //"#FFE0B2", "#FFD180", "#FFCC80", "#FFB74D", "#FFA726"
@@ -144,30 +148,104 @@ const Planning = () => {
     setSavedItem(null);
     closePopup();
   };
+  const filteredResources = useMemo(() => {
+    let filteredResources = [];
+
+    if (currentUser.role === "employe") {
+      filteredResources = missions
+        .filter(
+          (mission) =>
+            (filter === "" || mission.structure === filter) &&
+            (mission.etat === "acceptée" ||
+              mission.etat === "en-cours" ||
+              mission.etat === "terminée")
+        )
+        .map(({ _id, objetMission, structure }) => ({
+          _id,
+          objetMission,
+          structure,
+        }));
+    } else {
+      filteredResources = users
+        .filter((u) => u.role === "employe" || u.role === "responsable")
+        .filter(({ nom, prenom, structure }) => {
+          const search = searchQuery.toLowerCase().trim();
+          const fullName = `${nom.toLowerCase()} ${prenom.toLowerCase()}`;
+          return (
+            fullName.includes(search) && (filter === "" || structure === filter)
+          );
+        })
+        .map(({ _id, nom, prenom, structure }) => ({
+          _id,
+          nom,
+          prenom,
+          structure,
+        }));
+    }
+
+    return filteredResources;
+  }, [currentUser, users, missions, searchQuery, filter]);
+  const structures = useMemo(() => {
+    const excludedStructures = ["SECRETARIAT", "DG", "RELEX"];
+    const allStructures = users
+      .filter(
+        (u) =>
+          (u.role === "employe" || u.role === "responsable") &&
+          !excludedStructures.includes(u.structure)
+      )
+      .map(({ structure }) => structure);
+    return Array.from(new Set(allStructures));
+  }, [users]);
 
   return (
     <div className="planning">
-      {/* <PageName name="Planification" /> */}
       <div className="tab">
         {" "}
-        <span className="departmentName">
+        <div className="departmentName">
           Projet SH-ONE : Planning de mobilisation des missions
-        </span>
+        </div>
         <div className="schedule-head">
           <button onClick={handlePreviousMonth} className="planning-btn">
-            {" "}
-            <ArrowBackIosRoundedIcon />
+            <ArrowBackIosRoundedIcon className="icn" />
+          </button>
+          <button onClick={handleNextMonth} className="planning-btn">
+            <ArrowForwardIosRoundedIcon className="icn" />
           </button>
           <p>
-            {date.toLocaleDateString("en-US", {
+            {date.toLocaleDateString("fr-FR", {
               month: "long",
               year: "numeric",
             })}
           </p>
-          <button onClick={handleNextMonth} className="planning-btn">
-            {" "}
-            <ArrowForwardIosRoundedIcon />
-          </button>
+          <div className="planning-control">
+            <div className="search-container">
+              <div className="label">Rechercher:</div>
+              <input
+                type="text"
+                id="searchBox"
+                className="search-box"
+                placeholder="ex: nom prénom"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+            </div>
+            <div className="filter-container">
+              <div className="label">Filtrer par:</div>
+              <select
+                id="selectFilter"
+                className="select-filter"
+                value={filter}
+                onChange={(e) => setFilter(e.target.value)}
+              >
+                <option value="">toutes les structures</option>
+                {structures.map((structure) => (
+                  <option value={structure} key={structure}>
+                    {structure}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
         </div>
         <div className="ov" style={{ overflowX: "scroll", height: 450 }}>
           <table
@@ -199,8 +277,8 @@ const Planning = () => {
             </thead>
             <tbody className="planning-tbody">
               {currentUser.role === "employe" &&
-                resources.map(({ _id, objetMission, structure }) => (
-                  <tr key={_id} className="planning-tbody-row">
+                filteredResources.map(({ _id, objetMission, structure }) => (
+                  <tr key={uuidv4()} className="planning-tbody-row">
                     <td className="planning-tbody-td-res">{objetMission}</td>
                     <td className="planning-tbody-td-res">{structure}</td>
                     {[...Array(daysInMonth)].map((_, index) => {
@@ -242,8 +320,8 @@ const Planning = () => {
                   </tr>
                 ))}
               {currentUser.role !== "employe" &&
-                resources.map(({ _id, nom, prenom, structure }) => (
-                  <tr key={_id} className="planning-tbody-row">
+                filteredResources.map(({ _id, nom, prenom, structure }) => (
+                  <tr key={uuidv4()} className="planning-tbody-row">
                     <td className="planning-tbody-td-res">
                       {nom + " " + prenom}
                     </td>
@@ -290,6 +368,7 @@ const Planning = () => {
           </table>
         </div>
       </div>
+
       {isOpen && (
         <>
           <Popup

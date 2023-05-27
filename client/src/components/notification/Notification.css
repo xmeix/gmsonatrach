@@ -1,0 +1,23 @@
+.notification {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 0.5em;
+  padding: 1.5em;
+  border: solid 1px var(--gray3);
+  white-space: initial;
+  cursor: pointer;
+}
+
+.notification:hover {
+  background-color: var(--light-gray);
+}
+.notification .message {
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 20px;
+}
+.notification .date {
+  font-size: 10px;
+  color: var(--gray);
+}

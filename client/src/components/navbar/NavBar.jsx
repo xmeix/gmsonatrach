@@ -12,6 +12,7 @@ import NotificationsActiveRoundedIcon from "@mui/icons-material/NotificationsAct
 import NotificationsNoneRoundedIcon from "@mui/icons-material/NotificationsNoneRounded";
 import { socket } from "../../App";
 import { getNotifications } from "../../api/apiCalls/getCalls";
+import Notification from "../notification/Notification";
 const NavBar = () => {
   const { user, isLoggedIn, notifications } = useSelector(
     (state) => state.auth
@@ -137,10 +138,7 @@ const NavBar = () => {
           ) : (
             <div className="notifications">
               {notifications.map((notification, index) => (
-                <div key={index} className="notification">
-                  <div className="message">{notification.message}</div>{" "}
-                  <div className="date">{notification.createdAt}</div>
-                </div>
+                <Notification key={index} notification={notification} />
               ))}
             </div>
           )}

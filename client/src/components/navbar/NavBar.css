@@ -103,31 +103,8 @@
   white-space: initial;
   text-align: center;
 }
-
-.navbar .notification-list .notifications .notification {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 0.5em;
-  padding: 1.5em;
-  border: solid 1px var(--gray3);
-  white-space: initial;
-  cursor: pointer;
-}
-
-.navbar .notification-list .notifications .notification:hover {
-  background-color: var(--light-gray);
-}
-.navbar .notification-list .notifications .notification .message {
-  font-size: 12px;
-  font-weight: 600;
-  line-height: 20px;
-}
-
-.navbar .notification-list .notifications .notification .date {
-  font-size: 10px;
-  color: var(--gray);
-}
+ 
+ 
 
 .navbar .notif {
   position: relative;

@@ -64,7 +64,7 @@
 /*--------------------------------------------------*/
 
 .popup-om {
-  padding: 2em 5em;
+  padding: 2em;
 }
 .popup-om .om-head {
   display: flex;
@@ -102,11 +102,13 @@
   flex-direction: column;
   gap: 1em;
   margin-bottom: 0.5em;
+  padding: 0 5em;
 }
 
 .om-label-line {
   display: flex;
   gap: 1em;
+  white-space: nowrap;
   font-size: 12px;
 }
 
@@ -125,11 +127,14 @@
   display: flex;
   flex-direction: column;
   gap: 0.5em;
+  padding: 0 3em;
 }
 
-.popup-om .om-foot {
+.generate-btn {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
 }
-
 /*--------------------------------------------------*/
 
 .popup-refuse .pop-ref {
@@ -144,8 +149,11 @@
   display: flex;
   justify-content: space-around;
   gap: 1em;
-  background-color: var(--light-gray);
+  background-color: #f8f8f8;
   padding: 0.5em;
+  white-space: nowrap;
+
+  text-overflow: ellipsis;
 }
 .state .etat {
   display: flex;
@@ -208,131 +216,97 @@
   font-size: 13px;
 }
 
-.popup-mission .employes,
-.popup-mission .taches,
-.popup-mission .deplacement,
-.popup-mission .info-creation,
-.popup-mission .info {
-  padding: 1em;
-  text-align: left;
-  border-radius: 2px;
+.popup-mission .head h3 {
+  text-transform: uppercase;
 }
-.popup-mission {
-  padding: 2em;
-  padding-top: 4em;
+.taches {
+  display: grid;
+  grid-gap: 10px;
 }
-.popup-mission .head {
+
+.taches span {
+  font-weight: bold;
+}
+.employes {
+  margin-top: 20px;
+}
+
+.employes span {
+  font-weight: bold;
+  font-size: 1.2em;
+  color: #333333;
+  margin-bottom: 10px;
+}
+
+.employes .employe {
+  display: inline-block;
+  background-color: #f2f2f2;
+  border-radius: 4px;
+  padding: 8px 12px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  font-size: 0.9em;
+  color: #666666;
+}
+
+.employes .employe:last-child {
+  margin-right: 0;
+}
+
+.employes .employe:hover {
+  background-color: #eaeaea;
+  cursor: default;
+}
+
+.tache {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  font-size: 11px;
-  text-align: left;
-  padding: 1em;
-}
-
-.popup-mission .info {
-  display: flex;
-  align-items: flex-start;
-  align-items: center;
-  gap: 2em;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  /* border-top: solid 1px lightgray; */
-  border-bottom: solid 1px lightgray;
-  overflow: scroll;
-  padding: 1em;
-}
-
-.popup-mission .info .info-mission,
-.popup-mission .info .info-budget {
-  text-align: left;
-}
-.popup-mission .employe {
-  margin: 1em 1em;
-}
-
-.popup-mission .deplacement {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5em;
-}
-
-.popup-mission .tache {
-  margin: 0.5em 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  text-align: justify;
-  gap: 2em;
-  padding: 0.5em 1.5em;
-  white-space: normal;
-  /* border: solid 1px var(--light-gray); */
-  box-shadow: 0px 1px 4px rgb(0 0 0 / 10%);
-}
-.popup-mission .tache .content {
-  font-size: 12px;
-  line-height: 18px;
-}
-.popup-mission .info-creation {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5em;
-  /* border-top: solid 1px lightgray; */
-  padding: 1em;
-  overflow-x: scroll;
-}
-
-.popup-mission .info-creation .crea-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1em;
-}
-
-.popup-mission .info-creation .crea-container div {
-  flex: 1;
-}
-.popup-mission input {
-  /* border: none;
-  outline: none; */
-}
-.popup-mission button {
-  padding: 0.3em !important;
-  font-size: 14px !important;
-  border-radius: 30px !important;
-}
-.itemDiv {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 4em;
-  padding: 0.3em;
-}
-.itemDiv .item-label {
-  /* flex: 1; */
-  font-weight: 500;
-}
-
-.itemDiv .item-content {
-  /* flex: 2; */
-  border: solid 1px lightgray;
+  background-color: #ffffff;
+  padding: 10px;
   border-radius: 5px;
-  padding: 0.5em 1em;
-  position: relative; /* add a relative position to the item-content div */
-  /* width: 200px; */
-  max-width: 200px;
-  min-width: 100px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.itemDiv .item-content::before {
-  content: ":";
-  position: absolute; /* set a absolute position for the pseudo-element */
-  top: 0;
-  left: -1em; /* move the pseudo-element to the left of the item-content div */
-  height: 100%;
-  width: 1em;
-  border-right: solid 1px lightgray; /* create a border on the pseudo-element */
+.tache .content {
+  flex: 1;
+  margin-right: 10px;
 }
+
+.tache .MuiCheckbox-root {
+  color: #555555;
+}
+
+.tache:nth-child(even) {
+  background-color: #f8f8f8;
+}
+
+.info-creation {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 20px;
+}
+
+.info-creation .itemDiv {
+  background-color: #ffffff;
+  padding: 15px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: left !important;
+}
+
+.info-creation .item-label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.info-creation .item-content {
+  color: #555555;
+}
+
+.info-last .itemDiv {
+  background-color: #f8f8f8;
+}
+
 /*---------------------------------------------------*/
 
 .popup-update span,
@@ -406,7 +380,10 @@
   align-items: flex-start;
   gap: 0.5em;
   padding: 1.5em;
+  white-space: nowrap;
 }
+/*  */
+
 .title {
   text-transform: uppercase;
   color: var(--black);
@@ -423,21 +400,28 @@
 }
 .popup button {
   background-color: var(--white);
+  border: none;
   border-radius: 4px;
-  box-shadow: 0px 1px 4px rgb(0 0 0 / 10%);
-  border: 1px solid var(--light-gray);
-  padding: 0.6em 1em;
-  font-size: 15px;
-  outline: none;
-  cursor: pointer;
-  font-weight: 600;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   color: var(--black);
-  font-family: "Montserrat", sans-serif !important;
-  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+  font-family: "Montserrat", sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  transition: background-color 0.3s ease-in-out;
+  width: 100px;
+  outline: none;
+  text-transform: capitalize;
+  padding: 1em 0;
 }
 
 .popup button:hover {
-  background-color: var(--red2);
+  background-color: var(--light-gray);
+}
+
+.popup button:focus {
+  background-color: var(--gray);
+  color: white;
 }
 
 /*________________________________________________*/

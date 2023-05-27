@@ -91,21 +91,7 @@ const PopupDC = ({ item }) => {
         <div className="etat">
           <OmLabelLine
             label="Etat"
-            content={
-              <span
-                style={{
-                  color:
-                    item.etat === "en-attente"
-                      ? "var(--orange)"
-                      : item.etat === "acceptée"
-                      ? "var(--success)"
-                      : "var(--error)",
-                  fontWeight: "600",
-                }}
-              >
-                {item.etat}
-              </span>
-            }
+            content={<span className={`${item.etat}`}>{item.etat}</span>}
           />
         </div>
         <OmLabelLine

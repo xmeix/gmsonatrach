@@ -108,7 +108,9 @@ const PopupOM = ({ item }) => {
         <hr />
         <div className="om-foot"></div>
       </div>
-      <button onClick={generateDocument}>Generate PDF</button>
+      <div className="generate-btn">
+        <button onClick={generateDocument}>Télécharger document</button>
+      </div>
     </>
   );
 };

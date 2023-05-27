@@ -174,7 +174,7 @@ io.on("connection", (socket) => {
   });
 });
 
-cron.schedule("25 00 * * *", async () => {
+cron.schedule("50 01 * * *", async () => {
   console.log("working in index.js");
 
   // Update missions with tDateDeb equal to current time

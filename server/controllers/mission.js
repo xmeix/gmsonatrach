@@ -306,7 +306,19 @@ const sendNotification = async (operation, body) => {
               { _id: { $ne: toId(user.id) } },
             ],
           });
-          let message2 = `une nouvelle mission de ${mission.tDateDeb} a ${mission.tDateRet} a été créé par ${user.nom} ${user.prenom}`;
+          let message2 = `une nouvelle mission de ${new Date(mission.tDateDeb)
+            .toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "2-digit",
+              day: "2-digit",
+            })
+            .replace(/\//g, "-")} a ${new Date(mission.tDateRet)
+            .toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "2-digit",
+              day: "2-digit",
+            })
+            .replace(/\//g, "-")} a été créé par ${user.nom} ${user.prenom}`;
           await createNotification({
             users: users2,
             message: message2,
@@ -333,14 +345,40 @@ const sendNotification = async (operation, body) => {
 
         if (etat === "annulée") {
           if (mission.etat === "acceptée") {
-            message = `Votre mission prévu pour ${mission.tDateDeb} a ${mission.tDateRet} a été ${etat}.`;
+            message = `Votre mission prévu pour ${new Date(mission.tDateDeb)
+              .toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "2-digit",
+                day: "2-digit",
+              })
+              .replace(/\//g, "-")} a ${new Date(mission.tDateRet)
+              .toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "2-digit",
+                day: "2-digit",
+              })
+              .replace(/\//g, "-")} a été ${etat}.`;
             users = employes;
             await createNotification({ users, message, path, type });
           }
         } else if (etat === "acceptée") {
           //envoyer a tous les employés
           users = employes;
-          message = `Vous avez été affecté(e) à une nouvelle mission de travail de ${mission.tDateDeb} a ${mission.tDateRet}`;
+          message = `Vous avez été affecté(e) à une nouvelle mission de travail de ${new Date(
+            mission.tDateDeb
+          )
+            .toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "2-digit",
+              day: "2-digit",
+            })
+            .replace(/\//g, "-")} a ${new Date(mission.tDateRet)
+            .toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "2-digit",
+              day: "2-digit",
+            })
+            .replace(/\//g, "-")}`;
           await createNotification({ users, message, path, type });
         }
 
@@ -350,9 +388,21 @@ const sendNotification = async (operation, body) => {
 
         message = `La ${
           mission.etat === "acceptée" ? "" : "demande"
-        } mission prévue pour ${mission.tDateDeb} a ${
-          mission.tDateRet
-        } a été ${etat} par ${updatedBy.nom} ${updatedBy.prenom}.`;
+        } mission prévue pour ${new Date(mission.tDateDeb)
+          .toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+          })
+          .replace(/\//g, "-")} a ${new Date(mission.tDateRet)
+          .toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+          })
+          .replace(/\//g, "-")} a été ${etat} par ${updatedBy.nom} ${
+          updatedBy.prenom
+        }.`;
 
         if (updatedBy.id !== createdBy.id) {
           // Send notification to the creator of the mission

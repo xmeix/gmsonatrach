@@ -1,39 +1,84 @@
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { FormControlLabel, FormGroup } from "@mui/material";
 import Checkbox from "@mui/material/Checkbox";
-import { useEffect, useState } from "react";
 import useBtn from "../../../hooks/useBtn";
-import { useSelector } from "react-redux";
-
+export const ItemDiv = ({ label, content }) => (
+  <div className="itemDiv">
+    <div className="item-label">{label}</div>
+    <div className="item-content">{content}</div>
+  </div>
+);
 const PopupMission = ({ item }) => {
   const [tasks, setTasks] = useState(item.taches);
   const [handleClick] = useBtn();
   const currentUser = useSelector((state) => state.auth.user);
-  const belongs = () => {
-    return item.employes.some((employee) => employee._id === currentUser._id);
-  };
+  const belongs = () =>
+    item.employes.some((employee) => employee._id === currentUser._id);
   const [budgetConsome, setBudgetConsomme] = useState(0);
+
   const handleCheck = (check, id) => {
     const newTasks = tasks.map((task) => {
       if (task._id === id) {
         return {
           ...task,
-          state: check, // update the `accomplie` property based on the checkbox value
+          state: check,
         };
       }
-      return task; // return the unchanged task for all other IDs
+      return task;
     });
 
     handleClick("check", item, "mission", "", newTasks);
     setTasks(newTasks);
   };
 
-  const ItemDiv = ({ label, content }) => {
-    return (
-      <div className="itemDiv">
-        <div className="item-label">{label}</div>
-        <div className="item-content">{content}</div>
-      </div>
-    );
+  const renderBudgetComponent = () => {
+    if (
+      item.etat === "terminée" &&
+      ["secretaire", "directeur", "responsable"].includes(currentUser.role)
+    ) {
+      if (item.budgetConsome === 0 || item.budgetConsome === null) {
+        return (
+          <div className="itemDiv">
+            <div className="item-label">Budget consommé</div>
+            <div className="bgt">
+              <input
+                type="number"
+                style={{
+                  width: "100px",
+                  height: "10px",
+                }}
+                min={0}
+                onChange={(e) => setBudgetConsomme(e.target.value)}
+              />
+              {["secretaire", "directeur", "responsable"].includes(
+                currentUser.role
+              ) && (
+                <button
+                  onClick={() => {
+                    if (budgetConsome) {
+                      handleClick("update", item, "mission", "", {
+                        budgetConsome: budgetConsome,
+                      });
+                    }
+                  }}
+                >
+                  OK
+                </button>
+              )}
+            </div>
+          </div>
+        );
+      } else {
+        return (
+          <ItemDiv
+            label="Budget Consomme"
+            content={item.budgetConsome + " DA"}
+          />
+        );
+      }
+    }
+    return null;
   };
 
   return (
@@ -45,15 +90,16 @@ const PopupMission = ({ item }) => {
           <div>
             <span>Etat:</span>
             <span
-              style={{
-                color:
-                  item.etat === "en-attente"
-                    ? "var(--orange)"
-                    : item.etat === "acceptée"
-                    ? "var(--success)"
-                    : "var(--error)",
-                fontWeight: "600",
-              }}
+              className={`${item.etat}`}
+              // style={{
+              //   color:
+              //     item.etat === "en-attente"
+              //       ? "var(--orange)"
+              //       : item.etat === "acceptée"
+              //       ? "var(--success)"
+              //       : "var(--error)",
+              //   fontWeight: "600",
+              // }}
             >
               {item.etat}
             </span>
@@ -61,11 +107,6 @@ const PopupMission = ({ item }) => {
           <div>
             <span>Raison du refus:</span> {item.raisonRefus || "/"}
           </div>
-          {/* {item.etat === "refusée" && (
-          <div>
-            <span>Raison du refus:</span> {item.raisonRefus}
-          </div>
-        )} */}
         </div>
       </div>
       <div className="info-creation">
@@ -75,63 +116,22 @@ const PopupMission = ({ item }) => {
             content={Intl.DateTimeFormat(["ban", "id"]).format(
               new Date(item.tDateDeb)
             )}
-          />{" "}
+          />
           <ItemDiv
             label="Date fin mission"
             content={Intl.DateTimeFormat(["ban", "id"]).format(
               new Date(item.tDateRet)
             )}
           />
-          <ItemDiv label="Structure" content={item.structure} />{" "}
-          <ItemDiv label="Type" content={item.type} />{" "}
-          <ItemDiv label="Observation" content={item.observation || " / "} />{" "}
+          <ItemDiv label="Structure" content={item.structure} />
+          <ItemDiv label="Type" content={item.type} />
+          <ItemDiv label="Observation" content={item.observation || " / "} />
         </div>
         <div>
-          <ItemDiv label="Budget" content={item.budget + " DA"} />{" "}
-          {item.etat === "terminée" &&
-            ["secretaire", "directeur", "responsable"].includes(
-              currentUser.role
-            ) &&
-            (item.budgetConsome === 0 || item.budgetConsome === null ? (
-              <div className="itemDiv">
-                <div className="item-label">Budget consommé</div>
-                <div className="bgt">
-                  <input
-                    type="number"
-                    style={{
-                      width: "100px",
-                      height: "10px",
-                    }}
-                    min={0}
-                    onChange={(e) => setBudgetConsomme(e.target.value)}
-                  />
-                  {["secretaire", "directeur", "responsable"].includes(
-                    currentUser.role
-                  ) && (
-                    <button
-                      onClick={() => {
-                        //handle update budget consomme
-                        if (budgetConsome) {
-                          handleClick("update", item, "mission", "", {
-                            budgetConsome: budgetConsome,
-                          });
-                        }
-                      }}
-                    >
-                      OK
-                    </button>
-                  )}
-                </div>
-              </div>
-            ) : (
-              <ItemDiv
-                label="Budget Consomme"
-                content={item.budgetConsome + " DA"}
-              />
-            ))}
+          <ItemDiv label="Budget" content={item.budget + " DA"} />
+          {renderBudgetComponent()}
         </div>
       </div>
-
       <div className="employes">
         <span>Employes:</span>
         {item.employes.map((emp, i) => (
@@ -145,11 +145,8 @@ const PopupMission = ({ item }) => {
         {tasks.map((tache, i) => (
           <div className="tache" key={i}>
             <div className="content">{tache.content}</div>
-
             <Checkbox
-              disabled={
-                item.etat !== "en-cours" || belongs() === false ? true : false
-              }
+              disabled={item.etat !== "en-cours" || !belongs()}
               checked={tache.state === "accomplie"}
               onClick={() =>
                 handleCheck(
@@ -161,9 +158,8 @@ const PopupMission = ({ item }) => {
           </div>
         ))}
       </div>
-
       <div className="info-creation">
-        <ItemDiv label="Pays" content={item.pays} />{" "}
+        <ItemDiv label="Pays" content={item.pays} />
         <ItemDiv
           label="Moyen de transport aller"
           content={item.moyenTransport.join(" - ")}
@@ -175,8 +171,7 @@ const PopupMission = ({ item }) => {
         <ItemDiv label="Lieu de depart" content={item.lieuDep || "Alger"} />
         <ItemDiv label="lieu de destination" content={item.destination} />
       </div>
-
-      <div className="info-creation">
+      <div className="info-creation info-last">
         <div className="crea-container">
           <ItemDiv
             label="Créé le"
@@ -189,7 +184,6 @@ const PopupMission = ({ item }) => {
             content={item.createdBy.nom + " " + item.createdBy.prenom}
           />
         </div>
-
         <div className="crea-container">
           <ItemDiv
             label="Dernière modification le"

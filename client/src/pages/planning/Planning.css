@@ -14,11 +14,12 @@
 }
 
 .planning .departmentName {
-  font-size: 11px;
+  font-size: 13px;
   text-align: center;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 2px;
+  margin-top: 1.5em;
 }
 
 .tab {
@@ -26,18 +27,19 @@
   border-radius: 5px;
   text-align: center;
   background-color: white;
-  padding: 1em 0;
+  padding: 0 0;
 }
 
 .tab .schedule-head {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 1.5em;
+  padding: 0.5em 1.5em;
 }
 
 .tab .schedule-head p {
-  font-weight: 800;
+  font-weight: 700;
+  font-size: 12px;
   text-transform: uppercase;
   font-family: "Montserrat", sans-serif !important;
 }
@@ -92,4 +94,46 @@
   cursor: pointer;
   transition: all 0.5s ease-in-out;
   border-right: solid 1px var(--light-gray);
+}
+
+.search-container,
+.filter-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.search-container .label,
+.filter-container .label {
+  text-align: left;
+  color: var(--gray);
+  font-weight: 600;
+  font-size: 11px;
+  padding-left: 0.5em;
+  margin: 0.3em;
+}
+
+.search-box,
+.select-filter {
+  width: 150px !important;
+  border: 1px solid #ccc !important;
+  border-radius: 4px;
+  background-color: #fff;
+  font-size: 11px !important;
+  color: #333;
+  padding: 0.3em 1em !important;
+  box-shadow: none;
+}
+
+.search-box:focus,
+.select-filter:focus {
+  outline: none;
+  /* box-shadow: 0 0 0 2px var(--orange3); */
+}
+
+.planning-control {
+  display: flex;
+  width: 90vw;
+  justify-content: flex-end;
+  gap: 1em;
 }
