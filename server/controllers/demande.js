@@ -223,57 +223,98 @@ export const updateDemEtat = async (req, res) => {
       const relex = await User.find({ role: "relex" });
 
       // Check if the DC is accepted
-      if (updatedDemande.type === "DC" && updatedDemande.etat === "acceptée") {
+      if (updatedDemande.__t === "DC" && updatedDemande.etat === "acceptée") {
         const missions = await Mission.find({
-          employes: { $in: [updatedDemande.createdBy] },
-          tDateDeb: { $lte: updatedDemande.DateRetour },
-          tDateRet: { $gte: updatedDemande.DateDepart },
-          etat: { $ne: "annulée" },
+          employes: updatedDemande.idEmetteur,
+          $or: [
+            {
+              $and: [
+                { tDateDeb: { $lte: updatedDemande.DateRetour } },
+                { tDateRet: { $gte: updatedDemande.DateDepart } },
+              ],
+            },
+            {
+              $and: [
+                { tDateDeb: { $gte: updatedDemande.DateDepart } },
+                { tDateRet: { $lte: updatedDemande.DateRetour } },
+              ],
+            },
+            {
+              $and: [
+                { tDateDeb: { $lte: updatedDemande.DateDepart } },
+                { tDateRet: { $gte: updatedDemande.DateRetour } },
+              ],
+            },
+          ],
+          etat: { $nin: ["annulée", "refusée", "terminée"] },
         });
 
         for (const mission of missions) {
           if (
             mission.employes.length === 1 &&
-            mission.employes[0]._id.equals(updatedDemande.createdBy)
+            mission.employes[0].equals(updatedDemande.idEmetteur)
           ) {
+            console.log("here1");
             mission.etat = "annulée";
             await mission.save();
 
-            await createNotification(req, res, {
-              users: [...destinataires, updatedDemande.createdBy, ...relex],
-              message: `le voyage d'affaires prévu entre le ${mission.tDateDeb} et le ${mission.tDateRet} a été annulé`,
+            await createNotification({
+              users: [...destinataires, updatedDemande.idEmetteur, ...relex],
+              message: `le voyage d'affaires prévu entre le ${new Date(
+                mission.tDateDeb
+              )
+                .toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "2-digit",
+                  day: "2-digit",
+                })
+                .replace(/\//g, "-")} et le ${new Date(mission.tDateRet)
+                .toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "2-digit",
+                  day: "2-digit",
+                })
+                .replace(/\//g, "-")} a été annulé`,
               path: "",
               type: "",
             });
           } else if (mission.employes.length > 1) {
-            const employeId = updatedDemande.createdBy;
+            console.log("here2");
+            const employeId = updatedDemande.idEmetteur;
             mission.employes = mission.employes.filter(
-              (employe) => !employe._id.equals(employeId)
+              (employe) => !employe.equals(employeId)
             );
             await mission.save();
 
-            await createNotification(req, res, {
-              users: [updatedDemande.createdBy],
-              message: `le voyage d'affaires prévu entre le ${mission.tDateDeb} et le ${mission.tDateRet} a été annulé`,
+            await createNotification({
+              users: [updatedDemande.idEmetteur],
+              message: `votre voyage d'affaires prévu entre le ${new Date(
+                mission.tDateDeb
+              )
+                .toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "2-digit",
+                  day: "2-digit",
+                })
+                .replace(/\//g, "-")} et le ${new Date(mission.tDateRet)
+                .toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "2-digit",
+                  day: "2-digit",
+                })
+                .replace(/\//g, "-")} a été annulé`,
               path: "",
               type: "",
             });
           }
-          const employeId = updatedDemande.createdBy;
-          await User.updateOne(
-            { _id: employeId },
-            { $set: { etat: "non-missionnaire" } }
-          );
         }
       }
 
       //____________________________________________________________________________________
       if (req.body.etat) {
         const updatedBy = await User.findById(req.user.id);
-        // console.log("______________________________________________");
-        // console.log(updatedBy);
-        // console.log("______________________________________________");
-        sendRequestNotification("update", {
+
+        await sendRequestNotification("update", {
           oldDemande: populatedDemande,
           etat: req.body.etat,
           updatedBy: updatedBy,

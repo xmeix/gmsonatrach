@@ -109,29 +109,33 @@ const PopupMission = ({ item }) => {
           </div>
         </div>
       </div>
-      <div className="info-creation">
-        <div>
-          <ItemDiv
-            label="Date debut mission"
-            content={Intl.DateTimeFormat(["ban", "id"]).format(
-              new Date(item.tDateDeb)
-            )}
-          />
-          <ItemDiv
-            label="Date fin mission"
-            content={Intl.DateTimeFormat(["ban", "id"]).format(
-              new Date(item.tDateRet)
-            )}
-          />
-          <ItemDiv label="Structure" content={item.structure} />
-          <ItemDiv label="Type" content={item.type} />
-          <ItemDiv label="Observation" content={item.observation || " / "} />
+      <>
+        {" "}
+        <span className="plus">Information sur la mission:</span>
+        <div className="info-creation">
+          <div>
+            <ItemDiv
+              label="Date debut mission"
+              content={Intl.DateTimeFormat(["ban", "id"]).format(
+                new Date(item.tDateDeb)
+              )}
+            />
+            <ItemDiv
+              label="Date fin mission"
+              content={Intl.DateTimeFormat(["ban", "id"]).format(
+                new Date(item.tDateRet)
+              )}
+            />
+            <ItemDiv label="Structure" content={item.structure} />
+            <ItemDiv label="Type" content={item.type} />
+            <ItemDiv label="Observation" content={item.observation || " / "} />
+          </div>
+          <div>
+            <ItemDiv label="Budget" content={item.budget + " DA"} />
+            {renderBudgetComponent()}
+          </div>
         </div>
-        <div>
-          <ItemDiv label="Budget" content={item.budget + " DA"} />
-          {renderBudgetComponent()}
-        </div>
-      </div>
+      </>
       <div className="employes">
         <span>Employes:</span>
         {item.employes.map((emp, i) => (
@@ -158,19 +162,22 @@ const PopupMission = ({ item }) => {
           </div>
         ))}
       </div>
-      <div className="info-creation">
-        <ItemDiv label="Pays" content={item.pays} />
-        <ItemDiv
-          label="Moyen de transport aller"
-          content={item.moyenTransport.join(" - ")}
-        />
-        <ItemDiv
-          label="Moyen de transport retour"
-          content={item.moyenTransportRet.join(" - ")}
-        />
-        <ItemDiv label="Lieu de depart" content={item.lieuDep || "Alger"} />
-        <ItemDiv label="lieu de destination" content={item.destination} />
-      </div>
+      <>
+        <span className="plus">Plus d'information sur la mission:</span>
+        <div className="info-creation">
+          <ItemDiv label="Pays" content={item.pays} />
+          <ItemDiv
+            label="Moyen de transport aller"
+            content={item.moyenTransport.join(" - ")}
+          />
+          <ItemDiv
+            label="Moyen de transport retour"
+            content={item.moyenTransportRet.join(" - ")}
+          />
+          <ItemDiv label="Lieu de depart" content={item.lieuDep || "Alger"} />
+          <ItemDiv label="lieu de destination" content={item.destination} />
+        </div>
+      </>
       <div className="info-creation info-last">
         <div className="crea-container">
           <ItemDiv

@@ -26,6 +26,7 @@ const Planning = () => {
     date.getMonth() + 1,
     0
   ).getDate();
+  const currentDay = new Date().getDate();
 
   const currentUser = useSelector((state) => state.auth.user);
   // const resources = useMemo(() => {
@@ -269,7 +270,12 @@ const Planning = () => {
                   </>
                 )}
                 {[...Array(daysInMonth)].map((_, index) => (
-                  <th key={index} className="planning-th">
+                  <th
+                    key={index}
+                    className={`planning-th${
+                      currentDay === index + 1 ? " current-day" : ""
+                    }`}
+                  >
                     {index + 1}
                   </th>
                 ))}

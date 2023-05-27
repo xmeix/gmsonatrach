@@ -1,5 +1,5 @@
 .planning {
-  text-align: center;
+  /* text-align: center; */
   white-space: nowrap;
   display: flex;
   flex-direction: column;
@@ -136,4 +136,7 @@
   width: 90vw;
   justify-content: flex-end;
   gap: 1em;
+}
+.current-day {
+  border: solid 1px black;
 }

@@ -224,18 +224,18 @@
   grid-gap: 10px;
 }
 
-.taches span {
-  font-weight: bold;
-}
-.employes {
-  margin-top: 20px;
-}
-
-.employes span {
-  font-weight: bold;
+.taches span,
+.employes span,
+.popup-mission .plus {
+  font-weight: 600 !important;
   font-size: 1.2em;
   color: #333333;
   margin-bottom: 10px;
+  border-left: solid 4px #333333;
+  padding-left: 0.5em;
+}
+.employes {
+  margin-top: 20px;
 }
 
 .employes .employe {

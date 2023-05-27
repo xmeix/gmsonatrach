@@ -102,20 +102,23 @@ export const useAxios = () => {
         }
 
         break;
-      case "/demande/DB":
       case "/demande/DC":
+      case "/demande/DB":
       case "/demande/DM":
       case "/demande":
         getDemandes(dispatch);
+        getMissions(dispatch);
+        getOMs(dispatch);
         if (currentUser.role !== "employe" && currentUser.role !== "relex") {
           getFileKPIS(dispatch, 1);
+          getMissionKPIS(dispatch, 1);
         }
         break;
       case "/auth/user":
         if (currentUser.role !== "employe" && currentUser.role !== "relex") {
           getUsers(dispatch);
         }
-        break; 
+        break;
       case "/rapportFM":
         if (currentUser.role === "employe" && !body.etat) {
           getRFMs(dispatch, 1);
