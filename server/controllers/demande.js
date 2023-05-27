@@ -260,9 +260,7 @@ export const updateDemEtat = async (req, res) => {
 
             await createNotification({
               users: [...destinataires, updatedDemande.idEmetteur, ...relex],
-              message: `le voyage d'affaires prévu entre le ${new Date(
-                mission.tDateDeb
-              )
+              message: `la mission prévu entre le ${new Date(mission.tDateDeb)
                 .toLocaleDateString("en-US", {
                   year: "numeric",
                   month: "2-digit",
@@ -276,7 +274,7 @@ export const updateDemEtat = async (req, res) => {
                 })
                 .replace(/\//g, "-")} a été annulé`,
               path: "",
-              type: "",
+              type: "mission",
             });
           } else if (mission.employes.length > 1) {
             console.log("here2");
@@ -288,7 +286,7 @@ export const updateDemEtat = async (req, res) => {
 
             await createNotification({
               users: [updatedDemande.idEmetteur],
-              message: `votre voyage d'affaires prévu entre le ${new Date(
+              message: `votre mission prévue entre le ${new Date(
                 mission.tDateDeb
               )
                 .toLocaleDateString("en-US", {
@@ -304,7 +302,7 @@ export const updateDemEtat = async (req, res) => {
                 })
                 .replace(/\//g, "-")} a été annulé`,
               path: "",
-              type: "",
+              type: "mission",
             });
           }
         }
@@ -330,10 +328,10 @@ export const updateDemEtat = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
- 
+
 const sendRequestNotification = async (operation, body) => {
   let path = "";
-  let type = "";
+  let type = "demande";
   let users;
   let message;
   let users2;
@@ -364,7 +362,7 @@ const sendRequestNotification = async (operation, body) => {
             users: users,
             message: message,
             path,
-            type,
+            type: typeD,
           });
 
           //trouver les relex et leurs informer de la demande
@@ -375,7 +373,7 @@ const sendRequestNotification = async (operation, body) => {
             users: users2,
             message: message2,
             path,
-            type,
+            type: typeD,
           });
 
           break;
@@ -401,7 +399,7 @@ const sendRequestNotification = async (operation, body) => {
             users: users,
             message: message,
             path,
-            type,
+            type: typeD,
           });
           break;
 
@@ -451,7 +449,7 @@ const sendRequestNotification = async (operation, body) => {
           users: users2,
           message: message2,
           path,
-          type,
+          type: typeDemande,
         });
       } else {
         users = [emetteur.id];
@@ -460,7 +458,7 @@ const sendRequestNotification = async (operation, body) => {
           users: users,
           message: message,
           path,
-          type,
+          type: typeDemande,
         });
 
         users2 = await User.find({
@@ -475,7 +473,7 @@ const sendRequestNotification = async (operation, body) => {
           users: users2,
           message: message2,
           path,
-          type,
+          type: typeDemande,
         });
       }
 

@@ -40,6 +40,34 @@ const GestionModification = lazy(() =>
 const GestionConge = lazy(() => import("./pages/profilEmploye/GestionConge"));
 
 export const socket = io("http://localhost:3001");
+// Define reusable arrays for route configurations based on user roles
+const adminRoutes = [
+  { path: "/", element: <MissionDashboard /> },
+  { path: "/users-analytics", element: <UsersDashboard /> },
+  { path: "/files-analytics", element: <FilesDashboard /> },
+  { path: "/cost-analytics", element: <CostDashboard /> },
+  { path: "/gestion-des-mission", element: <GestionMission /> },
+  { path: "/gestion-des-employes", element: <GestionEmploye /> },
+  { path: "/gestion-service-relex", element: <GestionRelex /> },
+  { path: "/gestion-c-m-rfm", element: <GestionCMR /> },
+];
+
+const employeRoutes = [
+  { path: "/", element: <Planning /> },
+  { path: "/gestion-des-mission", element: <GestionMission /> },
+  { path: "/gestion-modification", element: <GestionModification /> },
+  { path: "/gestion-conge", element: <GestionConge /> },
+];
+
+const secretaireRoutes = [
+  { path: "/", element: <Planning /> },
+  { path: "/gestion-des-mission", element: <GestionMission /> },
+  { path: "/gestion-des-employes", element: <GestionEmploye /> },
+  { path: "/gestion-service-relex", element: <GestionRelex /> },
+  { path: "/gestion-c-m-rfm", element: <GestionCMR /> },
+];
+
+const relexRoutes = [{ path: "/", element: <GestionRelex /> }];
 
 function App() {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
@@ -50,7 +78,7 @@ function App() {
 
   // const employees = users.map((u) => u._id);
   // console.log(JSON.stringify(employees));
-  
+
   const handleSocketData = (type) => {
     switch (type) {
       case "demande":
@@ -123,57 +151,40 @@ function App() {
     };
   }, []);
 
+  let routes = [];
+
   if (!isLoggedIn) {
-    element = (
-      <>
-        <Route exact path="/" element={<LoginPage />} />{" "}
-        <Route path="*" element={<Navigate to="/" />} />
-      </>
-    );
-  } else if (currentUser.role === "employe") {
-    element = (
-      <>
-        <Route exact path="/" element={<Planning />} />
-        <Route path="/gestion-des-mission" element={<GestionMission />} />
-        <Route path="/gestion-modification" element={<GestionModification />} />
-        <Route path="/gestion-conge" element={<GestionConge />} />
-        <Route path="*" element={<Navigate to="/" />} />
-      </>
-    );
-  } else if (
-    currentUser.role === "responsable" ||
-    currentUser.role === "secretaire" ||
-    currentUser.role === "directeur"
-  ) {
-    element = (
-      <>
-        <Route exact path="/" element={<MissionDashboard />} />
-        <Route exact path="/users-analytics" element={<UsersDashboard />} />
-        <Route exact path="/files-analytics" element={<FilesDashboard />} />
-        <Route exact path="/cost-analytics" element={<CostDashboard />} />
-        <Route path="/planification" element={<Planning />} />
-        <Route path="/gestion-des-mission" element={<GestionMission />} />
-        <Route path="/gestion-des-employes" element={<GestionEmploye />} />
-        <Route path="/gestion-service-relex" element={<GestionRelex />} />
-        <Route path="/gestion-c-m-rfm" element={<GestionCMR />} />
-        <Route path="*" element={<Navigate to="/" />} />
-      </>
-    );
-  } else if (currentUser.role === "relex") {
-    element = (
-      <>
-        <Route exact path="/" element={<GestionRelex />} />{" "}
-        <Route path="*" element={<Navigate to="/" />} />
-      </>
-    );
+    routes = [{ path: "/", element: <LoginPage /> }];
+  } else {
+    switch (currentUser?.role) {
+      case "employe":
+        routes = employeRoutes;
+        break;
+      case "secretaire":
+        routes = secretaireRoutes;
+        break;
+      case "responsable":
+      case "directeur":
+        routes = [...adminRoutes, ...secretaireRoutes];
+        break;
+      case "relex":
+        routes = relexRoutes;
+        break;
+      default:
+        break;
+    }
   }
 
   return (
     <div className="app">
-      {/* <Formulaire /> */}
       {isLoggedIn && <NavBar />}
       <Suspense fallback={<Loading />}>
-        <Routes>{element}</Routes>
+        <Routes>
+          {routes.map((route, index) => (
+            <Route key={index} path={route.path} element={route.element} />
+          ))}
+          <Route path="*" element={<Navigate to="/" />} />
+        </Routes>
       </Suspense>
     </div>
   );

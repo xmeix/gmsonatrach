@@ -59,11 +59,11 @@ export const getAllRapports = async (req, res) => {
 
 const sendRFMNotification = async (body) => {
   let path = "";
-  let type = "";
+  let type = "RFM";
   let users;
-  let message; 
+  let message;
   const { rfm, etat } = body;
- 
+
   //idEmploye
   if (etat === "créé") {
     //refusé

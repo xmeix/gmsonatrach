@@ -6,6 +6,13 @@ export const titles = [
   { id: 5, title: "Missions", path: "/gestion-des-mission" }, // Tableau des missions + formulaire
   { id: 6, title: "Congé et Rapports", path: "/gestion-c-m-rfm" }, //Tableaux de RFM et Congé, formulaires de modification
 ];
+export const secTitles = [
+  { id: 2, title: "Planification", path: "/" },
+  { id: 3, title: "Employés", path: "/gestion-des-employes" }, // Tableau utilisateur + formulaire
+  { id: 4, title: "Service Relex", path: "/gestion-service-relex" }, //Tableau de billetterie + formulaire
+  { id: 5, title: "Missions", path: "/gestion-des-mission" }, // Tableau des missions + formulaire
+  { id: 6, title: "Congé et Rapports", path: "/gestion-c-m-rfm" }, //Tableaux de RFM et Congé, formulaires de modification
+];
 
 export const employeTitles = [
   { id: 1, title: "Planification", path: "/" },

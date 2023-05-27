@@ -5,7 +5,12 @@ import MenuRoundedIcon from "@mui/icons-material/Menu";
 import MenuBar from "../menuBar/MenuBar";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import { useDispatch, useSelector } from "react-redux";
-import { titles, employeTitles, relexTitles } from "../../data/navdata";
+import {
+  titles,
+  employeTitles,
+  relexTitles,
+  secTitles,
+} from "../../data/navdata";
 import { useAxios } from "../../hooks/useAxios";
 import { v4 as uuidv4 } from "uuid";
 import NotificationsActiveRoundedIcon from "@mui/icons-material/NotificationsActiveRounded";
@@ -62,9 +67,11 @@ const NavBar = () => {
   const [navData] = useState(() => {
     switch (user?.role) {
       case "directeur":
-      case "secretaire":
       case "responsable":
         return titles;
+      case "secretaire":
+        return secTitles;
+        break;
       case "employe":
         return employeTitles;
       case "relex":

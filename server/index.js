@@ -179,12 +179,10 @@ cron.schedule("50 01 * * *", async () => {
 
   // Update missions with tDateDeb equal to current time
   const currentDate = moment().format("YYYY-MM-DD");
-  const missionsEnCours = await Mission.find(
-    {
-      tDateDeb: { $eq: currentDate },
-      etat: "acceptée",
-    } 
-  );
+  const missionsEnCours = await Mission.find({
+    tDateDeb: { $eq: currentDate },
+    etat: "acceptée",
+  });
 
   for (const mission of missionsEnCours) {
     const employeIds = mission.employes.map((employe) => employe._id);
@@ -228,7 +226,7 @@ cron.schedule("50 01 * * *", async () => {
       message:
         "Votre rapport de fin de mission a été créé et doit être rempli dans les délais impartis. Merci de prendre les mesures nécessaires pour le compléter.",
       path: "",
-      type: "",
+      type: "RFM",
     });
     //__________________________________________________
   }
@@ -254,7 +252,7 @@ cron.schedule("50 01 * * *", async () => {
       message:
         "votre demande de mission a été automatiquement rejetée en raison d'une absence de réponse.",
       path: "",
-      type: "",
+      type: "mission",
     });
     //____________________________________________________________________________________
   }
@@ -279,7 +277,7 @@ cron.schedule("50 01 * * *", async () => {
       message:
         "Mission réussie ! Merci de nous envoyer votre rapport de fin de mission dûment rempli.",
       path: "",
-      type: "",
+      type: "RFM",
     });
     //____________________________________________________________________________________
   }

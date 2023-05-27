@@ -277,7 +277,7 @@ export const updateMissionEtat = async (req, res) => {
 const sendNotification = async (operation, body) => {
   let users;
   let message;
-  let path = "";
+  let path = "mission";
   let type = "";
   switch (operation) {
     case "creation":
