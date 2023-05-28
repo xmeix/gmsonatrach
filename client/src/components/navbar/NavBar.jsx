@@ -30,8 +30,8 @@ const NavBar = () => {
   useEffect(() => {
     function handleClickOutside(event) {
       if (
-        notificationsRef.current &&
-        !notificationsRef.current.contains(event.target)
+        !event.target.classList.contains("icon") &&
+        !event.target.closest(".notification-list")
       ) {
         setShowNotifications(false);
       }
@@ -197,7 +197,9 @@ const NavBar = () => {
             className="icon"
             onClick={handleNotificationsClick}
           />
-          <div className="notif-number">{notifications.length}</div>
+          <div className="notif-number">
+            {notifications.filter((notif) => !notif.isRead).length}
+          </div>
         </div>
         <button type="button" className="logoutBtn" onClick={handleLogout}>
           logout

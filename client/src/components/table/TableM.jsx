@@ -341,7 +341,8 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
             item?.etat === filterOption.toString() ||
             item?.structure === filterOption.toString() ||
             item?.role === filterOption.toString() ||
-            item?.moyenTransport === filterOption.toString() ||
+            item?.moyenTransport.includes(filterOption.toString()) ||
+            item?.moyenTransportRet.includes(filterOption.toString()) ||
             item?.type === filterOption.toString() ||
             item?.mission?.structure === filterOption.toString());
       }

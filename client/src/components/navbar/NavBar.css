@@ -103,8 +103,6 @@
   white-space: initial;
   text-align: center;
 }
- 
- 
 
 .navbar .notif {
   position: relative;
@@ -112,11 +110,11 @@
 .navbar .notif .notif-number {
   position: absolute;
   top: -0.5em;
-  right: -1em;
+  right: -0.5em;
   background-color: var(--orange1);
   border-radius: 30px;
   padding: 1px 5px;
-  font-size: 11px;
+  font-size: 9px;
   font-weight: 600;
   color: var(--black);
 }

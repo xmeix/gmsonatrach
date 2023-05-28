@@ -10,7 +10,17 @@ const Notification = ({ notification }) => {
   const { user } = useSelector((state) => state.auth);
   const { callApi } = useAxios();
 
-  const notificationTypes = () => {
+  const formattedDate = (createdAt) => {
+    const date = new Date(createdAt);
+    const options = {
+      day: "numeric",
+      month: "numeric",
+      year: "numeric",
+    };
+    return date.toLocaleDateString("fr-FR", options).split("/").join("-");
+  };
+
+  const getNotificationTypes = () => {
     switch (user?.role) {
       case "directeur":
       case "secretaire":
@@ -25,19 +35,10 @@ const Notification = ({ notification }) => {
     }
   };
 
-  const formattedDate = (createdAt) => {
-    const date = new Date(createdAt);
-    const options = {
-      day: "numeric",
-      month: "numeric",
-      year: "numeric",
-    };
-    return date.toLocaleDateString("fr-FR", options).split("/").join("-");
-  };
-
-  const type = notificationTypes().type;
-  const path = notificationTypes().path;
-
+  const [notificationTypes] = useState(getNotificationTypes);
+  const { type, path } = notificationTypes.find(
+    (item) => item.type === notification.type
+  ) || { type: "", path: "/" };
   return (
     <NavLink
       onClick={() => {
@@ -47,7 +48,7 @@ const Notification = ({ notification }) => {
           });
         }
       }}
-      to={notification.type === type ? path : "/"}
+      to={path}
       className={`notification link ${
         notification.isRead ? "isRead" : "notRead"
       }`}
