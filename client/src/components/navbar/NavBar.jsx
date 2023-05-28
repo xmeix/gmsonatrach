@@ -80,27 +80,27 @@ const NavBar = () => {
         return [];
     }
   });
-  const [profileTitle] = useState(() => {
-    switch (user?.role) {
-      case "directeur":
-        return "Directeur";
-        break;
-      case "responsable":
-        return "Sous-directeur";
-        break;
-      case "secretaire":
-        return "Secrétaire";
-        break;
-      case "relex":
-        return "Service Relex";
-        break;
-      case "employe":
-        return "Employé";
-        break;
-      default:
-        "";
-    }
-  });
+  // const [profileTitle] = useState(() => {
+  //   switch (user?.role) {
+  //     case "directeur":
+  //       return "Directeur";
+  //       break;
+  //     case "responsable":
+  //       return "Sous-directeur";
+  //       break;
+  //     case "secretaire":
+  //       return "Secrétaire";
+  //       break;
+  //     case "relex":
+  //       return "Service Relex";
+  //       break;
+  //     case "employe":
+  //       return "Employé";
+  //       break;
+  //     default:
+  //       "";
+  //   }
+  // });
 
   const handleMenu = () => {
     setIsOpen(true);

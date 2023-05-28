@@ -248,9 +248,7 @@ const Formulaire = ({ title, entries, buttons, type }) => {
         {updatedEntries.map((entry, i) => {
           return (
             <div className="inputGroup" key={i}>
-              {allowField(entry.id) && (
-                <label htmlFor={entry.label}>{entry.label}</label>
-              )}
+              {allowField(entry.id) && <label>{entry.label}</label>}
 
               {entry.inputType !== "textarea" &&
                 entry.inputType !== "select" &&

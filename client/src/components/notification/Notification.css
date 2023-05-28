@@ -21,3 +21,10 @@
   font-size: 10px;
   color: var(--gray);
 }
+
+.isRead {
+  background-color: var(--light-gray);
+}
+.notRead {
+  background-color: var(--orange3) !important;
+}

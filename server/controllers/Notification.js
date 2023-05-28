@@ -30,3 +30,17 @@ export const getNotifications = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+
+export const alterNotification = async (req, res) => {
+  try {
+    const updatedNotification = await Notification.findByIdAndUpdate(
+      req.params.id,
+      { ...req.body },
+      { new: true }
+    );
+    emitData("notification");
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
+};

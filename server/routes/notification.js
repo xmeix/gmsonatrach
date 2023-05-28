@@ -1,6 +1,10 @@
-import express from "express";  
+import express from "express";
 import { verifyToken } from "../middleware/auth.js";
-import { createNotification, getNotifications } from "../controllers/Notification.js";
+import {
+  alterNotification,
+  createNotification,
+  getNotifications,
+} from "../controllers/Notification.js";
 
 const router = express.Router();
 
@@ -8,6 +12,7 @@ const router = express.Router();
 router.post("/", verifyToken, createNotification);
 
 /** READ */
-router.get("/", verifyToken, getNotifications); 
+router.get("/", verifyToken, getNotifications);
+router.patch("/:id", verifyToken, alterNotification);
 
 export default router;

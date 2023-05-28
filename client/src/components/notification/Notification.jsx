@@ -2,38 +2,58 @@ import { useState } from "react";
 import "./Notification.css";
 import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { employeNotific, notific, relexNotific } from "../../data/navdata";
+import { convertLength } from "@mui/material/styles/cssUtils";
+import { useAxios } from "../../hooks/useAxios";
 
 const Notification = ({ notification }) => {
   const { user } = useSelector((state) => state.auth);
-  
-  const [navData] = useState(() => {
+  const { callApi } = useAxios();
+
+  const notificationTypes = () => {
     switch (user?.role) {
       case "directeur":
       case "secretaire":
       case "responsable":
-        return [];
+        return notific;
       case "employe":
-        return [];
+        return employeNotific;
       case "relex":
-        return [];
+        return relexNotific;
       default:
         return [];
     }
-  });
+  };
+
+  const formattedDate = (createdAt) => {
+    const date = new Date(createdAt);
+    const options = {
+      day: "numeric",
+      month: "numeric",
+      year: "numeric",
+    };
+    return date.toLocaleDateString("fr-FR", options).split("/").join("-");
+  };
+
+  const type = notificationTypes().type;
+  const path = notificationTypes().path;
 
   return (
-    <NavLink to={notification.path} className="notification link">
-      <div className="message">{notification.message}</div>{" "}
-      <div className="date">
-        {new Date(notification.createdAt)
-          .toLocaleDateString("fr-FR", {
-            day: "numeric",
-            month: "numeric",
-            year: "numeric",
-          })
-          .split("/")
-          .join("-")}
-      </div>
+    <NavLink
+      onClick={() => {
+        if (!notification.isRead) {
+          callApi("patch", `/notification/${notification._id}`, {
+            isRead: true,
+          });
+        }
+      }}
+      to={notification.type === type ? path : "/"}
+      className={`notification link ${
+        notification.isRead ? "isRead" : "notRead"
+      }`}
+    >
+      <div className="message">{notification.message}</div>
+      <div className="date">{formattedDate(notification.createdAt)}</div>
     </NavLink>
   );
 };

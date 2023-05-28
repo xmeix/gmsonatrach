@@ -58,8 +58,9 @@ export const useAxios = () => {
           } else if (url.includes("/mission")) {
             handleSuccess(response, "/mission", body);
           } else if (url.includes("/auth/user")) {
-            console.log("its here");
-            handleSuccess(response, "/auth/user", body);
+             handleSuccess(response, "/auth/user", body);
+          } else if (url.includes("/notification")) {
+             handleSuccess(response, "/notification", body);
           } else handleSuccess(response, url, body);
           break;
         default:
@@ -129,6 +130,8 @@ export const useAxios = () => {
         if (currentUser.role !== "employe" && currentUser.role !== "relex") {
           getFileKPIS(dispatch, 1);
         }
+        break;
+      case "/notification":
         break;
       default:
         handleUserType(currentUser.role);
