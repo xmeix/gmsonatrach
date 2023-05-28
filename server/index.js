@@ -15,6 +15,7 @@ import depenseRoutes from "./routes/depense.js";
 import rapportRoutes from "./routes/rapportFM.js";
 import kpisRoutes from "./routes/kpis.js";
 import notificationRoutes from "./routes/notification.js";
+import ticketRoutes from "./routes/ticket.js";
 import cookieParser from "cookie-parser";
 import { Server } from "socket.io";
 import http from "http";
@@ -84,6 +85,7 @@ app.use("/depense", depenseRoutes);
 app.use("/rapportFM", rapportRoutes);
 app.use("/kpis", kpisRoutes);
 app.use("/notification", notificationRoutes);
+app.use("/ticket", ticketRoutes);
 // Set up the HTTP server and Socket.IO instance
 const server = http.createServer(app);
 export const io = new Server(server, {

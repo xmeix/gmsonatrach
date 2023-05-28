@@ -5,6 +5,7 @@ export const titles = [
   { id: 4, title: "Service Relex", path: "/gestion-service-relex" }, //Tableau de billetterie + formulaire
   { id: 5, title: "Missions", path: "/gestion-des-mission" }, // Tableau des missions + formulaire
   { id: 6, title: "Congé et Rapports", path: "/gestion-c-m-rfm" }, //Tableaux de RFM et Congé, formulaires de modification
+  // { id: 6, title: "Tickets", path: "/gestion-tickets" }, //Tableaux de RFM et Congé, formulaires de modification
 ];
 export const secTitles = [
   { id: 2, title: "Planification", path: "/" },
@@ -19,7 +20,7 @@ export const employeTitles = [
   { id: 2, title: "Missions", path: "/gestion-des-mission" }, // Tableau des missions
   { id: 3, title: "Rapports de modification", path: "/gestion-modification" }, //Tableaux et formulaires
   { id: 4, title: "Demandes de congé", path: "/gestion-conge" }, //Tableaux et formulaires
-  // { id: 5, title: "Dépenses personnelles", path: "/gestion-depenses" }, //Tableaux et formulaires
+  { id: 6, title: "Tickets", path: "/gestion-tickets" }, //Tableaux de RFM et Congé, formulaires de modification
 ];
 
 export const relexTitles = [

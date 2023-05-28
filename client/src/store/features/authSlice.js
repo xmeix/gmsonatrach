@@ -13,6 +13,7 @@ const initialState = {
   depenses: [],
   oms: [],
   notifications: [],
+  tickets: [],
 };
 
 export const authSlice = createSlice({
@@ -42,6 +43,7 @@ export const authSlice = createSlice({
       state.oms = [];
       state.rfms = [];
       state.notifications = [];
+      state.tickets = [];
       localStorage.removeItem("jwt");
     },
     setDemandes: (state, action) => {
@@ -84,6 +86,9 @@ export const authSlice = createSlice({
       // console.log(action.payload);
       state.notifications = action.payload;
     },
+    setTickets: (state, action) => {
+      state.tickets = action.payload;
+    },
   },
 });
 
@@ -104,6 +109,7 @@ export const {
   getTokenFromState,
   setToken,
   setNotifications,
+  setTickets,
 } = authSlice.actions;
 
 export default authSlice.reducer;

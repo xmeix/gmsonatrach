@@ -1,4 +1,3 @@
-import PageName from "../../components/pageName/PageName";
 import "./../../css/Gestion.css";
 import TableM from "../../components/table/TableM";
 import Formulaire from "../../components/formulaire/Formulaire";

@@ -19,6 +19,25 @@ export const userButtons = [
     type: "submit",
   },
 ];
+
+export const ticketEntries = [
+  {
+    id: "object",
+    label: "Objet",
+    inputType: "text",
+    width: "230px",
+    placeholder: "Nom",
+    required: true,
+  },
+  {
+    id: "description",
+    label: "Description",
+    inputType: "textarea",
+    width: "230px",
+    placeholder: "Nom",
+    required: true,
+  },
+];
 export const userEntries = [
   {
     id: "nom",

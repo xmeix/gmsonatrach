@@ -224,8 +224,8 @@
   grid-gap: 10px;
 }
 
-.taches span,
-.employes span,
+.taches .tile,
+.employes .tile,
 .popup-mission .plus {
   font-weight: 600 !important;
   font-size: 1.2em;

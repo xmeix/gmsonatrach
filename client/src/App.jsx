@@ -16,6 +16,7 @@ import {
   getFileKPIS,
   getNotifications,
 } from "./api/apiCalls/getCalls";
+import GestionTicket from "./pages/profilAdmin/GestionTicket";
 const LoginPage = lazy(() => import("./pages/loginPage/LoginPage"));
 const CostDashboard = lazy(() =>
   import("./pages/profilAdmin/Dashboards/CostDashboard")
@@ -57,6 +58,7 @@ const employeRoutes = [
   { path: "/gestion-des-mission", element: <GestionMission /> },
   { path: "/gestion-modification", element: <GestionModification /> },
   { path: "/gestion-conge", element: <GestionConge /> },
+  { path: "/gestion-tickets", element: <GestionTicket /> },
 ];
 
 const secretaireRoutes = [
@@ -71,7 +73,8 @@ const relexRoutes = [{ path: "/", element: <GestionRelex /> }];
 
 function App() {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
-  const currentUser = useSelector((state) => state.auth.user);
+  const { user, missions } = useSelector((state) => state.auth);
+
   // const users = useSelector((state) => state.auth.users);
   let element = null;
   const dispatch = useDispatch();
@@ -134,7 +137,7 @@ function App() {
 
   useEffect(() => {
     if (isLoggedIn) {
-      socket.emit("login", currentUser);
+      socket.emit("login", user);
       handleSocketConnection();
     } else {
       socket.emit("logout");
@@ -143,7 +146,7 @@ function App() {
     return () => {
       handleSocketDisconnection();
     };
-  }, [isLoggedIn, currentUser]);
+  }, [isLoggedIn, user]);
 
   useEffect(() => {
     return () => {
@@ -156,7 +159,7 @@ function App() {
   if (!isLoggedIn) {
     routes = [{ path: "/", element: <LoginPage /> }];
   } else {
-    switch (currentUser?.role) {
+    switch (user?.role) {
       case "employe":
         routes = employeRoutes;
         break;

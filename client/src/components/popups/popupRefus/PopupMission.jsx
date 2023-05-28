@@ -88,7 +88,7 @@ const PopupMission = ({ item }) => {
         <h3>Object Mission: {item.objetMission}</h3>
         <div className="state">
           <div>
-            <span>Etat:</span>
+            <span >Etat:</span>
             <span
               className={`${item.etat}`}
               // style={{
@@ -105,7 +105,8 @@ const PopupMission = ({ item }) => {
             </span>
           </div>
           <div>
-            <span>Raison du refus:</span> {item.raisonRefus || "/"}
+            <span >Raison du refus:</span>{" "}
+            {item.raisonRefus || "/"}
           </div>
         </div>
       </div>
@@ -137,7 +138,7 @@ const PopupMission = ({ item }) => {
         </div>
       </>
       <div className="employes">
-        <span>Employes:</span>
+        <span className="tile">Employes:</span>
         {item.employes.map((emp, i) => (
           <li className="employe" key={i}>
             {emp.nom + " " + emp.prenom}
@@ -145,7 +146,7 @@ const PopupMission = ({ item }) => {
         ))}
       </div>
       <div className="taches">
-        <span>Taches:</span>
+        <span className="tile">Taches:</span>
         {tasks.map((tache, i) => (
           <div className="tache" key={i}>
             <div className="content">{tache.content}</div>
