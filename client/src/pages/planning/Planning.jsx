@@ -26,7 +26,10 @@ const Planning = () => {
     date.getMonth() + 1,
     0
   ).getDate();
+
   const currentDay = new Date().getDate();
+  const currentYear = new Date().getFullYear();
+  const currentMonth = new Date().getMonth();
 
   const currentUser = useSelector((state) => state.auth.user);
   // const resources = useMemo(() => {
@@ -172,8 +175,13 @@ const Planning = () => {
         .filter(({ nom, prenom, structure }) => {
           const search = searchQuery.toLowerCase().trim();
           const fullName = `${nom.toLowerCase()} ${prenom.toLowerCase()}`;
+          const reversedFullName = `${prenom.toLowerCase()} ${nom.toLowerCase()}`;
+          const structureName = `${structure.toLowerCase().trim()}`;
           return (
-            fullName.includes(search) && (filter === "" || structure === filter)
+            (structureName.includes(search) ||
+              fullName.includes(search) ||
+              reversedFullName.includes(search)) &&
+            (filter === "" || structure === filter)
           );
         })
         .map(({ _id, nom, prenom, structure }) => ({
@@ -273,7 +281,11 @@ const Planning = () => {
                   <th
                     key={index}
                     className={`planning-th${
-                      currentDay === index + 1 ? " current-day" : ""
+                      currentYear === date.getFullYear() &&
+                      currentMonth === date.getMonth() &&
+                      currentDay === index + 1
+                        ? " current-day"
+                        : ""
                     }`}
                   >
                     {index + 1}
@@ -361,7 +373,7 @@ const Planning = () => {
                           }}
                         >
                           {matchingMission ? (
-                            <div className="planning-mission"></div>
+                            <div className="planning-mission "></div>
                           ) : (
                             ""
                           )}

@@ -5,6 +5,12 @@ import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import "./TableM.css";
 import { v4 as uuidv4 } from "uuid";
 import SortRoundedIcon from "@mui/icons-material/SortRounded";
+import CheckRoundedIcon from "@mui/icons-material/CheckRounded";
+import ClearRoundedIcon from "@mui/icons-material/ClearRounded";
+import DoNotDisturbRoundedIcon from "@mui/icons-material/DoNotDisturbRounded";
+import SendRoundedIcon from "@mui/icons-material/SendRounded";
+
+import SettingsApplicationsRoundedIcon from "@mui/icons-material/SettingsApplicationsRounded";
 import {
   Table,
   TableBody,
@@ -16,6 +22,7 @@ import {
   TablePagination,
   InputAdornment,
   makeStyles,
+  Tooltip,
 } from "@material-ui/core";
 import { useSelector } from "react-redux";
 import useBtn from "../../hooks/useBtn";
@@ -183,7 +190,7 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
   function renderButton(button, item, type, index) {
     return (
       <button
-        className={`bouton ${button}`}
+        className={`icon-table-btn ${button}`}
         key={index}
         onClick={() => {
           if (button === "refuse") {
@@ -196,7 +203,29 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
           } else handleClick(button, item, type);
         }}
       >
-        {button}
+        {button === "accept" ? (
+          <Tooltip title="accepter">
+            <CheckRoundedIcon className="icn" />
+          </Tooltip>
+        ) : button === "refuse" ? (
+          <Tooltip title="refuser">
+            <ClearRoundedIcon className="icn" />
+          </Tooltip>
+        ) : button === "cancel" ? (
+          <Tooltip title="annuler">
+            <DoNotDisturbRoundedIcon className="icn" />
+          </Tooltip>
+        ) : button === "send" ? (
+          <Tooltip title="envoyer">
+            <SendRoundedIcon className="icn" />
+          </Tooltip>
+        ) : button === "update" ? (
+          <Tooltip title="mettre a jour">
+            <SettingsApplicationsRoundedIcon className="icn" />
+          </Tooltip>
+        ) : (
+          button
+        )}
       </button>
     );
   }
@@ -234,7 +263,14 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
     }
     const { btns, showBtn } = buttons;
     return (
-      <div>
+      <div
+        style={{
+          display: "flex",
+          gap: "1em",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
         {btns.map((button, index) => {
           if (shouldRenderButton(item, type, button))
             return renderButton(button, item, type, index);
@@ -616,13 +652,21 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
               justifyContent: "center",
             }}
           >
-            <label>trier</label>
             <SortRoundedIcon
               className={
                 sortOrder.direction === "asc" ? "icon sort" : "icon sort rotate"
               }
               onClick={handleSort}
             />
+            <div
+              style={{
+                fontSize: "13px",
+                fontWeight: "600",
+                color: "var(--gray)",
+              }}
+            >
+              tri
+            </div>
           </div>
         </div>
         <div className="countControl">{filteredData.length} lignes</div>
