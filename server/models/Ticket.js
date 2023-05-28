@@ -35,10 +35,9 @@ const TicketSchema = new mongoose.Schema(
         },
       },
     ],
-    etat: {
-      type: String,
-      default: "unsolved",
-      enum: ["solved", "unsolved"],
+    isSolved: {
+      type: Boolean,
+      default: false,
     },
   },
   {

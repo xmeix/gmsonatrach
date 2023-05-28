@@ -26,7 +26,7 @@ export const ticketEntries = [
     label: "Objet",
     inputType: "text",
     width: "230px",
-    placeholder: "Nom",
+    placeholder: "Objet du problème",
     required: true,
   },
   {
@@ -34,7 +34,7 @@ export const ticketEntries = [
     label: "Description",
     inputType: "textarea",
     width: "230px",
-    placeholder: "Nom",
+    placeholder: "Veuillez décrire votre problème",
     required: true,
   },
 ];

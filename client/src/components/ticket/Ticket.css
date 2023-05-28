@@ -1,0 +1,75 @@
+.ticket {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  max-width: 600px;
+}
+
+.ticket-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.ticket-header .ticket-etat {
+  font-size: 11px;
+  background-color: var(--success);
+  color: white;
+  border-radius: 20px;
+  padding: 0.5em 1em;
+}
+
+.ticket-header .ticket-etat-us {
+  border: solid 1px var(--success);
+  background-color: var(--white);
+  color: var(--success);
+  font-weight: 600 !important;
+}
+.ticket-title {
+  font-size: 20px;
+  text-transform: capitalize;
+}
+
+.ticket-description {
+  font-size: 13px;
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+  text-align: justify;
+}
+
+.ticket-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  color: #888;
+}
+
+.ticket-meta-item {
+  display: flex;
+  align-items: center;
+}
+
+.ticket-meta-item:not(:last-child) {
+  margin-right: 10px;
+}
+
+.ticket-meta-icon {
+  width: 16px;
+  height: 16px;
+  margin-right: 5px;
+  font-size: 15px !important;
+}
+
+.ticket-meta-text {
+  white-space: nowrap;
+  font-size: 12px;
+}
+
+.ticket-meta-time {
+  color: #aaa;
+}

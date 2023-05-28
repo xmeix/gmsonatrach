@@ -40,8 +40,11 @@ export const addComment = async (req, res) => {
 export const changeStatus = async (req, res) => {
   try {
     const { id } = req.params;
-    const { etat } = req.body;
-    const ticket = await Ticket.findByIdAndUpdate(id, { etat }, { new: true });
+    const ticket = await Ticket.findByIdAndUpdate(
+      id,
+      { isSolved: true },
+      { new: true }
+    );
     res.status(200).json(ticket);
   } catch (err) {
     res.status(500).json({ error: err.message });

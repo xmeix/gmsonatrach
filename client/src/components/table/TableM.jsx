@@ -9,7 +9,7 @@ import CheckRoundedIcon from "@mui/icons-material/CheckRounded";
 import ClearRoundedIcon from "@mui/icons-material/ClearRounded";
 import DoNotDisturbRoundedIcon from "@mui/icons-material/DoNotDisturbRounded";
 import SendRoundedIcon from "@mui/icons-material/SendRounded";
-
+import ModeRoundedIcon from "@mui/icons-material/ModeRounded";
 import SettingsApplicationsRoundedIcon from "@mui/icons-material/SettingsApplicationsRounded";
 import {
   Table,
@@ -76,12 +76,12 @@ const useStyles = makeStyles({
     overflow: "hidden",
     textOverflow: "ellipsis",
   },
-  lastTableCell: {
-    padding: "10px",
-    fontSize: 13,
-    width: "200px",
-    // overflow: "scroll",
-  },
+  // tableCell: {
+  //   padding: "10px",
+  //   fontSize: 13,
+  //   width: "200px",
+  //   // overflow: "scroll",
+  // },
   tableRow: {
     "&:nth-of-type(even)": {
       background: "white !important",
@@ -205,23 +205,23 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
       >
         {button === "accept" ? (
           <Tooltip title="accepter">
-            <CheckRoundedIcon className="icn" />
+            <CheckRoundedIcon className="icn black" />
           </Tooltip>
         ) : button === "refuse" ? (
           <Tooltip title="refuser">
-            <ClearRoundedIcon className="icn" />
+            <ClearRoundedIcon className="icn black" />
           </Tooltip>
         ) : button === "cancel" ? (
           <Tooltip title="annuler">
-            <DoNotDisturbRoundedIcon className="icn" />
+            <DoNotDisturbRoundedIcon className="icn black " />
           </Tooltip>
         ) : button === "send" ? (
-          <Tooltip title="envoyer">
-            <SendRoundedIcon className="icn" />
-          </Tooltip>
+          {/* <Tooltip title="envoyer">
+            <SendRoundedIcon className="icn black" />
+          </Tooltip> */}
         ) : button === "update" ? (
           <Tooltip title="mettre a jour">
-            <SettingsApplicationsRoundedIcon className="icn" />
+            <ModeRoundedIcon className="icn black" />
           </Tooltip>
         ) : (
           button
@@ -706,7 +706,7 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
                 </TableCell>
               ))}
               {colType !== "user" && (
-                <TableCell className={classes.lastTableCell} align="center">
+                <TableCell className={classes.tableCell} align="center">
                   Configuration
                 </TableCell>
               )}
@@ -722,10 +722,7 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
                       className={`${classes.tableRow} trow`}
                     >
                       {cols.map((col) => tableCell(item, col))}
-                      <TableCell
-                        align="center"
-                        className={classes.lastTableCell}
-                      >
+                      <TableCell align="center" className={classes.tableCell}>
                         {renderConfiguration(item, item.__t.toLowerCase())}
                       </TableCell>
                     </TableRow>
@@ -738,10 +735,7 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
                     >
                       {cols.map((col) => tableCell(item, col))}
                       {colType !== "user" && (
-                        <TableCell
-                          align="center"
-                          className={classes.lastTableCell}
-                        >
+                        <TableCell align="center" className={classes.tableCell}>
                           {renderConfiguration(item, colType)}
                         </TableCell>
                       )}
