@@ -216,9 +216,7 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
             <DoNotDisturbRoundedIcon className="icn black " />
           </Tooltip>
         ) : button === "send" ? (
-          {/* <Tooltip title="envoyer">
-            <SendRoundedIcon className="icn black" />
-          </Tooltip> */}
+           null
         ) : button === "update" ? (
           <Tooltip title="mettre a jour">
             <ModeRoundedIcon className="icn black" />
@@ -230,6 +228,11 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
     );
   }
 
+  {
+    /* <Tooltip title="envoyer">
+            <SendRoundedIcon className="icn black" />
+          </Tooltip>  */
+  }
   const renderConfiguration = (item, type) => {
     let buttons;
     let array;

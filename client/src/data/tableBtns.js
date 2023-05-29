@@ -19,7 +19,7 @@ export const EmployeBtns = [
   },
   {
     type: "RFM",
-    btns: ["update", "send"], //update&&send if not accepté or refusé
+    btns: ["update"], //update&&send if not accepté or refusé
     showBtn: true,
   },
   {
