@@ -1,0 +1,29 @@
+.comment-form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin: 0.5em 0;
+}
+
+.comment-input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.comment-submit {
+  background-color: var(--white);
+  cursor: pointer;
+}
+.comment-submit:hover {
+  background-color: transparent;
+}
+/* Add any additional styles or modifications as needed */
+.comment-input.disabled {
+  background-color: #f2f2f2;
+  cursor: not-allowed;
+}

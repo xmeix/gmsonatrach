@@ -16,9 +16,9 @@ router.post("/", verifyToken, createTicket);
 router.get("/", verifyToken, getTickets);
 
 /** UPDATE ADD COMMENT*/
-router.patch("/:id/comments", verifyToken, addComment);
+router.patch("/comments/:id", verifyToken, addComment);
 
 /** UPDATE STATE*/
-router.patch("/:id/etat", verifyToken, changeStatus);
+router.patch("/etat/:id", verifyToken, changeStatus);
 
 export default router;

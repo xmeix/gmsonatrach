@@ -1,0 +1,32 @@
+.comment {
+  background-color: #f2f2f2;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 0.5em 1.5em;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+}
+
+.comment-content {
+  font-size: 14px;
+  padding: 0;
+  margin: 0;
+}
+
+.comment-metadata {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 10px;
+  color: #90949c;
+}
+
+.comment-author {
+  font-weight: bold;
+}
+
+.comment-date {
+}
+
+/* Add any additional styles or modifications as needed */

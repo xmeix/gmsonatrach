@@ -32,7 +32,7 @@ const NavBar = () => {
       if (
         !event.target.classList.contains("icon") &&
         !event.target.closest(".notification-list")
-      ) {
+      ) { 
         setShowNotifications(false);
       }
     }

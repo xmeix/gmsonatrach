@@ -15,8 +15,8 @@ import {
   getMissionKPIS,
   getFileKPIS,
   getNotifications,
+  getTickets,
 } from "./api/apiCalls/getCalls";
-import GestionTicket from "./pages/profilAdmin/GestionTicket";
 const LoginPage = lazy(() => import("./pages/loginPage/LoginPage"));
 const CostDashboard = lazy(() =>
   import("./pages/profilAdmin/Dashboards/CostDashboard")
@@ -35,6 +35,8 @@ const GestionEmploye = lazy(() => import("./pages/profilAdmin/GestionEmploye"));
 const GestionRelex = lazy(() => import("./pages/profilAdmin/GestionRelex"));
 const GestionCMR = lazy(() => import("./pages/profilAdmin/GestionCMR"));
 const Planning = lazy(() => import("./pages/planning/Planning"));
+const GestionTicket = lazy(() => import("./pages/profilAdmin/GestionTicket"));
+
 const GestionModification = lazy(() =>
   import("./pages/profilEmploye/GestionModification")
 );
@@ -113,6 +115,9 @@ function App() {
       case "notification":
         getNotifications(dispatch, 1);
         break;
+      case "ticket":
+        getTickets(dispatch, 1);
+        break;
       default:
         break;
     }
@@ -127,6 +132,9 @@ function App() {
   };
   const handleSocketConnection = () => {
     socket.on("cronDataChange", handleCronData);
+    socket.on("ticket", async () => {
+      getTickets(dispatch, 1);
+    });
     socket.on("updatedData", handleSocketData);
   };
 

@@ -1,10 +1,13 @@
+.ticket-container {
+  margin: 1em 0;
+}
 .ticket {
   background-color: #fff;
   border: 1px solid #ccc;
-  border-radius: 8px;
+  border-radius: 8px 8px 0px 0px;
   padding: 20px;
-  margin-bottom: 20px;
-  max-width: 600px;
+  max-width: 60%;
+  min-width: 400px;
 }
 
 .ticket-header {
@@ -29,6 +32,7 @@
   color: var(--success);
   font-weight: 600 !important;
 }
+
 .ticket-title {
   font-size: 20px;
   text-transform: capitalize;
@@ -72,4 +76,16 @@
 
 .ticket-meta-time {
   color: #aaa;
+}
+
+.ticket-container .comments {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+
+  max-height: 150px;
+  overflow-y: scroll;
+
+  padding: 0.2em;
+  border: solid 1px var(--light-gray);
 }

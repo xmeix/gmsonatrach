@@ -16,6 +16,7 @@ import {
   getNotifications,
   getOMs,
   getRFMs,
+  getTickets,
   getUsers,
 } from "../api/apiCalls/getCalls";
 import { freeKpis } from "../store/features/statSlice";
@@ -58,9 +59,11 @@ export const useAxios = () => {
           } else if (url.includes("/mission")) {
             handleSuccess(response, "/mission", body);
           } else if (url.includes("/auth/user")) {
-             handleSuccess(response, "/auth/user", body);
+            handleSuccess(response, "/auth/user", body);
           } else if (url.includes("/notification")) {
-             handleSuccess(response, "/notification", body);
+            handleSuccess(response, "/notification", body);
+          } else if (url.includes("/ticket")) {
+            handleSuccess(response, "/ticket", body);
           } else handleSuccess(response, url, body);
           break;
         default:
@@ -132,6 +135,7 @@ export const useAxios = () => {
         }
         break;
       case "/notification":
+      case "/ticket":
         break;
       default:
         handleUserType(currentUser.role);
@@ -149,6 +153,7 @@ export const useAxios = () => {
     // getDepenses(dispatch, 1);
     getDemandes(dispatch, 1);
     getNotifications(dispatch, 1);
+    getTickets(dispatch, 1);
   };
   return {
     isLoading,

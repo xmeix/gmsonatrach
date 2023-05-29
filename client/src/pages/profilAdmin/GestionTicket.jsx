@@ -1,12 +1,18 @@
-import { useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import "./../../css/Gestion.css";
 import AddTicketForm from "../../components/addTicketForm/AddTicketForm";
 import Ticket from "../../components/ticket/Ticket";
-import AddRoundedIcon from "@mui/icons-material/AddRounded";
-import { useState } from "react";
+import { getTickets } from "../../api/apiCalls/getCalls";
+import { socket } from "../../App";
+
 const GestionTicket = () => {
-  const { user, missions } = useSelector((state) => state.auth);
+  const { user, missions, tickets, isLoggedIn } = useSelector(
+    (state) => state.auth
+  );
   const [isFormVisible, setIsFormVisible] = useState(false);
+  const dispatch = useDispatch();
 
   const currentUserHasMission = () => {
     if (!user || !missions) {
@@ -20,54 +26,59 @@ const GestionTicket = () => {
         mission.etat === "en-cours"
     );
   };
+
   const handleFormToggle = () => {
     setIsFormVisible((prevValue) => !prevValue);
   };
+
   if (!currentUserHasMission()) {
     return (
       <div className="noc-missions">
         <div className="noc-message">Vous n'avez pas de mission en cours</div>
       </div>
     );
-  } else
+  } else {
+    // Sort tickets by createdAt in descending order
+    const sortedTickets = tickets
+      .slice()
+      .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
     return (
-      <div className="gestion flex">
+      <div className="gestion">
+        {isFormVisible && (
+          <div
+            className="hideUnder"
+            onClick={() => setIsFormVisible(false)}
+          ></div>
+        )}
         <AddRoundedIcon
           onClick={handleFormToggle}
           className="icon addTicketIcon"
         />
         {isFormVisible && <AddTicketForm />}
-        <div className="tickets">
-          <Ticket
-            objet={"objet"}
-            description={
-              "Qui eu laborum do mollit. Enim Lorem cupidatat voluptate sunt au occaecat ut labore. Mollit exercitation magna qui aute pariatur tempor est sint in mollit eiusmod. Irure reprehenderit ipsum ut eiusmod eu quistempor labore magna consequat enim dolor veniam sint Consequatincididunt qui consectetur excepteur aliqua ad ullamco veniam non.Excepteur do dolor pariatur est id labore sunt."
-            }
-            createdBy={"nom prénom"}
-            createdAt={new Date().getTime()}
-            isSolved={true}
-          />
-          <Ticket
-            objet={"objet"}
-            description={
-              "Qui eu laborum do mollit. Enim Lorem cupidatat voluptate sunt au occaecat ut labore. Mollit exercitation magna qui aute pariatur tempor est sint in mollit eiusmod. Irure reprehenderit ipsum ut eiusmod eu quistempor labore magna consequat enim dolor veniam sint Consequatincididunt qui consectetur excepteur aliqua ad ullamco veniam non.Excepteur do dolor pariatur est id labore sunt."
-            }
-            createdBy={"nom prénom"}
-            createdAt={new Date().getTime()}
-            isSolved={true}
-          />
-          <Ticket
-            objet={"objet"}
-            description={
-              "Qui eu laborum do mollit. Enim Lorem cupidatat voluptate sunt au occaecat ut labore. Mollit exercitation magna qui aute pariatur tempor est sint in mollit eiusmod. Irure reprehenderit ipsum ut eiusmod eu quistempor labore magna consequat enim dolor veniam sint Consequatincididunt qui consectetur excepteur aliqua ad ullamco veniam non.Excepteur do dolor pariatur est id labore sunt."
-            }
-            createdBy={"nom prénom"}
-            createdAt={new Date().getTime()}
-            isSolved={false}
-          />
-        </div>
+        {sortedTickets.length > 0 ? (
+          <div className="tickets">
+            {sortedTickets.map((tick, i) => (
+              <Ticket
+                key={i}
+                id={tick._id}
+                objet={tick.object}
+                description={tick.description}
+                createdBy={tick.employe}
+                createdAt={new Date(tick.createdAt).getTime()}
+                isSolved={tick.isSolved}
+                commentaires={tick.commentaires || []}
+              />
+            ))}
+          </div>
+        ) : (
+          <div className="noc-missions">
+            <div className="noc-message">Pas de tickets disponibles</div>
+          </div>
+        )}
       </div>
     );
+  }
 };
 
 export default GestionTicket;

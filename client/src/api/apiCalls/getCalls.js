@@ -8,6 +8,7 @@ import {
   setNotifications,
   setOMs,
   setRFMs,
+  setTickets,
   setUsers,
 } from "../../store/features/authSlice";
 import { setFilesKpis, setMissionKpis } from "../../store/features/statSlice";
@@ -17,7 +18,7 @@ const fetchData = async (dispatch, endpoint, socketEvent, num) => {
   dispatch(fetchStart());
   try {
     const res = await apiService.user.get(endpoint);
-
+    console.log(endpoint);
     const eventToActionMap = {
       mission: setMissions,
       om: (data) => setOMs(data.filteredOMissions),
@@ -27,6 +28,7 @@ const fetchData = async (dispatch, endpoint, socketEvent, num) => {
       missionkpi: setMissionKpis,
       filekpi: setFilesKpis,
       notification: setNotifications,
+      ticket: setTickets,
     };
     if (!num || num !== 1) {
       socket.emit("updatedData", socketEvent);
@@ -72,4 +74,7 @@ export const getFileKPIS = async (dispatch, num) => {
 };
 export const getNotifications = async (dispatch, num) => {
   await fetchData(dispatch, "/notification/", "notification", num);
+};
+export const getTickets = async (dispatch, num) => {
+  await fetchData(dispatch, "/ticket/", "ticket", num);
 };

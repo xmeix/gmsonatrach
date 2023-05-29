@@ -75,3 +75,13 @@
   flex-direction: column;
   width: 100%;
 } */
+
+.hideUnder {
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.486);
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 100vw;
+  z-index: 1;
+}
