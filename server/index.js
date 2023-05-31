@@ -300,6 +300,7 @@ cron.schedule("50 01 * * *", async () => {
     }
   }
 
+ 
   console.log("finished updating index js ");
   io.emit("cronDataChange");
 });

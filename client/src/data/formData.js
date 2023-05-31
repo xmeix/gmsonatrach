@@ -18,6 +18,24 @@ export const userButtons = [
     onClick: "",
     type: "submit",
   },
+];export const missionButtons = [
+  {
+    id: 1,
+    title: "Annuler",
+    onClick: "",
+    type: "reset",
+  },
+  {
+    id: 2,
+    title: "Predire",
+    onClick: "",
+    type: "",
+  },{
+    id: 3,
+    title: "Ajouter",
+    onClick: "",
+    type: "submit",
+  },
 ];
 
 export const ticketEntries = [

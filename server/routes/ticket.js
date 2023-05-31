@@ -4,6 +4,7 @@ import {
   addComment,
   changeStatus,
   createTicket,
+  getEmployeesBySolvedTickets,
   getTickets,
 } from "../controllers/Ticket.js";
 
@@ -14,6 +15,8 @@ router.post("/", verifyToken, createTicket);
 
 /** READ */
 router.get("/", verifyToken, getTickets);
+router.get("/employes", verifyToken, getEmployeesBySolvedTickets);
+
 
 /** UPDATE ADD COMMENT*/
 router.patch("/comments/:id", verifyToken, addComment);

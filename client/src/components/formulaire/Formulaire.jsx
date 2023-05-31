@@ -14,6 +14,7 @@ import {
   validateMission,
   validateUser,
 } from "../../utils/formFieldsVerifications";
+import { getBestEmployes } from "../../api/apiCalls/getCalls";
 const customStyles = {
   control: (provided, state) => ({
     ...provided,
@@ -241,6 +242,24 @@ const Formulaire = ({ title, entries, buttons, type }) => {
 
     return input.options;
   };
+
+  const handlePredict = () => {
+    console.log("predicting smthg...");
+    fetch("http://localhost:5000/predict", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ data: [10, 2, 2, 20900] }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        // setResult(data);
+        console.log(data);
+      });
+    // getBestEmployes("/ticket/employes");
+  };
+
   return (
     <div className="formulaire">
       <div className="listTitle">{title}</div>
@@ -361,6 +380,17 @@ const Formulaire = ({ title, entries, buttons, type }) => {
                 disabled={isLoading}
               >
                 {btn.title}
+              </button>
+            );
+          } else if (btn.title === "Predire") {
+            return (
+              <button
+                className="formBtn"
+                key={index}
+                onClick={handlePredict}
+                disabled={isLoading}
+              >
+                Prédire
               </button>
             );
           } else

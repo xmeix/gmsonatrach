@@ -3,7 +3,7 @@ import { generateJWT } from "../middleware/auth.js";
 import User from "../models/User.js";
 import jwt from "jsonwebtoken";
 import { io } from "../index.js";
-import { generateCustomId } from "./utils.js";
+import { emitData, generateCustomId } from "./utils.js";
 
 /** REGISTER USER */
 export const register = async (req, res) => {
@@ -115,7 +115,6 @@ export const login = async (req, res) => {
 export const logout = async (req, res) => {
   const cookies = req.cookies;
   if (!cookies?.jwt) return res.status(204).send();
-
   res.clearCookie("jwt", { httpOnly: true, sameSite: "None", secure: true });
   res.json({ msg: "Logged out successfully and Cookie cleared" });
 };

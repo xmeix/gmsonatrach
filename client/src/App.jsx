@@ -1,7 +1,7 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
 import NavBar from "./components/navbar/NavBar";
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import Loading from "./components/loading/Loading";
@@ -46,6 +46,7 @@ export const socket = io("http://localhost:3001");
 // Define reusable arrays for route configurations based on user roles
 const adminRoutes = [
   { path: "/", element: <MissionDashboard /> },
+  { path: "/planification", element: <Planning /> },
   { path: "/users-analytics", element: <UsersDashboard /> },
   { path: "/files-analytics", element: <FilesDashboard /> },
   { path: "/cost-analytics", element: <CostDashboard /> },
@@ -55,6 +56,7 @@ const adminRoutes = [
   { path: "/gestion-c-m-rfm", element: <GestionCMR /> },
 ];
 
+//this would only appear if a mission is "en-cours"
 const employeRoutes = [
   { path: "/", element: <Planning /> },
   { path: "/gestion-des-mission", element: <GestionMission /> },
@@ -76,6 +78,11 @@ const relexRoutes = [{ path: "/", element: <GestionRelex /> }];
 function App() {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const { user, missions } = useSelector((state) => state.auth);
+  const [sessionExpired, setSessionExpired] = useState(false);
+
+  const handleSessionExpired = () => {
+    setSessionExpired(true);
+  };
 
   // const users = useSelector((state) => state.auth.users);
   let element = null;
@@ -150,12 +157,15 @@ function App() {
     } else {
       socket.emit("logout");
     }
+    socket.on("sessionExpired", handleSessionExpired);
 
     return () => {
       handleSocketDisconnection();
     };
   }, [isLoggedIn, user]);
-
+  const handleRefreshPage = () => {
+    window.location.reload();
+  };
   useEffect(() => {
     return () => {
       handleSocketDisconnection();
@@ -186,6 +196,18 @@ function App() {
     }
   }
 
+  const isAlreadyLoggedIn = isLoggedIn && location.pathname === "/";
+  const loginPath = "/"; // Replace with your actual login path
+  if (sessionExpired) {
+    return (
+      <div className="app">
+        <p>
+          Your session has expired. Please refresh the page or log in again.
+        </p>
+        <button onClick={handleRefreshPage}>Refresh Page</button>
+      </div>
+    );
+  }
   return (
     <div className="app">
       {isLoggedIn && <NavBar />}
@@ -194,7 +216,9 @@ function App() {
           {routes.map((route, index) => (
             <Route key={index} path={route.path} element={route.element} />
           ))}
-          <Route path="*" element={<Navigate to="/" />} />
+          {!isAlreadyLoggedIn && (
+            <Route path="*" element={<Navigate to={loginPath} />} />
+          )}
         </Routes>
       </Suspense>
     </div>

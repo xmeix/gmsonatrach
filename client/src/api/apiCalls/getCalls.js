@@ -78,3 +78,8 @@ export const getNotifications = async (dispatch, num) => {
 export const getTickets = async (dispatch, num) => {
   await fetchData(dispatch, "/ticket/", "ticket", num);
 };
+export const getBestEmployes = async (endpoint) => {
+  const res = await apiService.user.get(endpoint);
+  console.log(res.data);
+  return res.data;
+};

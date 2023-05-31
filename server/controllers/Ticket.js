@@ -59,3 +59,49 @@ export const changeStatus = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+
+export const getEmployeesBySolvedTickets = async (req, res) => {
+  try {
+    const employees = await Ticket.aggregate([
+      {
+        $group: {
+          _id: "$employe",
+          totalSolvedTickets: {
+            $sum: { $cond: [{ $eq: ["$isSolved", true] }, 1, 0] },
+          },
+        },
+      },
+      { $sort: { totalSolvedTickets: 1 } },
+      {
+        $lookup: {
+          from: "users",
+          localField: "_id",
+          foreignField: "_id",
+          as: "employeeDetails",
+        },
+      },
+      { $unwind: "$employeeDetails" },
+      {
+        $project: {
+          employee: "$employeeDetails",
+          totalSolvedTickets: 1,
+          _id: 0,
+        },
+      },
+    ]);
+
+    const sortedEmployees = employees.map(
+      ({ employee, totalSolvedTickets }) => ({
+        employee,
+        totalSolvedTickets,
+      })
+    );
+
+    console.log(sortedEmployees);
+
+    res.json(sortedEmployees);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};

@@ -9,16 +9,16 @@ const PopupRefus = ({ type, item, close }) => {
     <div className="popup-refuse">
       <div className="pop-ref">
         {" "}
-        <div className="title">Reason of Refusal</div>
-        <textarea onChange={(e) => setRaison(e.target.value)} />
+        <div className="title">Veuillez spécifier la raison du refus</div>
+        <textarea rows={5} onChange={(e) => setRaison(e.target.value)} />
         <button
           onClick={() => {
             handleClick("refuse", item, type, raison, {});
-            
+
             close();
           }}
         >
-          refuse
+          refuser
         </button>
       </div>
     </div>

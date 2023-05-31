@@ -4,7 +4,7 @@ import TableM from "../../components/table/TableM";
 import Formulaire from "../../components/formulaire/Formulaire";
 import {
   MissionEntries as entries,
-  userButtons as buttons,
+  missionButtons as buttons,
 } from "../../data/formData";
 import { useSelector } from "react-redux";
 import {
