@@ -3,7 +3,7 @@ import { generateJWT } from "../middleware/auth.js";
 import User from "../models/User.js";
 import jwt from "jsonwebtoken";
 import { io } from "../index.js";
-import { emitData, generateCustomId } from "./utils.js";
+import { emitDataSpec, generateCustomId } from "./utils.js";
 
 /** REGISTER USER */
 export const register = async (req, res) => {
@@ -105,6 +105,7 @@ export const login = async (req, res) => {
     });
     delete user.password;
 
+    // io.emit("login", user, jwtToken);
     res.status(200).json({ token: jwtToken, user, msg: "Login successful" });
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -113,8 +114,11 @@ export const login = async (req, res) => {
 
 /** LOGOUT */
 export const logout = async (req, res) => {
+  // console.log(req.user.id);
   const cookies = req.cookies;
   if (!cookies?.jwt) return res.status(204).send();
+  
+  // await emitDataSpec("sessionExpired", req.user.id, cookies.jwt);
   res.clearCookie("jwt", { httpOnly: true, sameSite: "None", secure: true });
   res.json({ msg: "Logged out successfully and Cookie cleared" });
 };

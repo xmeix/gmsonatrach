@@ -11,18 +11,21 @@ export const emitData = async (link, data) => {
     io.to(socketId).emit(link, data);
   });
 };
-export const emitDataSpec = async (link, data) => {
-  // Emit the notification event to each socket ID associated with the user ID
-  // console.log("____________________________________________________");
-  // console.log(connectedUsers);
-  // console.log("____________________________________________________");
+
+export const emitDataSpec = async (link, data, sid) => {
   connectedUsers.forEach((item) => {
-    const { userId, socketId } = item;
-    io.to(socketId).emit(link, data);
+    const { userId, socketIds } = item;
+    if (data.toString() === userId.toString() && Array.isArray(socketIds)) {
+      socketIds.forEach((socketId) => {
+        if (sid.includes(socketId)) {
+          io.to(socketId).emit(link);
+        }
+      });
+    }
   });
+  console.log(connectedUsers);
 };
 
-// Function to generate a custom ID
 export const generateCustomId = async (structure, collectionName) => {
   // Retrieve the counter document for the given structure and collection
   const query = { structure: structure, collectionName: collectionName };

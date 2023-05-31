@@ -48,7 +48,7 @@ import { verifyToken } from "./middleware/auth.js";
 import { createNotification } from "./controllers/Notification.js";
 import { createOrUpdateFDocument } from "./controllers/FilesKpis.js";
 import { createMission } from "./controllers/mission.js";
-import { generateCustomId } from "./controllers/utils.js";
+import { emitDataSpec, generateCustomId } from "./controllers/utils.js";
 const toId = mongoose.Types.ObjectId;
 // Configure environment variables
 dotenv.config();
@@ -93,7 +93,7 @@ export const io = new Server(server, {
     origin: ["http://127.0.0.1:5173", "http://localhost:5173"],
   },
 });
-
+export let connectedUsers = [];
 // ____________________________________________________________________________
 // Connect to the MongoDB database
 mongoose.set("strictQuery", false);
@@ -126,55 +126,72 @@ mongoose
     // FMission.insertMany(Fmissions);
     // addMissionsData();
     console.log("end");
+    io.on("connection", (socket) => {
+      console.log(connectedUsers);
+
+      socket.on("login", (user, token) => {
+        socket.user = user;
+        const userId = user._id;
+        const existingUser = connectedUsers.find(
+          (u) => u.userId === userId && u.token === token
+        );
+        if (!existingUser) {
+          connectedUsers.push({ userId, socketIds: [socket.id], token }); // Store the user ID and socket IDs in the array
+          console.log(`User ${userId} connected`);
+        } else {
+          console.log(`User ${userId} already connected`);
+          if (!existingUser.socketIds.includes(socket.id)) {
+            existingUser.socketIds.push(socket.id); // Add the new socket ID to the existing user's socket IDs if it doesn't already exist
+          }
+        }
+        console.log(connectedUsers);
+      });
+
+      socket.on("logout", async () => {
+        if (socket.user) {
+          const userId = socket.user._id;
+          console.log(`User ${userId} logged out`);
+
+          const indexToRemove = connectedUsers.findIndex(
+            (u) =>
+              u.userId.toString() === userId.toString() &&
+              u.socketIds.includes(socket.id)
+          );
+          if (indexToRemove !== -1) {
+            const { userId, token, socketIds } = connectedUsers[indexToRemove];
+            await emitDataSpec("sessionExpired", userId, socketIds); // Emit the sessionExpired event
+            connectedUsers.splice(indexToRemove, 1);
+          }
+
+          console.log(connectedUsers);
+        }
+      });
+
+      socket.on("updatedData", async (type) => {
+        try {
+          // console.log(type);
+          io.emit("updatedData", type);
+        } catch (error) {
+          console.error(error);
+        }
+      });
+
+      // socket.on("disconnect", () => {
+      //   if (socket.user) {
+      //     const userId = socket.user._id;
+      //     console.log(`User ${userId} disconnected`);
+      //     const disconnectedUser = connectedUsers.find((u) => u.userId === userId);
+      //     if (disconnectedUser) {
+      //       disconnectedUser.socketId = null; // Set the socket ID to null to mark it as disconnected
+      //     }
+      //   }
+      // });
+    });
   })
   .catch((error) => {
     console.error(`Failed to connect to MongoDB database: ${error.message}`);
   });
 //it works fine , just whenn we restart the server we need to refresh all the browsers
-export let connectedUsers = [];
-io.on("connection", (socket) => {
-  console.log(connectedUsers);
-
-  socket.on("login", async (user) => {
-    socket.user = user;
-    const userId = user._id;
-    const existingUser = connectedUsers.find((u) => u.userId === userId);
-
-    if (!existingUser) {
-      connectedUsers.push({ userId, socketId: socket.id }); // Store the user ID and socket ID in the array
-      console.log(`User ${userId} connected`);
-    } else {
-      console.log(`User ${userId} already connected`);
-      existingUser.socketId = socket.id; // Replace the old socket ID with the new socket ID
-    }
-  });
-  socket.on("logout", () => {
-    if (socket.user) {
-      const userId = socket.user._id;
-      console.log(`User ${userId} logged out`);
-      connectedUsers = connectedUsers.filter((user) => user.userId !== userId); // Remove the user from the array
-    }
-  });
-  socket.on("updatedData", async (type) => {
-    try {
-      // console.log(type);
-      io.emit("updatedData", type);
-    } catch (error) {
-      console.error(error);
-    }
-  });
-
-  socket.on("disconnect", () => {
-    if (socket.user) {
-      const userId = socket.user._id;
-      console.log(`User ${userId} disconnected`);
-      const disconnectedUser = connectedUsers.find((u) => u.userId === userId);
-      if (disconnectedUser) {
-        disconnectedUser.socketId = null; // Set the socket ID to null to mark it as disconnected
-      }
-    }
-  });
-});
 
 cron.schedule("50 01 * * *", async () => {
   console.log("working in index.js");
@@ -300,7 +317,6 @@ cron.schedule("50 01 * * *", async () => {
     }
   }
 
- 
   console.log("finished updating index js ");
   io.emit("cronDataChange");
 });

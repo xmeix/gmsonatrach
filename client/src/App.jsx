@@ -77,7 +77,7 @@ const relexRoutes = [{ path: "/", element: <GestionRelex /> }];
 
 function App() {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
-  const { user, missions } = useSelector((state) => state.auth);
+  const { user, missions, token } = useSelector((state) => state.auth);
   const [sessionExpired, setSessionExpired] = useState(false);
 
   const handleSessionExpired = () => {
@@ -151,21 +151,23 @@ function App() {
   };
 
   useEffect(() => {
+    const handleRefreshPage = () => {
+      window.location.reload();
+    };
     if (isLoggedIn) {
-      socket.emit("login", user);
+      socket.emit("login", user, token);
       handleSocketConnection();
     } else {
       socket.emit("logout");
     }
-    socket.on("sessionExpired", handleSessionExpired);
+    socket.on("sessionExpired", handleRefreshPage);
+    // socket.on("sessionExpired", handleRefreshPage);
 
     return () => {
       handleSocketDisconnection();
     };
   }, [isLoggedIn, user]);
-  const handleRefreshPage = () => {
-    window.location.reload();
-  };
+
   useEffect(() => {
     return () => {
       handleSocketDisconnection();
