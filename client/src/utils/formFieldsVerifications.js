@@ -18,7 +18,7 @@ export const validateMission = (mission, user, object) => {
 
   if (!mission?.type) {
     errors.type = "obligatoire";
-  }
+  } 
 
   if (!mission?.pays) {
     errors.pays = "obligatoire";

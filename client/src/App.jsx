@@ -79,14 +79,14 @@ function App() {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const { user, missions, token } = useSelector((state) => state.auth);
   const [sessionExpired, setSessionExpired] = useState(false);
+  const dispatch = useDispatch();
 
   const handleSessionExpired = () => {
     setSessionExpired(true);
   };
 
   // const users = useSelector((state) => state.auth.users);
-  let element = null;
-  const dispatch = useDispatch();
+  
 
   // const employees = users.map((u) => u._id);
   // console.log(JSON.stringify(employees));
