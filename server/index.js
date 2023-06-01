@@ -94,6 +94,7 @@ export const io = new Server(server, {
   },
 });
 export let connectedUsers = [];
+export let connectedClients = [];
 // ____________________________________________________________________________
 // Connect to the MongoDB database
 mongoose.set("strictQuery", false);
@@ -127,9 +128,10 @@ mongoose
     // addMissionsData();
     console.log("end");
     io.on("connection", (socket) => {
-      console.log(connectedUsers);
-
-      socket.on("login", (user, token) => {
+      // console.log(connectedUsers);
+      connectedClients.push(socket.id);
+      // console.log(connectedClients);
+      socket.on("login", async (user, token) => {
         socket.user = user;
         const userId = user._id;
         const existingUser = connectedUsers.find(
@@ -144,7 +146,8 @@ mongoose
             existingUser.socketIds.push(socket.id); // Add the new socket ID to the existing user's socket IDs if it doesn't already exist
           }
         }
-        console.log(connectedUsers);
+
+        // console.log(connectedUsers);
       });
 
       socket.on("logout", async () => {
@@ -163,7 +166,7 @@ mongoose
             connectedUsers.splice(indexToRemove, 1);
           }
 
-          console.log(connectedUsers);
+          // console.log(connectedUsers);
         }
       });
 

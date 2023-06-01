@@ -149,28 +149,46 @@ function App() {
     socket.off("cronDataChange", handleCronData);
     socket.off("updatedData", handleSocketData);
   };
-
+  const handleRefreshPage = () => {
+    window.location.reload();
+  };
   useEffect(() => {
-    const handleRefreshPage = () => {
-      window.location.reload();
-    };
     if (isLoggedIn) {
       socket.emit("login", user, token);
+      localStorage.setItem("isLoggedIn", true);
       handleSocketConnection();
     } else {
       socket.emit("logout");
+      localStorage.setItem("isLoggedIn", false);
     }
     socket.on("sessionExpired", handleRefreshPage);
-    // socket.on("sessionExpired", handleRefreshPage);
 
     return () => {
       handleSocketDisconnection();
     };
-  }, [isLoggedIn, user]);
+  }, [isLoggedIn, user, token]);
 
   useEffect(() => {
     return () => {
       handleSocketDisconnection();
+    };
+  }, []);
+
+  const handleStorageChange = (event) => {
+    if (event.key === "isLoggedIn") {
+      if (event.newValue === "true") {
+        console.log("refreshed");
+        
+        handleRefreshPage(); 
+      }
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("storage", handleStorageChange);
+
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
     };
   }, []);
 

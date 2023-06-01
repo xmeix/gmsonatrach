@@ -2,13 +2,12 @@ import bcrypt from "bcrypt";
 import { generateJWT } from "../middleware/auth.js";
 import User from "../models/User.js";
 import jwt from "jsonwebtoken";
-import { io } from "../index.js";
-import { emitDataSpec, generateCustomId } from "./utils.js";
+import { generateCustomId } from "./utils.js";
 
 /** REGISTER USER */
 export const register = async (req, res) => {
   try {
-    const {
+    const { 
       nom,
       prenom,
       fonction,
@@ -117,7 +116,7 @@ export const logout = async (req, res) => {
   // console.log(req.user.id);
   const cookies = req.cookies;
   if (!cookies?.jwt) return res.status(204).send();
-  
+
   // await emitDataSpec("sessionExpired", req.user.id, cookies.jwt);
   res.clearCookie("jwt", { httpOnly: true, sameSite: "None", secure: true });
   res.json({ msg: "Logged out successfully and Cookie cleared" });

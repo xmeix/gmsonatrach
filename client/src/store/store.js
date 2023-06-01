@@ -33,6 +33,12 @@ export const store = configureStore({
     getDefaultMiddleware({
       serializableCheck: false,
     }),
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
 });
 
 export const persistor = persistStore(store);
