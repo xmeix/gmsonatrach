@@ -39,11 +39,40 @@ export const generateCustomId = async (structure, collectionName) => {
   count++;
   // Generate the custom ID
   const prefix = getPrefixFromStructure(structure);
-  const cus = prefix + count.toString().padStart(5, "0");
+  const prefixCollect = getPrefixFromCollection(collectionName);
+  const cus = prefix + prefixCollect + count.toString().padStart(5, "0");
 
   return cus;
 };
 
 function getPrefixFromStructure(structure) {
-  return structure.toString();
+  const prefixMap = {
+    SECRETARIAT: "01",
+    DG: "02",
+    RELEX: "03",
+    PMO: "04",
+    FIN: "05",
+    SD: "06",
+    PRC: "07",
+    HCM: "08",
+    MRO: "09",
+    IPM: "10",
+    PDN: "11",
+    TECH: "12",
+    DATA: "13",
+    CHANGE: "14",
+  };
+
+  return prefixMap[structure] || "";
+}
+function getPrefixFromCollection(collectionName) {
+  const prefixMap = {
+    users: "1",
+    missions: "2",
+    demandes: "3",
+    ordremissions: "4",
+    rapportfms: "5",
+  };
+
+  return prefixMap[collectionName] || "";
 }

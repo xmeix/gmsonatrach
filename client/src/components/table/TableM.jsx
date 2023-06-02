@@ -215,9 +215,7 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
           <Tooltip title="annuler">
             <DoNotDisturbRoundedIcon className="icn black " />
           </Tooltip>
-        ) : button === "send" ? (
-           null
-        ) : button === "update" ? (
+        ) : button === "send" ? null : button === "update" ? (
           <Tooltip title="mettre a jour">
             <ModeRoundedIcon className="icn black" />
           </Tooltip>
@@ -380,11 +378,12 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
             item?.etat === filterOption.toString() ||
             item?.structure === filterOption.toString() ||
             item?.role === filterOption.toString() ||
-            item?.moyenTransport.includes(filterOption.toString()) ||
-            item?.moyenTransportRet.includes(filterOption.toString()) ||
+            item?.moyenTransport?.includes(filterOption.toString()) ||
+            item?.moyenTransportRet?.includes(filterOption.toString()) ||
             item?.type === filterOption.toString() ||
             item?.mission?.structure === filterOption.toString());
       }
+
       return result;
     });
   }, [data, filter, filterOption]);

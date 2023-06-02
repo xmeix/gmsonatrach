@@ -7,7 +7,7 @@ import { generateCustomId } from "./utils.js";
 /** REGISTER USER */
 export const register = async (req, res) => {
   try {
-    const { 
+    const {
       nom,
       prenom,
       fonction,
@@ -21,23 +21,6 @@ export const register = async (req, res) => {
     } = req.body;
     const salt = await bcrypt.genSalt();
     const passwordHash = await bcrypt.hash(password, salt);
-    // const numTelRegex = /^(0)(5|6|7)[0-9]{8}$/;
-    // if (
-    //   nom === "" ||
-    //   prenom === "" ||
-    //   fonction === "" ||
-    //   numTel === "" ||
-    //   email === "" ||
-    //   password === "" ||
-    //   structure === ""
-    // )
-    //   throw new Error("empty fields");
-    // else if (!numTelRegex.test(numTel)) {
-    //   throw new Error("Invalid phone number");
-    // } else {
-    //   const user = await User.findOne({ email: email });
-    //   if (user) throw new Error("user already exists");
-    // }
     console.log(user.role);
     let customId;
     if (user.role === "relex") {
@@ -220,13 +203,16 @@ export const deleteUser = async (req, res) => {
 
 export const alterUser = async (req, res) => {
   try {
-    // const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, {
-    //   new: true,
-    // });
-    const { structure } = req.body;
+    const { structure, password } = req.body;
     const updateOptions = structure
       ? { ...req.body, uid: await generateCustomId(structure, "users") }
       : req.body;
+
+    if (password) {
+      const salt = await bcrypt.genSalt();
+      const hashedPassword = await bcrypt.hash(password, salt);
+      updateOptions.password = hashedPassword;
+    }
 
     const updatedUser = await User.findByIdAndUpdate(
       req.params.id,
@@ -235,6 +221,7 @@ export const alterUser = async (req, res) => {
         new: true,
       }
     );
+
     res.status(200).json({
       updatedUser,
       msg: "User has been updated successfully",

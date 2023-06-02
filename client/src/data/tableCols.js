@@ -3,7 +3,7 @@
 export const columnsDemandes = [
   { id: "createdAt", label: "date d'envoi", minWidth: "20px" },
   { id: "uid", label: "Identifiant", minWidth: "20px" },
-  { id: "idEmetteur", label: "de", minWidth: "20px" },
+  { id: "idEmetteur", label: "par", minWidth: "20px" },
   // { id: "motif", label: "Motif", minWidth: "20px" },
   { id: "etat", label: "état Demande", minWidth: "20px" },
 ];
@@ -19,7 +19,7 @@ export const filterDBOptions = ["en-attente", "acceptée", "refusée", "annulée
 
 export const columnsRFM = [
   { id: "createdAt", label: "date de création", minWidth: "20px" },
-  { id: "idEmploye", label: "de", minWidth: "20px" },
+  { id: "idEmploye", label: "par", minWidth: "20px" },
   { id: "mission.uid", label: "Mission", minWidth: "20px" },
   { id: "etat", label: "état", minWidth: "20px" },
 ];

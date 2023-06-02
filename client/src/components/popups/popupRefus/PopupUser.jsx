@@ -60,8 +60,9 @@ const PopupUser = ({ item, close }) => {
     { label: "prenom", content: `${updatedItem.prenom}` },
     { label: "structure", content: `${updatedItem.structure}` },
     { label: "fonction", content: `${updatedItem.fonction}` },
-    { label: "email", content: `${updatedItem.email}` },
     { label: "numTel", content: `${updatedItem.numTel}` },
+    { label: "email", content: `${updatedItem.email}` },
+    { label: "password", content: `${updatedItem.password}` },
   ];
 
   const handleEditMode = (label) => {
@@ -199,6 +200,11 @@ const PopupUser = ({ item, close }) => {
                                   <input
                                     className={`${classes.inputField} user-input`}
                                     defaultValue={el.content}
+                                    type={
+                                      el.label === "password"
+                                        ? "password"
+                                        : "text"
+                                    }
                                     onChange={(e) =>
                                       handleInputChange(
                                         el.label,
@@ -252,7 +258,7 @@ const PopupUser = ({ item, close }) => {
                               onClick={() => handleEditMode(el.label)}
                               className="edit-box"
                             >
-                              {el.content}
+                              {el.label !== "password" ? el.content : "******"}
                               <ModeEditRoundedIcon className="icon" />
                             </div>
                           )}
