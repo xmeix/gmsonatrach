@@ -513,8 +513,15 @@
 /*___________________________________________*/
 
 .popup-user .title {
-  font-size: 24px;
-  font-weight: 700;
+  font-size: 13px;
+  font-weight: 800;
+  margin-bottom: 0;
+}
+.popup-user .sub-title {
+  font-size: 20px;
+  font-weight: 800;
+  text-align: center;
+  line-height: 0;
   margin-bottom: 20px;
 }
 
@@ -559,4 +566,18 @@
 .popup-user .user-form-box .user-input-box .select {
   width: 210px;
   /* height: 30px; */
+}
+
+.width {
+  width: 40px !important;
+  /* transition: none !important; */
+  box-shadow: none !important;
+}
+
+.width:hover {
+  background-color: var(--gray3) !important;
+}
+
+.width:focus {
+  background-color: var(--gray2) !important;
 }

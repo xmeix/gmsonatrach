@@ -12,35 +12,46 @@ import Select from "react-select";
 import ModeEditRoundedIcon from "@mui/icons-material/ModeEditRounded";
 import { useSelector } from "react-redux";
 import useBtn from "../../../hooks/useBtn";
-
+import "./../Popup.css";
 const useStyles = makeStyles({
   table2: {
-    borderCollapse: "separate",
+    borderCollapse: "collapse",
+    border: "none",
+  },
+  tableCell1: {
+    padding: "10px",
+    fontWeight: 700,
+    fontSize: 12,
+    flexBasis: "50%",
+    fontFamily: "Montserrat",
+    boxShadow: "none",
     border: "none",
   },
   tableCell2: {
     padding: "10px",
     fontWeight: 500,
-    fontSize: 13,
+    fontSize: 11,
     border: "none",
     flexBasis: "50%",
+    fontFamily: "Montserrat",
   },
   tableRow: {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+    border: "solid 1px black",
+    borderBottom: "none",
+    "&:last-child": {
+      borderBottom: "solid 1px black",
+    },
   },
-  inputField: {
-    // Add your input field styles here
+  success: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: "1em",
+    borderTop: "solid 1px black",
   },
-  select: {
-    // Add your select styles here
-  },
-  // error: {
-  //   color: "red",
-  //   fontSize: 12,
-  //   textAlign: "center",
-  // },
 });
 
 const PopupUser = ({ item, close }) => {
@@ -51,7 +62,7 @@ const PopupUser = ({ item, close }) => {
   const [updatedItem, setUpdatedItem] = useState(item);
   const [editMode, setEditMode] = useState(false);
   const [errors, setErrors] = useState({});
-  const [selectedRole, setSelectedRole] = useState(item.role);
+  const [success, setSuccess] = useState(false);
   const data = [
     { label: "matricule", content: `${updatedItem.uid}` },
     { label: "role", content: `${updatedItem.role}` },
@@ -108,6 +119,7 @@ const PopupUser = ({ item, close }) => {
   });
 
   const handleInputChange = (label, value) => {
+    setSuccess(false);
     setNewItem({ ...newItem, [label]: value });
     console.log(newItem);
   };
@@ -119,11 +131,13 @@ const PopupUser = ({ item, close }) => {
       const errs = handleVerification(key, value);
       //errors is an object
       if (Object.keys(errs).length <= 0) {
-        setUpdatedItem({ ...item, [key]: value });
+        setUpdatedItem((prevItem) => ({ ...prevItem, [key]: value }));
         setEditMode((prev) => (prev === key ? true : key));
         handleClick("update", item, "user", "", newItem);
         setErrors({});
+        setSuccess(true);
       } else {
+        setSuccess(false);
         setErrors(errs);
       }
     }
@@ -156,11 +170,12 @@ const PopupUser = ({ item, close }) => {
   // useEffect(() => {
   //   console.log(updatedItem);
   // }, [updatedItem]);
-
+  console.log(data);
   return (
     <div className="popup-user">
-      <div className="title">
-        Profile{/* : {updatedItem.nom} {updatedItem.prenom} */}
+      <div className="title">Profile</div>
+      <div className="sub-title">
+        {updatedItem.nom} {updatedItem.prenom}
       </div>
 
       <TableContainer>
@@ -179,7 +194,7 @@ const PopupUser = ({ item, close }) => {
               if (el.label !== "etat") {
                 return (
                   <TableRow key={i} className={classes.tableRow}>
-                    <TableCell className={classes.tableCell2}>
+                    <TableCell className={classes.tableCell1}>
                       {el.label === "numTel"
                         ? "tel"
                         : el.label === "prenom"
@@ -199,7 +214,11 @@ const PopupUser = ({ item, close }) => {
                                 <div className="user-input-box">
                                   <input
                                     className={`${classes.inputField} user-input`}
-                                    defaultValue={el.content}
+                                    defaultValue={
+                                      el.label !== "password"
+                                        ? el.content
+                                        : "******"
+                                    }
                                     type={
                                       el.label === "password"
                                         ? "password"
@@ -219,8 +238,11 @@ const PopupUser = ({ item, close }) => {
                                     </div>
                                   )}
                                 </div>
-                                <button onClick={handleOkClick}>
-                                  <CheckRoundedIcon />
+                                <button
+                                  onClick={handleOkClick}
+                                  className="user-btn width"
+                                >
+                                  <CheckRoundedIcon className="icon" />
                                 </button>
                               </div>
                             ) : (
@@ -248,7 +270,10 @@ const PopupUser = ({ item, close }) => {
                                     </div>
                                   )}
                                 </div>
-                                <button onClick={handleOkClick}>
+                                <button
+                                  onClick={handleOkClick}
+                                  className="user-btn width"
+                                >
                                   <CheckRoundedIcon className="icon" />
                                 </button>
                               </div>
@@ -272,6 +297,11 @@ const PopupUser = ({ item, close }) => {
               }
               return null;
             })}
+            {success && (
+              <TableRow className={classes.success}>
+                <div className="success-message">modification avec succés.</div>
+              </TableRow>
+            )}
           </TableBody>
         </Table>
       </TableContainer>

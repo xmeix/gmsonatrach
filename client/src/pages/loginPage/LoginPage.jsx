@@ -3,7 +3,7 @@ import logo from "../../assets/logo.svg";
 import AlternateEmailRoundedIcon from "@mui/icons-material/AlternateEmailRounded";
 import { InputAdornment } from "@mui/material";
 import LockRoundedIcon from "@mui/icons-material/LockRounded";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAxios } from "../../hooks/useAxios";
 import "./../../components/formulaire/Formulaire.css";
 
@@ -17,6 +17,18 @@ const LoginPage = () => {
   const { callApi, error, isLoading, successMsg } = useAxios();
   const [errors, setErrors] = useState({});
 
+  useEffect(() => {
+    if (error) {
+      setErrors({
+        email: "E-mail invalide",
+        password: "Mot de passe invalide",
+      });
+    } else {
+      setPassword("");
+      setEmail("");
+      setErrors({});
+    }
+  }, [error]);
   const handleLogin = (e) => {
     e.preventDefault();
     if (email !== "" && password !== "") {
@@ -32,20 +44,10 @@ const LoginPage = () => {
         setErrors(newErrors);
       } else {
         const userAuth = {
-          email: email,
+          email,
           password,
         };
-        callApi("post", "/auth/login", { email, password });
-        if (error) {
-          setErrors({
-            email: "E-mail invalide",
-            password: "Mot de passe invalide",
-          });
-        } else {
-          setPassword("");
-          setEmail("");
-          setErrors({});
-        }
+        callApi("post", "/auth/login", userAuth);
       }
     } else {
       const newErrors = {};
