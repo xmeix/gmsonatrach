@@ -243,8 +243,8 @@ const Formulaire = ({ title, entries, buttons, type }) => {
     return input.options;
   };
 
+  const [predResult, setPredResult] = useState("");
   const handlePredict = () => {
-    console.log("predicting smthg...");
     fetch("http://localhost:5000/predict", {
       method: "POST",
       headers: {
@@ -254,12 +254,35 @@ const Formulaire = ({ title, entries, buttons, type }) => {
     })
       .then((response) => response.json())
       .then((data) => {
-        // setResult(data);
-        console.log(data);
+        setPredResult(data.predictions);
       });
-    // getBestEmployes("/ticket/employes");
+    // let object = {
+    //   type: "form",
+    //   users,
+    //   missions,
+    // };
+    // setErrors(validateMission(values, currentUser, object));
+    // if (
+    //   Object.keys(validateMission(values, currentUser, object)).length === 0
+    // ) {
+    //   fetch("http://localhost:5000/predict", {
+    //     method: "POST",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //     body: JSON.stringify({ data: [10, 2, 2, 20900] }),
+    //   })
+    //     .then((response) => response.json())
+    //     .then((data) => {
+    //       setPredResult(data.predictions);
+    //     });
+    //   setErrors({});
+    // }
   };
 
+  const handleGetBestEmployes = () => {
+    getBestEmployes("/ticket/employes");
+  };
   return (
     <div className="formulaire">
       <div className="listTitle">{title}</div>
@@ -347,7 +370,6 @@ const Formulaire = ({ title, entries, buttons, type }) => {
               {entry.inputType === "textarea" && (
                 <textarea
                   placeholder={entry.placeholder}
-                  rows={5}
                   cols={7}
                   onChange={handleChange}
                   name={entry.id}
@@ -382,23 +404,18 @@ const Formulaire = ({ title, entries, buttons, type }) => {
                 {btn.title}
               </button>
             );
-          } else if (btn.title === "Predire") {
-            return (
-              <button
-                className="formBtn"
-                key={index}
-                onClick={handlePredict}
-                disabled={isLoading}
-              >
-                Prédire
-              </button>
-            );
           } else
             return (
               <button
                 className="formBtn"
                 key={index}
-                onClick={handleSubmit}
+                onClick={
+                  btn.title === "Prédire succés mission"
+                    ? handlePredict
+                    : btn.title === "Voir classement des employés"
+                    ? handleGetBestEmployes
+                    : handleSubmit
+                }
                 disabled={isLoading}
               >
                 {btn.title}
@@ -416,6 +433,17 @@ const Formulaire = ({ title, entries, buttons, type }) => {
         <div className="success-message">
           <CheckCircleRoundedIcon className="icn" />
           {successMsg}
+        </div>
+      )}
+      {predResult === 1 && (
+        <div className="success-message">
+          La mission introduite présente une perspective favorable
+          d'accomplissement réussi.
+        </div>
+      )}
+      {predResult === 0 && (
+        <div className="error-message">
+          Il n'est pas assuré que la mission introduite aboutisse à un succès.
         </div>
       )}
     </div>

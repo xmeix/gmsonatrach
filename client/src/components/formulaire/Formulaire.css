@@ -47,7 +47,13 @@ textarea {
   box-sizing: border-box;
   font-weight: 500;
 }
-
+textarea {
+  padding: 1em;
+  height: 45px; 
+  max-height: 60%;
+  min-width: 80%;
+  min-height: 40px;
+}
 .css-b62m3t-container,
 .css-3iigni-container {
   font-size: 12px;
@@ -58,16 +64,14 @@ textarea {
 .css-1ow3sjv-control {
   box-shadow: 0px 1px 4px rgb(0 0 0 / 20%) !important;
 }
-textarea {
-  max-width: 80%;
-  max-height: 60%;
-  min-width: 50%;
-  min-height: 5%;
-}
+
 .formulaire .buttons {
   display: flex;
   gap: 1em;
   align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+
   margin: 1em;
 }
 .formulaire .buttons .formBtn {

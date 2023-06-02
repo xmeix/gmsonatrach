@@ -18,20 +18,29 @@ export const userButtons = [
     onClick: "",
     type: "submit",
   },
-];export const missionButtons = [
+];
+export const missionButtons = [
   {
     id: 1,
+    title: "Voir classement des employés",
+    onClick: "",
+    type: "",
+  },
+  {
+    id: 2,
+    title: "Prédire succés mission",
+    onClick: "",
+    type: "",
+  },
+  {
+    id: 3,
     title: "Annuler",
     onClick: "",
     type: "reset",
   },
+
   {
-    id: 2,
-    title: "Predire",
-    onClick: "",
-    type: "",
-  },{
-    id: 3,
+    id: 4,
     title: "Ajouter",
     onClick: "",
     type: "submit",

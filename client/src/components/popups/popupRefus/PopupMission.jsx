@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { FormControlLabel, FormGroup } from "@mui/material";
 import Checkbox from "@mui/material/Checkbox";
 import useBtn from "../../../hooks/useBtn";
+import AddCircleRoundedIcon from "@mui/icons-material/AddCircleRounded";
 export const ItemDiv = ({ label, content }) => (
   <div className="itemDiv">
     <div className="item-label">{label}</div>
@@ -17,6 +18,12 @@ const PopupMission = ({ item }) => {
     item.employes.some((employee) => employee._id === currentUser._id);
   const [budgetConsome, setBudgetConsomme] = useState(0);
 
+  // const handleAddEmploye = () => {
+  //   //to add an employe to a mission , its a whole other process
+  //   //we need to create a separate om , rfm and also
+
+  // };
+  // const handleRemEmploye = () => {};
   const handleCheck = (check, id) => {
     const newTasks = tasks.map((task) => {
       if (task._id === id) {
@@ -88,25 +95,11 @@ const PopupMission = ({ item }) => {
         <h3>Object Mission: {item.objetMission}</h3>
         <div className="state">
           <div>
-            <span >Etat:</span>
-            <span
-              className={`${item.etat}`}
-              // style={{
-              //   color:
-              //     item.etat === "en-attente"
-              //       ? "var(--orange)"
-              //       : item.etat === "acceptée"
-              //       ? "var(--success)"
-              //       : "var(--error)",
-              //   fontWeight: "600",
-              // }}
-            >
-              {item.etat}
-            </span>
+            <span>Etat:</span>
+            <span className={`${item.etat}`}>{item.etat}</span>
           </div>
           <div>
-            <span >Raison du refus:</span>{" "}
-            {item.raisonRefus || "/"}
+            <span>Raison du refus:</span> {item.raisonRefus || "/"}
           </div>
         </div>
       </div>
@@ -139,11 +132,18 @@ const PopupMission = ({ item }) => {
       </>
       <div className="employes">
         <span className="tile">Employes:</span>
-        {item.employes.map((emp, i) => (
-          <li className="employe" key={i}>
-            {emp.nom + " " + emp.prenom}
-          </li>
-        ))}
+        <div className="list">
+          {item.employes.map((emp, i) => (
+            <li className="employe" key={i}>
+              {emp.nom + " " + emp.prenom}
+            </li>
+          ))}
+          {/* {(item.etat === "acceptée" || item.etat === "en-cours") && (
+            <button className="width" onClick={handleAddEmploye}>
+              <AddCircleRoundedIcon className="icon" />
+            </button>
+          )} */}
+        </div>
       </div>
       <div className="taches">
         <span className="tile">Taches:</span>
