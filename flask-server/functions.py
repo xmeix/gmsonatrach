@@ -259,8 +259,6 @@ def train_model(missions, tickets):
         return acc_rf, rf_model
 
 # structure  type    budget      pays  destination  NbEmployes     duree  resultat
-# structure   budget  type  pays  destination  duree  NbEmployes
-
 
 def predict_classification(data):
     # Perform preprocessing on the input data
@@ -274,7 +272,7 @@ def predict_classification(data):
     preprocessed_df = pd.DataFrame(preprocessed_row, columns=column_names)
     print(preprocessed_df)
     # Make predictions using the trained model
-    prediction = model[1].predict(preprocessed_df)
+    prediction = model.predict(preprocessed_df)
 
     # Return the predicted label
     return prediction

@@ -26,9 +26,9 @@ try:
     # missions = db['missions']
     # tickets = db['tickets']
     # # Print the first 10 documents in the collection
-    # trained_model = train_model(missions, tickets)
-    # joblib.dump(trained_model, 'trained_model.joblib')
-    # best_accuracy = 57.5  # the current best accuracy is 57.5
+    # # trained_model = train_model(missions, tickets)
+    # # joblib.dump(trained_model, 'trained_model.joblib')
+    # best_accuracy = 75.0  # the current best accuracy is 57.5
     # best_model = None  # Track the best model
 
     # # Perform iterative training
