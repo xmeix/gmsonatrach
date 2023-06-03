@@ -35,6 +35,7 @@ import {
   dcs,
   dms,
   missions,
+  tickets,
   users,
 } from "../client/src/data/data.js";
 import { createOrUpdateFMission } from "./controllers/Kpis.js";
@@ -49,6 +50,7 @@ import { createNotification } from "./controllers/Notification.js";
 import { createOrUpdateFDocument } from "./controllers/FilesKpis.js";
 import { createMission } from "./controllers/mission.js";
 import { emitDataSpec, generateCustomId } from "./controllers/utils.js";
+import Ticket from "./models/Ticket.js";
 const toId = mongoose.Types.ObjectId;
 // Configure environment variables
 dotenv.config();
@@ -114,6 +116,7 @@ mongoose
     //await mongoose.connection.db.dropDatabase(); //ATTENTION DELETES THE WHOOOLE DB
 
     // Mission.insertMany(missions);
+    // Ticket.insertMany(tickets);
     // FDocument.insertMany(FDM);
     // FDocument.insertMany(FRFM);
     // FDocument.insertMany(FDB);

@@ -4,16 +4,41 @@ from flask import Flask, request, jsonify
 from pymongo import MongoClient
 from flask_cors import CORS
 from functions import rf, predict_classification, preprocess_data
-
+from pymongo import MongoClient
+from pymongo.server_api import ServerApi
+from pymongo.mongo_client import MongoClient
+from functions import train_model
 app = Flask(__name__)
 CORS(app)  # enable CORS for all routes
+# Connect to MongoDB mongodb://myuser:mypassword@localhost:27017/mydatabase
+
+
+uri = "mongodb+srv://pfeuser:cxjoCXpn3zqJTru7@projetpfe.b2fxjea.mongodb.net/?retryWrites=true&w=majority"
+
+# Create a new client and connect to the server
+client = MongoClient(uri, server_api=ServerApi('1'))
+
+# Send a ping to confirm a successful connection
+try:
+    client.admin.command('ping')
+    print("Pinged your deployment. You successfully connected to MongoDB!")
+    db = client["test"]
+    missions = db['missions']
+    tickets = db['tickets']
+    # Print the first 10 documents in the collection
+    trained_model = train_model(missions, tickets)
+    joblib.dump(trained_model, 'trained_model.pkl')
+
+except Exception as e:
+    print(e)
 
 
 @app.route('/predict', methods=['POST'])
 def predict():
     data = request.json['data']  # Extract the data from the JSON payload
+    model = joblib.load('trained_model.pkl')
 
-    # predictions = predict_classification(data)  # Call the predict_classification function
+    # predictions = predict_classification(data,model)  # Call the predict_classification function
 
     # Return the predictions as a JSON response
     return jsonify({'predictions': "predictions.tolist()"})

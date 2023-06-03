@@ -77,7 +77,7 @@ const relexRoutes = [{ path: "/", element: <GestionRelex /> }];
 
 function App() {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
-  const { user, missions, token } = useSelector((state) => state.auth);
+  const { user, missions, token, users } = useSelector((state) => state.auth);
   const [sessionExpired, setSessionExpired] = useState(false);
   const dispatch = useDispatch();
 
@@ -85,10 +85,14 @@ function App() {
     setSessionExpired(true);
   };
 
-  // const users = useSelector((state) => state.auth.users);
-  
+  // const employees = users
+  //   .filter((u) => ["responsable", "directeur", "secretaire"].includes(u.role))
+  //   .map((u) => u._id);
+  // console.log(JSON.stringify(employees));
 
-  // const employees = users.map((u) => u._id);
+  // const employees = missions
+  //   .filter((u) => u.etat==="terminée")
+  //   .map((u) => u._id);
   // console.log(JSON.stringify(employees));
 
   const handleSocketData = (type) => {
@@ -178,8 +182,8 @@ function App() {
     if (event.key === "isLoggedIn") {
       if (event.newValue === "true") {
         console.log("refreshed");
-        
-        handleRefreshPage(); 
+
+        handleRefreshPage();
       }
     }
   };

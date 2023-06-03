@@ -65,7 +65,7 @@ const MissionSchema = new mongoose.Schema(
           default: "non-accomplie",
         },
       },
-    ], 
+    ],
     tDateDeb: {
       type: Date,
       required: true,
@@ -127,11 +127,9 @@ const MissionSchema = new mongoose.Schema(
       type: String,
       default: "",
     },
-    // circonscriptionAdm: {
-    //   //a supprimer
-    //   type: String,
-    //   // required: true,
-    // },
+    oldDuree: {
+      type: Number,
+    },
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
@@ -147,5 +145,15 @@ const MissionSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
+0;
+MissionSchema.pre("save", function (next) {
+  if (this.tDateDeb && this.tDateRet) {
+    const diffTime = Math.abs(this.tDateRet - this.tDateDeb);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    this.oldDuree = diffDays;
+  }
+  next();
+});
+
 const Mission = mongoose.model("Mission", MissionSchema);
 export default Mission;
