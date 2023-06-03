@@ -28,7 +28,7 @@ try:
     # # Print the first 10 documents in the collection
     # trained_model = train_model(missions, tickets)
     # joblib.dump(trained_model, 'trained_model.joblib')
-    best_accuracy = 55  # the current best accuracy is 55
+    best_accuracy = 57.5  # the current best accuracy is 57.5
     best_model = None  # Track the best model
 
     # Perform iterative training
