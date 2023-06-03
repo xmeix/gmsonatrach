@@ -8,10 +8,12 @@ from sklearn.metrics import accuracy_score
 from sklearn.preprocessing import LabelEncoder
 from sklearn.preprocessing import MinMaxScaler
 import joblib
+from sklearn.preprocessing import OneHotEncoder
 from sklearn import tree
 
 
 rf = None
+
 
 # Load a CSV file
 
@@ -25,6 +27,68 @@ def load_csv(filename):
                 continue
             dataset.append(row)
     return dataset
+
+
+def preprocess_row(row):
+    # Convert the row to a DataFrame
+    row = pd.DataFrame([row])
+
+    # Handle missing values if any
+    row = row.fillna(0.5)
+
+    # Convert 'tDateRet' and 'tDateDeb' columns to datetime
+    row['tDateRet'] = pd.to_datetime(row['tDateRet'])
+    row['tDateDeb'] = pd.to_datetime(row['tDateDeb'])
+
+    # Calculate the duration as timedelta
+    diff = row['tDateRet'] - row['tDateDeb']
+    # Extract the duration in days
+    duration_days = diff.dt.days
+    # Store the duration in a new column
+    row['duree'] = duration_days
+
+    # Load the label encoders
+    label_encoders = joblib.load('codifications.joblib')
+
+    columns_to_update = ['structure', 'type', 'pays', 'destination']
+
+    # Iterate over the specified columns and update the label encoders
+    for col in columns_to_update:
+        if col in row.columns and col in label_encoders:
+            # Get unique values in the column
+            unique_values = row[col].unique()
+
+            # Add new values to the label encoder
+            new_values = set(unique_values) - set(label_encoders[col].classes_)
+            if new_values:
+                label_encoder = label_encoders[col]
+                label_encoder.classes_ = np.concatenate(
+                    [label_encoder.classes_, list(new_values)])
+                label_encoders[col] = label_encoder
+
+            # Transform the values using the updated label encoder
+            label_encoder = label_encoders[col]
+            row[col] = label_encoder.transform(row[col])
+
+    # Calculate employees count
+    employes = row.at[0, "employes"]  # Get the array from the "taches" column
+    row.at[0, "NbEmployes"] = len(employes)
+
+    # Drop unnecessary columns
+    columns_to_drop = ['oldDuree', 'employes', 'taches', 'etat', 'tDateDeb', 'tDateRet', '_id', 'uid', 'objetMission', 'budgetConsome', 'NbTachesAccomplies', 'NbTachesTotal', 'NbTickets',
+                       'updatedAt', '__v', 'updatedBy', 'createdAt', 'DateDebA', 'DateRetA', 'observation', 'raisonRefus', 'createdBy', 'moyenTransport', 'lieuDep', 'moyenTransportRet']
+    columns_to_drop_existing = [
+        col for col in columns_to_drop if col in row.columns]
+    row = row.drop(columns_to_drop_existing, axis=1)
+
+    scaler = joblib.load('scaler.joblib')
+    numerical_features = ['structure', 'type', 'budget',
+                          'pays', 'destination', 'NbEmployes', 'duree']
+
+    row = scaler.transform(row[numerical_features])
+
+    print(row)
+    return row
 
 
 def preprocess_data(datasetMissions, datasetTickets):
@@ -44,7 +108,7 @@ def preprocess_data(datasetMissions, datasetTickets):
     # print(datasetMissions.isnull().sum())
     # Encode categorical variables if any
     # Specify the column names of categorical variables
-    categorical_cols = ['structure', 'pays', 'destination', 'type']
+    categorical_cols = ['structure', 'pays', 'type', 'destination']
     label_encoders = {}  # Dictionary to store label encoders for each categorical column
 
     for col in categorical_cols:
@@ -54,7 +118,7 @@ def preprocess_data(datasetMissions, datasetTickets):
         # Store the label encoder for future reference
         label_encoders[col] = label_encoder
 
-
+    joblib.dump(label_encoders, 'codifications.joblib')
 # ____________________________________________________________________________________
     # GETTING CRITERIA ITEMS#
 # ____________________________________________________________________________________
@@ -98,6 +162,10 @@ def preprocess_data(datasetMissions, datasetTickets):
 
     for index, mission in datasetMissions.iterrows():
         # Calculate the duration as timedelta
+        # Convert 'tDateRet' and 'tDateDeb' columns to datetime
+        mission['tDateRet'] = pd.to_datetime(mission['tDateRet'])
+        mission['tDateDeb'] = pd.to_datetime(mission['tDateDeb'])
+
         diff = mission['tDateRet'] - mission['tDateDeb']
         # Extract the duration in days
         duration_days = diff.days
@@ -151,12 +219,12 @@ def preprocess_data(datasetMissions, datasetTickets):
     # Create a new DataFrame with the normalized features
     normalized_data = pd.DataFrame(
         normalized_features, columns=numerical_features)
+    joblib.dump(scaler, 'scaler.joblib')
+
     # Concatenate the normalized features with the non-numerical features and target variable
     datasetMissions = pd.concat(
         [normalized_data, datasetMissions[['resultat']]], axis=1)
 
-    column_types = datasetMissions.dtypes
-    print(column_types)
     # print(datasetMissions)
     return datasetMissions
 
@@ -170,6 +238,7 @@ def train_model(missions, tickets):
 
     data = preprocess_data(datasetMissions, datasetTickets)
 
+    print("data training:", data.head())
     # Split the data into training and testing sets
     X_train, X_test, y_train, y_test = train_test_split(data.drop(
         "resultat", axis=1), data["resultat"], test_size=0.2)
@@ -189,13 +258,23 @@ def train_model(missions, tickets):
     else:
         return acc_rf, rf_model
 
+# structure  type    budget      pays  destination  NbEmployes     duree  resultat
+# structure   budget  type  pays  destination  duree  NbEmployes
 
-def predict_classification(data, model):
 
-    df = pd.DataFrame([data], columns=['nombre_employes',
-                      'destination', 'duree_mission', 'budget'])
-    # Make a prediction using the trained model
-    prediction = model.predict(df)
+def predict_classification(data):
+    # Perform preprocessing on the input data
+    model = joblib.load('trained_model.joblib')
+
+    preprocessed_row = preprocess_row(data)
+    column_names = ['structure', 'type', 'budget',
+                    'pays', 'destination', 'NbEmployes', 'duree']
+
+    # Create a new DataFrame with the preprocessed row
+    preprocessed_df = pd.DataFrame(preprocessed_row, columns=column_names)
+    print(preprocessed_df)
+    # Make predictions using the trained model
+    prediction = model[1].predict(preprocessed_df)
 
     # Return the predicted label
-    return prediction[0]
+    return prediction

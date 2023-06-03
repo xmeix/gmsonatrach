@@ -243,41 +243,36 @@ const Formulaire = ({ title, entries, buttons, type }) => {
     return input.options;
   };
 
-  const [predResult, setPredResult] = useState("");
+  const [predResult, setPredResult] = useState(0);
   const handlePredict = () => {
-    fetch("http://localhost:5000/predict", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ data: [10, 2, 2, 20900] }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setPredResult(data.predictions);
-      });
-    // let object = {
-    //   type: "form",
-    //   users,
-    //   missions,
-    // };
-    // setErrors(validateMission(values, currentUser, object));
-    // if (
-    //   Object.keys(validateMission(values, currentUser, object)).length === 0
-    // ) {
-    //   fetch("http://localhost:5000/predict", {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify({ data: [10, 2, 2, 20900] }),
-    //   })
-    //     .then((response) => response.json())
-    //     .then((data) => {
-    //       setPredResult(data.predictions);
-    //     });
-    //   setErrors({});
-    // }
+    let object = {
+      type: "form",
+      users,
+      missions,
+    };
+    setErrors(validateMission(values, currentUser, object));
+    if (
+      Object.keys(validateMission(values, currentUser, object)).length === 0
+    ) {
+      // data: [structure,type,budget,pays,destination,NbEmployes,duree]
+      //
+
+      fetch("http://localhost:5000/predict", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          data: values,
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          setPredResult(parseInt(data.predictions));
+          console.log(data.predictions);
+        });
+      setErrors({});
+    }
   };
 
   const handleGetBestEmployes = () => {
@@ -435,13 +430,26 @@ const Formulaire = ({ title, entries, buttons, type }) => {
           {successMsg}
         </div>
       )}
-      {predResult === 1 && (
+      {typeof predResult}
+      {predResult === 4 && (
         <div className="success-message">
           La mission introduite présente une perspective favorable
-          d'accomplissement réussi.
+          d'accomplissement réussi a 90%.
         </div>
       )}
-      {predResult === 0 && (
+      {predResult === 3 && (
+        <div className="success-message">
+          La mission introduite présente une perspective favorable
+          d'accomplissement réussi a 75%.
+        </div>
+      )}{" "}
+      {predResult === 2 && (
+        <div className="success-message">
+          La mission introduite présente une perspective favorable
+          d'accomplissement réussi a 50%.
+        </div>
+      )}
+      {predResult === 1 && (
         <div className="error-message">
           Il n'est pas assuré que la mission introduite aboutisse à un succès.
         </div>
