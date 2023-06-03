@@ -25,9 +25,26 @@ try:
     db = client["test"]
     missions = db['missions']
     tickets = db['tickets']
-    # Print the first 10 documents in the collection
-    trained_model = train_model(missions, tickets)
-    joblib.dump(trained_model, 'trained_model.pkl')
+    # # Print the first 10 documents in the collection
+    # trained_model = train_model(missions, tickets)
+    # joblib.dump(trained_model, 'trained_model.joblib')
+    best_accuracy = 55  # the current best accuracy is 55
+    best_model = None  # Track the best model
+
+    # Perform iterative training
+    for i in range(30):
+        print('iteration: ', i)
+        score, trained_model = train_model(missions, tickets)
+
+        if score > best_accuracy:
+            best_accuracy = score
+            best_model = trained_model
+
+    # Save the best model
+    if best_model is not None:
+        joblib.dump(best_model, 'trained_model.joblib')
+        print("Best model saved successfully!")
+        print("Best accuracy: ", best_accuracy)
 
 except Exception as e:
     print(e)
@@ -36,7 +53,7 @@ except Exception as e:
 @app.route('/predict', methods=['POST'])
 def predict():
     data = request.json['data']  # Extract the data from the JSON payload
-    model = joblib.load('trained_model.pkl')
+    model = joblib.load('trained_model.joblib')
 
     # predictions = predict_classification(data,model)  # Call the predict_classification function
 

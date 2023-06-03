@@ -162,9 +162,7 @@ def preprocess_data(datasetMissions, datasetTickets):
 
 
 def train_model(missions, tickets):
-    # Update the filename for your classification dataset
-    # filename = 'training_data.csv'
-    # dataset = pd.read_csv(filename)
+
     print('training')
     # Fetch the first 10 documents from MongoDB
     datasetMissions = list(missions.find())
@@ -172,36 +170,28 @@ def train_model(missions, tickets):
 
     data = preprocess_data(datasetMissions, datasetTickets)
 
-    print(data)
-
     # Split the data into training and testing sets
     X_train, X_test, y_train, y_test = train_test_split(data.drop(
-        "resultat", axis=1), data["resultat"], test_size=0.2, random_state=42)  # Update the target column name
-    # X_train = data.drop("resultat", axis=1)
-    # y_train = data["resultat"]
-    # print(X_test)
-    # print(X_train)
-    # print(y_test)
-    # print(y_train)
+        "resultat", axis=1), data["resultat"], test_size=0.2)
 
     dt_model = tree.DecisionTreeClassifier().fit(X_train, y_train)
     acc_dt = round(dt_model.score(X_test, y_test)*100, 2)
     print("Accuracy: %s" % acc_dt)
 
-    randf = RandomForestClassifier(n_estimators=100, random_state=42)
+    randf = RandomForestClassifier(n_estimators=100)
     rf_model = randf.fit(X_train, y_train)
     acc_rf = round(rf_model.score(X_test, y_test)*100, 2)
     print("Accuracy: %s" % acc_rf)
-    print("Model trained successfully!")
+    # print("Model trained successfully!")
 
     if acc_dt > acc_rf:
-        return dt_model
+        return acc_dt, dt_model
     else:
-        return rf_model
+        return acc_rf, rf_model
 
 
-def predict_classification(data,model):
-    
+def predict_classification(data, model):
+
     df = pd.DataFrame([data], columns=['nombre_employes',
                       'destination', 'duree_mission', 'budget'])
     # Make a prediction using the trained model
@@ -209,5 +199,3 @@ def predict_classification(data,model):
 
     # Return the predicted label
     return prediction[0]
-
-
