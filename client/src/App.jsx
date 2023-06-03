@@ -146,6 +146,9 @@ function App() {
     socket.on("ticket", async () => {
       getTickets(dispatch, 1);
     });
+    socket.on("loginData", async () => {
+      getTickets(dispatch, 1);
+    });
     socket.on("updatedData", handleSocketData);
   };
 

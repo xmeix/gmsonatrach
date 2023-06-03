@@ -7,6 +7,7 @@ import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useRef, useState } from "react";
 import { useAxios } from "../../hooks/useAxios";
+
 import {
   validateDB,
   validateDC,
@@ -15,6 +16,15 @@ import {
   validateUser,
 } from "../../utils/formFieldsVerifications";
 import { getBestEmployes } from "../../api/apiCalls/getCalls";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Snackbar,
+} from "@mui/material";
+import useMessage from "../message/useMessage";
 const customStyles = {
   control: (provided, state) => ({
     ...provided,
@@ -31,10 +41,12 @@ const customStyles = {
 
 const Formulaire = ({ title, entries, buttons, type }) => {
   const selectInputRef = useRef();
-  const { callApi, error, isLoading, successMsg } = useAxios();
+  const [Message, showMessage] = useMessage();
+  const { callApi, error, isLoading, successMsg } = useAxios(showMessage);
   const currentUser = useSelector((state) => state.auth.user);
   const [selectedRole, setSelectedRole] = useState("");
   const dispatch = useDispatch();
+
   const [values, handleChange, resetForm] = useForm(() => {
     const vals = {};
     entries.forEach((entry) => {
@@ -181,6 +193,7 @@ const Formulaire = ({ title, entries, buttons, type }) => {
           if (Object.keys(validateDC(values)).length === 0) {
             //register(values);
             callApi("post", "/demande/DC", values);
+            // showMessage(successMsg, "success");
           }
         }
         break;
@@ -190,6 +203,7 @@ const Formulaire = ({ title, entries, buttons, type }) => {
           if (Object.keys(validateDM(values)).length === 0) {
             //register(values);
             callApi("post", "/demande/DM", values);
+            showMessage("demande", "success");
           }
         }
         break;
@@ -243,7 +257,7 @@ const Formulaire = ({ title, entries, buttons, type }) => {
     return input.options;
   };
 
-  const [predResult, setPredResult] = useState(0);
+  const [predResult, setPredResult] = useState(null);
   const handlePredict = () => {
     let object = {
       type: "form",
@@ -278,6 +292,17 @@ const Formulaire = ({ title, entries, buttons, type }) => {
   const handleGetBestEmployes = () => {
     getBestEmployes("/ticket/employes");
   };
+
+  // useEffect(() => {
+  //   if (successMsg) showMessage(successMsg, "success");
+  // }, [callApi]);
+  // useEffect(() => {
+  //   if (error) showMessage(error, "error");
+  // }, [callApi]);
+  // useEffect(() => {
+  //   if (predResult) showMessage(predResult, "success");
+  // }, [callApi]);
+
   return (
     <div className="formulaire">
       <div className="listTitle">{title}</div>
@@ -418,20 +443,21 @@ const Formulaire = ({ title, entries, buttons, type }) => {
             );
         })}
       </div>
-      {error !== "" && (
+      {/* {error !== "" && (
         <div className="error-message">
           <ErrorIcon className="icn" />
           {error}
         </div>
-      )}
-      {successMsg !== "" && (
+      )} */}
+      {/* {successMsg !== "" && (
         <div className="success-message">
           <CheckCircleRoundedIcon className="icn" />
           {successMsg}
         </div>
-      )}
-      {typeof predResult}
-      {predResult === 4 && (
+      )} */}
+      <Message />
+      {/* {typeof predResult} */}
+      {/* {predResult === 4 && (
         <div className="success-message">
           La mission introduite présente une perspective favorable
           d'accomplissement réussi a 90%.
@@ -453,7 +479,7 @@ const Formulaire = ({ title, entries, buttons, type }) => {
         <div className="error-message">
           Il n'est pas assuré que la mission introduite aboutisse à un succès.
         </div>
-      )}
+      )} */}
     </div>
   );
 };

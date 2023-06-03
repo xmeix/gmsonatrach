@@ -149,7 +149,7 @@ mongoose
             existingUser.socketIds.push(socket.id); // Add the new socket ID to the existing user's socket IDs if it doesn't already exist
           }
         }
-
+        await emitDataSpec("loginData", userId, socketIds); // Emit the sessionExpired event
         // console.log(connectedUsers);
       });
 

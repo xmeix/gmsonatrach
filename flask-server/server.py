@@ -22,29 +22,29 @@ client = MongoClient(uri, server_api=ServerApi('1'))
 try:
     client.admin.command('ping')
     print("Pinged your deployment. You successfully connected to MongoDB!")
-    # db = client["test"]
-    # missions = db['missions']
-    # tickets = db['tickets']
-    # # Print the first 10 documents in the collection
-    # # trained_model = train_model(missions, tickets)
-    # # joblib.dump(trained_model, 'trained_model.joblib')
-    # best_accuracy = 75.0  # the current best accuracy is 57.5
-    # best_model = None  # Track the best model
+    db = client["test"]
+    missions = db['missions']
+    tickets = db['tickets']
+    # Print the first 10 documents in the collection
+    # trained_model = train_model(missions, tickets)
+    # joblib.dump(trained_model, 'trained_model.joblib')
+    best_accuracy = 72.5  # the current best accuracy is 57.5
+    best_model = None  # Track the best model
 
-    # # Perform iterative training
-    # for i in range(200):
-    #     print('iteration: ', i)
-    #     score, trained_model = train_model(missions, tickets)
+    # Perform iterative training
+    for i in range(200):
+        print('iteration: ', i)
+        score, trained_model = train_model(missions, tickets)
 
-    #     if score > best_accuracy:
-    #         best_accuracy = score
-    #         best_model = trained_model
+        if score > best_accuracy:
+            best_accuracy = score
+            best_model = trained_model
 
-    # # Save the best model
-    # if best_model is not None:
-    #     joblib.dump(best_model, 'trained_model.joblib')
-    #     print("Best model saved successfully!")
-    #     print("Best accuracy: ", best_accuracy)
+    # Save the best model
+    if best_model is not None:
+        joblib.dump(best_model, 'trained_model.joblib')
+        print("Best model saved successfully!")
+        print("Best accuracy: ", best_accuracy)
 
 except Exception as e:
     print(e)

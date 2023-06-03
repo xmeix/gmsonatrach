@@ -208,7 +208,7 @@ export const alterUser = async (req, res) => {
       ? { ...req.body, uid: await generateCustomId(structure, "users") }
       : req.body;
 
-    if (password) {
+    if (password) { 
       const salt = await bcrypt.genSalt();
       const hashedPassword = await bcrypt.hash(password, salt);
       updateOptions.password = hashedPassword;

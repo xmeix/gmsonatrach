@@ -32,8 +32,8 @@ export const useAxios = () => {
 
   const callApi = async (method, url, body) => {
     console.log("making a call...");
-    setError("");
-    setSuccessMsg("");
+    // setError("");
+    // setSuccessMsg("");
     dispatch(fetchStart());
     setIsLoading(true);
     try {
@@ -77,19 +77,18 @@ export const useAxios = () => {
   const handleSuccess = (response, url, body) => {
     dispatch(fetchEnd());
     setSuccessMsg(response.data.msg);
-
     switch (url) {
       case "/auth/login":
         dispatch(setLogin(response.data));
-        handleUserType(response.data);
-        if (
-          response.data.user.role !== "employe" &&
-          response.data.user.role !== "relex"
-        ) {
-          getMissionKPIS(dispatch, 1);
-          getFileKPIS(dispatch, 1);
-          getUsers(dispatch, 1);
-        }
+        // handleUserType(response.data);
+        // if (
+        //   response.data.user.role !== "employe" &&
+        //   response.data.user.role !== "relex"
+        // ) {
+        //   getMissionKPIS(dispatch, 1);
+        //   getFileKPIS(dispatch, 1);
+        //   getUsers(dispatch, 1);
+        // }
         break;
       case "/auth/logout":
         dispatch(setLogout());
