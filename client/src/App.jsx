@@ -159,6 +159,11 @@ function App() {
         getMissions(dispatch);
       }
     });
+    socket.on("getOms", (tab) => {
+      if (tabId === tab) {
+        getOMs(dispatch);
+      }
+    });
     // socket.on("updatedData", handleSocketData);
   };
 

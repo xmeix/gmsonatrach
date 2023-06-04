@@ -34,3 +34,20 @@ export const getAllOrdresMissions = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+
+
+
+export const deleteOm = async (req, res) => {
+  try {
+    console.log(req.params.id);
+    const ordreMission = await OrdreMission.findById(req.params.id);
+    if (!ordreMission) {
+      throw new Error("OrdreMission not found");
+    }
+    await ordreMission.remove();
+    res.status(200).json({ msg: "OrdreMission deleted" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server Error" });
+  }
+};

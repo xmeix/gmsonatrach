@@ -2,15 +2,6 @@ import { connectedUsers, io } from "../index.js";
 import CustomId from "../models/CustomId.js";
 
 export const emitGetData = (users, link) => {
-  // users.forEach((userId) => {
-  //   const user = connectedUsers.find(
-  //     (u) => u.userId.toString() === userId.toString()
-  //   );
-
-  //   if (user) {
-  //     io.to(user.socketId).emit(link, user.tabId);
-  //   }
-  // });
 
   connectedUsers.forEach((user) => {
     if (users.includes(user.userId.toString())) {

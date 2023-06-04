@@ -137,13 +137,13 @@ export const useAxios = () => {
     dispatch(fetchFailure());
   };
   const handleUserType = (data) => {
-    getMissions(dispatch, 1);
-    getRFMs(dispatch, 1);
-    getOMs(dispatch, 1);
-    // getDepenses(dispatch, 1);
-    getDemandes(dispatch, 1);
-    getNotifications(dispatch, 1);
-    getTickets(dispatch, 1);
+    // getMissions(dispatch, 1);
+    // getRFMs(dispatch, 1);
+    // getOMs(dispatch, 1);
+    // // getDepenses(dispatch, 1);
+    // getDemandes(dispatch, 1);
+    // getNotifications(dispatch, 1);
+    // getTickets(dispatch, 1);
   };
   return {
     isLoading,

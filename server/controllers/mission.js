@@ -189,17 +189,20 @@ export const updateMissionEtat = async (req, res) => {
     const updatedBy = toId(req.user.id);
     const mission = await Mission.findById(req.params.id);
     const employes = mission.employes;
-    console.log("here1");
-    console.log(req.body);
+    // console.log("here1");
+    // console.log(req.body);
     const updatedMission = await Mission.findByIdAndUpdate(
       req.params.id,
       { ...req.body, updatedBy: updatedBy },
       { new: true }
     );
-    console.log("here2");
+    // console.log("here2");
 
     if (req.body.etat) {
       const operation = req.body.etat;
+      // ________________________________________________________________________________________
+      //             CREATION OM POUR CHAQUE EMPLOYE SI LA MISSION EST ACCEPTEE
+      // ________________________________________________________________________________________
       //si la mission est acceptée alors on va creer OM pr ts les employés qui y participent + RFM
       if (operation === "acceptée" && employes.length > 0) {
         //on doit générer l'ordre de mission
@@ -216,6 +219,7 @@ export const updateMissionEtat = async (req, res) => {
           });
 
           await om.save();
+
           const populatedOM = await OrdreMission.findById(om.id)
             .populate("mission")
             .populate("employe");
@@ -224,7 +228,18 @@ export const updateMissionEtat = async (req, res) => {
           //______________________________________________________________
         }
       }
-      console.log("here3");
+
+      // ________________________________________________________________________________________
+      //          DELETE ALL OMS RELATED TO A MISSION IF A MISSION HAVE BEEN CANCELED
+      // ________________________________________________________________________________________
+      if (operation === "annulée") {
+        const oms = await OrdreMission.find({ mission: toId(req.params.id) });
+        if (oms.length > 0) {
+          for (const om of oms) {
+            await om.remove();
+          }
+        }
+      }
 
       const populatedMission = await Mission.findById(updatedMission.id)
         .populate("createdBy")
@@ -242,6 +257,12 @@ export const updateMissionEtat = async (req, res) => {
       //update etat
       createOrUpdateFMission(updatedMission, "update", mission, "etat");
       //____________________________________________________________________________________
+
+      sendEmits("update", {
+        others: employes.map((employe) => employe._id),
+        structure: mission.structure,
+        etat: operation,
+      });
     }
 
     if (req.body.taches) {
@@ -261,10 +282,11 @@ export const updateMissionEtat = async (req, res) => {
 };
 
 const sendEmits = async (operation, ids) => {
+  let { others, structure } = ids;
+  let users = [];
   switch (operation) {
     case "create":
-      let { user, others, structure } = ids;
-      let users = await User.find({
+      users = await User.find({
         $or: [
           { role: "responsable", structure: structure },
           { role: "directeur" },
@@ -282,6 +304,27 @@ const sendEmits = async (operation, ids) => {
       break;
 
     case "update":
+      let { etat } = ids;
+      const commonUserQuery = {
+        $or: [
+          { role: "responsable", structure: structure },
+          { role: "directeur" },
+          { role: "secretaire" },
+        ],
+      };
+
+      if (etat === "acceptée" || etat === "annulée") {
+        users = await User.find(commonUserQuery).select("_id").lean();
+        let allUsers = users.map((u) => u._id.toString());
+        let otherUsers = others.map((u) => u._id.toString());
+        let combinedUsers = allUsers.concat(otherUsers);
+        emitGetData(combinedUsers, "getMissions");
+        emitGetData(combinedUsers, "getOms");
+      } else if (etat === "refusée") {
+        users = await User.find(commonUserQuery).select("_id").lean();
+        let combinedUsers = users.map((u) => u._id.toString());
+        emitGetData(combinedUsers, "getMissions");
+      }
       break;
 
     default:
