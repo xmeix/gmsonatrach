@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { socket } from "../../App";
 
 const initialState = {
   user: null,
@@ -26,12 +27,14 @@ export const authSlice = createSlice({
       state.token = action.payload.token;
       state.isLoading = false;
       localStorage.setItem("jwt", action.payload.token);
+      // socket.emit("login", action.payload.user, action.payload.token);
     },
     setToken: (state, action) => {
       state.token = action.payload.token;
       localStorage.setItem("jwt", action.payload.token);
     },
     setLogout: (state) => {
+      socket.emit("logout", state.token);
       state.user = null;
       state.token = null;
       state.isLoading = false;

@@ -6,6 +6,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import Loading from "./components/loading/Loading";
 import { io } from "socket.io-client";
+import { v4 as uuidv4 } from "uuid";
+
 import {
   getDemandes,
   getUsers,
@@ -81,9 +83,15 @@ function App() {
   const [sessionExpired, setSessionExpired] = useState(false);
   const dispatch = useDispatch();
 
-  const handleSessionExpired = () => {
-    setSessionExpired(true);
-  };
+  let tabId = window.name;
+  if (!tabId) {
+    // Generate a new UUID if it doesn't exist in window.name
+    tabId = uuidv4();
+    // Store the generated UUID in the window.name property
+    window.name = tabId;
+    handleRefreshPage();
+  }
+  // console.log(tabId);
 
   // const employees = users
   //   .filter((u) => ["responsable", "directeur", "secretaire"].includes(u.role))
@@ -106,8 +114,8 @@ function App() {
 
         break;
       case "mission":
-        getMissions(dispatch, 1);
-        getOMs(dispatch, 1);
+        getMissions(dispatch);
+        getOMs(dispatch);
         break;
       case "rfm":
         {
@@ -146,10 +154,12 @@ function App() {
     socket.on("ticket", async () => {
       getTickets(dispatch, 1);
     });
-    socket.on("loginData", async () => {
-      getTickets(dispatch, 1);
+    socket.on("getMissions", (tab) => {
+      if (tabId === tab) {
+        getMissions(dispatch);
+      }
     });
-    socket.on("updatedData", handleSocketData);
+    // socket.on("updatedData", handleSocketData);
   };
 
   const handleSocketDisconnection = () => {
@@ -160,17 +170,37 @@ function App() {
     window.location.reload();
   };
   useEffect(() => {
+    const handleLoginData = async (userId) => {
+      if (user._id.toString() === userId.toString()) {
+        if (user.role !== "relex") {
+          getMissions(dispatch);
+          getRFMs(dispatch);
+          getOMs(dispatch);
+          getTickets(dispatch);
+        }
+        getDemandes(dispatch);
+        getNotifications(dispatch);
+        if (user.role !== "relex" && user.role !== "employe") {
+          getMissionKPIS(dispatch);
+          getFileKPIS(dispatch);
+          getUsers(dispatch);
+        }
+      }
+    };
     if (isLoggedIn) {
-      socket.emit("login", user, token);
+      socket.emit("login", user, token, tabId);
       localStorage.setItem("isLoggedIn", true);
       handleSocketConnection();
+      socket.on("loginData", handleLoginData);
     } else {
-      socket.emit("logout");
-      localStorage.setItem("isLoggedIn", false);
+      // socket.emit("logout");
+      socket.off("loginData", handleLoginData);
+      localStorage.removeItem("isLoggedIn");
     }
     socket.on("sessionExpired", handleRefreshPage);
 
     return () => {
+      socket.off("loginData", handleLoginData);
       handleSocketDisconnection();
     };
   }, [isLoggedIn, user, token]);
@@ -225,16 +255,7 @@ function App() {
 
   const isAlreadyLoggedIn = isLoggedIn && location.pathname === "/";
   const loginPath = "/"; // Replace with your actual login path
-  if (sessionExpired) {
-    return (
-      <div className="app">
-        <p>
-          Your session has expired. Please refresh the page or log in again.
-        </p>
-        <button onClick={handleRefreshPage}>Refresh Page</button>
-      </div>
-    );
-  }
+
   return (
     <div className="app">
       {isLoggedIn && <NavBar />}

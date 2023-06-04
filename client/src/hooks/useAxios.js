@@ -80,15 +80,6 @@ export const useAxios = () => {
     switch (url) {
       case "/auth/login":
         dispatch(setLogin(response.data));
-        // handleUserType(response.data);
-        // if (
-        //   response.data.user.role !== "employe" &&
-        //   response.data.user.role !== "relex"
-        // ) {
-        //   getMissionKPIS(dispatch, 1);
-        //   getFileKPIS(dispatch, 1);
-        //   getUsers(dispatch, 1);
-        // }
         break;
       case "/auth/logout":
         dispatch(setLogout());
@@ -98,15 +89,15 @@ export const useAxios = () => {
         getUsers(dispatch);
         break;
       case "/mission":
-        getMissions(dispatch);
-        if (currentUser.role !== "employe" && currentUser.role !== "relex") {
-          getMissionKPIS(dispatch, 1);
-          getFileKPIS(dispatch, 1);
-        }
-
+        // getMissions(dispatch);
+        // if (currentUser.role !== "employe" && currentUser.role !== "relex") {
+        //   getMissionKPIS(dispatch, 1);
+        //   getFileKPIS(dispatch, 1);
+        // }
+   
         break;
       case "/demande/DC":
-      case "/demande/DB":
+      case "/demande/DB": 
       case "/demande/DM":
       case "/demande":
         getDemandes(dispatch);

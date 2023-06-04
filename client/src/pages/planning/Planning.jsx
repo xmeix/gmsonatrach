@@ -127,6 +127,7 @@ const Planning = () => {
         );
     }
   });
+  // console.log(acceptedMissions);
   const handlePreviousMonth = useCallback(() => {
     setMonthOffset((prevOffset) => prevOffset - 1);
   }, []);

@@ -1,11 +1,26 @@
 import { connectedUsers, io } from "../index.js";
 import CustomId from "../models/CustomId.js";
 
+export const emitGetData = (users, link) => {
+  // users.forEach((userId) => {
+  //   const user = connectedUsers.find(
+  //     (u) => u.userId.toString() === userId.toString()
+  //   );
+
+  //   if (user) {
+  //     io.to(user.socketId).emit(link, user.tabId);
+  //   }
+  // });
+
+  connectedUsers.forEach((user) => {
+    if (users.includes(user.userId.toString())) {
+      io.to(user.socketId).emit(link, user.tabId);
+    }
+  });
+  
+};
+
 export const emitData = async (link, data) => {
-  // Emit the notification event to each socket ID associated with the user ID
-  // console.log("____________________________________________________");
-  // console.log(connectedUsers);
-  // console.log("____________________________________________________");
   connectedUsers.forEach((item) => {
     const { userId, socketId } = item;
     io.to(socketId).emit(link, data);
@@ -20,20 +35,6 @@ export const emitDataTo = async (link, data) => {
     const { userId, socketId } = item;
     io.to(socketId).emit(link, data);
   });
-};
-
-export const emitDataSpec = async (link, data, sid) => {
-  connectedUsers.forEach((item) => {
-    const { userId, socketIds } = item;
-    if (data.toString() === userId.toString() && Array.isArray(socketIds)) {
-      socketIds.forEach((socketId) => {
-        if (sid.includes(socketId)) {
-          io.to(socketId).emit(link);
-        }
-      });
-    }
-  });
-  console.log(connectedUsers);
 };
 
 export const generateCustomId = async (structure, collectionName) => {

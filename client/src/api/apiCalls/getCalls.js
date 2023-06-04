@@ -30,12 +30,9 @@ const fetchData = async (dispatch, endpoint, socketEvent, num) => {
       notification: setNotifications,
       ticket: setTickets,
     };
-    if (!num || num !== 1) {
-      socket.emit("updatedData", socketEvent);
-    } else {
-      const setDataFunc = eventToActionMap[socketEvent];
-      dispatch(setDataFunc(res.data));
-    }
+    const setDataFunc = eventToActionMap[socketEvent];
+    dispatch(setDataFunc(res.data));
+
     dispatch(fetchEnd());
   } catch (err) {
     console.log(`ERROR getting ${endpoint}`);
@@ -45,22 +42,22 @@ const fetchData = async (dispatch, endpoint, socketEvent, num) => {
 
 export const getMissions = async (dispatch, num) => {
   await fetchData(dispatch, "/mission/", "mission", num);
-  getMissionKPIS(dispatch, 1);
+  // getMissionKPIS(dispatch, 1);
 };
 
 export const getDemandes = async (dispatch, num) => {
   await fetchData(dispatch, "/demande/", "demande", num);
-  getFileKPIS(dispatch, 1);
+  // getFileKPIS(dispatch, 1);
 };
 
 export const getRFMs = async (dispatch, num) => {
   await fetchData(dispatch, "/rapportFM/", "rfm", num);
-  getFileKPIS(dispatch, 1);
+  // getFileKPIS(dispatch, 1);
 };
 
 export const getOMs = async (dispatch, num) => {
   await fetchData(dispatch, "/ordremission/", "om", num);
-  getFileKPIS(dispatch, 1);
+  // getFileKPIS(dispatch, 1);
 };
 
 export const getUsers = async (dispatch, num) => {

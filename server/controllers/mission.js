@@ -6,7 +6,7 @@ import { checkFields } from "../middleware/auth.js";
 import { createOrUpdateFDocument } from "./FilesKpis.js";
 import { createOrUpdateFMission } from "./Kpis.js";
 import { createNotification } from "./Notification.js";
-import { generateCustomId } from "./utils.js";
+import { emitGetData, generateCustomId } from "./utils.js";
 
 const toId = mongoose.Types.ObjectId;
 
@@ -49,28 +49,6 @@ export const createMission = async (req, res) => {
       etat = "acceptée";
     }
 
-    // //check
-    // const fields = [
-    //   objetMission,
-    //   newStructure,
-    //   type,
-    //   budget,
-    //   pays,
-    //   employes,
-    //   taches,
-    //   tDateDeb,
-    //   tDateRet,
-    //   moyenTransport,
-    //   moyenTransportRet,
-    //   lieuDep,
-    //   destination,
-    // ];
-
-    // if (!checkFields(fields)) {
-    //   throw new Error("empty fields");
-    // }
-
-    //const newTaches = taches.map((tache) => toId(tache));
     const newEmployes = employes.map((employe) => toId(employe));
 
     const createdBy = toId(req.user.id);
@@ -127,6 +105,14 @@ export const createMission = async (req, res) => {
       employes: newEmployes,
       user: userObj,
     });
+
+    sendEmits("create", {
+      user: userObj._id,
+      others:
+        etat === "acceptée" ? newEmployes.map((employe) => employe._id) : [],
+      structure,
+    });
+
     const query = {
       uid: newId,
       objetMission: objetMission,
@@ -271,6 +257,35 @@ export const updateMissionEtat = async (req, res) => {
     });
   } catch (err) {
     res.status(500).json({ error: err.message });
+  }
+};
+
+const sendEmits = async (operation, ids) => {
+  switch (operation) {
+    case "create":
+      let { user, others, structure } = ids;
+      let users = await User.find({
+        $or: [
+          { role: "responsable", structure: structure },
+          { role: "directeur" },
+          { role: "secretaire" },
+          // { _id: user },
+        ],
+      })
+        .select("_id")
+        .lean();
+      // Concatenate users and others arrays
+      let allUsers = users.map((u) => u._id.toString());
+      let otherUsers = others.map((u) => u._id.toString());
+      let combinedUsers = allUsers.concat(otherUsers);
+      emitGetData(combinedUsers, "getMissions");
+      break;
+
+    case "update":
+      break;
+
+    default:
+      break;
   }
 };
 

@@ -53,7 +53,7 @@ export const verifyToken = async (req, res, next) => {
       }
     } else {
       res.status(403).json({ error: "Invalid access token" });
-    }
+    } 
   }
 };
 

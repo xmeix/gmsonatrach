@@ -49,7 +49,7 @@ import { verifyToken } from "./middleware/auth.js";
 import { createNotification } from "./controllers/Notification.js";
 import { createOrUpdateFDocument } from "./controllers/FilesKpis.js";
 import { createMission } from "./controllers/mission.js";
-import { emitDataSpec, generateCustomId } from "./controllers/utils.js";
+import {  generateCustomId } from "./controllers/utils.js";
 import Ticket from "./models/Ticket.js";
 const toId = mongoose.Types.ObjectId;
 // Configure environment variables
@@ -134,39 +134,66 @@ mongoose
       // console.log(connectedUsers);
       connectedClients.push(socket.id);
       // console.log(connectedClients);
-      socket.on("login", async (user, token) => {
+
+      socket.on("login", async (user, token, tabId) => {
         socket.user = user;
         const userId = user._id;
         const existingUser = connectedUsers.find(
-          (u) => u.userId === userId && u.token === token
+          (u) =>
+            u.userId.toString() === userId.toString() &&
+            u.token === token &&
+            u.tabId === tabId
         );
+
         if (!existingUser) {
-          connectedUsers.push({ userId, socketIds: [socket.id], token }); // Store the user ID and socket IDs in the array
+          //create new instance
+          const newUser = {
+            userId: userId,
+            token: token,
+            tabId: tabId,
+            socketId: socket.id,
+          };
+          connectedUsers.push(newUser);
           console.log(`User ${userId} connected`);
+          socket.emit("loginData", userId);
         } else {
-          console.log(`User ${userId} already connected`);
-          if (!existingUser.socketIds.includes(socket.id)) {
-            existingUser.socketIds.push(socket.id); // Add the new socket ID to the existing user's socket IDs if it doesn't already exist
-          }
+          //update existing instance
+          const idx = connectedUsers.findIndex(
+            (u) =>
+              u.userId.toString() === userId.toString() &&
+              u.token === token &&
+              u.tabId === tabId
+          );
+          //and replace the socketId with a newOne
+          connectedUsers[idx].socketId = socket.id;
+          console.log(`User ${userId} did connect already `);
+ 
         }
-        await emitDataSpec("loginData", userId, socketIds); // Emit the sessionExpired event
         // console.log(connectedUsers);
       });
 
-      socket.on("logout", async () => {
+      socket.on("logout", async (token) => {
         if (socket.user) {
           const userId = socket.user._id;
           console.log(`User ${userId} logged out`);
 
-          const indexToRemove = connectedUsers.findIndex(
-            (u) =>
+          const indexesToRemove = [];
+          connectedUsers.forEach((u, index) => {
+            if (
               u.userId.toString() === userId.toString() &&
-              u.socketIds.includes(socket.id)
-          );
-          if (indexToRemove !== -1) {
-            const { userId, token, socketIds } = connectedUsers[indexToRemove];
-            await emitDataSpec("sessionExpired", userId, socketIds); // Emit the sessionExpired event
-            connectedUsers.splice(indexToRemove, 1);
+              u.token === token
+            ) {
+              indexesToRemove.push(index);
+            }
+          });
+
+          if (indexesToRemove.length > 0) {
+            indexesToRemove.reverse().forEach((index) => {
+              const removedUser = connectedUsers.splice(index, 1)[0];
+              const socketId = removedUser.socketId;
+              // Emit "Refresh" event to the specific socket ID
+              io.to(socketId).emit("sessionExpired");
+            });
           }
 
           // console.log(connectedUsers);
@@ -181,17 +208,6 @@ mongoose
           console.error(error);
         }
       });
-
-      // socket.on("disconnect", () => {
-      //   if (socket.user) {
-      //     const userId = socket.user._id;
-      //     console.log(`User ${userId} disconnected`);
-      //     const disconnectedUser = connectedUsers.find((u) => u.userId === userId);
-      //     if (disconnectedUser) {
-      //       disconnectedUser.socketId = null; // Set the socket ID to null to mark it as disconnected
-      //     }
-      //   }
-      // });
     });
   })
   .catch((error) => {
@@ -362,7 +378,7 @@ cron.schedule("50 01 * * *", async () => {
 cron.schedule("12 11 * * *", async () => {
   //creation auto des RFM + OM
   console.log("starting");
-  //RFM
+  //RFM 
   const missionsEnCours = await Mission.find({
     etat: { $in: ["en-cours", "terminée"] },
   });

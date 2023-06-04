@@ -77,7 +77,7 @@ const Formulaire = ({ title, entries, buttons, type }) => {
             !missions.some(
               (mission) =>
                 mission.employes.some((u) => u._id === user._id) &&
-                (mission.etat === "en-cours" || mission.etat === "acceptée") &&
+                (mission.etat === "en-cours" || mission.etat === "acceptée") && //add this || mission.etat === "en-attente"
                 mission.tDateRet > start &&
                 mission.tDateDeb < end
             )
@@ -167,7 +167,7 @@ const Formulaire = ({ title, entries, buttons, type }) => {
           ) {
             callApi("post", "/mission", values);
             setErrors({});
-          }
+           }
         }
         break;
       case "DB":
