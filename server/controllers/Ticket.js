@@ -1,13 +1,14 @@
-import mongoose from "mongoose";
 import Ticket from "../models/Ticket.js";
-import { emitData } from "./utils.js";
+import { emitGetData } from "./utils.js";
 
 export const createTicket = async (req, res) => {
   try {
     const { mission, employe, object, description } = req.body;
     const ticket = new Ticket({ mission, employe, object, description });
     await ticket.save();
-    emitData("ticket");
+
+    EmitTicket({ others: mission.employes });
+    // emitData("ticket");
     res.status(200).json(ticket);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -35,9 +36,12 @@ export const addComment = async (req, res) => {
       id,
       { $push: { commentaires: comment } },
       { new: true }
-    ).populate("commentaires.createdBy");
+    )
+      .populate("commentaires.createdBy")
+      .populate("mission.employes");
 
-    emitData("ticket");
+    // emitData("ticket");
+    EmitTicket({ others: ticket.mission.employes });
     res.status(200).json(ticket);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -51,9 +55,10 @@ export const changeStatus = async (req, res) => {
       id,
       { isSolved: true },
       { new: true }
-    );
+    ).populate("mission.employes");
 
-    emitData("ticket");
+    EmitTicket({ others: ticket.mission.employes });
+
     res.status(200).json(ticket);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -104,4 +109,10 @@ export const getEmployeesBySolvedTickets = async (req, res) => {
     console.error(error);
     res.status(500).json({ error: "Internal server error" });
   }
+};
+
+const EmitTicket = async (ids) => {
+  let { others } = ids;
+  let combinedUsers = others.map((u) => u._id.toString());
+  emitGetData(combinedUsers, "ticket");
 };

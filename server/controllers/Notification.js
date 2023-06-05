@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import Notification from "./../models/Notification.js";
-import { emitData } from "./utils.js";
+import { emitGetData } from "./utils.js";
 
 export const createNotification = async (body) => {
   try {
@@ -13,7 +13,10 @@ export const createNotification = async (body) => {
       type,
     });
     await newNotification.save();
-    emitData("notification");
+    await newNotification.populate("users");
+
+    // emitData("notification");
+    emitNotification({ others: newNotification.users });
   } catch (error) {
     console.log(error);
   }
@@ -37,10 +40,17 @@ export const alterNotification = async (req, res) => {
       req.params.id,
       { ...req.body },
       { new: true }
-    );
-    emitData("notification");
+    ).populate("users");
+    // emitData("notification");
+    emitNotification({ others: updatedNotification.users });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Server error" });
   }
+};
+
+export const emitNotification = async (ids) => {
+  let { others } = ids;
+  let combinedUsers = others.map((u) => u._id.toString());
+  emitGetData(combinedUsers, "notification");
 };

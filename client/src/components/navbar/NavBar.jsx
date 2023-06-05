@@ -12,11 +12,7 @@ import {
   secTitles,
 } from "../../data/navdata";
 import { useAxios } from "../../hooks/useAxios";
-import { v4 as uuidv4 } from "uuid";
-import NotificationsActiveRoundedIcon from "@mui/icons-material/NotificationsActiveRounded";
 import NotificationsNoneRoundedIcon from "@mui/icons-material/NotificationsNoneRounded";
-import { socket } from "../../App";
-import { getNotifications } from "../../api/apiCalls/getCalls";
 import Notification from "../notification/Notification";
 const NavBar = () => {
   const { user, isLoggedIn, notifications } = useSelector(
@@ -32,19 +28,12 @@ const NavBar = () => {
       if (
         !event.target.classList.contains("icon") &&
         !event.target.closest(".notification-list")
-      ) { 
+      ) {
         setShowNotifications(false);
       }
     }
     document.addEventListener("mousedown", handleClickOutside);
-    if (isLoggedIn) {
-      if (socket) {
-        socket.on("notification", async () => {
-          // console.log("new notification received");
-          getNotifications(dispatch, 1);
-        });
-      }
-    }
+
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
@@ -71,7 +60,6 @@ const NavBar = () => {
         return titles;
       case "secretaire":
         return secTitles;
-        break;
       case "employe":
         return employeTitles;
       case "relex":
@@ -80,27 +68,6 @@ const NavBar = () => {
         return [];
     }
   });
-  // const [profileTitle] = useState(() => {
-  //   switch (user?.role) {
-  //     case "directeur":
-  //       return "Directeur";
-  //       break;
-  //     case "responsable":
-  //       return "Sous-directeur";
-  //       break;
-  //     case "secretaire":
-  //       return "Secrétaire";
-  //       break;
-  //     case "relex":
-  //       return "Service Relex";
-  //       break;
-  //     case "employe":
-  //       return "Employé";
-  //       break;
-  //     default:
-  //       "";
-  //   }
-  // });
 
   const handleMenu = () => {
     setIsOpen(true);

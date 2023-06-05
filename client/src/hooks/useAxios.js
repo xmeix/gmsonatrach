@@ -86,7 +86,6 @@ export const useAxios = () => {
         dispatch(freeKpis());
         break;
       case "/auth/register":
-        getUsers(dispatch);
         break;
       case "/mission":
         // getMissions(dispatch);
@@ -94,10 +93,10 @@ export const useAxios = () => {
         //   getMissionKPIS(dispatch, 1);
         //   getFileKPIS(dispatch, 1);
         // }
-   
+
         break;
       case "/demande/DC":
-      case "/demande/DB": 
+      case "/demande/DB":
       case "/demande/DM":
       case "/demande":
         // getDemandes(dispatch);
@@ -109,20 +108,8 @@ export const useAxios = () => {
         // }
         break;
       case "/auth/user":
-        if (currentUser.role !== "employe" && currentUser.role !== "relex") {
-          getUsers(dispatch);
-        }
         break;
       case "/rapportFM":
-        // if (currentUser.role === "employe" && !body.etat) {
-        //   getRFMs(dispatch, 1);
-        // } else {
-        //   getRFMs(dispatch);
-        // }
-
-        // if (currentUser.role !== "employe" && currentUser.role !== "relex") {
-        //   getFileKPIS(dispatch, 1);
-        // }
         break;
       case "/notification":
       case "/ticket":

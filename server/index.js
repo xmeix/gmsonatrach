@@ -46,10 +46,13 @@ import DC from "./models/demandes/DC.js";
 import FDocument from "./models/FDocument.js";
 import FMission from "./models/FMission.js";
 import { verifyToken } from "./middleware/auth.js";
-import { createNotification } from "./controllers/Notification.js";
+import {
+  createNotification,
+  emitNotification,
+} from "./controllers/Notification.js";
 import { createOrUpdateFDocument } from "./controllers/FilesKpis.js";
 import { createMission } from "./controllers/mission.js";
-import { generateCustomId } from "./controllers/utils.js";
+import { emitGetData, generateCustomId } from "./controllers/utils.js";
 import Ticket from "./models/Ticket.js";
 const toId = mongoose.Types.ObjectId;
 // Configure environment variables
@@ -213,7 +216,8 @@ mongoose
     console.error(`Failed to connect to MongoDB database: ${error.message}`);
   });
 
-cron.schedule("50 01 * * *", async () => {
+// CRON JOB POUR UNE APPLICATION TEMPS REEL
+cron.schedule("29 05 * * *", async () => {
   console.log("Cron job starting...");
 
   //_____________________________________________________________________________________________________
@@ -227,6 +231,7 @@ cron.schedule("50 01 * * *", async () => {
     etat: "acceptée",
   });
 
+  console.log("1");
   // pour chacun des missions trouvé
   for (const mission of missionsEnCours) {
     const employeIds = mission.employes.map((employe) => employe._id);
@@ -239,10 +244,15 @@ cron.schedule("50 01 * * *", async () => {
       );
     }
 
+    // emit getUsers for employeIds + responsables (meme structure)---------------------------------------
+    emitDataCron(1, { others: employeIds, structure: mission.structure });
     let old = mission;
     // change the mission state to en cours
     mission.etat = "en-cours";
     let saved = await mission.save();
+
+    // emit getMissions for employeIds + responsables (m structure)---------------------------------------
+    emitDataCron(2, { others: employeIds, structure: mission.structure });
 
     //____________________________________________________________________________________
     // CASE FMISSION : update etat
@@ -254,7 +264,7 @@ cron.schedule("50 01 * * *", async () => {
     // for each employee of employees we create RFMS
     for (const employeId of employeIds) {
       let customId = await generateCustomId(saved.structure, "rapportfms");
-      console.log(customId);
+      // console.log(customId);
       const rfm = new RapportFM({
         uid: customId,
         idMission: toId(mission._id),
@@ -269,8 +279,9 @@ cron.schedule("50 01 * * *", async () => {
       createOrUpdateFDocument(populatedRFM, "RFM", "creation");
       //______________________________________________________________
     }
+    // emit getRFMS for employeIds + responsables m structure -------------------------------------
+    emitDataCron(3, { others: employeIds, structure: mission.structure });
 
-    //______________________________________________________________
     await createNotification({
       users: [employeIds],
       message:
@@ -278,8 +289,10 @@ cron.schedule("50 01 * * *", async () => {
       path: "",
       type: "RFM",
     });
-    //__________________________________________________
+
+    emitNotification({ others: mission.employes });
   }
+  console.log("2");
 
   //_____________________________________________________________________________________________________
   // IF MISSION DATE DEBUT <= NOW() AND STILL EN ATTENTE THEN UPDATE ITS STATE="REFUSEE"
@@ -288,7 +301,6 @@ cron.schedule("50 01 * * *", async () => {
     tDateDeb: { $lte: new Date() },
     etat: "en-attente",
   });
-
   // ______________
   //  UPDATE STATE
   // ______________
@@ -296,14 +308,14 @@ cron.schedule("50 01 * * *", async () => {
     let old = mission;
     mission.etat = "refusée";
     let saved = await mission.save();
-    //____________________________________________________________________________________
-    //update etat de en-attente a refusé ... change it
+
     createOrUpdateFMission(saved, "update", old, "etat");
-    //____________________________________________________________________________________
+    console.log("3");
+
     // __________________________________________________________________________
     //  CREATE NOTIFICATION FOR SECRETAIRE, DIRECTEUR, RESPONSABLE SAME STRUCTURE
     // __________________________________________________________________________
-    users = await User.find({
+    let users = await User.find({
       $and: [
         {
           $or: [
@@ -315,6 +327,8 @@ cron.schedule("50 01 * * *", async () => {
         { _id: { $ne: toId(mission.createdBy.id) } },
       ],
     });
+    console.log("4");
+
     await createNotification({
       users: [mission.createdBy, ...users], //this is a mistake , normally we would sennd a notification to the one who created it
       message: `la demande de mission prévu pour ${new Date(mission.tDateDeb)
@@ -336,10 +350,25 @@ cron.schedule("50 01 * * *", async () => {
       path: "",
       type: "mission",
     });
-    //____________________________________________________________________________________
+    console.log("5");
+
+    emitNotification({ others: [...users, mission.createdBy] });
+
+    let responsables = users
+      .filter((u) => u.role === "responsable")
+      .map((u) => u._id);
+    // emit getMissions responsables meme structure---------------------------------------
+    console.log("6");
+
+    emitDataCron(2, { others: responsables, structure: mission.structure });
+    console.log("7");
+
   }
 
-  // Update missions with tDateRet equal to current time and etat equal to en-cours
+
+  //_____________________________________________________________________________________________________
+  // IF MISSION DATE FIN < NOW() AND EN-COURS THEN UPDATE ITS STATE="TERMINEE"
+  //______________________________________________________________________________________________________
   const missionsEnCours2 = await Mission.find({
     tDateRet: { $lt: currentDate },
     etat: "en-cours",
@@ -348,29 +377,11 @@ cron.schedule("50 01 * * *", async () => {
   for (const mission of missionsEnCours2) {
     const employeIds = mission.employes.map((employe) => employe._id);
     let old = mission;
+    // ______________
+    //  UPDATE STATE
+    // ______________
     mission.etat = "terminée";
     let saved = await mission.save();
-    //____________________________________________________________________________________
-    //update etat de en-attente a terminée ... change it
-    createOrUpdateFMission(saved, "update", old, "etat");
-    //____________________________________________________________________________________
-    await createNotification({
-      users: [employeIds],
-      message:
-        "Mission réussie ! Merci de nous envoyer votre rapport de fin de mission dûment rempli.",
-      path: "",
-      type: "RFM",
-    });
-    //____________________________________________________________________________________
-  }
-
-  // Update users associated with completed missions
-  const missionsEnded = await Mission.find({
-    etat: "terminée",
-  });
-
-  for (const mission of missionsEnded) {
-    const employeIds = mission.employes.map((employe) => employe._id);
 
     for (const employeId of employeIds) {
       await User.updateOne(
@@ -378,12 +389,74 @@ cron.schedule("50 01 * * *", async () => {
         { $set: { etat: "non-missionnaire" } }
       );
     }
+    // emit getMissions to Employés + responsables same structure--------------------------------------
+
+    createOrUpdateFMission(saved, "update", old, "etat");
+    // __________________________________
+    //  SEND REMINDER FOR EACH EMPLOYES
+    // __________________________________
+    await createNotification({
+      users: [employeIds],
+      message:
+        "Mission réussie ! Merci de nous envoyer votre rapport de fin de mission dûment rempli.",
+      path: "",
+      type: "RFM",
+    });
+
+    emitNotification({ others: mission.employes });
   }
 
+  // emit getMissions + getUsers + getRFMS for secretaire , directeurs--------------XXXXXXX------------------
+  let all = await User.find({
+    $or: [{ role: "directeur" }, { role: "secretaire" }],
+  })
+    .select("_id")
+    .lean();
+
+  emitDataCron(4, { others: all });
   console.log("Cron job ending...");
-  io.emit("cronDataChange");
+
+  // io.emit("cronDataChange");
 });
 
+// function used to emit data to connected Users.
+const emitDataCron = async (operation, ids) => {
+  let { others, structure } = ids;
+
+  let users = await User.find({
+    $or: [{ role: "responsable", structure: structure }],
+  })
+    .select("_id")
+    .lean();
+  let allUsers = [];
+  let otherUsers = [];
+  let combinedUsers = [];
+
+  allUsers = users.map((u) => u._id.toString());
+  otherUsers = others.map((u) => u.toString());
+  combinedUsers = allUsers.concat(otherUsers);
+  switch (operation) {
+    case 1:
+      emitGetData(combinedUsers, "getUsers");
+      break;
+    case 2:
+      emitGetData(combinedUsers, "getMissions");
+      break;
+    case 3:
+      emitGetData(combinedUsers, "getRfms");
+      break;
+    case 4:
+      combinedUsers = others.map((u) => u.toString());
+      emitGetData(combinedUsers, "getUsers");
+      emitGetData(combinedUsers, "getMissions");
+      emitGetData(combinedUsers, "getRfms");
+
+      break;
+
+    default:
+      break;
+  }
+};
 //cron to add users to db
 // cron.schedule("31 07 * * *", async () => {
 //   console.log("start");
@@ -416,55 +489,58 @@ cron.schedule("50 01 * * *", async () => {
 // });
 
 // cron creation RFM+OM
-cron.schedule("12 11 * * *", async () => {
-  //creation auto des RFM + OM
-  console.log("starting");
-  //RFM
-  const missionsEnCours = await Mission.find({
-    etat: { $in: ["en-cours", "terminée"] },
-  });
 
-  for (const mission of missionsEnCours) {
-    const employeIds = mission.employes.map((employe) => employe._id);
+// _______________________________________________________________________
 
-    for (const employeId of employeIds) {
-      let customId = await generateCustomId(mission.structure, "rapportfms");
-      const rfm = new RapportFM({
-        uid: customId,
-        idMission: toId(mission._id),
-        idEmploye: toId(employeId),
-      });
+// cron.schedule("12 11 * * *", async () => {
+//   //creation auto des RFM + OM
+//   console.log("starting");
+//   //RFM
+//   const missionsEnCours = await Mission.find({
+//     etat: { $in: ["en-cours", "terminée"] },
+//   });
 
-      const savedRFM = await rfm.save();
-    }
-  }
-  console.log("finished rfm");
+//   for (const mission of missionsEnCours) {
+//     const employeIds = mission.employes.map((employe) => employe._id);
 
-  //OM
+//     for (const employeId of employeIds) {
+//       let customId = await generateCustomId(mission.structure, "rapportfms");
+//       const rfm = new RapportFM({
+//         uid: customId,
+//         idMission: toId(mission._id),
+//         idEmploye: toId(employeId),
+//       });
 
-  const missionsAccepted = await Mission.find({
-    etat: { $in: ["acceptée", "en-cours", "terminée"] },
-  });
+//       const savedRFM = await rfm.save();
+//     }
+//   }
+//   console.log("finished rfm");
 
-  for (const mission of missionsAccepted) {
-    const employeIds = mission.employes.map((employe) => employe._id);
+//   //OM
 
-    for (const employeId of employeIds) {
-      let customId = await generateCustomId(mission.structure, "rapportfms");
-      const om = new OrdreMission({
-        uid: customId,
-        mission: toId(mission._id),
-        employe: toId(employeId),
-      });
+//   const missionsAccepted = await Mission.find({
+//     etat: { $in: ["acceptée", "en-cours", "terminée"] },
+//   });
 
-      const savedOm = await om.save();
-    }
-  }
-  console.log("finished om");
-  console.log("emmiting");
-  io.emit("cronDataChange");
-  console.log("finished emmiting");
-});
+//   for (const mission of missionsAccepted) {
+//     const employeIds = mission.employes.map((employe) => employe._id);
+
+//     for (const employeId of employeIds) {
+//       let customId = await generateCustomId(mission.structure, "rapportfms");
+//       const om = new OrdreMission({
+//         uid: customId,
+//         mission: toId(mission._id),
+//         employe: toId(employeId),
+//       });
+
+//       const savedOm = await om.save();
+//     }
+//   }
+//   console.log("finished om");
+//   console.log("emmiting");
+//   io.emit("cronDataChange");
+//   console.log("finished emmiting");
+// });
 // _______________________________________________________________________
 //Creation FMission
 // cron.schedule("21 21 * * *", async () => {
@@ -477,57 +553,57 @@ cron.schedule("12 11 * * *", async () => {
 //   console.log("here");
 // });
 
-const addMissionsData = async () => {
-  //grab missions array from data file loop through it and insert each element into db using createMission function
-  missions.map(async (mission) => {
-    const {
-      uid,
-      objetMission,
-      structure,
-      type,
-      budget,
-      pays,
-      employes,
-      taches,
-      tDateDeb,
-      tDateRet,
-      moyenTransport,
-      moyenTransportRet,
-      lieuDep,
-      destination,
-      observation,
-      circonscriptionAdm,
-      createdBy,
-      updatedBy,
-      createdAt,
-      updatedAt,
-    } = mission;
-    const query = {
-      uid,
-      objetMission,
-      structure,
-      type,
-      budget,
-      pays,
-      employes,
-      taches,
-      tDateDeb,
-      tDateRet,
-      moyenTransport,
-      moyenTransportRet,
-      lieuDep,
-      destination,
-      observation,
-      etat: "en-attente",
-      circonscriptionAdm,
-      createdAt,
-      createdBy,
-      updatedBy,
-      updatedAt,
-    };
-    const miss = new Mission(query);
-    const savedMission = await miss.save();
+// const addMissionsData = async () => {
+//   //grab missions array from data file loop through it and insert each element into db using createMission function
+//   missions.map(async (mission) => {
+//     const {
+//       uid,
+//       objetMission,
+//       structure,
+//       type,
+//       budget,
+//       pays,
+//       employes,
+//       taches,
+//       tDateDeb,
+//       tDateRet,
+//       moyenTransport,
+//       moyenTransportRet,
+//       lieuDep,
+//       destination,
+//       observation,
+//       circonscriptionAdm,
+//       createdBy,
+//       updatedBy,
+//       createdAt,
+//       updatedAt,
+//     } = mission;
+//     const query = {
+//       uid,
+//       objetMission,
+//       structure,
+//       type,
+//       budget,
+//       pays,
+//       employes,
+//       taches,
+//       tDateDeb,
+//       tDateRet,
+//       moyenTransport,
+//       moyenTransportRet,
+//       lieuDep,
+//       destination,
+//       observation,
+//       etat: "en-attente",
+//       circonscriptionAdm,
+//       createdAt,
+//       createdBy,
+//       updatedBy,
+//       updatedAt,
+//     };
+//     const miss = new Mission(query);
+//     const savedMission = await miss.save();
 
-    createOrUpdateFMission(savedMission, "creation", null, "");
-  });
-};
+//     createOrUpdateFMission(savedMission, "creation", null, "");
+//   });
+// };

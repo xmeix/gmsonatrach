@@ -3,6 +3,7 @@ import User from "../models/User.js";
 import mongoose from "mongoose";
 import { createOrUpdateFDocument } from "./FilesKpis.js";
 import { createNotification } from "../controllers/Notification.js";
+import { emitGetData } from "./utils.js";
 const toId = mongoose.Types.ObjectId;
 
 export const updateRapport = async (req, res) => {
@@ -27,12 +28,40 @@ export const updateRapport = async (req, res) => {
     /**_____________________________________________________________________________________________ */
     createOrUpdateFDocument(populatedRFM, "RFM", "update");
 
+    sendRFMEmits({
+      etat: req.body.etat,
+      structure: populatedRFM.idMission.structure,
+      others: [updatedReport.idEmploye],
+    });
+
     res.status(201).json({ updatedReport, msg: "updated successfully" });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 };
+const sendRFMEmits = async (ids) => {
+  let { others, etat, structure } = ids;
 
+  if (etat === "créé" || etat === "accepté" || etat === "en-attente") {
+    let users = await User.find({
+      $or: [
+        { role: "responsable", structure: structure },
+        { role: "directeur" },
+        { role: "secretaire" },
+      ],
+    })
+      .select("_id")
+      .lean();
+    let allUsers = users.map((u) => u._id.toString());
+    let otherUsers = others.map((u) => u.toString());
+    let combinedUsers = allUsers.concat(otherUsers);
+    emitGetData(combinedUsers, "getRfms");
+  } else {
+    //case of other updates
+    let combinedUsers = others.map((u) => u.toString());
+    emitGetData(combinedUsers, "getRfms");
+  }
+};
 export const getAllRapports = async (req, res) => {
   try {
     const user = await User.findById(req.user.id);

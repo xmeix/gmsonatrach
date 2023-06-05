@@ -2,7 +2,7 @@ import bcrypt from "bcrypt";
 import { generateJWT } from "../middleware/auth.js";
 import User from "../models/User.js";
 import jwt from "jsonwebtoken";
-import { generateCustomId } from "./utils.js";
+import { emitGetData, generateCustomId } from "./utils.js";
 
 /** REGISTER USER */
 export const register = async (req, res) => {
@@ -43,6 +43,8 @@ export const register = async (req, res) => {
 
     const savedUser = await newUser.save();
 
+    // emit to responsable same structure, directeur , secrétaire
+    sendUserEmits("create", { structure: structure });
     res.status(201).json({ savedUser, msg: "Registered Successfully" });
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -208,7 +210,7 @@ export const alterUser = async (req, res) => {
       ? { ...req.body, uid: await generateCustomId(structure, "users") }
       : req.body;
 
-    if (password) { 
+    if (password) {
       const salt = await bcrypt.genSalt();
       const hashedPassword = await bcrypt.hash(password, salt);
       updateOptions.password = hashedPassword;
@@ -222,12 +224,48 @@ export const alterUser = async (req, res) => {
       }
     );
 
+    sendUserEmits("update", {
+      others: [req.params.id],
+      structure: updatedUser.structure,
+    });
+    
     res.status(200).json({
       updatedUser,
       msg: "User has been updated successfully",
     });
+
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server Error" });
+  }
+};
+
+const sendUserEmits = async (operation, ids) => {
+  let { structure } = ids;
+  let users = await User.find({
+    $or: [
+      { role: "responsable", structure: structure },
+      { role: "directeur" },
+      { role: "secretaire" },
+    ],
+  })
+    .select("_id")
+    .lean();
+  switch (operation) {
+    case "create":
+      let combinedUsers = users.map((u) => u._id.toString());
+      emitGetData(combinedUsers, "getUsers");
+      break;
+
+    case "update":
+      let { others } = ids;
+      let allUsers = users.map((u) => u._id.toString());
+      let otherUsers = others.map((u) => u.toString());
+      let combinedUsers2 = allUsers.concat(otherUsers);
+      emitGetData(combinedUsers2, "getUsers");
+
+      break;
+    default:
+      break;
   }
 };

@@ -101,52 +101,6 @@ function App() {
   //   .map((u) => u._id);
   // console.log(JSON.stringify(employees));
 
-  // const handleSocketData = (type) => {
-  //   switch (type) {
-  //     case "demande":
-  //       // getDemandes(dispatch, 1);
-
-  //       break;
-  //     case "user":
-  //       getUsers(dispatch, 1);
-
-  //       break;
-  //     case "mission":
-  //       // getMissions(dispatch);
-  //       // getOMs(dispatch);
-  //       break;
-  //     case "rfm":
-  //       {
-  //         getRFMs(dispatch, 1);
-  //       }
-  //       break;
-  //     case "om":
-  //       getOMs(dispatch, 1);
-  //       break;
-  //     case "missionkpi":
-  //       getMissionKPIS(dispatch, 1);
-  //       break;
-  //     case "filekpi":
-  //       getFileKPIS(dispatch, 1);
-  //       break;
-  //     case "notification":
-  //       getNotifications(dispatch, 1);
-  //       break;
-  //     case "ticket":
-  //       getTickets(dispatch, 1);
-  //       break;
-  //     default:
-  //       break;
-  //   }
-  // };
-  // const handleCronData = () => {
-  //   console.log("inside the handle Cron data ==> appjs");
-  //   getDemandes(dispatch);
-  //   getRFMs(dispatch);
-  //   getMissions(dispatch);
-  //   getOMs(dispatch);
-  //   getUsers(dispatch);
-  // };
   const handleSocketConnection = () => {
     // socket.on("cronDataChange", handleCronData);
     socket.on("ticket", async () => {
@@ -170,6 +124,16 @@ function App() {
     socket.on("getRfms", (tab) => {
       if (tabId === tab) {
         getRFMs(dispatch);
+      }
+    });
+    socket.on("getUsers", (tab) => {
+      if (tabId === tab) {
+        getUsers(dispatch);
+      }
+    });
+    socket.on("notification", async () => {
+      if (tabId === tab) {
+        getNotifications(dispatch);
       }
     });
     // socket.on("updatedData", handleSocketData);
