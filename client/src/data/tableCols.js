@@ -9,6 +9,8 @@ export const columnsDemandes = [
 ];
 
 export const filterDemOptions = [
+  "DM",
+  "DC",
   "en-attente",
   "acceptée",
   "refusée",

@@ -49,7 +49,7 @@ import { verifyToken } from "./middleware/auth.js";
 import { createNotification } from "./controllers/Notification.js";
 import { createOrUpdateFDocument } from "./controllers/FilesKpis.js";
 import { createMission } from "./controllers/mission.js";
-import {  generateCustomId } from "./controllers/utils.js";
+import { generateCustomId } from "./controllers/utils.js";
 import Ticket from "./models/Ticket.js";
 const toId = mongoose.Types.ObjectId;
 // Configure environment variables
@@ -167,7 +167,6 @@ mongoose
           //and replace the socketId with a newOne
           connectedUsers[idx].socketId = socket.id;
           console.log(`User ${userId} did connect already `);
- 
         }
         // console.log(connectedUsers);
       });
@@ -200,34 +199,39 @@ mongoose
         }
       });
 
-      socket.on("updatedData", async (type) => {
-        try {
-          // console.log(type);
-          io.emit("updatedData", type);
-        } catch (error) {
-          console.error(error);
-        }
-      });
+      // socket.on("updatedData", async (type) => {
+      //   try {
+      //     // console.log(type);
+      //     io.emit("updatedData", type);
+      //   } catch (error) {
+      //     console.error(error);
+      //   }
+      // });
     });
   })
   .catch((error) => {
     console.error(`Failed to connect to MongoDB database: ${error.message}`);
   });
-//it works fine , just whenn we restart the server we need to refresh all the browsers
 
 cron.schedule("50 01 * * *", async () => {
-  console.log("working in index.js");
+  console.log("Cron job starting...");
 
-  // Update missions with tDateDeb equal to current time
+  //_____________________________________________________________________________________________________
+  // IF MISSION DATE DEBUT = NOW() THEN UPDATE ITS STATE="EN-COURS", CREATE RFMS , UPDATE USERS STATUS
+  //______________________________________________________________________________________________________
+
   const currentDate = moment().format("YYYY-MM-DD");
+  // find les missions acceptée
   const missionsEnCours = await Mission.find({
     tDateDeb: { $eq: currentDate },
     etat: "acceptée",
   });
 
+  // pour chacun des missions trouvé
   for (const mission of missionsEnCours) {
     const employeIds = mission.employes.map((employe) => employe._id);
 
+    // for each employee change its state to missionnaire
     for (const employeId of employeIds) {
       await User.updateOne(
         { _id: employeId },
@@ -236,13 +240,18 @@ cron.schedule("50 01 * * *", async () => {
     }
 
     let old = mission;
+    // change the mission state to en cours
     mission.etat = "en-cours";
     let saved = await mission.save();
+
     //____________________________________________________________________________________
-    //update etat
+    // CASE FMISSION : update etat
+    //____________________________________________________________________________________
+
     createOrUpdateFMission(saved, "update", old, "etat");
-    //____________________________________________________________________________________
-    console.log(saved.structure);
+
+    // console.log(saved.structure);
+    // for each employee of employees we create RFMS
     for (const employeId of employeIds) {
       let customId = await generateCustomId(saved.structure, "rapportfms");
       console.log(customId);
@@ -272,15 +281,18 @@ cron.schedule("50 01 * * *", async () => {
     //__________________________________________________
   }
 
-  //pour chaque mission je fais ca
-  // Update missions with tDateDeb equal to current time and etat equal to en-attente
+  //_____________________________________________________________________________________________________
+  // IF MISSION DATE DEBUT <= NOW() AND STILL EN ATTENTE THEN UPDATE ITS STATE="REFUSEE"
+  //______________________________________________________________________________________________________
   const missionsEnAttente = await Mission.find({
     tDateDeb: { $lte: new Date() },
     etat: "en-attente",
   });
 
+  // ______________
+  //  UPDATE STATE
+  // ______________
   for (const mission of missionsEnAttente) {
-    const employeIds = mission.employes.map((employe) => employe._id);
     let old = mission;
     mission.etat = "refusée";
     let saved = await mission.save();
@@ -288,10 +300,39 @@ cron.schedule("50 01 * * *", async () => {
     //update etat de en-attente a refusé ... change it
     createOrUpdateFMission(saved, "update", old, "etat");
     //____________________________________________________________________________________
+    // __________________________________________________________________________
+    //  CREATE NOTIFICATION FOR SECRETAIRE, DIRECTEUR, RESPONSABLE SAME STRUCTURE
+    // __________________________________________________________________________
+    users = await User.find({
+      $and: [
+        {
+          $or: [
+            { role: "responsable", structure: mission.structure },
+            { role: "directeur" },
+            { role: "secretaire" },
+          ],
+        },
+        { _id: { $ne: toId(mission.createdBy.id) } },
+      ],
+    });
     await createNotification({
-      users: [employeIds],
-      message:
-        "votre demande de mission a été automatiquement rejetée en raison d'une absence de réponse.",
+      users: [mission.createdBy, ...users], //this is a mistake , normally we would sennd a notification to the one who created it
+      message: `la demande de mission prévu pour ${new Date(mission.tDateDeb)
+        .toLocaleDateString("en-US", {
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+        })
+        .replace(/\//g, "-")} a ${new Date(mission.tDateRet)
+        .toLocaleDateString("en-US", {
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+        })
+        .replace(
+          /\//g,
+          "-"
+        )} a été automatiquement rejetée en raison d'une absence de réponse.`,
       path: "",
       type: "mission",
     });
@@ -339,7 +380,7 @@ cron.schedule("50 01 * * *", async () => {
     }
   }
 
-  console.log("finished updating index js ");
+  console.log("Cron job ending...");
   io.emit("cronDataChange");
 });
 
@@ -378,7 +419,7 @@ cron.schedule("50 01 * * *", async () => {
 cron.schedule("12 11 * * *", async () => {
   //creation auto des RFM + OM
   console.log("starting");
-  //RFM 
+  //RFM
   const missionsEnCours = await Mission.find({
     etat: { $in: ["en-cours", "terminée"] },
   });

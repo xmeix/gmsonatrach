@@ -6,8 +6,9 @@ import Demande from "../models/Demande.js";
 import mongoose from "mongoose";
 import Mission from "../models/Mission.js";
 import { createOrUpdateFDocument } from "./FilesKpis.js";
-import { generateCustomId } from "./utils.js";
+import { emitGetData, generateCustomId } from "./utils.js";
 import { createNotification } from "./Notification.js";
+import OrdreMission from "../models/OrdreMission.js";
 const toId = mongoose.Types.ObjectId;
 
 export const createDemande = async (req, res) => {
@@ -58,6 +59,13 @@ export const createDemande = async (req, res) => {
           idEmetteur: emetteur,
           idDestinataire: destinataire,
         });
+
+        sendDemEmits("create", {
+          others: [emetteur],
+          type: type,
+          structure: structure,
+        });
+
         break;
       }
 
@@ -70,6 +78,12 @@ export const createDemande = async (req, res) => {
           motif,
           idEmetteur: emetteur,
           idDestinataire: destinataire,
+        });
+
+        sendDemEmits("create", {
+          others: [emetteur],
+          type: type,
+          structure: structure,
         });
         break;
       }
@@ -131,6 +145,12 @@ export const createDemande = async (req, res) => {
           base,
           gisement,
           employes,
+        });
+
+        sendDemEmits("create", {
+          others: [emetteur],
+          type: type,
+          structure: "",
         });
         break;
       }
@@ -200,10 +220,7 @@ export const updateDemEtat = async (req, res) => {
         demande.etat === "refusée" ? req.body.raisonRefus : demande.raisonRefus;
 
       const updatedDemande = await demande.save();
-      // console.log("DEMANDE__________________________________________");
-      // console.log(updatedDemande.etat);
-      // console.log("______________________________________________");
-      //________________________________________________________________
+
       const populatedDemande = await Demande.findById(updatedDemande.id)
         .populate("idEmetteur")
         .populate("idDestinataire")
@@ -223,6 +240,9 @@ export const updateDemEtat = async (req, res) => {
       const relex = await User.find({ role: "relex" });
 
       // Check if the DC is accepted
+      // ______________________________________________________________________________________________________
+      //   IF DC ACCEPTED THEN CHECK IF THEY HAVE MISSIONS AT THAT TIME IF THEY DO, CANCEL THEM, and REMOVE OMS
+      // ______________________________________________________________________________________________________
       if (updatedDemande.__t === "DC" && updatedDemande.etat === "acceptée") {
         const missions = await Mission.find({
           employes: updatedDemande.idEmetteur,
@@ -254,9 +274,22 @@ export const updateDemEtat = async (req, res) => {
             mission.employes.length === 1 &&
             mission.employes[0].equals(updatedDemande.idEmetteur)
           ) {
-            console.log("here1");
+            // __________
+            // CHANGE ETAT
+            // __________
             mission.etat = "annulée";
             await mission.save();
+            // __________
+            // REMOVE OM
+            // __________
+            const om = await OrdreMission.findOne({
+              mission: mission.id,
+              employe: mission.employes[0],
+            });
+
+            if (om) {
+              await om.remove();
+            }
 
             await createNotification({
               users: [...destinataires, updatedDemande.idEmetteur, ...relex],
@@ -277,12 +310,23 @@ export const updateDemEtat = async (req, res) => {
               type: "mission",
             });
           } else if (mission.employes.length > 1) {
-            console.log("here2");
             const employeId = updatedDemande.idEmetteur;
             mission.employes = mission.employes.filter(
               (employe) => !employe.equals(employeId)
             );
             await mission.save();
+
+            // _________________________________________
+            // REMOVE OM OF THAT MISSION FOR THAT USER
+            // _________________________________________
+            const om = await OrdreMission.findOne({
+              mission: mission.id,
+              employe: employeId,
+            });
+
+            if (om) {
+              await om.remove();
+            }
 
             await createNotification({
               users: [updatedDemande.idEmetteur],
@@ -317,6 +361,23 @@ export const updateDemEtat = async (req, res) => {
           etat: req.body.etat,
           updatedBy: updatedBy,
         });
+
+        //emit case DC+accepted
+        sendDemEmits("update", {
+          others: [populatedDemande.idEmetteur._id],
+          etat: "acceptée",
+          type: updatedDemande.__t,
+          structure: populatedDemande.idEmetteur.structure,
+        });
+        // need to emit getDemandes , getOMS + getMissions too verif etat + __t
+
+        //emit any other cases
+        //   sendDemEmits("update", {
+        //   others: [populatedDemande.idEmetteur],
+        //   etat: req.body.etat,
+
+        // });
+        // need to emit getDemandes only
       }
       //____________________________________________________________________________________
 
@@ -328,7 +389,93 @@ export const updateDemEtat = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+const sendDemEmits = async (operation, ids) => {
+  let { others, type } = ids;
+  let users = [];
+  switch (operation) {
+    case "create":
+      if (type === "DB") {
+        users = await User.find({
+          $or: [
+            { role: "responsable" },
+            { role: "directeur" },
+            { role: "secretaire" },
+            { role: "relex" },
+            // { _id: user },
+          ],
+        })
+          .select("_id")
+          .lean();
+        // Concatenate users and others arrays
+        let combinedUsers = users.map((u) => u._id.toString());
+        emitGetData(combinedUsers, "getDemandes");
+      } else if (type === "DM" || type === "DC") {
+        let { structure } = ids;
+        users = await User.find({
+          $or: [
+            { role: "responsable", structure: structure },
+            { role: "directeur" },
+            { role: "secretaire" },
+            // { _id: user },
+          ],
+        })
+          .select("_id")
+          .lean();
+        // Concatenate users and others arrays
+        let allUsers = users.map((u) => u._id.toString());
+        let otherUsers = others.map((u) => u.toString());
+        let combinedUsers = allUsers.concat(otherUsers);
+        emitGetData(combinedUsers, "getDemandes");
+      }
+      break;
 
+    case "update":
+      let { etat, structure } = ids;
+      if (type === "DB") {
+        users = await User.find({
+          $or: [
+            { role: "responsable" },
+            { role: "directeur" },
+            { role: "secretaire" },
+            { role: "relex" },
+          ],
+        })
+          .select("_id")
+          .lean();
+        let combinedUsers = users.map((u) => u._id.toString());
+        emitGetData(combinedUsers, "getDemandes");
+      } else if (type === "DC" || type === "DM") {
+        users = await User.find({
+          $or: [
+            { role: "responsable", structure: structure },
+            { role: "directeur" },
+            { role: "secretaire" },
+          ],
+        })
+          .select("_id")
+          .lean();
+        if (etat === "acceptée" || etat === "refusée") {
+          let allUsers = users.map((u) => u._id.toString());
+          let otherUsers = others.map((u) => u.toString());
+          let combinedUsers = allUsers.concat(otherUsers);
+
+          if (type === "DC" && etat === "acceptée") {
+            emitGetData(combinedUsers, "getMissions");
+            emitGetData(combinedUsers, "getOms");
+          }
+          emitGetData(combinedUsers, "getDemandes");
+        } else if (etat === "annulée") {
+          let allUsers = users.map((u) => u._id.toString());
+          emitGetData(allUsers, "getDemandes");
+        }
+      }
+
+      break;
+
+    default:
+      break;
+  }
+};
 const sendRequestNotification = async (operation, body) => {
   let path = "";
   let type = "demande";

@@ -100,13 +100,13 @@ export const useAxios = () => {
       case "/demande/DB": 
       case "/demande/DM":
       case "/demande":
-        getDemandes(dispatch);
-        getMissions(dispatch);
-        getOMs(dispatch);
-        if (currentUser.role !== "employe" && currentUser.role !== "relex") {
-          getFileKPIS(dispatch, 1);
-          getMissionKPIS(dispatch, 1);
-        }
+        // getDemandes(dispatch);
+        // getMissions(dispatch);
+        // getOMs(dispatch);
+        // if (currentUser.role !== "employe" && currentUser.role !== "relex") {
+        //   getFileKPIS(dispatch, 1);
+        //   getMissionKPIS(dispatch, 1);
+        // }
         break;
       case "/auth/user":
         if (currentUser.role !== "employe" && currentUser.role !== "relex") {
@@ -114,15 +114,15 @@ export const useAxios = () => {
         }
         break;
       case "/rapportFM":
-        if (currentUser.role === "employe" && !body.etat) {
-          getRFMs(dispatch, 1);
-        } else {
-          getRFMs(dispatch);
-        }
+        // if (currentUser.role === "employe" && !body.etat) {
+        //   getRFMs(dispatch, 1);
+        // } else {
+        //   getRFMs(dispatch);
+        // }
 
-        if (currentUser.role !== "employe" && currentUser.role !== "relex") {
-          getFileKPIS(dispatch, 1);
-        }
+        // if (currentUser.role !== "employe" && currentUser.role !== "relex") {
+        //   getFileKPIS(dispatch, 1);
+        // }
         break;
       case "/notification":
       case "/ticket":

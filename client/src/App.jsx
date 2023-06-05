@@ -38,7 +38,6 @@ const GestionRelex = lazy(() => import("./pages/profilAdmin/GestionRelex"));
 const GestionCMR = lazy(() => import("./pages/profilAdmin/GestionCMR"));
 const Planning = lazy(() => import("./pages/planning/Planning"));
 const GestionTicket = lazy(() => import("./pages/profilAdmin/GestionTicket"));
-
 const GestionModification = lazy(() =>
   import("./pages/profilEmploye/GestionModification")
 );
@@ -80,7 +79,6 @@ const relexRoutes = [{ path: "/", element: <GestionRelex /> }];
 function App() {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const { user, missions, token, users } = useSelector((state) => state.auth);
-  const [sessionExpired, setSessionExpired] = useState(false);
   const dispatch = useDispatch();
 
   let tabId = window.name;
@@ -103,54 +101,54 @@ function App() {
   //   .map((u) => u._id);
   // console.log(JSON.stringify(employees));
 
-  const handleSocketData = (type) => {
-    switch (type) {
-      case "demande":
-        getDemandes(dispatch, 1);
+  // const handleSocketData = (type) => {
+  //   switch (type) {
+  //     case "demande":
+  //       // getDemandes(dispatch, 1);
 
-        break;
-      case "user":
-        getUsers(dispatch, 1);
+  //       break;
+  //     case "user":
+  //       getUsers(dispatch, 1);
 
-        break;
-      case "mission":
-        getMissions(dispatch);
-        getOMs(dispatch);
-        break;
-      case "rfm":
-        {
-          getRFMs(dispatch, 1);
-        }
-        break;
-      case "om":
-        getOMs(dispatch, 1);
-        break;
-      case "missionkpi":
-        getMissionKPIS(dispatch, 1);
-        break;
-      case "filekpi":
-        getFileKPIS(dispatch, 1);
-        break;
-      case "notification":
-        getNotifications(dispatch, 1);
-        break;
-      case "ticket":
-        getTickets(dispatch, 1);
-        break;
-      default:
-        break;
-    }
-  };
-  const handleCronData = () => {
-    console.log("inside the handle Cron data ==> appjs");
-    getDemandes(dispatch);
-    getRFMs(dispatch);
-    getMissions(dispatch);
-    getOMs(dispatch);
-    getUsers(dispatch);
-  };
+  //       break;
+  //     case "mission":
+  //       // getMissions(dispatch);
+  //       // getOMs(dispatch);
+  //       break;
+  //     case "rfm":
+  //       {
+  //         getRFMs(dispatch, 1);
+  //       }
+  //       break;
+  //     case "om":
+  //       getOMs(dispatch, 1);
+  //       break;
+  //     case "missionkpi":
+  //       getMissionKPIS(dispatch, 1);
+  //       break;
+  //     case "filekpi":
+  //       getFileKPIS(dispatch, 1);
+  //       break;
+  //     case "notification":
+  //       getNotifications(dispatch, 1);
+  //       break;
+  //     case "ticket":
+  //       getTickets(dispatch, 1);
+  //       break;
+  //     default:
+  //       break;
+  //   }
+  // };
+  // const handleCronData = () => {
+  //   console.log("inside the handle Cron data ==> appjs");
+  //   getDemandes(dispatch);
+  //   getRFMs(dispatch);
+  //   getMissions(dispatch);
+  //   getOMs(dispatch);
+  //   getUsers(dispatch);
+  // };
   const handleSocketConnection = () => {
-    socket.on("cronDataChange", handleCronData);
+    // socket.on("cronDataChange", handleCronData);
     socket.on("ticket", async () => {
       getTickets(dispatch, 1);
     });
@@ -164,12 +162,22 @@ function App() {
         getOMs(dispatch);
       }
     });
+    socket.on("getDemandes", (tab) => {
+      if (tabId === tab) {
+        getDemandes(dispatch);
+      }
+    });
+    socket.on("getRfms", (tab) => {
+      if (tabId === tab) {
+        getRFMs(dispatch);
+      }
+    });
     // socket.on("updatedData", handleSocketData);
   };
 
   const handleSocketDisconnection = () => {
-    socket.off("cronDataChange", handleCronData);
-    socket.off("updatedData", handleSocketData);
+    // socket.off("cronDataChange", handleCronData);
+    // socket.off("updatedData", handleSocketData);
   };
   const handleRefreshPage = () => {
     window.location.reload();
@@ -192,6 +200,7 @@ function App() {
         }
       }
     };
+
     if (isLoggedIn) {
       socket.emit("login", user, token, tabId);
       localStorage.setItem("isLoggedIn", true);
