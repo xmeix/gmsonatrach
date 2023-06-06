@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import "./../../css/Gestion.css";
@@ -14,7 +14,7 @@ const GestionTicket = () => {
   const [isFormVisible, setIsFormVisible] = useState(false);
   const dispatch = useDispatch();
 
-  const currentUserHasMission = () => {
+  const currentUserHasMission =useCallback( () => {
     if (!user || !missions) {
       return false; // Return false if user or missions are not available
     }
@@ -25,7 +25,7 @@ const GestionTicket = () => {
         mission.employes.some((employe) => employe._id === user._id) &&
         mission.etat === "en-cours"
     );
-  };
+  },[missions]);
 
   const handleFormToggle = () => {
     setIsFormVisible((prevValue) => !prevValue);

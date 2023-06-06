@@ -115,7 +115,7 @@ export const useAxios = () => {
       case "/ticket":
         break;
       default:
-        handleUserType(currentUser.role);
+        // handleUserType(currentUser.role);
     }
   };
   const handleError = (error) => {

@@ -15,6 +15,7 @@ export const createNotification = async (body) => {
     await newNotification.save();
     await newNotification.populate("users");
 
+    console.log("notifications");
     // emitData("notification");
     emitNotification({ others: newNotification.users });
   } catch (error) {
@@ -52,5 +53,7 @@ export const alterNotification = async (req, res) => {
 export const emitNotification = async (ids) => {
   let { others } = ids;
   let combinedUsers = others.map((u) => u._id.toString());
+  console.log(combinedUsers);
+
   emitGetData(combinedUsers, "notification");
 };

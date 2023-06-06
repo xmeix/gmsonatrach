@@ -42,6 +42,14 @@ export const columnsUsersEmp = [
   { id: "nom", label: "Nom", minWidth: "20px" },
   { id: "prenom", label: "prénom", minWidth: "20px" },
 ];
+export const filterResOptions = [
+  "directeur",
+  "secretaire",
+  "employe",
+  "responsable",
+  "non-missionnaire",
+  "missionnaire",
+];
 export const filterUserOptions = [
   "directeur",
   "secretaire",
@@ -75,6 +83,18 @@ export const columnsMissions = [
   { id: "createdBy", label: "par", minWidth: "20px" },
   { id: "tDateDeb", label: "date début", minWidth: "20px" },
   { id: "etat", label: "état", minWidth: "20px" },
+];
+export const filterResMissionsOptions = [
+  "local",
+  "etranger",
+  "avion",
+  "route",
+  "en-attente",
+  "acceptée", //planifié
+  "refusée",
+  "en-cours",
+  "annulée",
+  "terminée",
 ];
 export const filterMissionsOptions = [
   "PMO",

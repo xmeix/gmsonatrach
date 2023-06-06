@@ -217,7 +217,7 @@ mongoose
   });
 
 // CRON JOB POUR UNE APPLICATION TEMPS REEL
-cron.schedule("29 05 * * *", async () => {
+cron.schedule("55 11 * * *", async () => {
   console.log("Cron job starting...");
 
   //_____________________________________________________________________________________________________
@@ -245,14 +245,20 @@ cron.schedule("29 05 * * *", async () => {
     }
 
     // emit getUsers for employeIds + responsables (meme structure)---------------------------------------
-    emitDataCron(1, { others: employeIds, structure: mission.structure });
+    emitDataCron(1, {
+      others: mission.employes,
+      structure: mission.structure,
+    });
     let old = mission;
     // change the mission state to en cours
     mission.etat = "en-cours";
     let saved = await mission.save();
 
     // emit getMissions for employeIds + responsables (m structure)---------------------------------------
-    emitDataCron(2, { others: employeIds, structure: mission.structure });
+    emitDataCron(2, {
+      others: mission.employes,
+      structure: mission.structure,
+    });
 
     //____________________________________________________________________________________
     // CASE FMISSION : update etat
@@ -280,10 +286,13 @@ cron.schedule("29 05 * * *", async () => {
       //______________________________________________________________
     }
     // emit getRFMS for employeIds + responsables m structure -------------------------------------
-    emitDataCron(3, { others: employeIds, structure: mission.structure });
+    emitDataCron(3, {
+      others: mission.employes,
+      structure: mission.structure,
+    });
 
     await createNotification({
-      users: [employeIds],
+      users: [...employeIds],
       message:
         "Votre rapport de fin de mission a été créé et doit être rempli dans les délais impartis. Merci de prendre les mesures nécessaires pour le compléter.",
       path: "",
@@ -356,15 +365,13 @@ cron.schedule("29 05 * * *", async () => {
 
     let responsables = users
       .filter((u) => u.role === "responsable")
-      .map((u) => u._id);
+      .map((u) => u);
     // emit getMissions responsables meme structure---------------------------------------
     console.log("6");
 
     emitDataCron(2, { others: responsables, structure: mission.structure });
     console.log("7");
-
   }
-
 
   //_____________________________________________________________________________________________________
   // IF MISSION DATE FIN < NOW() AND EN-COURS THEN UPDATE ITS STATE="TERMINEE"
@@ -413,7 +420,7 @@ cron.schedule("29 05 * * *", async () => {
     .select("_id")
     .lean();
 
-  emitDataCron(4, { others: all });
+  emitDataCron(4, { others: all.map((u) => u._id) });
   console.log("Cron job ending...");
 
   // io.emit("cronDataChange");
@@ -422,7 +429,8 @@ cron.schedule("29 05 * * *", async () => {
 // function used to emit data to connected Users.
 const emitDataCron = async (operation, ids) => {
   let { others, structure } = ids;
-
+  console.log("others  ==> ", others);
+  console.log("operation  ==> ", operation);
   let users = await User.find({
     $or: [{ role: "responsable", structure: structure }],
   })

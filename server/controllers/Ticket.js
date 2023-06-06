@@ -6,8 +6,8 @@ export const createTicket = async (req, res) => {
     const { mission, employe, object, description } = req.body;
     const ticket = new Ticket({ mission, employe, object, description });
     await ticket.save();
-
-    EmitTicket({ others: mission.employes });
+    await ticket.populate("mission.employes");
+    EmitTicket({ others: [...mission.employes] });
     // emitData("ticket");
     res.status(200).json(ticket);
   } catch (err) {
@@ -38,10 +38,10 @@ export const addComment = async (req, res) => {
       { new: true }
     )
       .populate("commentaires.createdBy")
-      .populate("mission.employes");
+      .populate("mission");
 
     // emitData("ticket");
-    EmitTicket({ others: ticket.mission.employes });
+    EmitTicket({ others: [...ticket.mission.employes, createdBy] });
     res.status(200).json(ticket);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -55,9 +55,9 @@ export const changeStatus = async (req, res) => {
       id,
       { isSolved: true },
       { new: true }
-    ).populate("mission.employes");
+    ).populate("mission");
 
-    EmitTicket({ others: ticket.mission.employes });
+    EmitTicket({ others: [...ticket.mission.employes] });
 
     res.status(200).json(ticket);
   } catch (err) {

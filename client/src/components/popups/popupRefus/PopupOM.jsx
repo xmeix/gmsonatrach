@@ -30,11 +30,11 @@ const PopupOM = ({ item }) => {
     fonction,
     parcours:
       lieuDep +
-      " Algérie " +
+      " Algérie -" +
       destination +
       " " +
       pays +
-      " " +
+      " -" +
       lieuDep +
       " Algérie ",
     objetMission,

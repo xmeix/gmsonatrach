@@ -165,28 +165,32 @@ const Planning = () => {
               mission.etat === "en-cours" ||
               mission.etat === "terminée")
         )
-        .map(({ _id, objetMission, structure }) => ({
+        .map(({ _id, uid, objetMission, structure }) => ({
           _id,
+          uid,
           objetMission,
           structure,
         }));
     } else {
       filteredResources = users
         .filter((u) => u.role === "employe" || u.role === "responsable")
-        .filter(({ nom, prenom, structure }) => {
+        .filter(({ _id, uid, nom, prenom, structure }) => {
           const search = searchQuery.toLowerCase().trim();
           const fullName = `${nom.toLowerCase()} ${prenom.toLowerCase()}`;
           const reversedFullName = `${prenom.toLowerCase()} ${nom.toLowerCase()}`;
           const structureName = `${structure.toLowerCase().trim()}`;
+          const id = `${uid}`;
           return (
             (structureName.includes(search) ||
               fullName.includes(search) ||
-              reversedFullName.includes(search)) &&
+              reversedFullName.includes(search) ||
+              id.includes(search)) &&
             (filter === "" || structure === filter)
           );
         })
-        .map(({ _id, nom, prenom, structure }) => ({
+        .map(({ _id, uid, nom, prenom, structure }) => ({
           _id,
+          uid,
           nom,
           prenom,
           structure,
@@ -228,33 +232,38 @@ const Planning = () => {
             })}
           </p>
           <div className="planning-control">
-            <div className="search-container">
-              <div className="label">Rechercher:</div>
-              <input
-                type="text"
-                id="searchBox"
-                className="search-box"
-                placeholder="ex: nom prénom"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
-            </div>
-            <div className="filter-container">
-              <div className="label">Filtrer par:</div>
-              <select
-                id="selectFilter"
-                className="select-filter"
-                value={filter}
-                onChange={(e) => setFilter(e.target.value)}
-              >
-                <option value="">toutes les structures</option>
-                {structures.map((structure) => (
-                  <option value={structure} key={structure}>
-                    {structure}
-                  </option>
-                ))}
-              </select>
-            </div>
+            {currentUser.role !== "employe" && (
+              <div className="search-container">
+                <div className="label">Rechercher:</div>
+                <input
+                  type="text"
+                  id="searchBox"
+                  className="search-box"
+                  placeholder="ex: nom prénom"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                />
+              </div>
+            )}
+            {currentUser.role !== "responsable" &&
+              currentUser.role !== "employe" && (
+                <div className="filter-container">
+                  <div className="label">Filtrer par:</div>
+                  <select
+                    id="selectFilter"
+                    className="select-filter"
+                    value={filter}
+                    onChange={(e) => setFilter(e.target.value)}
+                  >
+                    <option value="">toutes les structures</option>
+                    {structures.map((structure) => (
+                      <option value={structure} key={structure}>
+                        {structure}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              )}
           </div>
         </div>
         <div className="ov" style={{ overflowX: "scroll", height: 450 }}>
@@ -266,9 +275,10 @@ const Planning = () => {
           >
             <thead className="planning-thead">
               <tr className="planning-trow">
+                <th className="planning-th">Id</th>
                 {currentUser.role !== "employe" && (
                   <>
-                    <th className="planning-th">Resource</th>
+                    <th className="planning-th">Ressource</th>
                     <th className="planning-th">Structure</th>
                   </>
                 )}
@@ -296,93 +306,99 @@ const Planning = () => {
             </thead>
             <tbody className="planning-tbody">
               {currentUser.role === "employe" &&
-                filteredResources.map(({ _id, objetMission, structure }) => (
-                  <tr key={uuidv4()} className="planning-tbody-row">
-                    <td className="planning-tbody-td-res">{objetMission}</td>
-                    <td className="planning-tbody-td-res">{structure}</td>
-                    {[...Array(daysInMonth)].map((_, index) => {
-                      const day = index + 1;
-                      const matchingMission = acceptedMissions.find(
-                        (item) =>
-                          item.mission._id === _id &&
-                          memoizedIsMissionDay(day, item)
-                      );
+                filteredResources.map(
+                  ({ _id, uid, objetMission, structure }) => (
+                    <tr key={uuidv4()} className="planning-tbody-row">
+                      <td className="planning-tbody-td-res">{uid}</td>
+                      <td className="planning-tbody-td-res">{objetMission}</td>
+                      <td className="planning-tbody-td-res">{structure}</td>
+                      {[...Array(daysInMonth)].map((_, index) => {
+                        const day = index + 1;
+                        const matchingMission = acceptedMissions.find(
+                          (item) =>
+                            item.mission._id === _id &&
+                            memoizedIsMissionDay(day, item)
+                        );
 
-                      return (
-                        <td
-                          className={
-                            matchingMission
-                              ? "planning-mission"
-                              : "planning-tbody-td"
-                          }
-                          key={index}
-                          style={{
-                            backgroundColor: matchingMission
-                              ? matchingMission.color
-                              : "white",
-                          }}
-                          onClick={() => {
-                            if (matchingMission) {
-                              setSavedItem(matchingMission?.mission);
-                              openPopup("mission");
+                        return (
+                          <td
+                            className={
+                              matchingMission
+                                ? "planning-mission"
+                                : "planning-tbody-td"
                             }
-                          }}
-                        >
-                          {matchingMission ? (
-                            <div className="planning-mission"></div>
-                          ) : (
-                            ""
-                          )}
-                        </td>
-                      );
-                    })}
-                  </tr>
-                ))}
+                            key={index}
+                            style={{
+                              backgroundColor: matchingMission
+                                ? matchingMission.color
+                                : "white",
+                            }}
+                            onClick={() => {
+                              if (matchingMission) {
+                                setSavedItem(matchingMission?.mission);
+                                openPopup("mission");
+                              }
+                            }}
+                          >
+                            {matchingMission ? (
+                              <div className="planning-mission"></div>
+                            ) : (
+                              ""
+                            )}
+                          </td>
+                        );
+                      })}
+                    </tr>
+                  )
+                )}
               {currentUser.role !== "employe" &&
-                filteredResources.map(({ _id, nom, prenom, structure }) => (
-                  <tr key={uuidv4()} className="planning-tbody-row">
-                    <td className="planning-tbody-td-res">
-                      {nom + " " + prenom}
-                    </td>
-                    <td className="planning-tbody-td-res">{structure}</td>
-                    {[...Array(daysInMonth)].map((_, index) => {
-                      const day = index + 1;
-                      const matchingMission = acceptedMissions.find(
-                        (item) =>
-                          item.employe._id === _id &&
-                          memoizedIsMissionDay(day, item)
-                      );
+                filteredResources.map(
+                  ({ _id, uid, nom, prenom, structure }) => (
+                    <tr key={uuidv4()} className="planning-tbody-row">
+                      <td className="planning-tbody-td-res">{uid}</td>
+                      <td className="planning-tbody-td-res">
+                        {nom + " " + prenom}
+                      </td>
+                      <td className="planning-tbody-td-res">{structure}</td>
+                      {[...Array(daysInMonth)].map((_, index) => {
+                        const day = index + 1;
+                        const matchingMission = acceptedMissions.find(
+                          (item) =>
+                            item.employe._id === _id &&
+                            memoizedIsMissionDay(day, item)
+                        );
 
-                      return (
-                        <td
-                          className={
-                            matchingMission
-                              ? "planning-mission"
-                              : "planning-tbody-td"
-                          }
-                          key={index}
-                          style={{
-                            backgroundColor: matchingMission
-                              ? matchingMission.color
-                              : "white",
-                          }}
-                          onClick={() => {
-                            if (matchingMission) {
-                              setSavedItem(matchingMission?.mission);
-                              openPopup("mission");
+                        return (
+                          <td
+                            className={
+                              matchingMission
+                                ? "planning-mission"
+                                : "planning-tbody-td"
                             }
-                          }}
-                        >
-                          {matchingMission ? (
-                            <div className="planning-mission "></div>
-                          ) : (
-                            ""
-                          )}
-                        </td>
-                      );
-                    })}
-                  </tr>
-                ))}
+                            key={index}
+                            style={{
+                              backgroundColor: matchingMission
+                                ? matchingMission.color
+                                : "white",
+                            }}
+                            onClick={() => {
+                              if (matchingMission) {
+                                setSavedItem(matchingMission?.mission);
+                                openPopup("mission");
+                              }
+                            }}
+                          >
+                            {matchingMission ? (
+                              <div className="planning-mission "></div>
+                            ) : (
+                              ""
+                            )}
+                          </td>
+                        );
+                      })}
+                    </tr>
+                  )
+                )}
             </tbody>
           </table>
         </div>

@@ -1,7 +1,7 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
 import NavBar from "./components/navbar/NavBar";
-import { lazy, Suspense, useState } from "react";
+import { lazy, Suspense, useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import Loading from "./components/loading/Loading";
@@ -77,10 +77,15 @@ const secretaireRoutes = [
 const relexRoutes = [{ path: "/", element: <GestionRelex /> }];
 
 function App() {
-  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
-  const { user, missions, token, users } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+  const { user, missions, token, users, isLoggedIn } = useSelector(
+    (state) => state.auth
+  );
 
+  const handleRefreshPage = useCallback(() => {
+    window.location.reload();
+  }, []);
+  
   let tabId = window.name;
   if (!tabId) {
     // Generate a new UUID if it doesn't exist in window.name
@@ -101,10 +106,12 @@ function App() {
   //   .map((u) => u._id);
   // console.log(JSON.stringify(employees));
 
-  const handleSocketConnection = () => {
+  const handleSocketConnection = useCallback(() => {
     // socket.on("cronDataChange", handleCronData);
-    socket.on("ticket", async () => {
-      getTickets(dispatch, 1);
+    socket.on("ticket", (tab) => {
+      if (tabId === tab) {
+        getTickets(dispatch);
+      }
     });
     socket.on("getMissions", (tab) => {
       if (tabId === tab) {
@@ -131,21 +138,24 @@ function App() {
         getUsers(dispatch);
       }
     });
-    socket.on("notification", async () => {
+    socket.on("notification", (tab) => {
       if (tabId === tab) {
         getNotifications(dispatch);
       }
     });
     // socket.on("updatedData", handleSocketData);
-  };
+  }, []);
 
-  const handleSocketDisconnection = () => {
-    // socket.off("cronDataChange", handleCronData);
-    // socket.off("updatedData", handleSocketData);
-  };
-  const handleRefreshPage = () => {
-    window.location.reload();
-  };
+  const handleSocketDisconnection = useCallback(() => {
+    socket.off("ticket");
+    socket.off("notification");
+    socket.off("getUsers");
+    socket.off("getRfms");
+    socket.off("getDemandes");
+    socket.off("getOms");
+    socket.off("getMissions");
+  }, []);
+
   useEffect(() => {
     const handleLoginData = async (userId) => {
       if (user._id.toString() === userId.toString()) {
@@ -179,6 +189,7 @@ function App() {
 
     return () => {
       socket.off("loginData", handleLoginData);
+      socket.off("sessionExpired", handleRefreshPage);
       handleSocketDisconnection();
     };
   }, [isLoggedIn, user, token]);
@@ -189,7 +200,7 @@ function App() {
     };
   }, []);
 
-  const handleStorageChange = (event) => {
+  const handleStorageChange = useCallback((event) => {
     if (event.key === "isLoggedIn") {
       if (event.newValue === "true") {
         console.log("refreshed");
@@ -197,7 +208,7 @@ function App() {
         handleRefreshPage();
       }
     }
-  };
+  }, []);
 
   useEffect(() => {
     window.addEventListener("storage", handleStorageChange);

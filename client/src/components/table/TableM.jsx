@@ -673,19 +673,21 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
         </div>
         <div className="countControl">{filteredData.length} lignes</div>
 
-        <select
-          value={filterOption}
-          onChange={(event) => handleFilterOptionChange(event)}
-        >
-          <option value="">All</option>
-          {filterOptions.map((opt, i) => {
-            return (
-              <option key={i} value={opt}>
-                {opt}
-              </option>
-            );
-          })}
-        </select>
+        {!(currentUser.role === "responsable" && colType === "om") && (
+          <select
+            value={filterOption}
+            onChange={(event) => handleFilterOptionChange(event)}
+          >
+            <option value="">All</option>
+            {filterOptions.map((opt, i) => {
+              return (
+                <option key={i} value={opt}>
+                  {opt}
+                </option>
+              );
+            })}
+          </select>
+        )}
       </form>
 
       <TableContainer
