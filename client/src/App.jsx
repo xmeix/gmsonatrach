@@ -82,10 +82,10 @@ function App() {
     (state) => state.auth
   );
 
-  const handleRefreshPage = useCallback(() => {
+  const handleRefreshPage = () => {
     window.location.reload();
-  }, []);
-  
+  };
+
   let tabId = window.name;
   if (!tabId) {
     // Generate a new UUID if it doesn't exist in window.name
@@ -106,7 +106,7 @@ function App() {
   //   .map((u) => u._id);
   // console.log(JSON.stringify(employees));
 
-  const handleSocketConnection = useCallback(() => {
+  const handleSocketConnection =  () => {
     // socket.on("cronDataChange", handleCronData);
     socket.on("ticket", (tab) => {
       if (tabId === tab) {
@@ -144,17 +144,17 @@ function App() {
       }
     });
     // socket.on("updatedData", handleSocketData);
-  }, []);
+  };
 
-  const handleSocketDisconnection = useCallback(() => {
-    socket.off("ticket");
-    socket.off("notification");
-    socket.off("getUsers");
-    socket.off("getRfms");
-    socket.off("getDemandes");
-    socket.off("getOms");
-    socket.off("getMissions");
-  }, []);
+  const handleSocketDisconnection =  () => {
+    // socket.off("ticket");
+    // socket.off("notification");
+    // socket.off("getUsers");
+    // socket.off("getRfms");
+    // socket.off("getDemandes");
+    // socket.off("getOms");
+    // socket.off("getMissions");
+  };
 
   useEffect(() => {
     const handleLoginData = async (userId) => {
@@ -200,7 +200,7 @@ function App() {
     };
   }, []);
 
-  const handleStorageChange = useCallback((event) => {
+  const handleStorageChange = (event) => {
     if (event.key === "isLoggedIn") {
       if (event.newValue === "true") {
         console.log("refreshed");
@@ -208,7 +208,7 @@ function App() {
         handleRefreshPage();
       }
     }
-  }, []);
+  };
 
   useEffect(() => {
     window.addEventListener("storage", handleStorageChange);

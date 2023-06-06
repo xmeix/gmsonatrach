@@ -217,7 +217,7 @@ mongoose
   });
 
 // CRON JOB POUR UNE APPLICATION TEMPS REEL
-cron.schedule("55 11 * * *", async () => {
+cron.schedule("15 21 * * *", async () => {
   console.log("Cron job starting...");
 
   //_____________________________________________________________________________________________________
@@ -443,6 +443,7 @@ const emitDataCron = async (operation, ids) => {
   allUsers = users.map((u) => u._id.toString());
   otherUsers = others.map((u) => u.toString());
   combinedUsers = allUsers.concat(otherUsers);
+  console.log(combinedUsers)
   switch (operation) {
     case 1:
       emitGetData(combinedUsers, "getUsers");

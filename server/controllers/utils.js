@@ -2,13 +2,11 @@ import { connectedUsers, io } from "../index.js";
 import CustomId from "../models/CustomId.js";
 
 export const emitGetData = (users, link) => {
-
   connectedUsers.forEach((user) => {
     if (users.includes(user.userId.toString())) {
       io.to(user.socketId).emit(link, user.tabId);
     }
   });
-  
 };
 
 // export const emitData = async (link, data) => {
