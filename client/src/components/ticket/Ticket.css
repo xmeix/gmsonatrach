@@ -1,14 +1,15 @@
 .ticket-container {
-  margin: 1em 0;
+  flex: 0.5;
+  min-width: 400px;
 }
 .ticket {
   background-color: #fff;
   border: 1px solid #ccc;
   border-radius: 8px 8px 0px 0px;
   padding: 20px;
-  width: 400px;
-  max-width: 400px;
-  min-width: auto;
+  /* width: 400px; */
+  /* max-width: 400px;
+  min-width: auto; */
 }
 
 .ticket-header {
