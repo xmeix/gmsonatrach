@@ -187,15 +187,15 @@ export const getDemandes = async (req, res) => {
      * directeur / secretaire : get All demandes
      * relex : get only db
      */
-    if (
-      user.role === "employe" ||
-      user.role === "relex" ||
-      user.role === "responsable"
-    ) {
+    if (user.role === "employe" || user.role === "relex") {
       filteredDemandes = demandes.filter(
         (demande) =>
           demande.idEmetteur._id.toString() === user._id.toString() ||
           demande.idDestinataire._id.toString() === user._id.toString()
+      );
+    } else if (user.role === "responsable") {
+      filteredDemandes = demandes.filter(
+        (demande) => demande.idEmetteur.structure === user.structure
       );
     } else filteredDemandes = demandes;
     res.status(200).json(filteredDemandes);
@@ -495,7 +495,7 @@ const sendRequestNotification = async (operation, body) => {
           });
           // console.log("users ============>", users);
           message = `une demande de billetterie a été créé par ${idEmetteur.nom} ${idEmetteur.prenom}`;
-           createNotification({
+          createNotification({
             users: users,
             message: message,
             path,
@@ -506,7 +506,7 @@ const sendRequestNotification = async (operation, body) => {
           users2 = await User.find({ role: "relex" });
           message2 = `Vous avez reçu une nouvelle demande de billetterie de la part de ${idEmetteur.nom} ${idEmetteur.prenom}`;
 
-           createNotification({
+          createNotification({
             users: users2,
             message: message2,
             path,
@@ -532,7 +532,7 @@ const sendRequestNotification = async (operation, body) => {
           message = `Vous avez reçu une nouvelle demande de ${
             typeD === "DM" ? "modification" : "congés"
           } de la part de ${idEmetteur.nom} ${idEmetteur.prenom}`;
-           createNotification({
+          createNotification({
             users: users,
             message: message,
             path,
@@ -571,7 +571,7 @@ const sendRequestNotification = async (operation, body) => {
         if (updatedBy.id !== emetteur.id) {
           users = [emetteur.id];
           message = `Votre demande de ${nomDemande} a été ${etat} par ${updatedBy.nom} ${updatedBy.prenom}`;
-           createNotification({ users, message, path, type });
+          createNotification({ users, message, path, type });
         }
         users2 = await User.find({
           $and: [
@@ -582,7 +582,7 @@ const sendRequestNotification = async (operation, body) => {
         });
 
         message2 = `La demande de  ${nomDemande}  créée par ${emetteur.nom} ${emetteur.prenom} a été ${etat} par ${updatedBy.nom} ${updatedBy.prenom}`;
-         createNotification({
+        createNotification({
           users: users2,
           message: message2,
           path,
@@ -591,7 +591,7 @@ const sendRequestNotification = async (operation, body) => {
       } else {
         users = [emetteur.id];
         message = `Votre demande de  ${nomDemande}  a été ${etat} par ${updatedBy.nom} ${updatedBy.prenom}.`;
-         createNotification({
+        createNotification({
           users: users,
           message: message,
           path,
@@ -606,7 +606,7 @@ const sendRequestNotification = async (operation, body) => {
           ],
         });
         message2 = `La demande de  ${nomDemande}  créée par ${emetteur.nom} ${emetteur.prenom} a été ${etat} par ${updatedBy.nom} ${updatedBy.prenom}`;
-         createNotification({
+        createNotification({
           users: users2,
           message: message2,
           path,

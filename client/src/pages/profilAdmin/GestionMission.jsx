@@ -28,7 +28,11 @@ const GestionMission = () => {
           <TableM
             title="Liste de rapports de fin de mission"
             search={["id", "name"]}
-            filterOptions={filterRFMOptions}
+            filterOptions={
+              user.role !== "employe"
+                ? filterRFMOptions
+                : ["créé"].concat(filterRFMOptions)
+            }
             columns={columnsRFM}
             data={rfms}
             colType="rfm"

@@ -1,7 +1,7 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
 import NavBar from "./components/navbar/NavBar";
-import { lazy, Suspense, useCallback, useState } from "react";
+import { lazy, Suspense, useCallback, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import Loading from "./components/loading/Loading";
@@ -188,8 +188,7 @@ function App() {
     },
     [dispatch, tabId]
   );
-
-  useEffect(() => {
+  useMemo(() => {
     const handleLoginData = async (userId) => {
       if (user._id.toString() === userId.toString()) {
         if (user.role !== "relex") {
@@ -201,8 +200,6 @@ function App() {
         getDemandes(dispatch);
         getNotifications(dispatch);
         if (user.role !== "relex" && user.role !== "employe") {
-          // getMissionKPIS(dispatch);
-          // getFileKPIS(dispatch);
           getUsers(dispatch);
         }
       }
@@ -214,11 +211,11 @@ function App() {
       handleSocketConnection();
       socket.on("loginData", handleLoginData);
     } else {
-      // socket.emit("logout");
       socket.off("loginData", handleLoginData);
       localStorage.removeItem("isLoggedIn");
     }
-      socket.on("sessionExpired", handleRefreshPage);
+
+    socket.on("sessionExpired", handleRefreshPage);
 
     return () => {
       socket.off("loginData", handleLoginData);

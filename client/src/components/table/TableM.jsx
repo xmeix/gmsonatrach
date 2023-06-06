@@ -103,6 +103,7 @@ const useStyles = makeStyles({
 });
 
 const TableM = ({ title, filterOptions, columns, data, colType }) => {
+  
   const classes = useStyles();
 
   const [filter, setFilter] = useState("");

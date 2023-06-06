@@ -26,7 +26,7 @@ export const columnsRFM = [
   { id: "etat", label: "état", minWidth: "20px" },
 ];
 
-export const filterRFMOptions = ["créé", "en-attente", "accepté", "refusé"];
+export const filterRFMOptions = ["en-attente", "accepté"];
 
 // export const columnsUsersEmp = [
 //   { id: "createdAt", label: "date de création", minWidth: "20px" },

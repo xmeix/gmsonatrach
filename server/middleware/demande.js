@@ -130,12 +130,9 @@ export const updateAccessCheck = async (req, res, next) => {
               user.role !== "responsable") ||
             (user.role === "employe" &&
               operation === "annulée" &&
-              demande.idEmetteur.toString() !== user.id) ||
-            (user.role === "responsable" &&
-              (operation === "acceptée" || operation === "refusée") &&
-              demande.idDestinataire.toString() !== user.id)
+              demande.idEmetteur.toString() !== user.id)  
           )
-            throw new Error("Unauthorized");
+            throw new Error("Unauthorized2");
         }
         break;
     }
