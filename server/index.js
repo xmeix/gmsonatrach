@@ -134,7 +134,7 @@ mongoose
     // addMissionsData();
     console.log("end");
     io.on("connection", (socket) => {
-      // console.log(connectedUsers);
+      console.log(connectedUsers);
       connectedClients.push(socket.id);
       // console.log(connectedClients);
 
@@ -217,7 +217,7 @@ mongoose
   });
 
 // CRON JOB POUR UNE APPLICATION TEMPS REEL
-cron.schedule("15 21 * * *", async () => {
+cron.schedule("20 01 * * *", async () => {
   console.log("Cron job starting...");
 
   //_____________________________________________________________________________________________________
@@ -291,15 +291,15 @@ cron.schedule("15 21 * * *", async () => {
       structure: mission.structure,
     });
 
-    await createNotification({
+     createNotification({
       users: [...employeIds],
       message:
         "Votre rapport de fin de mission a été créé et doit être rempli dans les délais impartis. Merci de prendre les mesures nécessaires pour le compléter.",
       path: "",
       type: "RFM",
     });
+    // emitNotification({ others: mission.employes });
 
-    emitNotification({ others: mission.employes });
   }
   console.log("2");
 
@@ -338,7 +338,8 @@ cron.schedule("15 21 * * *", async () => {
     });
     console.log("4");
 
-    await createNotification({
+
+     createNotification({
       users: [mission.createdBy, ...users], //this is a mistake , normally we would sennd a notification to the one who created it
       message: `la demande de mission prévu pour ${new Date(mission.tDateDeb)
         .toLocaleDateString("en-US", {
@@ -358,10 +359,11 @@ cron.schedule("15 21 * * *", async () => {
         )} a été automatiquement rejetée en raison d'une absence de réponse.`,
       path: "",
       type: "mission",
-    });
+    });    
+    // emitNotification({ others: [...users, mission.createdBy] });
+
     console.log("5");
 
-    emitNotification({ others: [...users, mission.createdBy] });
 
     let responsables = users
       .filter((u) => u.role === "responsable")
@@ -402,7 +404,7 @@ cron.schedule("15 21 * * *", async () => {
     // __________________________________
     //  SEND REMINDER FOR EACH EMPLOYES
     // __________________________________
-    await createNotification({
+     createNotification({
       users: [employeIds],
       message:
         "Mission réussie ! Merci de nous envoyer votre rapport de fin de mission dûment rempli.",
@@ -410,7 +412,7 @@ cron.schedule("15 21 * * *", async () => {
       type: "RFM",
     });
 
-    emitNotification({ others: mission.employes });
+    // emitNotification({ others: mission.employes });
   }
 
   // emit getMissions + getUsers + getRFMS for secretaire , directeurs--------------XXXXXXX------------------
@@ -442,7 +444,7 @@ const emitDataCron = async (operation, ids) => {
 
   allUsers = users.map((u) => u._id.toString());
   otherUsers = others.map((u) => u.toString());
-  combinedUsers = allUsers.concat(otherUsers);
+  combinedUsers = otherUsers.concat(allUsers);
   console.log(combinedUsers)
   switch (operation) {
     case 1:

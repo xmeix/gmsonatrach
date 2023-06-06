@@ -14,7 +14,7 @@ import {
 import { setFilesKpis, setMissionKpis } from "../../store/features/statSlice";
 import { apiService } from "../apiService";
 
-const fetchData = async (dispatch, endpoint, socketEvent, num) => {
+const fetchData = async (dispatch, endpoint, socketEvent) => {
   dispatch(fetchStart());
   try {
     const res = await apiService.user.get(endpoint);
@@ -40,40 +40,40 @@ const fetchData = async (dispatch, endpoint, socketEvent, num) => {
   }
 };
 
-export const getMissions = async (dispatch, num) => {
-  await fetchData(dispatch, "/mission/", "mission", num);
+export const getMissions = (dispatch) => {
+  fetchData(dispatch, "/mission/", "mission");
   // getMissionKPIS(dispatch, 1);
 };
 
-export const getDemandes = async (dispatch, num) => {
-  await fetchData(dispatch, "/demande/", "demande", num);
+export const getDemandes = (dispatch) => {
+  fetchData(dispatch, "/demande/", "demande");
   // getFileKPIS(dispatch, 1);
 };
 
-export const getRFMs = async (dispatch, num) => {
-  await fetchData(dispatch, "/rapportFM/", "rfm", num);
+export const getRFMs = (dispatch) => {
+  fetchData(dispatch, "/rapportFM/", "rfm");
   // getFileKPIS(dispatch, 1);
 };
 
-export const getOMs = async (dispatch, num) => {
-  await fetchData(dispatch, "/ordremission/", "om", num);
+export const getOMs = (dispatch) => {
+  fetchData(dispatch, "/ordremission/", "om");
   // getFileKPIS(dispatch, 1);
 };
 
-export const getUsers = async (dispatch, num) => {
-  await fetchData(dispatch, "/auth/users", "user", num);
+export const getUsers = (dispatch) => {
+  fetchData(dispatch, "/auth/users", "user");
 };
-export const getMissionKPIS = async (dispatch, num) => {
-  await fetchData(dispatch, "/kpis/mission", "missionkpi", num);
+export const getMissionKPIS = (dispatch) => {
+  fetchData(dispatch, "/kpis/mission", "missionkpi");
 };
-export const getFileKPIS = async (dispatch, num) => {
-  await fetchData(dispatch, "/kpis/file", "filekpi", num);
+export const getFileKPIS = (dispatch) => {
+  fetchData(dispatch, "/kpis/file", "filekpi");
 };
-export const getNotifications = async (dispatch, num) => {
-  await fetchData(dispatch, "/notification/", "notification", num);
+export const getNotifications = (dispatch) => {
+  fetchData(dispatch, "/notification/", "notification");
 };
-export const getTickets = async (dispatch, num) => {
-  await fetchData(dispatch, "/ticket/", "ticket", num);
+export const getTickets = (dispatch) => {
+  fetchData(dispatch, "/ticket/", "ticket");
 };
 export const getBestEmployes = async (endpoint) => {
   const res = await apiService.user.get(endpoint);

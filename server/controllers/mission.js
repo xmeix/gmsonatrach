@@ -100,17 +100,16 @@ export const createMission = async (req, res) => {
     }
     //____________________________________________________________________________________;
     const userObj = await User.findById(user.id);
-    sendNotification("creation", {
-      mission: savedMission,
-      employes: newEmployes,
-      user: userObj,
-    });
-
     sendEmits("create", {
       user: userObj._id,
       others:
         etat === "acceptée" ? newEmployes.map((employe) => employe._id) : [],
       structure,
+    });
+    sendNotification("creation", {
+      mission: savedMission,
+      employes: newEmployes,
+      user: userObj,
     });
 
     const query = {
@@ -245,6 +244,11 @@ export const updateMissionEtat = async (req, res) => {
         .populate("createdBy")
         .populate("updatedBy");
 
+      sendEmits("update", {
+        others: employes.map((employe) => employe._id),
+        structure: mission.structure,
+        etat: operation,
+      });
       sendNotification("update", {
         mission,
         etat: updatedMission.etat,
@@ -257,15 +261,14 @@ export const updateMissionEtat = async (req, res) => {
       //update etat
       createOrUpdateFMission(updatedMission, "update", mission, "etat");
       //____________________________________________________________________________________
-
-      sendEmits("update", {
-        others: employes.map((employe) => employe._id),
-        structure: mission.structure,
-        etat: operation,
-      });
     }
 
     if (req.body.taches) {
+      sendEmits("update", {
+        others: employes.map((employe) => employe._id),
+        structure: mission.structure,
+        etat: "taches",
+      });
       //____________________________________________________________________________________
       //update tache
       createOrUpdateFMission(updatedMission, "update", mission, "tache");
@@ -284,44 +287,38 @@ export const updateMissionEtat = async (req, res) => {
 const sendEmits = async (operation, ids) => {
   let { others, structure } = ids;
   let users = [];
+  const commonUserQuery = {
+    $or: [
+      { role: "responsable", structure: structure },
+      { role: "directeur" },
+      { role: "secretaire" },
+    ],
+  };
+
   switch (operation) {
     case "create":
-      users = await User.find({
-        $or: [
-          { role: "responsable", structure: structure },
-          { role: "directeur" },
-          { role: "secretaire" },
-          // { _id: user },
-        ],
-      })
-        .select("_id")
-        .lean();
+      users = await User.find(commonUserQuery).select("_id").lean();
       // Concatenate users and others arrays
       let allUsers = users.map((u) => u._id.toString());
       let otherUsers = others.map((u) => u._id.toString());
-      let combinedUsers = allUsers.concat(otherUsers);
+      let combinedUsers = otherUsers.concat(allUsers);
       emitGetData(combinedUsers, "getMissions");
       break;
 
     case "update":
       let { etat } = ids;
-      const commonUserQuery = {
-        $or: [
-          { role: "responsable", structure: structure },
-          { role: "directeur" },
-          { role: "secretaire" },
-        ],
-      };
+      users = await User.find(commonUserQuery).select("_id").lean();
 
       if (etat === "acceptée" || etat === "annulée") {
-        users = await User.find(commonUserQuery).select("_id").lean();
         let allUsers = users.map((u) => u._id.toString());
         let otherUsers = others.map((u) => u._id.toString());
-        let combinedUsers = allUsers.concat(otherUsers);
+        let combinedUsers = otherUsers.concat(allUsers);
         emitGetData(combinedUsers, "getMissions");
         emitGetData(combinedUsers, "getOms");
       } else if (etat === "refusée") {
-        users = await User.find(commonUserQuery).select("_id").lean();
+        let combinedUsers = users.map((u) => u._id.toString());
+        emitGetData(combinedUsers, "getMissions");
+      } else if (etat === "taches") {
         let combinedUsers = users.map((u) => u._id.toString());
         emitGetData(combinedUsers, "getMissions");
       }
@@ -345,7 +342,7 @@ const sendNotification = async (operation, body) => {
         if (user.role === "directeur" || user.role === "responsable") {
           users = employes;
           message = `Vous avez été affecté(e) à une nouvelle mission de travail de ${mission.tDateDeb} a ${mission.tDateRet}`;
-          await createNotification({
+          createNotification({
             users: users,
             message: message,
             path,
@@ -377,7 +374,7 @@ const sendNotification = async (operation, body) => {
               day: "2-digit",
             })
             .replace(/\//g, "-")} a été créé par ${user.nom} ${user.prenom}`;
-          await createNotification({
+          createNotification({
             users: users2,
             message: message2,
             path,
@@ -393,7 +390,7 @@ const sendNotification = async (operation, body) => {
           };
           users = await User.find(query);
           message = `Vous avez reçu une nouvelle demande de mission de la part de  ${user.nom} ${user.prenom}`;
-          await createNotification({ users, message, path, type });
+          createNotification({ users, message, path, type });
         }
       }
       break;
@@ -417,7 +414,7 @@ const sendNotification = async (operation, body) => {
               })
               .replace(/\//g, "-")} a été ${etat}.`;
             users = employes;
-            await createNotification({ users, message, path, type });
+            createNotification({ users, message, path, type });
           }
         } else if (etat === "acceptée") {
           //envoyer a tous les employés
@@ -437,7 +434,7 @@ const sendNotification = async (operation, body) => {
               day: "2-digit",
             })
             .replace(/\//g, "-")}`;
-          await createNotification({ users, message, path, type });
+          createNotification({ users, message, path, type });
         }
 
         //on envoie pas de notification pour celui qui a créer la mission et l as annuler (created it === updatedit)
@@ -483,7 +480,7 @@ const sendNotification = async (operation, body) => {
             { _id: { $ne: toId(updatedBy.id) } },
           ],
         });
-        await createNotification({ users, message, path, type });
+        createNotification({ users, message, path, type });
       }
       break;
     default:

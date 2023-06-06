@@ -291,7 +291,7 @@ export const updateDemEtat = async (req, res) => {
               await om.remove();
             }
 
-            await createNotification({
+            createNotification({
               users: [...destinataires, updatedDemande.idEmetteur, ...relex],
               message: `la mission prévu entre le ${new Date(mission.tDateDeb)
                 .toLocaleDateString("en-US", {
@@ -328,7 +328,7 @@ export const updateDemEtat = async (req, res) => {
               await om.remove();
             }
 
-            await createNotification({
+            createNotification({
               users: [updatedDemande.idEmetteur],
               message: `votre mission prévue entre le ${new Date(
                 mission.tDateDeb
@@ -356,28 +356,18 @@ export const updateDemEtat = async (req, res) => {
       if (req.body.etat) {
         const updatedBy = await User.findById(req.user.id);
 
-        await sendRequestNotification("update", {
-          oldDemande: populatedDemande,
-          etat: req.body.etat,
-          updatedBy: updatedBy,
-        });
-
-        //emit case DC+accepted
         sendDemEmits("update", {
           others: [populatedDemande.idEmetteur._id],
           etat: "acceptée",
           type: updatedDemande.__t,
           structure: populatedDemande.idEmetteur.structure,
         });
-        // need to emit getDemandes , getOMS + getMissions too verif etat + __t
 
-        //emit any other cases
-        //   sendDemEmits("update", {
-        //   others: [populatedDemande.idEmetteur],
-        //   etat: req.body.etat,
-
-        // });
-        // need to emit getDemandes only
+        sendRequestNotification("update", {
+          oldDemande: populatedDemande,
+          etat: req.body.etat,
+          updatedBy: updatedBy,
+        });
       }
       //____________________________________________________________________________________
 
@@ -424,7 +414,7 @@ const sendDemEmits = async (operation, ids) => {
         // Concatenate users and others arrays
         let allUsers = users.map((u) => u._id.toString());
         let otherUsers = others.map((u) => u.toString());
-        let combinedUsers = allUsers.concat(otherUsers);
+        let combinedUsers = otherUsers.concat(allUsers);
         emitGetData(combinedUsers, "getDemandes");
       }
       break;
@@ -457,7 +447,7 @@ const sendDemEmits = async (operation, ids) => {
         if (etat === "acceptée" || etat === "refusée") {
           let allUsers = users.map((u) => u._id.toString());
           let otherUsers = others.map((u) => u.toString());
-          let combinedUsers = allUsers.concat(otherUsers);
+          let combinedUsers = otherUsers.concat(allUsers);
 
           if (type === "DC" && etat === "acceptée") {
             emitGetData(combinedUsers, "getMissions");
@@ -505,7 +495,7 @@ const sendRequestNotification = async (operation, body) => {
           });
           // console.log("users ============>", users);
           message = `une demande de billetterie a été créé par ${idEmetteur.nom} ${idEmetteur.prenom}`;
-          await createNotification({
+           createNotification({
             users: users,
             message: message,
             path,
@@ -516,7 +506,7 @@ const sendRequestNotification = async (operation, body) => {
           users2 = await User.find({ role: "relex" });
           message2 = `Vous avez reçu une nouvelle demande de billetterie de la part de ${idEmetteur.nom} ${idEmetteur.prenom}`;
 
-          await createNotification({
+           createNotification({
             users: users2,
             message: message2,
             path,
@@ -542,7 +532,7 @@ const sendRequestNotification = async (operation, body) => {
           message = `Vous avez reçu une nouvelle demande de ${
             typeD === "DM" ? "modification" : "congés"
           } de la part de ${idEmetteur.nom} ${idEmetteur.prenom}`;
-          await createNotification({
+           createNotification({
             users: users,
             message: message,
             path,
@@ -581,7 +571,7 @@ const sendRequestNotification = async (operation, body) => {
         if (updatedBy.id !== emetteur.id) {
           users = [emetteur.id];
           message = `Votre demande de ${nomDemande} a été ${etat} par ${updatedBy.nom} ${updatedBy.prenom}`;
-          await createNotification({ users, message, path, type });
+           createNotification({ users, message, path, type });
         }
         users2 = await User.find({
           $and: [
@@ -592,7 +582,7 @@ const sendRequestNotification = async (operation, body) => {
         });
 
         message2 = `La demande de  ${nomDemande}  créée par ${emetteur.nom} ${emetteur.prenom} a été ${etat} par ${updatedBy.nom} ${updatedBy.prenom}`;
-        await createNotification({
+         createNotification({
           users: users2,
           message: message2,
           path,
@@ -601,7 +591,7 @@ const sendRequestNotification = async (operation, body) => {
       } else {
         users = [emetteur.id];
         message = `Votre demande de  ${nomDemande}  a été ${etat} par ${updatedBy.nom} ${updatedBy.prenom}.`;
-        await createNotification({
+         createNotification({
           users: users,
           message: message,
           path,
@@ -616,7 +606,7 @@ const sendRequestNotification = async (operation, body) => {
           ],
         });
         message2 = `La demande de  ${nomDemande}  créée par ${emetteur.nom} ${emetteur.prenom} a été ${etat} par ${updatedBy.nom} ${updatedBy.prenom}`;
-        await createNotification({
+         createNotification({
           users: users2,
           message: message2,
           path,

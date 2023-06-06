@@ -106,55 +106,88 @@ function App() {
   //   .map((u) => u._id);
   // console.log(JSON.stringify(employees));
 
-  const handleSocketConnection =  () => {
-    // socket.on("cronDataChange", handleCronData);
-    socket.on("ticket", (tab) => {
+  const handleSocketConnection = useCallback(() => {
+    socket.on("ticket", handleTicket);
+    socket.on("getMissions", handleGetMissions);
+    socket.on("getOms", handleGetOMs);
+    socket.on("getDemandes", handleGetDemandes);
+    socket.on("getRfms", handleGetRFMs);
+    socket.on("getUsers", handleGetUsers);
+    socket.on("notification", handleNotification);
+  }, []);
+
+  const handleSocketDisconnection = useCallback(() => {
+    socket.off("ticket", handleTicket);
+    socket.off("getMissions", handleGetMissions);
+    socket.off("getOms", handleGetOMs);
+    socket.off("getDemandes", handleGetDemandes);
+    socket.off("getRfms", handleGetRFMs);
+    socket.off("getUsers", handleGetUsers);
+    socket.off("notification", handleNotification);
+  }, []);
+
+  const handleTicket = useCallback(
+    (tab) => {
       if (tabId === tab) {
         getTickets(dispatch);
       }
-    });
-    socket.on("getMissions", (tab) => {
+    },
+    [dispatch, tabId]
+  );
+
+  const handleGetMissions = useCallback(
+    (tab) => {
       if (tabId === tab) {
         getMissions(dispatch);
       }
-    });
-    socket.on("getOms", (tab) => {
+    },
+    [dispatch, tabId]
+  );
+
+  const handleGetOMs = useCallback(
+    (tab) => {
       if (tabId === tab) {
         getOMs(dispatch);
       }
-    });
-    socket.on("getDemandes", (tab) => {
+    },
+    [dispatch, tabId]
+  );
+
+  const handleGetDemandes = useCallback(
+    (tab) => {
       if (tabId === tab) {
         getDemandes(dispatch);
       }
-    });
-    socket.on("getRfms", (tab) => {
+    },
+    [dispatch, tabId]
+  );
+
+  const handleGetRFMs = useCallback(
+    (tab) => {
       if (tabId === tab) {
         getRFMs(dispatch);
       }
-    });
-    socket.on("getUsers", (tab) => {
+    },
+    [dispatch, tabId]
+  );
+
+  const handleGetUsers = useCallback(
+    (tab) => {
       if (tabId === tab) {
         getUsers(dispatch);
       }
-    });
-    socket.on("notification", (tab) => {
+    },
+    [dispatch, tabId]
+  );
+
+  const handleNotification = useCallback(
+    (tab) => {
       if (tabId === tab) {
         getNotifications(dispatch);
       }
-    });
-    // socket.on("updatedData", handleSocketData);
-  };
-
-  const handleSocketDisconnection =  () => {
-    // socket.off("ticket");
-    // socket.off("notification");
-    // socket.off("getUsers");
-    // socket.off("getRfms");
-    // socket.off("getDemandes");
-    // socket.off("getOms");
-    // socket.off("getMissions");
-  };
+    },
+    [dispatch, tabId]
+  );
 
   useEffect(() => {
     const handleLoginData = async (userId) => {
@@ -168,8 +201,8 @@ function App() {
         getDemandes(dispatch);
         getNotifications(dispatch);
         if (user.role !== "relex" && user.role !== "employe") {
-          getMissionKPIS(dispatch);
-          getFileKPIS(dispatch);
+          // getMissionKPIS(dispatch);
+          // getFileKPIS(dispatch);
           getUsers(dispatch);
         }
       }
@@ -185,14 +218,14 @@ function App() {
       socket.off("loginData", handleLoginData);
       localStorage.removeItem("isLoggedIn");
     }
-    socket.on("sessionExpired", handleRefreshPage);
+      socket.on("sessionExpired", handleRefreshPage);
 
     return () => {
       socket.off("loginData", handleLoginData);
       socket.off("sessionExpired", handleRefreshPage);
       handleSocketDisconnection();
     };
-  }, [isLoggedIn, user, token]);
+  }, [isLoggedIn]);
 
   useEffect(() => {
     return () => {

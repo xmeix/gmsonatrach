@@ -9,6 +9,17 @@ export const emitGetData = (users, link) => {
   });
 };
 
+// export const emitGetData = (users, link) => {
+//   const userSockets = connectedUsers
+//     .filter((user) => users.includes(user.userId.toString()))
+//     .map((user) => user.socketId);
+//   const userTabs = connectedUsers
+//     .filter((user) => users.includes(user.userId.toString()))
+//     .map((user) => user.tabId);
+
+//   io.to(userSockets).emit(link, userTabs);
+// };
+
 // export const emitData = async (link, data) => {
 //   connectedUsers.forEach((item) => {
 //     const { userId, socketId } = item;

@@ -53,7 +53,7 @@ export const alterNotification = async (req, res) => {
 export const emitNotification = async (ids) => {
   let { others } = ids;
   let combinedUsers = others.map((u) => u._id.toString());
-  console.log(combinedUsers);
+  // console.log(combinedUsers);
 
   emitGetData(combinedUsers, "notification");
 };

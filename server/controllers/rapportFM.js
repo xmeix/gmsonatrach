@@ -19,6 +19,11 @@ export const updateRapport = async (req, res) => {
       .populate("idMission")
       .populate("idEmploye");
 
+    sendRFMEmits({
+      etat: req.body.etat,
+      structure: populatedRFM.idMission.structure,
+      others: [updatedReport.idEmploye],
+    });
     sendRFMNotification({
       etat: req.body.etat,
       rfm: populatedRFM,
@@ -27,12 +32,6 @@ export const updateRapport = async (req, res) => {
 
     /**_____________________________________________________________________________________________ */
     createOrUpdateFDocument(populatedRFM, "RFM", "update");
-
-    sendRFMEmits({
-      etat: req.body.etat,
-      structure: populatedRFM.idMission.structure,
-      others: [updatedReport.idEmploye],
-    });
 
     res.status(201).json({ updatedReport, msg: "updated successfully" });
   } catch (err) {
@@ -54,7 +53,7 @@ const sendRFMEmits = async (ids) => {
       .lean();
     let allUsers = users.map((u) => u._id.toString());
     let otherUsers = others.map((u) => u.toString());
-    let combinedUsers = allUsers.concat(otherUsers);
+    let combinedUsers = otherUsers.concat(allUsers);
     emitGetData(combinedUsers, "getRfms");
   } else {
     //case of other updates
@@ -114,7 +113,7 @@ const sendRFMNotification = async (body) => {
     });
   }
   if (etat === "créé" || etat === "accepté" || etat === "en-attente") {
-    await createNotification({
+    createNotification({
       users: users,
       message: message,
       path,
