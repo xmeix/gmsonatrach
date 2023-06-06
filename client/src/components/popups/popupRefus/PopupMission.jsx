@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { FormControlLabel, FormGroup } from "@mui/material";
 import Checkbox from "@mui/material/Checkbox";
@@ -12,20 +12,15 @@ export const ItemDiv = ({ label, content }) => (
 );
 const PopupMission = ({ item }) => {
   const [tasks, setTasks] = useState(item.taches);
+  const tasksRef = useRef(item.taches);
+
   const [handleClick] = useBtn();
   const currentUser = useSelector((state) => state.auth.user);
   const belongs = () =>
     item.employes.some((employee) => employee._id === currentUser._id);
   const [budgetConsome, setBudgetConsomme] = useState(0);
-
-  // const handleAddEmploye = () => {
-  //   //to add an employe to a mission , its a whole other process
-  //   //we need to create a separate om , rfm and also
-
-  // };
-  // const handleRemEmploye = () => {};
   const handleCheck = (check, id) => {
-    const newTasks = tasks.map((task) => {
+    const newTasks = tasksRef.current.map((task) => {
       if (task._id === id) {
         return {
           ...task,
@@ -36,9 +31,8 @@ const PopupMission = ({ item }) => {
     });
 
     handleClick("check", item, "mission", "", newTasks);
-    setTasks(newTasks);
+    tasksRef.current = newTasks;
   };
-
   const renderBudgetComponent = () => {
     if (
       item.etat === "terminée" &&
@@ -147,7 +141,7 @@ const PopupMission = ({ item }) => {
       </div>
       <div className="taches">
         <span className="tile">Taches:</span>
-        {tasks.map((tache, i) => (
+        {tasksRef.current.map((tache, i) => (
           <div className="tache" key={i}>
             <div className="content">{tache.content}</div>
             <Checkbox

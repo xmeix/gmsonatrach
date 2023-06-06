@@ -319,7 +319,9 @@ const sendEmits = async (operation, ids) => {
         let combinedUsers = users.map((u) => u._id.toString());
         emitGetData(combinedUsers, "getMissions");
       } else if (etat === "taches") {
-        let combinedUsers = users.map((u) => u._id.toString());
+        let allUsers = users.map((u) => u._id.toString());
+        let otherUsers = others.map((u) => u._id.toString());
+        let combinedUsers = otherUsers.concat(allUsers);
         emitGetData(combinedUsers, "getMissions");
       }
       break;

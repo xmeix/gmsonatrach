@@ -185,7 +185,7 @@ const PopupUpdate = ({ item, close, setSurvey }) => {
     tDateDeb: item.idMission?.tDateDeb,
     tDateRet: item.idMission?.tDateRet,
   });
-  console.log(body2);
+  // console.log(body2);
 
   function addToDate(value, type) {
     let newDate;
@@ -196,7 +196,7 @@ const PopupUpdate = ({ item, close, setSurvey }) => {
         newDate.setHours(hours);
         newDate.setMinutes(minutes);
 
-        console.log(newDate);
+        // console.log(newDate);
         setBody2({
           ...body2,
           tDateDeb: new Date(newDate).toISOString(),
@@ -645,26 +645,30 @@ const PopupUpdate = ({ item, close, setSurvey }) => {
               >
                 Update
               </button>
-              <button
-                className="send"
-                onClick={() => {
-                  handleClick("update", item.idMission, "mission", "", {
-                    DateDebA: body2?.dateDebA,
-                    DateRetA: body2?.dateRetA,
-                    tDateDeb: body2?.tDateDeb,
-                    tDateRet: body2?.tDateRet,
-                  });
-                  handleClick("update", item, "rfm", "", { deroulement: body });
-                  handleClick("send", item, "rfm", "");
-                  if (item.nbRefus === 0 && item.etat !== "accepté") {
-                    setSurvey(true);
-                  } else {
-                    close();
-                  }
-                }}
-              >
-                Send
-              </button>
+              {item?.mission?.etat === "terminée" && (
+                <button
+                  className="send"
+                  onClick={() => {
+                    handleClick("update", item.idMission, "mission", "", {
+                      DateDebA: body2?.dateDebA,
+                      DateRetA: body2?.dateRetA,
+                      tDateDeb: body2?.tDateDeb,
+                      tDateRet: body2?.tDateRet,
+                    });
+                    handleClick("update", item, "rfm", "", {
+                      deroulement: body,
+                    });
+                    handleClick("send", item, "rfm", "");
+                    if (item.nbRefus === 0 && item.etat !== "accepté") {
+                      setSurvey(true);
+                    } else {
+                      close();
+                    }
+                  }}
+                >
+                  Send
+                </button>
+              )}
             </div>
           )}
         </div>
