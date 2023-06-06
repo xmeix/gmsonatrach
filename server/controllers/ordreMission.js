@@ -9,33 +9,24 @@ export const getAllOrdresMissions = async (req, res) => {
     const ordresMission = await OrdreMission.find()
       .populate("employe")
       .populate("mission");
-    let filteredOMissions;
-    if (user.role === "relex") throw new Error("Unauthorized");
-    else if (user.role === "directeur" || user.role === "secretaire")
-      filteredOMissions = ordresMission;
-    else if (user.role === "responsable") {
-      filteredOMissions = await Promise.all(
-        ordresMission.map(async (om) => {
-          // let emp = await User.findById(om.employe.id);
-          return om.mission.structure === user.structure ? om : null;
-        })
-      );
+    let filteredOMissions = ordresMission;
 
-      // Filter out null values from the resulting array
-      filteredOMissions = filteredOMissions.filter((om) => om !== null);
+    if (user.role === "relex") throw new Error("Unauthorized");
+    if (user.role === "responsable") {
+      filteredOMissions = ordresMission.filter(
+        (om) => om.mission.structure === user.structure
+      );
     } else if (user.role === "employe") {
       //if error occured then change to user.id without toId
       filteredOMissions = ordresMission.filter(
         (om) => om.employe.id === user.id
       );
-    }
-    res.status(200).json({ filteredOMissions });
+    }  
+    res.status(200).json(filteredOMissions);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 };
-
-
 
 export const deleteOm = async (req, res) => {
   try {

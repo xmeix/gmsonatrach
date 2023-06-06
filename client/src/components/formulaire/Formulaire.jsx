@@ -2,9 +2,7 @@ import "./Formulaire.css";
 import Select from "react-select";
 import CreatableSelect from "react-select/creatable";
 import useForm from "../../hooks/useForm";
-import ErrorIcon from "@mui/icons-material/Error";
-import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useEffect, useRef, useState } from "react";
 import { useAxios } from "../../hooks/useAxios";
 
@@ -14,16 +12,9 @@ import {
   validateDM,
   validateMission,
   validateUser,
+  verifyInclusion,
 } from "../../utils/formFieldsVerifications";
 import { getBestEmployes } from "../../api/apiCalls/getCalls";
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  Snackbar,
-} from "@mui/material";
 import useMessage from "../message/useMessage";
 const customStyles = {
   control: (provided, state) => ({
@@ -42,10 +33,9 @@ const customStyles = {
 const Formulaire = ({ title, entries, buttons, type }) => {
   const selectInputRef = useRef();
   const [Message, showMessage] = useMessage();
-  const { callApi, error, isLoading, successMsg } = useAxios(showMessage);
+  const { callApi, error, isLoading, successMsg } = useAxios();
   const currentUser = useSelector((state) => state.auth.user);
   const [selectedRole, setSelectedRole] = useState("");
-  const dispatch = useDispatch();
 
   const [values, handleChange, resetForm] = useForm(() => {
     const vals = {};
@@ -77,9 +67,12 @@ const Formulaire = ({ title, entries, buttons, type }) => {
             !missions.some(
               (mission) =>
                 mission.employes.some((u) => u._id === user._id) &&
-                (mission.etat === "en-cours" || mission.etat === "acceptée") && //add this || mission.etat === "en-attente"
-                mission.tDateRet > start &&
-                mission.tDateDeb < end
+                (mission.etat === "en-cours" ||
+                  mission.etat === "acceptée" ||
+                  mission.etat === "en-attente") &&
+                verifyInclusion(mission.tDateDeb, mission.tDateRet, start, end)
+              // mission.tDateRet > start &&
+              // mission.tDateDeb < end
             )
         )
         .map((user) => ({
@@ -149,7 +142,8 @@ const Formulaire = ({ title, entries, buttons, type }) => {
           ) {
             callApi("post", "/auth/register", { ...values, user: currentUser });
             setErrors({});
-          }
+            showMessage(successMsg, "success");
+          } else showMessage(error, "error");
         }
         break;
       case "mission":
@@ -167,7 +161,8 @@ const Formulaire = ({ title, entries, buttons, type }) => {
           ) {
             callApi("post", "/mission", values);
             setErrors({});
-           }
+            showMessage(successMsg, "success");
+          } else showMessage(error, "error");
         }
         break;
       case "DB":
@@ -183,7 +178,9 @@ const Formulaire = ({ title, entries, buttons, type }) => {
             Object.keys(validateDB(values, currentUser, object)).length === 0
           ) {
             callApi("post", "/demande/DB", values);
-          }
+            setErrors({});
+            showMessage(successMsg, "success");
+          } else showMessage(error, "error");
         }
         break;
       case "DC":
@@ -193,8 +190,9 @@ const Formulaire = ({ title, entries, buttons, type }) => {
           if (Object.keys(validateDC(values)).length === 0) {
             //register(values);
             callApi("post", "/demande/DC", values);
-            // showMessage(successMsg, "success");
-          }
+            setErrors({});
+            showMessage(successMsg, "success");
+          } else showMessage(error, "error");
         }
         break;
       case "DM":
@@ -203,8 +201,9 @@ const Formulaire = ({ title, entries, buttons, type }) => {
           if (Object.keys(validateDM(values)).length === 0) {
             //register(values);
             callApi("post", "/demande/DM", values);
-            showMessage("demande", "success");
-          }
+            setErrors({});
+            showMessage(successMsg, "success");
+          } else showMessage(error, "error");
         }
         break;
       default:
@@ -292,16 +291,6 @@ const Formulaire = ({ title, entries, buttons, type }) => {
   const handleGetBestEmployes = () => {
     getBestEmployes("/ticket/employes");
   };
-
-  // useEffect(() => {
-  //   if (successMsg) showMessage(successMsg, "success");
-  // }, [callApi]);
-  // useEffect(() => {
-  //   if (error) showMessage(error, "error");
-  // }, [callApi]);
-  // useEffect(() => {
-  //   if (predResult) showMessage(predResult, "success");
-  // }, [callApi]);
 
   return (
     <div className="formulaire">

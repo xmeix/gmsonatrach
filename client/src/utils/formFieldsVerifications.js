@@ -18,7 +18,7 @@ export const validateMission = (mission, user, object) => {
 
   if (!mission?.type) {
     errors.type = "obligatoire";
-  } 
+  }
 
   if (!mission?.pays) {
     errors.pays = "obligatoire";
@@ -106,10 +106,11 @@ export const verifyInclusion = (st, en, start, end) => {
   if (
     (en >= start && st <= start && en <= end) ||
     (st >= start && en <= end && st <= end && en > start) ||
-    (st <= end && st > start && en >= end)
+    (st <= end && st > start && en >= end) ||
+    (st > start && en > end)
   ) {
     return true;
-  }
+  } 
 
   return false;
 };
@@ -276,8 +277,8 @@ export const verifyWithRD = (db, demandes) => {
       })
       .map((f) => f);
 
-    console.log(filteredDemandes);
-    console.log("employee", employes);
+    // console.log(filteredDemandes);
+    // console.log("employee", employes);
     // console.log("____________________________________________________");
     // console.log(filteredDemandes);
     // Vérifier si l'employé spécifié est affecté à l'une des missions filtrées
@@ -286,10 +287,6 @@ export const verifyWithRD = (db, demandes) => {
       return dem.employes.some((employee) => employes.includes(employee._id));
     });
 
-    console.log(
-      "isEmployeeAssignedAlreadyToDemand: ",
-      isEmployeeAssignedAlreadyToDemand
-    );
     if (isEmployeeAssignedAlreadyToDemand === true) {
       errors.employes =
         "Les employées ne doivent pas avoir des demandes entre date de début et date de fin introduites";

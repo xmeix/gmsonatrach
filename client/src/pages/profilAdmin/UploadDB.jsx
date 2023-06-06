@@ -113,7 +113,7 @@ const UploadDB = () => {
         return dbObject;
       });
 
-      console.log("_______________________________");
+      // console.log("_______________________________");
 
       //first we verify missing fields from the imported data
       let object = {

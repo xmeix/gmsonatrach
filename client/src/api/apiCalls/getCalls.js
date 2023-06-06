@@ -21,7 +21,7 @@ const fetchData = async (dispatch, endpoint, socketEvent) => {
     console.log(endpoint);
     const eventToActionMap = {
       mission: setMissions,
-      om: (data) => setOMs(data.filteredOMissions),
+      om: setOMs,
       rfm: setRFMs,
       demande: setDemandes,
       user: setUsers,

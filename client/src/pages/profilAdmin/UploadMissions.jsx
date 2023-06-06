@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useMemo } from "react";
 import "./UploadMissions.css";
 import {
   Table,
@@ -40,7 +40,7 @@ const UploadMissions = () => {
   const [success, setSuccess] = useState(false);
   const { jsonData, handleFileChange } = useUpload();
 
-  useEffect(() => {
+  useMemo(() => {
     if (!jsonData) return;
     else {
       extractPlanningData();
@@ -57,6 +57,7 @@ const UploadMissions = () => {
     if (!planningData) return;
     else getPlanningDates();
   }, [planningData]);
+
   const createMissions = () => {
     let allMissions = [];
     let errs = [];
@@ -168,6 +169,7 @@ const UploadMissions = () => {
       setSuccess(true);
     }
   };
+
   const getDay = (j, ind) => {
     // console.log(planningDates, j, ind);
     const d = planningDates
@@ -181,6 +183,7 @@ const UploadMissions = () => {
     const date = new Date(year, month - 1, j);
     return date;
   };
+
   const extractMissionData = () => {
     const subset = jsonData
       .slice(1)
