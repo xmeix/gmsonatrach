@@ -40,7 +40,7 @@ const UploadMissions = () => {
   const [success, setSuccess] = useState(false);
   const { jsonData, handleFileChange } = useUpload();
 
-  useMemo(() => {
+  useEffect(() => {
     if (!jsonData) return;
     else {
       extractPlanningData();

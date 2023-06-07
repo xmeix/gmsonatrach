@@ -3,13 +3,17 @@ import { read, utils } from "xlsx";
 
 export const useUpload = () => {
   const [jsonData, setJsonData] = useState(null);
-
+  const previousFileRef = useRef(null);
+  const [fileName, setFileName] = useState("");
   const handleFileChange = useCallback((e) => {
-    const file = e.target.files[0];
+    let file = e.target.files[0];
     if (!file || !/\.xlsx?$/.test(file.name)) {
       alert("Please select a valid Excel file.");
+      setFileName("");
       return;
     }
+    setFileName(file.name);
+    e.target.value = "";
     const reader = new FileReader();
     reader.onload = (event) => {
       try {
@@ -22,6 +26,7 @@ export const useUpload = () => {
         setJsonData(newJsonData);
       } catch (error) {
         console.log("Error processing the file. Please try again.", error);
+        setFileName("");
       }
     };
     reader.readAsArrayBuffer(file);
@@ -31,5 +36,5 @@ export const useUpload = () => {
     setJsonData(null);
   };
 
-  return { jsonData, handleFileChange, clearData };
+  return { jsonData, handleFileChange, clearData, fileName };
 };

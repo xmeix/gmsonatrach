@@ -16,6 +16,7 @@ import {
   filterResMissionsOptions,
 } from "../../data/tableCols";
 import UploadMissions from "./UploadMissions";
+import UploadM from "./UploadM";
 
 const GestionMission = () => {
   const { missions, user, rfms, oms } = useSelector((state) => state.auth);
@@ -69,9 +70,7 @@ const GestionMission = () => {
               title="Formulaire d'ajout d'une mission"
             />
           )}
-          {user.role !== "employe" && user.role !== "relex" && (
-            <UploadMissions />
-          )}
+          {user.role !== "employe" && user.role !== "relex" && <UploadM />}
         </div>
       </div>
     </div>

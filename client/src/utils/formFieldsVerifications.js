@@ -6,9 +6,11 @@ export const validateMission = (mission, user, object) => {
     errors.objetMission = "obligatoire";
   }
 
-  if (!mission?.budget) {
-    errors.budget = "obligatoire";
-  } else if (mission?.budget <= 0) {
+  // if (!mission?.budget) {
+  //   errors.budget = "obligatoire";
+  // } 
+  
+  if (mission?.budget <= 0) {
     errors.budget = "le budget doit être supérieur à 0";
   }
 
