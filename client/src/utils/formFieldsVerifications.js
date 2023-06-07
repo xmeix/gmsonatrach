@@ -8,9 +8,9 @@ export const validateMission = (mission, user, object) => {
 
   // if (!mission?.budget) {
   //   errors.budget = "obligatoire";
-  // } 
-  
-  if (mission?.budget <= 0) {
+  // }
+
+  if (mission?.budget < 0) {
     errors.budget = "le budget doit être supérieur à 0";
   }
 
@@ -112,7 +112,7 @@ export const verifyInclusion = (st, en, start, end) => {
     (st > start && en > end)
   ) {
     return true;
-  } 
+  }
 
   return false;
 };

@@ -35,7 +35,7 @@ const MissionSchema = new mongoose.Schema(
     },
     budget: {
       type: Number,
-      required: true,
+      // required: true,
     },
     budgetConsome: {
       // a ajouter dans la liste des missions terminées

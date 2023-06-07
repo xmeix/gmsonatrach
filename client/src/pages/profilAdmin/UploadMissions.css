@@ -1,5 +1,8 @@
 .upload {
+  margin: 1em 3em;
   border-radius: 10px;
+  border: solid 1px var(--dark-gray);
+  padding: 2em;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -12,7 +15,8 @@
   font-weight: 500;
   color: var(--gray);
   letter-spacing: 1px;
-  width: 450px;
+  min-width: 200px;
+  max-width: 450px;
   display: flex;
   justify-content: center;
 }
@@ -25,23 +29,19 @@
   margin: 1.5em 0;
 }
 .upload .file-input-container {
-  position: relative;
 }
 
 .upload .file-input {
-  position: absolute;
-  top: 0;
-  left: 0;
-  opacity: 0;
-  z-index: -1;
+  display: none;
 }
 
 .upload .file-input-label {
   display: inline-block;
   padding: 10px 20px;
+  margin: 0;
   background-color: var(--light-gray);
   color: #333;
-  border: solid 1px var(--dark-gray);
+  border: solid 1px var(--gray2);
   border-radius: 5px;
   cursor: pointer;
 }
