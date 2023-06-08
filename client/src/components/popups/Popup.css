@@ -258,7 +258,9 @@
   align-items: center;
   gap: 1em;
 }
-
+.popup-mission .p-mission-btns button {
+  white-space: wrap !important;
+}
 .employes {
   margin-top: 20px;
 }

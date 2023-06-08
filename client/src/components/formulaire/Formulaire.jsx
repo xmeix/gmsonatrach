@@ -5,7 +5,8 @@ import useForm from "../../hooks/useForm";
 import { useSelector } from "react-redux";
 import { useEffect, useRef, useState } from "react";
 import { useAxios } from "../../hooks/useAxios";
-
+import ErrorIcon from "@mui/icons-material/Error";
+import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
 import {
   validateDB,
   validateDC,
@@ -32,7 +33,6 @@ const customStyles = {
 
 const Formulaire = ({ title, entries, buttons, type }) => {
   const selectInputRef = useRef();
-  const [Message, showMessage] = useMessage();
   const { callApi, error, isLoading, successMsg } = useAxios();
   const currentUser = useSelector((state) => state.auth.user);
   const [selectedRole, setSelectedRole] = useState("");
@@ -142,8 +142,9 @@ const Formulaire = ({ title, entries, buttons, type }) => {
           ) {
             callApi("post", "/auth/register", { ...values, user: currentUser });
             setErrors({});
-            showMessage(successMsg, "success");
-          } else showMessage(error, "error");
+            // showMessage(successMsg, "success");
+          }
+          // else showMessage(error, "error");
         }
         break;
       case "mission":
@@ -161,8 +162,8 @@ const Formulaire = ({ title, entries, buttons, type }) => {
           ) {
             callApi("post", "/mission", values);
             setErrors({});
-            showMessage(successMsg, "success");
-          } else showMessage(error, "error");
+            // showMessage(successMsg, "success");
+          }
         }
         break;
       case "DB":
@@ -179,8 +180,8 @@ const Formulaire = ({ title, entries, buttons, type }) => {
           ) {
             callApi("post", "/demande/DB", values);
             setErrors({});
-            showMessage(successMsg, "success");
-          } else showMessage(error, "error");
+            // showMessage(successMsg, "success");
+          }
         }
         break;
       case "DC":
@@ -191,8 +192,8 @@ const Formulaire = ({ title, entries, buttons, type }) => {
             //register(values);
             callApi("post", "/demande/DC", values);
             setErrors({});
-            showMessage(successMsg, "success");
-          } else showMessage(error, "error");
+            // showMessage(successMsg, "success");
+          }
         }
         break;
       case "DM":
@@ -202,8 +203,8 @@ const Formulaire = ({ title, entries, buttons, type }) => {
             //register(values);
             callApi("post", "/demande/DM", values);
             setErrors({});
-            showMessage(successMsg, "success");
-          } else showMessage(error, "error");
+            // showMessage(successMsg, "success");
+          }
         }
         break;
       default:
@@ -432,21 +433,20 @@ const Formulaire = ({ title, entries, buttons, type }) => {
             );
         })}
       </div>
-      {error !== "" && (
+      {error && error !== "" && (
         <div className="error-message">
           <ErrorIcon className="icn" />
           {error}
         </div>
       )}
-      {successMsg !== "" && (
+      {successMsg && successMsg !== "" && (
         <div className="success-message">
           <CheckCircleRoundedIcon className="icn" />
           {successMsg}
         </div>
       )}
-      {/* <Message /> */}
       {/* {typeof predResult} */}
-      {predResult === 4 && (
+      {/* {predResult === 4 && (
         <div className="success-message">
           La mission introduite présente une perspective favorable
           d'accomplissement réussi a 90%.
@@ -468,7 +468,7 @@ const Formulaire = ({ title, entries, buttons, type }) => {
         <div className="error-message">
           Il n'est pas assuré que la mission introduite aboutisse à un succès.
         </div>
-      )}
+      )} */}
     </div>
   );
 };

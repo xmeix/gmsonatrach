@@ -93,8 +93,13 @@ const PopupMission = ({ item }) => {
     const handleModify = () => {
       setError("");
       console.log("Modified date:", date);
-      if (date < 0) {
-        console.log("error");
+      if (
+        new Date(date).getTime() <= new Date(item.tDateDeb).getTime() ||
+        new Date(date).getTime() <= new Date().getTime()
+      ) {
+        setError(
+          "La date de fin de mission doit être postérieure à la date actuelle (ou la date de début de mission)."
+        );
       } else {
         const error = verifyProlongement(item, {
           missions: missions,
@@ -167,7 +172,10 @@ const PopupMission = ({ item }) => {
             <ItemDiv label="Observation" content={item.observation || " / "} />
           </div>
           <div>
-            <ItemDiv label="Budget" content={item.budget + " DA"} />
+            <ItemDiv
+              label="Budget"
+              content={item.budget ? item.budget : 0 + " DA"}
+            />
             {renderBudgetComponent()}
           </div>
         </div>
@@ -243,12 +251,15 @@ const PopupMission = ({ item }) => {
           />
         </div>
       </div>
-      <Pop title={"Prolonger la mission"} component={CustomComponent} />
+      <Pop
+        title={"Modifier la date de fin de mission"}
+        component={CustomComponent}
+      />
+      {/* this pop should be shown only when mission en-cours / acceptée */}
       <div className="p-mission-btns">
-        <button className="btn" onClick={openPop}>
-          Prolonger la mission
+        <button onClick={openPop} className="btn">
+          Modifier la date de fin de mission
         </button>
-        <button className="btn">Clôturer la mission (forcée)</button>
       </div>
     </div>
   );

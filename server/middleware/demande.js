@@ -20,16 +20,16 @@ export const checkCreateAccess = async (req, res, next) => {
         break;
       case "responsable":
         {
-          /** allowed to create Db Only */
-          if (type !== "DB") {
+          /** allowed to create Db + DC Only */
+          if (type === "DM") {
             throw new Error("Unauthorized");
           }
         }
         break;
       case "secretaire":
         {
-          /** allowed to create Db Only */
-          if (type !== "DB") {
+          /** allowed to create Db + DC Only */
+          if (type === "DM") {
             throw new Error("Unauthorized");
           }
         }
@@ -130,7 +130,7 @@ export const updateAccessCheck = async (req, res, next) => {
               user.role !== "responsable") ||
             (user.role === "employe" &&
               operation === "annulée" &&
-              demande.idEmetteur.toString() !== user.id)  
+              demande.idEmetteur.toString() !== user.id)
           )
             throw new Error("Unauthorized2");
         }

@@ -60,8 +60,9 @@ const NavBar = () => {
   const [navData] = useState(() => {
     switch (user?.role) {
       case "directeur":
-      case "responsable":
         return titles;
+      case "responsable":
+        return [...titles, { id: 7, title: "profile", path: "/profile" }];
       case "secretaire":
         return secTitles;
         break;
@@ -154,16 +155,25 @@ const NavBar = () => {
         )}
         {isOpen && <div className="hideDiv" onClick={handleHideMenu}></div>}
         <div className="profileTitle">
-          {/* {profileTitle} :{" "} */}
-          <span
-            style={{
-              fontSize: "13px",
-              color: "var(--black)",
-              textTransform: "capitalize",
-            }}
+          <NavLink
+            to={
+              user.role === "directeur" || user.role === "relex"
+                ? ""
+                : "/profile"
+            }
+            className="link"
+            style={navLinkStyle}
           >
-            {user.nom + " " + user.prenom}
-          </span>
+            <span
+              style={{
+                fontSize: "13px",
+                color: "var(--black)",
+                textTransform: "capitalize",
+              }}
+            >
+              {user.nom + " " + user.prenom}
+            </span>
+          </NavLink>
         </div>
         {!responsive && (
           <ul className="sublist">

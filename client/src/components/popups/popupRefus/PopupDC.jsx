@@ -208,7 +208,9 @@ const PopupDC = ({ item }) => {
         </div>
       </div>
       {etat === "acceptée" && (
-        <button onClick={generateDocument}>Generate PDF</button>
+        <button className="generate-btn" onClick={generateDocument}>
+          Télécharger document{" "}
+        </button>
       )}
     </>
   );

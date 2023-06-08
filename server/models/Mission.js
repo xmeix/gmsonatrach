@@ -35,6 +35,7 @@ const MissionSchema = new mongoose.Schema(
     },
     budget: {
       type: Number,
+      default: 0,
       // required: true,
     },
     budgetConsome: {

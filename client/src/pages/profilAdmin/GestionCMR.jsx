@@ -9,14 +9,12 @@ import {
   filterRFMOptions,
 } from "../../data/tableCols";
 import Formulaire from "../../components/formulaire/Formulaire";
-import { userButtons, userEntries } from "../../data/formData";
+import { DCEntries, userButtons, userEntries } from "../../data/formData";
 const GestionCMR = () => {
-  const demandes = useSelector((state) => state.auth.demandes);
+  const { demandes, rfms, user } = useSelector((state) => state.auth);
   const demandesCMR = demandes.filter(
     (dem) => dem.__t === "DM" || dem.__t === "DC"
   );
-
-  const rfms = useSelector((state) => state.auth.rfms);
 
   return (
     <div className="gestion">
@@ -38,6 +36,14 @@ const GestionCMR = () => {
           data={rfms}
           colType="rfm"
         />
+        {user.role !== "directeur" && (
+          <Formulaire
+            type="DC"
+            entries={DCEntries}
+            buttons={userButtons}
+            title="Formulaire de demande de congés"
+          />
+        )}
       </div>
     </div>
   );

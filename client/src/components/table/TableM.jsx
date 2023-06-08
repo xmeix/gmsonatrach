@@ -76,12 +76,6 @@ const useStyles = makeStyles({
     overflow: "hidden",
     textOverflow: "ellipsis",
   },
-  // tableCell: {
-  //   padding: "10px",
-  //   fontSize: 13,
-  //   width: "200px",
-  //   // overflow: "scroll",
-  // },
   tableRow: {
     "&:nth-of-type(even)": {
       background: "white !important",
@@ -103,7 +97,6 @@ const useStyles = makeStyles({
 });
 
 const TableM = ({ title, filterOptions, columns, data, colType }) => {
-  
   const classes = useStyles();
 
   const [filter, setFilter] = useState("");
@@ -710,11 +703,13 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
                   {column.label}
                 </TableCell>
               ))}
-              {colType !== "user" && (
-                <TableCell className={classes.tableCell} align="center">
-                  Configuration
-                </TableCell>
-              )}
+              {colType !== "user" &&
+                !(currentUser.role === "secretaire" && colType === "rfm") &&
+                colType !== "om" && (
+                  <TableCell className={classes.tableCell} align="center">
+                    Configuration
+                  </TableCell>
+                )}
             </TableRow>
           </TableHead>
           <TableBody className={classes.tableBody}>
@@ -739,11 +734,18 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
                       className={`${classes.tableRow} trow`}
                     >
                       {cols.map((col) => tableCell(item, col))}
-                      {colType !== "user" && (
-                        <TableCell align="center" className={classes.tableCell}>
-                          {renderConfiguration(item, colType)}
-                        </TableCell>
-                      )}
+                      {colType !== "user" &&
+                        !(
+                          currentUser.role === "secretaire" && colType === "rfm"
+                        ) &&
+                        colType !== "om" && (
+                          <TableCell
+                            align="center"
+                            className={classes.tableCell}
+                          >
+                            {renderConfiguration(item, colType)}
+                          </TableCell>
+                        )}
                     </TableRow>
                   );
                 }

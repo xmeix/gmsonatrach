@@ -19,6 +19,7 @@ import {
   getNotifications,
   getTickets,
 } from "./api/apiCalls/getCalls";
+import Profile from "./pages/Profile/Profile";
 const LoginPage = lazy(() => import("./pages/loginPage/LoginPage"));
 const CostDashboard = lazy(() =>
   import("./pages/profilAdmin/Dashboards/CostDashboard")
@@ -65,7 +66,6 @@ const employeRoutes = [
   { path: "/gestion-conge", element: <GestionConge /> },
   { path: "/gestion-tickets", element: <GestionTicket /> },
 ];
-
 const secretaireRoutes = [
   { path: "/", element: <Planning /> },
   { path: "/gestion-des-mission", element: <GestionMission /> },
@@ -73,7 +73,7 @@ const secretaireRoutes = [
   { path: "/gestion-service-relex", element: <GestionRelex /> },
   { path: "/gestion-c-m-rfm", element: <GestionCMR /> },
 ];
-
+const profileRoute = [{ path: "/profile", element: <Profile /> }];
 const relexRoutes = [{ path: "/", element: <GestionRelex /> }];
 
 function App() {
@@ -106,7 +106,8 @@ function App() {
   //   .map((u) => u._id);
   // console.log(JSON.stringify(employees));
 
-  const handleSocketConnection = useCallback(() => {
+  // removed useCallback
+  const handleSocketConnection = () => {
     socket.on("ticket", handleTicket);
     socket.on("getMissions", handleGetMissions);
     socket.on("getOms", handleGetOMs);
@@ -114,9 +115,9 @@ function App() {
     socket.on("getRfms", handleGetRFMs);
     socket.on("getUsers", handleGetUsers);
     socket.on("notification", handleNotification);
-  }, []);
+  };
 
-  const handleSocketDisconnection = useCallback(() => {
+  const handleSocketDisconnection = () => {
     socket.off("ticket", handleTicket);
     socket.off("getMissions", handleGetMissions);
     socket.off("getOms", handleGetOMs);
@@ -124,7 +125,7 @@ function App() {
     socket.off("getRfms", handleGetRFMs);
     socket.off("getUsers", handleGetUsers);
     socket.off("notification", handleNotification);
-  }, []);
+  };
 
   const handleTicket = useCallback(
     (tab) => {
@@ -255,14 +256,16 @@ function App() {
   } else {
     switch (user?.role) {
       case "employe":
-        routes = employeRoutes;
+        routes = [...employeRoutes, ...profileRoute];
         break;
       case "secretaire":
-        routes = secretaireRoutes;
+        routes = [...secretaireRoutes, ...profileRoute];
         break;
       case "responsable":
+        routes = [...adminRoutes, ...profileRoute];
+        break;
       case "directeur":
-        routes = [...adminRoutes, ...secretaireRoutes];
+        routes = adminRoutes;
         break;
       case "relex":
         routes = relexRoutes;

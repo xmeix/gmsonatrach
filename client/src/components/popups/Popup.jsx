@@ -13,7 +13,7 @@ import PopupSurvey from "./popupRefus/PopupSurvey";
 const Popup = ({ item, type, isOpen, closePopup, popupType }) => {
   const [deroulement, setDeroulement] = useState([]);
   const [survey, setSurvey] = useState(false);
-  console.log(survey);
+  // console.log(survey);
   return (
     <div className={survey ? "popup-survey" : `popup popup-${popupType}`}>
       {!survey && <CloseRoundedIcon className="icon" onClick={closePopup} />}

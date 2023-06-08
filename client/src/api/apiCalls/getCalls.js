@@ -31,11 +31,12 @@ const fetchData = async (dispatch, endpoint, socketEvent) => {
       ticket: setTickets,
     };
     const setDataFunc = eventToActionMap[socketEvent];
+    console.log(res.data);
     dispatch(setDataFunc(res.data));
 
     dispatch(fetchEnd());
   } catch (err) {
-    console.log(`ERROR getting ${endpoint}`);
+    console.log(`ERROR getting ${endpoint}: ${err}`);
     dispatch(fetchFailure());
   }
 };

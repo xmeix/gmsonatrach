@@ -5,14 +5,14 @@ export const titles = [
   { id: 4, title: "Service Relex", path: "/gestion-service-relex" }, //Tableau de billetterie + formulaire
   { id: 5, title: "Missions", path: "/gestion-des-mission" }, // Tableau des missions + formulaire
   { id: 6, title: "Congé et Rapports", path: "/gestion-c-m-rfm" }, //Tableaux de RFM et Congé, formulaires de modification
-  // { id: 6, title: "Tickets", path: "/gestion-tickets" }, //Tableaux de RFM et Congé, formulaires de modification
-];
+ ];
 export const secTitles = [
   { id: 2, title: "Planification", path: "/" },
   { id: 3, title: "Employés", path: "/gestion-des-employes" }, // Tableau utilisateur + formulaire
   { id: 4, title: "Service Relex", path: "/gestion-service-relex" }, //Tableau de billetterie + formulaire
   { id: 5, title: "Missions", path: "/gestion-des-mission" }, // Tableau des missions + formulaire
   { id: 6, title: "Congé et Rapports", path: "/gestion-c-m-rfm" }, //Tableaux de RFM et Congé, formulaires de modification
+  { id: 6, title: "profile", path: "/profile" },
 ];
 
 export const employeTitles = [
@@ -21,6 +21,7 @@ export const employeTitles = [
   { id: 3, title: "Rapports de modification", path: "/gestion-modification" }, //Tableaux et formulaires
   { id: 4, title: "Demandes de congé", path: "/gestion-conge" }, //Tableaux et formulaires
   { id: 6, title: "Tickets", path: "/gestion-tickets" }, //Tableaux de RFM et Congé, formulaires de modification
+  { id: 6, title: "profile", path: "/profile" },
 ];
 
 export const relexTitles = [

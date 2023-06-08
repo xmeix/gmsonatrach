@@ -1,0 +1,98 @@
+.user-profile {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 0.5em;
+  margin-top: 0.5em;
+  margin-bottom: 2em;
+}
+
+.profile-card {
+  background-color: var(--white);
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+.profile-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1em;
+  padding: 2em 0;
+}
+
+.profile-avatar {
+}
+
+.profile-avatar .icon {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  color: var(--gray);
+}
+
+.profile-name {
+  color: var(--gray);
+  font-size: 24px;
+  font-weight: 800;
+  text-transform: capitalize;
+}
+.profile-sections {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.5em;
+}
+.profile-section {
+  border: solid 1px var(--light-gray);
+  border-radius: 5px;
+  background-color: var(--white);
+  box-shadow: 0px 1px 4px rgb(0 0 0 / 30%);
+  padding: 1em;
+  width: 400px;
+  height: auto;
+}
+
+.section-title {
+  font-size: 13px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: var(--gray);
+}
+
+.profile-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+.profile-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3em;
+}
+
+.profile-info-label {
+  font-weight: 700;
+  font-size: 13px;
+}
+.profile-info-value {
+  font-size: 14px;
+  font-weight: 500;
+}
+.info-label {
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #555;
+}
+
+.info-value {
+  color: #888;
+  font-size: 14px;
+}
+
+.missionnaire {
+}
+.non-missionnaire {
+}

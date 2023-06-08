@@ -10,7 +10,7 @@ export const getAllOrdresMissions = async (req, res) => {
       .populate("employe")
       .populate("mission");
     let filteredOMissions = ordresMission;
-
+ 
     if (user.role === "relex") throw new Error("Unauthorized");
     if (user.role === "responsable") {
       filteredOMissions = ordresMission.filter(
@@ -21,10 +21,11 @@ export const getAllOrdresMissions = async (req, res) => {
       filteredOMissions = ordresMission.filter(
         (om) => om.employe.id === user.id
       );
-    }  
+    }
+
     res.status(200).json(filteredOMissions);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+     res.status(500).json({ error: err.message });
   }
 };
 
@@ -38,7 +39,6 @@ export const deleteOm = async (req, res) => {
     await ordreMission.remove();
     res.status(200).json({ msg: "OrdreMission deleted" });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Server Error" });
+     res.status(500).json({ message: "Server Error" });
   }
 };

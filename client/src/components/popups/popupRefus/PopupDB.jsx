@@ -391,7 +391,11 @@ const PopupDB = ({ item }) => {
           Le Directeur projet SH One <br /> A.FELFOUL{" "}
         </div>
       </div>
-      <button onClick={generateDocument}>Generate Document</button>
+      {item.etat === "acceptée" && (
+        <button className="generate-btn" onClick={generateDocument}>
+          Télécharger document{" "}
+        </button>
+      )}
     </>
   );
 };
