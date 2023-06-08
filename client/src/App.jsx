@@ -188,7 +188,7 @@ function App() {
     },
     [dispatch, tabId]
   );
-  useMemo(() => {
+  useEffect(() => {
     const handleLoginData = async (userId) => {
       if (user._id.toString() === userId.toString()) {
         if (user.role !== "relex") {

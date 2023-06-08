@@ -432,21 +432,21 @@ const Formulaire = ({ title, entries, buttons, type }) => {
             );
         })}
       </div>
-      {/* {error !== "" && (
+      {error !== "" && (
         <div className="error-message">
           <ErrorIcon className="icn" />
           {error}
         </div>
-      )} */}
-      {/* {successMsg !== "" && (
+      )}
+      {successMsg !== "" && (
         <div className="success-message">
           <CheckCircleRoundedIcon className="icn" />
           {successMsg}
         </div>
-      )} */}
-      <Message />
+      )}
+      {/* <Message /> */}
       {/* {typeof predResult} */}
-      {/* {predResult === 4 && (
+      {predResult === 4 && (
         <div className="success-message">
           La mission introduite présente une perspective favorable
           d'accomplissement réussi a 90%.
@@ -468,7 +468,7 @@ const Formulaire = ({ title, entries, buttons, type }) => {
         <div className="error-message">
           Il n'est pas assuré que la mission introduite aboutisse à un succès.
         </div>
-      )} */}
+      )}
     </div>
   );
 };

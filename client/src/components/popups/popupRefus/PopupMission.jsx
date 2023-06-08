@@ -88,6 +88,7 @@ const PopupMission = ({ item }) => {
   const CustomComponent = () => {
     const [date, setDate] = useState("");
     const [error, setError] = useState("");
+    const [handleClick] = useBtn();
 
     const handleModify = () => {
       setError("");
@@ -99,9 +100,17 @@ const PopupMission = ({ item }) => {
           missions: missions,
           newDate: date,
         });
-        console.log(error);
-        setError(error);
-        // callApi
+        if (error !== "") {
+          console.log(error);
+          setError(error);
+        } else {
+          // call api , and not forget that i need to emit a lot of things
+          // first thing i have to change is the oldDuree
+          // second thing is tDateRet
+          handleClick("update", item, "mission", "", {
+            tDateRet: new Date(date).toISOString(),
+          });
+        }
       }
     };
 

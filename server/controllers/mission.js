@@ -196,7 +196,9 @@ export const updateMissionEtat = async (req, res) => {
       { new: true }
     );
     // console.log("here2");
-
+    const populatedMission = await Mission.findById(updatedMission.id)
+      .populate("createdBy")
+      .populate("updatedBy");
     if (req.body.etat) {
       const operation = req.body.etat;
       // ________________________________________________________________________________________
@@ -240,10 +242,6 @@ export const updateMissionEtat = async (req, res) => {
         }
       }
 
-      const populatedMission = await Mission.findById(updatedMission.id)
-        .populate("createdBy")
-        .populate("updatedBy");
-
       sendEmits("update", {
         others: employes.map((employe) => employe._id),
         structure: mission.structure,
@@ -273,6 +271,19 @@ export const updateMissionEtat = async (req, res) => {
       //update tache
       createOrUpdateFMission(updatedMission, "update", mission, "tache");
       //____________________________________________________________________________________
+    }
+
+    if (req.body.tDateRet) {
+      sendEmits("update", {
+        others: employes.map((employe) => employe._id),
+        structure: mission.structure,
+        etat: "date",
+      });
+      sendNotification("date", {
+        mission,
+        employes,
+        updatedBy: populatedMission.updatedBy,
+      });
     }
 
     res.status(200).json({
@@ -323,6 +334,13 @@ const sendEmits = async (operation, ids) => {
         let otherUsers = others.map((u) => u._id.toString());
         let combinedUsers = otherUsers.concat(allUsers);
         emitGetData(combinedUsers, "getMissions");
+      } else if (etat === "date") {
+        let allUsers = users.map((u) => u._id.toString());
+        let otherUsers = others.map((u) => u._id.toString());
+        let combinedUsers = otherUsers.concat(allUsers);
+        emitGetData(combinedUsers, "getMissions");
+        emitGetData(combinedUsers, "getOms");
+        emitGetData(combinedUsers, "getRfms");
       }
       break;
 
@@ -484,6 +502,30 @@ const sendNotification = async (operation, body) => {
         });
         createNotification({ users, message, path, type });
       }
+      break;
+    case "date":
+      const { mission, employes, updatedBy } = body;
+
+      users = await User.find({
+        $and: [
+          {
+            $or: [
+              { role: "responsable", structure: mission.structure },
+              { role: "directeur" },
+              { role: "secretaire" },
+            ],
+          },
+          { _id: { $ne: toId(updatedBy.id) } },
+        ],
+      });
+
+      createNotification({
+        users: [...users, ...employes.map((e) => e._id)],
+        message: `la date de fin de mission prévue pour d1 a été modifié par ${updatedBy.nom} ${updatedBy.prenom} `,
+        path,
+        type,
+      });
+
       break;
     default:
       break;

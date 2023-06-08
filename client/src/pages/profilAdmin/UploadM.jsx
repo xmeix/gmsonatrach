@@ -192,7 +192,7 @@ const UploadM = () => {
 
     // console.log("new Data ===> ", newData);
     let dates = getPlanningDates(newData);
-    console.log(dates);
+    // console.log(dates);
     if (dates) {
       let missionData = extractMissionData();
       if (missionData) {
