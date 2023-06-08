@@ -4,6 +4,8 @@ import { FormControlLabel, FormGroup } from "@mui/material";
 import Checkbox from "@mui/material/Checkbox";
 import useBtn from "../../../hooks/useBtn";
 import AddCircleRoundedIcon from "@mui/icons-material/AddCircleRounded";
+import usePop from "../../../hooks/usePop";
+import { verifyProlongement } from "../../../utils/formFieldsVerifications";
 export const ItemDiv = ({ label, content }) => (
   <div className="itemDiv">
     <div className="item-label">{label}</div>
@@ -11,13 +13,13 @@ export const ItemDiv = ({ label, content }) => (
   </div>
 );
 const PopupMission = ({ item }) => {
-  const [tasks, setTasks] = useState(item.taches);
+  // const [tasks, setTasks] = useState(item.taches);
   const tasksRef = useRef(item.taches);
 
   const [handleClick] = useBtn();
-  const currentUser = useSelector((state) => state.auth.user);
+  const { user, missions } = useSelector((state) => state.auth);
   const belongs = () =>
-    item.employes.some((employee) => employee._id === currentUser._id);
+    item.employes.some((employee) => employee._id === user._id);
   const [budgetConsome, setBudgetConsomme] = useState(0);
   const handleCheck = (check, id) => {
     const newTasks = tasksRef.current.map((task) => {
@@ -31,12 +33,13 @@ const PopupMission = ({ item }) => {
     });
 
     handleClick("check", item, "mission", "", newTasks);
-    tasksRef.current = newTasks;
+    tasksRef.current = newTasks; // Update tasksRef.current instead of tasks state
   };
+
   const renderBudgetComponent = () => {
     if (
       item.etat === "terminée" &&
-      ["secretaire", "directeur", "responsable"].includes(currentUser.role)
+      ["secretaire", "directeur", "responsable"].includes(user.role)
     ) {
       if (item.budgetConsome === 0 || item.budgetConsome === null) {
         return (
@@ -53,7 +56,7 @@ const PopupMission = ({ item }) => {
                 onChange={(e) => setBudgetConsomme(e.target.value)}
               />
               {["secretaire", "directeur", "responsable"].includes(
-                currentUser.role
+                user.role
               ) && (
                 <button
                   onClick={() => {
@@ -82,6 +85,46 @@ const PopupMission = ({ item }) => {
     return null;
   };
 
+  const CustomComponent = () => {
+    const [date, setDate] = useState("");
+    const [error, setError] = useState("");
+
+    const handleModify = () => {
+      setError("");
+      console.log("Modified date:", date);
+      if (date < 0) {
+        console.log("error");
+      } else {
+        const error = verifyProlongement(item, {
+          missions: missions,
+          newDate: date,
+        });
+        console.log(error);
+        setError(error);
+        // callApi
+      }
+    };
+
+    return (
+      <div className="custom-component">
+        <div className="custom-component-input">
+          <label>nouvelle date de fin</label>
+          <input
+            type="date"
+            min={new Date().toISOString().split("T")[0]}
+            value={date}
+            onChange={(e) => setDate(e.target.value)}
+          />
+          {error && <div className="error-message">{error}</div>}
+        </div>
+        <button className="custom-component-button" onClick={handleModify}>
+          Modifier
+        </button>
+      </div>
+    );
+  };
+  const { Pop, openPop } = usePop();
+
   return (
     <div className="popup-mission">
       <div className="title">Information mission</div>
@@ -104,15 +147,11 @@ const PopupMission = ({ item }) => {
           <div>
             <ItemDiv
               label="Date debut mission"
-              content={Intl.DateTimeFormat(["ban", "id"]).format(
-                new Date(item.tDateDeb)
-              )}
+              content={new Date(item.tDateDeb).toISOString().slice(0, 10)}
             />
             <ItemDiv
               label="Date fin mission"
-              content={Intl.DateTimeFormat(["ban", "id"]).format(
-                new Date(item.tDateRet)
-              )}
+              content={new Date(item.tDateRet).toISOString().slice(0, 10)}
             />
             <ItemDiv label="Structure" content={item.structure} />
             <ItemDiv label="Type" content={item.type} />
@@ -177,9 +216,7 @@ const PopupMission = ({ item }) => {
         <div className="crea-container">
           <ItemDiv
             label="Créé le"
-            content={Intl.DateTimeFormat(["ban", "id"]).format(
-              new Date(item.createdAt)
-            )}
+            content={new Date(item.createdAt).toISOString().slice(0, 10)}
           />
           <ItemDiv
             label="par"
@@ -189,15 +226,20 @@ const PopupMission = ({ item }) => {
         <div className="crea-container">
           <ItemDiv
             label="Dernière modification le"
-            content={Intl.DateTimeFormat(["ban", "id"]).format(
-              new Date(item.updatedAt)
-            )}
+            content={new Date(item.updatedAt).toISOString().slice(0, 10)}
           />
           <ItemDiv
             label="par"
             content={item.updatedBy.nom + " " + item.updatedBy.prenom}
           />
         </div>
+      </div>
+      <Pop title={"Prolonger la mission"} component={CustomComponent} />
+      <div className="p-mission-btns">
+        <button className="btn" onClick={openPop}>
+          Prolonger la mission
+        </button>
+        <button className="btn">Clôturer la mission (forcée)</button>
       </div>
     </div>
   );

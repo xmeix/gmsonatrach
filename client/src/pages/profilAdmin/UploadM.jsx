@@ -8,24 +8,48 @@ import { useAxios } from "../../hooks/useAxios";
 
 const UploadM = () => {
   const { jsonData, handleFileChange, fileName } = useUpload();
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState([]);
   const { callApi } = useAxios();
   const missions = useSelector((state) => state.auth.missions);
   const users = useSelector((state) => state.auth.users);
   const currentUser = useSelector((state) => state.auth.user);
   const [success, setSuccess] = useState(false);
+
   useEffect(() => {
     console.log(errors);
   }, [errors]);
 
+  const ErrorMessages = ({ errors }) => (
+    <div className="error-message">
+      Désolé, votre fichier de données contient des erreurs. Veuillez vérifier
+      les points suivants:
+      <ul>
+        <li>
+          Assurez-vous que tous les champs obligatoires sont remplis. Certains
+          champs peuvent manquer.{" "}
+        </li>
+        <li>
+          Vérifiez qu'aucun des missionnaires n'a déjà des missions prévues à la
+          même période. Il y a peut-être un conflit d'horaire.{" "}
+        </li>
+        <li>Corrigez les erreurs et importer à nouveau le fichier.</li>
+      </ul>
+      {/* {errors.flatMap((obj) => Object.values(obj)).map(
+          (error, index) => (
+            <li key={index}>{error}</li>
+          )
+        )} */}
+    </div>
+  );
+
   const handleUpload = () => {
     if (jsonData) {
-      console.log(fileName);
-      setErrors({});
+      // console.log(fileName);
+      setErrors([{}]);
       if (
         jsonData[0][0] !== "Informations nécessaire sur les missions de travail"
       ) {
-        setErrors({ file: "veuillez introduire format correcte" });
+        setErrors([{ file: "veuillez introduire format correcte" }]);
       } else {
         extractPlanningData();
       }
@@ -55,9 +79,11 @@ const UploadM = () => {
         });
       // console.log(hasValidDates);
       if (!hasValidDates) {
-        setErrors({
-          file: "Les dates sur le calendrier ne sont pas en ordre croissant ou ne sont pas consécutives",
-        });
+        setErrors([
+          {
+            file: "Les dates sur le calendrier ne sont pas en ordre croissant ou ne sont pas consécutives",
+          },
+        ]);
         return;
       } else {
         dates = planningData[0]
@@ -78,7 +104,7 @@ const UploadM = () => {
           })
           .filter((e) => !e.includes(0))
           .map((e) => e);
-
+        // console.log(dates);
         const datesHaveValidDays = dates.map((d) => {
           const [month, year] = d[0].split("/");
           const date = new Date(year, month, 0);
@@ -105,9 +131,11 @@ const UploadM = () => {
         });
 
         if (datesHaveValidDays.includes(false)) {
-          setErrors({
-            file: "le calendrier ne contient pas des jours consécutives valides",
-          });
+          setErrors([
+            {
+              file: "le calendrier ne contient pas des jours consécutives valides",
+            },
+          ]);
           return;
         }
       }
@@ -144,7 +172,7 @@ const UploadM = () => {
   };
 
   const getDay = (j, ind, planningDates) => {
-    // console.log(planningDates, j, ind);
+    console.log(planningDates, j, ind);
     const d = planningDates
       .filter((e) => (e[1] < ind && ind < e[2]) || e[1] === ind || e[2] === ind)
       .map((e) => e);
@@ -154,7 +182,7 @@ const UploadM = () => {
     }
     const [month, year] = d[0][0].split("/");
     // console.log(month, year);
-    const date = new Date(year, month - 1, j);
+    const date = new Date(year, month - 1, j+1).toISOString().split("T")[0];
     // console.log(date);
     return date;
   };
@@ -164,6 +192,7 @@ const UploadM = () => {
 
     // console.log("new Data ===> ", newData);
     let dates = getPlanningDates(newData);
+    console.log(dates);
     if (dates) {
       let missionData = extractMissionData();
       if (missionData) {
@@ -200,13 +229,16 @@ const UploadM = () => {
         "structure",
       ])
     ) {
-      setErrors({
-        file: "Identificateurs des colonnes sont erronés doivent suivre ce format: ['id', 'objet mission', 'type mission', 'pays de destination', 'circonscription administrative', 'moyen de transport (aller)', 'moyen de transport (retour)', 'budget estimé', 'structure']",
-      });
+      setErrors([
+        {
+          file: "Identificateurs des colonnes sont erronés doivent suivre ce format: ['id', 'objet mission', 'type mission', 'pays de destination', 'circonscription administrative', 'moyen de transport (aller)', 'moyen de transport (retour)', 'budget estimé', 'structure']",
+        },
+      ]);
       return;
     }
     return subset;
   };
+
   const createMissions = (missionDatas, useDates, planningData) => {
     let allMissions = [];
     let errs = [];
@@ -238,7 +270,7 @@ const UploadM = () => {
           const indDeb = element.indexOf(mission[0]);
           const jD = planningData[1][indDeb];
           dateDeb = getDay(jD, indDeb, useDates);
-          // console.log([mission[0], dateDeb]);
+          console.log([mission[0], dateDeb]);
 
           for (let r = indDeb; r < element.length; r++) {
             const s = element[r];
@@ -283,6 +315,8 @@ const UploadM = () => {
                 mission.etat !== "refusée"
             ),
           };
+          console.log(missionObject);
+
           if (
             Object.keys(validateMission(missionObject, currentUser, object))
               .length !== 0
@@ -335,10 +369,11 @@ const UploadM = () => {
       {success && (
         <div className="success-message">Chargement de données avec succés</div>
       )}
-      {errors.length > 0 && (
+      {errors.length > 0 && <ErrorMessages errors={errors} />}
+      {/* {errors.length > 0 && (
         <div className="error-message">
           {/* Désolé, votre fichier de données contient des erreurs. Veuillez
-            vérifier les points suivants: */}
+            vérifier les points suivants: 
           <ul>
             <li>
               Assurez-vous que tous les champs obligatoires sont remplis.
@@ -351,7 +386,7 @@ const UploadM = () => {
             <li>Corrigez les erreurs et importer à nouveau le fichier.</li>
           </ul>
         </div>
-      )}
+      )} */}
     </div>
   );
 };

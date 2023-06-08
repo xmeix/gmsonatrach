@@ -1,3 +1,55 @@
+export const verifyProlongement = (miss, objet) => {
+  let error = "";
+  let { newDate, missions } = objet;
+  // verifier si les missionnaires sont libre durant la prolongation , pas d autres missions disponible
+  // parcourir les employés et trouver les missions des employés, et vérifier
+  // si y aura inclusion entre tdateDeb et de fin de chaque mission ,
+  //  et tdateDeb de cette mission et tDateFin de cette mission (tDateFin+ duree)
+  // au debut trouver remplacer date de fin par la nouvelle
+
+  if (new Date(newDate) < new Date()) {
+    error = "la nouvelle date de fin doit etre supérieur a la date précédente";
+  } else {
+    if (miss.employes.length > 0) {
+      let employes = miss.employes;
+      let start = new Date(miss.tDateDeb);
+      let end = new Date(newDate);
+
+      //on doit vérifier si les employées n'ont pas déja des missions entre start et end
+      //donc on doit chercher si employes exist dans missions.employes et que mission.etat est en cours ou acceptée et que mission.tDateRet > start et tDateDeb<end dans ce cas on retourne vrai
+      //trouver toutes les missions qui ne sont pas la mission en cours et qui se font en parallele avec cette mission
+      let filteredMissions = missions
+        .filter(
+          (m) =>
+            m._id !== miss._id &&
+            verifyInclusion(
+              start,
+              end,
+              new Date(m.tDateDeb),
+              new Date(m.tDateRet)
+            ) &&
+            (m.etat === "en-cours" ||
+              m.etat === "en-attente" ||
+              m.etat === "acceptée")
+        )
+        .map((m) => m);
+
+      // Check if any employee has missions between start and end dates
+      let hasEmployeeMissions = employes.some((employee) => {
+        // Check if the employee has missions in filteredMissions that overlap with the currentMission
+        return filteredMissions.some((mission) => {
+          return mission.employes.some((emp) => emp._id === employee._id);
+        });
+      });
+      // console.log("hasEmployeeMissions", hasEmployeeMissions);
+      if (hasEmployeeMissions) {
+        error =
+          "Les employés ne doivent pas avoir de missions entre la date de début et la date de fin des missions introduites.";
+      }
+    }
+  }
+  return error;
+};
 export const validateMission = (mission, user, object) => {
   // console.log(mission);
   const errors = {};
@@ -74,11 +126,16 @@ export const validateMission = (mission, user, object) => {
       //donc on doit chercher si employes exist dans missions.employes et que mission.etat est en cours ou acceptée et que mission.tDateRet > start et tDateDeb<end dans ce cas on retourne vrai
       const filteredMissions = object.missions
         .filter((mission) => {
-          return verifyInclusion(
-            new Date(mission.tDateDeb),
-            new Date(mission.tDateRet),
-            start,
-            end
+          return (
+            (mission.etat === "en-cours" ||
+              mission.etat === "en-attente" ||
+              mission.etat === "acceptée") &&
+            verifyInclusion(
+              new Date(mission.tDateDeb),
+              new Date(mission.tDateRet),
+              start,
+              end
+            )
           );
         })
         .map((f) => f);

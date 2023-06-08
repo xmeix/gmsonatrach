@@ -34,9 +34,7 @@ const PopupDM = ({ item }) => {
               label="Le"
               content={
                 ": " +
-                (Intl.DateTimeFormat(["ban", "id"]).format(
-                  new Date(item.createdAt)
-                ) || "/")
+                (new Date(item.createdAt).toISOString().slice(0, 10) || "/")
               }
             />
             <OmLabelLine label="Motif" content={": " + (item.motif || "/")} />

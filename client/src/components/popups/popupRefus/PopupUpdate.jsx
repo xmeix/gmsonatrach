@@ -266,9 +266,7 @@ const PopupUpdate = ({ item, close, setSurvey }) => {
         minute: "2-digit",
         hour12: false,
       }) || "",
-    dateretourA: Intl.DateTimeFormat(["ban", "id"]).format(
-      new Date(body2?.dateRetA)
-    ),
+    dateretourA: new Date(body2?.dateRetA).toISOString().slice(0, 10),
 
     timetDateRet: new Date(idMission?.tDateRet).toLocaleTimeString([], {
       hour: "2-digit",
@@ -276,27 +274,21 @@ const PopupUpdate = ({ item, close, setSurvey }) => {
       hour12: false,
     }),
 
-    tDateRet: Intl.DateTimeFormat(["ban", "id"]).format(
-      new Date(idMission?.tDateRet)
-    ),
+    tDateRet: new Date(idMission?.tDateRet).toISOString().slice(0, 10),
     timedebutA:
       new Date(body2?.dateDebA).toLocaleTimeString([], {
         hour: "2-digit",
         minute: "2-digit",
         hour12: false,
       }) || "",
-    dateDebA: Intl.DateTimeFormat(["ban", "id"]).format(
-      new Date(body2?.dateDebA)
-    ),
+    dateDebA: new Date(body2?.dateDebA).toISOString().slice(0, 10),
 
     timetDateDeb: new Date(idMission?.tDateDeb).toLocaleTimeString([], {
       hour: "2-digit",
       minute: "2-digit",
       hour12: false,
     }),
-    tDateDeb: Intl.DateTimeFormat(["ban", "id"]).format(
-      new Date(idMission?.tDateDeb)
-    ),
+    tDateDeb: new Date(idMission?.tDateDeb).toISOString().slice(0, 10),
     parcours:
       mission.lieuDep + " Alger " + mission.destination + " " + mission.pays,
     pays: mission.pays,
@@ -308,7 +300,7 @@ const PopupUpdate = ({ item, close, setSurvey }) => {
     idEmp: idEmploye.uid,
     year: new Date().getFullYear(),
     id: uid,
-    date: Intl.DateTimeFormat(["ban", "id"]).format(new Date(item.createdAt)),
+    date: new Date(item.createdAt).toISOString().slice(0, 10),
   };
 
   const [generateDocument] = useFileGenerator(
