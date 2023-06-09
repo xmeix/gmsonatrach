@@ -533,7 +533,7 @@ function App() {
       case "directeur":
         routes = mainDirRoutes;
         break;
-      case "responsable":
+      case "responsable": 
         routes = mainResRoutes;
         break;
 
