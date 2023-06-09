@@ -14,8 +14,6 @@ import {
   getRFMs,
   getOMs,
   getMissions,
-  getMissionKPIS,
-  getFileKPIS,
   getNotifications,
   getTickets,
 } from "./api/apiCalls/getCalls";
@@ -57,12 +55,12 @@ export const mainDirRoutes = [
       { path: "", title: "Liste des employés", element: <EmployeesList /> },
       {
         path: "/user-form",
-        title: "formulaire d'ajout d'utilisateur",
+        title: "Ajouter utilisateur",
         element: <EmployeesForm />,
       },
       {
         path: "/user-import",
-        title: "Importer plusieurs utilisateurs",
+        title: "Ajouter plusieurs utilisateurs",
         element: <UploadUsers />,
       },
     ],
@@ -76,12 +74,14 @@ export const mainDirRoutes = [
       {
         path: "/dbs-form",
         element: <DbsForm />,
-        title: "formulaire d'ajout d'une demandes de billetterie",
+
+        title: "Ajouter une demande de billetterie",
       },
       {
         path: "/dbs-import",
         element: <DbsImport />,
-        title: "Importer plusieurs demandes de billetterie",
+
+        title: "Ajouter plusieurs demandes de billetterie",
       },
     ],
   },
@@ -536,7 +536,8 @@ function App() {
       case "responsable":
         routes = mainResRoutes;
         break;
-      case "secrétaire":
+
+      case "secretaire":
         routes = mainSecRoutes;
         break;
       case "relex":

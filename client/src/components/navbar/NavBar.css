@@ -4,7 +4,7 @@
   justify-content: space-between;
   flex-direction: row;
   position: sticky;
-  top: 0;
+  top: 0; 
   z-index: 999;
   background-color: var(--white);
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
@@ -13,7 +13,7 @@
   transition: all 0.3s ease-in-out;
 }
 .profileTitle {
-  font-weight: 700;
+  font-weight: 800 !important;
   margin-left: 1em;
   transition: all 0.3s ease-in-out;
   font-size: 14px;
@@ -21,10 +21,10 @@
 .hideDiv {
   position: absolute;
   background-color: rgba(0, 0, 0, 0.486);
-  top: 3.5em;
+  top: 2.5em;
   left: 0;
   width: 100vw;
-  height: 90.5vh;
+  height: 93.5vh;
   z-index: 998;
 }
 .navbar .icon {

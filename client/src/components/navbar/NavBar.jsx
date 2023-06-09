@@ -163,7 +163,7 @@ const NavBar = () => {
               user.role === "directeur" || user.role === "relex"
                 ? ""
                 : "/profile"
-            }
+            } 
             className="link"
             style={navLinkStyle}
           >
