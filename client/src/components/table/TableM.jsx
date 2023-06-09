@@ -684,13 +684,7 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
         )}
       </form>
 
-      <TableContainer
-        component={Paper}
-        style={{
-          width: "80vw",
-        }}
-        aria-label="table"
-      >
+      <TableContainer component={Paper} aria-label="table">
         <Table className={classes.table} stickyHeader size="small">
           <TableHead className={classes.tableHeader}>
             <TableRow className={`${classes.tableRow} trow`}>

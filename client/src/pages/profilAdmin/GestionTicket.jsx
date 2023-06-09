@@ -14,7 +14,7 @@ const GestionTicket = () => {
   const [isFormVisible, setIsFormVisible] = useState(false);
   const dispatch = useDispatch();
 
-  const currentUserHasMission =useCallback( () => {
+  const currentUserHasMission = useCallback(() => {
     if (!user || !missions) {
       return false; // Return false if user or missions are not available
     }
@@ -25,7 +25,7 @@ const GestionTicket = () => {
         mission.employes.some((employe) => employe._id === user._id) &&
         mission.etat === "en-cours"
     );
-  },[missions]);
+  }, [missions]);
 
   const handleFormToggle = () => {
     setIsFormVisible((prevValue) => !prevValue);

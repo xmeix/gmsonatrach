@@ -5,19 +5,30 @@ import MenuRoundedIcon from "@mui/icons-material/Menu";
 import MenuBar from "../menuBar/MenuBar";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  titles,
-  employeTitles,
-  relexTitles,
-  secTitles,
-} from "../../data/navdata";
 import { useAxios } from "../../hooks/useAxios";
-import { v4 as uuidv4 } from "uuid";
-import NotificationsActiveRoundedIcon from "@mui/icons-material/NotificationsActiveRounded";
 import NotificationsNoneRoundedIcon from "@mui/icons-material/NotificationsNoneRounded";
-import { socket } from "../../App";
-import { getNotifications } from "../../api/apiCalls/getCalls";
+
 import Notification from "../notification/Notification";
+import DropdownMenu from "../dropdown/DropdownMenu";
+import {
+  mainDirRoutes,
+  mainEmpRoutes,
+  mainRelexRoutes,
+  mainResRoutes,
+  mainSecRoutes,
+} from "../../App";
+export const navLinkStyle = ({ isActive }) => {
+  return {
+    color: isActive ? "var(--orange)" : "var(--black)",
+    fontWeight: isActive ? "700" : "600",
+  };
+};
+export const NotNavLinkStyle = ({ isActive }) => {
+  return {
+    color: "var(--black)",
+    fontWeight: isActive ? "700" : "600",
+  };
+};
 const NavBar = () => {
   const { user, isLoggedIn, notifications } = useSelector(
     (state) => state.auth
@@ -47,12 +58,6 @@ const NavBar = () => {
   }
   /**_______________________________________________________________________________ */
 
-  const navLinkStyle = ({ isActive }) => {
-    return {
-      color: isActive ? "var(--orange)" : "var(--black)",
-      fontWeight: isActive ? "700" : "600",
-    };
-  };
   const [isOpen, setIsOpen] = useState(false);
   const [responsive, setResponsive] = useState(false);
   const { callApi } = useAxios();
@@ -60,41 +65,20 @@ const NavBar = () => {
   const [navData] = useState(() => {
     switch (user?.role) {
       case "directeur":
-        return titles;
+        return mainDirRoutes;
       case "responsable":
-        return [...titles, { id: 7, title: "profile", path: "/profile" }];
+        return mainResRoutes;
       case "secretaire":
-        return secTitles;
+        return mainSecRoutes;
         break;
       case "employe":
-        return employeTitles;
+        return mainEmpRoutes;
       case "relex":
-        return relexTitles;
+        return mainRelexRoutes;
       default:
         return [];
     }
   });
-  // const [profileTitle] = useState(() => {
-  //   switch (user?.role) {
-  //     case "directeur":
-  //       return "Directeur";
-  //       break;
-  //     case "responsable":
-  //       return "Sous-directeur";
-  //       break;
-  //     case "secretaire":
-  //       return "Secrétaire";
-  //       break;
-  //     case "relex":
-  //       return "Service Relex";
-  //       break;
-  //     case "employe":
-  //       return "Employé";
-  //       break;
-  //     default:
-  //       "";
-  //   }
-  // });
 
   const handleMenu = () => {
     setIsOpen(true);
@@ -130,6 +114,25 @@ const NavBar = () => {
     //logout();
     callApi("post", "/auth/logout", {});
   };
+
+  const renderSubMenu = (path, subroutes) => {
+    return (
+      <ul>
+        {subroutes.map((subroute, index) => (
+          <li key={index}>
+            <NavLink
+              to={path + subroute.path}
+              className="link"
+              style={navLinkStyle}
+            >
+              {subroute.title}
+            </NavLink>
+          </li>
+        ))}
+      </ul>
+    );
+  };
+
   return (
     <div className="navbar">
       {showNotifications && (
@@ -166,7 +169,7 @@ const NavBar = () => {
           >
             <span
               style={{
-                fontSize: "13px",
+                fontSize: "12px",
                 color: "var(--black)",
                 textTransform: "capitalize",
               }}
@@ -177,11 +180,33 @@ const NavBar = () => {
         </div>
         {!responsive && (
           <ul className="sublist">
-            {navData.map((title, i) => (
-              <li key={title.id}>
-                <NavLink to={title.path} className="link" style={navLinkStyle}>
-                  {title.title}
-                </NavLink>
+            {navData.map((title, index) => (
+              <li key={index}>
+                {title.subroutes ? (
+                  <>
+                    {" "}
+                    <NavLink
+                      to={title.path}
+                      className="link"
+                      style={navLinkStyle}
+                    >
+                      {title.title}
+                    </NavLink>
+                    <DropdownMenu
+                      path={title.path}
+                      title={title.title}
+                      subroutes={title.subroutes}
+                    />
+                  </>
+                ) : (
+                  <NavLink
+                    to={title.path}
+                    className="link"
+                    style={navLinkStyle}
+                  >
+                    {title.title}
+                  </NavLink>
+                )}
               </li>
             ))}
           </ul>

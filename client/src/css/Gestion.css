@@ -1,11 +1,18 @@
-.gestion .elements {
+.gestion {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-evenly;
-  gap: 10em;
-  margin: 3em;
+  justify-content: center;
+  padding: 1em 7em;
+  height: 88vh;
 }
+
+@media screen and (max-width: 700px) {
+  .gestion {
+    padding: 1em 2em;
+  }
+}
+
 .listTitle {
   font-weight: 700;
   text-transform: uppercase;

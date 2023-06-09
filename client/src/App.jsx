@@ -19,62 +19,337 @@ import {
   getNotifications,
   getTickets,
 } from "./api/apiCalls/getCalls";
-import Profile from "./pages/Profile/Profile";
+
+const Planning = lazy(() => import("./pages/planning/Planning"));
+const Profile = lazy(() => import("./pages/Profile/Profile"));
+const EmployeesList = lazy(() => import("./pages/Listes/EmployeesList"));
+const EmployeesForm = lazy(() => import("./pages/Forms/EmployeesForm"));
+const UploadUsers = lazy(() => import("./pages/profilAdmin/UploadUsers"));
+const DbsList = lazy(() => import("./pages/Listes/DbsList"));
+const DbsImport = lazy(() => import("./pages/Imports/DbsImport"));
+const DbsForm = lazy(() => import("./pages/Forms/DbsForm"));
+const MissionList = lazy(() => import("./pages/Listes/MissionList"));
+const OmsList = lazy(() => import("./pages/Listes/OmsList"));
+const MissionForm = lazy(() => import("./pages/Forms/MissionForm"));
+const MissionImport = lazy(() => import("./pages/Imports/MissionImport"));
+const DmcList = lazy(() => import("./pages/Listes/DmcList"));
+const RfmsList = lazy(() => import("./pages/Listes/RfmsList"));
+const DcForm = lazy(() => import("./pages/Forms/DcForm"));
+const DmList = lazy(() => import("./pages/Listes/DmList"));
+const DmForm = lazy(() => import("./pages/Forms/DmForm"));
+const DcList = lazy(() => import("./pages/Listes/DcList"));
+const GestionTicket = lazy(() => import("./pages/profilAdmin/GestionTicket"));
 const LoginPage = lazy(() => import("./pages/loginPage/LoginPage"));
-const CostDashboard = lazy(() =>
-  import("./pages/profilAdmin/Dashboards/CostDashboard")
-);
-const FilesDashboard = lazy(() =>
-  import("./pages/profilAdmin/Dashboards/FilesDashboard")
-);
-const UsersDashboard = lazy(() =>
-  import("./pages/profilAdmin/Dashboards/UsersDashboard")
-);
 const MissionDashboard = lazy(() =>
   import("./pages/profilAdmin/Dashboards/MissionDashboard")
 );
-const GestionMission = lazy(() => import("./pages/profilAdmin/GestionMission"));
-const GestionEmploye = lazy(() => import("./pages/profilAdmin/GestionEmploye"));
-const GestionRelex = lazy(() => import("./pages/profilAdmin/GestionRelex"));
-const GestionCMR = lazy(() => import("./pages/profilAdmin/GestionCMR"));
-const Planning = lazy(() => import("./pages/planning/Planning"));
-const GestionTicket = lazy(() => import("./pages/profilAdmin/GestionTicket"));
-const GestionModification = lazy(() =>
-  import("./pages/profilEmploye/GestionModification")
-);
-const GestionConge = lazy(() => import("./pages/profilEmploye/GestionConge"));
-
 export const socket = io("http://localhost:3001");
 // Define reusable arrays for route configurations based on user roles
-const adminRoutes = [
-  { path: "/", element: <MissionDashboard /> },
-  { path: "/planification", element: <Planning /> },
-  { path: "/users-analytics", element: <UsersDashboard /> },
-  { path: "/files-analytics", element: <FilesDashboard /> },
-  { path: "/cost-analytics", element: <CostDashboard /> },
-  { path: "/gestion-des-mission", element: <GestionMission /> },
-  { path: "/gestion-des-employes", element: <GestionEmploye /> },
-  { path: "/gestion-service-relex", element: <GestionRelex /> },
-  { path: "/gestion-c-m-rfm", element: <GestionCMR /> },
-];
 
-//this would only appear if a mission is "en-cours"
-const employeRoutes = [
-  { path: "/", element: <Planning /> },
-  { path: "/gestion-des-mission", element: <GestionMission /> },
-  { path: "/gestion-modification", element: <GestionModification /> },
-  { path: "/gestion-conge", element: <GestionConge /> },
-  { path: "/gestion-tickets", element: <GestionTicket /> },
+export const mainDirRoutes = [
+  { path: "/", element: <MissionDashboard />, title: "Tableau de bord" },
+  { path: "/planification", element: <Planning />, title: "Planification" },
+  {
+    path: "/gestion-des-employes",
+    title: "Employés",
+    element: <EmployeesList />,
+    subroutes: [
+      { path: "", title: "Liste des employés", element: <EmployeesList /> },
+      {
+        path: "/user-form",
+        title: "formulaire d'ajout d'utilisateur",
+        element: <EmployeesForm />,
+      },
+      {
+        path: "/user-import",
+        title: "Importer plusieurs utilisateurs",
+        element: <UploadUsers />,
+      },
+    ],
+  },
+  {
+    path: "/service-relex",
+    title: "Service Relex",
+    element: <DbsList />,
+    subroutes: [
+      { path: "", element: <DbsList />, title: "Demandes de billetterie" },
+      {
+        path: "/dbs-form",
+        element: <DbsForm />,
+        title: "formulaire d'ajout d'une demandes de billetterie",
+      },
+      {
+        path: "/dbs-import",
+        element: <DbsImport />,
+        title: "Importer plusieurs demandes de billetterie",
+      },
+    ],
+  },
+  {
+    path: "/gestion-des-mission",
+    title: "Missions",
+    element: <MissionList />,
+    subroutes: [
+      { path: "", element: <MissionList />, title: "Missions" },
+      { path: "/oms", element: <OmsList />, title: "Ordres des missions" },
+      {
+        path: "/missions-form",
+        element: <MissionForm />,
+        title: "Formulaire d'ajout Mission",
+      },
+      {
+        path: "/missions-import",
+        element: <MissionImport />,
+        title: "Importer plusieurs missions",
+      },
+    ],
+  },
+  {
+    title: "Congé et Rapports",
+    path: "/gestion-c-m-rfm",
+    element: <DmcList />,
+    subroutes: [
+      {
+        path: "",
+        element: <DmcList />,
+        title: "Demandes de congés et modification",
+      },
+      {
+        path: "/rfms",
+        element: <RfmsList />,
+        title: "Rapports de fin de mission",
+      },
+    ],
+  },
 ];
-const secretaireRoutes = [
-  { path: "/", element: <Planning /> },
-  { path: "/gestion-des-mission", element: <GestionMission /> },
-  { path: "/gestion-des-employes", element: <GestionEmploye /> },
-  { path: "/gestion-service-relex", element: <GestionRelex /> },
-  { path: "/gestion-c-m-rfm", element: <GestionCMR /> },
+export const mainResRoutes = [
+  { path: "/profile", element: <Profile />, title: "Mon Profile" },
+  { path: "/", element: <MissionDashboard />, title: "Tableau de bord" },
+  { path: "/planification", element: <Planning />, title: "Planification" },
+  {
+    path: "/gestion-des-employes",
+    title: "Employés",
+    element: <EmployeesList />,
+    subroutes: [
+      { path: "", title: "Liste des employés", element: <EmployeesList /> },
+      {
+        path: "/user-form",
+        title: "formulaire d'ajout d'utilisateur",
+        element: <EmployeesForm />,
+      },
+      {
+        path: "/user-import",
+        title: "Importer plusieurs utilisateurs",
+        element: <UploadUsers />,
+      },
+    ],
+  },
+  {
+    path: "/service-relex",
+    title: "Service Relex",
+    element: <DbsList />,
+    subroutes: [
+      { path: "", element: <DbsList />, title: "Demandes de billetterie" },
+      {
+        path: "/dbs-form",
+        element: <DbsForm />,
+        title: "formulaire d'ajout d'une demande de billetterie",
+      },
+      {
+        path: "/dbs-import",
+        element: <DbsImport />,
+        title: "Importer plusieurs demandes de billetterie",
+      },
+    ],
+  },
+  {
+    path: "/gestion-des-mission",
+    title: "Missions",
+    element: <MissionList />,
+    subroutes: [
+      { path: "", element: <MissionList />, title: "Missions" },
+      { path: "/oms", element: <OmsList />, title: "Ordres des missions" },
+      {
+        path: "/missions-form",
+        element: <MissionForm />,
+        title: "Formulaire d'ajout Mission",
+      },
+      {
+        path: "/missions-import",
+        element: <MissionImport />,
+        title: "Importer plusieurs missions",
+      },
+    ],
+  },
+  {
+    title: "Congé et Rapports",
+    path: "/gestion-c-m-rfm",
+    element: <DmcList />,
+    subroutes: [
+      {
+        path: "",
+        element: <DmcList />,
+        title: "Demandes de congés et modification",
+      },
+      {
+        path: "/dc-form",
+        element: <DcForm />,
+        title: "Formulaire demande de congé",
+      },
+      {
+        path: "/rfms",
+        element: <RfmsList />,
+        title: "Rapports de fin de mission",
+      },
+    ],
+  },
 ];
-const profileRoute = [{ path: "/profile", element: <Profile /> }];
-const relexRoutes = [{ path: "/", element: <GestionRelex /> }];
+export const mainSecRoutes = [
+  { path: "/profile", element: <Profile />, title: "Mon Profile" },
+  { path: "/", element: <Planning />, title: "Planification" },
+  {
+    path: "/gestion-des-employes",
+    title: "Employés",
+    element: <EmployeesList />,
+    subroutes: [
+      { path: "", title: "Liste des employés", element: <EmployeesList /> },
+      {
+        path: "/user-form",
+        title: "formulaire d'ajout d'utilisateur",
+        element: <EmployeesForm />,
+      },
+      {
+        path: "/user-import",
+        title: "Importer plusieurs utilisateurs",
+        element: <UploadUsers />,
+      },
+    ],
+  },
+  {
+    path: "/service-relex",
+    title: "Service Relex",
+    element: <DbsList />,
+    subroutes: [
+      { path: "", element: <DbsList />, title: "Demandes de billetterie" },
+      {
+        path: "/dbs-form",
+        element: <DbsForm />,
+        title: "formulaire d'ajout d'une demande de billetterie",
+      },
+      {
+        path: "/dbs-import",
+        element: <DbsImport />,
+        title: "Importer plusieurs demandes de billetterie",
+      },
+    ],
+  },
+  {
+    path: "/gestion-des-mission",
+    title: "Missions",
+    element: <MissionList />,
+    subroutes: [
+      { path: "", element: <MissionList />, title: "Missions" },
+      { path: "/oms", element: <OmsList />, title: "Ordres des missions" },
+      {
+        path: "/missions-form",
+        element: <MissionForm />,
+        title: "Formulaire d'ajout Mission",
+      },
+      {
+        path: "/missions-import",
+        element: <MissionImport />,
+        title: "Importer plusieurs missions",
+      },
+    ],
+  },
+  {
+    title: "Congé et Rapports",
+    path: "/gestion-c-m-rfm",
+    element: <DmcList />,
+    subroutes: [
+      {
+        path: "",
+        element: <DmcList />,
+        title: "Demandes de congés et modification",
+      },
+      {
+        path: "/dc-form",
+        element: <DcForm />,
+        title: "Formulaire demande de congé",
+      },
+      {
+        path: "/rfms",
+        element: <RfmsList />,
+        title: "Rapports de fin de mission",
+      },
+    ],
+  },
+];
+export const mainRelexRoutes = [
+  { path: "/profile", element: <Profile />, title: "Mon Profile" },
+  {
+    path: "/",
+    title: "Liste des demandes de billetterie",
+    element: <DbsList />,
+  },
+];
+export const mainEmpRoutes = [
+  { path: "/profile", element: <Profile />, title: "Mon Profile" },
+  { path: "/", element: <Planning />, title: "Planification" },
+  {
+    path: "/gestion-des-mission",
+    title: "Missions",
+    element: <MissionList />,
+    subroutes: [
+      { path: "", element: <MissionList />, title: "Missions" },
+      { path: "/oms", element: <OmsList />, title: "Ordres des missions" },
+      {
+        path: "/rfms",
+        element: <RfmsList />,
+        title: "Rapports de fin de mission",
+      },
+    ],
+  },
+  {
+    title: "demandes de modification",
+    path: "/gestion-modification",
+    element: <DmList />,
+    subroutes: [
+      {
+        path: "",
+        element: <DmList />,
+        title: "Demandes de modification",
+      },
+      {
+        path: "/dm-form",
+        element: <DmForm />,
+        title: "Formulaire demande de modification",
+      },
+    ],
+  },
+  {
+    title: "Tickets",
+    path: "/gestion-ticket",
+    element: <GestionTicket />,
+  },
+  {
+    title: "demandes de congé",
+    path: "/gestion-congés",
+    element: <DcList />,
+    subroutes: [
+      {
+        path: "",
+        element: <DcList />,
+        title: "Demandes de congé",
+      },
+      {
+        path: "/dc-form",
+        element: <DcForm />,
+        title: "Formulaire demande de congé",
+      },
+    ],
+  },
+];
 
 function App() {
   const dispatch = useDispatch();
@@ -255,21 +530,22 @@ function App() {
     routes = [{ path: "/", element: <LoginPage /> }];
   } else {
     switch (user?.role) {
-      case "employe":
-        routes = [...employeRoutes, ...profileRoute];
-        break;
-      case "secretaire":
-        routes = [...secretaireRoutes, ...profileRoute];
+      case "directeur":
+        routes = mainDirRoutes;
         break;
       case "responsable":
-        routes = [...adminRoutes, ...profileRoute];
+        routes = mainResRoutes;
         break;
-      case "directeur":
-        routes = adminRoutes;
+      case "secrétaire":
+        routes = mainSecRoutes;
         break;
       case "relex":
-        routes = relexRoutes;
+        routes = mainRelexRoutes;
         break;
+      case "employe":
+        routes = mainEmpRoutes;
+        break;
+
       default:
         break;
     }
@@ -277,7 +553,17 @@ function App() {
 
   const isAlreadyLoggedIn = isLoggedIn && location.pathname === "/";
   const loginPath = "/"; // Replace with your actual login path
-
+  const subroutes = routes.reduce((acc, route) => {
+    if (route.subroutes) {
+      route.subroutes.forEach((subroute) => {
+        acc.push({
+          path: route.path + subroute.path,
+          element: subroute.element,
+        });
+      });
+    }
+    return acc;
+  }, []);
   return (
     <div className="app">
       {isLoggedIn && <NavBar />}
@@ -285,6 +571,13 @@ function App() {
         <Routes>
           {routes.map((route, index) => (
             <Route key={index} path={route.path} element={route.element} />
+          ))}
+          {subroutes.map((subroute, index) => (
+            <Route
+              key={index}
+              path={subroute.path}
+              element={subroute.element}
+            />
           ))}
           {!isAlreadyLoggedIn && (
             <Route path="*" element={<Navigate to={loginPath} />} />

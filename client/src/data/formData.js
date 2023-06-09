@@ -1,9 +1,3 @@
-// import { user } from "react-redux";
-
-// const users = user((state) => state.auth.users);
-// const employeesNonMissionnaires = users.filter(
-//   (user) => user.role === "employe" && user.etat === "non-missionnaire"
-// );
 
 export const userButtons = [
   {
