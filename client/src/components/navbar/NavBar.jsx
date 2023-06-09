@@ -7,7 +7,6 @@ import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import { useDispatch, useSelector } from "react-redux";
 import { useAxios } from "../../hooks/useAxios";
 import NotificationsNoneRoundedIcon from "@mui/icons-material/NotificationsNoneRounded";
-
 import Notification from "../notification/Notification";
 import DropdownMenu from "../dropdown/DropdownMenu";
 import {
@@ -53,8 +52,9 @@ const NavBar = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [dispatch, isLoggedIn, notificationsRef]);
+
   function handleNotificationsClick() {
-    setShowNotifications((prev) => !prev);
+    setShowNotifications(!showNotifications);
   }
   /**_______________________________________________________________________________ */
 
@@ -115,24 +115,6 @@ const NavBar = () => {
     callApi("post", "/auth/logout", {});
   };
 
-  const renderSubMenu = (path, subroutes) => {
-    return (
-      <ul>
-        {subroutes.map((subroute, index) => (
-          <li key={index}>
-            <NavLink
-              to={path + subroute.path}
-              className="link"
-              style={navLinkStyle}
-            >
-              {subroute.title}
-            </NavLink>
-          </li>
-        ))}
-      </ul>
-    );
-  };
-
   return (
     <div className="navbar">
       {showNotifications && (
@@ -163,7 +145,7 @@ const NavBar = () => {
               user.role === "directeur" || user.role === "relex"
                 ? ""
                 : "/profile"
-            } 
+            }
             className="link"
             style={navLinkStyle}
           >
@@ -184,14 +166,6 @@ const NavBar = () => {
               <li key={index}>
                 {title.subroutes ? (
                   <>
-                    {" "}
-                    <NavLink
-                      to={title.path}
-                      className="link"
-                      style={navLinkStyle}
-                    >
-                      {title.title}
-                    </NavLink>
                     <DropdownMenu
                       path={title.path}
                       title={title.title}
