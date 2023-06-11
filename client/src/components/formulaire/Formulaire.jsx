@@ -140,7 +140,7 @@ const Formulaire = ({ title, entries, buttons, type }) => {
               })
             ).length === 0
           ) {
-            callApi("post", "/auth/register", { ...values, user: currentUser });
+            callApi("post", "/auth/register", { ...values });
             setErrors({});
             // showMessage(successMsg, "success");
           }

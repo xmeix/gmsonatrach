@@ -9,23 +9,7 @@ export const emitGetData = (users, link) => {
   });
 };
 
-// export const emitGetData = (users, link) => {
-//   const userSockets = connectedUsers
-//     .filter((user) => users.includes(user.userId.toString()))
-//     .map((user) => user.socketId);
-//   const userTabs = connectedUsers
-//     .filter((user) => users.includes(user.userId.toString()))
-//     .map((user) => user.tabId);
-
-//   io.to(userSockets).emit(link, userTabs);
-// };
-
-// export const emitData = async (link, data) => {
-//   connectedUsers.forEach((item) => {
-//     const { userId, socketId } = item;
-//     io.to(socketId).emit(link, data);
-//   });
-// };
+ 
 export const emitDataTo = async (link, data) => {
   // Emit the notification event to each socket ID associated with the user ID
   // console.log("____________________________________________________");

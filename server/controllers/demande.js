@@ -498,7 +498,7 @@ const sendRequestNotification = async (operation, body) => {
           createNotification({
             users: users,
             message: message,
-            path,
+            path: "/service-relex",
             type: typeD,
           });
 
@@ -509,7 +509,7 @@ const sendRequestNotification = async (operation, body) => {
           createNotification({
             users: users2,
             message: message2,
-            path,
+            path: "/",
             type: typeD,
           });
 
@@ -535,7 +535,7 @@ const sendRequestNotification = async (operation, body) => {
           createNotification({
             users: users,
             message: message,
-            path,
+            path: "/gestion-c-m-rfm",
             type: typeD,
           });
           break;
@@ -555,7 +555,7 @@ const sendRequestNotification = async (operation, body) => {
 
       if (typeDemande === "DB") {
         nomDemande = "billetterie";
-        roles = ["responsable", "secretaire", "directeur", "relex"];
+        roles = ["responsable", "secretaire", "directeur"]; //j ai enlevé relex
         roles2 = ["responsable", "secretaire", "directeur"];
       } else if (typeDemande === "DC") {
         nomDemande = "congés";
@@ -571,7 +571,17 @@ const sendRequestNotification = async (operation, body) => {
         if (updatedBy.id !== emetteur.id) {
           users = [emetteur.id];
           message = `Votre demande de ${nomDemande} a été ${etat} par ${updatedBy.nom} ${updatedBy.prenom}`;
-          createNotification({ users, message, path, type });
+          createNotification({
+            users,
+            message,
+            path:
+              typeDemande === "DB"
+                ? "/service-relex"
+                : typeDemande === "DC"
+                ? "/gestion-congés"
+                : "/gestion-modification",
+            type,
+          });
         }
         users2 = await User.find({
           $and: [
@@ -581,20 +591,31 @@ const sendRequestNotification = async (operation, body) => {
           ],
         });
 
-        message2 = `La demande de  ${nomDemande}  créée par ${emetteur.nom} ${emetteur.prenom} a été ${etat} par ${updatedBy.nom} ${updatedBy.prenom}`;
+        message2 = `La demande de ${nomDemande} créée par ${emetteur.nom} ${emetteur.prenom} a été ${etat} par ${updatedBy.nom} ${updatedBy.prenom}`;
         createNotification({
           users: users2,
           message: message2,
-          path,
+          path:
+            typeDemande === "DB"
+              ? "/service-relex"
+              : typeDemande === "DC"
+              ? "/gestion-congés"
+              : "/gestion-modification",
           type: typeDemande,
         });
       } else {
+        // celui qui l a envoyé
         users = [emetteur.id];
         message = `Votre demande de  ${nomDemande}  a été ${etat} par ${updatedBy.nom} ${updatedBy.prenom}.`;
         createNotification({
           users: users,
           message: message,
-          path,
+          path:
+            typeDemande === "DB"
+              ? "/service-relex"
+              : typeDemande === "DC"
+              ? "/gestion-congés"
+              : "/gestion-modification",
           type: typeDemande,
         });
 
@@ -609,7 +630,12 @@ const sendRequestNotification = async (operation, body) => {
         createNotification({
           users: users2,
           message: message2,
-          path,
+          path:
+            typeDemande === "DB"
+              ? "/service-relex"
+              : typeDemande === "DC"
+              ? "/gestion-congés"
+              : "/gestion-modification",
           type: typeDemande,
         });
       }

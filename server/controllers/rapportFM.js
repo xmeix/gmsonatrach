@@ -97,10 +97,12 @@ const sendRFMNotification = async (body) => {
     //refusé
     message = `Votre rapport de fin de mission a été refusé. Veuillez soumettre une nouvelle version dans les plus brefs délais.`;
     users = [rfm.idEmploye._id];
+    path = "/gestion-des-mission/rfms";
   } else if (etat === "accepté") {
     //accepté
     message = `votre rapport de fin de mission a été accepté.`;
     users = [rfm.idEmploye._id];
+    path = "/gestion-des-mission/rfms";
   } else if (etat === "en-attente") {
     //en-attente
     message = `vous avez reçu un nouveau rapport de fin de mission de la part de ${rfm.idEmploye.nom} ${rfm.idEmploye.prenom} .`;
@@ -111,6 +113,7 @@ const sendRFMNotification = async (body) => {
         { role: "secretaire" },
       ],
     });
+    path = "/gestion-c-m-rfm/rfms";
   }
   if (etat === "créé" || etat === "accepté" || etat === "en-attente") {
     createNotification({

@@ -9,15 +9,10 @@ export const createOrUpdateFMission = async (
   updateType
 ) => {
   //cas creation mission
-  console.log(
-    "_________________________________________________________________"
-  );
-  console.log(newMission.taches);
-  console.log(
-    "_________________________________________________________________"
-  );
+ 
   switch (operation) {
     case "creation":
+      // we look for the most recent document that has been created with the data (etat,structure,..) of the current new mission
       const mostRecent = await FMission.findOne({
         etat: "en-attente",
         structure: newMission.structure,
@@ -74,7 +69,7 @@ export const createOrUpdateFMission = async (
       const recentFMission = await FMission.findOne({
         etat: newMission ? newMission.etat : "",
         structure: newMission.structure,
-        type: newMission.type,
+        type: newMission.type, 
         country: newMission.pays,
         departure: newMission.lieuDep,
         destination: newMission.destination,

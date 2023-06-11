@@ -291,15 +291,14 @@ cron.schedule("20 01 * * *", async () => {
       structure: mission.structure,
     });
 
-     createNotification({
+    createNotification({
       users: [...employeIds],
       message:
         "Votre rapport de fin de mission a été créé et doit être rempli dans les délais impartis. Merci de prendre les mesures nécessaires pour le compléter.",
-      path: "",
+      path: "/gestion-des-missions/rfms",
       type: "RFM",
     });
     // emitNotification({ others: mission.employes });
-
   }
   console.log("2");
 
@@ -319,8 +318,6 @@ cron.schedule("20 01 * * *", async () => {
     let saved = await mission.save();
 
     createOrUpdateFMission(saved, "update", old, "etat");
-    console.log("3");
-
     // __________________________________________________________________________
     //  CREATE NOTIFICATION FOR SECRETAIRE, DIRECTEUR, RESPONSABLE SAME STRUCTURE
     // __________________________________________________________________________
@@ -336,11 +333,9 @@ cron.schedule("20 01 * * *", async () => {
         { _id: { $ne: toId(mission.createdBy.id) } },
       ],
     });
-    console.log("4");
 
-
-     createNotification({
-      users: [mission.createdBy, ...users], //this is a mistake , normally we would sennd a notification to the one who created it
+    createNotification({
+      users: [mission.createdBy, ...users],
       message: `la demande de mission prévu pour ${new Date(mission.tDateDeb)
         .toLocaleDateString("en-US", {
           year: "numeric",
@@ -359,20 +354,14 @@ cron.schedule("20 01 * * *", async () => {
         )} a été automatiquement rejetée en raison d'une absence de réponse.`,
       path: "",
       type: "mission",
-    });    
+    });
     // emitNotification({ others: [...users, mission.createdBy] });
-
-    console.log("5");
-
 
     let responsables = users
       .filter((u) => u.role === "responsable")
       .map((u) => u);
     // emit getMissions responsables meme structure---------------------------------------
-    console.log("6");
-
     emitDataCron(2, { others: responsables, structure: mission.structure });
-    console.log("7");
   }
 
   //_____________________________________________________________________________________________________
@@ -404,11 +393,11 @@ cron.schedule("20 01 * * *", async () => {
     // __________________________________
     //  SEND REMINDER FOR EACH EMPLOYES
     // __________________________________
-     createNotification({
+    createNotification({
       users: [employeIds],
       message:
         "Mission réussie ! Merci de nous envoyer votre rapport de fin de mission dûment rempli.",
-      path: "",
+      path: "/gestion-des-mission/rfms",
       type: "RFM",
     });
 
@@ -424,8 +413,6 @@ cron.schedule("20 01 * * *", async () => {
 
   emitDataCron(4, { others: all.map((u) => u._id) });
   console.log("Cron job ending...");
-
-  // io.emit("cronDataChange");
 });
 
 // function used to emit data to connected Users.
@@ -445,7 +432,7 @@ const emitDataCron = async (operation, ids) => {
   allUsers = users.map((u) => u._id.toString());
   otherUsers = others.map((u) => u.toString());
   combinedUsers = otherUsers.concat(allUsers);
-  console.log(combinedUsers)
+  console.log(combinedUsers);
   switch (operation) {
     case 1:
       emitGetData(combinedUsers, "getUsers");
@@ -468,10 +455,13 @@ const emitDataCron = async (operation, ids) => {
       break;
   }
 };
-//cron to add users to db
+
+// ____________________________________________________________________________________________
+//  cron to add users to db
+// ____________________________________________________________________________________________
+
 // cron.schedule("31 07 * * *", async () => {
 //   console.log("start");
-
 //   try {
 //     for (const user of users) {
 //       const { nom, prenom, fonction, numTel, email, role, etat, structure } =
@@ -499,9 +489,9 @@ const emitDataCron = async (operation, ids) => {
 //   console.log("end");
 // });
 
-// cron creation RFM+OM
-
-// _______________________________________________________________________
+// ____________________________________________________________________________________________
+//  cron creation RFM+OM (FOR TESTING ONLY)
+// ____________________________________________________________________________________________
 
 // cron.schedule("12 11 * * *", async () => {
 //   //creation auto des RFM + OM
@@ -552,18 +542,11 @@ const emitDataCron = async (operation, ids) => {
 //   io.emit("cronDataChange");
 //   console.log("finished emmiting");
 // });
-// _______________________________________________________________________
-//Creation FMission
-// cron.schedule("21 21 * * *", async () => {
-//   const missions = await Mission.find();
 
-//   console.log("here");
-//   for (const mission of missions) {
-//     createOrUpdateFMission(mission);
-//   }
-//   console.log("here");
-// });
-
+// ____________________________________________________________________________________________
+//  cron creation FMission (FOR TESTING ONLY)
+// ____________________________________________________________________________________________
+ 
 // const addMissionsData = async () => {
 //   //grab missions array from data file loop through it and insert each element into db using createMission function
 //   missions.map(async (mission) => {

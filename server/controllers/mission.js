@@ -365,7 +365,7 @@ const sendNotification = async (operation, body) => {
           createNotification({
             users: users,
             message: message,
-            path,
+            path: "/gestion-des-mission/oms",
             type,
           });
 
@@ -397,7 +397,7 @@ const sendNotification = async (operation, body) => {
           createNotification({
             users: users2,
             message: message2,
-            path,
+            path: "/gestion-des-mission",
             type,
           });
         } else {
@@ -410,7 +410,12 @@ const sendNotification = async (operation, body) => {
           };
           users = await User.find(query);
           message = `Vous avez reçu une nouvelle demande de mission de la part de  ${user.nom} ${user.prenom}`;
-          createNotification({ users, message, path, type });
+          createNotification({
+            users,
+            message,
+            path: "/gestion-des-mission",
+            type,
+          });
         }
       }
       break;
@@ -434,7 +439,12 @@ const sendNotification = async (operation, body) => {
               })
               .replace(/\//g, "-")} a été ${etat}.`;
             users = employes;
-            createNotification({ users, message, path, type });
+            createNotification({
+              users,
+              message,
+              path: "/gestion-des-mission",
+              type,
+            });
           }
         } else if (etat === "acceptée") {
           //envoyer a tous les employés
@@ -454,7 +464,12 @@ const sendNotification = async (operation, body) => {
               day: "2-digit",
             })
             .replace(/\//g, "-")}`;
-          createNotification({ users, message, path, type });
+          createNotification({
+            users,
+            message,
+            path: "/gestion-des-mission/oms",
+            type,
+          });
         }
 
         //on envoie pas de notification pour celui qui a créer la mission et l as annuler (created it === updatedit)
@@ -482,10 +497,15 @@ const sendNotification = async (operation, body) => {
         if (updatedBy.id !== createdBy.id) {
           // Send notification to the creator of the mission
           users = [createdBy];
-          await createNotification({ users, message, path, type });
+          await createNotification({
+            users,
+            message,
+            path: "/gestion-des-mission",
+            type,
+          });
         }
 
-        // Send notification to all other employees assigned to the mission
+        // Send notification to all other employees
 
         users = await User.find({
           $and: [
@@ -500,7 +520,12 @@ const sendNotification = async (operation, body) => {
             { _id: { $ne: toId(updatedBy.id) } },
           ],
         });
-        createNotification({ users, message, path, type });
+        createNotification({
+          users,
+          message,
+          path: "/gestion-des-mission",
+          type,
+        });
       }
       break;
     case "date":
@@ -521,8 +546,18 @@ const sendNotification = async (operation, body) => {
 
       createNotification({
         users: [...users, ...employes.map((e) => e._id)],
-        message: `la date de fin de mission prévue pour d1 a été modifié par ${updatedBy.nom} ${updatedBy.prenom} `,
-        path,
+        message: `la date de fin de mission prévue pour ${new Date(
+          mission.tDateDeb
+        )
+          .toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+          })
+          .replace(/\//g, "-")} a été modifié par ${updatedBy.nom} ${
+          updatedBy.prenom
+        } `,
+        path: " /gestion-des-mission",
         type,
       });
 

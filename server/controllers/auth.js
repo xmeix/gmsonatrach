@@ -33,7 +33,7 @@ export const login = async (req, res) => {
 
     const refreshToken = generateJWT(
       user,
-      "364d",  
+      "364d",
       process.env.REFRESH_TOKEN_SECRET
     );
 
@@ -41,7 +41,7 @@ export const login = async (req, res) => {
       httpOnly: true, //accessible only by web server
       secure: true, // should be true in production https
       sameSite: "None", //cross-site cookie
-      maxAge: 364 * 24 * 60 * 60 * 1000,  
+      maxAge: 364 * 24 * 60 * 60 * 1000,
     });
     delete user.password;
 
@@ -111,7 +111,7 @@ export const register = async (req, res) => {
     const passwordHash = await bcrypt.hash(password, salt);
     console.log(user.role);
     let customId;
-    if (user.role === "relex") {
+    if (role === "relex") {
       customId = await generateCustomId("RELEX", "users");
     } else if (user.role === "responsable") {
       customId = await generateCustomId(user.structure, "users");

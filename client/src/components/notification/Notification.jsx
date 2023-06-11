@@ -20,25 +20,25 @@ const Notification = ({ notification }) => {
     return date.toLocaleDateString("fr-FR", options).split("/").join("-");
   };
 
-  const getNotificationTypes = () => {
-    switch (user?.role) {
-      case "directeur":
-      case "secretaire":
-      case "responsable":
-        return notific;
-      case "employe":
-        return employeNotific;
-      case "relex":
-        return relexNotific;
-      default:
-        return [];
-    }
-  };
+  // const getNotificationTypes = () => {
+  //   switch (user?.role) {
+  //     case "directeur":
+  //     case "secretaire":
+  //     case "responsable":
+  //       return notific;
+  //     case "employe":
+  //       return employeNotific;
+  //     case "relex":
+  //       return relexNotific;
+  //     default:
+  //       return [];
+  //   }
+  // };
 
-  const [notificationTypes] = useState(getNotificationTypes);
-  const { type, path } = notificationTypes.find(
-    (item) => item.type === notification.type
-  ) || { type: "", path: "/" };
+  // const [notificationTypes] = useState(getNotificationTypes);
+  // const { type, path } = notificationTypes.find(
+  //   (item) => item.type === notification.type
+  // ) || { type: "", path: "/" };
   return (
     <NavLink
       onClick={() => {
@@ -48,7 +48,7 @@ const Notification = ({ notification }) => {
           });
         }
       }}
-      to={path}
+      to={notification.path}
       className={`notification link ${
         notification.isRead ? "isRead" : "notRead"
       }`}
