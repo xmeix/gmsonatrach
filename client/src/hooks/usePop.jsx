@@ -1,33 +1,40 @@
-import React, { useState } from "react";
-import {
-  Button,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-} from "@material-ui/core";
+import { useEffect, useState } from "react";
 
 const usePop = () => {
-  const [open, setOpen] = useState(false);
+  const [message, setMessage] = useState("");
+  const [severity, setSeverity] = useState("");
 
-  const openPop = () => {
-    setOpen(true);
+  useEffect(() => {
+    let timeout;
+
+    if (message) {
+      timeout = setTimeout(() => {
+        setMessage("");
+        setSeverity("");
+      }, 4000);
+    }
+
+    return () => clearTimeout(timeout);
+  }, [message]);
+
+  const showPopupMessage = (msg, sev) => {
+    setMessage(msg);
+    setSeverity(sev);
   };
 
-  const handleClose = () => {
-    setOpen(false);
+  const PopupMessage = () => {
+    if (!message) {
+      return null; // Hide the message component if there's no message
+    }
+    // useEffect(() => {
+    //   if (message && severity) {
+    //     showPopupMessage(message, severity);
+    //   }
+    // }, [message, severity]);
+
+    return <div className={`${severity}-message`}>{message}</div>;
   };
 
-  const Pop = ({ title, component }) => (
-    <div>
-      <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>{title}</DialogTitle>
-        <DialogContent>{React.createElement(component)}</DialogContent>
-      </Dialog>
-    </div>
-  );
-
-  return { Pop, openPop, handleClose };
+  return { showPopupMessage, PopupMessage };
 };
-
 export default usePop;

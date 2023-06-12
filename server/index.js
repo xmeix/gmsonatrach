@@ -460,34 +460,35 @@ const emitDataCron = async (operation, ids) => {
 //  cron to add users to db
 // ____________________________________________________________________________________________
 
-// cron.schedule("31 07 * * *", async () => {
-//   console.log("start");
-//   try {
-//     for (const user of users) {
-//       const { nom, prenom, fonction, numTel, email, role, etat, structure } =
-//         user;
-//       const salt = await bcrypt.genSalt();
-//       const passwordHash = await bcrypt.hash(user.password, salt);
-
-//       const newUser = new User({
-//         nom,
-//         prenom,
-//         fonction,
-//         numTel,
-//         email,
-//         password: passwordHash,
-//         role,
-//         etat,
-//         structure,
-//       });
-//       console.log(newUser);
-//       const savedUser = await newUser.save();
-//     }
-//   } catch (error) {
-//     console.log(error);
-//   }
-//   console.log("end");
-// });
+cron.schedule("31 07employ * * *", async () => {
+  console.log("start");
+  try {
+    for (const user of users) {
+      const { nom, prenom, fonction, numTel, email, role, etat, structure } =
+        user;
+      const salt = await bcrypt.genSalt();
+      const passwordHash = await bcrypt.hash(user.password, salt);
+      customId = await generateCustomId(structure, "users");
+       const newUser = new User({
+        uid: customId,
+        nom,
+        prenom,
+        fonction,
+        numTel,
+        email,
+        password: passwordHash,
+        role,
+        etat,
+        structure,
+      });
+      console.log(newUser);
+      const savedUser = await newUser.save();
+    }
+  } catch (error) {
+    console.log(error);
+  }
+  console.log("end");
+});
 
 // ____________________________________________________________________________________________
 //  cron creation RFM+OM (FOR TESTING ONLY)
@@ -546,7 +547,7 @@ const emitDataCron = async (operation, ids) => {
 // ____________________________________________________________________________________________
 //  cron creation FMission (FOR TESTING ONLY)
 // ____________________________________________________________________________________________
- 
+
 // const addMissionsData = async () => {
 //   //grab missions array from data file loop through it and insert each element into db using createMission function
 //   missions.map(async (mission) => {

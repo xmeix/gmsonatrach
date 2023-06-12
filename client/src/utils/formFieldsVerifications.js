@@ -398,7 +398,6 @@ export const validateUser = (user) => {
   ) {
     errors.email = "L'email doit être valide.";
   }
-  console.log(user.password);
   if (!user.password || user.password === "empty") {
     errors.password = "obligatoire.";
   }

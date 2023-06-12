@@ -59,5 +59,9 @@ export const useAxios = () => {
   return {
     isLoading,
     callApi,
+    successMsg,
+    error,
+    setError,
+    setSuccessMsg,
   };
 };

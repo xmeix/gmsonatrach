@@ -16,7 +16,6 @@ import {
   verifyInclusion,
 } from "../../utils/formFieldsVerifications";
 import { getBestEmployes } from "../../api/apiCalls/getCalls";
-import useMessage from "../message/useMessage";
 const customStyles = {
   control: (provided, state) => ({
     ...provided,
@@ -33,7 +32,8 @@ const customStyles = {
 
 const Formulaire = ({ title, entries, buttons, type }) => {
   const selectInputRef = useRef();
-  const { callApi, error, isLoading, successMsg } = useAxios();
+  const { callApi, error, setError, isLoading, successMsg, setSuccessMsg } =
+    useAxios();
   const currentUser = useSelector((state) => state.auth.user);
   const [selectedRole, setSelectedRole] = useState("");
 
@@ -107,108 +107,67 @@ const Formulaire = ({ title, entries, buttons, type }) => {
       }
     }
   }, [start, end, entries, missions, type, users]);
-  // resetForm(() => {
-  //   const vals = {};
-  //   entries.forEach((entry) => {
-  //     vals[entry.id] = "";
-  //   });
-  //   delete vals[""]; // remove empty string key
-  //   return vals;
-  // });
-  /***-----------------------------------------------------------*/
   const handleSubmit = (e) => {
     e.preventDefault();
-    // setSelectedRole("");
+
+    let validationErrors = {};
+    let apiEndpoint = "";
+    let dataToSend = {};
+
     switch (type) {
       case "user":
-        {
-          //register(values);
-
-          setErrors(
-            validateUser({
-              ...values,
-              user: currentUser,
-              selectedRole: selectedRole,
-            })
-          );
-          if (
-            Object.keys(
-              validateUser({
-                ...values,
-                user: currentUser,
-                selectedRole: selectedRole,
-              })
-            ).length === 0
-          ) {
-            callApi("post", "/auth/register", { ...values });
-            setErrors({});
-            // showMessage(successMsg, "success");
-          }
-          // else showMessage(error, "error");
-        }
+        validationErrors = validateUser({
+          ...values,
+          user: currentUser,
+          selectedRole: selectedRole,
+        });
+        apiEndpoint = "/auth/register";
+        dataToSend = { ...values, role: selectedRole || "" };
         break;
       case "mission":
-        {
-          //register(values);
-          let object = {
-            type: "form",
-            users,
-            missions,
-          };
-          setErrors(validateMission(values, currentUser, object));
-          if (
-            Object.keys(validateMission(values, currentUser, object)).length ===
-            0
-          ) {
-            callApi("post", "/mission", values);
-            setErrors({});
-            // showMessage(successMsg, "success");
-          }
-        }
+        const missionValidationObject = {
+          type: "form",
+          users,
+          missions,
+        };
+        validationErrors = validateMission(
+          values,
+          currentUser,
+          missionValidationObject
+        );
+        apiEndpoint = "/mission";
+        dataToSend = values;
         break;
       case "DB":
-        {
-          //register(values);
-          let object = {
-            type: "form",
-            users,
-            demandes: demandes.filter((d) => d.__t === "DB").map((d) => d),
-          };
-          setErrors(validateDB(values, currentUser, object));
-          if (
-            Object.keys(validateDB(values, currentUser, object)).length === 0
-          ) {
-            callApi("post", "/demande/DB", values);
-            setErrors({});
-            // showMessage(successMsg, "success");
-          }
-        }
+        const dbValidationObject = {
+          type: "form",
+          users,
+          demandes: demandes.filter((d) => d.__t === "DB").map((d) => d),
+        };
+        validationErrors = validateDB(values, currentUser, dbValidationObject);
+        apiEndpoint = "/demande/DB";
+        dataToSend = values;
         break;
       case "DC":
-        {
-          //register(values);
-          setErrors(validateDC(values));
-          if (Object.keys(validateDC(values)).length === 0) {
-            //register(values);
-            callApi("post", "/demande/DC", values);
-            setErrors({});
-            // showMessage(successMsg, "success");
-          }
-        }
+        validationErrors = validateDC(values);
+        apiEndpoint = "/demande/DC";
+        dataToSend = values;
         break;
       case "DM":
-        {
-          setErrors(validateDM(values));
-          if (Object.keys(validateDM(values)).length === 0) {
-            //register(values);
-            callApi("post", "/demande/DM", values);
-            setErrors({});
-            // showMessage(successMsg, "success");
-          }
-        }
+        validationErrors = validateDM(values);
+        apiEndpoint = "/demande/DM";
+        dataToSend = values;
         break;
       default:
         console.log("errrr");
+    }
+
+    setErrors(validationErrors);
+
+    if (Object.keys(validationErrors).length === 0) {
+      callApi("post", apiEndpoint, dataToSend);
+      setErrors({});
+      // showMessage(successMsg, "success");
     }
   };
 
@@ -218,8 +177,9 @@ const Formulaire = ({ title, entries, buttons, type }) => {
         if (currentUser.role === "secretaire") return false;
         break;
       case "structure":
-        if (currentUser.role === "responsable") return false;
-        else if (selectedRole === "relex" || selectedRole === "secretaire")
+        if (currentUser.role === "responsable") {
+          return false;
+        } else if (selectedRole === "relex" || selectedRole === "secretaire")
           return false;
         break;
     }
@@ -292,6 +252,29 @@ const Formulaire = ({ title, entries, buttons, type }) => {
   const handleGetBestEmployes = () => {
     getBestEmployes("/ticket/employes");
   };
+  useEffect(() => {
+    let timeout;
+
+    if (successMsg) {
+      timeout = setTimeout(() => {
+        setSuccessMsg("");
+      }, 4000);
+    }
+
+    return () => clearTimeout(timeout);
+  }, [successMsg]);
+
+  useEffect(() => {
+    let timeout;
+
+    if (error) {
+      timeout = setTimeout(() => {
+        setError("");
+      }, 4000);
+    }
+
+    return () => clearTimeout(timeout);
+  }, [error]);
 
   return (
     <div className="formulaire">

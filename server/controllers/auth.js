@@ -94,8 +94,9 @@ export const refresh = async (req, res) => {
 // ------------------------------------------------------------------
 /** REGISTER USER */
 export const register = async (req, res) => {
+  const user = await User.findById(req.user.id);
   try {
-    const {
+    let {
       nom,
       prenom,
       fonction,
@@ -105,17 +106,40 @@ export const register = async (req, res) => {
       role,
       etat,
       structure,
-      user,
+      selectedRole,
     } = req.body;
+
     const salt = await bcrypt.genSalt();
     const passwordHash = await bcrypt.hash(password, salt);
-    console.log(user.role);
     let customId;
-    if (role === "relex") {
+
+    // Check if user already exists
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({ error: "Cet utilisateur existe déjà" });
+    }
+
+    console.log(structure);
+
+    console.log(selectedRole);
+    console.log(role);
+
+    if (role === "secretaire") {
+      customId = await generateCustomId("SECRETARIAT", "users");
+      structure = "SECRETARIAT";
+    } else if (role === "relex") {
       customId = await generateCustomId("RELEX", "users");
-    } else if (user.role === "responsable") {
-      customId = await generateCustomId(user.structure, "users");
+      structure = "RELEX";
+    } else if (user.role === "responsable" && role === "employe") {
+      structure = user.structure;
+      customId = await generateCustomId(structure, "users");
+      console.log("here ", structure, user.structure);
+    } else if (user.role === "secretaire" && role === "") {
+      //car la secrétaire dans certain cas ne mentionne pas le besoin
+      customId = await generateCustomId(structure, "users");
+      role = "employe";
     } else customId = await generateCustomId(structure, "users");
+
     const newUser = new User({
       uid: customId,
       nom,
@@ -132,7 +156,7 @@ export const register = async (req, res) => {
     const savedUser = await newUser.save();
 
     // emit to responsable same structure, directeur , secrétaire
-    sendUserEmits("create", { structure: structure });
+    sendUserEmits("create", { structure });
     res.status(201).json({ savedUser, msg: "Registered Successfully" });
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -148,8 +172,11 @@ export const getAllUsers = async (req, res) => {
     if (currUser.role === "relex" || currUser.role === "employe")
       throw new Error("Unauthorized");
     else if (currUser.role === "responsable") {
+      //emp + secretaire
       filteredUsers = users.filter(
-        (user) => user.structure === req.user.structure
+        (user) =>
+          user.structure === req.user.structure ||
+          user.role === "secretaire"  
       );
     } else filteredUsers = users;
     res.status(200).json(filteredUsers);
@@ -223,6 +250,7 @@ const sendUserEmits = async (operation, ids) => {
   switch (operation) {
     case "create":
       let combinedUsers = users.map((u) => u._id.toString());
+      console.log("combined ===> ", combinedUsers);
       emitGetData(combinedUsers, "getUsers");
       break;
 

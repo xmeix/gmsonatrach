@@ -43,11 +43,9 @@ export const columnsUsersEmp = [
   { id: "prenom", label: "prénom", minWidth: "20px" },
 ];
 export const filterResOptions = [
-  "directeur",
-  "secretaire",
-  "employe",
-  "responsable",
-  "non-missionnaire",
+   "secretaire",
+  "employe", 
+   "non-missionnaire",
   "missionnaire",
 ];
 export const filterUserOptions = [
@@ -55,6 +53,7 @@ export const filterUserOptions = [
   "secretaire",
   "employe",
   "responsable",
+  "relex",
   "non-missionnaire",
   "missionnaire",
   "DG",
