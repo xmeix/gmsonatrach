@@ -112,32 +112,40 @@ export const createMission = async (req, res) => {
       user: userObj,
     });
 
-    const query = {
-      uid: newId,
-      objetMission: objetMission,
-      structure: newStructure,
-      type,
-      budget,
-      pays,
-      employes: newEmployes,
-      taches,
-      tDateDeb,
-      tDateRet,
-      moyenTransport,
-      moyenTransportRet,
-      lieuDep,
-      destination,
-      observation,
-      etat: "en-attente",
-      // circonscriptionAdm,
-      createdBy,
-      updatedBy,
-    };
+    // const query = {
+    //   uid: newId,
+    //   objetMission: objetMission,
+    //   structure: newStructure,
+    //   type,
+    //   budget,
+    //   pays,
+    //   employes: newEmployes,
+    //   taches,
+    //   tDateDeb,
+    //   tDateRet,
+    //   moyenTransport,
+    //   moyenTransportRet,
+    //   lieuDep,
+    //   destination,
+    //   observation,
+    //   etat: "en-attente",
+    //   // circonscriptionAdm,
+    //   createdBy,
+    //   updatedBy,
+    // };
     // ____________________________________________________________________________________;
-    createOrUpdateFMission(query, "creation", null, "");
+    // createOrUpdateFMission(query, "creation", null, "");
+    createOrUpdateFMission("creation", {
+      newMission: { ...savedMission, etat: "en-attente" },
+    });
 
     if (savedMission.etat === "acceptée") {
-      createOrUpdateFMission(savedMission, "update", query, "etat");
+      // createOrUpdateFMission(savedMission, "update", query, "etat"); //---------------------------------------------XXXXXXXX
+      createOrUpdateFMission("update", {
+        oldMission: { ...savedMission, etat: "en-attente" },
+        newMission: savedMission,
+        updateType: "etat",
+      });
     }
     //____________________________________________________________________________________;
 
@@ -188,14 +196,13 @@ export const updateMissionEtat = async (req, res) => {
     const updatedBy = toId(req.user.id);
     const mission = await Mission.findById(req.params.id);
     const employes = mission.employes;
-    // console.log("here1");
-    // console.log(req.body);
+
     const updatedMission = await Mission.findByIdAndUpdate(
       req.params.id,
       { ...req.body, updatedBy: updatedBy },
       { new: true }
     );
-    // console.log("here2");
+
     const populatedMission = await Mission.findById(updatedMission.id)
       .populate("createdBy")
       .populate("updatedBy");
@@ -229,7 +236,6 @@ export const updateMissionEtat = async (req, res) => {
           //______________________________________________________________
         }
       }
-
       // ________________________________________________________________________________________
       //          DELETE ALL OMS RELATED TO A MISSION IF A MISSION HAVE BEEN CANCELED
       // ________________________________________________________________________________________
@@ -257,7 +263,14 @@ export const updateMissionEtat = async (req, res) => {
 
       //____________________________________________________________________________________
       //update etat
-      createOrUpdateFMission(updatedMission, "update", mission, "etat");
+      // createOrUpdateFMission(updatedMission, "update", mission, "etat");
+      console.log("old:", mission.etat);
+      console.log("new:", updatedMission.etat);
+      createOrUpdateFMission("update", {
+        oldMission: mission,
+        newMission: updatedMission,
+        updateType: "etat",
+      });
       //____________________________________________________________________________________
     }
 
@@ -269,7 +282,12 @@ export const updateMissionEtat = async (req, res) => {
       });
       //____________________________________________________________________________________
       //update tache
-      createOrUpdateFMission(updatedMission, "update", mission, "tache");
+      // createOrUpdateFMission(updatedMission, "update", mission, "tache");
+      createOrUpdateFMission("update", {
+        oldMission: mission, //we wont really need it
+        newMission: updatedMission,
+        updateType: "tache",
+      });
       //____________________________________________________________________________________
     }
 
@@ -283,6 +301,25 @@ export const updateMissionEtat = async (req, res) => {
         mission,
         employes,
         updatedBy: populatedMission.updatedBy,
+      });
+
+      createOrUpdateFMission("update", {
+        oldMission: mission, //neither this
+        newMission: updatedMission,
+        updateType: "date",
+      });
+    }
+
+    if (req.body.budgetConsome) {
+      sendEmits("update", {
+        others: [],
+        structure: mission.structure,
+        etat: "budget",
+      });
+      createOrUpdateFMission("update", {
+        oldMission: mission, //neither this
+        newMission: updatedMission,
+        updateType: "budget",
       });
     }
 
@@ -334,7 +371,7 @@ const sendEmits = async (operation, ids) => {
         let otherUsers = others.map((u) => u._id.toString());
         let combinedUsers = otherUsers.concat(allUsers);
         emitGetData(combinedUsers, "getMissions");
-      } else if (etat === "date") {
+      } else if (etat === "date" || etat === "budget") {
         let allUsers = users.map((u) => u._id.toString());
         let otherUsers = others.map((u) => u._id.toString());
         let combinedUsers = otherUsers.concat(allUsers);

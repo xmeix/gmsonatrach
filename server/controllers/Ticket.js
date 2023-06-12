@@ -1,4 +1,5 @@
 import Ticket from "../models/Ticket.js";
+import { createOrUpdateFMission } from "./Kpis.js";
 import { emitGetData } from "./utils.js";
 
 export const createTicket = async (req, res) => {
@@ -7,7 +8,16 @@ export const createTicket = async (req, res) => {
     const ticket = new Ticket({ mission, employe, object, description });
     await ticket.save();
     await ticket.populate("mission.employes");
-    EmitTicket({ others: [...mission.employes] });
+
+    // ------------------------------------------------------------------------------------------------------XXXXXXXXXXXXXXXXXXXXXXX
+    createOrUpdateFMission("update", {
+      newMission: mission, // add one ticket to the number of tickets in this mission
+      updateType: "ticket",
+    });
+    // ------------------------------------------------------------------------------------------------------XXXXXXXXXXXXXXXXXXXXXXX
+
+    EmitTicket({ others: [...mission.employes] }); //might emit getKpis as well
+
     // emitData("ticket");
     res.status(200).json(ticket);
   } catch (err) {
@@ -57,6 +67,10 @@ export const changeStatus = async (req, res) => {
       { new: true }
     ).populate("mission");
 
+    createOrUpdateFMission("update", {
+      newMission: mission, // add one ticket to the number of tickets in this mission
+      updateType: "solvedTicket",
+    });
     EmitTicket({ others: [...ticket.mission.employes] });
 
     res.status(200).json(ticket);

@@ -9,7 +9,7 @@ import "./../../css/Gestion.css";
 
 const EmployeesList = () => {
   const { users, user } = useSelector((state) => state.auth);
-  const usersEmp = users.filter((user) => user.role !== "relex");
+  // const usersEmp = users.filter((user) => user.role !== "relex");
 
   return (
     <div className="gestion">
@@ -19,7 +19,7 @@ const EmployeesList = () => {
           user.role === "responsable" ? filterResOptions : filterUserOptions
         }
         columns={columnsUsersEmp}
-        data={usersEmp}
+        data={users}
         colType="user"
       />
     </div>

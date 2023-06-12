@@ -249,7 +249,7 @@ cron.schedule("20 01 * * *", async () => {
       others: mission.employes,
       structure: mission.structure,
     });
-    let old = mission;
+    // let old = mission;
     // change the mission state to en cours
     mission.etat = "en-cours";
     let saved = await mission.save();
@@ -264,13 +264,21 @@ cron.schedule("20 01 * * *", async () => {
     // CASE FMISSION : update etat
     //____________________________________________________________________________________
 
-    createOrUpdateFMission(saved, "update", old, "etat");
+    // createOrUpdateFMission(saved, "update", old, "etat");
+    //____________________________________________________________________________________
+    //update etat
+    createOrUpdateFMission("update", {
+      oldMission: { ...saved, etat: "acceptée" },
+      newMission: saved,
+      updateType: "etat",
+    });
+    //____________________________________________________________________________________
 
     // console.log(saved.structure);
     // for each employee of employees we create RFMS
     for (const employeId of employeIds) {
       let customId = await generateCustomId(saved.structure, "rapportfms");
-      // console.log(customId);
+
       const rfm = new RapportFM({
         uid: customId,
         idMission: toId(mission._id),
@@ -300,7 +308,6 @@ cron.schedule("20 01 * * *", async () => {
     });
     // emitNotification({ others: mission.employes });
   }
-  console.log("2");
 
   //_____________________________________________________________________________________________________
   // IF MISSION DATE DEBUT <= NOW() AND STILL EN ATTENTE THEN UPDATE ITS STATE="REFUSEE"
@@ -313,11 +320,20 @@ cron.schedule("20 01 * * *", async () => {
   //  UPDATE STATE
   // ______________
   for (const mission of missionsEnAttente) {
-    let old = mission;
+    // let old = mission;
     mission.etat = "refusée";
     let saved = await mission.save();
 
-    createOrUpdateFMission(saved, "update", old, "etat");
+    // createOrUpdateFMission(saved, "update", old, "etat");
+    //____________________________________________________________________________________
+    //update etat
+    createOrUpdateFMission("update", {
+      oldMission: { ...saved, etat: "en-attente" },
+      newMission: saved,
+      updateType: "etat",
+    });
+    //____________________________________________________________________________________
+
     // __________________________________________________________________________
     //  CREATE NOTIFICATION FOR SECRETAIRE, DIRECTEUR, RESPONSABLE SAME STRUCTURE
     // __________________________________________________________________________
@@ -389,7 +405,16 @@ cron.schedule("20 01 * * *", async () => {
     }
     // emit getMissions to Employés + responsables same structure--------------------------------------
 
-    createOrUpdateFMission(saved, "update", old, "etat");
+    // createOrUpdateFMission(saved, "update", old, "etat");
+    //____________________________________________________________________________________
+    //update etat
+    createOrUpdateFMission("update", {
+      oldMission: { ...saved, etat: "en-cours" },
+      newMission: saved,
+      updateType: "etat",
+    });
+    //____________________________________________________________________________________
+
     // __________________________________
     //  SEND REMINDER FOR EACH EMPLOYES
     // __________________________________
@@ -460,35 +485,34 @@ const emitDataCron = async (operation, ids) => {
 //  cron to add users to db
 // ____________________________________________________________________________________________
 
-cron.schedule("31 07employ * * *", async () => {
-  console.log("start");
-  try {
-    for (const user of users) {
-      const { nom, prenom, fonction, numTel, email, role, etat, structure } =
-        user;
-      const salt = await bcrypt.genSalt();
-      const passwordHash = await bcrypt.hash(user.password, salt);
-      customId = await generateCustomId(structure, "users");
-       const newUser = new User({
-        uid: customId,
-        nom,
-        prenom,
-        fonction,
-        numTel,
-        email,
-        password: passwordHash,
-        role,
-        etat,
-        structure,
-      });
-      console.log(newUser);
-      const savedUser = await newUser.save();
-    }
-  } catch (error) {
-    console.log(error);
-  }
-  console.log("end");
-});
+// cron.schedule("28 06 * * *", async () => {
+//   console.log("start");
+//   try {
+//     for (const user of users) {
+//       const { nom, prenom, fonction, numTel, email, role, etat, structure } =
+//         user;
+//       const salt = await bcrypt.genSalt();
+//       const passwordHash = await bcrypt.hash(user.password, salt);
+//       let customId = await generateCustomId(structure, "users");
+//        const newUser = new User({
+//         uid: customId,
+//         nom,
+//         prenom,
+//         fonction,
+//         numTel,
+//         email,
+//         password: passwordHash,
+//         role,
+//         etat,
+//         structure,
+//       });
+//       const savedUser = await newUser.save();
+//     }
+//   } catch (error) {
+//     console.log(error);
+//   }
+//   console.log("end");
+// });
 
 // ____________________________________________________________________________________________
 //  cron creation RFM+OM (FOR TESTING ONLY)

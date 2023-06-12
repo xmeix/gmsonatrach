@@ -213,6 +213,7 @@ export const alterUser = async (req, res) => {
       updateOptions.password = hashedPassword;
     }
 
+    // if structure changes does he need a new id ? 
     const updatedUser = await User.findByIdAndUpdate(
       req.params.id,
       updateOptions,

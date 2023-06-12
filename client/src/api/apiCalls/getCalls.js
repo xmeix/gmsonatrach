@@ -18,7 +18,7 @@ const fetchData = async (dispatch, endpoint, socketEvent) => {
   dispatch(fetchStart());
   try {
     const res = await apiService.user.get(endpoint);
-    console.log(endpoint);
+    // console.log(endpoint);
     const eventToActionMap = {
       mission: setMissions,
       om: setOMs,
@@ -31,7 +31,7 @@ const fetchData = async (dispatch, endpoint, socketEvent) => {
       ticket: setTickets,
     };
     const setDataFunc = eventToActionMap[socketEvent];
-    console.log(res.data);
+    // console.log(res.data);
     dispatch(setDataFunc(res.data));
 
     dispatch(fetchEnd());

@@ -147,7 +147,6 @@ const MissionSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
-0;
 MissionSchema.pre("save", function (next) {
   if (this.tDateDeb && this.tDateRet) {
     const diffTime = Math.abs(this.tDateRet - this.tDateDeb);

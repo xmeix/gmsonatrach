@@ -9,6 +9,7 @@ import { createOrUpdateFDocument } from "./FilesKpis.js";
 import { emitGetData, generateCustomId } from "./utils.js";
 import { createNotification } from "./Notification.js";
 import OrdreMission from "../models/OrdreMission.js";
+import { createOrUpdateFMission } from "./Kpis.js";
 const toId = mongoose.Types.ObjectId;
 
 export const createDemande = async (req, res) => {
@@ -207,10 +208,7 @@ export const getDemandes = async (req, res) => {
 export const updateDemEtat = async (req, res) => {
   try {
     const demande = await Demande.findById(req.params.id);
-    // console.log("DEMANDE__________________________________________");
-    // console.log(req.body.etat);
-    // console.log("______________________________________________");
-
+   
     if (demande.etat === "en-attente" && req.body.etat !== "en-attente") {
       demande.etat = req.body.etat;
 
@@ -277,8 +275,18 @@ export const updateDemEtat = async (req, res) => {
             // __________
             // CHANGE ETAT
             // __________
+            // ------------------------------------------------------------------------------------------------------XXXXXXXXXXXXXXXXXXXXXXX
+
+            createOrUpdateFMission("update", {
+              oldMission: mission,
+              newMission: { ...mission, etat: "annulée" },
+              updateType: "etat",
+            });
+            // ------------------------------------------------------------------------------------------------------XXXXXXXXXXXXXXXXXXXXXXX
+
             mission.etat = "annulée";
             await mission.save();
+
             // __________
             // REMOVE OM
             // __________
@@ -314,6 +322,19 @@ export const updateDemEtat = async (req, res) => {
             mission.employes = mission.employes.filter(
               (employe) => !employe.equals(employeId)
             );
+            // ------------------------------------------------------------------------------------------------------XXXXXXXXXXXXXXXXXXXXXXX
+            createOrUpdateFMission("update", {
+              oldMission: mission, //wont need this 
+              newMission: {
+                ...mission,
+                employes: mission.employes.filter(
+                  (employe) => !employe.equals(employeId)
+                ),
+              },
+              updateType: "employeCount",
+            });
+            // ------------------------------------------------------------------------------------------------------XXXXXXXXXXXXXXXXXXXXXXX
+
             await mission.save();
 
             // _________________________________________

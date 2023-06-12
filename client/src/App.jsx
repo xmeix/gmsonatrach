@@ -16,6 +16,7 @@ import {
   getMissions,
   getNotifications,
   getTickets,
+  getMissionKPIS,
 } from "./api/apiCalls/getCalls";
 
 const Planning = lazy(() => import("./pages/planning/Planning"));
@@ -390,6 +391,7 @@ function App() {
     socket.on("getRfms", handleGetRFMs);
     socket.on("getUsers", handleGetUsers);
     socket.on("notification", handleNotification);
+    socket.on("getMissionKPIs", handleGetMissionKpis);
   };
 
   const handleSocketDisconnection = () => {
@@ -400,6 +402,7 @@ function App() {
     socket.off("getRfms", handleGetRFMs);
     socket.off("getUsers", handleGetUsers);
     socket.off("notification", handleNotification);
+    socket.off("getMissionKPIs", handleGetMissionKpis);
   };
 
   const handleTicket = useCallback(
@@ -415,6 +418,14 @@ function App() {
     (tab) => {
       if (tabId === tab) {
         getMissions(dispatch);
+      }
+    },
+    [dispatch, tabId]
+  );
+  const handleGetMissionKpis = useCallback(
+    (tab) => {
+      if (tabId === tab) {
+        getMissionKPIS(dispatch);
       }
     },
     [dispatch, tabId]
@@ -478,6 +489,14 @@ function App() {
         if (user.role !== "relex" && user.role !== "employe") {
           getUsers(dispatch);
         }
+
+        if (
+          user.role !== "relex" &&
+          user.role !== "employe" &&
+          user.role !== "secretaire"
+        ) {
+          getMissionKPIS(dispatch);
+        }
       }
     };
 
@@ -533,7 +552,7 @@ function App() {
       case "directeur":
         routes = mainDirRoutes;
         break;
-      case "responsable": 
+      case "responsable":
         routes = mainResRoutes;
         break;
 
