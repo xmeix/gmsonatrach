@@ -161,6 +161,20 @@ export const validateMission = (mission, user, object) => {
   return errors;
 };
 
+export const checkEmployeesMission = (users, employees) => {
+  // create a function that takes users and employes as arguments
+  //  which will check the existence of that employee and also returns the neww employee array orelse itll return an empty array
+  let newEmployes = [];
+
+  // for each employes inside employees we will get his _id
+  newEmployes = users
+    .filter((user) => employees.includes(user.uid))
+    .map((user) => user._id);
+
+  return newEmployes;
+  // returns either employees or empty array , if length array < employees.length than error (some users dont exist)
+};
+
 export const verifyInclusion = (st, en, start, end) => {
   if (
     (en >= start && st <= start && en <= end) ||

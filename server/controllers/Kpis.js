@@ -22,7 +22,6 @@ export const createOrUpdateFMission = async (operation, needs) => {
         departure: newMission.lieuDep,
         destination: newMission.destination,
       }).sort({ createdAt: -1 });
-
       // duplicate the most recent to create a new one similar to it but the difference in the measures
       const newFMission = new FMission({
         etat: "en-attente",
@@ -53,11 +52,17 @@ export const createOrUpdateFMission = async (operation, needs) => {
             calculateTransportUtilizationCount(newMission, "avion")
           : calculateTransportUtilizationCount(newMission, "avion"),
         estimated_budget: mostRecent
-          ? mostRecent.estimated_budget + newMission.budget
-          : newMission.budget,
+          ? mostRecent.estimated_budget +
+            (newMission.budget ? newMission.budget : 0)
+          : newMission.budget
+          ? newMission.budget
+          : 0,
         consumed_budget: mostRecent
-          ? mostRecent.consumed_budget + newMission.budgetConsome
-          : newMission.budgetConsome,
+          ? mostRecent.consumed_budget +
+            (newMission.budgetConsome ? newMission.budgetConsome : 0)
+          : newMission.budgetConsome
+          ? newMission.budgetConsome
+          : 0,
         time_Estimated: mostRecent
           ? mostRecent.time_Spent +
             calculateTimeSpent(newMission.tDateDeb, newMission.tDateRet)

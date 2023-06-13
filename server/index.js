@@ -133,6 +133,7 @@ mongoose
     // FMission.insertMany(Fmissions);
     // addMissionsData();
     console.log("end");
+
     io.on("connection", (socket) => {
       console.log(connectedUsers);
       connectedClients.push(socket.id);

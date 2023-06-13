@@ -2,7 +2,10 @@ import { useEffect, useState } from "react";
 import { useUpload } from "../../hooks/useUpload";
 
 import "./UploadMissions.css";
-import { validateMission } from "../../utils/formFieldsVerifications";
+import {
+  checkEmployeesMission,
+  validateMission,
+} from "../../utils/formFieldsVerifications";
 import { useSelector } from "react-redux";
 import { useAxios } from "../../hooks/useAxios";
 
@@ -182,7 +185,7 @@ const UploadM = () => {
     }
     const [month, year] = d[0][0].split("/");
     // console.log(month, year);
-    const date = new Date(year, month - 1, j+1).toISOString().split("T")[0];
+    const date = new Date(year, month - 1, j + 1).toISOString().split("T")[0];
     // console.log(date);
     return date;
   };
@@ -257,6 +260,7 @@ const UploadM = () => {
         if (element.includes(mission[0])) {
           // console.log({ idUser: element[0], mission: mission });
           // here we have to look for all the users and push them to the array
+
           employees.push(element[0].trim());
         }
       }
@@ -287,45 +291,59 @@ const UploadM = () => {
         }
 
         if (dateDeb && dateFin) {
-          missionObject = {
-            objetMission: mission[1]?.trim(),
-            type: mission[2]?.toLowerCase()?.trim(),
-            pays: mission[3]?.toLowerCase()?.trim(),
-            destination: mission[4]?.toLowerCase()?.trim(),
-            tDateDeb: dateDeb,
-            tDateRet: dateFin,
-            budget: mission[7] === "empty" ? 0 : parseInt(mission[7]),
-            moyenTransport: mission[5]
-              ?.split("-")
-              .map((item) => item?.toLowerCase()?.trim()),
-            moyenTransportRet: mission[6]
-              ?.split("-")
-              .map((item) => item?.toLowerCase()?.trim()),
-            employes: employees,
-            structure: mission[8]?.toUpperCase()?.trim(),
-          };
+          // on doit vérifier si chaque id existe deja dans la base de données (users)
+          // and then instead of pushing uid , we push _id
+          // and thats all before putting employe inside the object
 
-          let object = {
-            type: "import",
-            users,
-            missions: missions.filter(
-              (mission) =>
-                mission.etat !== "annulée" &&
-                mission.etat !== "terminée" &&
-                mission.etat !== "refusée"
-            ),
-          };
-          console.log(missionObject);
+          // create a function that takes users and employes as arguments
+          //  which will check the existence of that employee and also returns the neww employee array orelse itll return an empty array
+          let newEmpArray = checkEmployeesMission(users, employees);
 
-          if (
-            Object.keys(validateMission(missionObject, currentUser, object))
-              .length !== 0
-          ) {
+          if (newEmpArray.length < employees.length) {
             errs.push([
               ...errors,
-              validateMission(missionObject, currentUser, object),
+              { employees: "Un des employés n'existe pas" },
             ]);
-          } else allMissions.push(missionObject);
+          } else {
+            missionObject = {
+              objetMission: mission[1]?.trim(),
+              type: mission[2]?.toLowerCase()?.trim(),
+              pays: mission[3]?.toLowerCase()?.trim(),
+              destination: mission[4]?.toLowerCase()?.trim(),
+              tDateDeb: dateDeb,
+              tDateRet: dateFin,
+              budget: mission[7] === "empty" ? 0 : parseInt(mission[7]),
+              moyenTransport: mission[5]
+                ?.split("-")
+                .map((item) => item?.toLowerCase()?.trim()),
+              moyenTransportRet: mission[6]
+                ?.split("-")
+                .map((item) => item?.toLowerCase()?.trim()),
+              employes: newEmpArray,
+              structure: mission[8]?.toUpperCase()?.trim(),
+            };
+
+            let object = {
+              type: "import",
+              users,
+              missions: missions.filter(
+                (mission) =>
+                  mission.etat !== "annulée" &&
+                  mission.etat !== "terminée" &&
+                  mission.etat !== "refusée"
+              ),
+            };
+
+            if (
+              Object.keys(validateMission(missionObject, currentUser, object))
+                .length !== 0
+            ) {
+              errs.push([
+                ...errors,
+                validateMission(missionObject, currentUser, object),
+              ]);
+            } else allMissions.push(missionObject);
+          }
 
           break;
         }

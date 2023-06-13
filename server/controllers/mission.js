@@ -112,41 +112,40 @@ export const createMission = async (req, res) => {
       user: userObj,
     });
 
-    // const query = {
-    //   uid: newId,
-    //   objetMission: objetMission,
-    //   structure: newStructure,
-    //   type,
-    //   budget,
-    //   pays,
-    //   employes: newEmployes,
-    //   taches,
-    //   tDateDeb,
-    //   tDateRet,
-    //   moyenTransport,
-    //   moyenTransportRet,
-    //   lieuDep,
-    //   destination,
-    //   observation,
-    //   etat: "en-attente",
-    //   // circonscriptionAdm,
-    //   createdBy,
-    //   updatedBy,
-    // };
+    const query = {
+      uid: newId,
+      objetMission: objetMission,
+      structure: newStructure,
+      type,
+      budget,
+      pays,
+      employes: newEmployes,
+      taches,
+      tDateDeb,
+      tDateRet,
+      moyenTransport,
+      moyenTransportRet,
+      lieuDep,
+      destination,
+      observation,
+      etat: "en-attente",
+      // circonscriptionAdm,
+      createdBy,
+      updatedBy,
+    };
     // ____________________________________________________________________________________;
     // createOrUpdateFMission(query, "creation", null, "");
     createOrUpdateFMission("creation", {
-      newMission: { ...savedMission, etat: "en-attente" },
+      newMission: query,
     });
-
     if (savedMission.etat === "acceptée") {
       // createOrUpdateFMission(savedMission, "update", query, "etat"); //---------------------------------------------XXXXXXXX
       createOrUpdateFMission("update", {
-        oldMission: { ...savedMission, etat: "en-attente" },
+        oldMission: query,
         newMission: savedMission,
         updateType: "etat",
       });
-    }
+    }  
     //____________________________________________________________________________________;
 
     res
