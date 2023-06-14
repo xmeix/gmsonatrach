@@ -296,9 +296,10 @@ export const missionCompletionRate = (data, option) => {
     option,
     "etat"
   ).filter((e) => e.stack === "en-cours")[0];
-
-  let B = docsCompleted.mission_count;
-  let A = docsAccepted.mission_count;
+  // console.log(docsAccepted);
+  // console.log(docsCompleted);
+  let B = docsCompleted["mission_count"];
+  let A = docsAccepted["mission_count"];
   // console.log(docsAccepted);
   // console.log(docsCompleted);
   const value = ((A * 100) / B).toFixed(2);
@@ -332,8 +333,8 @@ export const budgetVariance = (mission) => {
 
 // nb tickets resolus / nb tickets total
 export const ticketResolutionRate = (mission, tickets) => {
-  const mtickets = tickets.filter((t) => t.mission._id === mission._id);
-
+  const mtickets = tickets.filter((t) => t.mission?._id === mission?._id);
+  // console.log(tickets.map((e) => e.mission));
   let A = mtickets.length; // Number of tickets for the mission
   let B = mtickets.filter((t) => t.isSolved).length; // Number of resolved tickets for the mission
 
@@ -359,6 +360,28 @@ export const missionCostPerEmployee = (mission) => {
     mission.employes.length === 0
     ? (0).toFixed(2)
     : value;
+};
+export const employeeProductivity = (user, missions) => {
+  // Filter missions where user contributed
+  const userMissions = missions.filter((m) =>
+    m.employes.some((e) => e._id === user._id)
+  );
+
+  // Calculate the number of missions contributed by the user
+  const A = userMissions.length;
+
+  // Calculate the total duration of missions contributed by the user in days
+  const B = userMissions.reduce((acc, mission) => {
+    const timeDiff = Math.abs(
+      new Date(mission.tDateDeb) - new Date(mission.tDateRet)
+    );
+    const durationInDays = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+    return acc + durationInDays;
+  }, 0);
+
+  // console.log(A);
+  // console.log(B);
+  return 0;
 };
 
 export const currentSuccessRate = (data, property1, property2) => {

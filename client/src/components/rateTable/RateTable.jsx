@@ -14,6 +14,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import {
   budgetVariance,
+  employeeProductivity,
   missionCostPerEmployee,
   tasksResolutionRate,
   ticketResolutionRate,
@@ -83,10 +84,13 @@ const RateTable = ({ type }) => {
 
   const { missions, tickets, users } = useSelector((state) => state.auth);
   const endedMissions = missions.filter((m) => m.etat === "terminée");
+  const missionnaires = users.filter(
+    (m) => m.role !== "secretaire" && m.role !== "relex"
+  );
   const [rowsPerPage, setRowsPerPage] = useState(3);
   const [page, setPage] = useState(0);
 
-  //   console.log(JSON.stringify(endedMissions.map((m) => m._id)));
+    // console.log(JSON.stringify(endedMissions.map((m) => m._id)));
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -103,64 +107,92 @@ const RateTable = ({ type }) => {
           page * rowsPerPage,
           page * rowsPerPage + rowsPerPage
         )
-      : users.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
+      : missionnaires.slice(
+          page * rowsPerPage,
+          page * rowsPerPage + rowsPerPage
+        );
 
-  const tableHeaders = {
-    1: [
-      { label: "ID Mission", key: "uid" },
-      { label: "l'écart budgétaire en pourcentage", key: "budgetVariance" },
-      { label: "taux de résolution des tickets", key: "ticketResolutionRate" },
-      {
-        label: "taux de résolution des taches mission",
-        key: "tasksResolutionRate",
-      },
-      { label: "frais de mission par employé", key: "missionCostPerEmployee" },
-    ],
-    2: [
-      { label: "ID Employé", key: "uid" },
-      { label: "Nom", key: "nom" },
-      { label: "Prénom", key: "prenom" },
-      { label: "Structure", key: "structure" },
-      { label: "taux de productivité", key: "" },
-    ],
-  };
   return (
     <div className="rate-table">
       <TableContainer component={Paper} aria-label="table">
-        <Table className={classes.table}>
-          <TableHead className={classes.tableHeader}>
-            <TableRow className={classes.tableRow}>
-              {tableHeaders[type].map((header, index) => (
-                <TableCell key={index} className={classes.tableCell}>
-                  {header.label}
+        {type === 1 && (
+          <Table className={classes.table}>
+            <TableHead className={classes.tableHeader}>
+              <TableRow className={classes.tableRow}>
+                <TableCell className={classes.tableCell}>ID Mission</TableCell>
+                <TableCell className={classes.tableCell}>
+                  l'écart budgétaire en pourcentage
                 </TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody className={classes.tableBody}>
-            {paginatedData.map((item, index) => (
-              <TableRow key={index} className={classes.tableRow}>
-                {tableHeaders[type].map((header, index) => (
-                  <TableCell key={index} className={classes.tableCell}>
-                    {header.key === "budgetVariance" &&
-                      budgetVariance(item) + "%"}
-                    {header.key === "ticketResolutionRate" &&
-                      ticketResolutionRate(item, tickets) + "%"}
-                    {header.key === "tasksResolutionRate" &&
-                      tasksResolutionRate(item) + "%"}
-                    {header.key === "missionCostPerEmployee" &&
-                      missionCostPerEmployee(item) + "DZD"}
-                    {header.key !== "budgetVariance" &&
-                      header.key !== "ticketResolutionRate" &&
-                      header.key !== "tasksResolutionRate" &&
-                      header.key !== "missionCostPerEmployee" &&
-                      item[header.key]}
-                  </TableCell>
-                ))}
+                <TableCell className={classes.tableCell}>
+                  taux de résolution des tickets
+                </TableCell>
+                <TableCell className={classes.tableCell}>
+                  taux de résolution des taches mission
+                </TableCell>
+                <TableCell className={classes.tableCell}>
+                  frais de mission par employé
+                </TableCell>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+            </TableHead>
+            <TableBody className={classes.tableBody}>
+              {paginatedData.map((mission, i) => (
+                <TableRow key={i} className={classes.tableRow}>
+                  <TableCell className={classes.tableCell}>
+                    {mission.uid}
+                  </TableCell>
+                  <TableCell className={classes.tableCell}>
+                    {budgetVariance(mission) + "%"}
+                  </TableCell>
+                  <TableCell className={classes.tableCell}>
+                    {ticketResolutionRate(mission, tickets) + "%"}
+                  </TableCell>
+                  <TableCell className={classes.tableCell}>
+                    {tasksResolutionRate(mission) + "%"}
+                  </TableCell>
+                  <TableCell className={classes.tableCell}>
+                    {missionCostPerEmployee(mission) + "DZD"}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        )}{" "}
+        {type === 2 && (
+          <Table className={classes.table}>
+            <TableHead className={classes.tableHeader}>
+              <TableRow className={classes.tableRow}>
+                <TableCell className={classes.tableCell}>ID Employé</TableCell>
+                <TableCell className={classes.tableCell}>Nom</TableCell>
+                <TableCell className={classes.tableCell}>Prénom</TableCell>
+                <TableCell className={classes.tableCell}>Structure</TableCell>
+                <TableCell className={classes.tableCell}>
+                  taux de productivité
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody className={classes.tableBody}>
+              {paginatedData.map((user, i) => (
+                <TableRow key={i} className={classes.tableRow}>
+                  <TableCell className={classes.tableCell}>
+                    {user.uid}
+                  </TableCell>
+                  <TableCell className={classes.tableCell}>
+                    {user.nom}
+                  </TableCell>
+                  <TableCell className={classes.tableCell}>
+                    {user.prenom}
+                  </TableCell>
+                  <TableCell className={classes.tableCell}>
+                    {user.structure}
+                  </TableCell>
+                  <TableCell className={classes.tableCell}>
+                    {employeeProductivity(user, endedMissions)}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        )}
       </TableContainer>
       <TablePagination
         className="pagination"

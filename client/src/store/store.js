@@ -13,13 +13,12 @@ import {
   REGISTER,
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
+import localforage from 'localforage';
 
 const persistConfig = {
   key: "root",
   version: 1,
-  storage,
-  whitelist: ["auth","stat"],
-};
+   storage: localforage,};
 
 const rootReducer = combineReducers({
   auth: authReducer,
