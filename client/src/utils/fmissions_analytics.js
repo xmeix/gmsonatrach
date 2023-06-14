@@ -296,12 +296,14 @@ export const missionCompletionRate = (data, option) => {
     option,
     "etat"
   ).filter((e) => e.stack === "en-cours")[0];
-  // console.log(docsAccepted);
-  // console.log(docsCompleted);
+
+  if (!docsCompleted || !docsAccepted) {
+    return (0).toFixed(2);
+  }
+
   let B = docsCompleted["mission_count"];
   let A = docsAccepted["mission_count"];
-  // console.log(docsAccepted);
-  // console.log(docsCompleted);
+
   const value = ((A * 100) / B).toFixed(2);
   return isNaN(value) ? (0).toFixed(2) : value;
 };
