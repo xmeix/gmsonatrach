@@ -379,9 +379,8 @@ export const employeeProductivity = (user, missions) => {
     return acc + durationInDays;
   }, 0);
 
-  // console.log(A);
-  // console.log(B);
-  return 0;
+  const value = ((A * 100) / B).toFixed(2);
+  return isNaN(value) ? (0).toFixed(2) : value;
 };
 
 export const currentSuccessRate = (data, property1, property2) => {
