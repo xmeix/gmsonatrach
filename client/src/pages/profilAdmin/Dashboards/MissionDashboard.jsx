@@ -21,7 +21,7 @@ import {
   MissionAiEntries as entries,
   missionAiButtons as buttons,
 } from "../../../data/formData";
- const MissionDashboard = () => {
+const MissionDashboard = () => {
   let fmissionData = useSelector((state) => state.stat.missionKPIS);
   const { chartPer, chartPerNum, handleButtonClick } = useChartButtons();
 
@@ -164,170 +164,258 @@ import {
     <div className="missionDashboard">
       <Settings handleButtonClick={handleButtonClick} />
       <div className="dashboard-content">
-        {/* just need to test : 'missions en cours + terminées' */}
-        <div style={{ gridArea: "a" }} className="box">
-          {/* type - structure - etat - country*/}
-          {customSelecta()}
-          <StackedBarRechart
-            data={getMissionGroupedDataForTime(
-              fmissionData,
-              chartPerNum,
-              option1a.value
-            )}
-            type={option2a.value}
-            label={[xlabel, option2a.label]}
-            labelType={chartPer}
-            title={`Nombre de missions par ${xlabel}`}
-          />
-        </div>
-        {/* ___________________________GROUPE1__________________________ */}
-        <div style={{ gridArea: "b" }} className="box">
-          <Suspense fallback={<div>Loading...</div>}>
-            {/* add this to fmissionData==> .filter((e) => e.etat === "terminée") */}
-            <ComposedRechart
-              data={getMissionGroupedDataForTime(
-                fmissionData.filter((e) => e.etat === "terminée"),
-                chartPerNum,
-                "etat"
-              )}
-              labelType={chartPer}
-              title={`Taux d'utilisation moyen des moyens de transport par ${xlabel}`}
-              props={["airlineAvg", "roadAvg"]}
-              labels={["Avion", "Route"]}
-              label={[xlabel, "Taux d'utilisation moyen"]}
-            />
-          </Suspense>
-        </div>
-        <div style={{ gridArea: "c" }} className="box">
-          <Suspense fallback={<div>Loading...</div>}>
-            {/* add this to fmissionData==> .filter((e) => e.etat === "terminée") */}
-            {customSelectb()}
+        <div className="g11">
+          <div className="box a">
+            {/* type - structure - etat - country*/}
+            {customSelecta()}
             <StackedBarRechart
               data={getMissionGroupedDataForTime(
                 fmissionData,
                 chartPerNum,
-                option1b.value
+                option1a.value
               )}
-              type={option2b.value}
-              label={[xlabel, option2b.label]}
+              type={option2a.value}
+              label={[xlabel, option2a.label]}
               labelType={chartPer}
-              title={`${option2b.label} par ${xlabel}`}
+              title={`Nombre de missions par ${xlabel}`}
             />
-          </Suspense>
+          </div>
+
+          <div className="box b">
+            <Suspense fallback={<div>Loading...</div>}>
+              {/* add this to fmissionData==> .filter((e) => e.etat === "terminée") */}
+              <ComposedRechart
+                data={getMissionGroupedDataForTime(
+                  fmissionData.filter((e) => e.etat === "terminée"),
+                  chartPerNum,
+                  "etat"
+                )}
+                labelType={chartPer}
+                title={`Taux d'utilisation moyen des moyens de transport par ${xlabel}`}
+                props={["airlineAvg", "roadAvg"]}
+                labels={["Avion", "Route"]}
+                label={[xlabel, "Taux d'utilisation moyen"]}
+              />
+            </Suspense>
+          </div>
         </div>
-        {/* ___________________________GROUPE1__________________________ */}{" "}
-        {/* ___________________________GROUPE2__________________________ */}
-        <div style={{ gridArea: "d" }} className="box">
-          <Suspense fallback={<div>Loading...</div>}>
-            {/* add this to fmissionData==> .filter((e) => e.etat === "terminée") */}
-            <ComposedRechart
-              data={getMissionGroupedDataForTime(
-                fmissionData,
-                chartPerNum,
-                "etat"
-              )}
-              labelType={chartPer}
-              title={`Taux de résolution des tickets par ${xlabel}`}
-              props={["ticketSuccessAvg", "ticketFailAvg"]}
-              labels={["tickets cloturés", "tickets ouverts"]}
-              label={[xlabel, "Taux de résolution moyen des tickets"]}
+        <div className="box s all">
+          <RateTable type={3} />
+        </div>
+        <div className="g21">
+          <div className="box d">
+            <Suspense fallback={<div>Loading...</div>}>
+              {/* add this to fmissionData==> .filter((e) => e.etat === "terminée") */}
+              <ComposedRechart
+                data={getMissionGroupedDataForTime(
+                  fmissionData,
+                  chartPerNum,
+                  "etat"
+                )}
+                labelType={chartPer}
+                title={`Taux de résolution des tickets par ${xlabel}`}
+                props={["ticketSuccessAvg", "ticketFailAvg"]}
+                labels={["tickets cloturés", "tickets ouverts"]}
+                label={[xlabel, "Taux de résolution moyen des tickets"]}
+              />
+            </Suspense>
+          </div>
+          <div className="box c">
+            <Suspense fallback={<div>Loading...</div>}>
+              {/* add this to fmissionData==> .filter((e) => e.etat === "terminée") */}
+              {customSelectb()}
+              <StackedBarRechart
+                data={getMissionGroupedDataForTime(
+                  fmissionData,
+                  chartPerNum,
+                  option1b.value
+                )}
+                type={option2b.value}
+                label={[xlabel, option2b.label]}
+                labelType={chartPer}
+                title={`${option2b.label} par ${xlabel}`}
+              />
+            </Suspense>
+          </div>
+        </div>
+        <div className="box p all">
+          <RateTable type={1} />
+        </div>
+        <div className="g11">
+          <div className="gtt">
+            <div className="box e">
+              <Suspense fallback={<div>Loading...</div>}>
+                {/* add this to fmissionData==> .filter((e) => e.etat === "terminée") */}
+                {customSelectc()}
+                <StackedBarRechart
+                  data={getMissionGroupedDataForTime(
+                    fmissionData,
+                    chartPerNum,
+                    option1c.value
+                  )}
+                  type={option2c.value}
+                  label={[xlabel, option2c.label]}
+                  labelType={chartPer}
+                  title={`${option2c.label} par ${xlabel}`}
+                />
+              </Suspense>
+            </div>
+            <div className="box f">
+              <Suspense fallback={<div>Loading...</div>}>
+                {/* add this to fmissionData==> .filter((e) => e.etat === "terminée") */}
+                <ComposedRechart
+                  data={getMissionGroupedDataForTime(
+                    fmissionData,
+                    chartPerNum,
+                    "etat"
+                  )}
+                  labelType={chartPer}
+                  title={`Taux d'accomplissement moyen des taches par ${xlabel}`}
+                  props={["taskSuccessAvg", "taskFailAvg"]}
+                  labels={["Taches accomplies", "taches non accomplies"]}
+                  label={[xlabel, "Taux d'accomplissement moyen des taches"]}
+                />
+              </Suspense>
+            </div>
+          </div>
+          <div className="gtt">
+            <div className="box l">
+              {customSelectg()}
+              <PieRechart
+                data={getMissionCountFor(fmissionData, option1g.value)}
+                type={"mission_count"}
+                label="nombre de missions"
+                labelType={"label"}
+                title={`Répartition des missions actuelles par ${option1g.label}`}
+                style={1}
+              />
+              <Suspense fallback={<div>Loading...</div>}>
+                <PieRechart
+                  data={getMissionCountFor(
+                    fmissionData.filter((e) => e.etat === "en-cours"),
+                    "structure"
+                  )}
+                  type={"employee_count"}
+                  label="nombre de missionnaires"
+                  labelType={"label"}
+                  title={`Répartition des missionnaires par structure`}
+                  style={3}
+                />
+              </Suspense>
+            </div>
+          </div>
+        </div>
+        <div className="g11">
+          <div className="gtt">
+            <div className="box n">
+              <Suspense fallback={<div>Loading...</div>}>
+                {/* button to choose between 4 (year) and 7 (month) */}
+                <DashCard
+                  title={"taux de réalisation de la mission"}
+                  number={missionCompletionRate(fmissionData, 7) + "%"}
+                />
+              </Suspense>
+            </div>{" "}
+            <div className="box o ">
+              <Suspense fallback={<div>Loading...</div>}>
+                {/* button to choose between 4 (year) and 7 (month) */}
+                <DashCard
+                  title={"le délai jugé nécessaire pour finaliser les missions"}
+                  number={timeToCompletion(fmissionData) + " jours"}
+                />
+              </Suspense>
+            </div>
+          </div>
+          <div className="box g gtt">
+            <Suspense fallback={<div>Loading...</div>}>
+              {/* add this to fmissionData==> .filter((e) => e.etat === "terminée") */}
+              {customSelectd()}
+              <StackedBarRechart
+                data={getMissionGroupedDataForTime(
+                  fmissionData,
+                  chartPerNum,
+                  option1d.value
+                )}
+                type={option2d.value}
+                label={[xlabel, option2d.label]}
+                labelType={chartPer}
+                title={`${option2d.label} par ${xlabel}`}
+              />
+            </Suspense>
+          </div>
+        </div>
+        <div className="box q all">
+          <RateTable type={2} />
+        </div>
+        <div className="g11">
+          <div className="box i">
+            <Suspense fallback={<div>Loading...</div>}>
+              {/* add this to fmissionData==> .filter((e) => e.etat === "terminée") */}
+              {customSelecte()}
+              <StackedBarRechart
+                data={getMissionGroupedDataForTime(
+                  fmissionData,
+                  chartPerNum,
+                  option1e.value
+                )}
+                type={option2e.value}
+                label={[xlabel, option2e.label]}
+                labelType={chartPer}
+                title={`${option2e.label} par ${xlabel}`}
+              />
+            </Suspense>
+          </div>{" "}
+          <div className="box r">
+            {/* Formulaire check mission */}
+            <Formulaire
+              type="ia-form"
+              entries={entries}
+              buttons={buttons}
+              title=""
             />
-          </Suspense>
+            {/* Train model */}
+            <button className="button"> Entrainer le modèle</button>
+          </div>
         </div>
-        <div style={{ gridArea: "e" }} className="box">
-          <Suspense fallback={<div>Loading...</div>}>
-            {/* add this to fmissionData==> .filter((e) => e.etat === "terminée") */}
-            {customSelectc()}
-            <StackedBarRechart
-              data={getMissionGroupedDataForTime(
-                fmissionData,
-                chartPerNum,
-                option1c.value
-              )}
-              type={option2c.value}
-              label={[xlabel, option2c.label]}
-              labelType={chartPer}
-              title={`${option2c.label} par ${xlabel}`}
-            />
-          </Suspense>
+        <div className="g21">
+          <div className="box h">
+            <Suspense fallback={<div>Loading...</div>}>
+              {/* add this to fmissionData==> .filter((e) => e.etat === "terminée") */}
+              <ComposedRechart
+                data={getMissionGroupedDataForTime(
+                  fmissionData,
+                  chartPerNum,
+                  "etat"
+                )}
+                labelType={chartPer}
+                title={`Analyse comparative du budget prévu et du budget réel par ${xlabel}`}
+                props={["estimated_budget", "consumed_budget"]}
+                labels={["Budget Estimé", "Budget Consommé"]}
+                label={[xlabel, "Budget(DZD)"]}
+                tc1="line"
+                tc2="line"
+              />
+            </Suspense>
+          </div>
+          <div className="box k">
+            <Suspense fallback={<div>Loading...</div>}>
+              {/* add this to fmissionData==> .filter((e) => e.etat === "terminée") */}
+              {customSelectf()}
+              <StackedBarRechart
+                data={getMissionGroupedDataForTime(
+                  fmissionData,
+                  chartPerNum,
+                  option1f.value
+                )}
+                type={option2f.value}
+                label={[xlabel, option2f.label + "(jours)"]}
+                labelType={chartPer}
+                title={`${option2f.label} par ${xlabel}`}
+              />
+            </Suspense>
+          </div>
         </div>
-        {/* ___________________________GROUPE2__________________________ */}
-        {/* ___________________________GROUPE3__________________________ */}
-        <div style={{ gridArea: "f" }} className="box">
-          <Suspense fallback={<div>Loading...</div>}>
-            {/* add this to fmissionData==> .filter((e) => e.etat === "terminée") */}
-            <ComposedRechart
-              data={getMissionGroupedDataForTime(
-                fmissionData,
-                chartPerNum,
-                "etat"
-              )}
-              labelType={chartPer}
-              title={`Taux d'accomplissement moyen des taches par ${xlabel}`}
-              props={["taskSuccessAvg", "taskFailAvg"]}
-              labels={["Taches accomplies", "taches non accomplies"]}
-              label={[xlabel, "Taux d'accomplissement moyen des taches"]}
-            />
-          </Suspense>
-        </div>
-        <div style={{ gridArea: "g" }} className="box">
-          <Suspense fallback={<div>Loading...</div>}>
-            {/* add this to fmissionData==> .filter((e) => e.etat === "terminée") */}
-            {customSelectd()}
-            <StackedBarRechart
-              data={getMissionGroupedDataForTime(
-                fmissionData,
-                chartPerNum,
-                option1d.value
-              )}
-              type={option2d.value}
-              label={[xlabel, option2d.label]}
-              labelType={chartPer}
-              title={`${option2d.label} par ${xlabel}`}
-            />
-          </Suspense>
-        </div>
-        {/* ___________________________GROUPE3__________________________ */}{" "}
-        {/* ___________________________GROUPE4__________________________ */}
-        <div style={{ gridArea: "h" }} className="box">
-          <Suspense fallback={<div>Loading...</div>}>
-            {/* add this to fmissionData==> .filter((e) => e.etat === "terminée") */}
-            <ComposedRechart
-              data={getMissionGroupedDataForTime(
-                fmissionData,
-                chartPerNum,
-                "etat"
-              )}
-              labelType={chartPer}
-              title={`Analyse comparative du budget prévu et du budget réel par ${xlabel}`}
-              props={["estimated_budget", "consumed_budget"]}
-              labels={["Budget Estimé", "Budget Consommé"]}
-              label={[xlabel, "Budget(DZD)"]}
-              tc1="line"
-              tc2="line"
-            />
-          </Suspense>
-        </div>
-        <div style={{ gridArea: "i" }} className="box">
-          <Suspense fallback={<div>Loading...</div>}>
-            {/* add this to fmissionData==> .filter((e) => e.etat === "terminée") */}
-            {customSelecte()}
-            <StackedBarRechart
-              data={getMissionGroupedDataForTime(
-                fmissionData,
-                chartPerNum,
-                option1e.value
-              )}
-              type={option2e.value}
-              label={[xlabel, option2e.label]}
-              labelType={chartPer}
-              title={`${option2e.label} par ${xlabel}`}
-            />
-          </Suspense>
-        </div>
-        {/* ___________________________GROUPE4__________________________ */}
-        {/* ___________________________GROUPE5__________________________ */}
-        <div style={{ gridArea: "j" }} className="box">
+        <div className="box j all">
           <Suspense fallback={<div>Loading...</div>}>
             {/* add this to fmissionData==> .filter((e) => e.etat === "terminée") */}
             <ComposedRechart
@@ -346,98 +434,6 @@ import {
             />
           </Suspense>
         </div>
-        <div style={{ gridArea: "k" }} className="box">
-          <Suspense fallback={<div>Loading...</div>}>
-            {/* add this to fmissionData==> .filter((e) => e.etat === "terminée") */}
-            {customSelectf()}
-            <StackedBarRechart
-              data={getMissionGroupedDataForTime(
-                fmissionData,
-                chartPerNum,
-                option1f.value
-              )}
-              type={option2f.value}
-              label={[xlabel, option2f.label + "(jours)"]}
-              labelType={chartPer}
-              title={`${option2f.label} par ${xlabel}`}
-            />
-          </Suspense>
-        </div>
-        {/* ___________________________GROUPE5__________________________ */}
-        {/* ________________________________PIES_____________________________ */}
-        <div style={{ gridArea: "l" }} className="box">
-          {customSelectg()}
-          <PieRechart
-            data={getMissionCountFor(fmissionData, option1g.value)}
-            type={"mission_count"}
-            label="nombre de missions"
-            labelType={"label"}
-            title={`Répartition des missions actuelles par ${option1g.label}`}
-            style={1}
-          />
-        </div>
-        <div style={{ gridArea: "m" }} className="box">
-          <Suspense fallback={<div>Loading...</div>}>
-            <PieRechart
-              data={getMissionCountFor(
-                fmissionData.filter((e) => e.etat === "en-cours"),
-                "structure"
-              )}
-              type={"employee_count"}
-              label="nombre de missionnaires"
-              labelType={"label"}
-              title={`Répartition des missionnaires par structure`}
-              style={3}
-            />
-          </Suspense>
-        </div>
-        {/* ________________________________PIES_____________________________ */}
-        {/* ________________________________CARDS_____________________________ */}
-        <div style={{ gridArea: "n" }} className="box">
-          <Suspense fallback={<div>Loading...</div>}>
-            {/* button to choose between 4 (year) and 7 (month) */}
-            <DashCard
-              title={"taux de réalisation de la mission"}
-              number={missionCompletionRate(fmissionData, 7) + "%"}
-            />
-          </Suspense>
-        </div>{" "}
-        <div style={{ gridArea: "o" }} className="box">
-          <Suspense fallback={<div>Loading...</div>}>
-            {/* button to choose between 4 (year) and 7 (month) */}
-            <DashCard
-              title={"le délai jugé nécessaire pour finaliser les missions"}
-              number={timeToCompletion(fmissionData) + " jours"}
-            />
-          </Suspense>
-        </div>
-        {/* ________________________________CARDS_____________________________ */}
-        {/* ________________________________TABLE_____________________________ */}
-        <div style={{ gridArea: "p" }} className="box">
-          <RateTable type={1} />
-        </div>{" "}
-        <div style={{ gridArea: "q" }} className="box">
-          <RateTable type={2} />
-        </div>
-        {/* ________________________________TABLE_____________________________ */}
-        {/* __________________________________IA______________________________ */}
-        <div style={{ gridArea: "r" }} className="box">
-          {/* Formulaire check mission */}
-          <Formulaire
-            type="ia-form"
-            entries={entries}
-            buttons={buttons}
-            title=""
-          />
-          {/* Train model */}
-          <button className="button"> Entrainer le modèle</button>
-        </div>
-        {/* __________________________________IA______________________________ */}{" "}
-        {/* ___________________________ EMPLOYES RANK______________________________ */}
-        <div style={{ gridArea: "s" }} className="box">
-          <RateTable type={3} />
-        </div>
-        {/* ___________________________ EMPLOYES RANK______________________________ */}
       </div>
     </div>
   );

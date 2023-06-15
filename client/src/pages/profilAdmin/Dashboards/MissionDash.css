@@ -1,4 +1,4 @@
-.chart-controls {
+/* .chart-controls {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -109,7 +109,7 @@
 /* 
 .missionDashboard .box canvas {
   padding: 0 2em;
-} */
+} 
 @media screen and (max-width: 1100px) {
   .missionDashboard .dash-content {
     grid-template-columns: 100%;
@@ -120,10 +120,10 @@
   }
   /* .missionDashboard .box {
     max-height: 500px;
-  } */
+  } 
 }
 @media screen and (max-width: 700px) {
   .missionDashboard .dash-content {
     margin: 0 1em;
   }
-}
+} */
