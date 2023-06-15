@@ -55,7 +55,8 @@ const UploadUsers = () => {
   const { callApi } = useAxios();
 
   const [errors, setErrors] = useState([]);
-  const { users, demandes, user } = useSelector(({ auth }) => auth);
+  const { users, user } = useSelector((state) => state.auth);
+  const { demandes } = useSelector((state) => state.demande);
   const [success, setSuccess] = useState(false);
   const { jsonData, handleFileChange, clearData } = useUpload();
   const [usersData, setUsersData] = useState([]);

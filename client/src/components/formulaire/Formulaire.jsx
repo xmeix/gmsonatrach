@@ -8,6 +8,7 @@ import { useAxios } from "../../hooks/useAxios";
 import ErrorIcon from "@mui/icons-material/Error";
 import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
 import {
+  validateAIMissionForm,
   validateDB,
   validateDC,
   validateDM,
@@ -36,7 +37,6 @@ const Formulaire = ({ title, entries, buttons, type }) => {
     useAxios();
   const currentUser = useSelector((state) => state.auth.user);
   const [selectedRole, setSelectedRole] = useState("");
-
   const [values, handleChange, resetForm] = useForm(() => {
     const vals = {};
     entries.forEach((entry) => {
@@ -107,6 +107,32 @@ const Formulaire = ({ title, entries, buttons, type }) => {
       }
     }
   }, [start, end, entries, missions, type, users]);
+  const [predResult, setPredResult] = useState(null);
+  const handlePredict = () => {
+    setErrors(validateAIMissionForm(values, currentUser));
+    if (Object.keys(validateAIMissionForm(values, currentUser)).length === 0) {
+      // data: [structure, type, budget, pays, destination, NbEmployes, duree];
+      fetch("http://localhost:5000/predict", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          data: values,
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          setPredResult(parseInt(data.predictions));
+          console.log(data.predictions);
+        });
+      setErrors({});
+    }
+  };
+
+  const handleGetBestEmployes = () => {
+    getBestEmployes("/ticket/employes");
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -217,41 +243,6 @@ const Formulaire = ({ title, entries, buttons, type }) => {
     return input.options;
   };
 
-  const [predResult, setPredResult] = useState(null);
-  const handlePredict = () => {
-    let object = {
-      type: "form",
-      users,
-      missions,
-    };
-    setErrors(validateMission(values, currentUser, object));
-    if (
-      Object.keys(validateMission(values, currentUser, object)).length === 0
-    ) {
-      // data: [structure,type,budget,pays,destination,NbEmployes,duree]
-      //
-
-      fetch("http://localhost:5000/predict", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          data: values,
-        }),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          setPredResult(parseInt(data.predictions));
-          console.log(data.predictions);
-        });
-      setErrors({});
-    }
-  };
-
-  const handleGetBestEmployes = () => {
-    getBestEmployes("/ticket/employes");
-  };
   useEffect(() => {
     let timeout;
 
@@ -278,7 +269,7 @@ const Formulaire = ({ title, entries, buttons, type }) => {
 
   return (
     <div className="formulaire">
-      <div className="listTitle">{title}</div>
+      {type !== "ia-form" && <div className="listTitle">{title}</div>}
       <div className="inputs">
         {updatedEntries.map((entry, i) => {
           return (
@@ -405,8 +396,6 @@ const Formulaire = ({ title, entries, buttons, type }) => {
                 onClick={
                   btn.title === "Prédire succés mission"
                     ? handlePredict
-                    : btn.title === "Voir classement des employés"
-                    ? handleGetBestEmployes
                     : handleSubmit
                 }
                 disabled={isLoading}
@@ -429,7 +418,7 @@ const Formulaire = ({ title, entries, buttons, type }) => {
         </div>
       )}
       {/* {typeof predResult} */}
-      {/* {predResult === 4 && (
+      {predResult === 4 && (
         <div className="success-message">
           La mission introduite présente une perspective favorable
           d'accomplissement réussi a 90%.
@@ -449,9 +438,15 @@ const Formulaire = ({ title, entries, buttons, type }) => {
       )}
       {predResult === 1 && (
         <div className="error-message">
+          La mission introduite présente une perspective favorable
+          d'accomplissement réussi a 25%.
+        </div>
+      )}
+      {predResult === 0 && (
+        <div className="error-message">
           Il n'est pas assuré que la mission introduite aboutisse à un succès.
         </div>
-      )} */}
+      )}
     </div>
   );
 };

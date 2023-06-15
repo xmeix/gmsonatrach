@@ -160,6 +160,49 @@ export const validateMission = (mission, user, object) => {
 
   return errors;
 };
+export const validateAIMissionForm = (mission, user) => {
+  // console.log(mission);
+  const errors = {};
+
+  if (mission?.budget && mission?.budget < 0) {
+    errors.budget = "le budget doit être supérieur à 0";
+  }
+
+  if (!mission?.structure && user.role !== "responsable") {
+    errors.structure = "obligatoire";
+  }
+
+  if (!mission?.type) {
+    errors.type = "obligatoire";
+  }
+
+  if (!mission?.pays) {
+    errors.pays = "obligatoire";
+  }
+  if (!mission?.tDateDeb) {
+    errors.tDateDeb = "obligatoire";
+  }
+
+  if (!mission?.tDateRet) {
+    errors.tDateRet = "obligatoire";
+  }
+  if (!mission?.destination?.trim()) {
+    errors.destination = "obligatoire";
+  }
+
+  if (
+    new Date(mission?.tDateDeb).getTime() >=
+    new Date(mission?.tDateRet).getTime()
+  ) {
+    errors.tDateRet =
+      "Les dates ne doivent pas être identiques, la date de retour doit être postérieure à la date de départ.";
+    errors.tDateDeb =
+      "Les dates ne doivent pas être identiques, la date de retour doit être postérieure à la date de départ.";
+  }
+  ///we also need to validate the employees if they are disponible during that time
+
+  return errors;
+};
 
 export const checkEmployeesMission = (users, employees) => {
   // create a function that takes users and employes as arguments

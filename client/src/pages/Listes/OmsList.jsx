@@ -4,7 +4,7 @@ import { columnsOM, filterOMOptions } from "../../data/tableCols";
 import "./../../css/Gestion.css";
 
 const OmsList = () => {
-  const { oms } = useSelector((state) => state.auth);
+  const { oms } = useSelector((state) => state.oms);
 
   return (
     <div className="gestion">

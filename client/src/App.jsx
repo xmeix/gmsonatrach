@@ -354,9 +354,8 @@ export const mainEmpRoutes = [
 
 function App() {
   const dispatch = useDispatch();
-  const { user, missions, token, users, isLoggedIn } = useSelector(
-    (state) => state.auth
-  );
+  const { user, token, users, isLoggedIn } = useSelector((state) => state.auth);
+  const { missions } = useSelector((state) => state.mission);
 
   const handleRefreshPage = () => {
     window.location.reload();
@@ -477,7 +476,7 @@ function App() {
   );
   useEffect(() => {
     const handleLoginData = async (userId) => {
-      if (user._id.toString() === userId.toString()) {
+      if (user._id.toString() === userId.toString() && isLoggedIn) {
         if (user.role !== "relex") {
           getMissions(dispatch);
           getRFMs(dispatch);
@@ -508,32 +507,30 @@ function App() {
       handleSocketConnection();
       socket.on("loginData", handleLoginData);
     } else {
+      localStorage.setItem("isLoggedIn", false);
       socket.off("loginData", handleLoginData);
-      localStorage.removeItem("isLoggedIn");
+      handleSocketDisconnection();
     }
-
     socket.on("sessionExpired", handleRefreshPage);
 
     return () => {
       socket.off("loginData", handleLoginData);
       socket.off("sessionExpired", handleRefreshPage);
-      handleSocketDisconnection();
     };
   }, [isLoggedIn]);
 
-  useEffect(() => {
-    return () => {
-      handleSocketDisconnection();
-    };
-  }, []);
+  // useEffect(() => {
+  //   return () => {
+  //     handleSocketDisconnection();
+  //   };
+  // }, []);
 
   const handleStorageChange = (event) => {
     if (event.key === "isLoggedIn") {
-      if (event.newValue === "true") {
-        console.log("refreshed");
-
-        handleRefreshPage();
-      }
+      // if (event.newValue === "true") {
+      console.log("refreshed");
+      handleRefreshPage();
+      // }
     }
   };
 

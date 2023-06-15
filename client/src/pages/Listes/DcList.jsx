@@ -3,7 +3,7 @@ import TableM from "../../components/table/TableM";
 import { columnsDemandes, filterDemOptions } from "../../data/tableCols";
 import "./../../css/Gestion.css";
 const DcList = () => {
-  const demandes = useSelector((state) => state.auth.demandes);
+  const {demandes} = useSelector((state) => state.demande);
   const demandesC = demandes.filter((dem) => dem.__t === "DC");
 
   return (

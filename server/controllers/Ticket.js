@@ -90,7 +90,7 @@ export const getEmployeesBySolvedTickets = async (req, res) => {
           },
         },
       },
-      { $sort: { totalSolvedTickets: 1 } },
+      { $sort: { totalSolvedTickets: -1 } },
       {
         $lookup: {
           from: "users",
@@ -111,13 +111,12 @@ export const getEmployeesBySolvedTickets = async (req, res) => {
 
     const sortedEmployees = employees.map(
       ({ employee, totalSolvedTickets }) => ({
-        employee,
+        ...employee,
         totalSolvedTickets,
       })
     );
 
-    console.log(sortedEmployees);
-
+    // console.log(sortedEmployees);
     res.json(sortedEmployees);
   } catch (error) {
     console.error(error);

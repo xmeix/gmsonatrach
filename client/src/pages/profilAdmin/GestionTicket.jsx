@@ -8,9 +8,9 @@ import { getTickets } from "../../api/apiCalls/getCalls";
 import { socket } from "../../App";
 
 const GestionTicket = () => {
-  const { user, missions, tickets, isLoggedIn } = useSelector(
-    (state) => state.auth
-  );
+  const { user, isLoggedIn } = useSelector((state) => state.auth);
+  const { missions } = useSelector((state) => state.mission);
+  const { tickets } = useSelector((state) => state.ticket);
   const [isFormVisible, setIsFormVisible] = useState(false);
   const dispatch = useDispatch();
 

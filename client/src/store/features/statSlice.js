@@ -3,6 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   missionKPIS: [],
   filesKPIS: [],
+  isLoading: false,
+  failure: false,
 };
 
 export const statSlice = createSlice({
@@ -19,9 +21,28 @@ export const statSlice = createSlice({
       state.missionKPIS = [];
       state.filesKPIS = [];
     },
+    fetchStatStart: (state) => {
+      state.failure = false;
+      state.isLoading = true;
+    },
+    fetchStatEnd: (state) => {
+      state.isLoading = false;
+      state.failure = false;
+    },
+    fetchStatFailure: (state) => {
+      state.failure = true;
+      state.isLoading = false;
+    },
   },
 });
 
-export const { freeKpis, setMissionKpis, setFilesKpis } = statSlice.actions;
+export const {
+  freeKpis,
+  setMissionKpis,
+  setFilesKpis,
+  fetchStatStart,
+  fetchStatEnd,
+  fetchStatFailure,
+} = statSlice.actions;
 
 export default statSlice.reducer;

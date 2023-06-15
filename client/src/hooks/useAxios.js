@@ -8,6 +8,12 @@ import {
   setLogin,
   setLogout,
 } from "../store/features/authSlice";
+import { freeMission } from "../store/features/missionSlice";
+import { freeTicket } from "../store/features/ticketSlice";
+import { freeNotification } from "../store/features/notificationsSlice";
+import { freeDemande } from "../store/features/demandeSlice";
+import { freeOms } from "../store/features/omsSlice";
+import { freeRfms } from "../store/features/rfmsSlice";
 import { freeKpis } from "../store/features/statSlice";
 
 export const useAxios = () => {
@@ -40,8 +46,15 @@ export const useAxios = () => {
     const actionMap = {
       "/auth/login": () => dispatch(setLogin(response.data)),
       "/auth/logout": () => {
-        dispatch(setLogout());
         dispatch(freeKpis());
+        dispatch(freeRfms());
+        dispatch(freeOms());
+        dispatch(freeDemande());
+        dispatch(freeNotification());
+        dispatch(freeTicket());
+        dispatch(freeMission());
+        dispatch(setLogout());
+        localStorage.removeItem("jwt");
       },
     };
 

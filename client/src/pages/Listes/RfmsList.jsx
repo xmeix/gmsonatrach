@@ -4,7 +4,7 @@ import { columnsRFM, filterRFMOptions } from "../../data/tableCols";
 import "./../../css/Gestion.css";
 
 const RfmsList = () => {
-  const { rfms } = useSelector((state) => state.auth);
+  const { rfms } = useSelector((state) => state.rfms);
 
   return (
     <div className="gestion">

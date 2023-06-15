@@ -9,7 +9,8 @@ const AddTicketForm = () => {
   const [description, setDescription] = useState("");
   const [errors, setErrors] = useState({});
   const { callApi } = useAxios();
-  const { missions, user } = useSelector((state) => state.auth);
+  const { missions } = useSelector((state) => state.mission);
+  const { user } = useSelector((state) => state.auth);
 
   const handleAddTicket = () => {
     if (objet !== "" && description !== "") {

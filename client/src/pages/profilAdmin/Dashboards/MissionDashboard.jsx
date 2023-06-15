@@ -16,8 +16,12 @@ import { Suspense } from "react";
 import PieRechart from "../../../components/charts/PieRechart";
 import DashCard from "../../../components/charts/widgets/DashCard";
 import RateTable from "../../../components/rateTable/RateTable";
-
-const MissionDashboard = () => {
+import Formulaire from "../../../components/formulaire/Formulaire";
+import {
+  MissionAiEntries as entries,
+  missionAiButtons as buttons,
+} from "../../../data/formData";
+ const MissionDashboard = () => {
   let fmissionData = useSelector((state) => state.stat.missionKPIS);
   const { chartPer, chartPerNum, handleButtonClick } = useChartButtons();
 
@@ -177,12 +181,12 @@ const MissionDashboard = () => {
           />
         </div>
         {/* ___________________________GROUPE1__________________________ */}
-        <div style={{ gridArea: "h" }} className="box">
+        <div style={{ gridArea: "b" }} className="box">
           <Suspense fallback={<div>Loading...</div>}>
             {/* add this to fmissionData==> .filter((e) => e.etat === "terminée") */}
             <ComposedRechart
               data={getMissionGroupedDataForTime(
-                fmissionData,
+                fmissionData.filter((e) => e.etat === "terminée"),
                 chartPerNum,
                 "etat"
               )}
@@ -194,7 +198,7 @@ const MissionDashboard = () => {
             />
           </Suspense>
         </div>
-        <div style={{ gridArea: "h" }} className="box">
+        <div style={{ gridArea: "c" }} className="box">
           <Suspense fallback={<div>Loading...</div>}>
             {/* add this to fmissionData==> .filter((e) => e.etat === "terminée") */}
             {customSelectb()}
@@ -213,7 +217,7 @@ const MissionDashboard = () => {
         </div>
         {/* ___________________________GROUPE1__________________________ */}{" "}
         {/* ___________________________GROUPE2__________________________ */}
-        <div style={{ gridArea: "h" }} className="box">
+        <div style={{ gridArea: "d" }} className="box">
           <Suspense fallback={<div>Loading...</div>}>
             {/* add this to fmissionData==> .filter((e) => e.etat === "terminée") */}
             <ComposedRechart
@@ -230,7 +234,7 @@ const MissionDashboard = () => {
             />
           </Suspense>
         </div>
-        <div style={{ gridArea: "h" }} className="box">
+        <div style={{ gridArea: "e" }} className="box">
           <Suspense fallback={<div>Loading...</div>}>
             {/* add this to fmissionData==> .filter((e) => e.etat === "terminée") */}
             {customSelectc()}
@@ -249,7 +253,7 @@ const MissionDashboard = () => {
         </div>
         {/* ___________________________GROUPE2__________________________ */}
         {/* ___________________________GROUPE3__________________________ */}
-        <div style={{ gridArea: "h" }} className="box">
+        <div style={{ gridArea: "f" }} className="box">
           <Suspense fallback={<div>Loading...</div>}>
             {/* add this to fmissionData==> .filter((e) => e.etat === "terminée") */}
             <ComposedRechart
@@ -266,7 +270,7 @@ const MissionDashboard = () => {
             />
           </Suspense>
         </div>
-        <div style={{ gridArea: "h" }} className="box">
+        <div style={{ gridArea: "g" }} className="box">
           <Suspense fallback={<div>Loading...</div>}>
             {/* add this to fmissionData==> .filter((e) => e.etat === "terminée") */}
             {customSelectd()}
@@ -304,7 +308,7 @@ const MissionDashboard = () => {
             />
           </Suspense>
         </div>
-        <div style={{ gridArea: "h" }} className="box">
+        <div style={{ gridArea: "i" }} className="box">
           <Suspense fallback={<div>Loading...</div>}>
             {/* add this to fmissionData==> .filter((e) => e.etat === "terminée") */}
             {customSelecte()}
@@ -323,7 +327,7 @@ const MissionDashboard = () => {
         </div>
         {/* ___________________________GROUPE4__________________________ */}
         {/* ___________________________GROUPE5__________________________ */}
-        <div style={{ gridArea: "h" }} className="box">
+        <div style={{ gridArea: "j" }} className="box">
           <Suspense fallback={<div>Loading...</div>}>
             {/* add this to fmissionData==> .filter((e) => e.etat === "terminée") */}
             <ComposedRechart
@@ -342,7 +346,7 @@ const MissionDashboard = () => {
             />
           </Suspense>
         </div>
-        <div style={{ gridArea: "h" }} className="box">
+        <div style={{ gridArea: "k" }} className="box">
           <Suspense fallback={<div>Loading...</div>}>
             {/* add this to fmissionData==> .filter((e) => e.etat === "terminée") */}
             {customSelectf()}
@@ -361,7 +365,7 @@ const MissionDashboard = () => {
         </div>
         {/* ___________________________GROUPE5__________________________ */}
         {/* ________________________________PIES_____________________________ */}
-        <div style={{ gridArea: "b" }} className="box">
+        <div style={{ gridArea: "l" }} className="box">
           {customSelectg()}
           <PieRechart
             data={getMissionCountFor(fmissionData, option1g.value)}
@@ -372,7 +376,7 @@ const MissionDashboard = () => {
             style={1}
           />
         </div>
-        <div style={{ gridArea: "c" }} className="box">
+        <div style={{ gridArea: "m" }} className="box">
           <Suspense fallback={<div>Loading...</div>}>
             <PieRechart
               data={getMissionCountFor(
@@ -389,7 +393,7 @@ const MissionDashboard = () => {
         </div>
         {/* ________________________________PIES_____________________________ */}
         {/* ________________________________CARDS_____________________________ */}
-        <div style={{ gridArea: "c" }} className="box">
+        <div style={{ gridArea: "n" }} className="box">
           <Suspense fallback={<div>Loading...</div>}>
             {/* button to choose between 4 (year) and 7 (month) */}
             <DashCard
@@ -398,7 +402,7 @@ const MissionDashboard = () => {
             />
           </Suspense>
         </div>{" "}
-        <div style={{ gridArea: "c" }} className="box">
+        <div style={{ gridArea: "o" }} className="box">
           <Suspense fallback={<div>Loading...</div>}>
             {/* button to choose between 4 (year) and 7 (month) */}
             <DashCard
@@ -409,20 +413,31 @@ const MissionDashboard = () => {
         </div>
         {/* ________________________________CARDS_____________________________ */}
         {/* ________________________________TABLE_____________________________ */}
-        <div style={{ gridArea: "c" }} className="box">
+        <div style={{ gridArea: "p" }} className="box">
           <RateTable type={1} />
         </div>{" "}
-        <div style={{ gridArea: "c" }} className="box">
+        <div style={{ gridArea: "q" }} className="box">
           <RateTable type={2} />
         </div>
         {/* ________________________________TABLE_____________________________ */}
         {/* __________________________________IA______________________________ */}
-        <div style={{ gridArea: "c" }} className="box">
+        <div style={{ gridArea: "r" }} className="box">
           {/* Formulaire check mission */}
-          {/* Result */}
+          <Formulaire
+            type="ia-form"
+            entries={entries}
+            buttons={buttons}
+            title=""
+          />
           {/* Train model */}
+          <button className="button"> Entrainer le modèle</button>
         </div>
-        {/* __________________________________IA______________________________ */}
+        {/* __________________________________IA______________________________ */}{" "}
+        {/* ___________________________ EMPLOYES RANK______________________________ */}
+        <div style={{ gridArea: "s" }} className="box">
+          <RateTable type={3} />
+        </div>
+        {/* ___________________________ EMPLOYES RANK______________________________ */}
       </div>
     </div>
   );

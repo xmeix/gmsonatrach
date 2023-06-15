@@ -20,7 +20,7 @@ const Planning = () => {
     return new Date(today.getFullYear(), today.getMonth() + monthOffset, 1);
   }, [monthOffset]);
   const users = useSelector((state) => state.auth.users);
-  const missions = useSelector((state) => state.auth.missions);
+  const {missions} = useSelector((state) => state.mission);
   const daysInMonth = new Date(
     date.getFullYear(),
     date.getMonth() + 1,
@@ -86,7 +86,7 @@ const Planning = () => {
   const acceptedMissions = useSelector((state) => {
     let count = 0; // initialize count variable
     if (currentUser.role === "employe") {
-      return state.auth.missions
+      return state.mission.missions
         .filter(
           (mission) =>
             mission.etat === "acceptée" ||
@@ -105,7 +105,7 @@ const Planning = () => {
           };
         });
     } else {
-      return state.auth.missions
+      return state.mission.missions
         .filter(
           (mission) =>
             mission.etat === "acceptée" ||

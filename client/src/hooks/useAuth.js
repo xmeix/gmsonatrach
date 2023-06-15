@@ -5,13 +5,12 @@ import {
   setLogin,
   setLogout,
 } from "../store/features/authSlice";
-import { apiService } from "../api/apiService"; 
+import { apiService } from "../api/apiService";
 import { useState } from "react";
 export const useAuth = () => {
-  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
-  const token = useSelector((state) => state.auth.token);
-  const user = useSelector((state) => state.auth.user);
-  const isLoading = useSelector((state) => state.auth.isLoading);
+  const { isLoggedIn, user, token, isLoading } = useSelector(
+    (state) => state.auth
+  );
   const dispatch = useDispatch();
   const [error, setError] = useState("");
   const [successMsg, setSuccessMsg] = useState("");

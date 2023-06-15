@@ -29,9 +29,8 @@ export const NotNavLinkStyle = ({ isActive }) => {
   };
 };
 const NavBar = () => {
-  const { user, isLoggedIn, notifications } = useSelector(
-    (state) => state.auth
-  );
+  const { user, isLoggedIn } = useSelector((state) => state.auth);
+  const { notifications } = useSelector((state) => state.notifications);
   /**_______________________________________________________________________________ */
   const [showNotifications, setShowNotifications] = useState(false);
   const dispatch = useDispatch();

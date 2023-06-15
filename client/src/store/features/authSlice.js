@@ -5,16 +5,17 @@ const initialState = {
   user: null,
   token: localStorage.getItem("jwt"),
   isLoading: false,
-  isLoggedIn: false,
   failure: false,
+  isLoggedIn: false,
+
   users: [],
-  demandes: [],
-  missions: [],
-  rfms: [],
-  depenses: [],
-  oms: [],
-  notifications: [],
-  tickets: [],
+  // demandes: [],
+  // missions: [],
+  // rfms: [],
+  // depenses: [],
+  // oms: [],
+  // notifications: [],
+  // tickets: [],
 };
 
 export const authSlice = createSlice({
@@ -27,43 +28,21 @@ export const authSlice = createSlice({
       state.token = action.payload.token;
       state.isLoading = false;
       localStorage.setItem("jwt", action.payload.token);
-      // socket.emit("login", action.payload.user, action.payload.token);
+      // socket.emit("login", action.payload.user, state.token);
     },
     setToken: (state, action) => {
       state.token = action.payload.token;
       localStorage.setItem("jwt", action.payload.token);
     },
     setLogout: (state) => {
-      socket.emit("logout", state.token);
       state.user = null;
       state.token = null;
       state.isLoading = false;
       state.isLoggedIn = false;
-      state.demandes = [];
       state.users = [];
-      state.depenses = [];
-      state.missions = [];
-      state.oms = [];
-      state.rfms = [];
-      state.notifications = [];
-      state.tickets = [];
-      localStorage.removeItem("jwt");
+      socket.emit("logout", state.token);
     },
-    setDemandes: (state, action) => {
-      state.demandes = action.payload;
-    },
-    setRFMs: (state, action) => {
-      state.rfms = action.payload;
-    },
-    setMissions: (state, action) => {
-      state.missions = action.payload;
-    },
-    setOMs: (state, action) => {
-      state.oms = action.payload;
-    },
-    setDepenses: (state, action) => {
-      state.depenses = action.payload;
-    },
+
     setUsers: (state, action) => {
       state.users = action.payload;
     },
@@ -85,34 +64,27 @@ export const authSlice = createSlice({
       state.failure = true;
       state.isLoading = false;
     },
-    setNotifications: (state, action) => {
-      // console.log(action.payload);
-      state.notifications = action.payload;
-    },
-    setTickets: (state, action) => {
-      state.tickets = action.payload;
-    },
   },
 });
 
 export const {
   setLogin,
   setLogout,
-  setDemandes,
+  // setDemandes,
   loginStart,
   logoutStart,
   fetchStart,
   fetchEnd,
   fetchFailure,
-  setMissions,
-  setRFMs,
-  setOMs,
-  setDepenses,
+  // setMissions,
+  // setRFMs,
+  // setOMs,
+  // setDepenses,
   setUsers,
   getTokenFromState,
   setToken,
-  setNotifications,
-  setTickets,
+  // setNotifications,
+  // setTickets,
 } = authSlice.actions;
 
 export default authSlice.reducer;

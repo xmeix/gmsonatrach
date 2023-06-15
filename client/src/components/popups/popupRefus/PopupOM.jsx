@@ -1,4 +1,3 @@
-import { useSelector } from "react-redux";
 import logo from "../../../assets/logo.svg";
 import useFileGenerator from "../../../hooks/useFileGenerator";
 export const OmLabelLine = ({ label, content }) => (

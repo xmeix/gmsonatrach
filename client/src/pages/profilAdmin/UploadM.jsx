@@ -13,7 +13,7 @@ const UploadM = () => {
   const { jsonData, handleFileChange, fileName } = useUpload();
   const [errors, setErrors] = useState([]);
   const { callApi } = useAxios();
-  const missions = useSelector((state) => state.auth.missions);
+  const missions = useSelector((state) => state.mission.missions);
   const users = useSelector((state) => state.auth.users);
   const currentUser = useSelector((state) => state.auth.user);
   const [success, setSuccess] = useState(false);

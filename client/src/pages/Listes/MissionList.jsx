@@ -8,7 +8,8 @@ import {
 import "./../../css/Gestion.css";
 
 const MissionList = () => {
-  const { missions, user } = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state.auth);
+  const { missions } = useSelector((state) => state.mission);
 
   return (
     <div className="gestion">

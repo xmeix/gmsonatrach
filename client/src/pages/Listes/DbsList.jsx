@@ -4,7 +4,7 @@ import { columnsDemandes, filterDBOptions } from "../../data/tableCols";
 import "./../../css/Gestion.css";
 
 const DbsList = () => {
-  const demandes = useSelector((state) => state.auth.demandes);
+  const {demandes} = useSelector((state) => state.demande);
   const demandesDB = demandes.filter((dem) => dem.__t === "DB");
 
   return (

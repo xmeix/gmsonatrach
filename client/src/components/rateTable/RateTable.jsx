@@ -10,7 +10,7 @@ import {
   InputAdornment,
   makeStyles,
 } from "@material-ui/core";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import {
   budgetVariance,
@@ -19,6 +19,7 @@ import {
   tasksResolutionRate,
   ticketResolutionRate,
 } from "../../utils/fmissions_analytics";
+import { getBestEmployes } from "../../api/apiCalls/getCalls";
 const useStyles = makeStyles({
   table: {
     "& .MuiPaper-root, & .MuiTableContainer-root": {
@@ -79,18 +80,19 @@ const useStyles = makeStyles({
     borderLeft: "solid 4px var(--gray)",
   },
 });
+
 const RateTable = ({ type }) => {
   const classes = useStyles();
 
-  const { missions, tickets, users } = useSelector((state) => state.auth);
+  const { users } = useSelector((state) => state.auth);
+  const { missions } = useSelector((state) => state.mission);
+  const { tickets } = useSelector((state) => state.ticket);
   const endedMissions = missions.filter((m) => m.etat === "terminée");
   const missionnaires = users.filter(
     (m) => m.role !== "secretaire" && m.role !== "relex"
   );
   const [rowsPerPage, setRowsPerPage] = useState(3);
   const [page, setPage] = useState(0);
-
-    // console.log(JSON.stringify(endedMissions.map((m) => m._id)));
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -101,16 +103,35 @@ const RateTable = ({ type }) => {
     setPage(0);
   };
 
+  const [bestEmps, setBestEmps] = useState([]);
+
+  useEffect(() => {
+    let emps = [];
+    if (type === 3) {
+      const promise = getBestEmployes("/ticket/employes");
+
+      promise
+        .then((resolvedArray) => {
+          setBestEmps(resolvedArray);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+  }, [type]);
+
   const paginatedData =
     type === 1
       ? endedMissions.slice(
           page * rowsPerPage,
           page * rowsPerPage + rowsPerPage
         )
-      : missionnaires.slice(
+      : type === 2
+      ? missionnaires.slice(
           page * rowsPerPage,
           page * rowsPerPage + rowsPerPage
-        );
+        )
+      : bestEmps?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
 
   return (
     <div className="rate-table">
@@ -156,7 +177,7 @@ const RateTable = ({ type }) => {
               ))}
             </TableBody>
           </Table>
-        )}{" "}
+        )}
         {type === 2 && (
           <Table className={classes.table}>
             <TableHead className={classes.tableHeader}>
@@ -193,12 +214,42 @@ const RateTable = ({ type }) => {
             </TableBody>
           </Table>
         )}
+        {type === 3 && (
+          <Table className={classes.table}>
+            <TableHead className={classes.tableHeader}>
+              <TableRow className={classes.tableRow}>
+                <TableCell className={classes.tableCell}>Classement</TableCell>
+                <TableCell className={classes.tableCell}>ID Employé</TableCell>
+                <TableCell className={classes.tableCell}>Nom</TableCell>
+                <TableCell className={classes.tableCell}>Prénom</TableCell>
+                <TableCell className={classes.tableCell}></TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody className={classes.tableBody}>
+              {paginatedData?.map((emp, i) => (
+                <TableRow key={i} className={classes.tableRow}>
+                  <TableCell className={classes.tableCell}>{i}</TableCell>
+                  <TableCell className={classes.tableCell}>{emp.uid}</TableCell>
+                  <TableCell className={classes.tableCell}>{emp.nom}</TableCell>
+                  <TableCell className={classes.tableCell}>
+                    {emp.prenom}
+                  </TableCell>
+                  <TableCell className={classes.tableCell}>
+                    {emp.totalSolvedTickets}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        )}
       </TableContainer>
       <TablePagination
         className="pagination"
         rowsPerPageOptions={[3, 10, 25]}
         component="div"
-        count={endedMissions.length}
+        count={
+          type === 1 || type === 2 ? endedMissions.length : bestEmps.length
+        }
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}

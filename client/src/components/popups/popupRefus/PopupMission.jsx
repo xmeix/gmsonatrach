@@ -18,7 +18,8 @@ const PopupMission = ({ item }) => {
   const tasksRef = useRef(item.taches);
 
   const [handleClick] = useBtn();
-  const { user, missions } = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state.auth);
+  const { missions } = useSelector((state) => state.mission);
   const belongs = () =>
     item.employes.some((employee) => employee._id === user._id);
   const [budgetConsome, setBudgetConsomme] = useState(0);

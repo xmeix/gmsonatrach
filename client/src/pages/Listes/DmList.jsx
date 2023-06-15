@@ -4,7 +4,7 @@ import { columnsDemandes, filterDemOptions } from "../../data/tableCols";
 import "./../../css/Gestion.css";
 
 const DmList = () => {
-  const demandes = useSelector((state) => state.auth.demandes);
+  const {demandes} = useSelector((state) => state.demande);
   const demandesM = demandes.filter((dem) => dem.__t === "DM");
 
   return (
