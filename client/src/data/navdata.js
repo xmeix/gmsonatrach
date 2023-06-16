@@ -15,7 +15,5 @@ export const relexNotific = [{ id: 1, type: "DB", path: "/" }];
 
 export const dashTitles = [
   { id: 1, title: "missions", path: "/" },
-  { id: 2, title: "fichiers", path: "/files-analytics" },
-  { id: 3, title: "coûts", path: "/cost-analytics" },
-  { id: 4, title: "utilisateurs", path: "/users-analytics" },
+  { id: 2, title: "fichiers", path: "/files-analytics" }, 
 ];

@@ -1,4 +1,4 @@
-.files-control-nav {
+/* .files-control-nav {
   position: fixed;
   right: 0;
   top: 40vh;
@@ -25,17 +25,26 @@
 
 .files-control-nav .hashlink:hover {
   padding: 0.5em 1.5em;
-}
+} */
 
 .custom-options {
+  position: absolute;
+  top: 1em;
+  right: 0;
+  left: 0;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 1em;
   flex-wrap: wrap;
-  background-color: var(--white);
+  background-color: var(--orange2);
+  padding: 1em;
+  /* border: solid 1px var(--light-gray); */
+  box-shadow: 0px 1px 4px rgb(0 0 0 / 20%);
+
   border-radius: 5px;
   justify-self: flex-start;
+  transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
 .sett-div-icon {
@@ -45,6 +54,6 @@
   z-index: 89;
 }
 
-.selects {
+.select {
   width: auto !important;
 }

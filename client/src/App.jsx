@@ -17,7 +17,9 @@ import {
   getNotifications,
   getTickets,
   getMissionKPIS,
+  getFileKPIS,
 } from "./api/apiCalls/getCalls";
+import FilesDashboard from "./pages/profilAdmin/Dashboards/FilesDashboard";
 
 const Planning = lazy(() => import("./pages/planning/Planning"));
 const Profile = lazy(() => import("./pages/Profile/Profile"));
@@ -497,6 +499,7 @@ function App() {
           user.role !== "secretaire"
         ) {
           getMissionKPIS(dispatch);
+          getFileKPIS(dispatch);
         }
       }
     };
@@ -601,6 +604,10 @@ function App() {
           {!isAlreadyLoggedIn && (
             <Route path="*" element={<Navigate to={loginPath} />} />
           )}
+          {isLoggedIn &&
+            (user.role === "responsable" || user.role === "directeur") && (
+              <Route path="/files-analytics" element={<FilesDashboard />} />
+            )}
         </Routes>
       </Suspense>
     </div>

@@ -2,6 +2,7 @@ import { useState } from "react";
 import Select from "react-select";
 import "./../pages/profilAdmin/Dashboards/Dashboard.css";
 import SettingsIcon from "@mui/icons-material/Settings";
+import "./../components/formulaire/Formulaire.css";
 const customStyles = {
   control: (provided, state) => ({
     ...provided,
@@ -9,7 +10,7 @@ const customStyles = {
     height: "30px",
     borderRadius: 5,
     color: "var(--white)",
-    border: "1px solid var(--light-gray)",
+    // border: "1px solid var(--light-gray)",
     boxShadow: "none",
     "&:hover": {
       border: "1px solid var(--light-gray)",
@@ -62,7 +63,7 @@ const useChartSettings = (options1, options2, options3) => {
         >
           {options1 && (
             <Select
-              className="selects"
+              className="select"
               value={option1}
               options={options1}
               placeholder="{entry.placeholder}"
@@ -72,7 +73,7 @@ const useChartSettings = (options1, options2, options3) => {
           )}
           {options2 && (
             <Select
-              className="selects"
+              className="select"
               value={option2}
               options={options2}
               placeholder="{entry.placeholder}"
@@ -83,7 +84,7 @@ const useChartSettings = (options1, options2, options3) => {
           {options3 && (
             <Select
               value={option3}
-              className="selects"
+              className="select"
               options={options3}
               placeholder="{entry.placeholder}"
               styles={customStyles}

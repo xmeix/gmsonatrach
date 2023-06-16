@@ -47,7 +47,6 @@
   padding: 0 !important;
 }
 .missionDashboard .box {
-  border: solid 1px black;
   padding: 2em;
   background-color: var(--white);
   border-radius: 5px;
@@ -74,17 +73,17 @@
   justify-items: stretch;
   align-items: stretch;
 }
-.g11 div {
+.g11 .b1 {
   flex: 1;
   min-width: 25%;
 }
-.g21 div:first-of-type {
+.g21 .g2 {
   flex: 1;
   max-width: 75%;
   min-width: 40%;
 }
 
-.g21 div:last-of-type {
+.g21 .g1 {
   flex: 1;
   max-width: 35%;
   min-width: auto;
@@ -92,21 +91,56 @@
 .all {
   flex: 1;
 }
-
-.gtt {
+.gv {
   display: flex;
   flex-direction: column;
   gap: 1em;
 }
 
-@media screen and (max-width: 900px) {
+.gv * {
+  flex: 1;
+}
+
+.gtt {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  gap: 1em;
+}
+.missionDashboard .box {
+}
+.missionDashboard .box .btn-list {
+  align-self: flex-end;
+}
+.missionDashboard .box .btn-list button {
+  border: solid 1px var(--orange1);
+  padding: 0.5em 1em;
+  margin-bottom: 1em;
+
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: capitalize;
+
+  background-color: var(--white);
+}
+.missionDashboard .box .btn-list button:hover {
+  cursor: pointer;
+}
+.missionDashboard .box .btn-list button:first-of-type {
+  border-radius: 5px 0px 0px 5px;
+}
+.missionDashboard .box .btn-list button:last-of-type {
+  border-radius: 0px 5px 5px 0px;
+}
+
+@media screen and (max-width: 1040px) {
   .g11,
   .g21 {
     flex-direction: column;
   }
 
-  .g21 div:first-of-type,
-  .g21 div:last-of-type {
+  .g21 .g2,
+  .g21 .g1 {
     flex: 1;
     min-width: 25%;
     max-width: 95%;

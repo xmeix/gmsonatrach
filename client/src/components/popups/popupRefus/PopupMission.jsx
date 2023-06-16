@@ -13,7 +13,7 @@ export const ItemDiv = ({ label, content }) => (
 );
 import usePop from "./../../../hooks/usePop";
 const PopupMission = ({ item }) => {
-  console.log("item======>", item);
+  // console.log("item======>", item);
   // const [tasks, setTasks] = useState(item.taches);
   const tasksRef = useRef(item.taches);
 
@@ -239,7 +239,7 @@ const PopupMission = ({ item }) => {
           />
           <ItemDiv
             label="par"
-            content={item.createdBy.nom + " " + item.createdBy.prenom}
+            content={item?.createdBy?.nom + " " + item?.createdBy?.prenom}
           />
         </div>
         <div className="crea-container">
@@ -249,7 +249,7 @@ const PopupMission = ({ item }) => {
           />
           <ItemDiv
             label="par"
-            content={item.updatedBy.nom + " " + item.updatedBy.prenom}
+            content={item?.updatedBy?.nom + " " + item?.updatedBy?.prenom}
           />
         </div>
       </div>

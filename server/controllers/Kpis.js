@@ -57,12 +57,7 @@ export const createOrUpdateFMission = async (operation, needs) => {
           : newMission.budget
           ? newMission.budget
           : 0,
-        consumed_budget: mostRecent
-          ? mostRecent.consumed_budget +
-            (newMission.budgetConsome ? newMission.budgetConsome : 0)
-          : newMission.budgetConsome
-          ? newMission.budgetConsome
-          : 0,
+        consumed_budget: 0,
         time_Estimated: mostRecent
           ? mostRecent.time_Spent +
             calculateTimeSpent(newMission.tDateDeb, newMission.tDateRet)
@@ -72,7 +67,6 @@ export const createOrUpdateFMission = async (operation, needs) => {
 
       await newFMission.save();
       break;
-
     case "update":
       let {
         updateType,
@@ -100,7 +94,7 @@ export const createOrUpdateFMission = async (operation, needs) => {
         destination: newMission.destination,
       }).sort({ createdAt: -1 });
 
-       let solvedTicketCount = 0;
+      let solvedTicketCount = 0;
       let totalTicketCount = 0;
       if (oldFMission) {
         try {

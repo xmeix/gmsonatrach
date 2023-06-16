@@ -222,7 +222,9 @@ const RateTable = ({ type }) => {
                 <TableCell className={classes.tableCell}>ID Employé</TableCell>
                 <TableCell className={classes.tableCell}>Nom</TableCell>
                 <TableCell className={classes.tableCell}>Prénom</TableCell>
-                <TableCell className={classes.tableCell}></TableCell>
+                <TableCell className={classes.tableCell}>
+                  Nombre de tickets
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody className={classes.tableBody}>

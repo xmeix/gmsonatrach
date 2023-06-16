@@ -418,7 +418,7 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
 
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0); 
+    setPage(0);
   };
 
   const paginatedData = sortedData.slice(
@@ -457,7 +457,7 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
           className={classes.tableCell}
           onClick={() => handleOnClick(item)}
         >
-          {item.idEmetteur.nom + " " + item.idEmetteur.prenom}
+          {item?.idEmetteur?.nom + " " + item?.idEmetteur?.prenom}
         </TableCell>
       );
     } else if (property === "mission.objetMission") {
@@ -479,7 +479,7 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
           className={classes.tableCell}
           onClick={() => handleOnClick(item)}
         >
-          {item.idEmetteur.structure}
+          {item?.idEmetteur.structure}
         </TableCell>
       );
     } else if (property === "idEmploye.nom + ' ' + idEmploye.prenom") {
@@ -490,7 +490,7 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
           className={classes.tableCell}
           onClick={() => handleOnClick(item)}
         >
-          {item.idEmploye?.nom + " " + item.idEmploye?.prenom}
+          {item?.idEmploye?.nom + " " + item?.idEmploye?.prenom}
         </TableCell>
       );
     } else if (property === "createdBy.nom + ' ' + createdBy.prenom") {
@@ -501,7 +501,7 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
           className={classes.tableCell}
           onClick={() => handleOnClick(item)}
         >
-          {item.createdBy.nom + " " + item.createdBy.prenom}
+          {item?.createdBy?.nom + " " + item?.createdBy?.prenom}
         </TableCell>
       );
     } else if (property === "mission.uid") {
@@ -523,7 +523,7 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
           className={classes.tableCell}
           onClick={() => handleOnClick(item)}
         >
-          {item.idMission?.uid}
+          {item?.idMission?.uid}
         </TableCell>
       );
     } else if (property === "employe.nom") {
@@ -534,7 +534,7 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
           className={classes.tableCell}
           onClick={() => handleOnClick(item)}
         >
-          {item.employe?.nom}
+          {item?.employe?.nom}
         </TableCell>
       );
     } else if (property === "employe.prenom") {
@@ -545,7 +545,7 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
           className={classes.tableCell}
           onClick={() => handleOnClick(item)}
         >
-          {item.employe?.prenom}
+          {item?.employe?.prenom}
         </TableCell>
       );
     } else

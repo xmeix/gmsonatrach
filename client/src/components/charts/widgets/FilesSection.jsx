@@ -6,7 +6,6 @@ import PieRechart from "../PieRechart";
 import StackedBarRechart from "../StackedBarRechart";
 import "./FileSection.css";
 import AreaRechart from "../AreaRechart";
-import DashCard from "./dashCard";
 import useChartSettings from "../../../hooks/useChartSettings";
 const FileSection = ({
   data,
@@ -17,7 +16,7 @@ const FileSection = ({
   chartPer,
   chartPerNum,
 }) => {
-   const xlabel = chartPer === 1 ? "années" : chartPer === 2 ? "mois" : "jours";
+  const xlabel = chartPer === 1 ? "années" : chartPer === 2 ? "mois" : "jours";
 
   const pieType = (option) => {
     if (["structure"].includes(option)) {
