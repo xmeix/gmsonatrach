@@ -197,7 +197,6 @@ export const getMissionCountFor = (data, type) => {
       solved_ticket_count: doc.solved_ticket_count,
       total_ticket_count: doc.total_ticket_count,
       unsolved_ticket_count: doc.total_ticket_count - doc.solved_ticket_count,
-
       done_tasks_count: doc.done_tasks_count,
       total_tasks_count: doc.total_tasks_count,
       undone_tasks_count: doc.total_tasks_count - doc.done_tasks_count,

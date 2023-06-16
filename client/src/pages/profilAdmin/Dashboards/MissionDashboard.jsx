@@ -3,10 +3,15 @@ import useChartButtons from "../../../hooks/useChartButtons";
 import "./MissionDashboard.css";
 import Settings from "../../../components/charts/widgets/Settings";
 import useChartSettings from "../../../hooks/useChartSettings";
-import { getMissionGroupedDataForTime } from "../../../utils/fmissions_analytics";
+import {
+  getMissionCountFor,
+  getMissionGroupedDataForTime,
+} from "../../../utils/fmissions_analytics";
 import StackedBarRechart from "../../../components/charts/StackedBarRechart";
 import ComposedRechart from "../../../components/charts/ComposedRechart";
+import AreaRechart from "../../../components/charts/AreaRechart";
 import { Suspense } from "react";
+import PieRechart from "../../../components/charts/PieRechart";
 
 const MissionDashboard = () => {
   let fmissionData = useSelector((state) => state.stat.missionKPIS);
@@ -99,6 +104,51 @@ const MissionDashboard = () => {
       },
     ]
   );
+  const {
+    option1: option1e,
+    option2: option2e,
+    customSelect: customSelecte,
+  } = useChartSettings(
+    [
+      { label: "type", value: "type" },
+      { label: "structure", value: "structure" },
+      { label: "pays", value: "country" },
+      { label: "départ", value: "departure" },
+      { label: "destination", value: "destination" },
+    ],
+    [
+      { label: "Budget estimé ", value: "estimated_budget" },
+      {
+        label: "Budget consommé",
+        value: "consumed_budget",
+      },
+    ]
+  );
+  const {
+    option1: option1f,
+    option2: option2f,
+    customSelect: customSelectf,
+  } = useChartSettings(
+    [
+      { label: "type", value: "type" },
+      { label: "structure", value: "structure" },
+      { label: "pays", value: "country" },
+      { label: "départ", value: "departure" },
+      { label: "destination", value: "destination" },
+    ],
+    [
+      { label: "Durée estimée ", value: "time_Estimated" },
+      {
+        label: "Durée passée",
+        value: "time_Spent",
+      },
+    ]
+  );
+  const { option1: option1g, customSelect: customSelectg } = useChartSettings([
+    { label: "type", value: "type" },
+    { label: "structure", value: "structure" },
+    { label: "etat", value: "etat" },
+  ]);
 
   const xlabel = chartPer === 1 ? "années" : chartPer === 2 ? "mois" : "jours";
 
@@ -193,8 +243,8 @@ const MissionDashboard = () => {
             />
           </Suspense>
         </div>
-        {/* ___________________________GROUPE3__________________________ */}
         {/* ___________________________GROUPE2__________________________ */}
+        {/* ___________________________GROUPE3__________________________ */}
         <div style={{ gridArea: "h" }} className="box">
           <Suspense fallback={<div>Loading...</div>}>
             {/* add this to fmissionData==> .filter((e) => e.etat === "terminée") */}
@@ -215,7 +265,7 @@ const MissionDashboard = () => {
         <div style={{ gridArea: "h" }} className="box">
           <Suspense fallback={<div>Loading...</div>}>
             {/* add this to fmissionData==> .filter((e) => e.etat === "terminée") */}
-            {customSelectc()}
+            {customSelectd()}
             <StackedBarRechart
               data={getMissionGroupedDataForTime(
                 fmissionData,
@@ -229,7 +279,111 @@ const MissionDashboard = () => {
             />
           </Suspense>
         </div>
-        {/* ___________________________GROUPE3__________________________ */}
+        {/* ___________________________GROUPE3__________________________ */}{" "}
+        {/* ___________________________GROUPE4__________________________ */}
+        <div style={{ gridArea: "h" }} className="box">
+          <Suspense fallback={<div>Loading...</div>}>
+            {/* add this to fmissionData==> .filter((e) => e.etat === "terminée") */}
+            <ComposedRechart
+              data={getMissionGroupedDataForTime(
+                fmissionData,
+                chartPerNum,
+                "etat"
+              )}
+              labelType={chartPer}
+              title={`Analyse comparative du budget prévu et du budget réel par ${xlabel}`}
+              props={["estimated_budget", "consumed_budget"]}
+              labels={["Budget Estimé", "Budget Consommé"]}
+              label={[xlabel, "Budget(DZD)"]}
+              tc1="line"
+              tc2="line"
+            />
+          </Suspense>
+        </div>
+        <div style={{ gridArea: "h" }} className="box">
+          <Suspense fallback={<div>Loading...</div>}>
+            {/* add this to fmissionData==> .filter((e) => e.etat === "terminée") */}
+            {customSelecte()}
+            <StackedBarRechart
+              data={getMissionGroupedDataForTime(
+                fmissionData,
+                chartPerNum,
+                option1e.value
+              )}
+              type={option2e.value}
+              label={[xlabel, option2e.label]}
+              labelType={chartPer}
+              title={`${option2e.label} par ${xlabel}`}
+            />
+          </Suspense>
+        </div>
+        {/* ___________________________GROUPE4__________________________ */}
+        {/* ___________________________GROUPE5__________________________ */}
+        <div style={{ gridArea: "h" }} className="box">
+          <Suspense fallback={<div>Loading...</div>}>
+            {/* add this to fmissionData==> .filter((e) => e.etat === "terminée") */}
+            <ComposedRechart
+              data={getMissionGroupedDataForTime(
+                fmissionData,
+                chartPerNum,
+                "etat"
+              )}
+              labelType={chartPer}
+              title={`Analyse comparative des durées estimé et passé des missions par ${xlabel}`}
+              props={["time_Estimated", "time_Spent"]}
+              labels={["Durée Estimée(jours)", "Durée passée(jours)"]}
+              label={[xlabel, "Durée(jours)"]}
+              tc1="line"
+              tc2="line"
+            />
+          </Suspense>
+        </div>
+        <div style={{ gridArea: "h" }} className="box">
+          <Suspense fallback={<div>Loading...</div>}>
+            {/* add this to fmissionData==> .filter((e) => e.etat === "terminée") */}
+            {customSelectf()}
+            <StackedBarRechart
+              data={getMissionGroupedDataForTime(
+                fmissionData,
+                chartPerNum,
+                option1f.value
+              )}
+              type={option2f.value}
+              label={[xlabel, option2f.label + "(jours)"]}
+              labelType={chartPer}
+              title={`${option2f.label} par ${xlabel}`}
+            />
+          </Suspense>
+        </div>
+        {/* ___________________________GROUPE5__________________________ */}
+        {/* ________________________________PIES_____________________________ */}
+        <div style={{ gridArea: "b" }} className="box">
+          {customSelectg()}
+          <PieRechart
+            data={getMissionCountFor(fmissionData, option1g.value)}
+            type={"mission_count"}
+            label="nombre de missions"
+            labelType={"label"}
+            title={`Répartition des missions actuelles par ${option1g.label}`}
+            style={1}
+          />
+        </div>
+        <div style={{ gridArea: "c" }} className="box">
+          <Suspense fallback={<div>Loading...</div>}>
+            <PieRechart
+              data={getMissionCountFor(
+                fmissionData.filter((e) => e.etat === "en-cours"),
+                "structure"
+              )}
+              type={"employee_count"}
+              label="nombre de missionnaires"
+              labelType={"label"}
+              title={`Répartition des missionnaires par structure`}
+              style={3}
+            />
+          </Suspense>
+        </div>
+        {/* ________________________________PIES_____________________________ */}
       </div>
     </div>
   );
