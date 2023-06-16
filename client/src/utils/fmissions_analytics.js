@@ -283,6 +283,46 @@ export const getMissionCountFor = (data, type) => {
   }
 };
 //que l etat terminée car il determine les statistiques globales actuelles
+// nbmissions terminées / nb mission acceptées
+export const missionCompletionRate = (data, option) => {
+  const docsCompleted = getMissionGroupedDataForTime(
+    data,
+    option,
+    "etat"
+  ).filter((e) => e.stack === "terminée")[0];
+
+  const docsAccepted = getMissionGroupedDataForTime(
+    data,
+    option,
+    "etat"
+  ).filter((e) => e.stack === "en-cours")[0];
+
+  let B = docsCompleted["mission_count"];
+  let A = docsAccepted["mission_count"];
+  // console.log(docsAccepted);
+  // console.log(docsCompleted);
+  const value = ((A * 100) / B).toFixed(2);
+  return isNaN(value) ? 0 : value;
+};
+
+// somme durée missions terminées / nb missions terminées
+export const timeToCompletion = (data, option) => {
+  const docs = getMissionGroupedDataForTime(data, 4, "etat").filter(
+    (e) => e.stack === "terminée"
+  );
+
+  let A = 0;
+  let B = 0;
+  // console.log(docs);
+  docs.reduce((acc, e) => {
+    A += e["time_Spent"];
+    B += e["mission_count"];
+  }, 0);
+
+  const value = ((A * 100) / B).toFixed(2);
+  return isNaN(value) ? 0 : value;
+};
+
 export const currentSuccessRate = (data, property1, property2) => {
   const docs = getMissionCountFor(data, "etat").filter(
     (e) => e.label === "terminée"

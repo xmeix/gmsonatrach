@@ -6,12 +6,15 @@ import useChartSettings from "../../../hooks/useChartSettings";
 import {
   getMissionCountFor,
   getMissionGroupedDataForTime,
+  missionCompletionRate,
+  timeToCompletion,
 } from "../../../utils/fmissions_analytics";
 import StackedBarRechart from "../../../components/charts/StackedBarRechart";
 import ComposedRechart from "../../../components/charts/ComposedRechart";
 import AreaRechart from "../../../components/charts/AreaRechart";
 import { Suspense } from "react";
 import PieRechart from "../../../components/charts/PieRechart";
+import DashCard from "../../../components/charts/widgets/DashCard";
 
 const MissionDashboard = () => {
   let fmissionData = useSelector((state) => state.stat.missionKPIS);
@@ -384,6 +387,26 @@ const MissionDashboard = () => {
           </Suspense>
         </div>
         {/* ________________________________PIES_____________________________ */}
+        {/* ________________________________CARDS_____________________________ */}
+        <div style={{ gridArea: "c" }} className="box">
+          <Suspense fallback={<div>Loading...</div>}>
+            {/* button to choose between 4 (year) and 7 (month) */}
+            <DashCard
+              title={"taux de réalisation de la mission"}
+              number={missionCompletionRate(fmissionData, 7) + "%"}
+            />
+          </Suspense>
+        </div>{" "}
+        <div style={{ gridArea: "c" }} className="box">
+          <Suspense fallback={<div>Loading...</div>}>
+            {/* button to choose between 4 (year) and 7 (month) */}
+            <DashCard
+              title={"le délai jugé nécessaire pour finaliser les missions"}
+              number={timeToCompletion(fmissionData, 4) + " jours"}
+            />
+          </Suspense>
+        </div>
+        {/* ________________________________CARDS_____________________________ */}
       </div>
     </div>
   );
