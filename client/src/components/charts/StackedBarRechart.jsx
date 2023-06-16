@@ -71,6 +71,10 @@ const StackedBarRechart = ({
                     weight: "bold",
                   },
                 },
+                ticks: {
+                  beginAtZero: true,
+                  // count:6,
+                },
               },
             },
             plugins: {

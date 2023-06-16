@@ -3,7 +3,7 @@ export const getMissionGroupedDataForTime = (data, time, stack) => {
     .slice()
     .filter((d) => new Date(d.createdAt) <= new Date())
     .sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt));
-  //No need for most recent
+
   let mostRecentDocuments = {};
 
   for (const document of documents) {
@@ -30,24 +30,37 @@ export const getMissionGroupedDataForTime = (data, time, stack) => {
         el.stack === cur[stack]
     );
     if (yearIndex === -1) {
-      const totalSuccessFail = cur.success_count + cur.fail_count;
       const totalAirlineRoad =
         cur.airline_utilization_count + cur.road_utilization_count;
       acc.push({
         createdAt: new Date(cur.createdAt).toISOString().slice(0, time),
         stack: cur[stack],
         mission_count: cur.mission_count,
-        success_count: cur.success_count,
+        solved_ticket_count: cur.solved_ticket_count,
+        total_ticket_count: cur.total_ticket_count,
+        done_tasks_count: cur.done_tasks_count,
+        total_tasks_count: cur.total_tasks_count,
         employee_count: cur.employee_count,
-        fail_count: cur.fail_count,
         airline_utilization_count: cur.airline_utilization_count,
         road_utilization_count: cur.road_utilization_count,
-        successAvg:
-          totalSuccessFail > 0
-            ? (cur.success_count * 100) / totalSuccessFail
+        ticketSuccessAvg:
+          cur.total_ticket_count > 0
+            ? (cur.solved_ticket_count * 100) / cur.total_ticket_count
             : 0,
-        failAvg:
-          totalSuccessFail > 0 ? (cur.fail_count * 100) / totalSuccessFail : 0,
+        ticketFailAvg:
+          cur.total_ticket_count > 0
+            ? ((cur.total_ticket_count - cur.solved_ticket_count) * 100) /
+              cur.total_ticket_count
+            : 0,
+        taskSuccessAvg:
+          cur.total_tasks_count > 0
+            ? (cur.done_tasks_count * 100) / cur.total_tasks_count
+            : 0,
+        taskFailAvg:
+          cur.total_tasks_count > 0
+            ? ((cur.total_tasks_count - cur.done_tasks_count) * 100) /
+              cur.total_tasks_count
+            : 0,
         airlineAvg:
           totalAirlineRoad > 0
             ? (cur.airline_utilization_count * 100) / totalAirlineRoad
@@ -56,25 +69,50 @@ export const getMissionGroupedDataForTime = (data, time, stack) => {
           totalAirlineRoad > 0
             ? (cur.road_utilization_count * 100) / totalAirlineRoad
             : 0,
+        estimated_budget: cur.estimated_budget,
+        consumed_budget: cur.consumed_budget,
+        time_Estimated: cur.time_Estimated,
+        time_Spent: cur.time_Spent,
       });
     } else {
       acc[yearIndex].mission_count += cur.mission_count;
-      acc[yearIndex].success_count += cur.success_count;
-      acc[yearIndex].fail_count += cur.fail_count;
+      acc[yearIndex].solved_ticket_count += cur.solved_ticket_count;
+      acc[yearIndex].total_ticket_count += cur.total_ticket_count;
+      acc[yearIndex].done_tasks_count += cur.done_tasks_count;
+      acc[yearIndex].total_tasks_count += cur.total_tasks_count;
       acc[yearIndex].employee_count += cur.employee_count;
       acc[yearIndex].airline_utilization_count += cur.airline_utilization_count;
       acc[yearIndex].road_utilization_count += cur.road_utilization_count;
-      const totalSuccessFail =
-        acc[yearIndex].success_count + acc[yearIndex].fail_count;
+      acc[yearIndex].estimated_budget += cur.estimated_budget;
+      acc[yearIndex].consumed_budget += cur.consumed_budget;
+      acc[yearIndex].time_Estimated += cur.time_Estimated;
+      acc[yearIndex].time_Spent += cur.time_Spent;
+
       const totalAirlineRoad =
         acc[yearIndex].airline_utilization_count +
         acc[yearIndex].road_utilization_count;
-      if (totalSuccessFail > 0) {
-        acc[yearIndex].successAvg =
-          (acc[yearIndex].success_count * 100) / totalSuccessFail;
-        acc[yearIndex].failAvg =
-          (acc[yearIndex].fail_count * 100) / totalSuccessFail;
+
+      if (acc[yearIndex].total_ticket_count > 0) {
+        acc[yearIndex].ticketSuccessAvg =
+          (acc[yearIndex].solved_ticket_count * 100) /
+          acc[yearIndex].total_ticket_count;
+        acc[yearIndex].ticketFailAvg =
+          ((acc[yearIndex].total_ticket_count -
+            acc[yearIndex].solved_ticket_count) *
+            100) /
+          acc[yearIndex].total_ticket_count;
       }
+      if (acc[yearIndex].total_tasks_count > 0) {
+        acc[yearIndex].taskSuccessAvg =
+          (acc[yearIndex].done_tasks_count * 100) /
+          acc[yearIndex].total_tasks_count;
+        acc[yearIndex].taskFailAvg =
+          ((acc[yearIndex].total_tasks_count -
+            acc[yearIndex].done_tasks_count) *
+            100) /
+          acc[yearIndex].total_tasks_count;
+      }
+
       if (totalAirlineRoad > 0) {
         acc[yearIndex].airlineAvg =
           (acc[yearIndex].airline_utilization_count * 100) / totalAirlineRoad;
@@ -106,10 +144,16 @@ export const getMissionCountFor = (data, type) => {
       createdAt,
       mission_count,
       employee_count,
-      success_count,
-      fail_count,
+      total_ticket_count,
+      solved_ticket_count,
+      total_tasks_count,
+      done_tasks_count,
       airline_utilization_count,
       road_utilization_count,
+      estimated_budget,
+      consumed_budget,
+      time_Estimated,
+      time_Spent,
     } = document;
     const key = `${structure}-${etat}-${docType}-${country}-${departure}-${destination}`;
 
@@ -124,10 +168,16 @@ export const getMissionCountFor = (data, type) => {
       ...document,
       mission_count,
       employee_count,
-      success_count,
-      fail_count,
+      total_ticket_count,
+      solved_ticket_count,
+      total_tasks_count,
+      done_tasks_count,
       airline_utilization_count,
       road_utilization_count,
+      estimated_budget,
+      consumed_budget,
+      time_Estimated,
+      time_Spent,
     };
   }
 
@@ -138,10 +188,16 @@ export const getMissionCountFor = (data, type) => {
       label: doc[prop],
       mission_count: doc.mission_count,
       employee_count: doc.employee_count,
-      success_count: doc.success_count,
-      fail_count: doc.fail_count,
+      solved_ticket_count: doc.solved_ticket_count,
+      total_ticket_count: doc.total_ticket_count,
+      done_tasks_count: doc.done_tasks_count,
+      total_tasks_count: doc.total_tasks_count,
       airline_utilization_count: doc.airline_utilization_count,
       road_utilization_count: doc.road_utilization_count,
+      estimated_budget: doc.estimated_budget,
+      consumed_budget: doc.consumed_budget,
+      time_Estimated: doc.time_Estimated,
+      time_Spent: doc.time_Spent,
     }));
 
     const reducedData = groupedData.reduce((acc, cur) => {
@@ -149,19 +205,37 @@ export const getMissionCountFor = (data, type) => {
       // console.log(cur);
       if (key in acc) {
         acc[key].mission_count += cur.mission_count;
+        acc[key].solved_ticket_count += cur.solved_ticket_count;
+        acc[key].total_ticket_count += cur.total_ticket_count;
+        acc[key].done_tasks_count += cur.done_tasks_count;
+        acc[key].total_tasks_count += cur.total_tasks_count;
         acc[key].employee_count += cur.employee_count;
-        acc[key].success_count += cur.success_count;
-        acc[key].fail_count += cur.fail_count;
         acc[key].airline_utilization_count += cur.airline_utilization_count;
         acc[key].road_utilization_count += cur.road_utilization_count;
-        const totalSuccessFail = acc[key].success_count + acc[key].fail_count;
+        acc[key].estimated_budget += cur.estimated_budget;
+        acc[key].consumed_budget += cur.consumed_budget;
+        acc[key].time_Estimated += cur.time_Estimated;
+        acc[key].time_Spent += cur.time_Spent;
+
         const totalAirlineRoad =
           acc[key].airline_utilization_count + acc[key].road_utilization_count;
-        if (totalSuccessFail > 0) {
-          acc[key].successAvg =
-            (acc[key].success_count * 100) / totalSuccessFail;
-          acc[key].failAvg = (acc[key].fail_count * 100) / totalSuccessFail;
+
+        if (acc[key].total_ticket_count > 0) {
+          acc[key].ticketSuccessAvg =
+            (acc[key].solved_ticket_count * 100) / acc[key].total_ticket_count;
+          acc[key].ticketFailAvg =
+            ((acc[key].total_ticket_count - acc[key].solved_ticket_count) *
+              100) /
+            acc[key].total_ticket_count;
         }
+        if (acc[key].total_tasks_count > 0) {
+          acc[key].taskSuccessAvg =
+            (acc[key].done_tasks_count * 100) / acc[key].total_tasks_count;
+          acc[key].taskFailAvg =
+            ((acc[key].total_tasks_count - acc[key].done_tasks_count) * 100) /
+            acc[key].total_tasks_count;
+        }
+
         if (totalAirlineRoad > 0) {
           acc[key].airlineAvg =
             (acc[key].airline_utilization_count * 100) / totalAirlineRoad;

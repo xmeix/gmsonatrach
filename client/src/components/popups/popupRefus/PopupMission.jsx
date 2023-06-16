@@ -4,7 +4,6 @@ import { FormControlLabel, FormGroup } from "@mui/material";
 import Checkbox from "@mui/material/Checkbox";
 import useBtn from "../../../hooks/useBtn";
 import AddCircleRoundedIcon from "@mui/icons-material/AddCircleRounded";
-import usePop from "../../../hooks/usePop";
 import { verifyProlongement } from "../../../utils/formFieldsVerifications";
 export const ItemDiv = ({ label, content }) => (
   <div className="itemDiv">
@@ -12,7 +11,9 @@ export const ItemDiv = ({ label, content }) => (
     <div className="item-content">{content}</div>
   </div>
 );
+import usePop from "./../../../hooks/usePop";
 const PopupMission = ({ item }) => {
+  console.log("item======>", item);
   // const [tasks, setTasks] = useState(item.taches);
   const tasksRef = useRef(item.taches);
 
@@ -137,7 +138,7 @@ const PopupMission = ({ item }) => {
       </div>
     );
   };
-  const { Pop, openPop } = usePop();
+  // const { Pop, openPop } = usePop();
 
   return (
     <div className="popup-mission">
@@ -251,15 +252,15 @@ const PopupMission = ({ item }) => {
           />
         </div>
       </div>
-      <Pop
+      {/* <Pop
         title={"Modifier la date de fin de mission"}
         component={CustomComponent}
-      />
+      /> */}
       {/* this pop should be shown only when mission en-cours / acceptée */}
       <div className="p-mission-btns">
-        <button onClick={openPop} className="btn">
+        {/* <button onClick={openPop} className="btn">
           Modifier la date de fin de mission
-        </button>
+        </button> */}
       </div>
     </div>
   );

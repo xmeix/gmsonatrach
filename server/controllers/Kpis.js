@@ -80,7 +80,6 @@ export const createOrUpdateFMission = async (operation, needs) => {
       } = needs;
       // SINCE ITS UPDATE , means that we already created a document , so we need to look for the most recent one , and the older than recent one.
       // One case is different , some creations go directly to accepted state, doesnt pass through en attente
-
       // Find the old most recent document with same type, structure, and old etat
       const oldFMission = await FMission.findOne({
         etat: oldMission ? oldMission.etat : "en-attente",
@@ -101,6 +100,19 @@ export const createOrUpdateFMission = async (operation, needs) => {
         destination: newMission.destination,
       }).sort({ createdAt: -1 });
 
+       let solvedTicketCount = 0;
+      let totalTicketCount = 0;
+      if (oldFMission) {
+        try {
+          solvedTicketCount = await calculateSolvedTickets(newMission);
+          totalTicketCount = await calculateTotalTickets(newMission);
+        } catch (error) {
+          console.error(error);
+          // Handle the error...
+          return;
+        }
+      }
+      console.log("old   mission =====>", solvedTicketCount);
       switch (updateType) {
         case "etat":
           // Duplicate the old state document and decrement whatever fields
@@ -114,12 +126,10 @@ export const createOrUpdateFMission = async (operation, needs) => {
 
             mission_count: oldFMission ? oldFMission.mission_count - 1 : 0, //if we found the most recent mission document then we just add one mission(creation one mission) , orelse if theres no old document we initialize it with one 1
             solved_ticket_count: oldFMission
-              ? oldFMission.solved_ticket_count -
-                calculateSolvedTickets(newMission)
+              ? oldFMission.solved_ticket_count - solvedTicketCount
               : 0,
             total_ticket_count: oldFMission
-              ? oldFMission.total_ticket_count -
-                calculateTotalTickets(newMission)
+              ? oldFMission.total_ticket_count - totalTicketCount
               : 0,
             done_tasks_count: oldFMission
               ? oldFMission.done_tasks_count - calculateDoneTasks(newMission)
@@ -166,13 +176,11 @@ export const createOrUpdateFMission = async (operation, needs) => {
               ? recentFMission.mission_count + 1
               : 1,
             solved_ticket_count: recentFMission
-              ? recentFMission.solved_ticket_count +
-                calculateSolvedTickets(newMission)
-              : calculateSolvedTickets(newMission),
+              ? recentFMission.solved_ticket_count + solvedTicketCount
+              : solvedTicketCount,
             total_ticket_count: recentFMission
-              ? recentFMission.total_ticket_count +
-                calculateTotalTickets(newMission)
-              : calculateTotalTickets(newMission),
+              ? recentFMission.total_ticket_count + totalTicketCount
+              : totalTicketCount,
             done_tasks_count: recentFMission
               ? recentFMission.done_tasks_count + calculateDoneTasks(newMission)
               : calculateDoneTasks(newMission),
@@ -402,6 +410,7 @@ const calculateSolvedTickets = async (mission) => {
       mission: mission,
       isSolved: true,
     });
+    console.log("solvedTickets", solvedTickets);
     return solvedTickets;
   } catch (error) {
     // Handle any errors that occur during the query
@@ -413,6 +422,7 @@ const calculateSolvedTickets = async (mission) => {
 const calculateTotalTickets = async (mission) => {
   try {
     const totalTickets = await Ticket.countDocuments({ mission: mission });
+    console.log("totalTickets", totalTickets);
     return totalTickets;
   } catch (error) {
     // Handle any errors that occur during the query

@@ -68,7 +68,7 @@ export const createMission = async (req, res) => {
       tDateRet: new Date(tDateRet).toISOString(),
       moyenTransport,
       moyenTransportRet,
-      lieuDep,
+      lieuDep: lieuDep ? lieuDep : "Alger",
       destination,
       observation,
       etat,
@@ -135,17 +135,17 @@ export const createMission = async (req, res) => {
     };
     // ____________________________________________________________________________________;
     // createOrUpdateFMission(query, "creation", null, "");
-    createOrUpdateFMission("creation", {
+    await createOrUpdateFMission("creation", {
       newMission: query,
     });
     if (savedMission.etat === "acceptée") {
       // createOrUpdateFMission(savedMission, "update", query, "etat"); //---------------------------------------------XXXXXXXX
-      createOrUpdateFMission("update", {
+      await createOrUpdateFMission("update", {
         oldMission: query,
         newMission: savedMission,
         updateType: "etat",
       });
-    }  
+    }
     //____________________________________________________________________________________;
 
     res
