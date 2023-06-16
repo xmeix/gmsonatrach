@@ -410,7 +410,10 @@ const MissionDashboard = () => {
         {/* ________________________________CARDS_____________________________ */}
         {/* ________________________________TABLE_____________________________ */}
         <div style={{ gridArea: "c" }} className="box">
-          <RateTable />
+          <RateTable type={1} />
+        </div>{" "}
+        <div style={{ gridArea: "c" }} className="box">
+          <RateTable type={2} />
         </div>
         {/* ________________________________TABLE_____________________________ */}
       </div>

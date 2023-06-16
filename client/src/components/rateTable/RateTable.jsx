@@ -78,7 +78,7 @@ const useStyles = makeStyles({
     borderLeft: "solid 4px var(--gray)",
   },
 });
-const RateTable = () => {
+const RateTable = ({ type }) => {
   const classes = useStyles();
 
   const { missions, tickets, users } = useSelector((state) => state.auth);
@@ -97,49 +97,66 @@ const RateTable = () => {
     setPage(0);
   };
 
-  const paginatedData = endedMissions.slice(
-    page * rowsPerPage,
-    page * rowsPerPage + rowsPerPage
-  );
+  const paginatedData =
+    type === 1
+      ? endedMissions.slice(
+          page * rowsPerPage,
+          page * rowsPerPage + rowsPerPage
+        )
+      : users.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
+
+  const tableHeaders = {
+    1: [
+      { label: "ID Mission", key: "uid" },
+      { label: "l'écart budgétaire en pourcentage", key: "budgetVariance" },
+      { label: "taux de résolution des tickets", key: "ticketResolutionRate" },
+      {
+        label: "taux de résolution des taches mission",
+        key: "tasksResolutionRate",
+      },
+      { label: "frais de mission par employé", key: "missionCostPerEmployee" },
+    ],
+    2: [
+      { label: "ID Employé", key: "uid" },
+      { label: "Nom", key: "nom" },
+      { label: "Prénom", key: "prenom" },
+      { label: "Structure", key: "structure" },
+      { label: "taux de productivité", key: "" },
+    ],
+  };
   return (
     <div className="rate-table">
       <TableContainer component={Paper} aria-label="table">
         <Table className={classes.table}>
           <TableHead className={classes.tableHeader}>
             <TableRow className={classes.tableRow}>
-              <TableCell className={classes.tableCell}>ID Mission</TableCell>
-              <TableCell className={classes.tableCell}>
-                l'écart budgétaire en pourcentage
-              </TableCell>
-              <TableCell className={classes.tableCell}>
-                taux de résolution des tickets
-              </TableCell>
-              <TableCell className={classes.tableCell}>
-                taux de résolution des taches mission
-              </TableCell>
-              <TableCell className={classes.tableCell}>
-                frais de mission par employé
-              </TableCell>
+              {tableHeaders[type].map((header, index) => (
+                <TableCell key={index} className={classes.tableCell}>
+                  {header.label}
+                </TableCell>
+              ))}
             </TableRow>
           </TableHead>
           <TableBody className={classes.tableBody}>
-            {paginatedData.map((mission, i) => (
-              <TableRow key={i} className={classes.tableRow}>
-                <TableCell className={classes.tableCell}>
-                  {mission.uid}
-                </TableCell>
-                <TableCell className={classes.tableCell}>
-                  {budgetVariance(mission) + "%"}
-                </TableCell>
-                <TableCell className={classes.tableCell}>
-                  {ticketResolutionRate(mission, tickets) + "%"}
-                </TableCell>
-                <TableCell className={classes.tableCell}>
-                  {tasksResolutionRate(mission) + "%"}
-                </TableCell>
-                <TableCell className={classes.tableCell}>
-                  {missionCostPerEmployee(mission) + "DZD"}
-                </TableCell>
+            {paginatedData.map((item, index) => (
+              <TableRow key={index} className={classes.tableRow}>
+                {tableHeaders[type].map((header, index) => (
+                  <TableCell key={index} className={classes.tableCell}>
+                    {header.key === "budgetVariance" &&
+                      budgetVariance(item) + "%"}
+                    {header.key === "ticketResolutionRate" &&
+                      ticketResolutionRate(item, tickets) + "%"}
+                    {header.key === "tasksResolutionRate" &&
+                      tasksResolutionRate(item) + "%"}
+                    {header.key === "missionCostPerEmployee" &&
+                      missionCostPerEmployee(item) + "DZD"}
+                    {header.key !== "budgetVariance" &&
+                      header.key !== "ticketResolutionRate" &&
+                      header.key !== "tasksResolutionRate" &&
+                      header.key !== "missionCostPerEmployee" &&
+                      item[header.key]}
+                  </TableCell>
+                ))}
               </TableRow>
             ))}
           </TableBody>
