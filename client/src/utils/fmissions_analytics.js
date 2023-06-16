@@ -38,7 +38,9 @@ export const getMissionGroupedDataForTime = (data, time, stack) => {
         mission_count: cur.mission_count,
         solved_ticket_count: cur.solved_ticket_count,
         total_ticket_count: cur.total_ticket_count,
+        unsolved_ticket_count: cur.total_ticket_count - cur.solved_ticket_count,
         done_tasks_count: cur.done_tasks_count,
+        undone_tasks_count: cur.total_tasks_count - cur.done_tasks_count,
         total_tasks_count: cur.total_tasks_count,
         employee_count: cur.employee_count,
         airline_utilization_count: cur.airline_utilization_count,
@@ -78,8 +80,12 @@ export const getMissionGroupedDataForTime = (data, time, stack) => {
       acc[yearIndex].mission_count += cur.mission_count;
       acc[yearIndex].solved_ticket_count += cur.solved_ticket_count;
       acc[yearIndex].total_ticket_count += cur.total_ticket_count;
+      acc[yearIndex].unsolved_ticket_count +=
+        cur.total_ticket_count - cur.solved_ticket_count;
       acc[yearIndex].done_tasks_count += cur.done_tasks_count;
       acc[yearIndex].total_tasks_count += cur.total_tasks_count;
+      acc[yearIndex].undone_tasks_count +=
+        cur.total_tasks_count - cur.done_tasks_count;
       acc[yearIndex].employee_count += cur.employee_count;
       acc[yearIndex].airline_utilization_count += cur.airline_utilization_count;
       acc[yearIndex].road_utilization_count += cur.road_utilization_count;
@@ -190,8 +196,11 @@ export const getMissionCountFor = (data, type) => {
       employee_count: doc.employee_count,
       solved_ticket_count: doc.solved_ticket_count,
       total_ticket_count: doc.total_ticket_count,
+      unsolved_ticket_count: doc.total_ticket_count - doc.solved_ticket_count,
+
       done_tasks_count: doc.done_tasks_count,
       total_tasks_count: doc.total_tasks_count,
+      undone_tasks_count: doc.total_tasks_count - doc.done_tasks_count,
       airline_utilization_count: doc.airline_utilization_count,
       road_utilization_count: doc.road_utilization_count,
       estimated_budget: doc.estimated_budget,
@@ -207,8 +216,12 @@ export const getMissionCountFor = (data, type) => {
         acc[key].mission_count += cur.mission_count;
         acc[key].solved_ticket_count += cur.solved_ticket_count;
         acc[key].total_ticket_count += cur.total_ticket_count;
+        acc[key].unsolved_ticket_count +=
+          cur.total_ticket_count - cur.solved_ticket_count;
         acc[key].done_tasks_count += cur.done_tasks_count;
         acc[key].total_tasks_count += cur.total_tasks_count;
+        acc[key].undone_tasks_count +=
+          cur.total_tasks_count - cur.done_tasks_count;
         acc[key].employee_count += cur.employee_count;
         acc[key].airline_utilization_count += cur.airline_utilization_count;
         acc[key].road_utilization_count += cur.road_utilization_count;
