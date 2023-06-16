@@ -297,16 +297,16 @@ export const missionCompletionRate = (data, option) => {
     "etat"
   ).filter((e) => e.stack === "en-cours")[0];
 
-  let B = docsCompleted["mission_count"];
-  let A = docsAccepted["mission_count"];
+  let B = docsCompleted.mission_count;
+  let A = docsAccepted.mission_count;
   // console.log(docsAccepted);
   // console.log(docsCompleted);
   const value = ((A * 100) / B).toFixed(2);
-  return isNaN(value) ? 0 : value;
+  return isNaN(value) ? (0).toFixed(2) : value;
 };
 
 // somme durée missions terminées / nb missions terminées
-export const timeToCompletion = (data, option) => {
+export const timeToCompletion = (data) => {
   const docs = getMissionGroupedDataForTime(data, 4, "etat").filter(
     (e) => e.stack === "terminée"
   );
@@ -320,7 +320,45 @@ export const timeToCompletion = (data, option) => {
   }, 0);
 
   const value = ((A * 100) / B).toFixed(2);
-  return isNaN(value) ? 0 : value;
+  return isNaN(value) ? (0).toFixed(2) : value;
+};
+export const budgetVariance = (mission) => {
+  let A = mission["budget"];
+  let B = mission["budgetConsome"];
+
+  const value = (((A - B) * 100) / A).toFixed(2);
+  return isNaN(value) ? (0).toFixed(2) : value;
+};
+
+// nb tickets resolus / nb tickets total
+export const ticketResolutionRate = (mission, tickets) => {
+  const mtickets = tickets.filter((t) => t.mission._id === mission._id);
+
+  let A = mtickets.length; // Number of tickets for the mission
+  let B = mtickets.filter((t) => t.isSolved).length; // Number of resolved tickets for the mission
+
+  const value = ((B * 100) / A).toFixed(2);
+  return isNaN(value) ? (0).toFixed(2) : value;
+};
+// nb tickets resolus / nb tickets total
+export const tasksResolutionRate = (mission) => {
+  let A = mission.taches.length; // Number of tickets for the mission
+  let B = mission.taches.filter((t) => t.state === "accomplie").length; // Number of resolved tickets for the mission
+
+  const value = ((B * 100) / A).toFixed(2);
+  return isNaN(value) ? (0).toFixed(2) : value;
+};
+export const missionCostPerEmployee = (mission) => {
+  let A = mission.budgetConsome; // Number of tickets for the mission
+  let B = mission.employes.length; // Number of resolved tickets for the mission
+
+  const value = (A / B).toFixed(2);
+  return isNaN(value) ||
+    isNaN(mission.budgetConsome) ||
+    mission.budgetConsome === 0 ||
+    mission.employes.length === 0
+    ? (0).toFixed(2)
+    : value;
 };
 
 export const currentSuccessRate = (data, property1, property2) => {

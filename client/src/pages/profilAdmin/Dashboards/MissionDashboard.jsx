@@ -15,6 +15,7 @@ import AreaRechart from "../../../components/charts/AreaRechart";
 import { Suspense } from "react";
 import PieRechart from "../../../components/charts/PieRechart";
 import DashCard from "../../../components/charts/widgets/DashCard";
+import RateTable from "../../../components/rateTable/RateTable";
 
 const MissionDashboard = () => {
   let fmissionData = useSelector((state) => state.stat.missionKPIS);
@@ -402,11 +403,16 @@ const MissionDashboard = () => {
             {/* button to choose between 4 (year) and 7 (month) */}
             <DashCard
               title={"le délai jugé nécessaire pour finaliser les missions"}
-              number={timeToCompletion(fmissionData, 4) + " jours"}
+              number={timeToCompletion(fmissionData) + " jours"}
             />
           </Suspense>
         </div>
         {/* ________________________________CARDS_____________________________ */}
+        {/* ________________________________TABLE_____________________________ */}
+        <div style={{ gridArea: "c" }} className="box">
+          <RateTable />
+        </div>
+        {/* ________________________________TABLE_____________________________ */}
       </div>
     </div>
   );

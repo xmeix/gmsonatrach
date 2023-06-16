@@ -418,7 +418,7 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
 
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
+    setPage(0); 
   };
 
   const paginatedData = sortedData.slice(

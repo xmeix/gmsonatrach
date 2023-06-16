@@ -482,12 +482,14 @@ function App() {
           getMissions(dispatch);
           getRFMs(dispatch);
           getOMs(dispatch);
-          getTickets(dispatch);
         }
         getDemandes(dispatch);
         getNotifications(dispatch);
         if (user.role !== "relex" && user.role !== "employe") {
           getUsers(dispatch);
+        }
+        if (user.role !== "relex" && user.role !== "secretaire") {
+          getTickets(dispatch);
         }
 
         if (
