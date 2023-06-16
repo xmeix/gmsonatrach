@@ -30,6 +30,16 @@ const customStyles = {
     },
   }),
 };
+const successMessages = {
+  4: "La mission introduite présente une perspective favorable d'accomplissement réussi à 90%.",
+  3: "La mission introduite présente une perspective favorable d'accomplissement réussi à 75%.",
+  2: "La mission introduite présente une perspective favorable d'accomplissement réussi à 50%.",
+};
+
+const errorMessages = {
+  1: "La mission introduite présente une perspective favorable d'accomplissement réussi à 25%.",
+  0: "Il n'est pas assuré que la mission introduite aboutisse à un succès.",
+};
 
 const Formulaire = ({ title, entries, buttons, type }) => {
   const selectInputRef = useRef();
@@ -50,16 +60,22 @@ const Formulaire = ({ title, entries, buttons, type }) => {
     selectInputRef.current.setValue(null);
   };
   /***----------------------------------------------------------- */
-  const { missions, demandes } = useSelector((state) => state.auth || []);
+  const { missions } = useSelector((state) => state.mission || []);
+  const { demandes } = useSelector((state) => state.demande || []);
   const users = useSelector((state) => state.auth.users);
   const [start, setStart] = useState(null);
   const [end, setEnd] = useState(null);
   const [updatedEntries, setUpdatedEntries] = useState(entries); // new state variable
   const [disabled, setDisabled] = useState(true); // new state variable
+  const [predResult, setPredResult] = useState(null);
 
   useEffect(() => {
     let newEmployeesNonMissionnaires;
-    if (start && end && (type === "mission" || type === "DB")) {
+    if (
+      start &&
+      end &&
+      (type === "mission" || type === "DB" || type === "ia-form")
+    ) {
       newEmployeesNonMissionnaires = users
         .filter(
           (user) =>
@@ -81,7 +97,7 @@ const Formulaire = ({ title, entries, buttons, type }) => {
         }));
 
       let newEntries;
-      if (type === "mission") {
+      if (type === "mission" || type === "ia-form") {
         newEntries = entries.map((entry) => {
           if (entry.id === "employes") {
             entry.options = newEmployeesNonMissionnaires;
@@ -107,11 +123,12 @@ const Formulaire = ({ title, entries, buttons, type }) => {
       }
     }
   }, [start, end, entries, missions, type, users]);
-  const [predResult, setPredResult] = useState(null);
+
   const handlePredict = () => {
     setErrors(validateAIMissionForm(values, currentUser));
     if (Object.keys(validateAIMissionForm(values, currentUser)).length === 0) {
       // data: [structure, type, budget, pays, destination, NbEmployes, duree];
+      console.log(values);
       fetch("http://localhost:5000/predict", {
         method: "POST",
         headers: {
@@ -254,6 +271,17 @@ const Formulaire = ({ title, entries, buttons, type }) => {
 
     return () => clearTimeout(timeout);
   }, [successMsg]);
+  useEffect(() => {
+    let timeout;
+
+    if (predResult) {
+      timeout = setTimeout(() => {
+        setPredResult(null);
+      }, 4000);
+    }
+
+    return () => clearTimeout(timeout);
+  }, [predResult]);
 
   useEffect(() => {
     let timeout;
@@ -289,7 +317,7 @@ const Formulaire = ({ title, entries, buttons, type }) => {
                       undefined
                     }
                     onChange={(e) => {
-                      if (type === "mission") {
+                      if (type === "mission" || type === "ia-form") {
                         if (entry.id === "tDateDeb") {
                           setStart(e.target.value);
                         } else if (entry.id === "tDateRet") {
@@ -418,33 +446,15 @@ const Formulaire = ({ title, entries, buttons, type }) => {
         </div>
       )}
       {/* {typeof predResult} */}
-      {predResult === 4 && (
-        <div className="success-message">
-          La mission introduite présente une perspective favorable
-          d'accomplissement réussi a 90%.
-        </div>
-      )}
-      {predResult === 3 && (
-        <div className="success-message">
-          La mission introduite présente une perspective favorable
-          d'accomplissement réussi a 75%.
-        </div>
-      )}{" "}
-      {predResult === 2 && (
-        <div className="success-message">
-          La mission introduite présente une perspective favorable
-          d'accomplissement réussi a 50%.
-        </div>
-      )}
-      {predResult === 1 && (
-        <div className="error-message">
-          La mission introduite présente une perspective favorable
-          d'accomplissement réussi a 25%.
-        </div>
-      )}
-      {predResult === 0 && (
-        <div className="error-message">
-          Il n'est pas assuré que la mission introduite aboutisse à un succès.
+      {predResult && predResult >= 0 && (
+        <div
+          className={
+            predResult > 0 ? "success-predict-message" : "error-predict-message"
+          }
+        >
+          {predResult > 0
+            ? successMessages[predResult]
+            : errorMessages[predResult]}
         </div>
       )}
     </div>

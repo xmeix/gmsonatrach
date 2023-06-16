@@ -393,8 +393,6 @@ const MissionDashboard = () => {
               buttons={buttons}
               title=""
             />
-            {/* Train model */}
-            <button className="button"> Entrainer le modèle</button>
           </div>
         </div>
         <div className="g21">

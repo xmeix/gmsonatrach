@@ -20,6 +20,9 @@ import {
   ticketResolutionRate,
 } from "../../utils/fmissions_analytics";
 import { getBestEmployes } from "../../api/apiCalls/getCalls";
+import usePopup from "../../hooks/usePopup";
+import Popup from "../popups/Popup";
+import "./RateTable.css";
 const useStyles = makeStyles({
   table: {
     "& .MuiPaper-root, & .MuiTableContainer-root": {
@@ -60,10 +63,18 @@ const useStyles = makeStyles({
     fontSize: 13,
     overflow: "hidden",
     textOverflow: "ellipsis",
+    "& span": {
+      padding: "0.3em 1em",
+      borderRadius: "10px",
+    },
   },
   tableRow: {
     "&:nth-of-type(even)": {
       background: "white !important",
+    },
+    "&:hover": {
+      background: "var(--light-gray) !important",
+      cursor: "pointer",
     },
   },
   tableBody: {
@@ -83,7 +94,9 @@ const useStyles = makeStyles({
 
 const RateTable = ({ type }) => {
   const classes = useStyles();
-
+  const [isOpen, openPopup, closePopup, popupType] = usePopup();
+  const [savedItem, setSavedItem] = useState(null);
+  const [savedType, setSavedType] = useState("");
   const { users } = useSelector((state) => state.auth);
   const { missions } = useSelector((state) => state.mission);
   const { tickets } = useSelector((state) => state.ticket);
@@ -133,13 +146,27 @@ const RateTable = ({ type }) => {
         )
       : bestEmps?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
 
+  const sortedData =
+    type === 2
+      ? paginatedData.slice().sort((a, b) => {
+          const productivityA = employeeProductivity(a, endedMissions);
+          const productivityB = employeeProductivity(b, endedMissions);
+
+          return productivityB - productivityA; // Sort in descending order
+        })
+      : [];
+  const handleCloseForm = () => {
+    console.log("are closing");
+    setSavedItem(null);
+    closePopup();
+  };
   return (
     <div className="rate-table">
       <TableContainer component={Paper} aria-label="table">
         {type === 1 && (
           <Table className={classes.table}>
             <TableHead className={classes.tableHeader}>
-              <TableRow className={classes.tableRow}>
+              <TableRow>
                 <TableCell className={classes.tableCell}>ID Mission</TableCell>
                 <TableCell className={classes.tableCell}>
                   l'écart budgétaire en pourcentage
@@ -157,18 +184,48 @@ const RateTable = ({ type }) => {
             </TableHead>
             <TableBody className={classes.tableBody}>
               {paginatedData.map((mission, i) => (
-                <TableRow key={i} className={classes.tableRow}>
+                <TableRow
+                  key={i}
+                  className={classes.tableRow}
+                  onClick={() => {
+                    setSavedItem(mission);
+                    setSavedType("mission");
+                    openPopup("mission");
+                  }}
+                >
                   <TableCell className={classes.tableCell}>
                     {mission.uid}
                   </TableCell>
                   <TableCell className={classes.tableCell}>
-                    {budgetVariance(mission) + "%"}
+                    <span
+                      className={
+                        budgetVariance(mission) <= 0 ? "bhigh" : "ghigh"
+                      }
+                    >
+                      {budgetVariance(mission) + "%"}
+                    </span>
                   </TableCell>
                   <TableCell className={classes.tableCell}>
-                    {ticketResolutionRate(mission, tickets) + "%"}
+                    <span
+                      className={
+                        ticketResolutionRate(mission, tickets) <= 0
+                          ? "bhigh"
+                          : "ghigh"
+                      }
+                    >
+                      {" "}
+                      {ticketResolutionRate(mission, tickets) + "%"}
+                    </span>
                   </TableCell>
                   <TableCell className={classes.tableCell}>
-                    {tasksResolutionRate(mission) + "%"}
+                    <span
+                      className={
+                        tasksResolutionRate(mission) <= 0 ? "bhigh" : "ghigh"
+                      }
+                    >
+                      {" "}
+                      {tasksResolutionRate(mission) + "%"}
+                    </span>
                   </TableCell>
                   <TableCell className={classes.tableCell}>
                     {missionCostPerEmployee(mission) + "DZD"}
@@ -181,19 +238,28 @@ const RateTable = ({ type }) => {
         {type === 2 && (
           <Table className={classes.table}>
             <TableHead className={classes.tableHeader}>
-              <TableRow className={classes.tableRow}>
+              <TableRow>
                 <TableCell className={classes.tableCell}>ID Employé</TableCell>
                 <TableCell className={classes.tableCell}>Nom</TableCell>
                 <TableCell className={classes.tableCell}>Prénom</TableCell>
                 <TableCell className={classes.tableCell}>Structure</TableCell>
                 <TableCell className={classes.tableCell}>
-                  taux de productivité
+                  taux de productivité (missions/jours)
                 </TableCell>
               </TableRow>
             </TableHead>
             <TableBody className={classes.tableBody}>
-              {paginatedData.map((user, i) => (
-                <TableRow key={i} className={classes.tableRow}>
+              {sortedData.map((user, i) => (
+                <TableRow
+                  key={i}
+                  className={classes.tableRow}
+                  style={{ backgroundColor: i === 0 ? "var(--blue2)" : "" }}
+                  onClick={() => {
+                    setSavedItem(user);
+                    setSavedType("user");
+                    openPopup("user");
+                  }}
+                >
                   <TableCell className={classes.tableCell}>
                     {user.uid}
                   </TableCell>
@@ -207,7 +273,7 @@ const RateTable = ({ type }) => {
                     {user.structure}
                   </TableCell>
                   <TableCell className={classes.tableCell}>
-                    {employeeProductivity(user, endedMissions)}
+                    {employeeProductivity(user, endedMissions) + " m/j"}
                   </TableCell>
                 </TableRow>
               ))}
@@ -217,7 +283,7 @@ const RateTable = ({ type }) => {
         {type === 3 && (
           <Table className={classes.table}>
             <TableHead className={classes.tableHeader}>
-              <TableRow className={classes.tableRow}>
+              <TableRow>
                 <TableCell className={classes.tableCell}>Classement</TableCell>
                 <TableCell className={classes.tableCell}>ID Employé</TableCell>
                 <TableCell className={classes.tableCell}>Nom</TableCell>
@@ -229,7 +295,15 @@ const RateTable = ({ type }) => {
             </TableHead>
             <TableBody className={classes.tableBody}>
               {paginatedData?.map((emp, i) => (
-                <TableRow key={i} className={classes.tableRow}>
+                <TableRow
+                  key={i}
+                  className={classes.tableRow}
+                  onClick={() => {
+                    setSavedItem(emp);
+                    setSavedType("user");
+                    openPopup("user");
+                  }}
+                >
                   <TableCell className={classes.tableCell}>{i}</TableCell>
                   <TableCell className={classes.tableCell}>{emp.uid}</TableCell>
                   <TableCell className={classes.tableCell}>{emp.nom}</TableCell>
@@ -237,7 +311,11 @@ const RateTable = ({ type }) => {
                     {emp.prenom}
                   </TableCell>
                   <TableCell className={classes.tableCell}>
-                    {emp.totalSolvedTickets}
+                    <span
+                      className={emp.totalSolvedTickets < 0 ? "bhigh" : "ghigh"}
+                    >
+                      {emp.totalSolvedTickets}
+                    </span>
                   </TableCell>
                 </TableRow>
               ))}
@@ -256,7 +334,19 @@ const RateTable = ({ type }) => {
         page={page}
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
-      />
+      />{" "}
+      {isOpen && (
+        <>
+          <Popup
+            item={savedItem}
+            type={savedType}
+            isOpen={isOpen}
+            closePopup={closePopup}
+            popupType={popupType}
+          />
+        </>
+      )}{" "}
+      {isOpen && <div className="closePopup" onClick={handleCloseForm}></div>}
     </div>
   );
 };

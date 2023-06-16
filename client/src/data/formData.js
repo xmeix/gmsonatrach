@@ -15,30 +15,25 @@ export const userButtons = [
 export const missionAiButtons = [
   {
     id: 1,
-    title: "Prédire succés mission",
-    onClick: "",
-    type: "",
-  },
-  {
-    id: 2,
     title: "Annuler",
     onClick: "",
     type: "reset",
   },
+  {
+    id: 2,
+    title: "Entrainer le modèle",
+    onClick: "",
+    type: "",
+  },
+  {
+    id: 3,
+    title: "Prédire succés mission",
+    onClick: "",
+    type: "",
+  },
 ];
 export const missionButtons = [
-  // {
-  //   id: 1,
-  //   title: "Voir classement des employés",
-  //   onClick: "",
-  //   type: "",
-  // },
-  // {
-  //   id: 2,
-  //   title: "Prédire succés mission",
-  //   onClick: "",
-  //   type: "",
-  // },
+ 
   {
     id: 3,
     title: "Annuler",
@@ -2936,6 +2931,16 @@ export const MissionAiEntries = [
     inputType: "date",
     width: "230px",
     placeholder: "date fin mission",
+    required: true,
+  },
+  {
+    id: "employes",
+    label: "missionnaires",
+    inputType: "select",
+    width: "230px",
+    placeholder: "missionnaires",
+    isMulti: true,
+    disabled: true,
     required: true,
   },
 

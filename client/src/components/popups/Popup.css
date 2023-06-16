@@ -3,7 +3,7 @@
   flex-direction: column;
   gap: 1em;
   position: fixed;
-  z-index: 998;
+  z-index: 998 !important;
   background-color: var(--white);
   border-radius: 3px;
   box-shadow: 0 0 0 2px rgba(70, 69, 69, 0.034);

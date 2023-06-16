@@ -199,7 +199,9 @@ export const validateAIMissionForm = (mission, user) => {
     errors.tDateDeb =
       "Les dates ne doivent pas être identiques, la date de retour doit être postérieure à la date de départ.";
   }
-  ///we also need to validate the employees if they are disponible during that time
+  if (!mission?.employes || mission.employes.length === 0) {
+    errors.employes = "obligatoire";
+  }
 
   return errors;
 };

@@ -131,6 +131,24 @@ textarea {
   gap: 0.5em;
   border-radius: 5px;
 }
+.success-predict-message {
+  border: solid 3px var(--success);
+  color: var(--success);
+  font-size: 13px;
+  font-weight: 800;
+  padding: 1em 1.5em;
+  animation: slide-in 0.3s ease-out;
+  border-radius: 5px;
+}
+.error-predict-message {
+  border: solid 3px var(--error);
+  color: var(--error);
+  font-size: 13px;
+  font-weight: 800;
+  padding: 1em 1.5em;
+  animation: slide-in 0.3s ease-out;
+  border-radius: 5px;
+}
 @keyframes slide-in {
   from {
     transform: translateY(-100%);
