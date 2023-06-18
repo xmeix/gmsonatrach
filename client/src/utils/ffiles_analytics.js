@@ -32,7 +32,6 @@ export const getCountFor = (data, type, fileType) => {
         label: doc[property],
         circulation_count: doc.circulation_count,
       }));
- 
 
   switch (type) {
     case "structure":
@@ -128,4 +127,3 @@ export const getGroupedDataForTime = (data, time, fileType, stack) => {
 
   return groupedDataArray;
 };
- 

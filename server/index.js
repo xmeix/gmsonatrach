@@ -11,7 +11,6 @@ import authRoutes from "./routes/auth.js";
 import demandeRoutes from "./routes/demande.js";
 import missionRoutes from "./routes/mission.js";
 import ordreMissionRoutes from "./routes/ordreMission.js";
-import depenseRoutes from "./routes/depense.js";
 import rapportRoutes from "./routes/rapportFM.js";
 import kpisRoutes from "./routes/kpis.js";
 import notificationRoutes from "./routes/notification.js";
@@ -86,7 +85,6 @@ app.use("/auth", authRoutes);
 app.use("/demande", demandeRoutes);
 app.use("/mission", missionRoutes);
 app.use("/ordremission", ordreMissionRoutes);
-app.use("/depense", depenseRoutes);
 app.use("/rapportFM", rapportRoutes);
 app.use("/kpis", kpisRoutes);
 app.use("/notification", notificationRoutes);
@@ -232,8 +230,7 @@ cron.schedule("20 01 * * *", async () => {
     etat: "acceptée",
   });
 
-  console.log("1");
-  // pour chacun des missions trouvé
+   // pour chacun des missions trouvé
   for (const mission of missionsEnCours) {
     const employeIds = mission.employes.map((employe) => employe._id);
 
@@ -250,7 +247,7 @@ cron.schedule("20 01 * * *", async () => {
       others: mission.employes,
       structure: mission.structure,
     });
-    // let old = mission;
+    let old = mission;
     // change the mission state to en cours
     mission.etat = "en-cours";
     let saved = await mission.save();
@@ -269,7 +266,7 @@ cron.schedule("20 01 * * *", async () => {
     //____________________________________________________________________________________
     //update etat
     createOrUpdateFMission("update", {
-      oldMission: { ...saved, etat: "acceptée" },
+      oldMission: old,
       newMission: saved,
       updateType: "etat",
     });
@@ -291,6 +288,7 @@ cron.schedule("20 01 * * *", async () => {
       const populatedRFM = await RapportFM.findById(savedRFM._id)
         .populate("idMission")
         .populate("idEmploye");
+        
       createOrUpdateFDocument(populatedRFM, "RFM", "creation");
       //______________________________________________________________
     }

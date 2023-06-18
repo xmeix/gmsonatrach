@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
 import FDocument from "../models/FDocument.js";
+import User from "../models/User.js";
+import { emitGetData } from "./utils.js";
 const toId = mongoose.Types.ObjectId;
 
 export const createOrUpdateFDocument = async (newFile, fileType, operation) => {
@@ -16,6 +18,31 @@ export const createOrUpdateFDocument = async (newFile, fileType, operation) => {
   } else if (fileType === "OM") {
     struct = newFile.mission.structure;
   }
+
+  let oldEtat;
+  if (operation === "update" || operation === "delete") {
+    switch (newFile.etat) {
+      case "créé":
+        oldEtat = "en-attente";
+        break;
+      case "en-attente":
+        oldEtat = "créé";
+        break;
+      case "annulée":
+        oldEtat = "en-attente";
+        break;
+      case "accepté":
+      case "acceptée":
+        oldEtat = "en-attente";
+        break;
+      case "refusé":
+      case "refusée":
+        oldEtat = "en-attente";
+        break;
+      default:
+        throw new Error(`Invalid new file etat: ${newFile.etat}`);
+    }
+  }
   try {
     switch (operation) {
       case "creation":
@@ -28,7 +55,7 @@ export const createOrUpdateFDocument = async (newFile, fileType, operation) => {
           nature: newFile.nature ? newFile.nature : "",
           motifDep: newFile.motifDep ? newFile.motifDep : "",
         }).sort({ createdAt: -1 });
-   
+
         // Duplicate the most recent document and increment the circulation_count field
         const newDocument = new FDocument({
           structure: struct,
@@ -43,29 +70,6 @@ export const createOrUpdateFDocument = async (newFile, fileType, operation) => {
         break;
 
       case "update":
-        let oldEtat;
-        switch (newFile.etat) {
-          case "créé":
-            oldEtat = "en-attente";
-            break;
-          case "en-attente":
-            oldEtat = "créé";
-            break;
-          case "annulée":
-            oldEtat = "en-attente";
-            break;
-          case "accepté":
-          case "acceptée":
-            oldEtat = "en-attente";
-            break;
-          case "refusé":
-          case "refusée":
-            oldEtat = "en-attente";
-            break;
-          default:
-            throw new Error(`Invalid new file etat: ${newFile.etat}`);
-        }
-
         // Find the most recent document with same type, structure, and old etat
 
         const oldDocument = await FDocument.findOne({
@@ -112,10 +116,34 @@ export const createOrUpdateFDocument = async (newFile, fileType, operation) => {
         await updatedDocument.save();
 
         break;
+      case "delete":
+        const oldFDocument = await FDocument.findOne({
+          type: fileType,
+          structure: struct,
+          etat: oldEtat,
+          nature: newFile.nature || "",
+          motifDep: newFile.motifDep || "",
+        }).sort({ createdAt: -1 });
 
+        // Duplicate the old document and decrement its circulation_count field
+        let updatedOldDocument = new FDocument({
+          structure: struct,
+          etat: oldEtat,
+          type: fileType,
+          nature: newFile.nature || "",
+          motifDep: newFile.motifDep || "",
+          circulation_count: oldFDocument
+            ? oldFDocument.circulation_count - 1
+            : 0,
+        });
+        await updatedOldDocument.save();
+
+        break;
       default:
         throw new Error(`Invalid operation: ${operation}`);
     }
+
+    emitFileKPI();
   } catch (error) {
     // Handle any errors
     console.error(error);
@@ -129,4 +157,17 @@ export const getFilesKPIS = async (req, res) => {
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
+};
+
+const emitFileKPI = async () => {
+  let users = await User.find({
+    $or: [{ role: "responsable" }, { role: "directeur" }],
+  })
+    .select("_id")
+    .lean();
+  let allUsers = [];
+
+  allUsers = users.map((u) => u._id.toString());
+
+  emitGetData(allUsers, "getFileKPIs");
 };

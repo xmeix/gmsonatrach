@@ -77,6 +77,9 @@ export const createMission = async (req, res) => {
       updatedBy,
     });
     const savedMission = await mission.save();
+    // ___________________________________________________________________________________________________
+    //                      GENERATION OM SI ETAT MISSION ACCEPTEE POUR CHAQUE EMPLOYE
+    // ___________________________________________________________________________________________________
     if (etat === "acceptée" && newEmployes.length > 0) {
       //on doit générer l'ordre de mission et rfm
       const employeIds = newEmployes.map((employe) => employe._id);
@@ -89,11 +92,12 @@ export const createMission = async (req, res) => {
         });
         await om.save();
         //______________________________________________________________;
-
         const populatedOM = await OrdreMission.findById(om._id)
           .populate("mission")
           .populate("employe");
-
+        // ___________________________________________________________________________________________________
+        //                      CREATION FDOCUMENT
+        // ___________________________________________________________________________________________________
         createOrUpdateFDocument(populatedOM, "OM", "creation");
         //______________________________________________________________;
       }
@@ -263,8 +267,8 @@ export const updateMissionEtat = async (req, res) => {
       //____________________________________________________________________________________
       //update etat
       // createOrUpdateFMission(updatedMission, "update", mission, "etat");
-      console.log("old:", mission.etat);
-      console.log("new:", updatedMission.etat);
+      // console.log("old:", mission.etat);
+      // console.log("new:", updatedMission.etat);
       createOrUpdateFMission("update", {
         oldMission: mission,
         newMission: updatedMission,

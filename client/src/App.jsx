@@ -393,6 +393,7 @@ function App() {
     socket.on("getUsers", handleGetUsers);
     socket.on("notification", handleNotification);
     socket.on("getMissionKPIs", handleGetMissionKpis);
+    socket.on("getFileKPIs", handleGetFileKpis);
   };
 
   const handleSocketDisconnection = () => {
@@ -404,6 +405,7 @@ function App() {
     socket.off("getUsers", handleGetUsers);
     socket.off("notification", handleNotification);
     socket.off("getMissionKPIs", handleGetMissionKpis);
+    socket.off("getFileKPIs", handleGetFileKpis);
   };
 
   const handleTicket = useCallback(
@@ -427,6 +429,14 @@ function App() {
     (tab) => {
       if (tabId === tab) {
         getMissionKPIS(dispatch);
+      }
+    },
+    [dispatch, tabId]
+  );
+  const handleGetFileKpis = useCallback(
+    (tab) => {
+      if (tabId === tab) {
+        getFileKPIS(dispatch);
       }
     },
     [dispatch, tabId]

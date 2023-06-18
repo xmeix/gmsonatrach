@@ -23,7 +23,11 @@ export const createDemande = async (req, res) => {
     let newDemande;
     let destinataire;
 
-    if (type === "DM" || type === "DC") {
+    if (type === "DC" && user.role === "secretaire") {
+      destinataire = await User.findOne({
+        role: "directeur",
+      });
+    } else if (type === "DM" || type === "DC") {
       destinataire = await User.findOne({
         role: "responsable",
         structure: structure,
@@ -31,9 +35,12 @@ export const createDemande = async (req, res) => {
     } else if (type === "DB") {
       destinataire = await User.findOne({ role: "relex" });
     }
+    console.log("here");
+    console.log("destinataire.id", req.user);
 
     destinataire = toId(destinataire.id);
     let emetteur = toId(user.id);
+
     switch (type) {
       case "DC": {
         const { motif, DateDepart, DateRetour, LieuSejour, Nature } = req.body;
@@ -165,7 +172,9 @@ export const createDemande = async (req, res) => {
     sendRequestNotification("creation", {
       demande: populatedDemande,
     });
-
+    // ____________________________________________________________________________
+    //                               CREATION FDOCUMENT
+    // ____________________________________________________________________________
     createOrUpdateFDocument(populatedDemande, populatedDemande.__t, "creation");
 
     res.status(201).json({ savedDemande, msg: "Demande envoyée" });
@@ -208,7 +217,7 @@ export const getDemandes = async (req, res) => {
 export const updateDemEtat = async (req, res) => {
   try {
     const demande = await Demande.findById(req.params.id);
-   
+
     if (demande.etat === "en-attente" && req.body.etat !== "en-attente") {
       demande.etat = req.body.etat;
 
@@ -223,7 +232,9 @@ export const updateDemEtat = async (req, res) => {
         .populate("idEmetteur")
         .populate("idDestinataire")
         ?.populate("employes");
-
+      // ____________________________________________________________________________
+      //                               UPDATE FDOCUMENT
+      // ____________________________________________________________________________
       createOrUpdateFDocument(populatedDemande, populatedDemande.__t, "update");
       //________________________________________________________________
       let destinataires = await User.find({
@@ -275,20 +286,20 @@ export const updateDemEtat = async (req, res) => {
             // __________
             // CHANGE ETAT
             // __________
-            // ------------------------------------------------------------------------------------------------------XXXXXXXXXXXXXXXXXXXXXXX
-
-            createOrUpdateFMission("update", {
-              oldMission: mission,
-              newMission: { ...mission, etat: "annulée" },
-              updateType: "etat",
-            });
-            // ------------------------------------------------------------------------------------------------------XXXXXXXXXXXXXXXXXXXXXXX
+            let oldMission = mission;
 
             mission.etat = "annulée";
-            await mission.save();
+            let newMission = await mission.save();
+            // ------------------------------------------------------------------------------------------------------XXXXXXXXXXXXXXXXXXXXXXX
+            createOrUpdateFMission("update", {
+              oldMission: oldMission,
+              newMission: newMission,
+              updateType: "etat",
+            });
+            // ---------------------------------------------------- --------------------------------------------------XXXXXXXXXXXXXXXXXXXXXXX
 
             // __________
-            // REMOVE OM
+            // REMOVE OM |||| IN CASE OF MISSION EN COURS ! WE DONT DELETE OM, WE CHANGE DATE OF END OF MISSION
             // __________
             const om = await OrdreMission.findOne({
               mission: mission.id,
@@ -296,7 +307,7 @@ export const updateDemEtat = async (req, res) => {
             });
 
             if (om) {
-              await om.remove();
+              let newOm = await om.remove();
             }
 
             createNotification({
@@ -324,7 +335,7 @@ export const updateDemEtat = async (req, res) => {
             );
             // ------------------------------------------------------------------------------------------------------XXXXXXXXXXXXXXXXXXXXXXX
             createOrUpdateFMission("update", {
-              oldMission: mission, //wont need this 
+              oldMission: mission, //wont need this
               newMission: {
                 ...mission,
                 employes: mission.employes.filter(
@@ -338,7 +349,7 @@ export const updateDemEtat = async (req, res) => {
             await mission.save();
 
             // _________________________________________
-            // REMOVE OM OF THAT MISSION FOR THAT USER
+            // REMOVE OM OF THAT MISSION FOR THAT USER |||| IN CASE OF MISSION EN COURS ! WE DONT DELETE OM, WE CHANGE DATE OF END OF MISSION
             // _________________________________________
             const om = await OrdreMission.findOne({
               mission: mission.id,
@@ -346,7 +357,7 @@ export const updateDemEtat = async (req, res) => {
             });
 
             if (om) {
-              await om.remove();
+              let newOm = await om.remove();
             }
 
             createNotification({
@@ -598,9 +609,11 @@ const sendRequestNotification = async (operation, body) => {
             path:
               typeDemande === "DB"
                 ? "/service-relex"
-                : typeDemande === "DC"
-                ? "/gestion-congés"
-                : "/gestion-modification",
+                : emetteur.role === "employe"
+                ? typeDemande === "DC"
+                  ? "/gestion-congés"
+                  : "/gestion-modification"
+                : "gestion-c-m-rfm",
             type,
           });
         }
@@ -616,27 +629,25 @@ const sendRequestNotification = async (operation, body) => {
         createNotification({
           users: users2,
           message: message2,
-          path:
-            typeDemande === "DB"
-              ? "/service-relex"
-              : typeDemande === "DC"
-              ? "/gestion-congés"
-              : "/gestion-modification",
+          path: typeDemande === "DB" ? "/service-relex" : "gestion-c-m-rfm",
           type: typeDemande,
         });
+        // SEPARATE OF NOTIFICATIONS , RESPONSABLES | DIRECTEURS ==>gestion-c-m-rfm , EMPLOYES
       } else {
         // celui qui l a envoyé
         users = [emetteur.id];
-        message = `Votre demande de  ${nomDemande}  a été ${etat} par ${updatedBy.nom} ${updatedBy.prenom}.`;
+        message = `Votre demande de  ${nomDemande} a été ${etat} par ${updatedBy.nom} ${updatedBy.prenom}.`;
         createNotification({
           users: users,
           message: message,
           path:
             typeDemande === "DB"
               ? "/service-relex"
-              : typeDemande === "DC"
-              ? "/gestion-congés"
-              : "/gestion-modification",
+              : emetteur.role === "employe"
+              ? typeDemande === "DC"
+                ? "/gestion-congés"
+                : "/gestion-modification"
+              : "gestion-c-m-rfm",
           type: typeDemande,
         });
 
@@ -651,12 +662,7 @@ const sendRequestNotification = async (operation, body) => {
         createNotification({
           users: users2,
           message: message2,
-          path:
-            typeDemande === "DB"
-              ? "/service-relex"
-              : typeDemande === "DC"
-              ? "/gestion-congés"
-              : "/gestion-modification",
+          path: typeDemande === "DB" ? "/service-relex" : "gestion-c-m-rfm",
           type: typeDemande,
         });
       }

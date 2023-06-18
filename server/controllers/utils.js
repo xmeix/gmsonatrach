@@ -9,7 +9,6 @@ export const emitGetData = (users, link) => {
   });
 };
 
- 
 export const emitDataTo = async (link, data) => {
   // Emit the notification event to each socket ID associated with the user ID
   // console.log("____________________________________________________");

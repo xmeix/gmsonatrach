@@ -118,6 +118,7 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
     setSavedItem(null);
     closePopup();
   };
+  console.log(currentUser);
   function canAcceptOrRefuse(item, currentUser, button) {
     return (
       ((item.etat === "en-attente" &&
@@ -126,7 +127,12 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
         (item.etat === "en-attente" &&
           currentUser.role !== "employe" &&
           currentUser.role !== "secretaire" &&
-          currentUser.role !== "relex")) &&
+          currentUser.role !== "relex" &&
+          !(
+            item.__t === "DC" &&
+            item.idEmetteur.role === "responsable" &&
+            currentUser.role === "responsable"
+          ))) &&
       ["accept", "refuse"].includes(button)
     );
   }

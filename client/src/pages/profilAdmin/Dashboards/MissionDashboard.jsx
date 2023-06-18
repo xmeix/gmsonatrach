@@ -168,6 +168,7 @@ const MissionDashboard = () => {
           <div className="box a b1">
             {/* type - structure - etat - country*/}
             {customSelecta()}
+            <div className="box-title">Nombre de missions par {xlabel}</div>
             <StackedBarRechart
               data={getMissionGroupedDataForTime(
                 fmissionData,
@@ -184,6 +185,9 @@ const MissionDashboard = () => {
           <div className="box b b1">
             <Suspense fallback={<div>Loading...</div>}>
               {/* add this to fmissionData==> .filter((e) => e.etat === "terminée") */}
+              <div className="box-title">
+                Taux d'utilisation moyen des moyens de transport par {xlabel}
+              </div>
               <ComposedRechart
                 data={getMissionGroupedDataForTime(
                   fmissionData.filter((e) => e.etat === "terminée"),
@@ -200,12 +204,18 @@ const MissionDashboard = () => {
           </div>
         </div>
         <div className="box s all">
+          <div className="box-title">
+            Evaluation productivité des employés a travers les tickets résolus
+          </div>
           <RateTable type={3} />
         </div>
         <div className="g21">
           <div className="box d g2">
             <Suspense fallback={<div>Loading...</div>}>
               {/* add this to fmissionData==> .filter((e) => e.etat === "terminée") */}
+              <div className="box-title">
+                Taux de résolution des tickets par {xlabel}
+              </div>
               <ComposedRechart
                 data={getMissionGroupedDataForTime(
                   fmissionData,
@@ -224,6 +234,9 @@ const MissionDashboard = () => {
             <Suspense fallback={<div>Loading...</div>}>
               {/* add this to fmissionData==> .filter((e) => e.etat === "terminée") */}
               {customSelectb()}
+              <div className="box-title">
+                Analyse d'utilisation des compagnies aérienne par {xlabel}
+              </div>
               <StackedBarRechart
                 data={getMissionGroupedDataForTime(
                   fmissionData,
@@ -239,6 +252,9 @@ const MissionDashboard = () => {
           </div>
         </div>
         <div className="box p all">
+          <div className="box-title">
+            Analyse de différents indicateurs des missions
+          </div>
           <RateTable type={1} />
         </div>
         <div className="g11">
@@ -247,6 +263,9 @@ const MissionDashboard = () => {
               <Suspense fallback={<div>Loading...</div>}>
                 {/* add this to fmissionData==> .filter((e) => e.etat === "terminée") */}
                 {customSelectc()}
+                <div className="box-title">
+                  {option2c.label} par {xlabel}
+                </div>
                 <StackedBarRechart
                   data={getMissionGroupedDataForTime(
                     fmissionData,
@@ -262,6 +281,9 @@ const MissionDashboard = () => {
             </div>
             <div className="box f">
               <Suspense fallback={<div>Loading...</div>}>
+                <div className="box-title">
+                  Taux d'accomplissement moyen des taches par {xlabel}
+                </div>
                 {/* add this to fmissionData==> .filter((e) => e.etat === "terminée") */}
                 <ComposedRechart
                   data={getMissionGroupedDataForTime(
@@ -280,6 +302,10 @@ const MissionDashboard = () => {
           </div>
           <div className="gtt box b1">
             {customSelectg()}
+            <div className="box-title">
+              Répartition des missions , missionnaires actuelles par{" "}
+              {option1g.label}
+            </div>
             <PieRechart
               data={getMissionCountFor(fmissionData, option1g.value)}
               type={"mission_count"}
@@ -348,6 +374,9 @@ const MissionDashboard = () => {
           </div>
           <div className="box g gtt b1">
             <Suspense fallback={<div>Loading...</div>}>
+              <div className="box-title">
+                {option2d.label} par {xlabel}
+              </div>
               {/* add this to fmissionData==> .filter((e) => e.etat === "terminée") */}
               {customSelectd()}
               <StackedBarRechart
@@ -365,6 +394,9 @@ const MissionDashboard = () => {
           </div>
         </div>
         <div className="box q all">
+          <div className="box-title">
+            Représentation de Taux De Productivité des employés
+          </div>
           <RateTable type={2} />
         </div>
         <div className="g11">
@@ -372,6 +404,9 @@ const MissionDashboard = () => {
             <Suspense fallback={<div>Loading...</div>}>
               {/* add this to fmissionData==> .filter((e) => e.etat === "terminée") */}
               {customSelecte()}
+              <div className="box-title">
+                {option2e.label} par {xlabel}
+              </div>
               <StackedBarRechart
                 data={getMissionGroupedDataForTime(
                   fmissionData.filter((e) => e.etat === "terminée"),
@@ -387,6 +422,9 @@ const MissionDashboard = () => {
           </div>{" "}
           <div className="box r b1">
             {/* Formulaire check mission */}
+            <div className="box-title">
+              Prévision de pourcentage de succés des missions futurs
+            </div>
             <Formulaire
               type="ia-form"
               entries={entries}
@@ -398,6 +436,10 @@ const MissionDashboard = () => {
         <div className="g21">
           <div className="box h g2">
             <Suspense fallback={<div>Loading...</div>}>
+              <div className="box-title">
+                Analyse comparative du budget prévu et du budget réel par{" "}
+                {xlabel}
+              </div>
               {/* add this to fmissionData==> .filter((e) => e.etat === "terminée") */}
               <ComposedRechart
                 data={getMissionGroupedDataForTime(
@@ -419,6 +461,9 @@ const MissionDashboard = () => {
             <Suspense fallback={<div>Loading...</div>}>
               {/* add this to fmissionData==> .filter((e) => e.etat === "terminée") */}
               {customSelectf()}
+              <div className="box-title">
+                Analyse des {option2f.label} des missions par {xlabel}
+              </div>
               <StackedBarRechart
                 data={getMissionGroupedDataForTime(
                   fmissionData.filter((e) => e.etat === "terminée"),
@@ -436,6 +481,10 @@ const MissionDashboard = () => {
         <div className="box j all">
           <Suspense fallback={<div>Loading...</div>}>
             {/* add this to fmissionData==> .filter((e) => e.etat === "terminée") */}
+            <div className="box-title">
+              Analyse comparative des durées estimé et passé des missions par
+              {xlabel}
+            </div>
             <ComposedRechart
               data={getMissionGroupedDataForTime(
                 fmissionData.filter((e) => e.etat === "terminée"),
