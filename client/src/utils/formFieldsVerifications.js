@@ -357,7 +357,7 @@ export const verifyDuplicates = (data) => {
       // console.log("j: ", j);
       // console.log(employeSet, employeSet2);
 
-      if (verifyInclusionDB(dateDepart2, dateRetour2, dateDepart, dateRetour)) {
+      if (verifyInclusion(dateDepart2, dateRetour2, dateDepart, dateRetour)) {
         // console.log("here index = ", index2, index);
         const employeOverlap = employeSet.some((e) => employeSet2.includes(e));
         // console.log("employeOverlap: ", employeOverlap);

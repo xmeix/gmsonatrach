@@ -31,6 +31,7 @@ import {
   EmployeBtns,
   relexBtns,
   ResponsableBtns,
+  SecretaireBtns,
 } from "../../data/tableBtns";
 import Popup from "../popups/Popup";
 import usePopup from "../../hooks/usePopup";
@@ -118,7 +119,7 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
     setSavedItem(null);
     closePopup();
   };
-  console.log(currentUser);
+  // console.log(currentUser);
   function canAcceptOrRefuse(item, currentUser, button) {
     return (
       ((item.etat === "en-attente" &&
@@ -159,18 +160,28 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
       ((type === "mission" &&
         item.etat === "acceptée" &&
         item.etat !== "en-cours") ||
-        item.etat === "en-attente") &&
+        (item.etat === "en-attente" &&
+          !(
+            item.__t === "DC" &&
+            currentUser._id.toString() !== item.idEmetteur._id.toString()
+          ))) &&
       button === "cancel"
     );
   }
 
   function canCancelOther(item, type, button) {
     return (
-      type !== "mission" && item.etat === "en-attente" && button === "cancel"
+      type !== "mission" &&
+      item.etat === "en-attente" &&
+      !(
+        item.__t === "DC" &&
+        currentUser._id.toString() !== item.idEmetteur._id.toString()
+      ) &&
+      button === "cancel"
     );
   }
   function shouldRenderButton(item, type, button) {
-    switch (button) {
+     switch (button) {
       case "accept":
       case "refuse":
         return canAcceptOrRefuse(item, currentUser, button);
@@ -248,7 +259,7 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
         array = relexBtns;
         break;
       case "secretaire":
-        array = DirecteurBtns;
+        array = SecretaireBtns;
         break;
 
       default:

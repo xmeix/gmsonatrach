@@ -484,7 +484,7 @@ const emitDataCron = async (operation, ids) => {
 //  cron to add users to db
 // ____________________________________________________________________________________________
 
-// cron.schedule("28 06 * * *", async () => {
+// cron.schedule("25 19 * * *", async () => {
 //   console.log("start");
 //   try {
 //     for (const user of users) {

@@ -23,7 +23,7 @@ const FilesDashboard = () => {
         handleButtonClick={handleButtonClick}
         handleFileChange={handleFileChange}
         file={file}
-      />
+      /> 
       <div id={file.fileName}>
         <Suspense fallback={<Loading />}>
           <FileSection

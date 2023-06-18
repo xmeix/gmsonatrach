@@ -24,7 +24,6 @@ export const getCountFor = (data, type, fileType) => {
     mostRecentDocuments[docType] = document;
   }
 
-  // console.log(mostRecentDocuments);
   const getGroupedData = (property) =>
     Object.values(mostRecentDocuments)
       .filter((el) => el[property] !== "")
@@ -49,6 +48,7 @@ export const getCountFor = (data, type, fileType) => {
       throw new Error(`Invalid type: ${type}`);
   }
 };
+
 export const getGroupedDataForTime = (data, time, fileType, stack) => {
   let documents =
     fileType === "tous"
@@ -60,7 +60,7 @@ export const getGroupedDataForTime = (data, time, fileType, stack) => {
           .filter((doc) => doc.type === fileType)
           .sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt));
 
-  // console.log("documents =>", documents);
+  console.log("documents =>", documents);
 
   let mostRecentDocuments = {};
 
@@ -75,16 +75,16 @@ export const getGroupedDataForTime = (data, time, fileType, stack) => {
         continue;
       }
       // Merge the documents with the same stack and createdAt and sum their circulation_count
-      if (mostRecentDocument[stack] === document[stack]) {
-        mostRecentDocument.circulation_count += document.circulation_count;
-        continue;
-      }
+      // if (mostRecentDocument[stack] === document[stack]) {
+      //   mostRecentDocument.circulation_count += document.circulation_count;
+      //   continue;
+      // }
     }
 
     mostRecentDocuments[key] = document;
   }
 
-  // console.log(mostRecentDocuments);
+  console.log("most recent docs", mostRecentDocuments);
 
   let groupedDataArray;
   groupedDataArray = Object.values(mostRecentDocuments).reduce((acc, cur) => {

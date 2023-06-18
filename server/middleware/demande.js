@@ -95,9 +95,9 @@ export const updateAccessCheck = async (req, res, next) => {
            * NOT SECRETAIRE NOT RELEX
            */
           if (
-            user.role === "secretaire" ||
+            (user.role === "secretaire" && operation !== "annulée") ||
             user.role === "relex" ||
-            (operation === "annulée" && user.role !== "employe") ||
+            (operation === "annulée" && user.role === "relex") ||
             ((operation === "acceptée" || operation === "refusée") &&
               user.role !== "directeur" &&
               user.role !== "responsable") ||

@@ -1,7 +1,5 @@
-import useDateFilter from "../../hooks/useDateFilter";
-import Nodata from "./Nodata";
-import { Bar } from "react-chartjs-2";
-import { Chart as ChartJS } from "chart.js/auto";
+import useDateFilter from "../../hooks/useDateFilter"; 
+import { Bar } from "react-chartjs-2"; 
 
 const StackedBarRechart = ({
   data,
@@ -33,7 +31,6 @@ const StackedBarRechart = ({
           return recentData ? recentData[type] : null;
         }),
         maxBarThickness: 50,
-
         borderWidth: 2,
       };
       acc.push(newData);

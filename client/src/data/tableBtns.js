@@ -31,7 +31,7 @@ export const EmployeBtns = [
 export const SecretaireBtns = [
   {
     type: "DC",
-    btns: [],
+    btns: ["cancel"], // if item.etat == en attente
     showBtn: true,
   },
   {
@@ -41,7 +41,7 @@ export const SecretaireBtns = [
   },
   {
     type: "RFM",
-    btns: [],
+    btns: [], // if item.etat == en attente
     showBtn: true,
   },
   {
@@ -56,12 +56,12 @@ export const SecretaireBtns = [
   },
   {
     type: "mission",
-    btns: ["cancel", "mission order"], //acceptée mais (pas en cours == date debut mission!= current date)
+    btns: ["cancel"], //si item.etat en attente
     showBtn: true,
   },
   {
     type: "user",
-    btns: [],
+    btns: [], // if item.role !== directeur / responsable //deleted delete
     showBtn: true,
   },
 ];
@@ -107,7 +107,7 @@ export const DirecteurBtns = [
 export const ResponsableBtns = [
   {
     type: "DC",
-    btns: ["accept", "refuse"], // if item.etat == en attente
+    btns: ["accept", "refuse", "cancel"], // if item.etat == en attente
     showBtn: true,
   },
   {

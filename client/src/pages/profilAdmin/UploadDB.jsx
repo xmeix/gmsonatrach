@@ -88,8 +88,21 @@ const UploadDB = () => {
         }
         arr = [...arr, n];
       }
-
+      let errs = [];
       const data = arr.slice(1).map((e) => {
+        let newEmp = [...new Set(e[4]?.replace(/#/g, "")?.split(","))];
+
+        newEmp = newEmp.map((uid) => {
+          const user = users.find((u) => u.uid === uid);
+          if (!user) {
+            errs.push({
+              employes: "Un des identifiants des utilisateurs inexistant",
+            });
+            return {};
+          }
+          return user._id;
+        });
+
         let dbObject = {
           index: e[0],
           motif: e[1] !== "empty" ? e[1] : "",
@@ -109,7 +122,7 @@ const UploadDB = () => {
           division: e[7] !== "empty" ? e[7] : "",
           base: e[6] !== "empty" ? e[6] : "",
           gisement: e[5] !== "empty" ? e[5] : "",
-          employes: [...new Set(e[4]?.replace(/#/g, "")?.split(","))],
+          employes: newEmp,
         };
         return dbObject;
       });
@@ -122,7 +135,7 @@ const UploadDB = () => {
         users,
         type: "import",
       };
-      let errs = [];
+
       data.map((d) => {
         const validationErrors = validateDB(d, object);
         if (Object.keys(validationErrors).length !== 0) {
