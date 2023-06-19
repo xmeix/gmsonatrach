@@ -9,7 +9,7 @@
   text-align: center;
   text-transform: uppercase;
 }
-
+/* 
 .fileSection .file-section-content .box {
   padding: 2em;
   background-color: var(--white);
@@ -53,4 +53,4 @@
     grid-auto-rows: initial;
     margin: 0 6vw;
   }
-}
+} */

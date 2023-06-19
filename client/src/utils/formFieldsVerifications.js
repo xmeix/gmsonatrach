@@ -82,12 +82,14 @@ export const validateMission = (mission, user, object) => {
     errors.employes = "obligatoire";
   }
 
-  //   if (!mission.taches || mission.taches.length === 0) {
-  //     errors.taches = "La mission doit avoir au moins une tâche à accomplir.";
-  //   }
-
   if (!mission?.tDateDeb) {
     errors.tDateDeb = "obligatoire";
+  } else if (
+    isNaN(new Date(mission.tDateDeb).getTime()) ||
+    new Date(mission.tDateDeb) <= new Date()
+  ) {
+    errors.tDateDeb =
+      "La date de début doit être ultérieure à la date actuelle.";
   }
 
   if (!mission?.tDateRet) {
@@ -179,10 +181,17 @@ export const validateAIMissionForm = (mission, user) => {
   if (!mission?.pays) {
     errors.pays = "obligatoire";
   }
+
   if (!mission?.tDateDeb) {
     errors.tDateDeb = "obligatoire";
   }
-
+  if (
+    isNaN(new Date(mission.tDateDeb).getTime()) ||
+    new Date(mission.tDateDeb) <= new Date()
+  ) {
+    errors.tDateDeb =
+      "La date de début doit être ultérieure à la date actuelle.";
+  }
   if (!mission?.tDateRet) {
     errors.tDateRet = "obligatoire";
   }
@@ -230,7 +239,7 @@ export const verifyInclusion = (st, en, start, end) => {
   if (
     (en >= start && st <= start && en <= end) ||
     (st >= start && en <= end && st <= end && en > start) ||
-    (st <= end && st > start && en >= end)  
+    (st <= end && st > start && en >= end)
   ) {
     return true;
   }
@@ -270,10 +279,10 @@ export const validateDB = (db, object) => {
   if (
     !db.dateDepart ||
     isNaN(new Date(db.dateDepart).getTime()) ||
-    new Date(db.dateDepart) <= new Date().now
+    new Date(db.dateDepart) <= new Date()
   ) {
     errors.dateDepart =
-      "La date de départ est obligatoire et doit être une date valide";
+      "La date de départ est obligatoire et doit être ultérieure à la date actuelle.";
   }
 
   if (!db.dateRetour || isNaN(new Date(db.dateRetour).getTime())) {

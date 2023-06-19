@@ -154,7 +154,7 @@ export const createMission = async (req, res) => {
 
     res
       .status(201)
-      .json({ savedMission, msg: "mission has been created successfully" });
+      .json({ savedMission, msg: "mission créée avec succés" });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -354,6 +354,7 @@ const sendEmits = async (operation, ids) => {
       let otherUsers = others.map((u) => u._id.toString());
       let combinedUsers = otherUsers.concat(allUsers);
       emitGetData(combinedUsers, "getMissions");
+      emitGetData(combinedUsers, "getOms");
       break;
 
     case "update":
