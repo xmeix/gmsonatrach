@@ -4,7 +4,12 @@ import User from "../models/User.js";
 import { emitGetData } from "./utils.js";
 const toId = mongoose.Types.ObjectId;
 
-export const createOrUpdateFDocument = async (newFile, fileType, operation) => {
+export const createOrUpdateFDocument = async (
+  newFile,
+  fileType,
+  operation,
+  created
+) => {
   // Check if the new file is populated
   if (!newFile) {
     throw new Error("New file is not populated");
@@ -64,6 +69,7 @@ export const createOrUpdateFDocument = async (newFile, fileType, operation) => {
           nature: newFile.nature ? newFile.nature : "",
           motifDep: newFile.motifDep ? newFile.motifDep : "",
           circulation_count: mostRecent ? mostRecent.circulation_count + 1 : 1,
+          createdAt: created ? created : new Date(),
         });
 
         await newDocument.save();

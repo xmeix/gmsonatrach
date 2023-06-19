@@ -31,12 +31,12 @@ import {
   FRFM,
   Fmissions,
   dcs,
-  missions,
   tickets,
   users,
 } from "../client/src/data/data.js";
 import { dbs } from "./data/dbData.js";
 import { dms } from "./data/dmData.js";
+import { missions } from "./data/missionData.js";
 import { createOrUpdateFMission } from "./controllers/Kpis.js";
 import OrdreMission from "./models/OrdreMission.js";
 import DM from "./models/demandes/DM.js";
@@ -596,7 +596,7 @@ const emitDataCron = async (operation, ids) => {
 //  // ____________________________________________________________________________
 //     //                               CREATION FDOCUMENT
 //     // ____________________________________________________________________________
-//     createOrUpdateFDocument(populatedDemande, populatedDemande.__t, "creation");
+//     createOrUpdateFDocument(populatedDemande, populatedDemande.__t, "creation", created: createdAt);
 
 //     }
 //   } catch (error) {
@@ -659,7 +659,7 @@ const emitDataCron = async (operation, ids) => {
 //       createOrUpdateFDocument(
 //         populatedDemande,
 //         populatedDemande.__t,
-//         "creation"
+//         "creation", created: createdAt
 //       );
 //     }
 //   } catch (error) {
@@ -670,60 +670,142 @@ const emitDataCron = async (operation, ids) => {
 // ____________________________________________________________________________________________
 //  cron to add Missions to db
 // ____________________________________________________________________________________________
-cron.schedule("29 18 * * *", async () => {
+cron.schedule("55 19 * * *", async () => {
   console.log("start");
   const toId = mongoose.Types.ObjectId;
   console.log("starting missions");
   try {
-    for (const dm of dms) {
-      const { motif, idemetteur, iddestinataire, createdAt } = dm;
+    for (const mission of missions) {
+      const {
+        objetMission,
+        structure,
+        type,
+        budget,
+        pays,
+        taches,
+        tDateDeb,
+        tDateRet,
+        moyenTransport,
+        moyenTransportRet,
+        lieuDep,
+        destination,
+        observation,
+        createdAt,
+        updatedAt,
+      } = mission;
 
-      let employe = await User.findById(idemetteur);
-      let emetteur = employe._id;
-
-      let responsable = await User.find({
+      let employes = await User.find({
+        $or: [{ role: "employe", structure: structure }],
+      });
+      const newEmployes = employes.map((employe) => toId(employe));
+      let creators = await User.find({
         $and: [
           {
-            $or: [{ role: "responsable", structure: employe.structure }],
+            $or: [
+              { role: "responsable", structure: structure },
+              { role: "directeur" },
+              { role: "secretaire" },
+            ],
           },
         ],
       });
-      const randomIndex = Math.floor(Math.random() * responsable.length);
-      const randomUser = responsable[randomIndex];
-      let destinataire = randomUser._id;
-      const customId = await generateCustomId(
-        responsable.structure,
-        "demandes"
-      );
-      const newDemande = new DM({
-        uid: customId,
-        __t: "DM",
-        motif,
-        idEmetteur: emetteur,
-        idDestinataire: destinataire,
-        createdAt,
-      });
-      const savedDemande = await newDemande.save();
-      sendDemEmits("create", {
-        others: [emetteur],
-        type: "DM",
-        structure: responsable.structure,
-      });
-      const populatedDemande = await Demande.findById(savedDemande.id)
-        .populate("idEmetteur")
-        .populate("idDestinataire");
 
-      sendRequestNotification("creation", {
-        demande: populatedDemande,
+      const randomIndex = Math.floor(Math.random() * creators.length);
+      const randomUser = creators[randomIndex];
+      let createdBy = randomUser._id;
+      let updatedBy = randomUser._id;
+
+      let newId = await generateCustomId(structure, "missions");
+      let etat =
+        randomUser.role === "responsable" || randomUser.role === "directeur"
+          ? "acceptée"
+          : "en-attente";
+      const newMission = new Mission({
+        uid: newId,
+        objetMission,
+        structure,
+        type,
+        budget,
+        pays,
+        employes: newEmployes,
+        taches: taches ? taches : [],
+        tDateDeb: new Date(tDateDeb).toISOString(),
+        tDateRet: new Date(tDateRet).toISOString(),
+        moyenTransport,
+        moyenTransportRet,
+        lieuDep: lieuDep ? lieuDep : "Alger",
+        destination,
+        observation,
+        etat: etat,
+        // circonscriptionAdm,
+        createdBy,
+        updatedBy,
+        createdAt,
+        updatedAt,
       });
-      // ____________________________________________________________________________
-      //                               CREATION FDOCUMENT
-      // ____________________________________________________________________________
-      createOrUpdateFDocument(
-        populatedDemande,
-        populatedDemande.__t,
-        "creation"
-      );
+      const savedMission = await newMission.save();
+
+      if (etat === "acceptée" && newEmployes.length > 0) {
+        //on doit générer l'ordre de mission et rfm
+        const employeIds = newEmployes.map((employe) => employe._id);
+        for (const employeId of employeIds) {
+          let customId = await generateCustomId(structure, "ordremissions");
+          const om = new OrdreMission({
+            uid: customId,
+            mission: savedMission.id,
+            employe: employeId,
+          });
+          await om.save();
+          //______________________________________________________________;
+          const populatedOM = await OrdreMission.findById(om._id)
+            .populate("mission")
+            .populate("employe");
+          // ___________________________________________________________________________________________________
+          //                      CREATION FDOCUMENT
+          // ___________________________________________________________________________________________________
+          createOrUpdateFDocument(populatedOM, "OM", "creation", createdAt);
+          //______________________________________________________________;
+        }
+      }
+
+      const query = {
+        uid: newId,
+        objetMission: objetMission,
+        structure: structure,
+        type,
+        budget,
+        pays,
+        employes: newEmployes,
+        taches,
+        tDateDeb,
+        tDateRet,
+        moyenTransport,
+        moyenTransportRet,
+        lieuDep,
+        destination,
+        observation,
+        etat: "en-attente",
+        // circonscriptionAdm,
+        createdBy,
+        updatedBy,
+        createdAt,
+        updatedAt,
+      };
+      // ____________________________________________________________________________________;
+      // createOrUpdateFMission(query, "creation", null, "");
+      await createOrUpdateFMission("creation", {
+        newMission: query,
+        created: createdAt,
+      });
+      if (savedMission.etat === "acceptée") {
+        // createOrUpdateFMission(savedMission, "update", query, "etat"); //---------------------------------------------XXXXXXXX
+        await createOrUpdateFMission("update", {
+          oldMission: query,
+          newMission: savedMission,
+          updateType: "etat",
+          created: createdAt,
+        });
+      }
     }
   } catch (error) {
     console.log(error);

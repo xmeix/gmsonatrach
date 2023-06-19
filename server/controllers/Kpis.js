@@ -9,6 +9,7 @@ export const createOrUpdateFMission = async (operation, needs) => {
   //cas creation mission
   let {
     newMission, // the new state (etat)
+    created,
   } = needs;
 
   switch (operation) {
@@ -66,6 +67,7 @@ export const createOrUpdateFMission = async (operation, needs) => {
           ? mostRecent.time_Spent +
             calculateTimeSpent(newMission.tDateDeb, newMission.tDateRet)
           : calculateTimeSpent(newMission.tDateDeb, newMission.tDateRet),
+        createdAt: created ? created : new Date(),
       });
 
       await newFMission.save();
@@ -157,6 +159,7 @@ export const createOrUpdateFMission = async (operation, needs) => {
               ? oldFMission.time_Spent -
                 calculateTimeSpent(newMission.tDateDeb, newMission.tDateRet)
               : 0,
+            createdAt: created ? created : new Date(),
           });
           await oldUpdatedDocument.save();
 
@@ -210,6 +213,7 @@ export const createOrUpdateFMission = async (operation, needs) => {
               ? recentFMission.time_Spent +
                 calculateTimeSpent(newMission.tDateDeb, newMission.tDateRet)
               : calculateTimeSpent(newMission.tDateDeb, newMission.tDateRet),
+            createdAt: created ? created : new Date(),
           });
           await newUpdatedDocument.save();
 
@@ -241,6 +245,7 @@ export const createOrUpdateFMission = async (operation, needs) => {
             consumed_budget: recentFMission.consumed_budget,
             time_Estimated: recentFMission.time_Estimated,
             time_Spent: recentFMission.time_Spent,
+            createdAt: created ? created : new Date(),
           });
           await newDocument.save();
           break;
@@ -264,12 +269,12 @@ export const createOrUpdateFMission = async (operation, needs) => {
             consumed_budget: recentFMission.consumed_budget,
             time_Estimated: recentFMission.time_Estimated,
             time_Spent: recentFMission.time_Spent,
+            createdAt: created ? created : new Date(),
           });
           await newFTdocument.save();
 
           break;
         case "date":
-
           let newFDdocument = new FMission({
             etat: newMission.etat,
             structure: newMission.structure,
@@ -293,7 +298,7 @@ export const createOrUpdateFMission = async (operation, needs) => {
                 calculateTimeSpent(oldMission.tDateDeb, oldMission.tDateRet) +
                 calculateTimeSpent(newMission.tDateDeb, newMission.tDateRet)
               : 0,
-            
+            createdAt: created ? created : new Date(),
           });
           await newFDdocument.save();
           break;
@@ -317,6 +322,7 @@ export const createOrUpdateFMission = async (operation, needs) => {
             consumed_budget: recentFMission.consumed_budget,
             time_Estimated: recentFMission.time_Estimated,
             time_Spent: recentFMission.time_Spent,
+            createdAt: created ? created : new Date(),
           });
           await newFSTdocument.save();
           break;
@@ -342,6 +348,7 @@ export const createOrUpdateFMission = async (operation, needs) => {
               : newMission.budgetConsome,
             time_Estimated: recentFMission.time_Estimated,
             time_Spent: recentFMission.time_Spent,
+            createdAt: created ? created : new Date(),
           });
           await newFBdocument.save();
           break;
@@ -365,6 +372,7 @@ export const createOrUpdateFMission = async (operation, needs) => {
             consumed_budget: recentFMission.consumed_budget,
             time_Estimated: recentFMission.time_Estimated,
             time_Spent: recentFMission.time_Spent,
+            createdAt: created ? created : new Date(),
           });
           await newFEdocument.save();
           break;
