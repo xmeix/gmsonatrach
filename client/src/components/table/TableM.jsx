@@ -161,6 +161,7 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
         item.etat === "acceptée" &&
         item.etat !== "en-cours") ||
         (item.etat === "en-attente" &&
+          !(type === "mission") &&
           !(
             item.__t === "DC" &&
             currentUser._id.toString() !== item.idEmetteur._id.toString()
@@ -181,7 +182,7 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
     );
   }
   function shouldRenderButton(item, type, button) {
-     switch (button) {
+    switch (button) {
       case "accept":
       case "refuse":
         return canAcceptOrRefuse(item, currentUser, button);
