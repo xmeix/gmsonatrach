@@ -1,8 +1,11 @@
+import { Tooltip } from "@mui/material";
 import "./DashCard.css";
-const DashCard = ({ title, number, icon }) => {
+const DashCard = ({ title, number, icon, formule }) => {
   return (
     <div className="dash-card">
-      <span className="card-title">{title}</span>
+      <Tooltip title={formule}>
+        <span className="card-title">{title}</span>
+      </Tooltip>
       <span className="number">{number}</span>
       {icon && (
         <icon

@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./UploadMissions.css";
 import {
   Table,
@@ -65,6 +65,18 @@ const UploadUsers = () => {
     setSuccess(false);
     setUsersData([]);
   };
+  useEffect(() => {
+    let timeout;
+
+    if (errors) {
+      timeout = setTimeout(() => {
+        setErrors([]);
+      }, 4000);
+    }
+
+    return () => clearTimeout(timeout);
+  }, [errors]);
+
   const handleUpload = () => {
     resetState();
     if (

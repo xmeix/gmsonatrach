@@ -22,6 +22,17 @@ const UploadM = () => {
   useEffect(() => {
     console.log(errors);
   }, [errors]);
+  useEffect(() => {
+    let timeout;
+
+    if (errors) {
+      timeout = setTimeout(() => {
+        setErrors([]);
+      }, 4000);
+    }
+
+    return () => clearTimeout(timeout);
+  }, [errors]);
 
   const ErrorMessages = ({ errors }) => (
     <div className="error-message">

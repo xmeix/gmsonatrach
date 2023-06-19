@@ -2,8 +2,7 @@
 import { useSelector } from "react-redux";
 import useChartButtons from "../../../hooks/useChartButtons";
 
-
-import "./Dashboard.css";
+ 
 import { lazy, Suspense } from "react";
 const FileSection = lazy(() =>
   import("./../../../components/charts/widgets/FilesSection")
@@ -35,7 +34,7 @@ const FilesDashboard = () => {
             chartPer={chartPer}
             chartPerNum={chartPerNum}
           />{" "}
-        </Suspense>
+        </Suspense> 
       </div>
     </div>
   );

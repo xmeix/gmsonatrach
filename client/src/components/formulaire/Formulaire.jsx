@@ -78,22 +78,29 @@ const Formulaire = ({ title, entries, buttons, type }) => {
     ) {
       newEmployeesNonMissionnaires = users
         .filter(
-          (user) =>
-            user.role === "employe" &&
+          (us) =>
+            us.role === "employe" &&
             !missions.some(
               (mission) =>
-                mission.employes.some((u) => u._id === user._id) &&
+                mission.employes.some(
+                  (u) => u._id.toString() === us._id.toString()
+                ) &&
                 (mission.etat === "en-cours" ||
                   mission.etat === "acceptée" ||
                   mission.etat === "en-attente") &&
-                verifyInclusion(mission.tDateDeb, mission.tDateRet, start, end)
+                verifyInclusion(
+                  new Date(mission.tDateDeb),
+                  new Date(mission.tDateRet),
+                  new Date(start),
+                  new Date(end)
+                )
               // mission.tDateRet > start &&
               // mission.tDateDeb < end
             )
         )
-        .map((user) => ({
-          label: user.nom + " " + user.prenom,
-          value: user._id,
+        .map((us) => ({
+          label: us.nom + " " + us.prenom,
+          value: us._id,
         }));
 
       let newEntries;

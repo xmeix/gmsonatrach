@@ -356,6 +356,9 @@ const MissionDashboard = () => {
                   </button>
                 </div>
                 <DashCard
+                  formule={
+                    "Nombre de missions terminées / Nombre de missions acceptées"
+                  }
                   title={"taux de réalisation des mission"}
                   number={
                     missionCompletionRate(fmissionData, btnlistItem) + "%"
@@ -366,6 +369,9 @@ const MissionDashboard = () => {
             <div className="box">
               <Suspense fallback={<div>Loading...</div>}>
                 <DashCard
+                  formule={
+                    "Somme de durée des missions terminées / Nombre de missions terminées "
+                  }
                   title={"la durée jugé nécessaire pour finaliser les missions"}
                   number={timeToCompletion(fmissionData) + " jours"}
                 />

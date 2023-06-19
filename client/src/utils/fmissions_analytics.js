@@ -412,3 +412,18 @@ export const currentCount = (data, property1) => {
 
   return S;
 };
+
+export const AverageTicketPerMissionPerEmployee = (
+  user,
+  missions,
+  totalTickets
+) => {
+  const userMissions = missions.filter((m) =>
+    m.employes.some((e) => e._id === user._id)
+  );
+
+  // Calculate the number of missions contributed by the user
+  const A = userMissions.length;
+  const value = ((totalTickets) / A).toFixed(2);
+  return isNaN(value) ? 0 : value;
+};

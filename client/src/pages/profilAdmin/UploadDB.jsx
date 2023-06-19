@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./UploadMissions.css";
 import {
   Table,
@@ -51,6 +51,18 @@ const ErrorMessages = ({ errors }) => (
     </ul>
   </div>
 );
+
+useEffect(() => {
+  let timeout;
+
+  if (errors) {
+    timeout = setTimeout(() => {
+      setErrors([]);
+    }, 4000);
+  }
+
+  return () => clearTimeout(timeout);
+}, [errors]);
 
 const UploadDB = () => {
   const classes = useStyles();

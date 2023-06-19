@@ -212,13 +212,11 @@ export const checkEmployeesMission = (users, employees) => {
   let newEmployes = [];
 
   // for each employes inside employees we will get his _id
-  console.log(employees);
 
   newEmployes = employees
     .map((uid) => {
       const u = users.find((u) => u.uid === uid);
       if (u) {
-        console.log("uid", u._id);
         return u._id;
       } else return "";
     })
@@ -232,8 +230,7 @@ export const verifyInclusion = (st, en, start, end) => {
   if (
     (en >= start && st <= start && en <= end) ||
     (st >= start && en <= end && st <= end && en > start) ||
-    (st <= end && st > start && en >= end) ||
-    (st > start && en > end)
+    (st <= end && st > start && en >= end)  
   ) {
     return true;
   }

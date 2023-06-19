@@ -9,10 +9,12 @@ import {
   TablePagination,
   InputAdornment,
   makeStyles,
+  Tooltip,
 } from "@material-ui/core";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import {
+  AverageTicketPerMissionPerEmployee,
   budgetVariance,
   employeeProductivity,
   missionCostPerEmployee,
@@ -168,18 +170,26 @@ const RateTable = ({ type }) => {
             <TableHead className={classes.tableHeader}>
               <TableRow>
                 <TableCell className={classes.tableCell}>ID Mission</TableCell>
-                <TableCell className={classes.tableCell}>
-                  l'écart budgétaire en pourcentage
-                </TableCell>
-                <TableCell className={classes.tableCell}>
-                  taux de résolution des tickets
-                </TableCell>
-                <TableCell className={classes.tableCell}>
-                  taux de résolution des taches mission
-                </TableCell>
-                <TableCell className={classes.tableCell}>
-                  frais de mission par employé
-                </TableCell>
+                <Tooltip title="(Budget Estimé - Budget Consomé) / Budget Estimé">
+                  <TableCell className={classes.tableCell}>
+                    l'écart budgétaire en pourcentage
+                  </TableCell>
+                </Tooltip>
+                <Tooltip title="Nombre tickets cloturés / nombre tickets total">
+                  <TableCell className={classes.tableCell}>
+                    taux de résolution des tickets
+                  </TableCell>
+                </Tooltip>
+                <Tooltip title="Nombre Taches accomplies / nombre Taches total">
+                  <TableCell className={classes.tableCell}>
+                    taux de résolution des taches mission
+                  </TableCell>
+                </Tooltip>
+                <Tooltip title="Budget Consommé de la mission / nombre Employés ">
+                  <TableCell className={classes.tableCell}>
+                    frais de mission par employé
+                  </TableCell>
+                </Tooltip>
               </TableRow>
             </TableHead>
             <TableBody className={classes.tableBody}>
@@ -243,9 +253,11 @@ const RateTable = ({ type }) => {
                 <TableCell className={classes.tableCell}>Nom</TableCell>
                 <TableCell className={classes.tableCell}>Prénom</TableCell>
                 <TableCell className={classes.tableCell}>Structure</TableCell>
-                <TableCell className={classes.tableCell}>
-                  taux de productivité (missions/jours)
-                </TableCell>
+                <Tooltip title="Nombre Missions Terminées / Durée passée">
+                  <TableCell className={classes.tableCell}>
+                    taux de productivité (missions/jours)
+                  </TableCell>
+                </Tooltip>
               </TableRow>
             </TableHead>
             <TableBody className={classes.tableBody}>
@@ -288,9 +300,11 @@ const RateTable = ({ type }) => {
                 <TableCell className={classes.tableCell}>ID Employé</TableCell>
                 <TableCell className={classes.tableCell}>Nom</TableCell>
                 <TableCell className={classes.tableCell}>Prénom</TableCell>
-                <TableCell className={classes.tableCell}>
-                  Nombre de tickets
-                </TableCell>
+                <Tooltip title="Nombre total de tickets clos / Nombre total de missions">
+                  <TableCell className={classes.tableCell}>
+                    Nombre moyen de tickets traités par mission
+                  </TableCell>
+                </Tooltip>
               </TableRow>
             </TableHead>
             <TableBody className={classes.tableBody}>
@@ -312,9 +326,21 @@ const RateTable = ({ type }) => {
                   </TableCell>
                   <TableCell className={classes.tableCell}>
                     <span
-                      className={emp.totalSolvedTickets < 0 ? "bhigh" : "ghigh"}
+                      className={
+                        AverageTicketPerMissionPerEmployee(
+                          emp,
+                          endedMissions,
+                          emp.totalSolvedTickets
+                        ) < 25
+                          ? "bhigh"
+                          : "ghigh"
+                      }
                     >
-                      {emp.totalSolvedTickets}
+                      {AverageTicketPerMissionPerEmployee(
+                        emp,
+                        endedMissions,
+                        emp.totalSolvedTickets
+                      )}
                     </span>
                   </TableCell>
                 </TableRow>
