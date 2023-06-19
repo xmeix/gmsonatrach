@@ -175,7 +175,7 @@ const UploadM = () => {
   };
 
   const getDay = (j, ind, planningDates) => {
-    console.log(planningDates, j, ind);
+    // console.log(planningDates, j, ind);
     const d = planningDates
       .filter((e) => (e[1] < ind && ind < e[2]) || e[1] === ind || e[2] === ind)
       .map((e) => e);
@@ -199,7 +199,7 @@ const UploadM = () => {
     if (dates) {
       let missionData = extractMissionData();
       if (missionData) {
-        console.log("mission data ", missionData);
+        // console.log("mission data ", missionData);
         createMissions(missionData, dates, newData);
       }
     }
@@ -274,7 +274,6 @@ const UploadM = () => {
           const indDeb = element.indexOf(mission[0]);
           const jD = planningData[1][indDeb];
           dateDeb = getDay(jD, indDeb, useDates);
-          console.log([mission[0], dateDeb]);
 
           for (let r = indDeb; r < element.length; r++) {
             const s = element[r];
@@ -299,8 +298,26 @@ const UploadM = () => {
           //  which will check the existence of that employee and also returns the neww employee array orelse itll return an empty array
           let newEmpArray = checkEmployeesMission(users, employees);
 
-          if (newEmpArray.length < employees.length) {
-            errs.push({ employees: "Un des employés n'existe pas" });
+          if (
+            newEmpArray.length === 0 ||
+            newEmpArray.length < employees.length
+          ) {
+            if (currentUser.role === "responsable") {
+              errs.push({
+                employees:
+                  "Un des employés n'existe pas ou n'appartient pas a votre structure",
+              });
+            } else errs.push({ employees: "Un des employés n'existe pas" });
+            setErrors(errs);
+            return;
+          } else if (
+            currentUser.structure !== mission[8]?.toUpperCase()?.trim()
+          ) {
+            errs.push({
+              missions:
+                "Les missions que vous essayez d'introduire ne concernent pas votre structure",
+            });
+            setErrors(errs);
             return;
           } else {
             missionObject = {

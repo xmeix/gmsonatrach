@@ -222,8 +222,8 @@ export const checkEmployeesMission = (users, employees) => {
         return u._id;
       } else return "";
     })
-    .filter(Boolean); 
-  console.log("newEmployes", newEmployes, "employees", employees);
+    .filter(Boolean);
+
   return newEmployes;
   // returns either employees or empty array , if length array < employees.length than error (some users dont exist)
 };
