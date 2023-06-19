@@ -30,13 +30,13 @@ import {
   FOM,
   FRFM,
   Fmissions,
-  dbs,
   dcs,
-  dms,
   missions,
   tickets,
   users,
 } from "../client/src/data/data.js";
+import { dbs } from "./data/dbData.js";
+import { dms } from "./data/dmData.js";
 import { createOrUpdateFMission } from "./controllers/Kpis.js";
 import OrdreMission from "./models/OrdreMission.js";
 import DM from "./models/demandes/DM.js";
@@ -53,6 +53,11 @@ import { createOrUpdateFDocument } from "./controllers/FilesKpis.js";
 import { createMission } from "./controllers/mission.js";
 import { emitGetData, generateCustomId } from "./controllers/utils.js";
 import Ticket from "./models/Ticket.js";
+import {
+  sendDemEmits,
+  sendRequestNotification,
+} from "./controllers/demande.js";
+import Demande from "./models/Demande.js";
 const toId = mongoose.Types.ObjectId;
 // Configure environment variables
 dotenv.config();
@@ -230,7 +235,7 @@ cron.schedule("20 01 * * *", async () => {
     etat: "acceptée",
   });
 
-   // pour chacun des missions trouvé
+  // pour chacun des missions trouvé
   for (const mission of missionsEnCours) {
     const employeIds = mission.employes.map((employe) => employe._id);
 
@@ -288,7 +293,7 @@ cron.schedule("20 01 * * *", async () => {
       const populatedRFM = await RapportFM.findById(savedRFM._id)
         .populate("idMission")
         .populate("idEmploye");
-        
+
       createOrUpdateFDocument(populatedRFM, "RFM", "creation");
       //______________________________________________________________
     }
@@ -512,6 +517,219 @@ const emitDataCron = async (operation, ids) => {
 //   }
 //   console.log("end");
 // });
+// ____________________________________________________________________________________________
+//  cron to add DB to db
+// ____________________________________________________________________________________________
+// cron.schedule("32 17 * * *", async () => {
+//   console.log("start");
+//   const toId = mongoose.Types.ObjectId;
+//   console.log("starting db");
+//   try {
+//     for (const db of dbs) {
+//       const {
+//         motif,
+//         idemetteur,
+//         iddestinataire,
+//         numSC,
+//         designationSC,
+//         montantEngage,
+//         nature,
+//         motifDep,
+//         observation,
+//         dateDepart,
+//         dateRetour,
+//         depart,
+//         destination,
+//         paysDestination,
+//         direction,
+//         sousSection,
+//         division,
+//         base,
+//         gisement,
+//         employes,createdAt
+//       } = db;
+
+//       let emetteur = toId(idemetteur);
+//       let destinataire = toId(iddestinataire);
+//       const customId = await generateCustomId("RELEX", "demandes");
+//       const newDemande = new DB({
+//         uid: customId,
+//         __t: "DB",
+//         motif,
+//         idEmetteur: emetteur,
+//         idDestinataire: destinataire,
+//         numSC, // def ""
+//         designationSC, // def ""
+//         montantEngage, //def 0
+//         nature,
+//         motifDep,
+//         observation,
+//         dateDepart,
+//         dateRetour,
+//         depart,
+//         destination,
+//         paysDestination,
+//         direction,
+//         sousSection,
+//         division,
+//         base,
+//         gisement,
+//         employes,createdAt
+//       });
+//       const savedDemande = await newDemande.save();
+//       sendDemEmits("create", {
+//         others: [emetteur],
+//         type: "DB",
+//         structure: "",
+//       });
+//       const populatedDemande = await Demande.findById(savedDemande.id)
+//         .populate("idEmetteur")
+//         .populate("idDestinataire");
+
+//       sendRequestNotification("creation", {
+//         demande: populatedDemande,
+//       });
+
+// const populatedDemande = await Demande.findById(savedDemande.id)
+// .populate("idEmetteur")
+// .populate("idDestinataire");
+//  // ____________________________________________________________________________
+//     //                               CREATION FDOCUMENT
+//     // ____________________________________________________________________________
+//     createOrUpdateFDocument(populatedDemande, populatedDemande.__t, "creation");
+
+//     }
+//   } catch (error) {
+//     console.log(error);
+//   }
+//   console.log("end db");
+// });
+// ____________________________________________________________________________________________
+//  cron to add DM to db
+// ____________________________________________________________________________________________
+// cron.schedule("29 18 * * *", async () => {
+//   console.log("start");
+//   const toId = mongoose.Types.ObjectId;
+//   console.log("starting dm");
+//   try {
+//     for (const dm of dms) {
+//       const { motif, idemetteur, iddestinataire, createdAt } = dm;
+
+//       let employe = await User.findById(idemetteur);
+//       let emetteur = employe._id;
+
+//       let responsable = await User.find({
+//         $and: [
+//           {
+//             $or: [{ role: "responsable", structure: employe.structure }],
+//           },
+//         ],
+//       });
+//       const randomIndex = Math.floor(Math.random() * responsable.length);
+//       const randomUser = responsable[randomIndex];
+//       let destinataire = randomUser._id;
+//       const customId = await generateCustomId(
+//         responsable.structure,
+//         "demandes"
+//       );
+//       const newDemande = new DM({
+//         uid: customId,
+//         __t: "DM",
+//         motif,
+//         idEmetteur: emetteur,
+//         idDestinataire: destinataire,
+//         createdAt,
+//       });
+//       const savedDemande = await newDemande.save();
+//       sendDemEmits("create", {
+//         others: [emetteur],
+//         type: "DM",
+//         structure: responsable.structure,
+//       });
+//       const populatedDemande = await Demande.findById(savedDemande.id)
+//         .populate("idEmetteur")
+//         .populate("idDestinataire");
+
+//       sendRequestNotification("creation", {
+//         demande: populatedDemande,
+//       });
+//       // ____________________________________________________________________________
+//       //                               CREATION FDOCUMENT
+//       // ____________________________________________________________________________
+//       createOrUpdateFDocument(
+//         populatedDemande,
+//         populatedDemande.__t,
+//         "creation"
+//       );
+//     }
+//   } catch (error) {
+//     console.log(error);
+//   }
+//   console.log("end db");
+// });
+// ____________________________________________________________________________________________
+//  cron to add Missions to db
+// ____________________________________________________________________________________________
+cron.schedule("29 18 * * *", async () => {
+  console.log("start");
+  const toId = mongoose.Types.ObjectId;
+  console.log("starting missions");
+  try {
+    for (const dm of dms) {
+      const { motif, idemetteur, iddestinataire, createdAt } = dm;
+
+      let employe = await User.findById(idemetteur);
+      let emetteur = employe._id;
+
+      let responsable = await User.find({
+        $and: [
+          {
+            $or: [{ role: "responsable", structure: employe.structure }],
+          },
+        ],
+      });
+      const randomIndex = Math.floor(Math.random() * responsable.length);
+      const randomUser = responsable[randomIndex];
+      let destinataire = randomUser._id;
+      const customId = await generateCustomId(
+        responsable.structure,
+        "demandes"
+      );
+      const newDemande = new DM({
+        uid: customId,
+        __t: "DM",
+        motif,
+        idEmetteur: emetteur,
+        idDestinataire: destinataire,
+        createdAt,
+      });
+      const savedDemande = await newDemande.save();
+      sendDemEmits("create", {
+        others: [emetteur],
+        type: "DM",
+        structure: responsable.structure,
+      });
+      const populatedDemande = await Demande.findById(savedDemande.id)
+        .populate("idEmetteur")
+        .populate("idDestinataire");
+
+      sendRequestNotification("creation", {
+        demande: populatedDemande,
+      });
+      // ____________________________________________________________________________
+      //                               CREATION FDOCUMENT
+      // ____________________________________________________________________________
+      createOrUpdateFDocument(
+        populatedDemande,
+        populatedDemande.__t,
+        "creation"
+      );
+    }
+  } catch (error) {
+    console.log(error);
+  }
+  console.log("end missions");
+});
 
 // ____________________________________________________________________________________________
 //  cron creation RFM+OM (FOR TESTING ONLY)

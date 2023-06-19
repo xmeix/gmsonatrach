@@ -411,7 +411,7 @@ export const updateDemEtat = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
-const sendDemEmits = async (operation, ids) => {
+export const sendDemEmits = async (operation, ids) => {
   let { others, type } = ids;
   let users = [];
   switch (operation) {
@@ -498,7 +498,7 @@ const sendDemEmits = async (operation, ids) => {
       break;
   }
 };
-const sendRequestNotification = async (operation, body) => {
+export const sendRequestNotification = async (operation, body) => {
   let path = "";
   let type = "demande";
   let users;
