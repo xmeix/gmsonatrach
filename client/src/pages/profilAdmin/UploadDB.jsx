@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import "./UploadMissions.css";
+import "./../../components/formulaire/Formulaire.css";
 import {
   Table,
   TableBody,
@@ -52,17 +53,7 @@ const ErrorMessages = ({ errors }) => (
   </div>
 );
 
-useEffect(() => {
-  let timeout;
 
-  if (errors) {
-    timeout = setTimeout(() => {
-      setErrors([]);
-    }, 4000);
-  }
-
-  return () => clearTimeout(timeout);
-}, [errors]);
 
 const UploadDB = () => {
   const classes = useStyles();
@@ -74,7 +65,17 @@ const UploadDB = () => {
   const [success, setSuccess] = useState(false);
   const { jsonData, handleFileChange, clearData } = useUpload();
   const [dbs, setDbs] = useState([]);
+useEffect(() => {
+  let timeout;
 
+  if (errors) {
+    timeout = setTimeout(() => {
+      setErrors([]);
+    }, 4000);
+  }
+
+  return () => clearTimeout(timeout);
+}, [errors]);
   const resetState = () => {
     setErrors([]);
     setSuccess(false);

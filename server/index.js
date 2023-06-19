@@ -30,13 +30,13 @@ import {
   FOM,
   FRFM,
   Fmissions,
-  dcs,
   tickets,
   users,
 } from "../client/src/data/data.js";
 import { dbs } from "./data/dbData.js";
 import { dms } from "./data/dmData.js";
 import { missions } from "./data/missionData.js";
+import { dcs } from "./data/dcData.js";
 import { createOrUpdateFMission } from "./controllers/Kpis.js";
 import OrdreMission from "./models/OrdreMission.js";
 import DM from "./models/demandes/DM.js";
@@ -221,7 +221,7 @@ mongoose
   });
 
 // CRON JOB POUR UNE APPLICATION TEMPS REEL
-cron.schedule("20 01 * * *", async () => {
+cron.schedule("20 14 * * *", async () => {
   console.log("Cron job starting...");
 
   //_____________________________________________________________________________________________________
@@ -520,7 +520,7 @@ const emitDataCron = async (operation, ids) => {
 // ____________________________________________________________________________________________
 //  cron to add DB to db
 // ____________________________________________________________________________________________
-// cron.schedule("32 17 * * *", async () => {
+// cron.schedule("45 23 * * *", async () => {
 //   console.log("start");
 //   const toId = mongoose.Types.ObjectId;
 //   console.log("starting db");
@@ -546,7 +546,8 @@ const emitDataCron = async (operation, ids) => {
 //         division,
 //         base,
 //         gisement,
-//         employes,createdAt
+//         employes,
+//         createdAt,
 //       } = db;
 
 //       let emetteur = toId(idemetteur);
@@ -574,14 +575,15 @@ const emitDataCron = async (operation, ids) => {
 //         division,
 //         base,
 //         gisement,
-//         employes,createdAt
+//         employes,
+//         createdAt,
 //       });
 //       const savedDemande = await newDemande.save();
-//       sendDemEmits("create", {
-//         others: [emetteur],
-//         type: "DB",
-//         structure: "",
-//       });
+//       // sendDemEmits("create", {
+//       //   others: [emetteur],
+//       //   type: "DB",
+//       //   structure: "",
+//       // });
 //       const populatedDemande = await Demande.findById(savedDemande.id)
 //         .populate("idEmetteur")
 //         .populate("idDestinataire");
@@ -590,14 +592,15 @@ const emitDataCron = async (operation, ids) => {
 //         demande: populatedDemande,
 //       });
 
-// const populatedDemande = await Demande.findById(savedDemande.id)
-// .populate("idEmetteur")
-// .populate("idDestinataire");
-//  // ____________________________________________________________________________
-//     //                               CREATION FDOCUMENT
-//     // ____________________________________________________________________________
-//     createOrUpdateFDocument(populatedDemande, populatedDemande.__t, "creation", created: createdAt);
-
+//       // ____________________________________________________________________________
+//       //                               CREATION FDOCUMENT
+//       // ____________________________________________________________________________
+//       createOrUpdateFDocument(
+//         populatedDemande,
+//         populatedDemande.__t,
+//         "creation",
+//         createdAt
+//       );
 //     }
 //   } catch (error) {
 //     console.log(error);
@@ -607,7 +610,7 @@ const emitDataCron = async (operation, ids) => {
 // ____________________________________________________________________________________________
 //  cron to add DM to db
 // ____________________________________________________________________________________________
-// cron.schedule("29 18 * * *", async () => {
+// cron.schedule("58 23 * * *", async () => {
 //   console.log("start");
 //   const toId = mongoose.Types.ObjectId;
 //   console.log("starting dm");
@@ -641,11 +644,11 @@ const emitDataCron = async (operation, ids) => {
 //         createdAt,
 //       });
 //       const savedDemande = await newDemande.save();
-//       sendDemEmits("create", {
-//         others: [emetteur],
-//         type: "DM",
-//         structure: responsable.structure,
-//       });
+//       // sendDemEmits("create", {
+//       //   others: [emetteur],
+//       //   type: "DM",
+//       //   structure: responsable.structure,
+//       // });
 //       const populatedDemande = await Demande.findById(savedDemande.id)
 //         .populate("idEmetteur")
 //         .populate("idDestinataire");
@@ -659,18 +662,96 @@ const emitDataCron = async (operation, ids) => {
 //       createOrUpdateFDocument(
 //         populatedDemande,
 //         populatedDemande.__t,
-//         "creation", created: createdAt
+//         "creation", createdAt
 //       );
 //     }
 //   } catch (error) {
 //     console.log(error);
 //   }
-//   console.log("end db");
+//   console.log("end dm");
 // });
+// ____________________________________________________________________________________________
+//  cron to add DC to db
+// ____________________________________________________________________________________________
+cron.schedule("12 00 * * *", async () => {
+  console.log("start");
+  const toId = mongoose.Types.ObjectId;
+  console.log("starting dc");
+  try {
+    for (const dc of dcs) {
+      const { motif, DateDepart, DateRetour, LieuSejour, Nature, createdAt } =
+        dc;
+
+      let responsable = await User.find({
+        $or: [{ role: "responsable" }],
+      });
+      const randomIndex = Math.floor(Math.random() * responsable.length);
+      const randomUser = responsable[randomIndex];
+      let destinataire = randomUser._id;
+
+      let employe = await User.find({
+        $and: [
+          {
+            $or: [
+              { role: "responsable", structure: randomUser.structure },
+              { role: "employe" },
+            ],
+          },
+        ],
+      });
+
+      const Index = Math.floor(Math.random() * employe.length);
+      const randUser = employe[Index];
+      let emetteur = randUser._id;
+
+      const customId = await generateCustomId(randomUser.structure, "demandes");
+      let newDemande = new DC({
+        uid: customId,
+__t: "DC",
+        motif,
+        DateDepart,
+        DateRetour,
+        LieuSejour,
+        Nature,
+        idEmetteur: emetteur,
+        idDestinataire: destinataire,
+        createdAt: createdAt,
+      });
+
+      sendDemEmits("create", {
+        others: [emetteur],
+        type: "DC",
+        structure: randomUser.structure,
+      });
+
+      const savedDemande = await newDemande.save();
+
+      const populatedDemande = await Demande.findById(savedDemande.id)
+        .populate("idEmetteur")
+        .populate("idDestinataire");
+
+      sendRequestNotification("creation", {
+        demande: populatedDemande,
+      });
+      // ____________________________________________________________________________
+      //                               CREATION FDOCUMENT
+      // ____________________________________________________________________________
+      createOrUpdateFDocument(
+        populatedDemande,
+        populatedDemande.__t,
+        "creation",
+        createdAt
+      );
+    }
+  } catch (error) {
+    console.log(error);
+  }
+  console.log("end dc");
+});
 // ____________________________________________________________________________________________
 //  cron to add Missions to db
 // ____________________________________________________________________________________________
-cron.schedule("55 19 * * *", async () => {
+cron.schedule("15 00 * * *", async () => {
   console.log("start");
   const toId = mongoose.Types.ObjectId;
   console.log("starting missions");

@@ -16,6 +16,7 @@ import {
   checkUserRD,
   validateUser,
 } from "../../utils/formFieldsVerifications";
+import "./../../components/formulaire/Formulaire.css";
 
 const useStyles = makeStyles({
   table2: {

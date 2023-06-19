@@ -35,8 +35,8 @@ export const createDemande = async (req, res) => {
     } else if (type === "DB") {
       destinataire = await User.findOne({ role: "relex" });
     }
-    console.log("here");
-    console.log("destinataire.id", req.user);
+    // console.log("here");
+    // console.log("destinataire.id", req.user);
 
     destinataire = toId(destinataire.id);
     let emetteur = toId(user.id);
