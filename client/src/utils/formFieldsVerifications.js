@@ -212,10 +212,18 @@ export const checkEmployeesMission = (users, employees) => {
   let newEmployes = [];
 
   // for each employes inside employees we will get his _id
-  newEmployes = users
-    .filter((user) => employees.includes(user.uid))
-    .map((user) => user._id);
+  console.log(employees);
 
+  newEmployes = employees
+    .map((uid) => {
+      const u = users.find((u) => u.uid === uid);
+      if (u) {
+        console.log("uid", u._id);
+        return u._id;
+      } else return "";
+    })
+    .filter(Boolean); 
+  console.log("newEmployes", newEmployes, "employees", employees);
   return newEmployes;
   // returns either employees or empty array , if length array < employees.length than error (some users dont exist)
 };
@@ -262,10 +270,11 @@ export const validateDB = (db, object) => {
       "Le motif de la demande doit être 'travail' ou 'formation'";
   }
 
-  if (!db.dateDepart || isNaN(new Date(db.dateDepart).getTime())) {
-    // console.log("true");
-    // console.log(db.dateDepart);
-
+  if (
+    !db.dateDepart ||
+    isNaN(new Date(db.dateDepart).getTime()) ||
+    new Date(db.dateDepart) <= new Date().now
+  ) {
     errors.dateDepart =
       "La date de départ est obligatoire et doit être une date valide";
   }
@@ -303,7 +312,7 @@ export const validateDB = (db, object) => {
       return employee && employee.structure !== object.user.structure;
     });
     if (!hasSameStructureAndEmployee) {
-      errors.employesStructure = "not the same";
+      errors.employesStructure = "pas la meme structure";
     }
   }
   return errors;
@@ -326,7 +335,6 @@ export const verifyDuplicates = (data) => {
   //First verify duplicates
   const errors = {};
 
-  // console.log(data);
   // create a new array of objects with necessary properties for sorting
   const sortedData = data
     .map((item, index) => ({
@@ -337,6 +345,7 @@ export const verifyDuplicates = (data) => {
       employeSet: item.employes,
     }))
     .sort((a, b) => new Date(a.dateDepart) - new Date(b.dateDepart));
+  console.log(sortedData);
 
   for (let i = 0; i < sortedData.length; i++) {
     const { dateDepart, dateRetour, employeSet, index } = sortedData[i];
@@ -357,11 +366,15 @@ export const verifyDuplicates = (data) => {
       // console.log("j: ", j);
       // console.log(employeSet, employeSet2);
 
-      if (verifyInclusion(dateDepart2, dateRetour2, dateDepart, dateRetour)) {
-        // console.log("here index = ", index2, index);
-        const employeOverlap = employeSet.some((e) => employeSet2.includes(e));
+      if (verifyInclusionDB(dateDepart2, dateRetour2, dateDepart, dateRetour)) {
+        console.log(employeSet);
+        console.log(employeSet2);
+        let employeOverlap = employeSet.some((e) =>
+          employeSet2.find((emp) => emp === e)
+        );
         // console.log("employeOverlap: ", employeOverlap);
         if (employeOverlap) {
+          // console.log("error");
           errors.duplicates = `line ${index} and line ${index2}`;
           return errors;
         }
@@ -407,7 +420,7 @@ export const verifyWithRD = (db, demandes) => {
 
     if (isEmployeeAssignedAlreadyToDemand === true) {
       errors.employes =
-        "Les employées ne doivent pas avoir des demandes entre date de début et date de fin introduites";
+        "Les employées ne doivent pas avoir des demandes soumises prévues à une même période pour les memes employés.";
       return errors;
     }
   }

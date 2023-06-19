@@ -67,7 +67,13 @@ const UploadUsers = () => {
   };
   const handleUpload = () => {
     resetState();
-    if (jsonData) {
+    if (
+      jsonData &&
+      jsonData[0][0].toLowerCase() !== "LISTE DE MISSIONNAIRES".toLowerCase()
+    ) {
+      setErrors([{ file: "veuillez introduire format correcte. " }]);
+      alert("veuillez introduire un fichier valide. ");
+    } else if (jsonData) {
       const subset = jsonData
         .slice(1)
         .filter((row) => row.length > 0 && row[0])

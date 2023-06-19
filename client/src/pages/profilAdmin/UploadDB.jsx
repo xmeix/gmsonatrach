@@ -93,14 +93,22 @@ const UploadDB = () => {
         let newEmp = [...new Set(e[4]?.replace(/#/g, "")?.split(","))];
 
         newEmp = newEmp.map((uid) => {
-          const user = users.find((u) => u.uid === uid);
-          if (!user) {
-            errs.push({
-              employes: "Un des identifiants des utilisateurs inexistant",
-            });
+          const u = users.find((u) => u.uid === uid);
+          if (!u) {
+            if (user.role === "responsable") {
+              errs.push({
+                employes:
+                  "Un des identifiants des utilisateurs inexistant ou n'appartient pas a votre structure",
+              });
+            } else {
+              errs.push({
+                employes: "Un des identifiants des utilisateurs inexistant",
+              });
+            }
+
             return {};
           }
-          return user._id;
+          return u._id;
         });
 
         let dbObject = {
@@ -114,7 +122,7 @@ const UploadDB = () => {
           observation: e[10] !== "empty" ? e[10] : "",
           dateDepart: ExcelDateToJSDate(e[2]),
           dateRetour: ExcelDateToJSDate(e[3]),
-          depart: e[14],
+          depart: e[14] !== "empty" ? e[14] : "Alger",
           destination: e[13],
           paysDestination: e[12],
           direction: e[9] !== "empty" ? e[9] : "",
@@ -147,7 +155,8 @@ const UploadDB = () => {
         setErrors(errs);
         setSuccess(false);
       } else if (Object.keys(verifyDuplicates(data)).length !== 0) {
-        setErrors(verifyDuplicates(data));
+        errs.push(verifyDuplicates(data));
+        setErrors(errs);
         setSuccess(false);
       } else {
         //here we verify if theres fields errors from the db

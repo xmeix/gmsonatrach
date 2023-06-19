@@ -8,6 +8,7 @@ import {
 } from "../../utils/formFieldsVerifications";
 import { useSelector } from "react-redux";
 import { useAxios } from "../../hooks/useAxios";
+import "../../components/formulaire/Formulaire.css";
 
 const UploadM = () => {
   const { jsonData, handleFileChange, fileName } = useUpload();
@@ -48,11 +49,12 @@ const UploadM = () => {
   const handleUpload = () => {
     if (jsonData) {
       // console.log(fileName);
-      setErrors([{}]);
+      setErrors([]);
       if (
-        jsonData[0][0] !== "Informations nécessaire sur les missions de travail"
+        jsonData[0][0] !==
+        "Informations nécessaires sur les missions de travail"
       ) {
-        setErrors([{ file: "veuillez introduire format correcte" }]);
+        alert("veuillez introduire un format de fichier correcte");
       } else {
         extractPlanningData();
       }
@@ -117,8 +119,7 @@ const UploadM = () => {
           const subArray = planningData[1]
             .slice(startIndex, endIndex + 1)
             .filter((el) => el !== "empty");
-          // console.log(d[0]);
-          // console.log(subArray);
+
           // checks if the elements in the subarray are consecutive numbers and if they are in the same order.
           const hasConsecutiveNumbers = !subArray.some((num, i, arr) => {
             if (i !== arr.length - 1) {
@@ -158,7 +159,6 @@ const UploadM = () => {
         .slice(secondIndex, longestRow.length)
         .map((val) => (typeof val !== "undefined" ? val : "empty"));
     });
-    // console.log("subset", subset);
 
     const planningData = subset.map((element) => {
       return [
@@ -261,7 +261,7 @@ const UploadM = () => {
           // console.log({ idUser: element[0], mission: mission });
           // here we have to look for all the users and push them to the array
 
-          employees.push(element[0].trim());
+          employees.push(element[0]);
         }
       }
 
@@ -300,10 +300,8 @@ const UploadM = () => {
           let newEmpArray = checkEmployeesMission(users, employees);
 
           if (newEmpArray.length < employees.length) {
-            errs.push([
-              ...errors,
-              { employees: "Un des employés n'existe pas" },
-            ]);
+            errs.push({ employees: "Un des employés n'existe pas" });
+            return;
           } else {
             missionObject = {
               objetMission: mission[1]?.trim(),
