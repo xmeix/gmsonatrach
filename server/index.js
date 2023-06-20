@@ -23,21 +23,23 @@ import User from "./models/User.js";
 import RapportFM from "./models/RapportFM.js";
 import cron from "node-cron";
 import jwt from "jsonwebtoken";
-import {
-  FDB,
-  FDC,
-  FDM,
-  FOM,
-  FRFM,
-  Fmissions,
-  tickets,
-  users,
-} from "../client/src/data/data.js";
-import { dbs } from "./data/dbData.js";
-import { dms } from "./data/dmData.js";
-import { missions } from "./data/missionData.js";
-import { missionsT } from "./data/missionDataTerm.js";
-import { dcs } from "./data/dcData.js";
+import { dbs } from "./data/dbs.js";
+import { dcs } from "./data/dcs.js";
+import { dms } from "./data/dms.js";
+import { fdc } from "./data/fdc.js";
+import { fdm } from "./data/fdm.js";
+import { fdb } from "./data/fdb.js";
+import { frfm } from "./data/frfm.js";
+import { Fmissions } from "./data/fMissions.js";
+import { missions } from "./data/missions.js";
+// import { dbs } from "./data/dbData.js";
+// import { dms } from "./data/dmData.js";
+// import { missions } from "./data/missionData.js";
+// import { missionsT } from "./data/missionDataTerm.js";
+import { simpleData } from "./data/SimpleDataTerm.js";
+// import { dcs } from "./data/dcData.js";
+import { ticketData } from "./data/ticketData.js";
+import { commentData } from "./data/ticketData.js";
 import { createOrUpdateFMission } from "./controllers/Kpis.js";
 import OrdreMission from "./models/OrdreMission.js";
 import DM from "./models/demandes/DM.js";
@@ -124,11 +126,11 @@ mongoose
 
     // Mission.insertMany(missions);
     // Ticket.insertMany(tickets);
-    // FDocument.insertMany(FDM);
-    // FDocument.insertMany(FRFM);
-    // FDocument.insertMany(FDB);
-    // FDocument.insertMany(FDC);
-    // FDocument.insertMany(FOM);
+    // FDocument.insertMany(fdm);
+    // FDocument.insertMany(frfm);
+    // FDocument.insertMany(fdb);
+    // FDocument.insertMany(fdc);
+    // FDocument.insertMany(fom);
 
     // DM.insertMany(dms);
     // DB.insertMany(dbs);
@@ -445,6 +447,186 @@ cron.schedule("20 14 * * *", async () => {
   console.log("Cron job ending...");
 });
 
+// ____________________________________________________________________________________________
+//  cron to add DB to db
+// // ____________________________________________________________________________________________
+// cron.schedule("37 18 * * *", async () => {
+//   console.log("start");
+//   const toId = mongoose.Types.ObjectId;
+//   console.log("starting db");
+//   try {
+//     for (const db of dbs) {
+//       const {
+//         motif,
+//         idEmetteur,
+//         idDestinataire,
+//         numSC,
+//         designationSC,
+//         montantEngage,
+//         nature,
+//         motifDep,
+//         observation,
+//         dateDepart,
+//         dateRetour,
+//         depart,
+//         destination,
+//         paysDestination,
+//         direction,
+//         sousSection,
+//         division,
+//         base,
+//         gisement,
+//         employes,
+//         createdAt,
+//         etat,
+//       } = db;
+
+//       let emetteur = toId(idEmetteur);
+//       let destinataire = toId(idDestinataire);
+//       const customId = await generateCustomId("RELEX", "demandes");
+//       const newDemande = new DB({
+//         uid: customId,
+//         __t: "DB",
+//         motif,
+//         idEmetteur: emetteur,
+//         idDestinataire: destinataire,
+//         numSC, // def ""
+//         designationSC, // def ""
+//         montantEngage, //def 0
+//         nature,
+//         motifDep,
+//         observation,
+//         dateDepart,
+//         dateRetour,
+//         depart,
+//         destination,
+//         paysDestination,
+//         direction,
+//         sousSection,
+//         division,
+//         base,
+//         gisement,
+//         employes,
+//         createdAt,
+//         etat,
+//       });
+//       const savedDemande = await newDemande.save();
+//     }
+//   } catch (error) {
+//     console.log(error);
+//   }
+//   console.log("end db");
+// });
+
+// ____________________________________________________________________________________________
+//  cron to add DC to db
+// ____________________________________________________________________________________________
+// cron.schedule("35 18 * * *", async () => {
+//   console.log("start");
+//   const toId = mongoose.Types.ObjectId;
+//   console.log("starting dc");
+//   try {
+//     for (const dc of dcs) {
+//       const {
+//         motif,
+//         DateDepart,
+//         DateRetour,
+//         LieuSejour,
+//         Nature,
+//         createdAt,
+//         etat,
+//       } = dc;
+
+//       let responsable = await User.find({
+//         $or: [{ role: "responsable" }],
+//       });
+//       const randomIndex = Math.floor(Math.random() * responsable.length);
+//       const randomUser = responsable[randomIndex];
+//       let destinataire = randomUser._id;
+
+//       let employe = await User.find({
+//         $and: [
+//           {
+//             $or: [
+//               { role: "responsable", structure: randomUser.structure },
+//               { role: "employe" },
+//             ],
+//           },
+//         ],
+//       });
+
+//       const Index = Math.floor(Math.random() * employe.length);
+//       const randUser = employe[Index];
+//       let emetteur = randUser._id;
+
+//       const customId = await generateCustomId(randomUser.structure, "demandes");
+//       let newDemande = new DC({
+//         uid: customId,
+//         __t: "DC",
+//         motif,
+//         DateDepart,
+//         DateRetour,
+//         LieuSejour,
+//         Nature,
+//         idEmetteur: emetteur,
+//         idDestinataire: destinataire,
+//         createdAt: createdAt,
+//         etat,
+//       });
+
+//       const savedDemande = await newDemande.save();
+//     }
+//   } catch (error) {
+//     console.log(error);
+//   }
+//   console.log("end dc");
+// });
+
+// ____________________________________________________________________________________________
+//  cron to add DM to db
+// ____________________________________________________________________________________________
+// cron.schedule("33 18 * * *", async () => {
+//   console.log("start");
+//   const toId = mongoose.Types.ObjectId;
+//   console.log("starting dm");
+//   try {
+//     for (const dm of dms) {
+//       const { motif, idemetteur, iddestinataire, createdAt, etat } = dm;
+
+//       let employe = await User.findById(idemetteur);
+//       let emetteur = employe._id;
+
+//       let responsable = await User.find({
+//         $and: [
+//           {
+//             $or: [{ role: "responsable", structure: employe.structure }],
+//           },
+//         ],
+//       });
+//       const randomIndex = Math.floor(Math.random() * responsable.length);
+//       const randomUser = responsable[randomIndex];
+//       let destinataire = randomUser._id;
+//       const customId = await generateCustomId(
+//         responsable.structure,
+//         "demandes"
+//       );
+//       const newDemande = new DM({
+//         uid: customId,
+//         __t: "DM",
+//         motif,
+//         idEmetteur: emetteur,
+//         idDestinataire: destinataire,
+//         etat,
+//         createdAt,
+//       });
+//       const savedDemande = await newDemande.save();
+//     }
+//   } catch (error) {
+//     console.log(error);
+//   }
+//   console.log("end dm");
+// });
+
 // function used to emit data to connected Users.
 const emitDataCron = async (operation, ids) => {
   let { others, structure } = ids;
@@ -487,272 +669,9 @@ const emitDataCron = async (operation, ids) => {
 };
 
 // ____________________________________________________________________________________________
-//  cron to add users to db
-// ____________________________________________________________________________________________
-
-// cron.schedule("25 19 * * *", async () => {
-//   console.log("start");
-//   try {
-//     for (const user of users) {
-//       const { nom, prenom, fonction, numTel, email, role, etat, structure } =
-//         user;
-//       const salt = await bcrypt.genSalt();
-//       const passwordHash = await bcrypt.hash(user.password, salt);
-//       let customId = await generateCustomId(structure, "users");
-//        const newUser = new User({
-//         uid: customId,
-//         nom,
-//         prenom,
-//         fonction,
-//         numTel,
-//         email,
-//         password: passwordHash,
-//         role,
-//         etat,
-//         structure,
-//       });
-//       const savedUser = await newUser.save();
-//     }
-//   } catch (error) {
-//     console.log(error);
-//   }
-//   console.log("end");
-// });
-// ____________________________________________________________________________________________
-//  cron to add DB to db
-// ____________________________________________________________________________________________
-// cron.schedule("45 23 * * *", async () => {
-//   console.log("start");
-//   const toId = mongoose.Types.ObjectId;
-//   console.log("starting db");
-//   try {
-//     for (const db of dbs) {
-//       const {
-//         motif,
-//         idemetteur,
-//         iddestinataire,
-//         numSC,
-//         designationSC,
-//         montantEngage,
-//         nature,
-//         motifDep,
-//         observation,
-//         dateDepart,
-//         dateRetour,
-//         depart,
-//         destination,
-//         paysDestination,
-//         direction,
-//         sousSection,
-//         division,
-//         base,
-//         gisement,
-//         employes,
-//         createdAt,
-//       } = db;
-
-//       let emetteur = toId(idemetteur);
-//       let destinataire = toId(iddestinataire);
-//       const customId = await generateCustomId("RELEX", "demandes");
-//       const newDemande = new DB({
-//         uid: customId,
-//         __t: "DB",
-//         motif,
-//         idEmetteur: emetteur,
-//         idDestinataire: destinataire,
-//         numSC, // def ""
-//         designationSC, // def ""
-//         montantEngage, //def 0
-//         nature,
-//         motifDep,
-//         observation,
-//         dateDepart,
-//         dateRetour,
-//         depart,
-//         destination,
-//         paysDestination,
-//         direction,
-//         sousSection,
-//         division,
-//         base,
-//         gisement,
-//         employes,
-//         createdAt,
-//       });
-//       const savedDemande = await newDemande.save();
-//       // sendDemEmits("create", {
-//       //   others: [emetteur],
-//       //   type: "DB",
-//       //   structure: "",
-//       // });
-//       const populatedDemande = await Demande.findById(savedDemande.id)
-//         .populate("idEmetteur")
-//         .populate("idDestinataire");
-
-//       sendRequestNotification("creation", {
-//         demande: populatedDemande,
-//       });
-
-//       // ____________________________________________________________________________
-//       //                               CREATION FDOCUMENT
-//       // ____________________________________________________________________________
-//       createOrUpdateFDocument(
-//         populatedDemande,
-//         populatedDemande.__t,
-//         "creation",
-//         createdAt
-//       );
-//     }
-//   } catch (error) {
-//     console.log(error);
-//   }
-//   console.log("end db");
-// });
-// ____________________________________________________________________________________________
-//  cron to add DM to db
-// ____________________________________________________________________________________________
-// cron.schedule("58 23 * * *", async () => {
-//   console.log("start");
-//   const toId = mongoose.Types.ObjectId;
-//   console.log("starting dm");
-//   try {
-//     for (const dm of dms) {
-//       const { motif, idemetteur, iddestinataire, createdAt } = dm;
-
-//       let employe = await User.findById(idemetteur);
-//       let emetteur = employe._id;
-
-//       let responsable = await User.find({
-//         $and: [
-//           {
-//             $or: [{ role: "responsable", structure: employe.structure }],
-//           },
-//         ],
-//       });
-//       const randomIndex = Math.floor(Math.random() * responsable.length);
-//       const randomUser = responsable[randomIndex];
-//       let destinataire = randomUser._id;
-//       const customId = await generateCustomId(
-//         responsable.structure,
-//         "demandes"
-//       );
-//       const newDemande = new DM({
-//         uid: customId,
-//         __t: "DM",
-//         motif,
-//         idEmetteur: emetteur,
-//         idDestinataire: destinataire,
-//         createdAt,
-//       });
-//       const savedDemande = await newDemande.save();
-//       // sendDemEmits("create", {
-//       //   others: [emetteur],
-//       //   type: "DM",
-//       //   structure: responsable.structure,
-//       // });
-//       const populatedDemande = await Demande.findById(savedDemande.id)
-//         .populate("idEmetteur")
-//         .populate("idDestinataire");
-
-//       sendRequestNotification("creation", {
-//         demande: populatedDemande,
-//       });
-//       // ____________________________________________________________________________
-//       //                               CREATION FDOCUMENT
-//       // ____________________________________________________________________________
-//       createOrUpdateFDocument(
-//         populatedDemande,
-//         populatedDemande.__t,
-//         "creation", createdAt
-//       );
-//     }
-//   } catch (error) {
-//     console.log(error);
-//   }
-//   console.log("end dm");
-// });
-// ____________________________________________________________________________________________
-//  cron to add DC to db
-// ____________________________________________________________________________________________
-// cron.schedule("12 00 * * *", async () => {
-//   console.log("start");
-//   const toId = mongoose.Types.ObjectId;
-//   console.log("starting dc");
-//   try {
-//     for (const dc of dcs) {
-//       const { motif, DateDepart, DateRetour, LieuSejour, Nature, createdAt } =
-//         dc;
-
-//       let responsable = await User.find({
-//         $or: [{ role: "responsable" }],
-//       });
-//       const randomIndex = Math.floor(Math.random() * responsable.length);
-//       const randomUser = responsable[randomIndex];
-//       let destinataire = randomUser._id;
-
-//       let employe = await User.find({
-//         $and: [
-//           {
-//             $or: [
-//               { role: "responsable", structure: randomUser.structure },
-//               { role: "employe" },
-//             ],
-//           },
-//         ],
-//       });
-
-//       const Index = Math.floor(Math.random() * employe.length);
-//       const randUser = employe[Index];
-//       let emetteur = randUser._id;
-
-//       const customId = await generateCustomId(randomUser.structure, "demandes");
-//       let newDemande = new DC({
-//         uid: customId,
-//         __t: "DC",
-//         motif,
-//         DateDepart,
-//         DateRetour,
-//         LieuSejour,
-//         Nature,
-//         idEmetteur: emetteur,
-//         idDestinataire: destinataire,
-//         createdAt: createdAt,
-//       });
-
-//       sendDemEmits("create", {
-//         others: [emetteur],
-//         type: "DC",
-//         structure: randomUser.structure,
-//       });
-
-//       const savedDemande = await newDemande.save();
-
-//       const populatedDemande = await Demande.findById(savedDemande.id)
-//         .populate("idEmetteur")
-//         .populate("idDestinataire");
-
-//       sendRequestNotification("creation", {
-//         demande: populatedDemande,
-//       });
-//       // ____________________________________________________________________________
-//       //                               CREATION FDOCUMENT
-//       // ____________________________________________________________________________
-//       createOrUpdateFDocument(
-//         populatedDemande,
-//         populatedDemande.__t,
-//         "creation",
-//         createdAt
-//       );
-//     }
-//   } catch (error) {
-//     console.log(error);
-//   }
-//   console.log("end dc");
-// });
-// ____________________________________________________________________________________________
 //  cron to add Missions to db
 // // ____________________________________________________________________________________________
-// cron.schedule("49 05 * * *", async () => {
+// cron.schedule("32 16 * * *", async () => {
 //   console.log("start");
 //   const toId = mongoose.Types.ObjectId;
 //   console.log("starting missions");
@@ -763,6 +682,8 @@ const emitDataCron = async (operation, ids) => {
 //         structure,
 //         type,
 //         budget,
+//         budgetConsome,
+//         oldDuree,
 //         pays,
 //         taches,
 //         tDateDeb,
@@ -774,11 +695,9 @@ const emitDataCron = async (operation, ids) => {
 //         observation,
 //         createdAt,
 //         updatedAt,
+//         employes,
 //       } = mission;
 
-//       let employes = await User.find({
-//         $or: [{ role: "employe", structure: structure }],
-//       });
 //       const newEmployes = employes.map((employe) => toId(employe));
 //       let creators = await User.find({
 //         $and: [
@@ -798,16 +717,33 @@ const emitDataCron = async (operation, ids) => {
 //       let updatedBy = randomUser._id;
 
 //       let newId = await generateCustomId(structure, "missions");
-//       let etat =
-//         randomUser.role === "responsable" || randomUser.role === "directeur"
-//           ? "acceptée"
-//           : "en-attente";
+//       let etat;
+
+//       if (
+//         randomUser.role === "responsable" ||
+//         randomUser.role === "directeur"
+//       ) {
+//         // Randomly select from "acceptée", "en cours", or "terminée"
+//         const etatOptions = ["acceptée", "en-cours", "terminée"];
+//         etat = etatOptions[Math.floor(Math.random() * etatOptions.length)];
+//       } else {
+//         // Randomly select from "refusée", "acceptée", "en cours", or "terminée"
+//         const etatOptions = ["refusée", "acceptée", "en-cours", "terminée"];
+//         etat = etatOptions[Math.floor(Math.random() * etatOptions.length)];
+//       }
+//       const dateDeb = new Date(tDateDeb);
+//       const dateRet = new Date(tDateRet);
+//       const timeDifference = Math.abs(dateRet - dateDeb);
+//       const daysDifference = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
+
 //       const newMission = new Mission({
 //         uid: newId,
 //         objetMission,
 //         structure,
 //         type,
 //         budget,
+//         budgetConsome: etat === "terminée" ? budgetConsome : 0,
+//         oldDuree: etat === "terminée" ? oldDuree : daysDifference,
 //         pays,
 //         employes: newEmployes,
 //         taches: taches ? taches : [],
@@ -826,69 +762,6 @@ const emitDataCron = async (operation, ids) => {
 //         updatedAt,
 //       });
 //       const savedMission = await newMission.save();
-
-//       if (etat === "acceptée" && newEmployes.length > 0) {
-//         //on doit générer l'ordre de mission
-//         const employeIds = newEmployes.map((employe) => employe._id);
-//         for (const employeId of employeIds) {
-//           let customId = await generateCustomId(structure, "ordremissions");
-//           const om = new OrdreMission({
-//             uid: customId,
-//             mission: savedMission.id,
-//             employe: employeId,
-//           });
-//           await om.save();
-//           //______________________________________________________________;
-//           const populatedOM = await OrdreMission.findById(om._id)
-//             .populate("mission")
-//             .populate("employe");
-//           // ___________________________________________________________________________________________________
-//           //                      CREATION FDOCUMENT
-//           // ___________________________________________________________________________________________________
-//           createOrUpdateFDocument(populatedOM, "OM", "creation", createdAt);
-//           //______________________________________________________________;
-//         }
-//       }
-
-//       const query = {
-//         uid: newId,
-//         objetMission: objetMission,
-//         structure: structure,
-//         type,
-//         budget,
-//         pays,
-//         employes: newEmployes,
-//         taches,
-//         tDateDeb,
-//         tDateRet,
-//         moyenTransport,
-//         moyenTransportRet,
-//         lieuDep,
-//         destination,
-//         observation,
-//         etat: "en-attente",
-//         // circonscriptionAdm,
-//         createdBy,
-//         updatedBy,
-//         createdAt,
-//         updatedAt,
-//       };
-//       // ____________________________________________________________________________________;
-//       // createOrUpdateFMission(query, "creation", null, "");
-//       await createOrUpdateFMission("creation", {
-//         newMission: query,
-//         created: createdAt,
-//       });
-
-//       if (savedMission.etat === "acceptée") {
-//         // createOrUpdateFMission(savedMission, "update", query, "etat"); //---------------------------------------------XXXXXXXX
-//         await createOrUpdateFMission("update", {
-//           oldMission: query,
-//           newMission: savedMission,
-//           updateType: "etat",
-//           created: createdAt,
-//         });
-//       }
 //     }
 //   } catch (error) {
 //     console.log(error);
@@ -896,424 +769,231 @@ const emitDataCron = async (operation, ids) => {
 //   console.log("end missions");
 // });
 // ____________________________________________________________________________________________
-//  cron to add Missions Terminées to db
-// ____________________________________________________________________________________________
-cron.schedule("40 00 * * *", async () => {
-  console.log("start");
-  const toId = mongoose.Types.ObjectId;
-  console.log("starting missions");
-  try {
-    for (const mission of missionsT) {
-      const {
-        objetMission,
-        structure,
-        type,
-        budget,
-        budgetConsome,
-        pays,
-        taches,
-        tDateDeb,
-        tDateRet,
-        moyenTransport,
-        moyenTransportRet,
-        lieuDep,
-        destination,
-        observation,
-        createdAt,
-        updatedAt,
-        oldDuree,
-      } = mission;
+//  cron to add Simple Missions Terminées to db
+// // ____________________________________________________________________________________________
+// cron.schedule("42 16 * * *", async () => {
+//   console.log("start");
+//   const toId = mongoose.Types.ObjectId;
+//   console.log("starting simple missions for AI");
+//   try {
+//     for (const mission of simpleData) {
+//       const {
+//         objetMission,
+//         structure,
+//         type,
+//         budget,
+//         budgetConsome,
+//         pays,
+//         taches,
+//         tDateDeb,
+//         tDateRet,
+//         moyenTransport,
+//         moyenTransportRet,
+//         lieuDep,
+//         destination,
+//         createdAt,
+//         updatedAt,
+//         oldDuree,
+//         etat,
+//         employes,
+//       } = mission;
 
-      let employes = await User.find({
-        $or: [{ role: "employe", structure: structure }],
-      });
-      const newEmployes = employes.map((employe) => toId(employe));
-      let creators = await User.find({
-        $and: [
-          {
-            $or: [
-              { role: "responsable", structure: structure },
-              { role: "directeur" },
-              { role: "secretaire" },
-            ],
-          },
-        ],
-      });
+//       let newEmployes = employes.map((emp) => toId(emp));
 
-      const randomIndex = Math.floor(Math.random() * creators.length);
-      const randomUser = creators[randomIndex];
-      let createdBy = randomUser._id;
-      let updatedBy = randomUser._id;
+//       let creators = await User.find({
+//         $and: [
+//           {
+//             $or: [
+//               { role: "responsable", structure: structure },
+//               { role: "directeur" },
+//               { role: "secretaire" },
+//             ],
+//           },
+//         ],
+//       });
 
-      let newId = await generateCustomId(structure, "missions");
+//       const randomIndex = Math.floor(Math.random() * creators.length);
+//       const randomUser = creators[randomIndex];
+//       let createdBy = randomUser._id;
+//       let updatedBy = randomUser._id;
 
-      const newMission = new Mission({
-        uid: newId,
-        objetMission,
-        structure,
-        type,
-        budget,
-        budgetConsome,
-        pays,
-        employes: newEmployes,
-        taches: taches ? taches : [],
-        tDateDeb: new Date(tDateDeb).toISOString(),
-        tDateRet: new Date(tDateRet).toISOString(),
-        oldDuree,
-        moyenTransport,
-        moyenTransportRet,
-        lieuDep: lieuDep ? lieuDep : "Alger",
-        destination,
-        observation,
-        etat: etat,
-        createdBy,
-        updatedBy,
-        createdAt,
-        updatedAt,
-      });
-      const savedMission = await newMission.save();
+//       let newId = await generateCustomId(structure, "missions");
 
-      const employeIds = newEmployes.map((employe) => employe._id);
-      for (const employeId of employeIds) {
-        let customId = await generateCustomId(structure, "ordremissions");
-        const om = new OrdreMission({
-          uid: customId,
-          mission: savedMission.id,
-          employe: employeId,
-          createdAt: createdAt,
-        });
-        await om.save();
-        //______________________________________________________________;
-        const populatedOM = await OrdreMission.findById(om._id)
-          .populate("mission")
-          .populate("employe");
-        // ___________________________________________________________________________________________________
-        //                      CREATION FDOCUMENT
-        // ___________________________________________________________________________________________________
-        createOrUpdateFDocument(populatedOM, "OM", "creation", createdAt);
-        //______________________________________________________________;
-
-        let customId2 = await generateCustomId(structure, "rapportfms");
-        const rfm = new RapportFM({
-          uid: customId2,
-          idMission: savedMission.id,
-          idEmploye: employeId,
-          createdAt: new Date(tDateDeb).toISOString(),
-        });
-
-        const savedRFM = await rfm.save();
-        //______________________________________________________________
-        const populatedRFM = await RapportFM.findById(savedRFM._id)
-          .populate("idMission")
-          .populate("idEmploye");
-
-        createOrUpdateFDocument(
-          populatedRFM,
-          "RFM",
-          "creation",
-          new Date(tDateDeb).toISOString()
-        );
-        //______________________________________________________________
-      }
-
-      const query = {
-        uid: newId,
-        objetMission: objetMission,
-        structure: structure,
-        type,
-        budget,
-        budgetConsome,
-        pays,
-        employes: newEmployes,
-        taches,
-        tDateDeb,
-        tDateRet,
-        moyenTransport,
-        moyenTransportRet,
-        lieuDep,
-        destination,
-        observation,
-        etat: "en-attente",
-        oldDuree,
-        createdBy,
-        updatedBy,
-        createdAt,
-        updatedAt,
-      };
-      // ____________________________________________________________________________________;
-      // createOrUpdateFMission(query, "creation", null, "");
-      await createOrUpdateFMission("creation", {
-        newMission: query,
-        created: createdAt,
-      });
-
-      const query2 = {
-        uid: newId,
-        objetMission: objetMission,
-        structure: structure,
-        type,
-        budget,
-        budgetConsome,
-        pays,
-        employes: newEmployes,
-        taches,
-        tDateDeb,
-        tDateRet,
-        moyenTransport,
-        moyenTransportRet,
-        lieuDep,
-        destination,
-        observation,
-        oldDuree,
-        etat: "acceptée",
-        createdBy,
-        updatedBy,
-        createdAt,
-        updatedAt,
-      };
-
-      await createOrUpdateFMission("update", {
-        oldMission: query,
-        newMission: query2,
-        updateType: "etat",
-        created: createdAt,
-      });
-      const query3 = {
-        uid: newId,
-        objetMission: objetMission,
-        structure: structure,
-        type,
-        budget,
-        budgetConsome,
-        pays,
-        employes: newEmployes,
-        taches,
-        tDateDeb,
-        tDateRet,
-        moyenTransport,
-        moyenTransportRet,
-        lieuDep,
-        destination,
-        observation,
-        oldDuree,
-        etat: "en-cours",
-        createdBy,
-        updatedBy,
-        createdAt,
-        updatedAt,
-      };
-      await createOrUpdateFMission("update", {
-        oldMission: query2,
-        newMission: query3,
-        updateType: "etat",
-        created: new Date(tDateDeb).toISOString(),
-      });
-      const query4 = {
-        uid: newId,
-        objetMission: objetMission,
-        structure: structure,
-        type,
-        budget,
-        budgetConsome,
-        pays,
-        employes: newEmployes,
-        taches,
-        tDateDeb,
-        tDateRet,
-        moyenTransport,
-        moyenTransportRet,
-        lieuDep,
-        destination,
-        observation,
-        oldDuree,
-        etat: "terminée",
-        createdBy,
-        updatedBy,
-        createdAt,
-        updatedAt,
-      };
-      await createOrUpdateFMission("update", {
-        oldMission: query3,
-        newMission: query4,
-        updateType: "etat",
-        created: new Date(tDateRet).toISOString(),
-      });
-    }
-  } catch (error) {
-    console.log(error);
-  }
-  console.log("end missions");
-});
-// ____________________________________________________________________________________________
-//  cron to add Missions Tickets to db
-// ____________________________________________________________________________________________
-cron.schedule("00 00 * * *", async () => {
-  console.log("start");
-  const toId = mongoose.Types.ObjectId;
-  console.log("starting tickets");
-  try {
-    const ticketData = [
-      { object: "Ticket Object 1", description: "Ticket Description 1" },
-      { object: "Ticket Object 2", description: "Ticket Description 2" },
-      { object: "Ticket Object 3", description: "Ticket Description 3" },
-      // Add more ticket data as needed
-    ];
-
-    const commentData = [
-      { contenu: "Comment 1" },
-      { contenu: "Comment 2" },
-      { contenu: "Comment 3" },
-      // Add more comment data as needed
-    ];
-    const missions = await Mission.find({ etat: "terminée" });
-
-    for (const mission of missions) {
-      const employeIds = mission.employes.map((employe) => employe._id);
-      const numTickets = Math.floor(Math.random() * 5) + 1; // Random number of tickets (1-5)
-
-      for (let i = 0; i < numTickets; i++) {
-        const randomEmployeeId =
-          employeIds[Math.floor(Math.random() * employeIds.length)];
-        const ticketIndex = Math.floor(Math.random() * ticketData.length);
-        const ticket = new Ticket({
-          mission: mission._id,
-          employe: randomEmployeeId,
-          object: ticketData[ticketIndex].object,
-          description: ticketData[ticketIndex].description,
-        });
-
-        const numComments = Math.floor(Math.random() * employeIds.length) + 1; // Random number of comments (1 to employeIds.length)
-
-        for (let j = 0; j < numComments; j++) {
-          const randomEmployeeId =
-            employeIds[Math.floor(Math.random() * employeIds.length)];
-          const commentIndex = Math.floor(Math.random() * commentData.length);
-          const commentData = {
-            contenu: commentData[commentIndex].contenu,
-            createdBy: randomEmployeeId,
-          };
-
-          ticket.commentaires.push(commentData);
-        }
-
-        await ticket.save();
-      }
-    }
-  } catch (error) {
-    console.log(error);
-  }
-  console.log("end tickets");
-});
-
+//       const newMission = new Mission({
+//         uid: newId,
+//         objetMission,
+//         structure,
+//         type,
+//         budget,
+//         budgetConsome,
+//         pays,
+//         employes: newEmployes,
+//         taches: taches ? taches : [],
+//         tDateDeb: new Date(tDateDeb).toISOString(),
+//         tDateRet: new Date(tDateRet).toISOString(),
+//         oldDuree,
+//         moyenTransport,
+//         moyenTransportRet,
+//         lieuDep: lieuDep ? lieuDep : "Alger",
+//         destination,
+//         etat: etat,
+//         createdBy,
+//         updatedBy,
+//         createdAt,
+//         updatedAt,
+//       });
+//       const savedMission = await newMission.save();
+//     }
+//   } catch (error) {
+//     console.log(error);
+//   }
+//   console.log("end simple missions");
+// });
 // ____________________________________________________________________________________________
 //  cron creation RFM+OM (FOR TESTING ONLY)
 // ____________________________________________________________________________________________
 
-// cron.schedule("12 11 * * *", async () => {
-//   //creation auto des RFM + OM
+// cron.schedule("24 17 * * *", async () => {
+//   // Creation auto des RFM + OM
 //   console.log("starting");
-//   //RFM
-//   const missionsEnCours = await Mission.find({
-//     etat: { $in: ["en-cours", "terminée"] },
-//   });
 
-//   for (const mission of missionsEnCours) {
-//     const employeIds = mission.employes.map((employe) => employe._id);
+//   try {
+//     // RFM
+//     const missionsEnCours = await Mission.find({
+//       etat: { $in: ["en-cours", "terminée"] },
+//     }).limit(100);
 
-//     for (const employeId of employeIds) {
-//       let customId = await generateCustomId(mission.structure, "rapportfms");
-//       const rfm = new RapportFM({
-//         uid: customId,
-//         idMission: toId(mission._id),
-//         idEmploye: toId(employeId),
-//       });
+//     for (const mission of missionsEnCours) {
+//       console.log("1");
+//       const employeIds = mission.employes.map((employe) => employe._id);
 
-//       const savedRFM = await rfm.save();
+//       for (const employeId of employeIds) {
+//         let customId = await generateCustomId(mission.structure, "rapportfms");
+//         const deroulement = [];
+
+//         const firstDate = new Date(mission.tDateDeb); // Get the start date of the mission
+//         const lastDate = new Date(mission.tDateRet); // Get the end date of the mission
+
+//         // Generate random values for each element in the deroulement array
+//         let currentDate = new Date(firstDate); // Start with the first date
+
+//         while (currentDate <= lastDate) {
+//           const randomHebergement =
+//             Math.random() < 0.5
+//               ? "avec-prise-en-charge"
+//               : "sans-prise-en-charge";
+//           const randomDejeuner =
+//             Math.random() < 0.5
+//               ? "avec-prise-en-charge"
+//               : "sans-prise-en-charge";
+//           const randomDiner =
+//             Math.random() < 0.5
+//               ? "avec-prise-en-charge"
+//               : "sans-prise-en-charge";
+//           const randomObservation = ""; // You can customize the generation of random observations if needed
+
+//           const deroulementItem = {
+//             IdDate: currentDate,
+//             hebergement: randomHebergement,
+//             dejeuner: randomDejeuner,
+//             diner: randomDiner,
+//             observation: randomObservation,
+//           };
+
+//           deroulement.push(deroulementItem);
+
+//           // Move to the next date
+//           currentDate.setDate(currentDate.getDate() + 1);
+//         }
+
+//         const rfm = new RapportFM({
+//           uid: customId,
+//           idMission: mission._id,
+//           idEmploye: employeId,
+//           deroulement: deroulement,
+//           etat:
+//             mission.etat === "terminée" && Math.random() < 0.5
+//               ? "créé"
+//               : "accepté",
+//         });
+
+//         const savedRFM = await rfm.save();
+//       }
 //     }
-//   }
-//   console.log("finished rfm");
 
-//   //OM
+//     console.log("finished rfm");
 
-//   const missionsAccepted = await Mission.find({
-//     etat: { $in: ["acceptée", "en-cours", "terminée"] },
-//   });
+//     // OM
 
-//   for (const mission of missionsAccepted) {
-//     const employeIds = mission.employes.map((employe) => employe._id);
+//     const missionsAccepted = await Mission.find({
+//       etat: { $in: ["acceptée", "en-cours", "terminée"] },
+//     }).limit(100);
 
-//     for (const employeId of employeIds) {
-//       let customId = await generateCustomId(mission.structure, "rapportfms");
-//       const om = new OrdreMission({
-//         uid: customId,
-//         mission: toId(mission._id),
-//         employe: toId(employeId),
-//       });
+//     for (const mission of missionsAccepted) {
+//       const employeIds = mission.employes.map((employe) => employe._id);
 
-//       const savedOm = await om.save();
+//       for (const employeId of employeIds) {
+//         let customId = await generateCustomId(mission.structure, "rapportfms");
+//         const om = new OrdreMission({
+//           uid: customId,
+//           mission: mission._id,
+//           employe: employeId,
+//         });
+
+//         const savedOm = await om.save();
+//       }
 //     }
+//   } catch (err) {
+//     console.log(err);
 //   }
+
 //   console.log("finished om");
-//   console.log("emmiting");
-//   io.emit("cronDataChange");
-//   console.log("finished emmiting");
 // });
-
 // ____________________________________________________________________________________________
-//  cron creation FMission (FOR TESTING ONLY)
+//  cron to add Missions Tickets to db
 // ____________________________________________________________________________________________
+// cron.schedule("28 18 * * *", async () => {
+//   console.log("start");
+//   console.log("starting tickets");
+//   try {
+//     const missions = await Mission.find({ etat: "terminée" });
 
-// const addMissionsData = async () => {
-//   //grab missions array from data file loop through it and insert each element into db using createMission function
-//   missions.map(async (mission) => {
-//     const {
-//       uid,
-//       objetMission,
-//       structure,
-//       type,
-//       budget,
-//       pays,
-//       employes,
-//       taches,
-//       tDateDeb,
-//       tDateRet,
-//       moyenTransport,
-//       moyenTransportRet,
-//       lieuDep,
-//       destination,
-//       observation,
-//       circonscriptionAdm,
-//       createdBy,
-//       updatedBy,
-//       createdAt,
-//       updatedAt,
-//     } = mission;
-//     const query = {
-//       uid,
-//       objetMission,
-//       structure,
-//       type,
-//       budget,
-//       pays,
-//       employes,
-//       taches,
-//       tDateDeb,
-//       tDateRet,
-//       moyenTransport,
-//       moyenTransportRet,
-//       lieuDep,
-//       destination,
-//       observation,
-//       etat: "en-attente",
-//       circonscriptionAdm,
-//       createdAt,
-//       createdBy,
-//       updatedBy,
-//       updatedAt,
-//     };
-//     const miss = new Mission(query);
-//     const savedMission = await miss.save();
+//     for (const mission of missions) {
+//       const employeIds = mission.employes.map((employe) => employe);
+//       const numTickets = Math.floor(Math.random() * 5) + 1; // Random number of tickets (1-5)
 
-//     createOrUpdateFMission(savedMission, "creation", null, "");
-//   });
-// };
+//       for (let i = 0; i < numTickets; i++) {
+//         const randomEmployeeId =
+//           employeIds[Math.floor(Math.random() * employeIds.length)];
+//         const ticketIndex = Math.floor(Math.random() * ticketData.length);
+//         const ticket = new Ticket({
+//           mission: mission._id,
+//           employe: randomEmployeeId,
+//           object: ticketData[ticketIndex].object,
+//           description: ticketData[ticketIndex].description,
+//           isSolved:  Math.random() < 0.5 ? true : false
+
+//         });
+
+//         const numComments = Math.floor(Math.random() * employeIds.length) + 1; // Random number of comments (1 to employeIds.length)
+
+//         for (let j = 0; j < numComments; j++) {
+//           const randomEmployeeId =
+//             employeIds[Math.floor(Math.random() * employeIds.length)];
+//           const commentIndex = Math.floor(Math.random() * commentData.length);
+//           const commentD = {
+//             contenu: commentData[commentIndex].contenu,
+//             createdBy: randomEmployeeId,
+//           };
+
+//           ticket.commentaires.push(commentD);
+//         }
+
+//         await ticket.save();
+//       }
+//     }
+//   } catch (error) {
+//     console.log(error);
+//   }
+//   console.log("end tickets");
+// });

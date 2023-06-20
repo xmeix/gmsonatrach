@@ -116,11 +116,11 @@ const MissionSchema = new mongoose.Schema(
       type: String,
       enum: [
         "en-attente",
-        "acceptée", //planifié
+        "acceptée",
         "refusée",
-        "en-cours", //Date de debut === current date
+        "en-cours",
         "annulée",
-        "terminée", //automatiquement a l envoi du RFM
+        "terminée",
       ],
       default: "en-attente",
     },

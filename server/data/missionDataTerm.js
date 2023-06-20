@@ -1,200 +1,5004 @@
-export const missionsT = [{"objetMission":"Rencontre avec des experts en géophysique pour l'interprétation des données","structure":"SD","type":"local","budget":85345.9,"budgetConsome":714300.76,"pays":"Algérie","lieuDep":"Alger","destination":"Alger","employes":["648f4c2bf4e6335f247a9ce9","648f4c12f4e6335f247a9ba5","648f4c31f4e6335f247a9d3d"],"taches":[{"content":"Provide technical support and guidance to field operations teams during drilling and production activities.","state":"accomplie"},{"content":"Mener des études de marché pour évaluer la demande et la rentabilité de l'exploration de champs pétroliers spécifiques.","state":"accomplie"},{"content":"Manage the logistics and supply chain for offshore exploration and production activities.","state":"non-accomplie"}],"tDateDeb":"2021-07-28T18:16:11Z","tDateRet":"2021-08-27T18:16:11Z","moyenTransport":["avion","route"],"moyenTransportRet":["avion","route"],"createdAt":"2021-05-28T18:16:11Z","updatedAt":"2021-05-28T18:16:11Z","oldDuree":30,"etat":"terminée"},
-{"objetMission":"Participation à des tests de contrôle de qualité","structure":"PRC","type":"etranger","budget":461770.53,"budgetConsome":609850.4,"pays":"Algérie","lieuDep":"Alger","destination":"Alger","employes":["648f4c07f4e6335f247a9b1e","648f4c17f4e6335f247a9be4","648f4c1cf4e6335f247a9c26","648f4c21f4e6335f247a9c65"],"taches":[],"tDateDeb":"2022-12-09T20:18:18Z","tDateRet":"2022-12-11T20:18:18Z","moyenTransport":["avion","route"],"moyenTransportRet":["avion"],"createdAt":"2022-11-10T20:18:18Z","updatedAt":"2022-07-09T20:18:18Z","oldDuree":22,"etat":"terminée"},
-{"objetMission":"Visite d'inspection du site pétrolier","structure":"HCM","type":"etranger","budget":82193.7,"budgetConsome":222305.41,"pays":"Algérie","lieuDep":"Alger","destination":"Tiaret","employes":["648f4c2ef4e6335f247a9d13","648f4c1ff4e6335f247a9c4d","648f4c2ff4e6335f247a9d2b","648f4c2ff4e6335f247a9d25"],"taches":[{"content":"Effectuer des études d'impact environnemental et élaborer des mesures de protection.","state":"accomplie"},{"content":"Conduct economic evaluations of investment opportunities in new oil and gas assets.","state":"non-accomplie"},{"content":"Organiser des réunions avec des partenaires externes pour discuter des opportunités de collaboration.","state":"accomplie"},{"content":"Perform risk assessments and develop contingency plans for potential operational hazards.","state":"accomplie"},{"content":"Conduire des inspections régulières des pipelines pour détecter les fuites et les défauts structurels.","state":"accomplie"}],"tDateDeb":"2021-11-27T17:43:28Z","tDateRet":"2021-12-14T17:43:28Z","moyenTransport":["route","avion"],"moyenTransportRet":["route","avion"],"createdAt":"2021-03-27T17:43:28Z","updatedAt":"2021-11-22T17:43:28Z","oldDuree":30,"etat":"terminée"},
-{"objetMission":"Formation sur les normes de sécurité internationales dans l'industrie pétrolière","structure":"PDN","type":"etranger","budget":405124.46,"budgetConsome":633482.16,"pays":"Algérie","lieuDep":"Alger","destination":"Biskra","employes":["648f4c0bf4e6335f247a9b4b","648f4c29f4e6335f247a9cd1"],"taches":[{"content":"Collaborate with geophysicists to interpret seismic data for exploration purposes.","state":"accomplie"},{"content":"Monitor production rates and analyze well performance to optimize reservoir recovery.","state":"non-accomplie"},{"content":"Assurer la coordination des opérations de forage sur le terrain et superviser les équipes de travail.","state":"non-accomplie"}],"tDateDeb":"2023-01-05T20:53:27Z","tDateRet":"2023-08-05T20:53:27Z","moyenTransport":["route"],"moyenTransportRet":["route","avion"],"createdAt":"2022-04-05T20:53:27Z","updatedAt":"2022-12-30T20:53:27Z","oldDuree":212,"etat":"terminée"},
-{"objetMission":"Participation à des tests de résistance des matériaux","structure":"CHANGE","type":"local","budget":546739.83,"budgetConsome":300795.53,"pays":"Algérie","lieuDep":"Alger","destination":"Tamanrasset","employes":["648fc2f54862fabc27dc8ed3","648f4c13f4e6335f247a9bbd","648f4c32f4e6335f247a9d4c","648f4c10f4e6335f247a9b90","648f4c31f4e6335f247a9d46"],"taches":[{"content":"Develop and implement training programs for personnel involved in offshore operations.","state":"non-accomplie"},{"content":"Conduct technical evaluations of equipment and technologies for oil and gas operations.","state":"non-accomplie"},{"content":"Collaborate with geophysicists to interpret seismic data for exploration purposes.","state":"non-accomplie"},{"content":"Organiser des réunions avec des partenaires externes pour discuter des opportunités de collaboration.","state":"accomplie"},{"content":"Conduct economic evaluations of investment opportunities in new oil and gas assets.","state":"accomplie"}],"tDateDeb":"2020-04-16T14:20:46Z","tDateRet":"2020-04-21T14:20:46Z","moyenTransport":["avion"],"moyenTransportRet":["route","avion"],"createdAt":"2020-04-13T14:20:46Z","updatedAt":"2020-02-16T14:20:46Z","oldDuree":7,"etat":"terminée"},
-{"objetMission":"Formation sur les techniques de forage avancées","structure":"PDN","type":"etranger","budget":821100.24,"budgetConsome":240393.54,"pays":"Algérie","lieuDep":"Alger","destination":"Bejaia","employes":["648f4c09f4e6335f247a9b2d"],"taches":[{"content":"Analyser les données de production et identifier des stratégies d'optimisation des rendements.","state":"non-accomplie"},{"content":"Perform reservoir engineering analysis to optimize oil and gas production rates.","state":"non-accomplie"},{"content":"Perform reservoir engineering analysis to optimize oil and gas production rates.","state":"non-accomplie"}],"tDateDeb":"2019-02-19T13:35:00Z","tDateRet":"2020-02-19T13:35:00Z","moyenTransport":["route","avion"],"moyenTransportRet":["avion"],"createdAt":"2018-02-19T13:35:00Z","updatedAt":"2018-11-19T13:35:00Z","oldDuree":25,"etat":"terminée"},
-{"objetMission":"Élaboration d'un plan d'urgence en cas de catastrophe","structure":"PDN","type":"local","budget":114084.97,"budgetConsome":442481.11,"pays":"Algérie","lieuDep":"Alger","destination":"Illizi","employes":["648f4c17f4e6335f247a9be7"],"taches":[{"content":"Mener des études de marché pour évaluer la demande et la rentabilité de l'exploration de champs pétroliers spécifiques.","state":"accomplie"},{"content":"Collaborate with geophysicists to interpret seismic data for exploration purposes.","state":"accomplie"},{"content":"Assurer la supervision des opérations de logistique et de transport liées aux activités pétrolières.","state":"non-accomplie"},{"content":"Conduct environmental impact assessments for proposed exploration projects.","state":"accomplie"}],"tDateDeb":"2023-05-01T19:07:31Z","tDateRet":"2024-04-01T19:07:31Z","moyenTransport":["route"],"moyenTransportRet":["route","avion"],"createdAt":"2023-04-16T19:07:31Z","updatedAt":"2023-04-07T19:07:31Z","oldDuree":336,"etat":"terminée"},
-{"objetMission":"Évaluation des besoins en infrastructures pour soutenir la croissance de Sonatrach","structure":"TECH","type":"local","budget":820810.22,"budgetConsome":856985.93,"pays":"Algérie","lieuDep":"Alger","destination":"Skikda","employes":["648f4c0af4e6335f247a9b3f","648f4c2bf4e6335f247a9cf5","648f4c2cf4e6335f247a9cf8","648f4c24f4e6335f247a9c98","648f4c15f4e6335f247a9bd5"],"taches":[{"content":"Analyser les données de production et identifier des stratégies d'optimisation des rendements.","state":"accomplie"},{"content":"Analyser les données de marché pour identifier les tendances et les opportunités d'affaires.","state":"accomplie"},{"content":"Effectuer une analyse approfondie des données géologiques pour identifier de nouveaux sites potentiels de forage.","state":"non-accomplie"},{"content":"Organiser des réunions avec des partenaires externes pour discuter des opportunités de collaboration.","state":"non-accomplie"}],"tDateDeb":"2020-11-06T22:19:19Z","tDateRet":"2020-11-15T22:19:19Z","moyenTransport":["route","avion"],"moyenTransportRet":["avion"],"createdAt":"2020-11-01T22:19:19Z","updatedAt":"2020-10-23T22:19:19Z","oldDuree":6,"etat":"terminée"},
-{"objetMission":"Évaluation des impacts environnementaux des opérations de forage","structure":"PDN","type":"local","budget":786346.05,"budgetConsome":849108.69,"pays":"Algérie","lieuDep":"Alger","destination":"Adrar","employes":["648f4c1cf4e6335f247a9c26","648fc2f54862fabc27dc8eb1","648f4c0ef4e6335f247a9b75","648f4c17f4e6335f247a9be1"],"taches":[],"tDateDeb":"2020-12-06T20:59:31Z","tDateRet":"2021-02-06T20:59:31Z","moyenTransport":["route"],"moyenTransportRet":["route","avion"],"createdAt":"2020-11-11T20:59:31Z","updatedAt":"2020-11-20T20:59:31Z","oldDuree":62,"etat":"terminée"},
-{"objetMission":"Étude de faisabilité pour l'expansion des opérations","structure":"DATA","type":"local","budget":464087.26,"budgetConsome":769462.57,"pays":"Algérie","lieuDep":"Alger","destination":"Tamanrasset","employes":["648f4c1ef4e6335f247a9c3b","648f4c19f4e6335f247a9c05"],"taches":[{"content":"Implement data management systems to effectively organize and analyze geological and reservoir data.","state":"accomplie"},{"content":"Participer à des projets de recherche et développement pour améliorer les techniques d'extraction.","state":"accomplie"},{"content":"Effectuer des tests et des analyses sur les échantillons de roche pour évaluer le potentiel pétrolier.","state":"accomplie"},{"content":"Participer à des conférences et des événements professionnels pour représenter Sonatrach.","state":"accomplie"}],"tDateDeb":"2022-05-13T23:15:54Z","tDateRet":"2022-05-19T23:15:54Z","moyenTransport":["route"],"moyenTransportRet":["avion"],"createdAt":"2022-04-16T23:15:54Z","updatedAt":"2022-05-03T23:15:54Z","oldDuree":6,"etat":"terminée"},
-{"objetMission":"Analyse des indicateurs de performance pour évaluer la productivité des équipes","structure":"SD","type":"local","budget":718205.64,"budgetConsome":388757.58,"pays":"Algérie","lieuDep":"Alger","destination":"Tamanrasset","employes":["648f4c0ff4e6335f247a9b84","648f4c2df4e6335f247a9d0d"],"taches":[{"content":"Effectuer une analyse approfondie des données géologiques pour identifier de nouveaux sites potentiels de forage.","state":"non-accomplie"}],"tDateDeb":"2022-09-27T12:41:33Z","tDateRet":"2022-10-26T12:41:33Z","moyenTransport":["avion"],"moyenTransportRet":["route"],"createdAt":"2022-02-27T12:41:33Z","updatedAt":"2021-09-27T12:41:33Z","oldDuree":29,"etat":"terminée"},
-{"objetMission":"Analyse des indicateurs de performance pour évaluer la productivité des équipes","structure":"PRC","type":"local","budget":856707.09,"budgetConsome":25502.39,"pays":"Algérie","lieuDep":"Alger","destination":"Illizi","employes":["648f4c10f4e6335f247a9b8d","648f4c0cf4e6335f247a9b5a","648f4c18f4e6335f247a9bf6"],"taches":[{"content":"Provide technical support and guidance to field operations teams during drilling and production activities.","state":"non-accomplie"},{"content":"Monitor and analyze drilling data to identify potential drilling problems and propose solutions.","state":"accomplie"},{"content":"Coordinate with drilling contractors to ensure efficient and safe well operations.","state":"non-accomplie"},{"content":"Effectuer des études d'impact environnemental et élaborer des mesures de protection.","state":"non-accomplie"},{"content":"Develop and maintain relationships with key stakeholders, including government entities and local communities.","state":"accomplie"}],"tDateDeb":"2021-10-31T14:39:16Z","tDateRet":"2021-11-27T14:39:16Z","moyenTransport":["avion","route"],"moyenTransportRet":["avion","route"],"createdAt":"2021-10-03T14:39:16Z","updatedAt":"2021-07-31T14:39:16Z","oldDuree":13,"etat":"terminée"},
-{"objetMission":"Rencontre avec des consultants en gestion pour l'amélioration des processus","structure":"HCM","type":"local","budget":507502.68,"budgetConsome":537249.27,"pays":"Algérie","lieuDep":"Alger","destination":"Laghouat","employes":["648f4c25f4e6335f247a9ca1","648f4c19f4e6335f247a9c02","648f4c31f4e6335f247a9d40","648f4c20f4e6335f247a9c59","648f4c1af4e6335f247a9c0b"],"taches":[{"content":"Conduct geological surveys to identify potential oil and gas reserves in specific regions.","state":"accomplie"},{"content":"Participer à des projets de recherche et développement pour améliorer les techniques d'extraction.","state":"non-accomplie"},{"content":"Perform quality control checks on oil and gas samples to ensure accurate analysis.","state":"non-accomplie"},{"content":"Collaborate with geophysicists to interpret seismic data for exploration purposes.","state":"accomplie"},{"content":"Préparer des rapports détaillés sur les résultats des inspections des infrastructures pétrolières et gazières.","state":"accomplie"},{"content":"Provide technical support and guidance to field operations teams during drilling and production activities.","state":"accomplie"},{"content":"Gérer les contrats avec les fournisseurs de services et assurer le respect des accords.","state":"accomplie"}],"tDateDeb":"2019-01-24T03:00:02Z","tDateRet":"2019-12-24T03:00:02Z","moyenTransport":["avion"],"moyenTransportRet":["avion"],"createdAt":"2019-01-23T03:00:02Z","updatedAt":"2019-01-15T03:00:02Z","oldDuree":334,"etat":"terminée"},
-{"objetMission":"Réunion avec les équipes de recherche et développement","structure":"PRC","type":"local","budget":819690.68,"budgetConsome":883166.49,"pays":"Algérie","lieuDep":"Alger","destination":"Illizi","employes":["648f4c08f4e6335f247a9b21","648f4c23f4e6335f247a9c83"],"taches":[{"content":"Effectuer des évaluations de risques pour les projets d'exploration et de production.","state":"accomplie"},{"content":"Organiser des réunions avec des partenaires externes pour discuter des opportunités de collaboration.","state":"accomplie"},{"content":"Develop cost estimation models for new oil and gas development projects.","state":"non-accomplie"},{"content":"Mener des études de marché pour évaluer la demande et la rentabilité de l'exploration de champs pétroliers spécifiques.","state":"accomplie"},{"content":"Provide technical support and guidance to field operations teams during drilling and production activities.","state":"accomplie"},{"content":"Coordinate with regulatory agencies to ensure compliance with environmental regulations.","state":"accomplie"}],"tDateDeb":"2021-12-09T05:53:11Z","tDateRet":"2021-12-17T05:53:11Z","moyenTransport":["route","avion"],"moyenTransportRet":["avion","route"],"createdAt":"2021-11-19T05:53:11Z","updatedAt":"2021-11-24T05:53:11Z","oldDuree":26,"etat":"terminée"},
-{"objetMission":"Formation sur les techniques de réduction des émissions de gaz","structure":"CHANGE","type":"etranger","budget":445827.35,"budgetConsome":405214.61,"pays":"Algérie","lieuDep":"Alger","destination":"Ghardaia","employes":["648f4c14f4e6335f247a9bc6","648f4c1ef4e6335f247a9c47","648f4c11f4e6335f247a9b99","648f4c2bf4e6335f247a9cf5"],"taches":[{"content":"Develop cost estimation models for new oil and gas development projects.","state":"non-accomplie"},{"content":"Analyser les données de marché pour identifier les tendances et les opportunités d'affaires.","state":"accomplie"},{"content":"Analyser les données de production et identifier des stratégies d'optimisation des rendements.","state":"accomplie"},{"content":"Conduct economic evaluations of investment opportunities in new oil and gas assets.","state":"accomplie"}],"tDateDeb":"2022-06-08T01:20:11Z","tDateRet":"2022-09-08T01:20:11Z","moyenTransport":["avion","route"],"moyenTransportRet":["route","avion"],"createdAt":"2022-05-12T01:20:11Z","updatedAt":"2022-01-08T01:20:11Z","oldDuree":16,"etat":"terminée"},
-{"objetMission":"Réunion avec les partenaires commerciaux","structure":"FIN","type":"etranger","budget":793615.3,"budgetConsome":55256.9,"pays":"Algérie","lieuDep":"Alger","destination":"Adrar","employes":["648f4c1bf4e6335f247a9c17","648f4c23f4e6335f247a9c80","648f4c09f4e6335f247a9b39"],"taches":[{"content":"Contribuer à l'élaboration de plans de maintenance préventive pour les installations pétrolières.","state":"non-accomplie"},{"content":"Collaborate with research institutions to explore innovative technologies for oil and gas exploration.","state":"non-accomplie"},{"content":"Collaborate with research institutions to explore innovative technologies for oil and gas exploration.","state":"non-accomplie"},{"content":"Monitor and analyze drilling data to identify potential drilling problems and propose solutions.","state":"accomplie"},{"content":"Perform reservoir engineering analysis to optimize oil and gas production rates.","state":"accomplie"},{"content":"Monitor and analyze drilling data to identify potential drilling problems and propose solutions.","state":"accomplie"},{"content":"Contribuer à l'élaboration de plans de maintenance préventive pour les installations pétrolières.","state":"non-accomplie"}],"tDateDeb":"2023-01-07T10:55:38Z","tDateRet":"2023-08-07T10:55:38Z","moyenTransport":["route"],"moyenTransportRet":["avion"],"createdAt":"2022-04-07T10:55:38Z","updatedAt":"2022-07-07T10:55:38Z","oldDuree":14,"etat":"terminée"},
-{"objetMission":"Rencontre avec des experts en géophysique pour l'interprétation des données","structure":"TECH","type":"local","budget":548176.2,"budgetConsome":6814.63,"pays":"Algérie","lieuDep":"Alger","destination":"Bejaia","employes":["648f4c1cf4e6335f247a9c23","648f4c17f4e6335f247a9bea"],"taches":[],"tDateDeb":"2019-02-10T00:48:35Z","tDateRet":"2019-02-26T00:48:35Z","moyenTransport":["route","avion"],"moyenTransportRet":["route","avion"],"createdAt":"2019-01-11T00:48:35Z","updatedAt":"2018-04-10T00:48:35Z","oldDuree":16,"etat":"terminée"},
-{"objetMission":"Analyse des contrats de fournisseurs pour assurer la conformité","structure":"PMO","type":"etranger","budget":612095.26,"budgetConsome":778434.7,"pays":"Algérie","lieuDep":"Alger","destination":"Ghardaia","employes":["648f4c32f4e6335f247a9d4c","648f4c0af4e6335f247a9b3c","648f4c24f4e6335f247a9c95"],"taches":[{"content":"Contribuer à l'élaboration de plans de maintenance préventive pour les installations pétrolières.","state":"accomplie"},{"content":"Collaborer avec des équipes multidisciplinaires pour résoudre des problèmes techniques complexes.","state":"non-accomplie"},{"content":"Gérer les contrats avec les fournisseurs de services et assurer le respect des accords.","state":"non-accomplie"},{"content":"Effectuer des évaluations de risques pour les projets d'exploration et de production.","state":"non-accomplie"},{"content":"Veiller à la sécurité et à la conformité des opérations sur les sites pétroliers.","state":"non-accomplie"},{"content":"Participer à des formations spécialisées pour développer des compétences techniques avancées.","state":"accomplie"}],"tDateDeb":"2022-01-29T06:16:27Z","tDateRet":"2022-02-03T06:16:27Z","moyenTransport":["route","avion"],"moyenTransportRet":["avion"],"createdAt":"2022-01-25T06:16:27Z","updatedAt":"2022-01-02T06:16:27Z","oldDuree":26,"etat":"terminée"},
-{"objetMission":"Inspection des installations de stockage de gaz naturel","structure":"PMO","type":"local","budget":391673.34,"budgetConsome":834487.64,"pays":"Algérie","lieuDep":"Alger","destination":"Bejaia","employes":["648f4c0cf4e6335f247a9b57","648f4c30f4e6335f247a9d31","648f4c18f4e6335f247a9bf0"],"taches":[{"content":"Perform risk assessments and develop contingency plans for potential operational hazards.","state":"accomplie"},{"content":"Perform risk assessments and develop contingency plans for potential operational hazards.","state":"non-accomplie"}],"tDateDeb":"2022-05-09T02:11:43Z","tDateRet":"2022-05-23T02:11:43Z","moyenTransport":["avion","route"],"moyenTransportRet":["route","avion"],"createdAt":"2021-08-09T02:11:43Z","updatedAt":"2021-10-09T02:11:43Z","oldDuree":14,"etat":"terminée"},
-{"objetMission":"Réunion avec les partenaires commerciaux","structure":"MRO","type":"etranger","budget":232939.93,"budgetConsome":19462.98,"pays":"Algérie","lieuDep":"Alger","destination":"Bejaia","employes":["648f4c18f4e6335f247a9bf3","648f4c1ef4e6335f247a9c47","648f4c27f4e6335f247a9cb9","648f4c2ef4e6335f247a9d13"],"taches":[{"content":"Conduct technical evaluations of equipment and technologies for oil and gas operations.","state":"accomplie"},{"content":"Participate in industry conferences and workshops to stay updated on emerging trends and technologies.","state":"accomplie"},{"content":"Gérer les contrats avec les fournisseurs de services et assurer le respect des accords.","state":"non-accomplie"},{"content":"Gérer les contrats avec les fournisseurs de services et assurer le respect des accords.","state":"accomplie"},{"content":"Assurer la supervision des opérations de logistique et de transport liées aux activités pétrolières.","state":"non-accomplie"}],"tDateDeb":"2020-06-27T06:23:23Z","tDateRet":"2020-06-29T06:23:23Z","moyenTransport":["avion","route"],"moyenTransportRet":["avion","route"],"createdAt":"2020-01-27T06:23:23Z","updatedAt":"2020-01-27T06:23:23Z","oldDuree":2,"etat":"terminée"},
-{"objetMission":"Rencontre avec des experts en technologie pour l'innovation dans le secteur","structure":"TECH","type":"etranger","budget":73987.51,"budgetConsome":775809.56,"pays":"Algérie","lieuDep":"Alger","destination":"Alger","employes":["648f4c1af4e6335f247a9c08","648f4c18f4e6335f247a9bf6","648f4c11f4e6335f247a9b99"],"taches":[{"content":"Collaborate with geophysicists to interpret seismic data for exploration purposes.","state":"non-accomplie"},{"content":"Participer à des conférences et des événements professionnels pour représenter Sonatrach.","state":"non-accomplie"},{"content":"Monitor production rates and analyze well performance to optimize reservoir recovery.","state":"accomplie"},{"content":"Effectuer des études d'impact environnemental et élaborer des mesures de protection.","state":"accomplie"},{"content":"Manage the logistics and supply chain for offshore exploration and production activities.","state":"non-accomplie"}],"tDateDeb":"2022-11-16T17:37:37Z","tDateRet":"2022-12-04T17:37:37Z","moyenTransport":["avion","route"],"moyenTransportRet":["route","avion"],"createdAt":"2022-10-18T17:37:37Z","updatedAt":"2022-07-16T17:37:37Z","oldDuree":14,"etat":"terminée"},
-{"objetMission":"Rencontre avec des représentants syndicaux pour discuter des conditions de travail","structure":"MRO","type":"local","budget":null,"budgetConsome":null,"pays":"Algérie","lieuDep":"Alger","destination":"Bejaia","employes":["648f4c13f4e6335f247a9bba","648f4c27f4e6335f247a9cc2","648f4c28f4e6335f247a9ccb"],"taches":[],"tDateDeb":"2022-07-06T14:22:27Z","tDateRet":"2022-07-21T14:22:27Z","moyenTransport":["avion"],"moyenTransportRet":["route"],"createdAt":"2022-06-06T14:22:27Z","updatedAt":"2022-06-09T14:22:27Z","oldDuree":9,"etat":"terminée"},
-{"objetMission":"Réunion avec les équipes de recherche et développement","structure":"PDN","type":"etranger","budget":447907.39,"budgetConsome":620332.62,"pays":"Algérie","lieuDep":"Alger","destination":"Ouargla","employes":["648f4c17f4e6335f247a9be4","648f4c2cf4e6335f247a9cfe"],"taches":[{"content":"Gérer les contrats avec les fournisseurs de services et assurer le respect des accords.","state":"accomplie"}],"tDateDeb":"2020-06-22T22:48:33Z","tDateRet":"2021-03-22T22:48:33Z","moyenTransport":["route"],"moyenTransportRet":["avion","route"],"createdAt":"2020-05-27T22:48:33Z","updatedAt":"2019-06-22T22:48:33Z","oldDuree":273,"etat":"terminée"},
-{"objetMission":"Évaluation des performances des installations","structure":"PMO","type":"local","budget":923334.16,"budgetConsome":884306.2,"pays":"Algérie","lieuDep":"Alger","destination":"Ouargla","employes":["648f4c2ff4e6335f247a9d1f"],"taches":[{"content":"Conduct economic evaluations of investment opportunities in new oil and gas assets.","state":"non-accomplie"}],"tDateDeb":"2020-02-20T10:16:08Z","tDateRet":"2020-02-24T10:16:08Z","moyenTransport":["route","avion"],"moyenTransportRet":["avion","route"],"createdAt":"2020-01-29T10:16:08Z","updatedAt":"2019-03-20T10:16:08Z","oldDuree":4,"etat":"terminée"},
-{"objetMission":"Analyse des données géologiques pour l'exploration de nouveaux gisements","structure":"MRO","type":"etranger","budget":392241.21,"budgetConsome":997018.77,"pays":"Algérie","lieuDep":"Alger","destination":"Biskra","employes":["648f4c1bf4e6335f247a9c20","648f4c22f4e6335f247a9c7a"],"taches":[{"content":"Develop and implement training programs for personnel involved in offshore operations.","state":"non-accomplie"},{"content":"Coordinate with drilling contractors to ensure efficient and safe well operations.","state":"non-accomplie"}],"tDateDeb":"2019-05-24T16:09:32Z","tDateRet":"2020-04-24T16:09:32Z","moyenTransport":["route"],"moyenTransportRet":["route"],"createdAt":"2019-05-18T16:09:32Z","updatedAt":"2018-11-24T16:09:32Z","oldDuree":1,"etat":"terminée"},
-{"objetMission":"Participation à des réunions de l'industrie pour le réseautage","structure":"DATA","type":"etranger","budget":906935.76,"budgetConsome":826216.91,"pays":"Algérie","lieuDep":"Alger","destination":"Ouargla","employes":["648f4c17f4e6335f247a9be4"],"taches":[{"content":"Effectuer des évaluations de risques pour les projets d'exploration et de production.","state":"non-accomplie"}],"tDateDeb":"2022-04-02T12:00:43Z","tDateRet":"2023-03-02T12:00:43Z","moyenTransport":["route"],"moyenTransportRet":["avion"],"createdAt":"2022-03-02T12:00:43Z","updatedAt":"2022-03-02T12:00:43Z","oldDuree":27,"etat":"terminée"},
-{"objetMission":"Supervision du processus de forage horizontal","structure":"PMO","type":"etranger","budget":87123.67,"budgetConsome":724000.99,"pays":"Algérie","lieuDep":"Alger","destination":"Laghouat","employes":["648f4c09f4e6335f247a9b2d","648f4c1bf4e6335f247a9c20","648f4c17f4e6335f247a9bed"],"taches":[{"content":"Contribuer à l'élaboration de plans de maintenance préventive pour les installations pétrolières.","state":"accomplie"},{"content":"Perform reservoir engineering analysis to optimize oil and gas production rates.","state":"non-accomplie"},{"content":"Participer à des projets de recherche et développement pour améliorer les techniques d'extraction.","state":"non-accomplie"},{"content":"Effectuer des études d'impact environnemental et élaborer des mesures de protection.","state":"non-accomplie"},{"content":"Develop and maintain relationships with key stakeholders, including government entities and local communities.","state":"non-accomplie"}],"tDateDeb":"2020-01-13T11:02:39Z","tDateRet":"2020-01-20T11:02:39Z","moyenTransport":["route"],"moyenTransportRet":["avion","route"],"createdAt":"2020-01-04T11:02:39Z","updatedAt":"2019-12-24T11:02:39Z","oldDuree":22,"etat":"terminée"},
-{"objetMission":"Étude d'impact environnemental pour l'expansion des activités de production","structure":"TECH","type":"local","budget":null,"budgetConsome":null,"pays":"Algérie","lieuDep":"Alger","destination":"Tamanrasset","employes":["648f4c0bf4e6335f247a9b4b","648f4c32f4e6335f247a9d4f"],"taches":[{"content":"Monitor and analyze drilling data to identify potential drilling problems and propose solutions.","state":"accomplie"},{"content":"Effectuer une analyse approfondie des données géologiques pour identifier de nouveaux sites potentiels de forage.","state":"non-accomplie"},{"content":"Conduct geological surveys to identify potential oil and gas reserves in specific regions.","state":"accomplie"},{"content":"Conduire des inspections régulières des pipelines pour détecter les fuites et les défauts structurels.","state":"non-accomplie"},{"content":"Implement data management systems to effectively organize and analyze geological and reservoir data.","state":"non-accomplie"},{"content":"Analyser les données de production et identifier des stratégies d'optimisation des rendements.","state":"accomplie"},{"content":"Perform reservoir engineering analysis to optimize oil and gas production rates.","state":"accomplie"}],"tDateDeb":"2020-07-07T15:38:21Z","tDateRet":"2020-07-12T15:38:21Z","moyenTransport":["route"],"moyenTransportRet":["route"],"createdAt":"2019-07-07T15:38:21Z","updatedAt":"2020-06-07T15:38:21Z","oldDuree":5,"etat":"terminée"},
-{"objetMission":"Étude de la concurrence sur les marchés internationaux","structure":"PMO","type":"etranger","budget":423987.9,"budgetConsome":506143.02,"pays":"Algérie","lieuDep":"Alger","destination":"Illizi","employes":["648f4c29f4e6335f247a9cda","648f4c27f4e6335f247a9cc2"],"taches":[{"content":"Provide technical support and guidance to field operations teams during drilling and production activities.","state":"non-accomplie"},{"content":"Effectuer une analyse approfondie des données géologiques pour identifier de nouveaux sites potentiels de forage.","state":"accomplie"},{"content":"Collaborate with geophysicists to interpret seismic data for exploration purposes.","state":"accomplie"}],"tDateDeb":"2020-04-22T03:45:56Z","tDateRet":"2020-10-22T03:45:56Z","moyenTransport":["avion"],"moyenTransportRet":["avion","route"],"createdAt":"2020-03-26T03:45:56Z","updatedAt":"2019-10-22T03:45:56Z","oldDuree":30,"etat":"terminée"},
-{"objetMission":"Analyse des données de production pour l'optimisation des rendements","structure":"HCM","type":"local","budget":911871.63,"budgetConsome":430659.13,"pays":"Algérie","lieuDep":"Alger","destination":"Skikda","employes":["648f4c2bf4e6335f247a9cef","648f4c0af4e6335f247a9b3c","648f4c1df4e6335f247a9c35"],"taches":[],"tDateDeb":"2019-12-19T05:13:40Z","tDateRet":"2019-12-24T05:13:40Z","moyenTransport":["route"],"moyenTransportRet":["avion"],"createdAt":"2019-02-19T05:13:40Z","updatedAt":"2018-12-19T05:13:40Z","oldDuree":5,"etat":"terminée"},
-{"objetMission":"Rencontre avec des experts en sécurité industrielle","structure":"CHANGE","type":"etranger","budget":null,"budgetConsome":null,"pays":"Algérie","lieuDep":"Alger","destination":"Adrar","employes":["648f4c0ff4e6335f247a9b84","648f4c26f4e6335f247a9cad","648f4c31f4e6335f247a9d43"],"taches":[{"content":"Gérer les contrats avec les fournisseurs de services et assurer le respect des accords.","state":"non-accomplie"}],"tDateDeb":"2022-01-25T19:59:35Z","tDateRet":"2022-02-05T19:59:35Z","moyenTransport":["avion"],"moyenTransportRet":["avion","route"],"createdAt":"2021-11-25T19:59:35Z","updatedAt":"2022-01-15T19:59:35Z","oldDuree":29,"etat":"terminée"},
-{"objetMission":"Formation sur la gestion de projet dans le secteur pétrolier","structure":"DATA","type":"etranger","budget":896473.37,"budgetConsome":280443.73,"pays":"Algérie","lieuDep":"Alger","destination":"Laghouat","employes":["648f4c25f4e6335f247a9ca1"],"taches":[{"content":"Develop cost estimation models for new oil and gas development projects.","state":"non-accomplie"},{"content":"Préparer des rapports détaillés sur les résultats des inspections des infrastructures pétrolières et gazières.","state":"accomplie"},{"content":"Monitor and analyze drilling data to identify potential drilling problems and propose solutions.","state":"accomplie"},{"content":"Collaborate with research institutions to explore innovative technologies for oil and gas exploration.","state":"non-accomplie"},{"content":"Effectuer des évaluations économiques pour déterminer la rentabilité des projets d'investissement.","state":"non-accomplie"}],"tDateDeb":"2021-02-02T00:04:52Z","tDateRet":"2021-03-02T00:04:52Z","moyenTransport":["avion"],"moyenTransportRet":["avion"],"createdAt":"2021-01-12T00:04:52Z","updatedAt":"2021-01-03T00:04:52Z","oldDuree":28,"etat":"terminée"},
-{"objetMission":"Analyse des indicateurs de performance pour évaluer la productivité des équipes","structure":"IPM","type":"etranger","budget":152783.34,"budgetConsome":959007.45,"pays":"Algérie","lieuDep":"Alger","destination":"Ghardaia","employes":["648fc2f54862fabc27dc8eb1","648f4c29f4e6335f247a9cd4","648f4c13f4e6335f247a9bb4","648f4c1bf4e6335f247a9c17"],"taches":[{"content":"Organiser des réunions avec des partenaires externes pour discuter des opportunités de collaboration.","state":"non-accomplie"},{"content":"Participate in industry conferences and workshops to stay updated on emerging trends and technologies.","state":"non-accomplie"},{"content":"Conduct environmental impact assessments for proposed exploration projects.","state":"accomplie"},{"content":"Develop and implement training programs for personnel involved in offshore operations.","state":"non-accomplie"}],"tDateDeb":"2021-04-15T14:55:13Z","tDateRet":"2022-02-15T14:55:13Z","moyenTransport":["avion","route"],"moyenTransportRet":["avion"],"createdAt":"2021-04-08T14:55:13Z","updatedAt":"2021-03-30T14:55:13Z","oldDuree":306,"etat":"terminée"},
-{"objetMission":"Rencontre avec des experts en géophysique pour l'interprétation des données","structure":"PRC","type":"local","budget":376192.53,"budgetConsome":954935.99,"pays":"Algérie","lieuDep":"Alger","destination":"Laghouat","employes":["648fc2f54862fabc27dc8eb1"],"taches":[{"content":"Perform reservoir engineering analysis to optimize oil and gas production rates.","state":"non-accomplie"},{"content":"Conduct economic evaluations of investment opportunities in new oil and gas assets.","state":"accomplie"},{"content":"Coordinate with regulatory agencies to ensure compliance with environmental regulations.","state":"accomplie"},{"content":"Mener des études de marché pour évaluer la demande et la rentabilité de l'exploration de champs pétroliers spécifiques.","state":"accomplie"},{"content":"Implement data management systems to effectively organize and analyze geological and reservoir data.","state":"accomplie"},{"content":"Préparer des rapports détaillés sur les résultats des inspections des infrastructures pétrolières et gazières.","state":"accomplie"}],"tDateDeb":"2021-07-04T21:00:13Z","tDateRet":"2021-10-04T21:00:13Z","moyenTransport":["route"],"moyenTransportRet":["route"],"createdAt":"2020-12-04T21:00:13Z","updatedAt":"2020-12-04T21:00:13Z","oldDuree":2,"etat":"terminée"},
-{"objetMission":"Formation sur les techniques de forage avancées","structure":"PRC","type":"etranger","budget":419930.68,"budgetConsome":87218.92,"pays":"Algérie","lieuDep":"Alger","destination":"Tiaret","employes":["648f4c11f4e6335f247a9b9c","648f4c32f4e6335f247a9d52","648f4c09f4e6335f247a9b33","648f4c0ff4e6335f247a9b7e"],"taches":[{"content":"Analyser les données de production et identifier des stratégies d'optimisation des rendements.","state":"non-accomplie"},{"content":"Develop cost estimation models for new oil and gas development projects.","state":"accomplie"},{"content":"Participer à des conférences et des événements professionnels pour représenter Sonatrach.","state":"accomplie"},{"content":"Assurer la coordination des opérations de forage sur le terrain et superviser les équipes de travail.","state":"accomplie"},{"content":"Manage the logistics and supply chain for offshore exploration and production activities.","state":"accomplie"},{"content":"Effectuer des tests et des analyses sur les échantillons de roche pour évaluer le potentiel pétrolier.","state":"non-accomplie"},{"content":"Analyser les données de marché pour identifier les tendances et les opportunités d'affaires.","state":"accomplie"}],"tDateDeb":"2021-05-29T15:58:08Z","tDateRet":"2021-07-29T15:58:08Z","moyenTransport":["route"],"moyenTransportRet":["avion"],"createdAt":"2021-05-07T15:58:08Z","updatedAt":"2020-12-29T15:58:08Z","oldDuree":61,"etat":"terminée"},
-{"objetMission":"Formation sur les normes de sécurité internationales","structure":"FIN","type":"etranger","budget":448476.25,"budgetConsome":159877.25,"pays":"Algérie","lieuDep":"Alger","destination":"Bejaia","employes":["648f4c2df4e6335f247a9d0a","648f4c14f4e6335f247a9bcc","648f4c18f4e6335f247a9bf9","648f4c23f4e6335f247a9c89"],"taches":[{"content":"Contribuer à l'élaboration de plans de maintenance préventive pour les installations pétrolières.","state":"accomplie"},{"content":"Perform risk assessments and develop contingency plans for potential operational hazards.","state":"accomplie"},{"content":"Mener des études de marché pour évaluer la demande et la rentabilité de l'exploration de champs pétroliers spécifiques.","state":"accomplie"},{"content":"Participate in industry conferences and workshops to stay updated on emerging trends and technologies.","state":"non-accomplie"}],"tDateDeb":"2023-01-18T11:38:22Z","tDateRet":"2023-01-23T11:38:22Z","moyenTransport":["route","avion"],"moyenTransportRet":["route","avion"],"createdAt":"2023-01-07T11:38:22Z","updatedAt":"2023-01-14T11:38:22Z","oldDuree":11,"etat":"terminée"},
-{"objetMission":"Étude de faisabilité pour l'exploration de nouveaux gisements","structure":"PRC","type":"etranger","budget":331353.42,"budgetConsome":961348.0,"pays":"Algérie","lieuDep":"Alger","destination":"Adrar","employes":["648f4c33f4e6335f247a9d55","648f4c10f4e6335f247a9b8d"],"taches":[{"content":"Effectuer des études d'impact environnemental et élaborer des mesures de protection.","state":"non-accomplie"},{"content":"Monitor and analyze drilling data to identify potential drilling problems and propose solutions.","state":"accomplie"},{"content":"Gérer les contrats avec les fournisseurs de services et assurer le respect des accords.","state":"non-accomplie"},{"content":"Develop and maintain relationships with key stakeholders, including government entities and local communities.","state":"non-accomplie"}],"tDateDeb":"2022-11-12T07:22:24Z","tDateRet":"2022-12-06T07:22:24Z","moyenTransport":["avion"],"moyenTransportRet":["avion","route"],"createdAt":"2022-11-01T07:22:24Z","updatedAt":"2022-10-22T07:22:24Z","oldDuree":24,"etat":"terminée"},
-{"objetMission":"Analyse des coûts de production et proposition d'améliorations","structure":"FIN","type":"local","budget":848603.31,"budgetConsome":827494.01,"pays":"Algérie","lieuDep":"Alger","destination":"Biskra","employes":["648f4c2bf4e6335f247a9cf5","648f4c18f4e6335f247a9bf3"],"taches":[{"content":"Effectuer des études d'impact environnemental et élaborer des mesures de protection.","state":"non-accomplie"}],"tDateDeb":"2022-12-01T12:00:50Z","tDateRet":"2023-02-01T12:00:50Z","moyenTransport":["route"],"moyenTransportRet":["route","avion"],"createdAt":"2022-11-10T12:00:50Z","updatedAt":"2022-11-05T12:00:50Z","oldDuree":1,"etat":"terminée"},
-{"objetMission":"Rencontre avec des fournisseurs pour l'approvisionnement en équipements","structure":"FIN","type":"etranger","budget":541797.64,"budgetConsome":365853.46,"pays":"Algérie","lieuDep":"Alger","destination":"Ghardaia","employes":["648f4c0af4e6335f247a9b45","648f4c27f4e6335f247a9cb6"],"taches":[{"content":"Organiser des réunions avec des partenaires externes pour discuter des opportunités de collaboration.","state":"accomplie"}],"tDateDeb":"2020-01-23T22:50:30Z","tDateRet":"2020-02-17T22:50:30Z","moyenTransport":["route","avion"],"moyenTransportRet":["avion"],"createdAt":"2020-01-19T22:50:30Z","updatedAt":"2019-09-23T22:50:30Z","oldDuree":25,"etat":"terminée"},
-{"objetMission":"Étude d'impact environnemental pour l'expansion des opérations","structure":"IPM","type":"etranger","budget":757492.55,"budgetConsome":619151.97,"pays":"Algérie","lieuDep":"Alger","destination":"Ouargla","employes":["648f4c0cf4e6335f247a9b60","648f4c0cf4e6335f247a9b54","648f4c21f4e6335f247a9c6b"],"taches":[{"content":"Participer à des formations spécialisées pour développer des compétences techniques avancées.","state":"accomplie"},{"content":"Effectuer des études d'impact environnemental et élaborer des mesures de protection.","state":"accomplie"},{"content":"Monitor production rates and analyze well performance to optimize reservoir recovery.","state":"non-accomplie"},{"content":"Develop and maintain relationships with key stakeholders, including government entities and local communities.","state":"non-accomplie"}],"tDateDeb":"2019-09-22T20:05:39Z","tDateRet":"2020-02-22T20:05:39Z","moyenTransport":["avion"],"moyenTransportRet":["route","avion"],"createdAt":"2019-07-22T20:05:39Z","updatedAt":"2019-09-18T20:05:39Z","oldDuree":153,"etat":"terminée"},
-{"objetMission":"Étude d'impact environnemental pour l'expansion des opérations","structure":"DATA","type":"local","budget":757965.21,"budgetConsome":287425.73,"pays":"Algérie","lieuDep":"Alger","destination":"Tiaret","employes":["648f4c19f4e6335f247a9bfc","648f4c2ff4e6335f247a9d25","648f4c0cf4e6335f247a9b5d","648fc2f54862fabc27dc8eb1","648f4c07f4e6335f247a9b15"],"taches":[{"content":"Effectuer des tests et des analyses sur les échantillons de roche pour évaluer le potentiel pétrolier.","state":"accomplie"},{"content":"Participer à des conférences et des événements professionnels pour représenter Sonatrach.","state":"non-accomplie"},{"content":"Assurer la coordination des opérations de forage sur le terrain et superviser les équipes de travail.","state":"non-accomplie"}],"tDateDeb":"2020-01-13T20:34:01Z","tDateRet":"2020-02-08T20:34:01Z","moyenTransport":["avion"],"moyenTransportRet":["route"],"createdAt":"2019-12-30T20:34:01Z","updatedAt":"2019-08-13T20:34:01Z","oldDuree":26,"etat":"terminée"},
-{"objetMission":"Recherche de nouvelles opportunités d'exploration","structure":"TECH","type":"etranger","budget":166322.78,"budgetConsome":642344.74,"pays":"Algérie","lieuDep":"Alger","destination":"Ghardaia","employes":["648f4c09f4e6335f247a9b39","648f4c2df4e6335f247a9d07","648f4c24f4e6335f247a9c92","648f4c25f4e6335f247a9ca4"],"taches":[{"content":"Assurer la coordination des opérations de forage sur le terrain et superviser les équipes de travail.","state":"accomplie"},{"content":"Préparer des rapports détaillés sur les résultats des inspections des infrastructures pétrolières et gazières.","state":"non-accomplie"},{"content":"Effectuer des évaluations économiques pour déterminer la rentabilité des projets d'investissement.","state":"non-accomplie"},{"content":"Élaborer des rapports de conformité réglementaire et suivre les évolutions législatives.","state":"accomplie"},{"content":"Develop and implement safety protocols for offshore drilling operations.","state":"accomplie"},{"content":"Participer à des conférences et des événements professionnels pour représenter Sonatrach.","state":"non-accomplie"}],"tDateDeb":"2023-03-13T14:57:30Z","tDateRet":"2023-10-13T14:57:30Z","moyenTransport":["route"],"moyenTransportRet":["avion","route"],"createdAt":"2022-10-13T14:57:30Z","updatedAt":"2023-03-05T14:57:30Z","oldDuree":214,"etat":"terminée"},
-{"objetMission":"Participation à des tests de contrôle de qualité","structure":"FIN","type":"etranger","budget":585772.16,"budgetConsome":971908.46,"pays":"Algérie","lieuDep":"Alger","destination":"Bejaia","employes":["648f4c0af4e6335f247a9b3f","648f4c18f4e6335f247a9bf3","648f4c07f4e6335f247a9b12","648f4c0ef4e6335f247a9b78"],"taches":[{"content":"Analyser les données de production et identifier des stratégies d'optimisation des rendements.","state":"non-accomplie"},{"content":"Collaborate with geophysicists to interpret seismic data for exploration purposes.","state":"accomplie"},{"content":"Coordinate with drilling contractors to ensure efficient and safe well operations.","state":"non-accomplie"},{"content":"Assurer la supervision des opérations de logistique et de transport liées aux activités pétrolières.","state":"accomplie"},{"content":"Collaborate with research institutions to explore innovative technologies for oil and gas exploration.","state":"non-accomplie"},{"content":"Participate in industry conferences and workshops to stay updated on emerging trends and technologies.","state":"non-accomplie"},{"content":"Collaborate with geophysicists to interpret seismic data for exploration purposes.","state":"accomplie"}],"tDateDeb":"2023-03-13T21:46:23Z","tDateRet":"2023-10-13T21:46:23Z","moyenTransport":["avion","route"],"moyenTransportRet":["avion"],"createdAt":"2022-08-13T21:46:23Z","updatedAt":"2023-03-05T21:46:23Z","oldDuree":214,"etat":"terminée"},
-{"objetMission":"Analyse des tendances du marché pétrolier et gazier","structure":"FIN","type":"etranger","budget":974327.54,"budgetConsome":415418.18,"pays":"Algérie","lieuDep":"Alger","destination":"Biskra","employes":["648f4c2cf4e6335f247a9cf8","648f4c0af4e6335f247a9b3c","648f4c11f4e6335f247a9b9c"],"taches":[],"tDateDeb":"2019-08-11T17:44:13Z","tDateRet":"2019-08-14T17:44:13Z","moyenTransport":["route"],"moyenTransportRet":["route","avion"],"createdAt":"2019-03-11T17:44:13Z","updatedAt":"2019-07-12T17:44:13Z","oldDuree":3,"etat":"terminée"},
-{"objetMission":"Participation à des tests de contrôle de qualité","structure":"IPM","type":"local","budget":147230.41,"budgetConsome":44960.54,"pays":"Algérie","lieuDep":"Alger","destination":"Bejaia","employes":["648f4c1ef4e6335f247a9c3b"],"taches":[{"content":"Élaborer des rapports de conformité réglementaire et suivre les évolutions législatives.","state":"non-accomplie"},{"content":"Analyser les données de marché pour identifier les tendances et les opportunités d'affaires.","state":"non-accomplie"},{"content":"Perform reservoir engineering analysis to optimize oil and gas production rates.","state":"accomplie"},{"content":"Analyser les données de production et identifier des stratégies d'optimisation des rendements.","state":"accomplie"},{"content":"Develop and implement safety protocols for offshore drilling operations.","state":"accomplie"},{"content":"Conduct technical evaluations of equipment and technologies for oil and gas operations.","state":"non-accomplie"},{"content":"Provide technical support and guidance to field operations teams during drilling and production activities.","state":"accomplie"}],"tDateDeb":"2021-03-16T20:54:09Z","tDateRet":"2021-12-16T20:54:09Z","moyenTransport":["route"],"moyenTransportRet":["avion","route"],"createdAt":"2021-01-16T20:54:09Z","updatedAt":"2021-03-03T20:54:09Z","oldDuree":275,"etat":"terminée"},
-{"objetMission":"Réunion avec les partenaires commerciaux","structure":"PRC","type":"etranger","budget":75059.56,"budgetConsome":681636.24,"pays":"Algérie","lieuDep":"Alger","destination":"Tiaret","employes":["648f4c25f4e6335f247a9c9b","648f4c26f4e6335f247a9caa","648fc2f54862fabc27dc8ed7"],"taches":[{"content":"Monitor production rates and analyze well performance to optimize reservoir recovery.","state":"accomplie"},{"content":"Participate in industry conferences and workshops to stay updated on emerging trends and technologies.","state":"accomplie"},{"content":"Effectuer des tests et des analyses sur les échantillons de roche pour évaluer le potentiel pétrolier.","state":"accomplie"},{"content":"Conduct technical evaluations of equipment and technologies for oil and gas operations.","state":"accomplie"},{"content":"Conduct economic evaluations of investment opportunities in new oil and gas assets.","state":"non-accomplie"},{"content":"Participer à des formations spécialisées pour développer des compétences techniques avancées.","state":"non-accomplie"}],"tDateDeb":"2019-12-17T12:55:55Z","tDateRet":"2020-04-17T12:55:55Z","moyenTransport":["route"],"moyenTransportRet":["route","avion"],"createdAt":"2018-12-17T12:55:55Z","updatedAt":"2019-11-17T12:55:55Z","oldDuree":13,"etat":"terminée"},
-{"objetMission":"Analyse des performances des installations de stockage de pétrole","structure":"CHANGE","type":"local","budget":184805.81,"budgetConsome":326582.8,"pays":"Algérie","lieuDep":"Alger","destination":"Tamanrasset","employes":["648f4c07f4e6335f247a9b15","648f4c11f4e6335f247a9ba2","648f4c2bf4e6335f247a9cec"],"taches":[{"content":"Monitor and analyze drilling data to identify potential drilling problems and propose solutions.","state":"accomplie"},{"content":"Develop and maintain relationships with key stakeholders, including government entities and local communities.","state":"non-accomplie"},{"content":"Effectuer des évaluations économiques pour déterminer la rentabilité des projets d'investissement.","state":"accomplie"},{"content":"Élaborer des rapports de conformité réglementaire et suivre les évolutions législatives.","state":"non-accomplie"}],"tDateDeb":"2021-04-12T13:12:29Z","tDateRet":"2021-04-19T13:12:29Z","moyenTransport":["avion","route"],"moyenTransportRet":["route","avion"],"createdAt":"2020-07-12T13:12:29Z","updatedAt":"2021-04-11T13:12:29Z","oldDuree":7,"etat":"terminée"},
-{"objetMission":"Évaluation des besoins en infrastructures pour soutenir la croissance de Sonatrach","structure":"CHANGE","type":"local","budget":627099.86,"budgetConsome":188675.54,"pays":"Algérie","lieuDep":"Alger","destination":"Ghardaia","employes":["648f4c31f4e6335f247a9d3a"],"taches":[{"content":"Develop and maintain relationships with key stakeholders, including government entities and local communities.","state":"accomplie"},{"content":"Implement data management systems to effectively organize and analyze geological and reservoir data.","state":"non-accomplie"},{"content":"Mener des études de marché pour évaluer la demande et la rentabilité de l'exploration de champs pétroliers spécifiques.","state":"accomplie"},{"content":"Assurer la coordination des opérations de forage sur le terrain et superviser les équipes de travail.","state":"accomplie"},{"content":"Develop and maintain relationships with key stakeholders, including government entities and local communities.","state":"accomplie"},{"content":"Conduct environmental impact assessments for proposed exploration projects.","state":"non-accomplie"},{"content":"Analyser les données de production et identifier des stratégies d'optimisation des rendements.","state":"accomplie"}],"tDateDeb":"2022-12-20T12:46:12Z","tDateRet":"2023-01-09T12:46:12Z","moyenTransport":["avion","route"],"moyenTransportRet":["route","avion"],"createdAt":"2022-07-20T12:46:12Z","updatedAt":"2022-04-20T12:46:12Z","oldDuree":20,"etat":"terminée"},
-{"objetMission":"Évaluation des besoins en infrastructure pour de nouveaux projets","structure":"CHANGE","type":"local","budget":770831.68,"budgetConsome":15432.56,"pays":"Algérie","lieuDep":"Alger","destination":"Tiaret","employes":["648f4c29f4e6335f247a9cda","648f4c1af4e6335f247a9c14","648f4c15f4e6335f247a9bd2","648f4c16f4e6335f247a9bdb"],"taches":[{"content":"Coordinate with drilling contractors to ensure efficient and safe well operations.","state":"non-accomplie"},{"content":"Participer à des conférences et des événements professionnels pour représenter Sonatrach.","state":"non-accomplie"},{"content":"Develop and maintain relationships with key stakeholders, including government entities and local communities.","state":"non-accomplie"},{"content":"Gérer les contrats avec les fournisseurs de services et assurer le respect des accords.","state":"non-accomplie"},{"content":"Collaborer avec des équipes multidisciplinaires pour résoudre des problèmes techniques complexes.","state":"accomplie"},{"content":"Coordinate with regulatory agencies to ensure compliance with environmental regulations.","state":"accomplie"}],"tDateDeb":"2019-06-05T07:48:51Z","tDateRet":"2019-10-05T07:48:51Z","moyenTransport":["route","avion"],"moyenTransportRet":["avion","route"],"createdAt":"2019-05-19T07:48:51Z","updatedAt":"2018-09-05T07:48:51Z","oldDuree":122,"etat":"terminée"},
-{"objetMission":"Évaluation des opportunités d'exploration dans de nouveaux bassins sédimentaires","structure":"PRC","type":"etranger","budget":null,"budgetConsome":null,"pays":"Algérie","lieuDep":"Alger","destination":"Adrar","employes":["648f4c1ff4e6335f247a9c4d","648f4c29f4e6335f247a9cd4","648f4c21f4e6335f247a9c6b","648f4c1af4e6335f247a9c11","648f4c29f4e6335f247a9cd1"],"taches":[],"tDateDeb":"2020-12-02T14:45:46Z","tDateRet":"2021-03-02T14:45:46Z","moyenTransport":["avion","route"],"moyenTransportRet":["avion","route"],"createdAt":"2020-03-02T14:45:46Z","updatedAt":"2020-11-29T14:45:46Z","oldDuree":2,"etat":"terminée"},
-{"objetMission":"Analyse des performances des installations de stockage de pétrole","structure":"SD","type":"local","budget":689911.36,"budgetConsome":858658.79,"pays":"Algérie","lieuDep":"Alger","destination":"Tamanrasset","employes":["648f4c0bf4e6335f247a9b4b","648f4c0df4e6335f247a9b6c","648f4c23f4e6335f247a9c89","648f4c21f4e6335f247a9c68","648f4c14f4e6335f247a9bc3"],"taches":[{"content":"Collaborer avec des équipes multidisciplinaires pour résoudre des problèmes techniques complexes.","state":"accomplie"},{"content":"Implement data management systems to effectively organize and analyze geological and reservoir data.","state":"non-accomplie"},{"content":"Conduct economic evaluations of investment opportunities in new oil and gas assets.","state":"non-accomplie"},{"content":"Veiller à la sécurité et à la conformité des opérations sur les sites pétroliers.","state":"non-accomplie"},{"content":"Mener des études de marché pour évaluer la demande et la rentabilité de l'exploration de champs pétroliers spécifiques.","state":"accomplie"}],"tDateDeb":"2020-05-08T16:11:41Z","tDateRet":"2020-05-22T16:11:41Z","moyenTransport":["avion","route"],"moyenTransportRet":["avion"],"createdAt":"2020-04-09T16:11:41Z","updatedAt":"2020-04-16T16:11:41Z","oldDuree":14,"etat":"terminée"},
-{"objetMission":"Participation à une conférence internationale sur l'énergie","structure":"IPM","type":"etranger","budget":449485.01,"budgetConsome":222380.68,"pays":"Algérie","lieuDep":"Alger","destination":"Tamanrasset","employes":["648f4c32f4e6335f247a9d4f","648fc2f54862fabc27dc8ed5"],"taches":[{"content":"Implement data management systems to effectively organize and analyze geological and reservoir data.","state":"non-accomplie"},{"content":"Analyser les données de marché pour identifier les tendances et les opportunités d'affaires.","state":"non-accomplie"},{"content":"Perform quality control checks on oil and gas samples to ensure accurate analysis.","state":"non-accomplie"},{"content":"Contribuer à l'élaboration de plans de maintenance préventive pour les installations pétrolières.","state":"accomplie"},{"content":"Contribuer à l'élaboration de plans de maintenance préventive pour les installations pétrolières.","state":"accomplie"},{"content":"Effectuer des évaluations économiques pour déterminer la rentabilité des projets d'investissement.","state":"accomplie"},{"content":"Perform quality control checks on oil and gas samples to ensure accurate analysis.","state":"non-accomplie"}],"tDateDeb":"2020-03-01T07:36:28Z","tDateRet":"2021-03-01T07:36:28Z","moyenTransport":["route"],"moyenTransportRet":["avion"],"createdAt":"2020-02-01T07:36:28Z","updatedAt":"2019-08-01T07:36:28Z","oldDuree":16,"etat":"terminée"},
-{"objetMission":"Formation sur les techniques avancées de forage directionnel","structure":"IPM","type":"local","budget":152391.66,"budgetConsome":387289.89,"pays":"Algérie","lieuDep":"Alger","destination":"Oran","employes":["648f4c32f4e6335f247a9d4c","648f4c11f4e6335f247a9b9f","648f4c11f4e6335f247a9b96"],"taches":[{"content":"Participer à des conférences et des événements professionnels pour représenter Sonatrach.","state":"non-accomplie"},{"content":"Participate in industry conferences and workshops to stay updated on emerging trends and technologies.","state":"accomplie"},{"content":"Manage the logistics and supply chain for offshore exploration and production activities.","state":"non-accomplie"},{"content":"Analyser les données de marché pour identifier les tendances et les opportunités d'affaires.","state":"non-accomplie"},{"content":"Develop and implement safety protocols for offshore drilling operations.","state":"accomplie"}],"tDateDeb":"2022-05-04T09:50:44Z","tDateRet":"2022-05-22T09:50:44Z","moyenTransport":["avion","route"],"moyenTransportRet":["avion","route"],"createdAt":"2022-01-04T09:50:44Z","updatedAt":"2022-01-04T09:50:44Z","oldDuree":18,"etat":"terminée"},
-{"objetMission":"Supervision des essais de production pour estimer les débits","structure":"PRC","type":"local","budget":730796.19,"budgetConsome":36056.73,"pays":"Algérie","lieuDep":"Alger","destination":"Laghouat","employes":["648f4c11f4e6335f247a9b99","648f4c26f4e6335f247a9caa","648f4c1ff4e6335f247a9c4d","648f4c11f4e6335f247a9ba2","648f4c15f4e6335f247a9bd5"],"taches":[{"content":"Mener des études de marché pour évaluer la demande et la rentabilité de l'exploration de champs pétroliers spécifiques.","state":"non-accomplie"}],"tDateDeb":"2020-08-28T12:10:49Z","tDateRet":"2020-12-28T12:10:49Z","moyenTransport":["avion"],"moyenTransportRet":["route"],"createdAt":"2020-07-30T12:10:49Z","updatedAt":"2019-11-28T12:10:49Z","oldDuree":122,"etat":"terminée"},
-{"objetMission":"Étude de la concurrence sur les marchés internationaux","structure":"HCM","type":"local","budget":125615.8,"budgetConsome":814843.07,"pays":"Algérie","lieuDep":"Alger","destination":"Bejaia","employes":["648f4c16f4e6335f247a9bde","648f4c19f4e6335f247a9c02","648f4c23f4e6335f247a9c89"],"taches":[{"content":"Monitor production rates and analyze well performance to optimize reservoir recovery.","state":"non-accomplie"},{"content":"Monitor and analyze drilling data to identify potential drilling problems and propose solutions.","state":"non-accomplie"},{"content":"Participer à des projets de recherche et développement pour améliorer les techniques d'extraction.","state":"accomplie"},{"content":"Élaborer des rapports de conformité réglementaire et suivre les évolutions législatives.","state":"non-accomplie"}],"tDateDeb":"2022-10-21T14:18:30Z","tDateRet":"2022-11-15T14:18:30Z","moyenTransport":["route","avion"],"moyenTransportRet":["route","avion"],"createdAt":"2022-10-02T14:18:30Z","updatedAt":"2022-10-18T14:18:30Z","oldDuree":25,"etat":"terminée"},
-{"objetMission":"Rencontre avec les autorités gouvernementales pour discuter des réglementations","structure":"PMO","type":"etranger","budget":225377.79,"budgetConsome":719313.31,"pays":"Algérie","lieuDep":"Alger","destination":"Bejaia","employes":["648f4c31f4e6335f247a9d46","648f4c25f4e6335f247a9ca4","648f4c23f4e6335f247a9c83","648f4c09f4e6335f247a9b36"],"taches":[{"content":"Organiser des réunions avec des partenaires externes pour discuter des opportunités de collaboration.","state":"non-accomplie"},{"content":"Effectuer une analyse approfondie des données géologiques pour identifier de nouveaux sites potentiels de forage.","state":"accomplie"},{"content":"Conduct environmental impact assessments for proposed exploration projects.","state":"accomplie"},{"content":"Perform quality control checks on oil and gas samples to ensure accurate analysis.","state":"accomplie"},{"content":"Préparer des rapports détaillés sur les résultats des inspections des infrastructures pétrolières et gazières.","state":"accomplie"},{"content":"Collaborer avec des équipes multidisciplinaires pour résoudre des problèmes techniques complexes.","state":"accomplie"},{"content":"Develop and maintain relationships with key stakeholders, including government entities and local communities.","state":"accomplie"}],"tDateDeb":"2021-12-03T06:31:22Z","tDateRet":"2021-12-13T06:31:22Z","moyenTransport":["route"],"moyenTransportRet":["avion","route"],"createdAt":"2021-06-03T06:31:22Z","updatedAt":"2021-12-02T06:31:22Z","oldDuree":10,"etat":"terminée"},
-{"objetMission":"Réunion avec les partenaires commerciaux","structure":"PDN","type":"local","budget":411996.32,"budgetConsome":719636.63,"pays":"Algérie","lieuDep":"Alger","destination":"Oran","employes":["648f4c31f4e6335f247a9d46","648f4c2df4e6335f247a9d04"],"taches":[{"content":"Participer à des projets de recherche et développement pour améliorer les techniques d'extraction.","state":"non-accomplie"},{"content":"Collaborer avec des équipes multidisciplinaires pour résoudre des problèmes techniques complexes.","state":"accomplie"},{"content":"Élaborer des rapports de conformité réglementaire et suivre les évolutions législatives.","state":"non-accomplie"}],"tDateDeb":"2022-04-17T11:33:29Z","tDateRet":"2022-07-17T11:33:29Z","moyenTransport":["route"],"moyenTransportRet":["avion"],"createdAt":"2022-03-30T11:33:29Z","updatedAt":"2022-04-08T11:33:29Z","oldDuree":26,"etat":"terminée"},
-{"objetMission":"Rencontre avec des experts de l'industrie pour partager les meilleures pratiques","structure":"CHANGE","type":"etranger","budget":865699.94,"budgetConsome":225007.13,"pays":"Algérie","lieuDep":"Alger","destination":"Alger","employes":["648f4c1ff4e6335f247a9c4d","648fc2f54862fabc27dc8eb7","648f4c23f4e6335f247a9c89","648f4c1df4e6335f247a9c32"],"taches":[{"content":"Mener des études de marché pour évaluer la demande et la rentabilité de l'exploration de champs pétroliers spécifiques.","state":"non-accomplie"},{"content":"Conduct geological surveys to identify potential oil and gas reserves in specific regions.","state":"non-accomplie"},{"content":"Monitor production rates and analyze well performance to optimize reservoir recovery.","state":"accomplie"}],"tDateDeb":"2020-09-29T09:42:00Z","tDateRet":"2020-10-22T09:42:00Z","moyenTransport":["route","avion"],"moyenTransportRet":["route","avion"],"createdAt":"2020-04-29T09:42:00Z","updatedAt":"2020-09-14T09:42:00Z","oldDuree":4,"etat":"terminée"},
-{"objetMission":"Rencontre avec les partenaires locaux pour le développement de projets","structure":"DATA","type":"local","budget":817948.39,"budgetConsome":332707.65,"pays":"Algérie","lieuDep":"Alger","destination":"Oran","employes":["648f4c1ef4e6335f247a9c3b","648f4c24f4e6335f247a9c92","648f4c2cf4e6335f247a9d01","648f4c23f4e6335f247a9c80","648f4c2df4e6335f247a9d04"],"taches":[{"content":"Collaborer avec des équipes multidisciplinaires pour résoudre des problèmes techniques complexes.","state":"non-accomplie"},{"content":"Conduct environmental impact assessments for proposed exploration projects.","state":"non-accomplie"},{"content":"Participate in industry conferences and workshops to stay updated on emerging trends and technologies.","state":"non-accomplie"},{"content":"Conduct technical evaluations of equipment and technologies for oil and gas operations.","state":"accomplie"},{"content":"Effectuer des évaluations économiques pour déterminer la rentabilité des projets d'investissement.","state":"accomplie"},{"content":"Collaborate with geophysicists to interpret seismic data for exploration purposes.","state":"non-accomplie"}],"tDateDeb":"2023-03-03T17:47:51Z","tDateRet":"2023-03-27T17:47:51Z","moyenTransport":["route","avion"],"moyenTransportRet":["route"],"createdAt":"2023-02-10T17:47:51Z","updatedAt":"2023-02-21T17:47:51Z","oldDuree":22,"etat":"terminée"},
-{"objetMission":"Analyse des risques environnementaux","structure":"SD","type":"local","budget":258854.85,"budgetConsome":22546.87,"pays":"Algérie","lieuDep":"Alger","destination":"Adrar","employes":["648f4c1ff4e6335f247a9c50","648f4c33f4e6335f247a9d5b","648f4c30f4e6335f247a9d34"],"taches":[{"content":"Conduire des inspections régulières des pipelines pour détecter les fuites et les défauts structurels.","state":"accomplie"}],"tDateDeb":"2020-10-29T21:06:37Z","tDateRet":"2020-11-14T21:06:37Z","moyenTransport":["route","avion"],"moyenTransportRet":["route"],"createdAt":"2020-10-01T21:06:37Z","updatedAt":"2020-03-29T21:06:37Z","oldDuree":24,"etat":"terminée"},
-{"objetMission":"Supervision des opérations de maintenance des installations pétrolières","structure":"FIN","type":"etranger","budget":101353.37,"budgetConsome":918407.76,"pays":"Algérie","lieuDep":"Alger","destination":"Ghardaia","employes":["648f4c17f4e6335f247a9bea","648f4c24f4e6335f247a9c95","648f4c20f4e6335f247a9c62","648f4c25f4e6335f247a9ca7"],"taches":[{"content":"Develop and implement safety protocols for offshore drilling operations.","state":"accomplie"},{"content":"Organiser des réunions avec des partenaires externes pour discuter des opportunités de collaboration.","state":"non-accomplie"},{"content":"Effectuer une analyse approfondie des données géologiques pour identifier de nouveaux sites potentiels de forage.","state":"non-accomplie"},{"content":"Collaborate with geophysicists to interpret seismic data for exploration purposes.","state":"non-accomplie"}],"tDateDeb":"2019-08-18T17:31:37Z","tDateRet":"2019-09-16T17:31:37Z","moyenTransport":["route"],"moyenTransportRet":["route"],"createdAt":"2019-07-27T17:31:37Z","updatedAt":"2019-08-15T17:31:37Z","oldDuree":25,"etat":"terminée"},
-{"objetMission":"Analyse des tendances du marché pétrolier et gazier","structure":"HCM","type":"etranger","budget":915472.52,"budgetConsome":88044.66,"pays":"Algérie","lieuDep":"Alger","destination":"Tiaret","employes":["648f4c2af4e6335f247a9ce6"],"taches":[],"tDateDeb":"2019-09-17T02:50:40Z","tDateRet":"2020-05-17T02:50:40Z","moyenTransport":["avion","route"],"moyenTransportRet":["avion","route"],"createdAt":"2019-08-21T02:50:40Z","updatedAt":"2019-08-18T02:50:40Z","oldDuree":243,"etat":"terminée"},
-{"objetMission":"Participation à des formations sur la gestion des risques en milieu industriel","structure":"IPM","type":"local","budget":434815.73,"budgetConsome":736825.68,"pays":"Algérie","lieuDep":"Alger","destination":"Ghardaia","employes":["648f4c28f4e6335f247a9cce","648f4c1ef4e6335f247a9c41","648f4c19f4e6335f247a9bfc"],"taches":[{"content":"Develop and maintain relationships with key stakeholders, including government entities and local communities.","state":"non-accomplie"}],"tDateDeb":"2021-10-20T09:43:06Z","tDateRet":"2021-10-22T09:43:06Z","moyenTransport":["route"],"moyenTransportRet":["route","avion"],"createdAt":"2021-10-17T09:43:06Z","updatedAt":"2021-09-23T09:43:06Z","oldDuree":10,"etat":"terminée"},
-{"objetMission":"Rencontre avec des organismes gouvernementaux pour discuter des réglementations","structure":"PDN","type":"etranger","budget":393938.23,"budgetConsome":934472.0,"pays":"Algérie","lieuDep":"Alger","destination":"Laghouat","employes":["648f4c2cf4e6335f247a9cfe","648f4c2bf4e6335f247a9ce9","648f4c0ef4e6335f247a9b75"],"taches":[{"content":"Assurer la coordination des opérations de forage sur le terrain et superviser les équipes de travail.","state":"non-accomplie"},{"content":"Effectuer des évaluations de risques pour les projets d'exploration et de production.","state":"non-accomplie"}],"tDateDeb":"2020-10-12T20:53:05Z","tDateRet":"2020-10-18T20:53:05Z","moyenTransport":["route","avion"],"moyenTransportRet":["avion","route"],"createdAt":"2020-10-09T20:53:05Z","updatedAt":"2019-10-12T20:53:05Z","oldDuree":6,"etat":"terminée"},
-{"objetMission":"Analyse des contrats de fournisseurs pour assurer la conformité","structure":"PDN","type":"local","budget":30501.83,"budgetConsome":644254.93,"pays":"Algérie","lieuDep":"Alger","destination":"Bejaia","employes":["648f4c1ff4e6335f247a9c53","648f4c1cf4e6335f247a9c2c","648f4c10f4e6335f247a9b8d","648f4c11f4e6335f247a9b9c"],"taches":[{"content":"Develop and implement training programs for personnel involved in offshore operations.","state":"non-accomplie"},{"content":"Perform quality control checks on oil and gas samples to ensure accurate analysis.","state":"accomplie"},{"content":"Conduct geological surveys to identify potential oil and gas reserves in specific regions.","state":"accomplie"}],"tDateDeb":"2021-07-06T02:25:33Z","tDateRet":"2021-07-18T02:25:33Z","moyenTransport":["avion","route"],"moyenTransportRet":["avion","route"],"createdAt":"2021-07-05T02:25:33Z","updatedAt":"2021-07-02T02:25:33Z","oldDuree":21,"etat":"terminée"},
-{"objetMission":"Participation à des conférences sur l'industrie pétrolière et gazière","structure":"PDN","type":"local","budget":639993.94,"budgetConsome":697582.65,"pays":"Algérie","lieuDep":"Alger","destination":"Ouargla","employes":["648f4c33f4e6335f247a9d58","648f4c0bf4e6335f247a9b51","648f4c11f4e6335f247a9b96"],"taches":[{"content":"Develop cost estimation models for new oil and gas development projects.","state":"non-accomplie"},{"content":"Préparer des rapports détaillés sur les résultats des inspections des infrastructures pétrolières et gazières.","state":"accomplie"}],"tDateDeb":"2019-05-05T10:33:07Z","tDateRet":"2019-05-08T10:33:07Z","moyenTransport":["avion"],"moyenTransportRet":["route","avion"],"createdAt":"2019-04-11T10:33:07Z","updatedAt":"2018-11-05T10:33:07Z","oldDuree":31,"etat":"terminée"},
-{"objetMission":"Évaluation des performances des installations","structure":"IPM","type":"local","budget":318627.18,"budgetConsome":147043.77,"pays":"Algérie","lieuDep":"Alger","destination":"Ghardaia","employes":["648f4c23f4e6335f247a9c86","648fc2f54862fabc27dc8ed7","648f4c1df4e6335f247a9c38","648f4c2ff4e6335f247a9d28","648f4c1cf4e6335f247a9c29"],"taches":[],"tDateDeb":"2023-01-24T16:22:33Z","tDateRet":"2023-07-24T16:22:33Z","moyenTransport":["route","avion"],"moyenTransportRet":["avion","route"],"createdAt":"2023-01-07T16:22:33Z","updatedAt":"2023-01-17T16:22:33Z","oldDuree":181,"etat":"terminée"},
-{"objetMission":"Rencontre avec des experts en sécurité industrielle","structure":"SD","type":"local","budget":null,"budgetConsome":null,"pays":"Algérie","lieuDep":"Alger","destination":"Ghardaia","employes":["648f4c25f4e6335f247a9c9b","648f4c24f4e6335f247a9c98","648f4c1ef4e6335f247a9c3e","648f4c21f4e6335f247a9c6b"],"taches":[],"tDateDeb":"2020-05-08T20:56:05Z","tDateRet":"2020-05-25T20:56:05Z","moyenTransport":["route"],"moyenTransportRet":["avion","route"],"createdAt":"2020-04-12T20:56:05Z","updatedAt":"2019-06-08T20:56:05Z","oldDuree":26,"etat":"terminée"},
-{"objetMission":"Évaluation des risques liés à l'exploration en eaux profondes","structure":"PRC","type":"etranger","budget":593970.41,"budgetConsome":993536.21,"pays":"Algérie","lieuDep":"Alger","destination":"Ouargla","employes":["648f4c11f4e6335f247a9b96"],"taches":[{"content":"Develop and implement safety protocols for offshore drilling operations.","state":"non-accomplie"},{"content":"Contribuer à l'élaboration de plans de maintenance préventive pour les installations pétrolières.","state":"non-accomplie"},{"content":"Effectuer une analyse approfondie des données géologiques pour identifier de nouveaux sites potentiels de forage.","state":"accomplie"},{"content":"Effectuer des études d'impact environnemental et élaborer des mesures de protection.","state":"non-accomplie"},{"content":"Collaborer avec des équipes multidisciplinaires pour résoudre des problèmes techniques complexes.","state":"accomplie"},{"content":"Develop cost estimation models for new oil and gas development projects.","state":"non-accomplie"}],"tDateDeb":"2019-02-28T18:08:25Z","tDateRet":"2019-10-28T18:08:25Z","moyenTransport":["avion","route"],"moyenTransportRet":["route"],"createdAt":"2019-02-27T18:08:25Z","updatedAt":"2019-01-30T18:08:25Z","oldDuree":242,"etat":"terminée"},
-{"objetMission":"Évaluation des réserves de gaz naturel pour la planification à long terme","structure":"CHANGE","type":"etranger","budget":987415.4,"budgetConsome":213844.93,"pays":"Algérie","lieuDep":"Alger","destination":"Illizi","employes":["648f4c1df4e6335f247a9c38"],"taches":[{"content":"Monitor and analyze drilling data to identify potential drilling problems and propose solutions.","state":"accomplie"},{"content":"Organiser des réunions avec des partenaires externes pour discuter des opportunités de collaboration.","state":"accomplie"},{"content":"Mener des études de marché pour évaluer la demande et la rentabilité de l'exploration de champs pétroliers spécifiques.","state":"non-accomplie"},{"content":"Assurer la coordination des opérations de forage sur le terrain et superviser les équipes de travail.","state":"accomplie"}],"tDateDeb":"2019-02-18T08:29:53Z","tDateRet":"2019-03-18T08:29:53Z","moyenTransport":["route"],"moyenTransportRet":["route"],"createdAt":"2018-10-18T08:29:53Z","updatedAt":"2018-05-18T08:29:53Z","oldDuree":15,"etat":"terminée"},
-{"objetMission":"Formation sur les normes de sécurité internationales dans l'industrie pétrolière","structure":"PMO","type":"local","budget":639802.12,"budgetConsome":487426.65,"pays":"Algérie","lieuDep":"Alger","destination":"Ouargla","employes":["648fc2f54862fabc27dc8ed9","648f4c19f4e6335f247a9bff"],"taches":[{"content":"Gérer les contrats avec les fournisseurs de services et assurer le respect des accords.","state":"non-accomplie"},{"content":"Collaborer avec des équipes multidisciplinaires pour résoudre des problèmes techniques complexes.","state":"non-accomplie"},{"content":"Coordinate with drilling contractors to ensure efficient and safe well operations.","state":"non-accomplie"},{"content":"Analyser les données de production et identifier des stratégies d'optimisation des rendements.","state":"non-accomplie"},{"content":"Effectuer des études d'impact environnemental et élaborer des mesures de protection.","state":"non-accomplie"},{"content":"Develop and maintain relationships with key stakeholders, including government entities and local communities.","state":"accomplie"},{"content":"Participate in industry conferences and workshops to stay updated on emerging trends and technologies.","state":"accomplie"}],"tDateDeb":"2020-05-02T09:35:25Z","tDateRet":"2021-02-02T09:35:25Z","moyenTransport":["route"],"moyenTransportRet":["route"],"createdAt":"2020-02-02T09:35:25Z","updatedAt":"2020-01-02T09:35:25Z","oldDuree":12,"etat":"terminée"},
-{"objetMission":"Rencontre avec des organismes gouvernementaux pour discuter des réglementations","structure":"DATA","type":"etranger","budget":783838.66,"budgetConsome":1795.91,"pays":"Algérie","lieuDep":"Alger","destination":"Ouargla","employes":["648f4c28f4e6335f247a9cce"],"taches":[{"content":"Analyser les données de production et identifier des stratégies d'optimisation des rendements.","state":"non-accomplie"},{"content":"Préparer des rapports détaillés sur les résultats des inspections des infrastructures pétrolières et gazières.","state":"accomplie"},{"content":"Manage the logistics and supply chain for offshore exploration and production activities.","state":"accomplie"}],"tDateDeb":"2019-08-07T15:06:40Z","tDateRet":"2020-03-07T15:06:40Z","moyenTransport":["route","avion"],"moyenTransportRet":["avion"],"createdAt":"2019-07-09T15:06:40Z","updatedAt":"2019-07-22T15:06:40Z","oldDuree":30,"etat":"terminée"},
-{"objetMission":"Recherche de nouvelles opportunités d'exploration","structure":"CHANGE","type":"local","budget":612983.54,"budgetConsome":918140.84,"pays":"Algérie","lieuDep":"Alger","destination":"Oran","employes":["648f4c17f4e6335f247a9bed","648f4c15f4e6335f247a9bd5","648f4c2ff4e6335f247a9d22"],"taches":[{"content":"Perform reservoir engineering analysis to optimize oil and gas production rates.","state":"accomplie"},{"content":"Participer à des conférences et des événements professionnels pour représenter Sonatrach.","state":"non-accomplie"},{"content":"Conduct technical evaluations of equipment and technologies for oil and gas operations.","state":"accomplie"}],"tDateDeb":"2019-03-05T12:27:07Z","tDateRet":"2019-03-27T12:27:07Z","moyenTransport":["avion","route"],"moyenTransportRet":["route"],"createdAt":"2019-02-13T12:27:07Z","updatedAt":"2018-07-05T12:27:07Z","oldDuree":13,"etat":"terminée"},
-{"objetMission":"Rencontre avec des fournisseurs pour l'approvisionnement en équipements","structure":"MRO","type":"etranger","budget":654805.3,"budgetConsome":309947.5,"pays":"Algérie","lieuDep":"Alger","destination":"Illizi","employes":["648f4c1ff4e6335f247a9c50","648fc2f54862fabc27dc8ed5","648f4c14f4e6335f247a9bc6","648f4c2af4e6335f247a9ce3","648f4c17f4e6335f247a9be7"],"taches":[{"content":"Organiser des réunions avec des partenaires externes pour discuter des opportunités de collaboration.","state":"non-accomplie"},{"content":"Coordinate with regulatory agencies to ensure compliance with environmental regulations.","state":"accomplie"},{"content":"Monitor production rates and analyze well performance to optimize reservoir recovery.","state":"accomplie"}],"tDateDeb":"2019-06-27T02:09:16Z","tDateRet":"2019-07-23T02:09:16Z","moyenTransport":["avion"],"moyenTransportRet":["avion","route"],"createdAt":"2018-08-27T02:09:16Z","updatedAt":"2018-10-27T02:09:16Z","oldDuree":4,"etat":"terminée"},
-{"objetMission":"Rencontre avec des représentants syndicaux pour discuter des conditions de travail","structure":"IPM","type":"etranger","budget":771060.31,"budgetConsome":665708.28,"pays":"Algérie","lieuDep":"Alger","destination":"Ouargla","employes":["648f4c0ef4e6335f247a9b72","648f4c33f4e6335f247a9d55","648f4c27f4e6335f247a9cb6","648f4c2ef4e6335f247a9d13"],"taches":[{"content":"Conduct environmental impact assessments for proposed exploration projects.","state":"non-accomplie"},{"content":"Perform risk assessments and develop contingency plans for potential operational hazards.","state":"accomplie"},{"content":"Effectuer des études d'impact environnemental et élaborer des mesures de protection.","state":"non-accomplie"}],"tDateDeb":"2020-07-16T15:03:55Z","tDateRet":"2021-04-16T15:03:55Z","moyenTransport":["avion"],"moyenTransportRet":["avion","route"],"createdAt":"2019-10-16T15:03:55Z","updatedAt":"2020-03-16T15:03:55Z","oldDuree":274,"etat":"terminée"},
-{"objetMission":"Audit des processus de production","structure":"CHANGE","type":"local","budget":437333.34,"budgetConsome":605721.77,"pays":"Algérie","lieuDep":"Alger","destination":"Biskra","employes":["648f4c0df4e6335f247a9b69","648f4c08f4e6335f247a9b27","648f4c2ef4e6335f247a9d16","648f4c1df4e6335f247a9c2f"],"taches":[{"content":"Gérer les contrats avec les fournisseurs de services et assurer le respect des accords.","state":"accomplie"},{"content":"Organiser des réunions avec des partenaires externes pour discuter des opportunités de collaboration.","state":"non-accomplie"},{"content":"Participate in industry conferences and workshops to stay updated on emerging trends and technologies.","state":"non-accomplie"},{"content":"Develop cost estimation models for new oil and gas development projects.","state":"accomplie"},{"content":"Develop and implement safety protocols for offshore drilling operations.","state":"non-accomplie"}],"tDateDeb":"2023-02-10T05:40:30Z","tDateRet":"2023-03-03T05:40:30Z","moyenTransport":["route","avion"],"moyenTransportRet":["avion"],"createdAt":"2023-02-01T05:40:30Z","updatedAt":"2023-01-13T05:40:30Z","oldDuree":21,"etat":"terminée"},
-{"objetMission":"Supervision des opérations de construction d'un nouveau pipeline","structure":"CHANGE","type":"etranger","budget":971829.02,"budgetConsome":756185.64,"pays":"Algérie","lieuDep":"Alger","destination":"Biskra","employes":["648f4c08f4e6335f247a9b27","648f4c13f4e6335f247a9bba","648f4c28f4e6335f247a9ccb","648f4c0cf4e6335f247a9b5d","648f4c20f4e6335f247a9c62"],"taches":[{"content":"Develop and maintain relationships with key stakeholders, including government entities and local communities.","state":"accomplie"},{"content":"Implement data management systems to effectively organize and analyze geological and reservoir data.","state":"non-accomplie"},{"content":"Participer à des conférences et des événements professionnels pour représenter Sonatrach.","state":"accomplie"},{"content":"Analyser les données de production et identifier des stratégies d'optimisation des rendements.","state":"non-accomplie"},{"content":"Gérer les contrats avec les fournisseurs de services et assurer le respect des accords.","state":"accomplie"}],"tDateDeb":"2019-08-26T07:51:21Z","tDateRet":"2019-12-26T07:51:21Z","moyenTransport":["avion"],"moyenTransportRet":["route","avion"],"createdAt":"2019-08-17T07:51:21Z","updatedAt":"2019-02-26T07:51:21Z","oldDuree":18,"etat":"terminée"},
-{"objetMission":"Étude d'impact social pour les projets d'exploitation pétrolière","structure":"PRC","type":"etranger","budget":417550.47,"budgetConsome":328413.68,"pays":"Algérie","lieuDep":"Alger","destination":"Ouargla","employes":["648f4c29f4e6335f247a9cd1","648f4c13f4e6335f247a9bbd","648f4c2af4e6335f247a9ce0"],"taches":[{"content":"Effectuer des évaluations de risques pour les projets d'exploration et de production.","state":"accomplie"},{"content":"Effectuer des évaluations économiques pour déterminer la rentabilité des projets d'investissement.","state":"accomplie"}],"tDateDeb":"2020-10-17T16:31:36Z","tDateRet":"2020-10-31T16:31:36Z","moyenTransport":["route","avion"],"moyenTransportRet":["route"],"createdAt":"2020-09-17T16:31:36Z","updatedAt":"2020-06-17T16:31:36Z","oldDuree":14,"etat":"terminée"},
-{"objetMission":"Formation sur la gestion de projet dans le secteur pétrolier","structure":"TECH","type":"etranger","budget":916131.46,"budgetConsome":486008.3,"pays":"Algérie","lieuDep":"Alger","destination":"Alger","employes":["648fc2f54862fabc27dc8ed3","648f4c0bf4e6335f247a9b51"],"taches":[],"tDateDeb":"2020-12-15T06:28:47Z","tDateRet":"2020-12-27T06:28:47Z","moyenTransport":["avion","route"],"moyenTransportRet":["avion"],"createdAt":"2020-05-15T06:28:47Z","updatedAt":"2020-11-29T06:28:47Z","oldDuree":26,"etat":"terminée"},
-{"objetMission":"Rencontre avec les fournisseurs pour la négociation des contrats","structure":"CHANGE","type":"etranger","budget":402652.11,"budgetConsome":370202.81,"pays":"Algérie","lieuDep":"Alger","destination":"Skikda","employes":["648f4c15f4e6335f247a9bd2","648f4c21f4e6335f247a9c68","648f4c07f4e6335f247a9b15","648f4c2af4e6335f247a9ce6"],"taches":[{"content":"Assurer la supervision des opérations de logistique et de transport liées aux activités pétrolières.","state":"accomplie"},{"content":"Conduct technical evaluations of equipment and technologies for oil and gas operations.","state":"non-accomplie"},{"content":"Effectuer des évaluations économiques pour déterminer la rentabilité des projets d'investissement.","state":"accomplie"},{"content":"Develop and maintain relationships with key stakeholders, including government entities and local communities.","state":"accomplie"},{"content":"Effectuer des évaluations de risques pour les projets d'exploration et de production.","state":"accomplie"}],"tDateDeb":"2021-06-14T01:10:29Z","tDateRet":"2021-06-16T01:10:29Z","moyenTransport":["route","avion"],"moyenTransportRet":["avion","route"],"createdAt":"2021-06-12T01:10:29Z","updatedAt":"2021-05-27T01:10:29Z","oldDuree":11,"etat":"terminée"},
-{"objetMission":"Formation sur la gestion de crise en cas d'incident majeur","structure":"PRC","type":"etranger","budget":757954.56,"budgetConsome":800377.6,"pays":"Algérie","lieuDep":"Alger","destination":"Ghardaia","employes":["648f4c2ff4e6335f247a9d22","648f4c2cf4e6335f247a9cfe","648f4c11f4e6335f247a9b9f"],"taches":[{"content":"Participate in industry conferences and workshops to stay updated on emerging trends and technologies.","state":"accomplie"},{"content":"Organiser des réunions avec des partenaires externes pour discuter des opportunités de collaboration.","state":"non-accomplie"},{"content":"Assurer la coordination des opérations de forage sur le terrain et superviser les équipes de travail.","state":"accomplie"},{"content":"Gérer les contrats avec les fournisseurs de services et assurer le respect des accords.","state":"accomplie"}],"tDateDeb":"2019-02-02T09:04:15Z","tDateRet":"2019-02-14T09:04:15Z","moyenTransport":["avion","route"],"moyenTransportRet":["route","avion"],"createdAt":"2018-04-02T09:04:15Z","updatedAt":"2018-02-02T09:04:15Z","oldDuree":17,"etat":"terminée"},
-{"objetMission":"Inspection des installations de stockage de gaz naturel","structure":"SD","type":"etranger","budget":234735.09,"budgetConsome":169337.58,"pays":"Algérie","lieuDep":"Alger","destination":"Oran","employes":["648f4c2cf4e6335f247a9cfb","648f4c26f4e6335f247a9cad"],"taches":[{"content":"Perform quality control checks on oil and gas samples to ensure accurate analysis.","state":"non-accomplie"},{"content":"Coordinate with drilling contractors to ensure efficient and safe well operations.","state":"accomplie"},{"content":"Contribuer à l'élaboration de plans de maintenance préventive pour les installations pétrolières.","state":"accomplie"},{"content":"Effectuer des évaluations économiques pour déterminer la rentabilité des projets d'investissement.","state":"non-accomplie"}],"tDateDeb":"2023-05-01T17:12:40Z","tDateRet":"2023-12-01T17:12:40Z","moyenTransport":["avion","route"],"moyenTransportRet":["avion"],"createdAt":"2023-04-16T17:12:40Z","updatedAt":"2023-04-10T17:12:40Z","oldDuree":214,"etat":"terminée"},
-{"objetMission":"Analyse des coûts de transport pour l'optimisation logistique","structure":"PMO","type":"etranger","budget":919183.23,"budgetConsome":487838.56,"pays":"Algérie","lieuDep":"Alger","destination":"Skikda","employes":["648f4c15f4e6335f247a9bcf"],"taches":[{"content":"Develop and maintain relationships with key stakeholders, including government entities and local communities.","state":"accomplie"},{"content":"Develop and implement safety protocols for offshore drilling operations.","state":"non-accomplie"},{"content":"Contribuer à l'élaboration de plans de maintenance préventive pour les installations pétrolières.","state":"accomplie"},{"content":"Monitor and analyze drilling data to identify potential drilling problems and propose solutions.","state":"accomplie"},{"content":"Participer à des conférences et des événements professionnels pour représenter Sonatrach.","state":"accomplie"},{"content":"Manage the logistics and supply chain for offshore exploration and production activities.","state":"non-accomplie"}],"tDateDeb":"2021-07-16T13:11:47Z","tDateRet":"2022-01-16T13:11:47Z","moyenTransport":["avion"],"moyenTransportRet":["route","avion"],"createdAt":"2021-03-16T13:11:47Z","updatedAt":"2021-07-02T13:11:47Z","oldDuree":184,"etat":"terminée"},
-{"objetMission":"Analyse des coûts de transport pour l'optimisation logistique","structure":"IPM","type":"etranger","budget":238039.53,"budgetConsome":69522.03,"pays":"Algérie","lieuDep":"Alger","destination":"Illizi","employes":["648f4c09f4e6335f247a9b33"],"taches":[{"content":"Manage the logistics and supply chain for offshore exploration and production activities.","state":"accomplie"},{"content":"Collaborer avec des équipes multidisciplinaires pour résoudre des problèmes techniques complexes.","state":"non-accomplie"},{"content":"Conduct technical evaluations of equipment and technologies for oil and gas operations.","state":"non-accomplie"},{"content":"Monitor and analyze drilling data to identify potential drilling problems and propose solutions.","state":"non-accomplie"},{"content":"Develop cost estimation models for new oil and gas development projects.","state":"accomplie"},{"content":"Develop and implement safety protocols for offshore drilling operations.","state":"non-accomplie"}],"tDateDeb":"2021-08-06T21:14:08Z","tDateRet":"2022-06-06T21:14:08Z","moyenTransport":["route","avion"],"moyenTransportRet":["avion"],"createdAt":"2020-11-06T21:14:08Z","updatedAt":"2021-04-06T21:14:08Z","oldDuree":304,"etat":"terminée"},
-{"objetMission":"Analyse des coûts de transport pour l'optimisation logistique","structure":"DATA","type":"local","budget":568186.29,"budgetConsome":349083.37,"pays":"Algérie","lieuDep":"Alger","destination":"Skikda","employes":["648f4c33f4e6335f247a9d58","648f4c21f4e6335f247a9c6e","648f4c14f4e6335f247a9bcc","648f4c0ef4e6335f247a9b7b"],"taches":[{"content":"Élaborer des rapports de conformité réglementaire et suivre les évolutions législatives.","state":"non-accomplie"},{"content":"Develop and maintain relationships with key stakeholders, including government entities and local communities.","state":"accomplie"},{"content":"Collaborate with geophysicists to interpret seismic data for exploration purposes.","state":"accomplie"},{"content":"Effectuer des tests et des analyses sur les échantillons de roche pour évaluer le potentiel pétrolier.","state":"accomplie"},{"content":"Provide technical support and guidance to field operations teams during drilling and production activities.","state":"non-accomplie"},{"content":"Effectuer des études d'impact environnemental et élaborer des mesures de protection.","state":"accomplie"},{"content":"Develop and implement training programs for personnel involved in offshore operations.","state":"non-accomplie"}],"tDateDeb":"2021-04-05T09:12:38Z","tDateRet":"2021-09-05T09:12:38Z","moyenTransport":["route"],"moyenTransportRet":["avion"],"createdAt":"2021-03-05T09:12:38Z","updatedAt":"2021-03-30T09:12:38Z","oldDuree":153,"etat":"terminée"},
-{"objetMission":"Supervision des essais de réservoir pour l'estimation des réserves","structure":"CHANGE","type":"local","budget":343428.97,"budgetConsome":462798.54,"pays":"Algérie","lieuDep":"Alger","destination":"Biskra","employes":["648f4c19f4e6335f247a9c02","648f4c1ff4e6335f247a9c4d","648f4c22f4e6335f247a9c74","648f4c26f4e6335f247a9caa"],"taches":[{"content":"Conduct geological surveys to identify potential oil and gas reserves in specific regions.","state":"accomplie"},{"content":"Analyser les données de production et identifier des stratégies d'optimisation des rendements.","state":"accomplie"},{"content":"Gérer les contrats avec les fournisseurs de services et assurer le respect des accords.","state":"non-accomplie"},{"content":"Conduct geological surveys to identify potential oil and gas reserves in specific regions.","state":"accomplie"},{"content":"Participer à des projets de recherche et développement pour améliorer les techniques d'extraction.","state":"accomplie"}],"tDateDeb":"2022-09-30T09:14:49Z","tDateRet":"2022-10-18T09:14:49Z","moyenTransport":["avion","route"],"moyenTransportRet":["route","avion"],"createdAt":"2022-03-30T09:14:49Z","updatedAt":"2022-09-10T09:14:49Z","oldDuree":13,"etat":"terminée"},
-{"objetMission":"Évaluation des risques géologiques pour la planification des forages","structure":"SD","type":"etranger","budget":773049.5,"budgetConsome":414374.88,"pays":"Algérie","lieuDep":"Alger","destination":"Ghardaia","employes":["648f4c1bf4e6335f247a9c20","648f4c1af4e6335f247a9c14","648f4c07f4e6335f247a9b1e"],"taches":[{"content":"Coordinate with regulatory agencies to ensure compliance with environmental regulations.","state":"non-accomplie"},{"content":"Participate in industry conferences and workshops to stay updated on emerging trends and technologies.","state":"accomplie"},{"content":"Develop and implement safety protocols for offshore drilling operations.","state":"accomplie"},{"content":"Coordinate with drilling contractors to ensure efficient and safe well operations.","state":"accomplie"},{"content":"Participate in industry conferences and workshops to stay updated on emerging trends and technologies.","state":"accomplie"},{"content":"Provide technical support and guidance to field operations teams during drilling and production activities.","state":"accomplie"}],"tDateDeb":"2023-01-19T17:19:49Z","tDateRet":"2023-06-19T17:19:49Z","moyenTransport":["avion"],"moyenTransportRet":["avion","route"],"createdAt":"2023-01-07T17:19:49Z","updatedAt":"2022-02-19T17:19:49Z","oldDuree":151,"etat":"terminée"},
-{"objetMission":"Rencontre avec des organismes gouvernementaux pour discuter des réglementations","structure":"SD","type":"etranger","budget":303361.39,"budgetConsome":90717.31,"pays":"Algérie","lieuDep":"Alger","destination":"Adrar","employes":["648f4c32f4e6335f247a9d4c"],"taches":[],"tDateDeb":"2023-02-28T03:34:34Z","tDateRet":"2023-03-05T03:34:34Z","moyenTransport":["route","avion"],"moyenTransportRet":["avion"],"createdAt":"2022-02-28T03:34:34Z","updatedAt":"2023-02-16T03:34:34Z","oldDuree":10,"etat":"terminée"},
-{"objetMission":"Élaboration d'un plan stratégique pour l'entreprise","structure":"PMO","type":"etranger","budget":null,"budgetConsome":null,"pays":"Algérie","lieuDep":"Alger","destination":"Ouargla","employes":["648f4c25f4e6335f247a9c9b","648f4c1cf4e6335f247a9c2c","648f4c21f4e6335f247a9c6e","648f4c09f4e6335f247a9b33"],"taches":[{"content":"Préparer des rapports détaillés sur les résultats des inspections des infrastructures pétrolières et gazières.","state":"accomplie"},{"content":"Develop and implement training programs for personnel involved in offshore operations.","state":"accomplie"},{"content":"Participer à des formations spécialisées pour développer des compétences techniques avancées.","state":"accomplie"},{"content":"Contribuer à l'élaboration de plans de maintenance préventive pour les installations pétrolières.","state":"accomplie"},{"content":"Analyser les données de marché pour identifier les tendances et les opportunités d'affaires.","state":"accomplie"},{"content":"Collaborer avec des équipes multidisciplinaires pour résoudre des problèmes techniques complexes.","state":"non-accomplie"},{"content":"Participer à des formations spécialisées pour développer des compétences techniques avancées.","state":"accomplie"}],"tDateDeb":"2019-03-09T04:44:39Z","tDateRet":"2019-04-01T04:44:39Z","moyenTransport":["avion"],"moyenTransportRet":["avion","route"],"createdAt":"2018-04-09T04:44:39Z","updatedAt":"2019-02-17T04:44:39Z","oldDuree":24,"etat":"terminée"},
-{"objetMission":"Participation à une conférence internationale sur l'énergie","structure":"PMO","type":"local","budget":840452.72,"budgetConsome":250473.25,"pays":"Algérie","lieuDep":"Alger","destination":"Tiaret","employes":["648f4c1bf4e6335f247a9c1a"],"taches":[{"content":"Conduct environmental impact assessments for proposed exploration projects.","state":"accomplie"}],"tDateDeb":"2020-01-23T04:30:47Z","tDateRet":"2020-09-23T04:30:47Z","moyenTransport":["route","avion"],"moyenTransportRet":["route"],"createdAt":"2020-01-10T04:30:47Z","updatedAt":"2019-02-23T04:30:47Z","oldDuree":244,"etat":"terminée"},
-{"objetMission":"Étude de faisabilité pour la construction d'une nouvelle raffinerie","structure":"FIN","type":"local","budget":872724.52,"budgetConsome":128402.39,"pays":"Algérie","lieuDep":"Alger","destination":"Illizi","employes":["648f4c1cf4e6335f247a9c23"],"taches":[{"content":"Manage the logistics and supply chain for offshore exploration and production activities.","state":"accomplie"}],"tDateDeb":"2022-01-15T19:46:46Z","tDateRet":"2022-02-08T19:46:46Z","moyenTransport":["avion"],"moyenTransportRet":["avion","route"],"createdAt":"2021-02-15T19:46:46Z","updatedAt":"2021-12-21T19:46:46Z","oldDuree":24,"etat":"terminée"},
-{"objetMission":"Formation sur les techniques de fracturation hydraulique","structure":"PDN","type":"etranger","budget":691482.0,"budgetConsome":255838.73,"pays":"Algérie","lieuDep":"Alger","destination":"Tiaret","employes":["648f4c06f4e6335f247a9b0f"],"taches":[],"tDateDeb":"2021-11-01T00:37:27Z","tDateRet":"2022-07-01T00:37:27Z","moyenTransport":["avion","route"],"moyenTransportRet":["avion","route"],"createdAt":"2021-10-27T00:37:27Z","updatedAt":"2021-10-14T00:37:27Z","oldDuree":7,"etat":"terminée"},
-{"objetMission":"Formation sur la gestion de projet dans le secteur pétrolier","structure":"PDN","type":"local","budget":225927.33,"budgetConsome":285680.9,"pays":"Algérie","lieuDep":"Alger","destination":"Alger","employes":["648f4c2af4e6335f247a9ce6","648f4c0bf4e6335f247a9b4e"],"taches":[{"content":"Conduire des inspections régulières des pipelines pour détecter les fuites et les défauts structurels.","state":"accomplie"}],"tDateDeb":"2020-11-29T05:48:04Z","tDateRet":"2020-12-28T05:48:04Z","moyenTransport":["route","avion"],"moyenTransportRet":["route","avion"],"createdAt":"2020-09-29T05:48:04Z","updatedAt":"2020-06-29T05:48:04Z","oldDuree":22,"etat":"terminée"},
-{"objetMission":"Évaluation des risques liés à l'exploration en eaux profondes","structure":"FIN","type":"etranger","budget":811220.5,"budgetConsome":40696.79,"pays":"Algérie","lieuDep":"Alger","destination":"Biskra","employes":["648f4c1cf4e6335f247a9c2c"],"taches":[{"content":"Participate in industry conferences and workshops to stay updated on emerging trends and technologies.","state":"non-accomplie"},{"content":"Manage the logistics and supply chain for offshore exploration and production activities.","state":"non-accomplie"},{"content":"Participer à des projets de recherche et développement pour améliorer les techniques d'extraction.","state":"non-accomplie"},{"content":"Perform quality control checks on oil and gas samples to ensure accurate analysis.","state":"non-accomplie"},{"content":"Conduire des inspections régulières des pipelines pour détecter les fuites et les défauts structurels.","state":"accomplie"},{"content":"Organiser des réunions avec des partenaires externes pour discuter des opportunités de collaboration.","state":"accomplie"}],"tDateDeb":"2021-06-23T19:22:35Z","tDateRet":"2021-11-23T19:22:35Z","moyenTransport":["route"],"moyenTransportRet":["avion","route"],"createdAt":"2021-05-28T19:22:35Z","updatedAt":"2021-02-23T19:22:35Z","oldDuree":153,"etat":"terminée"},
-{"objetMission":"Rencontre avec des consultants en gestion pour l'amélioration des processus","structure":"DATA","type":"local","budget":316760.06,"budgetConsome":158704.42,"pays":"Algérie","lieuDep":"Alger","destination":"Illizi","employes":["648f4c13f4e6335f247a9bba"],"taches":[{"content":"Élaborer des rapports de conformité réglementaire et suivre les évolutions législatives.","state":"non-accomplie"},{"content":"Organiser des réunions avec des partenaires externes pour discuter des opportunités de collaboration.","state":"accomplie"},{"content":"Participer à des formations spécialisées pour développer des compétences techniques avancées.","state":"accomplie"},{"content":"Élaborer des rapports de conformité réglementaire et suivre les évolutions législatives.","state":"non-accomplie"}],"tDateDeb":"2020-10-19T02:18:55Z","tDateRet":"2021-08-19T02:18:55Z","moyenTransport":["route"],"moyenTransportRet":["route","avion"],"createdAt":"2020-05-19T02:18:55Z","updatedAt":"2020-09-30T02:18:55Z","oldDuree":304,"etat":"terminée"},
-{"objetMission":"Visite de sites de production pour l'optimisation des processus","structure":"DATA","type":"etranger","budget":553596.45,"budgetConsome":965483.05,"pays":"Algérie","lieuDep":"Alger","destination":"Ouargla","employes":["648f4c1ef4e6335f247a9c3b","648f4c22f4e6335f247a9c71","648f4c26f4e6335f247a9cad"],"taches":[{"content":"Develop and implement training programs for personnel involved in offshore operations.","state":"non-accomplie"},{"content":"Conduire des inspections régulières des pipelines pour détecter les fuites et les défauts structurels.","state":"accomplie"},{"content":"Conduct geological surveys to identify potential oil and gas reserves in specific regions.","state":"accomplie"}],"tDateDeb":"2020-01-10T15:31:39Z","tDateRet":"2020-01-22T15:31:39Z","moyenTransport":["route","avion"],"moyenTransportRet":["avion","route"],"createdAt":"2020-01-02T15:31:39Z","updatedAt":"2019-05-10T15:31:39Z","oldDuree":12,"etat":"terminée"},
-{"objetMission":"Évaluation des besoins en infrastructures pour soutenir la croissance de Sonatrach","structure":"CHANGE","type":"etranger","budget":744469.82,"budgetConsome":804455.61,"pays":"Algérie","lieuDep":"Alger","destination":"Ouargla","employes":["648fc2f54862fabc27dc8eb7","648f4c23f4e6335f247a9c83","648f4c19f4e6335f247a9bfc","648f4c19f4e6335f247a9bff"],"taches":[{"content":"Collaborer avec des équipes multidisciplinaires pour résoudre des problèmes techniques complexes.","state":"accomplie"},{"content":"Provide technical support and guidance to field operations teams during drilling and production activities.","state":"non-accomplie"}],"tDateDeb":"2021-12-16T04:50:51Z","tDateRet":"2022-01-02T04:50:51Z","moyenTransport":["avion","route"],"moyenTransportRet":["avion"],"createdAt":"2021-12-05T04:50:51Z","updatedAt":"2021-04-16T04:50:51Z","oldDuree":14,"etat":"terminée"},
-{"objetMission":"Rencontre avec des représentants syndicaux pour discuter des conditions de travail","structure":"SD","type":"local","budget":254140.66,"budgetConsome":663904.53,"pays":"Algérie","lieuDep":"Alger","destination":"Oran","employes":["648f4c21f4e6335f247a9c68","648f4c1cf4e6335f247a9c23","648f4c1bf4e6335f247a9c1d","648f4c32f4e6335f247a9d4f"],"taches":[{"content":"Monitor and analyze drilling data to identify potential drilling problems and propose solutions.","state":"non-accomplie"},{"content":"Develop cost estimation models for new oil and gas development projects.","state":"accomplie"}],"tDateDeb":"2019-01-19T19:13:23Z","tDateRet":"2019-06-19T19:13:23Z","moyenTransport":["route"],"moyenTransportRet":["route","avion"],"createdAt":"2018-12-19T19:13:23Z","updatedAt":"2018-12-19T19:13:23Z","oldDuree":151,"etat":"terminée"},
-{"objetMission":"Rencontre avec des fournisseurs pour l'approvisionnement en équipements","structure":"FIN","type":"local","budget":946056.02,"budgetConsome":298777.83,"pays":"Algérie","lieuDep":"Alger","destination":"Illizi","employes":["648f4c2af4e6335f247a9ce0"],"taches":[{"content":"Effectuer une analyse approfondie des données géologiques pour identifier de nouveaux sites potentiels de forage.","state":"non-accomplie"},{"content":"Participer à des formations spécialisées pour développer des compétences techniques avancées.","state":"non-accomplie"},{"content":"Élaborer des rapports de conformité réglementaire et suivre les évolutions législatives.","state":"non-accomplie"}],"tDateDeb":"2020-04-25T18:05:42Z","tDateRet":"2020-05-14T18:05:42Z","moyenTransport":["route","avion"],"moyenTransportRet":["avion","route"],"createdAt":"2020-04-05T18:05:42Z","updatedAt":"2019-04-25T18:05:42Z","oldDuree":26,"etat":"terminée"},
-{"objetMission":"Analyse des indicateurs de performance pour évaluer la productivité des équipes","structure":"PMO","type":"etranger","budget":525570.06,"budgetConsome":368148.66,"pays":"Algérie","lieuDep":"Alger","destination":"Bejaia","employes":["648f4c27f4e6335f247a9cb6","648f4c0af4e6335f247a9b42","648f4c2af4e6335f247a9ce0","648f4c17f4e6335f247a9be1"],"taches":[{"content":"Conduct geological surveys to identify potential oil and gas reserves in specific regions.","state":"accomplie"},{"content":"Manage the logistics and supply chain for offshore exploration and production activities.","state":"non-accomplie"},{"content":"Coordinate with drilling contractors to ensure efficient and safe well operations.","state":"accomplie"},{"content":"Effectuer des évaluations de risques pour les projets d'exploration et de production.","state":"non-accomplie"},{"content":"Analyser les données de marché pour identifier les tendances et les opportunités d'affaires.","state":"accomplie"},{"content":"Analyser les données de production et identifier des stratégies d'optimisation des rendements.","state":"non-accomplie"}],"tDateDeb":"2020-02-17T07:55:33Z","tDateRet":"2020-04-17T07:55:33Z","moyenTransport":["route"],"moyenTransportRet":["avion","route"],"createdAt":"2019-04-17T07:55:33Z","updatedAt":"2020-02-12T07:55:33Z","oldDuree":60,"etat":"terminée"},
-{"objetMission":"Formation sur les meilleures pratiques de gestion de projet","structure":"DATA","type":"etranger","budget":236300.17,"budgetConsome":572257.47,"pays":"Algérie","lieuDep":"Alger","destination":"Tiaret","employes":["648f4c2df4e6335f247a9d07","648f4c26f4e6335f247a9caa","648f4c0cf4e6335f247a9b5a","648f4c1cf4e6335f247a9c2c"],"taches":[{"content":"Implement data management systems to effectively organize and analyze geological and reservoir data.","state":"non-accomplie"},{"content":"Participer à des projets de recherche et développement pour améliorer les techniques d'extraction.","state":"accomplie"},{"content":"Conduct environmental impact assessments for proposed exploration projects.","state":"non-accomplie"}],"tDateDeb":"2020-12-01T00:13:22Z","tDateRet":"2021-02-01T00:13:22Z","moyenTransport":["route","avion"],"moyenTransportRet":["route","avion"],"createdAt":"2020-06-01T00:13:22Z","updatedAt":"2020-11-10T00:13:22Z","oldDuree":62,"etat":"terminée"},
-{"objetMission":"Formation sur les nouvelles technologies dans l'industrie pétrolière","structure":"TECH","type":"etranger","budget":195063.02,"budgetConsome":246418.54,"pays":"Algérie","lieuDep":"Alger","destination":"Biskra","employes":["648f4c22f4e6335f247a9c71","648f4c0ff4e6335f247a9b7e"],"taches":[{"content":"Élaborer des rapports de conformité réglementaire et suivre les évolutions législatives.","state":"non-accomplie"},{"content":"Élaborer des rapports de conformité réglementaire et suivre les évolutions législatives.","state":"non-accomplie"},{"content":"Conduct technical evaluations of equipment and technologies for oil and gas operations.","state":"accomplie"},{"content":"Participer à des projets de recherche et développement pour améliorer les techniques d'extraction.","state":"accomplie"},{"content":"Develop and implement safety protocols for offshore drilling operations.","state":"non-accomplie"}],"tDateDeb":"2020-06-28T10:13:59Z","tDateRet":"2021-03-28T10:13:59Z","moyenTransport":["route","avion"],"moyenTransportRet":["avion","route"],"createdAt":"2020-06-27T10:13:59Z","updatedAt":"2020-05-29T10:13:59Z","oldDuree":273,"etat":"terminée"},
-{"objetMission":"Rencontre avec des experts en technologie pour l'innovation dans le secteur","structure":"DATA","type":"etranger","budget":260791.09,"budgetConsome":207091.16,"pays":"Algérie","lieuDep":"Alger","destination":"Alger","employes":["648f4c08f4e6335f247a9b24","648f4c32f4e6335f247a9d4f","648f4c16f4e6335f247a9bdb"],"taches":[{"content":"Develop and maintain relationships with key stakeholders, including government entities and local communities.","state":"accomplie"}],"tDateDeb":"2020-10-28T14:02:45Z","tDateRet":"2020-11-09T14:02:45Z","moyenTransport":["avion"],"moyenTransportRet":["route"],"createdAt":"2019-12-28T14:02:45Z","updatedAt":"2020-08-28T14:02:45Z","oldDuree":12,"etat":"terminée"},
-{"objetMission":"Supervision des opérations de forage offshore","structure":"PRC","type":"local","budget":608743.04,"budgetConsome":388947.52,"pays":"Algérie","lieuDep":"Alger","destination":"Laghouat","employes":["648f4c13f4e6335f247a9bb7","648f4c33f4e6335f247a9d5b","648f4c24f4e6335f247a9c8c"],"taches":[{"content":"Effectuer des évaluations économiques pour déterminer la rentabilité des projets d'investissement.","state":"non-accomplie"},{"content":"Assurer la supervision des opérations de logistique et de transport liées aux activités pétrolières.","state":"accomplie"},{"content":"Perform quality control checks on oil and gas samples to ensure accurate analysis.","state":"accomplie"},{"content":"Effectuer des études d'impact environnemental et élaborer des mesures de protection.","state":"non-accomplie"},{"content":"Conduct geological surveys to identify potential oil and gas reserves in specific regions.","state":"accomplie"},{"content":"Élaborer des rapports de conformité réglementaire et suivre les évolutions législatives.","state":"non-accomplie"}],"tDateDeb":"2022-07-21T09:06:39Z","tDateRet":"2022-08-12T09:06:39Z","moyenTransport":["route","avion"],"moyenTransportRet":["avion"],"createdAt":"2022-07-12T09:06:39Z","updatedAt":"2021-07-21T09:06:39Z","oldDuree":23,"etat":"terminée"},
-{"objetMission":"Analyse des données géologiques pour l'exploration de nouveaux gisements","structure":"PMO","type":"local","budget":615879.43,"budgetConsome":984019.67,"pays":"Algérie","lieuDep":"Alger","destination":"Alger","employes":["648f4c24f4e6335f247a9c98","648f4c17f4e6335f247a9be7","648fc2f54862fabc27dc8eb3","648f4c1ef4e6335f247a9c47","648f4c29f4e6335f247a9cda"],"taches":[{"content":"Gérer les contrats avec les fournisseurs de services et assurer le respect des accords.","state":"accomplie"},{"content":"Collaborer avec des équipes multidisciplinaires pour résoudre des problèmes techniques complexes.","state":"non-accomplie"},{"content":"Veiller à la sécurité et à la conformité des opérations sur les sites pétroliers.","state":"non-accomplie"},{"content":"Organiser des réunions avec des partenaires externes pour discuter des opportunités de collaboration.","state":"non-accomplie"},{"content":"Coordinate with drilling contractors to ensure efficient and safe well operations.","state":"accomplie"},{"content":"Develop cost estimation models for new oil and gas development projects.","state":"non-accomplie"}],"tDateDeb":"2021-10-10T06:26:22Z","tDateRet":"2022-02-10T06:26:22Z","moyenTransport":["avion"],"moyenTransportRet":["route"],"createdAt":"2021-05-10T06:26:22Z","updatedAt":"2021-09-21T06:26:22Z","oldDuree":123,"etat":"terminée"},
-{"objetMission":"Inspection des installations de traitement du gaz naturel","structure":"PDN","type":"local","budget":577315.56,"budgetConsome":818593.76,"pays":"Algérie","lieuDep":"Alger","destination":"Illizi","employes":["648f4c17f4e6335f247a9bed","648f4c2ef4e6335f247a9d16","648f4c1af4e6335f247a9c08","648f4c1ef4e6335f247a9c47"],"taches":[{"content":"Conduct geological surveys to identify potential oil and gas reserves in specific regions.","state":"non-accomplie"}],"tDateDeb":"2021-01-03T10:47:52Z","tDateRet":"2021-01-27T10:47:52Z","moyenTransport":["avion","route"],"moyenTransportRet":["avion","route"],"createdAt":"2020-10-03T10:47:52Z","updatedAt":"2020-11-03T10:47:52Z","oldDuree":0,"etat":"terminée"},
-{"objetMission":"Évaluation des performances des installations","structure":"FIN","type":"etranger","budget":142658.1,"budgetConsome":592231.87,"pays":"Algérie","lieuDep":"Alger","destination":"Skikda","employes":["648f4c12f4e6335f247a9bab","648f4c24f4e6335f247a9c95"],"taches":[{"content":"Analyser les données de production et identifier des stratégies d'optimisation des rendements.","state":"accomplie"},{"content":"Monitor and analyze drilling data to identify potential drilling problems and propose solutions.","state":"accomplie"}],"tDateDeb":"2019-11-16T10:59:27Z","tDateRet":"2019-11-24T10:59:27Z","moyenTransport":["route","avion"],"moyenTransportRet":["avion"],"createdAt":"2019-10-29T10:59:27Z","updatedAt":"2019-01-16T10:59:27Z","oldDuree":20,"etat":"terminée"},
-{"objetMission":"Participation à une conférence internationale sur l'énergie","structure":"TECH","type":"etranger","budget":409840.14,"budgetConsome":98991.1,"pays":"Algérie","lieuDep":"Alger","destination":"Illizi","employes":["648f4c08f4e6335f247a9b27","648f4c1ef4e6335f247a9c3b"],"taches":[{"content":"Perform risk assessments and develop contingency plans for potential operational hazards.","state":"accomplie"},{"content":"Participer à des projets de recherche et développement pour améliorer les techniques d'extraction.","state":"accomplie"},{"content":"Effectuer des études d'impact environnemental et élaborer des mesures de protection.","state":"accomplie"},{"content":"Participate in industry conferences and workshops to stay updated on emerging trends and technologies.","state":"non-accomplie"},{"content":"Gérer les contrats avec les fournisseurs de services et assurer le respect des accords.","state":"non-accomplie"}],"tDateDeb":"2023-05-04T00:23:55Z","tDateRet":"2023-05-18T00:23:55Z","moyenTransport":["route"],"moyenTransportRet":["route","avion"],"createdAt":"2022-07-04T00:23:55Z","updatedAt":"2023-03-04T00:23:55Z","oldDuree":31,"etat":"terminée"},
-{"objetMission":"Analyse des coûts d'exploitation pour l'optimisation des budgets","structure":"PRC","type":"local","budget":480293.97,"budgetConsome":923028.69,"pays":"Algérie","lieuDep":"Alger","destination":"Ghardaia","employes":["648f4c09f4e6335f247a9b33","648f4c27f4e6335f247a9cbf","648f4c16f4e6335f247a9bde","648f4c25f4e6335f247a9ca1","648f4c28f4e6335f247a9ccb"],"taches":[{"content":"Perform quality control checks on oil and gas samples to ensure accurate analysis.","state":"accomplie"},{"content":"Effectuer des études d'impact environnemental et élaborer des mesures de protection.","state":"non-accomplie"},{"content":"Coordinate with regulatory agencies to ensure compliance with environmental regulations.","state":"non-accomplie"},{"content":"Collaborate with research institutions to explore innovative technologies for oil and gas exploration.","state":"accomplie"},{"content":"Analyser les données de production et identifier des stratégies d'optimisation des rendements.","state":"accomplie"},{"content":"Implement data management systems to effectively organize and analyze geological and reservoir data.","state":"non-accomplie"}],"tDateDeb":"2022-11-09T06:20:35Z","tDateRet":"2023-11-09T06:20:35Z","moyenTransport":["avion","route"],"moyenTransportRet":["route"],"createdAt":"2021-11-09T06:20:35Z","updatedAt":"2022-10-11T06:20:35Z","oldDuree":22,"etat":"terminée"},
-{"objetMission":"Examen des procédures de maintenance préventive","structure":"SD","type":"etranger","budget":257327.91,"budgetConsome":783923.44,"pays":"Algérie","lieuDep":"Alger","destination":"Bejaia","employes":["648f4c25f4e6335f247a9ca4","648f4c21f4e6335f247a9c6b","648f4c2cf4e6335f247a9cfb","648f4c1cf4e6335f247a9c2c","648f4c2ff4e6335f247a9d25"],"taches":[{"content":"Develop and implement safety protocols for offshore drilling operations.","state":"accomplie"}],"tDateDeb":"2019-09-18T21:25:44Z","tDateRet":"2019-10-02T21:25:44Z","moyenTransport":["avion"],"moyenTransportRet":["avion"],"createdAt":"2018-09-18T21:25:44Z","updatedAt":"2019-02-18T21:25:44Z","oldDuree":28,"etat":"terminée"},
-{"objetMission":"Participation à des conférences sur l'industrie pétrolière et gazière","structure":"PMO","type":"etranger","budget":506338.84,"budgetConsome":942420.58,"pays":"Algérie","lieuDep":"Alger","destination":"Ghardaia","employes":["648f4c32f4e6335f247a9d52"],"taches":[{"content":"Préparer des rapports détaillés sur les résultats des inspections des infrastructures pétrolières et gazières.","state":"non-accomplie"},{"content":"Organiser des réunions avec des partenaires externes pour discuter des opportunités de collaboration.","state":"accomplie"},{"content":"Develop cost estimation models for new oil and gas development projects.","state":"non-accomplie"}],"tDateDeb":"2019-06-03T05:46:17Z","tDateRet":"2019-07-03T05:46:17Z","moyenTransport":["route"],"moyenTransportRet":["route"],"createdAt":"2018-10-03T05:46:17Z","updatedAt":"2019-05-17T05:46:17Z","oldDuree":10,"etat":"terminée"},
-{"objetMission":"Élaboration d'un plan stratégique pour l'entreprise","structure":"PRC","type":"etranger","budget":652419.07,"budgetConsome":854491.5,"pays":"Algérie","lieuDep":"Alger","destination":"Bejaia","employes":["648f4c2cf4e6335f247a9cfb"],"taches":[{"content":"Contribuer à l'élaboration de plans de maintenance préventive pour les installations pétrolières.","state":"non-accomplie"},{"content":"Collaborate with geophysicists to interpret seismic data for exploration purposes.","state":"non-accomplie"},{"content":"Veiller à la sécurité et à la conformité des opérations sur les sites pétroliers.","state":"non-accomplie"},{"content":"Conduct technical evaluations of equipment and technologies for oil and gas operations.","state":"non-accomplie"},{"content":"Develop and maintain relationships with key stakeholders, including government entities and local communities.","state":"accomplie"}],"tDateDeb":"2020-01-21T16:55:14Z","tDateRet":"2020-02-12T16:55:14Z","moyenTransport":["avion"],"moyenTransportRet":["avion"],"createdAt":"2019-04-21T16:55:14Z","updatedAt":"2019-02-21T16:55:14Z","oldDuree":22,"etat":"terminée"},
-{"objetMission":"Analyse des données géologiques pour l'exploration de nouveaux gisements","structure":"FIN","type":"local","budget":373366.42,"budgetConsome":755966.66,"pays":"Algérie","lieuDep":"Alger","destination":"Biskra","employes":["648fc2f54862fabc27dc8ed9","648f4c30f4e6335f247a9d37"],"taches":[{"content":"Conduire des inspections régulières des pipelines pour détecter les fuites et les défauts structurels.","state":"non-accomplie"},{"content":"Perform quality control checks on oil and gas samples to ensure accurate analysis.","state":"accomplie"},{"content":"Conduct economic evaluations of investment opportunities in new oil and gas assets.","state":"accomplie"},{"content":"Monitor and analyze drilling data to identify potential drilling problems and propose solutions.","state":"accomplie"},{"content":"Participer à des formations spécialisées pour développer des compétences techniques avancées.","state":"accomplie"},{"content":"Effectuer des évaluations de risques pour les projets d'exploration et de production.","state":"non-accomplie"}],"tDateDeb":"2019-02-23T18:35:48Z","tDateRet":"2019-12-23T18:35:48Z","moyenTransport":["route"],"moyenTransportRet":["avion"],"createdAt":"2019-02-10T18:35:48Z","updatedAt":"2019-02-07T18:35:48Z","oldDuree":303,"etat":"terminée"},
-{"objetMission":"Étude de marché pour l'identification de nouvelles opportunités","structure":"PDN","type":"etranger","budget":334907.34,"budgetConsome":714608.45,"pays":"Algérie","lieuDep":"Alger","destination":"Ghardaia","employes":["648fc2f54862fabc27dc8ed5","648f4c22f4e6335f247a9c77","648f4c14f4e6335f247a9bc6","648f4c13f4e6335f247a9bb4","648f4c2bf4e6335f247a9cf2"],"taches":[{"content":"Effectuer une analyse approfondie des données géologiques pour identifier de nouveaux sites potentiels de forage.","state":"non-accomplie"},{"content":"Monitor and analyze drilling data to identify potential drilling problems and propose solutions.","state":"accomplie"},{"content":"Participer à des formations spécialisées pour développer des compétences techniques avancées.","state":"non-accomplie"}],"tDateDeb":"2020-02-19T06:33:08Z","tDateRet":"2020-03-18T06:33:08Z","moyenTransport":["route"],"moyenTransportRet":["route"],"createdAt":"2020-01-26T06:33:08Z","updatedAt":"2019-08-19T06:33:08Z","oldDuree":2,"etat":"terminée"},
-{"objetMission":"Formation sur les techniques de forage avancées","structure":"CHANGE","type":"etranger","budget":480636.86,"budgetConsome":381910.18,"pays":"Algérie","lieuDep":"Alger","destination":"Oran","employes":["648f4c2cf4e6335f247a9cfe","648f4c1ef4e6335f247a9c47","648f4c25f4e6335f247a9c9b"],"taches":[{"content":"Préparer des rapports détaillés sur les résultats des inspections des infrastructures pétrolières et gazières.","state":"non-accomplie"},{"content":"Develop and implement training programs for personnel involved in offshore operations.","state":"accomplie"},{"content":"Mener des études de marché pour évaluer la demande et la rentabilité de l'exploration de champs pétroliers spécifiques.","state":"non-accomplie"}],"tDateDeb":"2021-01-13T01:36:17Z","tDateRet":"2021-07-13T01:36:17Z","moyenTransport":["route"],"moyenTransportRet":["avion","route"],"createdAt":"2021-01-06T01:36:17Z","updatedAt":"2020-08-13T01:36:17Z","oldDuree":0,"etat":"terminée"},
-{"objetMission":"Participation à des conférences sur l'industrie pétrolière et gazière","structure":"HCM","type":"etranger","budget":164644.96,"budgetConsome":551411.33,"pays":"Algérie","lieuDep":"Alger","destination":"Skikda","employes":["648f4c1ef4e6335f247a9c44","648f4c27f4e6335f247a9cc2","648f4c06f4e6335f247a9b06"],"taches":[{"content":"Perform reservoir engineering analysis to optimize oil and gas production rates.","state":"non-accomplie"},{"content":"Conduct technical evaluations of equipment and technologies for oil and gas operations.","state":"non-accomplie"},{"content":"Perform quality control checks on oil and gas samples to ensure accurate analysis.","state":"non-accomplie"},{"content":"Conduire des inspections régulières des pipelines pour détecter les fuites et les défauts structurels.","state":"non-accomplie"},{"content":"Conduire des inspections régulières des pipelines pour détecter les fuites et les défauts structurels.","state":"accomplie"},{"content":"Conduct geological surveys to identify potential oil and gas reserves in specific regions.","state":"accomplie"}],"tDateDeb":"2019-05-17T11:54:13Z","tDateRet":"2020-04-17T11:54:13Z","moyenTransport":["avion","route"],"moyenTransportRet":["route","avion"],"createdAt":"2018-11-17T11:54:13Z","updatedAt":"2018-07-17T11:54:13Z","oldDuree":336,"etat":"terminée"},
-{"objetMission":"Étude de marché pour l'identification de nouvelles opportunités","structure":"PDN","type":"local","budget":274403.42,"budgetConsome":944390.9,"pays":"Algérie","lieuDep":"Alger","destination":"Tiaret","employes":["648f4c0bf4e6335f247a9b4e","648f4c25f4e6335f247a9c9e","648f4c1af4e6335f247a9c0e","648f4c0bf4e6335f247a9b48","648f4c08f4e6335f247a9b24"],"taches":[{"content":"Coordinate with regulatory agencies to ensure compliance with environmental regulations.","state":"non-accomplie"}],"tDateDeb":"2019-12-28T15:12:17Z","tDateRet":"2020-07-28T15:12:17Z","moyenTransport":["avion"],"moyenTransportRet":["route","avion"],"createdAt":"2019-11-28T15:12:17Z","updatedAt":"2019-12-22T15:12:17Z","oldDuree":213,"etat":"terminée"},
-{"objetMission":"Formation sur les meilleures pratiques de sécurité","structure":"HCM","type":"etranger","budget":585410.01,"budgetConsome":796143.22,"pays":"Algérie","lieuDep":"Alger","destination":"Tiaret","employes":["648f4c07f4e6335f247a9b1b"],"taches":[{"content":"Manage the logistics and supply chain for offshore exploration and production activities.","state":"non-accomplie"}],"tDateDeb":"2021-01-19T19:44:53Z","tDateRet":"2021-02-03T19:44:53Z","moyenTransport":["route","avion"],"moyenTransportRet":["avion","route"],"createdAt":"2020-11-19T19:44:53Z","updatedAt":"2021-01-06T19:44:53Z","oldDuree":15,"etat":"terminée"},
-{"objetMission":"Analyse des coûts de transport pour l'optimisation logistique","structure":"TECH","type":"local","budget":492258.65,"budgetConsome":977423.99,"pays":"Algérie","lieuDep":"Alger","destination":"Laghouat","employes":["648f4c25f4e6335f247a9c9b","648f4c22f4e6335f247a9c74","648f4c13f4e6335f247a9bb1","648f4c22f4e6335f247a9c7d"],"taches":[{"content":"Perform reservoir engineering analysis to optimize oil and gas production rates.","state":"non-accomplie"},{"content":"Develop and maintain relationships with key stakeholders, including government entities and local communities.","state":"non-accomplie"}],"tDateDeb":"2021-07-03T10:52:11Z","tDateRet":"2021-08-01T10:52:11Z","moyenTransport":["route"],"moyenTransportRet":["route","avion"],"createdAt":"2021-06-06T10:52:11Z","updatedAt":"2021-06-03T10:52:11Z","oldDuree":4,"etat":"terminée"},
-{"objetMission":"Rencontre avec des organismes gouvernementaux pour discuter des réglementations","structure":"PDN","type":"local","budget":373417.52,"budgetConsome":599810.4,"pays":"Algérie","lieuDep":"Alger","destination":"Skikda","employes":["648f4c24f4e6335f247a9c8f"],"taches":[{"content":"Develop and maintain relationships with key stakeholders, including government entities and local communities.","state":"non-accomplie"},{"content":"Participate in industry conferences and workshops to stay updated on emerging trends and technologies.","state":"non-accomplie"},{"content":"Participer à des formations spécialisées pour développer des compétences techniques avancées.","state":"accomplie"},{"content":"Contribuer à l'élaboration de plans de maintenance préventive pour les installations pétrolières.","state":"non-accomplie"},{"content":"Develop cost estimation models for new oil and gas development projects.","state":"non-accomplie"},{"content":"Conduct technical evaluations of equipment and technologies for oil and gas operations.","state":"non-accomplie"}],"tDateDeb":"2019-11-30T03:04:50Z","tDateRet":"2019-12-05T03:04:50Z","moyenTransport":["avion"],"moyenTransportRet":["route"],"createdAt":"2019-11-04T03:04:50Z","updatedAt":"2019-05-30T03:04:50Z","oldDuree":5,"etat":"terminée"},
-{"objetMission":"Supervision des opérations de forage offshore","structure":"CHANGE","type":"etranger","budget":154544.88,"budgetConsome":555678.35,"pays":"Algérie","lieuDep":"Alger","destination":"Laghouat","employes":["648f4c1cf4e6335f247a9c26","648fc2f54862fabc27dc8eb1"],"taches":[{"content":"Participer à des conférences et des événements professionnels pour représenter Sonatrach.","state":"non-accomplie"},{"content":"Develop and implement training programs for personnel involved in offshore operations.","state":"non-accomplie"},{"content":"Assurer la supervision des opérations de logistique et de transport liées aux activités pétrolières.","state":"accomplie"},{"content":"Effectuer des études d'impact environnemental et élaborer des mesures de protection.","state":"accomplie"}],"tDateDeb":"2020-03-16T06:48:18Z","tDateRet":"2020-04-07T06:48:18Z","moyenTransport":["avion","route"],"moyenTransportRet":["route","avion"],"createdAt":"2020-03-04T06:48:18Z","updatedAt":"2020-02-16T06:48:18Z","oldDuree":22,"etat":"terminée"},
-{"objetMission":"Supervision des essais de réservoir pour l'estimation des réserves","structure":"DATA","type":"local","budget":954260.39,"budgetConsome":598529.55,"pays":"Algérie","lieuDep":"Alger","destination":"Skikda","employes":["648f4c2ef4e6335f247a9d13","648f4c0bf4e6335f247a9b4b"],"taches":[{"content":"Conduct environmental impact assessments for proposed exploration projects.","state":"accomplie"},{"content":"Élaborer des rapports de conformité réglementaire et suivre les évolutions législatives.","state":"accomplie"},{"content":"Monitor and analyze drilling data to identify potential drilling problems and propose solutions.","state":"non-accomplie"},{"content":"Perform quality control checks on oil and gas samples to ensure accurate analysis.","state":"non-accomplie"},{"content":"Contribuer à l'élaboration de plans de maintenance préventive pour les installations pétrolières.","state":"non-accomplie"}],"tDateDeb":"2021-08-09T12:43:10Z","tDateRet":"2021-08-16T12:43:10Z","moyenTransport":["avion","route"],"moyenTransportRet":["avion"],"createdAt":"2021-06-09T12:43:10Z","updatedAt":"2020-09-09T12:43:10Z","oldDuree":7,"etat":"terminée"},
-{"objetMission":"Étude de la concurrence sur les marchés internationaux","structure":"MRO","type":"etranger","budget":27451.52,"budgetConsome":43560.16,"pays":"Algérie","lieuDep":"Alger","destination":"Laghouat","employes":["648f4c13f4e6335f247a9bbd","648f4c2ef4e6335f247a9d10","648f4c14f4e6335f247a9bc0"],"taches":[{"content":"Perform risk assessments and develop contingency plans for potential operational hazards.","state":"accomplie"},{"content":"Préparer des rapports détaillés sur les résultats des inspections des infrastructures pétrolières et gazières.","state":"non-accomplie"},{"content":"Assurer la supervision des opérations de logistique et de transport liées aux activités pétrolières.","state":"non-accomplie"},{"content":"Analyser les données de marché pour identifier les tendances et les opportunités d'affaires.","state":"accomplie"},{"content":"Organiser des réunions avec des partenaires externes pour discuter des opportunités de collaboration.","state":"accomplie"}],"tDateDeb":"2020-02-20T22:56:40Z","tDateRet":"2020-07-20T22:56:40Z","moyenTransport":["route"],"moyenTransportRet":["route","avion"],"createdAt":"2020-02-03T22:56:40Z","updatedAt":"2020-02-05T22:56:40Z","oldDuree":151,"etat":"terminée"},
-{"objetMission":"Étude d'impact social pour les projets d'exploitation pétrolière","structure":"MRO","type":"local","budget":451191.31,"budgetConsome":721461.23,"pays":"Algérie","lieuDep":"Alger","destination":"Bejaia","employes":["648f4c17f4e6335f247a9be4","648f4c1ff4e6335f247a9c53","648f4c1bf4e6335f247a9c20","648f4c27f4e6335f247a9cbf"],"taches":[{"content":"Manage the logistics and supply chain for offshore exploration and production activities.","state":"accomplie"},{"content":"Manage the logistics and supply chain for offshore exploration and production activities.","state":"accomplie"}],"tDateDeb":"2019-08-24T15:26:27Z","tDateRet":"2020-08-24T15:26:27Z","moyenTransport":["avion"],"moyenTransportRet":["route","avion"],"createdAt":"2019-08-05T15:26:27Z","updatedAt":"2019-08-10T15:26:27Z","oldDuree":21,"etat":"terminée"},
-{"objetMission":"Visite d'inspection du site pétrolier","structure":"MRO","type":"etranger","budget":311506.27,"budgetConsome":236514.68,"pays":"Algérie","lieuDep":"Alger","destination":"Tiaret","employes":["648f4c14f4e6335f247a9bc0"],"taches":[{"content":"Collaborate with geophysicists to interpret seismic data for exploration purposes.","state":"accomplie"},{"content":"Develop and implement training programs for personnel involved in offshore operations.","state":"accomplie"},{"content":"Implement data management systems to effectively organize and analyze geological and reservoir data.","state":"non-accomplie"},{"content":"Participer à des projets de recherche et développement pour améliorer les techniques d'extraction.","state":"non-accomplie"},{"content":"Perform reservoir engineering analysis to optimize oil and gas production rates.","state":"accomplie"},{"content":"Analyser les données de marché pour identifier les tendances et les opportunités d'affaires.","state":"non-accomplie"}],"tDateDeb":"2019-02-10T06:49:17Z","tDateRet":"2019-02-25T06:49:17Z","moyenTransport":["avion","route"],"moyenTransportRet":["avion"],"createdAt":"2019-01-12T06:49:17Z","updatedAt":"2019-01-25T06:49:17Z","oldDuree":15,"etat":"terminée"},
-{"objetMission":"Rencontre avec les fournisseurs pour la négociation des contrats","structure":"PMO","type":"etranger","budget":400867.11,"budgetConsome":18986.07,"pays":"Algérie","lieuDep":"Alger","destination":"Alger","employes":["648f4c0ff4e6335f247a9b87","648f4c0ef4e6335f247a9b7b","648f4c11f4e6335f247a9b96"],"taches":[{"content":"Conduire des inspections régulières des pipelines pour détecter les fuites et les défauts structurels.","state":"accomplie"},{"content":"Élaborer des rapports de conformité réglementaire et suivre les évolutions législatives.","state":"accomplie"},{"content":"Perform reservoir engineering analysis to optimize oil and gas production rates.","state":"non-accomplie"},{"content":"Gérer les contrats avec les fournisseurs de services et assurer le respect des accords.","state":"non-accomplie"},{"content":"Participer à des formations spécialisées pour développer des compétences techniques avancées.","state":"non-accomplie"}],"tDateDeb":"2020-05-22T02:52:57Z","tDateRet":"2020-11-22T02:52:57Z","moyenTransport":["avion","route"],"moyenTransportRet":["route"],"createdAt":"2020-03-22T02:52:57Z","updatedAt":"2020-05-12T02:52:57Z","oldDuree":184,"etat":"terminée"},
-{"objetMission":"Étude de marché pour l'identification de nouveaux marchés potentiels","structure":"IPM","type":"local","budget":803863.51,"budgetConsome":385214.64,"pays":"Algérie","lieuDep":"Alger","destination":"Ghardaia","employes":["648f4c10f4e6335f247a9b90","648f4c29f4e6335f247a9cd4","648f4c14f4e6335f247a9bc6"],"taches":[],"tDateDeb":"2021-06-02T12:08:18Z","tDateRet":"2021-06-08T12:08:18Z","moyenTransport":["avion"],"moyenTransportRet":["avion"],"createdAt":"2021-05-02T12:08:18Z","updatedAt":"2021-02-02T12:08:18Z","oldDuree":22,"etat":"terminée"},
-{"objetMission":"Rencontre avec des partenaires commerciaux pour discuter de nouvelles opportunités","structure":"MRO","type":"etranger","budget":308212.19,"budgetConsome":359539.35,"pays":"Algérie","lieuDep":"Alger","destination":"Bejaia","employes":["648f4c0bf4e6335f247a9b4b","648f4c14f4e6335f247a9bcc","648f4c0af4e6335f247a9b42"],"taches":[{"content":"Develop and implement safety protocols for offshore drilling operations.","state":"non-accomplie"}],"tDateDeb":"2023-04-10T07:18:24Z","tDateRet":"2023-10-10T07:18:24Z","moyenTransport":["route","avion"],"moyenTransportRet":["avion"],"createdAt":"2023-03-22T07:18:24Z","updatedAt":"2022-09-10T07:18:24Z","oldDuree":183,"etat":"terminée"},
-{"objetMission":"Évaluation des besoins en infrastructure pour de nouveaux projets","structure":"FIN","type":"etranger","budget":816559.1,"budgetConsome":42959.92,"pays":"Algérie","lieuDep":"Alger","destination":"Ouargla","employes":["648fc2f54862fabc27dc8ed7","648f4c09f4e6335f247a9b39","648f4c27f4e6335f247a9cbf"],"taches":[{"content":"Monitor production rates and analyze well performance to optimize reservoir recovery.","state":"accomplie"}],"tDateDeb":"2022-01-31T22:56:40Z","tDateRet":"2022-02-24T22:56:40Z","moyenTransport":["route","avion"],"moyenTransportRet":["avion","route"],"createdAt":"2022-01-27T22:56:40Z","updatedAt":"2021-05-31T22:56:40Z","oldDuree":24,"etat":"terminée"},
-{"objetMission":"Étude de marché pour l'identification de nouvelles opportunités","structure":"SD","type":"etranger","budget":931947.57,"budgetConsome":579307.66,"pays":"Algérie","lieuDep":"Alger","destination":"Ghardaia","employes":["648f4c2ef4e6335f247a9d13","648f4c2ef4e6335f247a9d1c"],"taches":[{"content":"Organiser des réunions avec des partenaires externes pour discuter des opportunités de collaboration.","state":"non-accomplie"},{"content":"Develop and implement safety protocols for offshore drilling operations.","state":"non-accomplie"},{"content":"Collaborate with geophysicists to interpret seismic data for exploration purposes.","state":"non-accomplie"},{"content":"Conduct environmental impact assessments for proposed exploration projects.","state":"non-accomplie"},{"content":"Analyser les données de production et identifier des stratégies d'optimisation des rendements.","state":"non-accomplie"},{"content":"Conduire des inspections régulières des pipelines pour détecter les fuites et les défauts structurels.","state":"accomplie"},{"content":"Analyser les données de marché pour identifier les tendances et les opportunités d'affaires.","state":"accomplie"}],"tDateDeb":"2020-12-24T02:39:12Z","tDateRet":"2021-05-24T02:39:12Z","moyenTransport":["avion","route"],"moyenTransportRet":["avion","route"],"createdAt":"2020-05-24T02:39:12Z","updatedAt":"2020-06-24T02:39:12Z","oldDuree":151,"etat":"terminée"},
-{"objetMission":"Audit des processus de production","structure":"DATA","type":"etranger","budget":54353.0,"budgetConsome":635683.24,"pays":"Algérie","lieuDep":"Alger","destination":"Illizi","employes":["648f4c23f4e6335f247a9c80","648f4c1af4e6335f247a9c08","648f4c06f4e6335f247a9b09","648f4c16f4e6335f247a9bdb","648f4c31f4e6335f247a9d46"],"taches":[{"content":"Assurer la coordination des opérations de forage sur le terrain et superviser les équipes de travail.","state":"non-accomplie"},{"content":"Effectuer une analyse approfondie des données géologiques pour identifier de nouveaux sites potentiels de forage.","state":"non-accomplie"}],"tDateDeb":"2019-10-03T06:20:28Z","tDateRet":"2019-11-01T06:20:28Z","moyenTransport":["route","avion"],"moyenTransportRet":["avion","route"],"createdAt":"2018-11-03T06:20:28Z","updatedAt":"2019-05-03T06:20:28Z","oldDuree":29,"etat":"terminée"},
-{"objetMission":"Évaluation des opportunités d'exploration dans de nouveaux bassins sédimentaires","structure":"PRC","type":"etranger","budget":null,"budgetConsome":null,"pays":"Algérie","lieuDep":"Alger","destination":"Alger","employes":["648f4c2ff4e6335f247a9d22","648fc2f54862fabc27dc8ed3","648f4c22f4e6335f247a9c7a","648f4c0bf4e6335f247a9b48"],"taches":[],"tDateDeb":"2022-08-09T10:11:36Z","tDateRet":"2022-09-04T10:11:36Z","moyenTransport":["route","avion"],"moyenTransportRet":["avion"],"createdAt":"2022-07-25T10:11:36Z","updatedAt":"2022-08-03T10:11:36Z","oldDuree":26,"etat":"terminée"},
-{"objetMission":"Formation sur les nouvelles technologies dans l'industrie pétrolière","structure":"FIN","type":"etranger","budget":923567.5,"budgetConsome":946374.87,"pays":"Algérie","lieuDep":"Alger","destination":"Ouargla","employes":["648f4c1bf4e6335f247a9c20","648f4c1ff4e6335f247a9c53"],"taches":[{"content":"Analyser les données de production et identifier des stratégies d'optimisation des rendements.","state":"non-accomplie"},{"content":"Monitor and analyze drilling data to identify potential drilling problems and propose solutions.","state":"non-accomplie"},{"content":"Élaborer des rapports de conformité réglementaire et suivre les évolutions législatives.","state":"accomplie"}],"tDateDeb":"2023-01-20T03:01:50Z","tDateRet":"2023-02-07T03:01:50Z","moyenTransport":["route"],"moyenTransportRet":["avion"],"createdAt":"2022-12-21T03:01:50Z","updatedAt":"2022-08-20T03:01:50Z","oldDuree":21,"etat":"terminée"},
-{"objetMission":"Analyse des coûts d'exploitation pour l'optimisation des budgets","structure":"TECH","type":"etranger","budget":231422.8,"budgetConsome":963472.93,"pays":"Algérie","lieuDep":"Alger","destination":"Laghouat","employes":["648f4c08f4e6335f247a9b2a"],"taches":[{"content":"Contribuer à l'élaboration de plans de maintenance préventive pour les installations pétrolières.","state":"non-accomplie"},{"content":"Perform quality control checks on oil and gas samples to ensure accurate analysis.","state":"accomplie"}],"tDateDeb":"2022-11-22T03:41:24Z","tDateRet":"2022-12-22T03:41:24Z","moyenTransport":["avion"],"moyenTransportRet":["avion","route"],"createdAt":"2022-10-22T03:41:24Z","updatedAt":"2022-07-22T03:41:24Z","oldDuree":19,"etat":"terminée"},
-{"objetMission":"Rencontre avec des experts en sécurité industrielle","structure":"PMO","type":"local","budget":725610.03,"budgetConsome":102744.97,"pays":"Algérie","lieuDep":"Alger","destination":"Tiaret","employes":["648f4c0ff4e6335f247a9b84"],"taches":[{"content":"Provide technical support and guidance to field operations teams during drilling and production activities.","state":"non-accomplie"}],"tDateDeb":"2020-02-04T12:08:22Z","tDateRet":"2020-02-18T12:08:22Z","moyenTransport":["avion","route"],"moyenTransportRet":["avion","route"],"createdAt":"2019-07-04T12:08:22Z","updatedAt":"2020-02-02T12:08:22Z","oldDuree":14,"etat":"terminée"},
-{"objetMission":"Rencontre avec des représentants syndicaux pour discuter des conditions de travail","structure":"CHANGE","type":"etranger","budget":550099.57,"budgetConsome":262391.84,"pays":"Algérie","lieuDep":"Alger","destination":"Alger","employes":["648f4c1af4e6335f247a9c0b","648f4c1cf4e6335f247a9c2c","648f4c23f4e6335f247a9c86","648f4c26f4e6335f247a9cad","648f4c17f4e6335f247a9be1"],"taches":[{"content":"Veiller à la sécurité et à la conformité des opérations sur les sites pétroliers.","state":"accomplie"},{"content":"Manage the logistics and supply chain for offshore exploration and production activities.","state":"non-accomplie"},{"content":"Assurer la supervision des opérations de logistique et de transport liées aux activités pétrolières.","state":"non-accomplie"}],"tDateDeb":"2020-07-06T20:39:57Z","tDateRet":"2020-12-06T20:39:57Z","moyenTransport":["avion","route"],"moyenTransportRet":["avion","route"],"createdAt":"2019-07-06T20:39:57Z","updatedAt":"2020-06-29T20:39:57Z","oldDuree":1,"etat":"terminée"},
-{"objetMission":"Supervision du processus de forage horizontal","structure":"PRC","type":"etranger","budget":336236.26,"budgetConsome":306559.07,"pays":"Algérie","lieuDep":"Alger","destination":"Skikda","employes":["648f4c19f4e6335f247a9c05","648f4c0ff4e6335f247a9b87"],"taches":[{"content":"Perform risk assessments and develop contingency plans for potential operational hazards.","state":"accomplie"},{"content":"Gérer les contrats avec les fournisseurs de services et assurer le respect des accords.","state":"accomplie"},{"content":"Effectuer des études d'impact environnemental et élaborer des mesures de protection.","state":"accomplie"},{"content":"Analyser les données de production et identifier des stratégies d'optimisation des rendements.","state":"accomplie"},{"content":"Conduct technical evaluations of equipment and technologies for oil and gas operations.","state":"accomplie"},{"content":"Conduct geological surveys to identify potential oil and gas reserves in specific regions.","state":"accomplie"}],"tDateDeb":"2022-07-27T17:19:05Z","tDateRet":"2022-08-05T17:19:05Z","moyenTransport":["avion"],"moyenTransportRet":["avion","route"],"createdAt":"2021-07-27T17:19:05Z","updatedAt":"2022-07-24T17:19:05Z","oldDuree":9,"etat":"terminée"},
-{"objetMission":"Étude de marché pour l'identification de nouvelles opportunités","structure":"PRC","type":"etranger","budget":239591.27,"budgetConsome":440878.21,"pays":"Algérie","lieuDep":"Alger","destination":"Oran","employes":["648f4c1af4e6335f247a9c14","648f4c2cf4e6335f247a9cf8"],"taches":[{"content":"Develop and implement training programs for personnel involved in offshore operations.","state":"accomplie"},{"content":"Élaborer des rapports de conformité réglementaire et suivre les évolutions législatives.","state":"accomplie"},{"content":"Effectuer une analyse approfondie des données géologiques pour identifier de nouveaux sites potentiels de forage.","state":"non-accomplie"},{"content":"Analyser les données de marché pour identifier les tendances et les opportunités d'affaires.","state":"non-accomplie"},{"content":"Conduct economic evaluations of investment opportunities in new oil and gas assets.","state":"accomplie"},{"content":"Participer à des conférences et des événements professionnels pour représenter Sonatrach.","state":"non-accomplie"}],"tDateDeb":"2022-12-11T08:29:10Z","tDateRet":"2023-05-11T08:29:10Z","moyenTransport":["route"],"moyenTransportRet":["avion"],"createdAt":"2022-11-24T08:29:10Z","updatedAt":"2022-04-11T08:29:10Z","oldDuree":151,"etat":"terminée"},
-{"objetMission":"Visite de sites de production pour l'optimisation des processus","structure":"PDN","type":"etranger","budget":355569.39,"budgetConsome":97362.42,"pays":"Algérie","lieuDep":"Alger","destination":"Skikda","employes":["648f4c1bf4e6335f247a9c17","648f4c14f4e6335f247a9bc0","648f4c07f4e6335f247a9b18","648f4c0ef4e6335f247a9b75","648f4c11f4e6335f247a9b9c"],"taches":[{"content":"Préparer des rapports détaillés sur les résultats des inspections des infrastructures pétrolières et gazières.","state":"non-accomplie"},{"content":"Effectuer des études d'impact environnemental et élaborer des mesures de protection.","state":"accomplie"},{"content":"Gérer les contrats avec les fournisseurs de services et assurer le respect des accords.","state":"non-accomplie"},{"content":"Gérer les contrats avec les fournisseurs de services et assurer le respect des accords.","state":"accomplie"}],"tDateDeb":"2019-05-29T09:26:43Z","tDateRet":"2020-02-29T09:26:43Z","moyenTransport":["route"],"moyenTransportRet":["route","avion"],"createdAt":"2019-05-04T09:26:43Z","updatedAt":"2019-05-28T09:26:43Z","oldDuree":276,"etat":"terminée"},
-{"objetMission":"Formation sur les techniques de fracturation hydraulique","structure":"IPM","type":"etranger","budget":763470.7,"budgetConsome":952077.81,"pays":"Algérie","lieuDep":"Alger","destination":"Illizi","employes":["648fc2f54862fabc27dc8eb7","648f4c24f4e6335f247a9c8f","648f4c28f4e6335f247a9ccb","648f4c09f4e6335f247a9b2d"],"taches":[{"content":"Effectuer une analyse approfondie des données géologiques pour identifier de nouveaux sites potentiels de forage.","state":"accomplie"},{"content":"Participer à des projets de recherche et développement pour améliorer les techniques d'extraction.","state":"accomplie"},{"content":"Veiller à la sécurité et à la conformité des opérations sur les sites pétroliers.","state":"accomplie"},{"content":"Participer à des conférences et des événements professionnels pour représenter Sonatrach.","state":"accomplie"},{"content":"Conduct environmental impact assessments for proposed exploration projects.","state":"non-accomplie"},{"content":"Develop and maintain relationships with key stakeholders, including government entities and local communities.","state":"non-accomplie"}],"tDateDeb":"2021-04-30T08:37:54Z","tDateRet":"2021-05-02T08:37:54Z","moyenTransport":["route","avion"],"moyenTransportRet":["avion","route"],"createdAt":"2020-07-30T08:37:54Z","updatedAt":"2020-05-30T08:37:54Z","oldDuree":2,"etat":"terminée"},
-{"objetMission":"Étude d'impact social pour les projets d'exploitation pétrolière","structure":"SD","type":"local","budget":408538.69,"budgetConsome":854041.56,"pays":"Algérie","lieuDep":"Alger","destination":"Ouargla","employes":["648f4c07f4e6335f247a9b12","648f4c1af4e6335f247a9c0e","648f4c09f4e6335f247a9b2d","648f4c10f4e6335f247a9b8d","648f4c2ef4e6335f247a9d13"],"taches":[],"tDateDeb":"2019-07-19T09:29:52Z","tDateRet":"2019-08-13T09:29:52Z","moyenTransport":["avion"],"moyenTransportRet":["avion"],"createdAt":"2018-11-19T09:29:52Z","updatedAt":"2019-06-26T09:29:52Z","oldDuree":25,"etat":"terminée"},
-{"objetMission":"Rencontre avec des représentants syndicaux pour discuter des conditions de travail","structure":"DATA","type":"local","budget":53934.34,"budgetConsome":947133.85,"pays":"Algérie","lieuDep":"Alger","destination":"Ouargla","employes":["648f4c14f4e6335f247a9bc9"],"taches":[{"content":"Préparer des rapports détaillés sur les résultats des inspections des infrastructures pétrolières et gazières.","state":"accomplie"},{"content":"Collaborer avec des équipes multidisciplinaires pour résoudre des problèmes techniques complexes.","state":"non-accomplie"}],"tDateDeb":"2020-02-07T13:17:18Z","tDateRet":"2020-09-07T13:17:18Z","moyenTransport":["route","avion"],"moyenTransportRet":["route","avion"],"createdAt":"2020-01-15T13:17:18Z","updatedAt":"2020-01-21T13:17:18Z","oldDuree":21,"etat":"terminée"},
-{"objetMission":"Supervision des tests de production pour assurer la qualité des hydrocarbures","structure":"CHANGE","type":"etranger","budget":474067.36,"budgetConsome":93255.31,"pays":"Algérie","lieuDep":"Alger","destination":"Skikda","employes":["648f4c26f4e6335f247a9cb0"],"taches":[{"content":"Develop and implement training programs for personnel involved in offshore operations.","state":"accomplie"},{"content":"Effectuer des évaluations économiques pour déterminer la rentabilité des projets d'investissement.","state":"non-accomplie"},{"content":"Perform risk assessments and develop contingency plans for potential operational hazards.","state":"accomplie"},{"content":"Perform risk assessments and develop contingency plans for potential operational hazards.","state":"accomplie"},{"content":"Organiser des réunions avec des partenaires externes pour discuter des opportunités de collaboration.","state":"non-accomplie"},{"content":"Participer à des conférences et des événements professionnels pour représenter Sonatrach.","state":"non-accomplie"},{"content":"Collaborate with research institutions to explore innovative technologies for oil and gas exploration.","state":"accomplie"}],"tDateDeb":"2021-03-10T13:06:50Z","tDateRet":"2021-08-10T13:06:50Z","moyenTransport":["avion","route"],"moyenTransportRet":["route","avion"],"createdAt":"2020-09-10T13:06:50Z","updatedAt":"2020-10-10T13:06:50Z","oldDuree":2,"etat":"terminée"},
-{"objetMission":"Rencontre avec des experts de l'industrie pour partager les meilleures pratiques","structure":"IPM","type":"etranger","budget":161194.14,"budgetConsome":344158.78,"pays":"Algérie","lieuDep":"Alger","destination":"Biskra","employes":["648f4c30f4e6335f247a9d2e","648f4c07f4e6335f247a9b1e"],"taches":[{"content":"Mener des études de marché pour évaluer la demande et la rentabilité de l'exploration de champs pétroliers spécifiques.","state":"non-accomplie"},{"content":"Monitor and analyze drilling data to identify potential drilling problems and propose solutions.","state":"non-accomplie"},{"content":"Conduct environmental impact assessments for proposed exploration projects.","state":"non-accomplie"},{"content":"Manage the logistics and supply chain for offshore exploration and production activities.","state":"non-accomplie"}],"tDateDeb":"2019-12-19T23:13:00Z","tDateRet":"2019-12-26T23:13:00Z","moyenTransport":["route"],"moyenTransportRet":["route","avion"],"createdAt":"2019-12-01T23:13:00Z","updatedAt":"2019-12-03T23:13:00Z","oldDuree":7,"etat":"terminée"},
-{"objetMission":"Formation sur les meilleures pratiques de sécurité","structure":"PRC","type":"etranger","budget":891387.4,"budgetConsome":943728.66,"pays":"Algérie","lieuDep":"Alger","destination":"Alger","employes":["648f4c1ef4e6335f247a9c3e"],"taches":[{"content":"Develop and implement safety protocols for offshore drilling operations.","state":"accomplie"},{"content":"Develop and maintain relationships with key stakeholders, including government entities and local communities.","state":"accomplie"},{"content":"Analyser les données de marché pour identifier les tendances et les opportunités d'affaires.","state":"accomplie"},{"content":"Analyser les données de production et identifier des stratégies d'optimisation des rendements.","state":"accomplie"}],"tDateDeb":"2019-08-21T12:37:19Z","tDateRet":"2019-09-21T12:37:19Z","moyenTransport":["route"],"moyenTransportRet":["route"],"createdAt":"2018-08-21T12:37:19Z","updatedAt":"2018-11-21T12:37:19Z","oldDuree":31,"etat":"terminée"},
-{"objetMission":"Étude de marché pour l'identification de nouvelles opportunités","structure":"IPM","type":"etranger","budget":537001.14,"budgetConsome":26898.22,"pays":"Algérie","lieuDep":"Alger","destination":"Laghouat","employes":["648f4c24f4e6335f247a9c8c","648f4c26f4e6335f247a9caa","648f4c22f4e6335f247a9c7a","648f4c21f4e6335f247a9c65","648f4c31f4e6335f247a9d40"],"taches":[{"content":"Contribuer à l'élaboration de plans de maintenance préventive pour les installations pétrolières.","state":"non-accomplie"},{"content":"Mener des études de marché pour évaluer la demande et la rentabilité de l'exploration de champs pétroliers spécifiques.","state":"accomplie"},{"content":"Participer à des projets de recherche et développement pour améliorer les techniques d'extraction.","state":"accomplie"}],"tDateDeb":"2020-09-27T22:23:27Z","tDateRet":"2020-11-27T22:23:27Z","moyenTransport":["avion","route"],"moyenTransportRet":["route","avion"],"createdAt":"2020-09-08T22:23:27Z","updatedAt":"2020-09-15T22:23:27Z","oldDuree":61,"etat":"terminée"},
-{"objetMission":"Analyse des données de production pour l'optimisation des rendements","structure":"PMO","type":"etranger","budget":203118.94,"budgetConsome":483780.84,"pays":"Algérie","lieuDep":"Alger","destination":"Laghouat","employes":["648f4c15f4e6335f247a9bd5"],"taches":[{"content":"Manage the logistics and supply chain for offshore exploration and production activities.","state":"accomplie"},{"content":"Élaborer des rapports de conformité réglementaire et suivre les évolutions législatives.","state":"non-accomplie"},{"content":"Analyser les données de production et identifier des stratégies d'optimisation des rendements.","state":"non-accomplie"},{"content":"Effectuer des évaluations de risques pour les projets d'exploration et de production.","state":"accomplie"}],"tDateDeb":"2020-10-14T07:15:31Z","tDateRet":"2020-10-19T07:15:31Z","moyenTransport":["route"],"moyenTransportRet":["avion"],"createdAt":"2020-09-26T07:15:31Z","updatedAt":"2020-04-14T07:15:31Z","oldDuree":8,"etat":"terminée"},
-{"objetMission":"Formation sur les techniques de fracturation hydraulique","structure":"PDN","type":"local","budget":474078.15,"budgetConsome":419253.75,"pays":"Algérie","lieuDep":"Alger","destination":"Alger","employes":["648f4c24f4e6335f247a9c92","648f4c0ef4e6335f247a9b78"],"taches":[{"content":"Perform risk assessments and develop contingency plans for potential operational hazards.","state":"accomplie"}],"tDateDeb":"2023-02-08T15:20:08Z","tDateRet":"2023-09-08T15:20:08Z","moyenTransport":["avion"],"moyenTransportRet":["route"],"createdAt":"2022-11-08T15:20:08Z","updatedAt":"2023-01-24T15:20:08Z","oldDuree":212,"etat":"terminée"},
-{"objetMission":"Rencontre avec des organismes gouvernementaux pour discuter des réglementations","structure":"DATA","type":"local","budget":68214.02,"budgetConsome":277899.25,"pays":"Algérie","lieuDep":"Alger","destination":"Ouargla","employes":["648f4c32f4e6335f247a9d4c","648f4c26f4e6335f247a9cb3","648f4c0af4e6335f247a9b3c","648f4c0bf4e6335f247a9b4e"],"taches":[{"content":"Participer à des formations spécialisées pour développer des compétences techniques avancées.","state":"accomplie"}],"tDateDeb":"2022-11-17T12:28:21Z","tDateRet":"2023-09-17T12:28:21Z","moyenTransport":["route"],"moyenTransportRet":["avion","route"],"createdAt":"2022-11-11T12:28:21Z","updatedAt":"2022-11-06T12:28:21Z","oldDuree":304,"etat":"terminée"},
-{"objetMission":"Inspection des installations de stockage de gaz naturel","structure":"PMO","type":"local","budget":630071.75,"budgetConsome":967237.11,"pays":"Algérie","lieuDep":"Alger","destination":"Ghardaia","employes":["648f4c33f4e6335f247a9d55","648f4c2ef4e6335f247a9d1c","648f4c1ef4e6335f247a9c47","648f4c2cf4e6335f247a9cfe","648f4c31f4e6335f247a9d43"],"taches":[{"content":"Effectuer des évaluations de risques pour les projets d'exploration et de production.","state":"accomplie"},{"content":"Effectuer des évaluations de risques pour les projets d'exploration et de production.","state":"non-accomplie"},{"content":"Coordinate with regulatory agencies to ensure compliance with environmental regulations.","state":"accomplie"},{"content":"Mener des études de marché pour évaluer la demande et la rentabilité de l'exploration de champs pétroliers spécifiques.","state":"non-accomplie"},{"content":"Effectuer des évaluations économiques pour déterminer la rentabilité des projets d'investissement.","state":"accomplie"},{"content":"Perform reservoir engineering analysis to optimize oil and gas production rates.","state":"non-accomplie"},{"content":"Implement data management systems to effectively organize and analyze geological and reservoir data.","state":"non-accomplie"}],"tDateDeb":"2021-05-19T22:34:54Z","tDateRet":"2021-08-19T22:34:54Z","moyenTransport":["avion","route"],"moyenTransportRet":["avion","route"],"createdAt":"2021-05-11T22:34:54Z","updatedAt":"2021-05-08T22:34:54Z","oldDuree":29,"etat":"terminée"},
-{"objetMission":"Analyse des risques environnementaux","structure":"TECH","type":"local","budget":509339.26,"budgetConsome":402641.32,"pays":"Algérie","lieuDep":"Alger","destination":"Laghouat","employes":["648f4c24f4e6335f247a9c8f","648f4c2ff4e6335f247a9d22","648f4c27f4e6335f247a9cb6","648f4c0cf4e6335f247a9b57","648f4c09f4e6335f247a9b36"],"taches":[{"content":"Conduct environmental impact assessments for proposed exploration projects.","state":"non-accomplie"},{"content":"Gérer les contrats avec les fournisseurs de services et assurer le respect des accords.","state":"accomplie"}],"tDateDeb":"2020-02-06T08:02:18Z","tDateRet":"2020-02-14T08:02:18Z","moyenTransport":["avion"],"moyenTransportRet":["avion"],"createdAt":"2019-02-06T08:02:18Z","updatedAt":"2019-06-06T08:02:18Z","oldDuree":8,"etat":"terminée"},
-{"objetMission":"Élaboration d'un plan de communication pour un projet majeur","structure":"DATA","type":"local","budget":126514.38,"budgetConsome":252357.04,"pays":"Algérie","lieuDep":"Alger","destination":"Alger","employes":["648f4c18f4e6335f247a9bf9","648f4c30f4e6335f247a9d31"],"taches":[{"content":"Develop and maintain relationships with key stakeholders, including government entities and local communities.","state":"accomplie"},{"content":"Develop and maintain relationships with key stakeholders, including government entities and local communities.","state":"non-accomplie"},{"content":"Monitor and analyze drilling data to identify potential drilling problems and propose solutions.","state":"non-accomplie"}],"tDateDeb":"2023-01-24T17:11:04Z","tDateRet":"2023-02-07T17:11:04Z","moyenTransport":["avion"],"moyenTransportRet":["route","avion"],"createdAt":"2022-03-24T17:11:04Z","updatedAt":"2022-04-24T17:11:04Z","oldDuree":31,"etat":"terminée"},
-{"objetMission":"Formation sur les normes de sécurité internationales dans l'industrie pétrolière","structure":"IPM","type":"local","budget":210599.91,"budgetConsome":759331.8,"pays":"Algérie","lieuDep":"Alger","destination":"Biskra","employes":["648f4c31f4e6335f247a9d3d","648f4c08f4e6335f247a9b2a","648f4c26f4e6335f247a9caa"],"taches":[{"content":"Manage the logistics and supply chain for offshore exploration and production activities.","state":"non-accomplie"},{"content":"Organiser des réunions avec des partenaires externes pour discuter des opportunités de collaboration.","state":"non-accomplie"},{"content":"Participate in industry conferences and workshops to stay updated on emerging trends and technologies.","state":"accomplie"},{"content":"Conduire des inspections régulières des pipelines pour détecter les fuites et les défauts structurels.","state":"non-accomplie"},{"content":"Effectuer des évaluations de risques pour les projets d'exploration et de production.","state":"accomplie"}],"tDateDeb":"2021-06-25T21:26:45Z","tDateRet":"2021-12-25T21:26:45Z","moyenTransport":["avion","route"],"moyenTransportRet":["route","avion"],"createdAt":"2021-05-28T21:26:45Z","updatedAt":"2021-01-25T21:26:45Z","oldDuree":1,"etat":"terminée"},
-{"objetMission":"Rencontre avec des experts en technologie pour l'innovation dans le secteur","structure":"SD","type":"etranger","budget":755056.37,"budgetConsome":102291.38,"pays":"Algérie","lieuDep":"Alger","destination":"Laghouat","employes":["648fc2f54862fabc27dc8eb9"],"taches":[{"content":"Perform risk assessments and develop contingency plans for potential operational hazards.","state":"accomplie"}],"tDateDeb":"2021-08-17T23:12:34Z","tDateRet":"2022-07-17T23:12:34Z","moyenTransport":["route","avion"],"moyenTransportRet":["avion","route"],"createdAt":"2021-07-23T23:12:34Z","updatedAt":"2021-07-24T23:12:34Z","oldDuree":31,"etat":"terminée"},
-{"objetMission":"Inspection des pipelines pour assurer la sécurité des infrastructures","structure":"PRC","type":"local","budget":962911.75,"budgetConsome":520917.4,"pays":"Algérie","lieuDep":"Alger","destination":"Illizi","employes":["648f4c30f4e6335f247a9d34","648f4c10f4e6335f247a9b90"],"taches":[{"content":"Effectuer des évaluations économiques pour déterminer la rentabilité des projets d'investissement.","state":"non-accomplie"},{"content":"Assurer la coordination des opérations de forage sur le terrain et superviser les équipes de travail.","state":"accomplie"},{"content":"Gérer les contrats avec les fournisseurs de services et assurer le respect des accords.","state":"non-accomplie"},{"content":"Gérer les contrats avec les fournisseurs de services et assurer le respect des accords.","state":"accomplie"},{"content":"Perform risk assessments and develop contingency plans for potential operational hazards.","state":"accomplie"}],"tDateDeb":"2019-05-14T15:54:10Z","tDateRet":"2019-05-16T15:54:10Z","moyenTransport":["avion"],"moyenTransportRet":["avion"],"createdAt":"2019-04-15T15:54:10Z","updatedAt":"2018-09-14T15:54:10Z","oldDuree":24,"etat":"terminée"},
-{"objetMission":"Analyse des coûts de transport pour l'optimisation logistique","structure":"SD","type":"local","budget":369967.68,"budgetConsome":709045.01,"pays":"Algérie","lieuDep":"Alger","destination":"Ghardaia","employes":["648fc2f54862fabc27dc8ed3","648f4c0ef4e6335f247a9b72","648fc2f54862fabc27dc8eb1"],"taches":[{"content":"Collaborer avec des équipes multidisciplinaires pour résoudre des problèmes techniques complexes.","state":"non-accomplie"}],"tDateDeb":"2022-12-20T18:07:23Z","tDateRet":"2023-01-18T18:07:23Z","moyenTransport":["avion","route"],"moyenTransportRet":["avion","route"],"createdAt":"2022-11-22T18:07:23Z","updatedAt":"2022-11-20T18:07:23Z","oldDuree":30,"etat":"terminée"},
-{"objetMission":"Évaluation des risques géologiques pour la planification des forages","structure":"PDN","type":"etranger","budget":429142.21,"budgetConsome":121683.52,"pays":"Algérie","lieuDep":"Alger","destination":"Illizi","employes":["648f4c31f4e6335f247a9d3a","648f4c0cf4e6335f247a9b54"],"taches":[{"content":"Participate in industry conferences and workshops to stay updated on emerging trends and technologies.","state":"non-accomplie"},{"content":"Gérer les contrats avec les fournisseurs de services et assurer le respect des accords.","state":"non-accomplie"},{"content":"Collaborate with geophysicists to interpret seismic data for exploration purposes.","state":"accomplie"},{"content":"Participer à des conférences et des événements professionnels pour représenter Sonatrach.","state":"accomplie"},{"content":"Develop and maintain relationships with key stakeholders, including government entities and local communities.","state":"non-accomplie"}],"tDateDeb":"2022-08-09T15:38:33Z","tDateRet":"2022-12-09T15:38:33Z","moyenTransport":["route","avion"],"moyenTransportRet":["route"],"createdAt":"2022-07-23T15:38:33Z","updatedAt":"2022-07-15T15:38:33Z","oldDuree":21,"etat":"terminée"},
-{"objetMission":"Visite d'inspection du site pétrolier","structure":"HCM","type":"etranger","budget":755786.52,"budgetConsome":126835.94,"pays":"Algérie","lieuDep":"Alger","destination":"Oran","employes":["648f4c27f4e6335f247a9cbf","648f4c27f4e6335f247a9cbc","648f4c1af4e6335f247a9c14","648f4c11f4e6335f247a9b9c"],"taches":[{"content":"Participate in industry conferences and workshops to stay updated on emerging trends and technologies.","state":"non-accomplie"}],"tDateDeb":"2021-12-26T16:55:45Z","tDateRet":"2022-02-26T16:55:45Z","moyenTransport":["route"],"moyenTransportRet":["route"],"createdAt":"2021-12-19T16:55:45Z","updatedAt":"2021-05-26T16:55:45Z","oldDuree":62,"etat":"terminée"},
-{"objetMission":"Analyse des coûts de production et proposition d'améliorations","structure":"FIN","type":"etranger","budget":110421.86,"budgetConsome":48628.14,"pays":"Algérie","lieuDep":"Alger","destination":"Biskra","employes":["648fc2f54862fabc27dc8ed5"],"taches":[{"content":"Effectuer une analyse approfondie des données géologiques pour identifier de nouveaux sites potentiels de forage.","state":"accomplie"},{"content":"Assurer la coordination des opérations de forage sur le terrain et superviser les équipes de travail.","state":"non-accomplie"},{"content":"Monitor production rates and analyze well performance to optimize reservoir recovery.","state":"accomplie"}],"tDateDeb":"2020-10-16T09:46:37Z","tDateRet":"2020-10-22T09:46:37Z","moyenTransport":["route","avion"],"moyenTransportRet":["route"],"createdAt":"2020-07-16T09:46:37Z","updatedAt":"2020-10-04T09:46:37Z","oldDuree":6,"etat":"terminée"},
-{"objetMission":"Inspection des installations de traitement du gaz naturel","structure":"DATA","type":"local","budget":358673.07,"budgetConsome":912088.31,"pays":"Algérie","lieuDep":"Alger","destination":"Alger","employes":["648f4c0df4e6335f247a9b6c","648f4c25f4e6335f247a9ca7","648f4c09f4e6335f247a9b30","648f4c30f4e6335f247a9d37"],"taches":[{"content":"Effectuer une analyse approfondie des données géologiques pour identifier de nouveaux sites potentiels de forage.","state":"accomplie"},{"content":"Coordinate with regulatory agencies to ensure compliance with environmental regulations.","state":"accomplie"},{"content":"Contribuer à l'élaboration de plans de maintenance préventive pour les installations pétrolières.","state":"accomplie"},{"content":"Collaborate with geophysicists to interpret seismic data for exploration purposes.","state":"accomplie"},{"content":"Conduct technical evaluations of equipment and technologies for oil and gas operations.","state":"non-accomplie"},{"content":"Assurer la coordination des opérations de forage sur le terrain et superviser les équipes de travail.","state":"non-accomplie"}],"tDateDeb":"2021-04-26T09:21:58Z","tDateRet":"2021-04-28T09:21:58Z","moyenTransport":["avion","route"],"moyenTransportRet":["route"],"createdAt":"2020-04-26T09:21:58Z","updatedAt":"2021-04-18T09:21:58Z","oldDuree":15,"etat":"terminée"},
-{"objetMission":"Analyse des risques environnementaux","structure":"MRO","type":"etranger","budget":289622.75,"budgetConsome":457570.14,"pays":"Algérie","lieuDep":"Alger","destination":"Tiaret","employes":["648f4c22f4e6335f247a9c77","648f4c1bf4e6335f247a9c1a","648f4c1ff4e6335f247a9c4a"],"taches":[{"content":"Assurer la coordination des opérations de forage sur le terrain et superviser les équipes de travail.","state":"accomplie"}],"tDateDeb":"2021-03-06T09:14:46Z","tDateRet":"2022-01-06T09:14:46Z","moyenTransport":["route","avion"],"moyenTransportRet":["route"],"createdAt":"2021-02-07T09:14:46Z","updatedAt":"2020-06-06T09:14:46Z","oldDuree":14,"etat":"terminée"},
-{"objetMission":"Étude de faisabilité pour l'exploration de nouveaux gisements","structure":"IPM","type":"etranger","budget":907656.36,"budgetConsome":818486.89,"pays":"Algérie","lieuDep":"Alger","destination":"Illizi","employes":["648f4c0ef4e6335f247a9b7b"],"taches":[{"content":"Élaborer des rapports de conformité réglementaire et suivre les évolutions législatives.","state":"accomplie"},{"content":"Develop and implement safety protocols for offshore drilling operations.","state":"non-accomplie"},{"content":"Analyser les données de production et identifier des stratégies d'optimisation des rendements.","state":"accomplie"},{"content":"Participer à des conférences et des événements professionnels pour représenter Sonatrach.","state":"accomplie"}],"tDateDeb":"2019-03-23T21:52:49Z","tDateRet":"2019-04-23T21:52:49Z","moyenTransport":["route"],"moyenTransportRet":["avion"],"createdAt":"2019-03-15T21:52:49Z","updatedAt":"2018-05-23T21:52:49Z","oldDuree":10,"etat":"terminée"},
-{"objetMission":"Examen des procédures de maintenance préventive","structure":"IPM","type":"etranger","budget":247275.96,"budgetConsome":724004.12,"pays":"Algérie","lieuDep":"Alger","destination":"Illizi","employes":["648f4c12f4e6335f247a9ba5","648f4c2ef4e6335f247a9d13","648f4c2af4e6335f247a9cdd"],"taches":[{"content":"Collaborate with geophysicists to interpret seismic data for exploration purposes.","state":"non-accomplie"},{"content":"Effectuer des évaluations économiques pour déterminer la rentabilité des projets d'investissement.","state":"non-accomplie"},{"content":"Collaborate with research institutions to explore innovative technologies for oil and gas exploration.","state":"non-accomplie"}],"tDateDeb":"2022-08-29T09:28:43Z","tDateRet":"2022-09-15T09:28:43Z","moyenTransport":["avion","route"],"moyenTransportRet":["avion"],"createdAt":"2022-08-08T09:28:43Z","updatedAt":"2021-10-29T09:28:43Z","oldDuree":17,"etat":"terminée"},
-{"objetMission":"Évaluation des risques liés à l'exploration en eaux profondes","structure":"PRC","type":"local","budget":101083.71,"budgetConsome":89336.7,"pays":"Algérie","lieuDep":"Alger","destination":"Tiaret","employes":["648f4c31f4e6335f247a9d3d"],"taches":[{"content":"Conduct economic evaluations of investment opportunities in new oil and gas assets.","state":"accomplie"},{"content":"Provide technical support and guidance to field operations teams during drilling and production activities.","state":"non-accomplie"},{"content":"Conduct economic evaluations of investment opportunities in new oil and gas assets.","state":"non-accomplie"},{"content":"Manage the logistics and supply chain for offshore exploration and production activities.","state":"accomplie"},{"content":"Conduct environmental impact assessments for proposed exploration projects.","state":"accomplie"},{"content":"Assurer la coordination des opérations de forage sur le terrain et superviser les équipes de travail.","state":"accomplie"}],"tDateDeb":"2022-09-17T19:47:45Z","tDateRet":"2023-06-17T19:47:45Z","moyenTransport":["route","avion"],"moyenTransportRet":["route"],"createdAt":"2021-09-17T19:47:45Z","updatedAt":"2022-08-27T19:47:45Z","oldDuree":273,"etat":"terminée"},
-{"objetMission":"Analyse des données de production pour optimiser l'efficacité opérationnelle","structure":"FIN","type":"etranger","budget":958338.69,"budgetConsome":150477.07,"pays":"Algérie","lieuDep":"Alger","destination":"Biskra","employes":["648f4c1df4e6335f247a9c38","648f4c0df4e6335f247a9b6c","648f4c19f4e6335f247a9c02","648f4c27f4e6335f247a9cb6","648f4c30f4e6335f247a9d34"],"taches":[{"content":"Effectuer des évaluations de risques pour les projets d'exploration et de production.","state":"non-accomplie"},{"content":"Coordinate with drilling contractors to ensure efficient and safe well operations.","state":"accomplie"},{"content":"Participer à des projets de recherche et développement pour améliorer les techniques d'extraction.","state":"non-accomplie"},{"content":"Conduct environmental impact assessments for proposed exploration projects.","state":"accomplie"}],"tDateDeb":"2022-09-28T09:29:57Z","tDateRet":"2022-10-03T09:29:57Z","moyenTransport":["route","avion"],"moyenTransportRet":["route"],"createdAt":"2022-01-28T09:29:57Z","updatedAt":"2022-09-13T09:29:57Z","oldDuree":5,"etat":"terminée"},
-{"objetMission":"Analyse des données sismiques pour l'exploration de nouveaux gisements","structure":"TECH","type":"etranger","budget":544426.56,"budgetConsome":862232.31,"pays":"Algérie","lieuDep":"Alger","destination":"Adrar","employes":["648f4c2df4e6335f247a9d0d","648fc2f54862fabc27dc8ed3","648f4c32f4e6335f247a9d49"],"taches":[],"tDateDeb":"2021-02-17T04:22:47Z","tDateRet":"2021-10-17T04:22:47Z","moyenTransport":["route","avion"],"moyenTransportRet":["route"],"createdAt":"2021-01-18T04:22:47Z","updatedAt":"2021-01-30T04:22:47Z","oldDuree":3,"etat":"terminée"},
-{"objetMission":"Réunion avec les partenaires commerciaux","structure":"PRC","type":"local","budget":440366.49,"budgetConsome":311502.55,"pays":"Algérie","lieuDep":"Alger","destination":"Alger","employes":["648f4c07f4e6335f247a9b15"],"taches":[],"tDateDeb":"2021-10-24T14:03:15Z","tDateRet":"2022-02-24T14:03:15Z","moyenTransport":["avion","route"],"moyenTransportRet":["avion"],"createdAt":"2021-10-06T14:03:15Z","updatedAt":"2021-02-24T14:03:15Z","oldDuree":123,"etat":"terminée"},
-{"objetMission":"Formation sur les normes de sécurité internationales dans l'industrie pétrolière","structure":"PDN","type":"local","budget":null,"budgetConsome":null,"pays":"Algérie","lieuDep":"Alger","destination":"Bejaia","employes":["648f4c17f4e6335f247a9bed","648f4c33f4e6335f247a9d55"],"taches":[{"content":"Collaborer avec des équipes multidisciplinaires pour résoudre des problèmes techniques complexes.","state":"non-accomplie"},{"content":"Conduire des inspections régulières des pipelines pour détecter les fuites et les défauts structurels.","state":"accomplie"},{"content":"Conduct economic evaluations of investment opportunities in new oil and gas assets.","state":"accomplie"}],"tDateDeb":"2021-07-29T18:10:26Z","tDateRet":"2021-08-08T18:10:26Z","moyenTransport":["route","avion"],"moyenTransportRet":["avion","route"],"createdAt":"2021-02-28T18:10:26Z","updatedAt":"2020-07-29T18:10:26Z","oldDuree":25,"etat":"terminée"},
-{"objetMission":"Rencontre avec les fournisseurs pour la négociation des contrats","structure":"PMO","type":"etranger","budget":476570.04,"budgetConsome":713935.32,"pays":"Algérie","lieuDep":"Alger","destination":"Adrar","employes":["648f4c20f4e6335f247a9c56","648f4c20f4e6335f247a9c5c","648f4c2cf4e6335f247a9cfb","648f4c33f4e6335f247a9d58","648fc2f54862fabc27dc8ed3"],"taches":[{"content":"Analyser les données de marché pour identifier les tendances et les opportunités d'affaires.","state":"accomplie"},{"content":"Veiller à la sécurité et à la conformité des opérations sur les sites pétroliers.","state":"non-accomplie"},{"content":"Participer à des projets de recherche et développement pour améliorer les techniques d'extraction.","state":"non-accomplie"}],"tDateDeb":"2019-09-22T12:19:04Z","tDateRet":"2019-10-21T12:19:04Z","moyenTransport":["route"],"moyenTransportRet":["route","avion"],"createdAt":"2018-12-22T12:19:04Z","updatedAt":"2019-02-22T12:19:04Z","oldDuree":29,"etat":"terminée"},
-{"objetMission":"Analyse des données de production pour optimiser l'efficacité opérationnelle","structure":"PMO","type":"local","budget":69154.71,"budgetConsome":264036.91,"pays":"Algérie","lieuDep":"Alger","destination":"Ghardaia","employes":["648f4c24f4e6335f247a9c98","648f4c08f4e6335f247a9b27"],"taches":[{"content":"Conduct economic evaluations of investment opportunities in new oil and gas assets.","state":"non-accomplie"},{"content":"Conduct economic evaluations of investment opportunities in new oil and gas assets.","state":"non-accomplie"}],"tDateDeb":"2019-11-12T07:38:14Z","tDateRet":"2020-02-12T07:38:14Z","moyenTransport":["avion","route"],"moyenTransportRet":["route"],"createdAt":"2019-02-12T07:38:14Z","updatedAt":"2019-10-29T07:38:14Z","oldDuree":92,"etat":"terminée"},
-{"objetMission":"Supervision du processus de forage horizontal","structure":"PMO","type":"etranger","budget":290735.29,"budgetConsome":740291.07,"pays":"Algérie","lieuDep":"Alger","destination":"Oran","employes":["648f4c22f4e6335f247a9c7a","648f4c28f4e6335f247a9cc5","648f4c0af4e6335f247a9b45","648f4c0af4e6335f247a9b42"],"taches":[{"content":"Develop and implement training programs for personnel involved in offshore operations.","state":"accomplie"},{"content":"Perform reservoir engineering analysis to optimize oil and gas production rates.","state":"accomplie"}],"tDateDeb":"2023-03-26T12:55:46Z","tDateRet":"2023-04-04T12:55:46Z","moyenTransport":["route","avion"],"moyenTransportRet":["avion","route"],"createdAt":"2023-02-26T12:55:46Z","updatedAt":"2022-06-26T12:55:46Z","oldDuree":13,"etat":"terminée"},
-{"objetMission":"Participation à des réunions de l'industrie pour le réseautage","structure":"CHANGE","type":"etranger","budget":387660.53,"budgetConsome":894466.99,"pays":"Algérie","lieuDep":"Alger","destination":"Bejaia","employes":["648f4c2df4e6335f247a9d0d","648f4c20f4e6335f247a9c59"],"taches":[{"content":"Participer à des projets de recherche et développement pour améliorer les techniques d'extraction.","state":"accomplie"},{"content":"Effectuer des évaluations économiques pour déterminer la rentabilité des projets d'investissement.","state":"accomplie"},{"content":"Participer à des formations spécialisées pour développer des compétences techniques avancées.","state":"accomplie"},{"content":"Collaborate with geophysicists to interpret seismic data for exploration purposes.","state":"accomplie"},{"content":"Participate in industry conferences and workshops to stay updated on emerging trends and technologies.","state":"non-accomplie"}],"tDateDeb":"2023-04-04T17:30:04Z","tDateRet":"2023-04-21T17:30:04Z","moyenTransport":["avion","route"],"moyenTransportRet":["route","avion"],"createdAt":"2023-03-24T17:30:04Z","updatedAt":"2023-03-14T17:30:04Z","oldDuree":17,"etat":"terminée"},
-{"objetMission":"Rencontre avec des experts en sécurité industrielle","structure":"CHANGE","type":"etranger","budget":180429.67,"budgetConsome":596823.64,"pays":"Algérie","lieuDep":"Alger","destination":"Biskra","employes":["648fc2f54862fabc27dc8ed7","648f4c0df4e6335f247a9b63"],"taches":[{"content":"Assurer la supervision des opérations de logistique et de transport liées aux activités pétrolières.","state":"accomplie"},{"content":"Perform quality control checks on oil and gas samples to ensure accurate analysis.","state":"accomplie"},{"content":"Veiller à la sécurité et à la conformité des opérations sur les sites pétroliers.","state":"non-accomplie"},{"content":"Conduct environmental impact assessments for proposed exploration projects.","state":"non-accomplie"},{"content":"Effectuer des évaluations de risques pour les projets d'exploration et de production.","state":"non-accomplie"},{"content":"Perform quality control checks on oil and gas samples to ensure accurate analysis.","state":"non-accomplie"},{"content":"Coordinate with regulatory agencies to ensure compliance with environmental regulations.","state":"accomplie"}],"tDateDeb":"2020-10-07T03:36:50Z","tDateRet":"2020-10-09T03:36:50Z","moyenTransport":["route"],"moyenTransportRet":["avion","route"],"createdAt":"2020-05-07T03:36:50Z","updatedAt":"2020-01-07T03:36:50Z","oldDuree":8,"etat":"terminée"},
-{"objetMission":"Évaluation des performances des installations","structure":"PRC","type":"etranger","budget":202404.73,"budgetConsome":211145.26,"pays":"Algérie","lieuDep":"Alger","destination":"Alger","employes":["648f4c07f4e6335f247a9b1e","648f4c08f4e6335f247a9b21","648f4c31f4e6335f247a9d3a","648f4c0ff4e6335f247a9b81"],"taches":[{"content":"Effectuer des tests et des analyses sur les échantillons de roche pour évaluer le potentiel pétrolier.","state":"non-accomplie"},{"content":"Collaborer avec des équipes multidisciplinaires pour résoudre des problèmes techniques complexes.","state":"accomplie"},{"content":"Analyser les données de production et identifier des stratégies d'optimisation des rendements.","state":"accomplie"},{"content":"Develop and implement training programs for personnel involved in offshore operations.","state":"non-accomplie"},{"content":"Monitor production rates and analyze well performance to optimize reservoir recovery.","state":"accomplie"},{"content":"Develop and implement safety protocols for offshore drilling operations.","state":"accomplie"}],"tDateDeb":"2023-02-08T21:45:07Z","tDateRet":"2023-02-16T21:45:07Z","moyenTransport":["avion","route"],"moyenTransportRet":["avion","route"],"createdAt":"2022-12-08T21:45:07Z","updatedAt":"2023-01-14T21:45:07Z","oldDuree":17,"etat":"terminée"},
-{"objetMission":"Analyse des données géologiques pour la planification des activités","structure":"DATA","type":"etranger","budget":92186.12,"budgetConsome":20461.64,"pays":"Algérie","lieuDep":"Alger","destination":"Illizi","employes":["648f4c2ff4e6335f247a9d22","648f4c1af4e6335f247a9c14","648f4c10f4e6335f247a9b8a","648f4c11f4e6335f247a9b9c","648f4c24f4e6335f247a9c92"],"taches":[{"content":"Collaborate with geophysicists to interpret seismic data for exploration purposes.","state":"non-accomplie"},{"content":"Develop and implement training programs for personnel involved in offshore operations.","state":"accomplie"},{"content":"Assurer la coordination des opérations de forage sur le terrain et superviser les équipes de travail.","state":"non-accomplie"},{"content":"Contribuer à l'élaboration de plans de maintenance préventive pour les installations pétrolières.","state":"accomplie"},{"content":"Gérer les contrats avec les fournisseurs de services et assurer le respect des accords.","state":"accomplie"}],"tDateDeb":"2021-11-30T13:06:26Z","tDateRet":"2021-12-05T13:06:26Z","moyenTransport":["avion","route"],"moyenTransportRet":["route","avion"],"createdAt":"2021-11-11T13:06:26Z","updatedAt":"2021-01-30T13:06:26Z","oldDuree":2,"etat":"terminée"},
-{"objetMission":"Rencontre avec les autorités gouvernementales pour discuter des réglementations","structure":"TECH","type":"local","budget":608387.2,"budgetConsome":427950.56,"pays":"Algérie","lieuDep":"Alger","destination":"Laghouat","employes":["648f4c23f4e6335f247a9c80"],"taches":[],"tDateDeb":"2021-11-15T22:23:40Z","tDateRet":"2022-11-15T22:23:40Z","moyenTransport":["avion","route"],"moyenTransportRet":["route","avion"],"createdAt":"2021-10-26T22:23:40Z","updatedAt":"2021-10-30T22:23:40Z","oldDuree":17,"etat":"terminée"},
-{"objetMission":"Élaboration d'un plan stratégique pour l'entreprise","structure":"IPM","type":"local","budget":745538.61,"budgetConsome":824736.67,"pays":"Algérie","lieuDep":"Alger","destination":"Biskra","employes":["648fc2f54862fabc27dc8eb3","648f4c12f4e6335f247a9ba8","648f4c27f4e6335f247a9cc2","648f4c27f4e6335f247a9cbf"],"taches":[{"content":"Develop and implement safety protocols for offshore drilling operations.","state":"accomplie"},{"content":"Perform reservoir engineering analysis to optimize oil and gas production rates.","state":"non-accomplie"}],"tDateDeb":"2022-03-27T05:52:57Z","tDateRet":"2022-04-24T05:52:57Z","moyenTransport":["route"],"moyenTransportRet":["route"],"createdAt":"2022-03-17T05:52:57Z","updatedAt":"2022-03-19T05:52:57Z","oldDuree":24,"etat":"terminée"},
-{"objetMission":"Analyse des données de production pour l'optimisation des rendements","structure":"CHANGE","type":"local","budget":811174.72,"budgetConsome":503075.04,"pays":"Algérie","lieuDep":"Alger","destination":"Tiaret","employes":["648f4c25f4e6335f247a9ca4"],"taches":[{"content":"Monitor production rates and analyze well performance to optimize reservoir recovery.","state":"accomplie"},{"content":"Analyser les données de production et identifier des stratégies d'optimisation des rendements.","state":"accomplie"},{"content":"Veiller à la sécurité et à la conformité des opérations sur les sites pétroliers.","state":"non-accomplie"},{"content":"Conduct environmental impact assessments for proposed exploration projects.","state":"accomplie"},{"content":"Collaborate with research institutions to explore innovative technologies for oil and gas exploration.","state":"accomplie"},{"content":"Analyser les données de marché pour identifier les tendances et les opportunités d'affaires.","state":"non-accomplie"},{"content":"Conduct economic evaluations of investment opportunities in new oil and gas assets.","state":"non-accomplie"}],"tDateDeb":"2019-07-15T02:15:08Z","tDateRet":"2019-07-30T02:15:08Z","moyenTransport":["route","avion"],"moyenTransportRet":["avion"],"createdAt":"2019-04-15T02:15:08Z","updatedAt":"2019-06-30T02:15:08Z","oldDuree":15,"etat":"terminée"},
-{"objetMission":"Participation à une conférence internationale sur l'énergie","structure":"DATA","type":"etranger","budget":815300.22,"budgetConsome":582145.2,"pays":"Algérie","lieuDep":"Alger","destination":"Ouargla","employes":["648f4c2ef4e6335f247a9d13","648f4c09f4e6335f247a9b33","648f4c2ff4e6335f247a9d22","648f4c1ff4e6335f247a9c53","648f4c31f4e6335f247a9d46"],"taches":[{"content":"Perform risk assessments and develop contingency plans for potential operational hazards.","state":"non-accomplie"},{"content":"Coordinate with regulatory agencies to ensure compliance with environmental regulations.","state":"accomplie"}],"tDateDeb":"2022-08-19T17:50:14Z","tDateRet":"2023-01-19T17:50:14Z","moyenTransport":["avion"],"moyenTransportRet":["avion"],"createdAt":"2022-08-05T17:50:14Z","updatedAt":"2022-01-19T17:50:14Z","oldDuree":153,"etat":"terminée"},
-{"objetMission":"Élaboration d'un plan de communication pour un projet majeur","structure":"SD","type":"etranger","budget":940394.0,"budgetConsome":549666.05,"pays":"Algérie","lieuDep":"Alger","destination":"Tamanrasset","employes":["648f4c1bf4e6335f247a9c1a","648f4c18f4e6335f247a9bf6"],"taches":[{"content":"Conduct technical evaluations of equipment and technologies for oil and gas operations.","state":"accomplie"},{"content":"Perform risk assessments and develop contingency plans for potential operational hazards.","state":"non-accomplie"},{"content":"Develop and implement training programs for personnel involved in offshore operations.","state":"accomplie"},{"content":"Contribuer à l'élaboration de plans de maintenance préventive pour les installations pétrolières.","state":"non-accomplie"},{"content":"Participate in industry conferences and workshops to stay updated on emerging trends and technologies.","state":"accomplie"},{"content":"Effectuer des évaluations de risques pour les projets d'exploration et de production.","state":"non-accomplie"},{"content":"Participate in industry conferences and workshops to stay updated on emerging trends and technologies.","state":"accomplie"}],"tDateDeb":"2021-08-04T13:33:45Z","tDateRet":"2021-08-29T13:33:45Z","moyenTransport":["avion","route"],"moyenTransportRet":["avion"],"createdAt":"2021-06-04T13:33:45Z","updatedAt":"2021-07-12T13:33:45Z","oldDuree":25,"etat":"terminée"},
-{"objetMission":"Participation à des formations sur la gestion des risques en milieu industriel","structure":"PMO","type":"local","budget":622463.09,"budgetConsome":205810.8,"pays":"Algérie","lieuDep":"Alger","destination":"Tiaret","employes":["648f4c07f4e6335f247a9b12"],"taches":[{"content":"Conduct technical evaluations of equipment and technologies for oil and gas operations.","state":"non-accomplie"},{"content":"Participer à des projets de recherche et développement pour améliorer les techniques d'extraction.","state":"accomplie"},{"content":"Veiller à la sécurité et à la conformité des opérations sur les sites pétroliers.","state":"accomplie"},{"content":"Develop and maintain relationships with key stakeholders, including government entities and local communities.","state":"non-accomplie"}],"tDateDeb":"2020-10-10T18:27:48Z","tDateRet":"2020-10-18T18:27:48Z","moyenTransport":["avion"],"moyenTransportRet":["avion","route"],"createdAt":"2020-01-10T18:27:48Z","updatedAt":"2020-08-10T18:27:48Z","oldDuree":8,"etat":"terminée"},
-{"objetMission":"Formation sur les nouvelles technologies dans l'industrie pétrolière","structure":"DATA","type":"local","budget":241221.35,"budgetConsome":327694.49,"pays":"Algérie","lieuDep":"Alger","destination":"Ghardaia","employes":["648f4c17f4e6335f247a9bed","648f4c2bf4e6335f247a9cf2","648f4c1ef4e6335f247a9c44","648f4c09f4e6335f247a9b33"],"taches":[{"content":"Conduct economic evaluations of investment opportunities in new oil and gas assets.","state":"accomplie"},{"content":"Participer à des formations spécialisées pour développer des compétences techniques avancées.","state":"accomplie"}],"tDateDeb":"2022-02-08T17:18:41Z","tDateRet":"2022-02-24T17:18:41Z","moyenTransport":["avion","route"],"moyenTransportRet":["avion","route"],"createdAt":"2022-01-25T17:18:41Z","updatedAt":"2022-02-01T17:18:41Z","oldDuree":30,"etat":"terminée"},
-{"objetMission":"Évaluation des besoins en infrastructures pour soutenir la croissance de Sonatrach","structure":"SD","type":"local","budget":475031.13,"budgetConsome":842018.93,"pays":"Algérie","lieuDep":"Alger","destination":"Tamanrasset","employes":["648f4c1cf4e6335f247a9c2c","648f4c31f4e6335f247a9d3a","648f4c25f4e6335f247a9c9e"],"taches":[{"content":"Collaborate with research institutions to explore innovative technologies for oil and gas exploration.","state":"non-accomplie"},{"content":"Coordinate with regulatory agencies to ensure compliance with environmental regulations.","state":"accomplie"},{"content":"Assurer la supervision des opérations de logistique et de transport liées aux activités pétrolières.","state":"accomplie"},{"content":"Contribuer à l'élaboration de plans de maintenance préventive pour les installations pétrolières.","state":"non-accomplie"},{"content":"Perform quality control checks on oil and gas samples to ensure accurate analysis.","state":"non-accomplie"}],"tDateDeb":"2021-05-18T12:49:43Z","tDateRet":"2021-08-18T12:49:43Z","moyenTransport":["route","avion"],"moyenTransportRet":["avion"],"createdAt":"2021-02-18T12:49:43Z","updatedAt":"2021-02-18T12:49:43Z","oldDuree":16,"etat":"terminée"},
-{"objetMission":"Analyse des coûts de transport pour l'optimisation logistique","structure":"HCM","type":"etranger","budget":386839.78,"budgetConsome":188971.08,"pays":"Algérie","lieuDep":"Alger","destination":"Ghardaia","employes":["648f4c07f4e6335f247a9b1e","648f4c28f4e6335f247a9cc5","648f4c29f4e6335f247a9cd4","648f4c2bf4e6335f247a9cf5"],"taches":[{"content":"Veiller à la sécurité et à la conformité des opérations sur les sites pétroliers.","state":"accomplie"},{"content":"Participer à des formations spécialisées pour développer des compétences techniques avancées.","state":"non-accomplie"},{"content":"Implement data management systems to effectively organize and analyze geological and reservoir data.","state":"non-accomplie"},{"content":"Monitor production rates and analyze well performance to optimize reservoir recovery.","state":"accomplie"}],"tDateDeb":"2022-10-10T08:03:46Z","tDateRet":"2022-11-01T08:03:46Z","moyenTransport":["route","avion"],"moyenTransportRet":["route"],"createdAt":"2022-09-16T08:03:46Z","updatedAt":"2022-09-28T08:03:46Z","oldDuree":22,"etat":"terminée"},
-{"objetMission":"Évaluation des réserves de gaz naturel pour la planification à long terme","structure":"IPM","type":"etranger","budget":150122.31,"budgetConsome":94086.88,"pays":"Algérie","lieuDep":"Alger","destination":"Tiaret","employes":["648f4c23f4e6335f247a9c89","648f4c0bf4e6335f247a9b48","648f4c21f4e6335f247a9c6b","648f4c28f4e6335f247a9cc8"],"taches":[{"content":"Manage the logistics and supply chain for offshore exploration and production activities.","state":"non-accomplie"}],"tDateDeb":"2022-03-23T17:25:17Z","tDateRet":"2023-03-23T17:25:17Z","moyenTransport":["route"],"moyenTransportRet":["avion","route"],"createdAt":"2021-10-23T17:25:17Z","updatedAt":"2022-02-24T17:25:17Z","oldDuree":26,"etat":"terminée"},
-{"objetMission":"Rencontre avec les autorités gouvernementales pour discuter des réglementations","structure":"HCM","type":"local","budget":647335.81,"budgetConsome":818988.13,"pays":"Algérie","lieuDep":"Alger","destination":"Ghardaia","employes":["648f4c10f4e6335f247a9b93","648f4c27f4e6335f247a9cb9","648f4c1df4e6335f247a9c2f","648f4c23f4e6335f247a9c89","648f4c0ef4e6335f247a9b78"],"taches":[],"tDateDeb":"2021-01-31T05:53:24Z","tDateRet":"2021-06-30T05:53:24Z","moyenTransport":["route"],"moyenTransportRet":["route","avion"],"createdAt":"2020-03-31T05:53:24Z","updatedAt":"2020-08-31T05:53:24Z","oldDuree":150,"etat":"terminée"},
-{"objetMission":"Évaluation des opportunités d'exploration dans de nouveaux bassins sédimentaires","structure":"TECH","type":"etranger","budget":50763.46,"budgetConsome":113887.93,"pays":"Algérie","lieuDep":"Alger","destination":"Bejaia","employes":["648f4c2df4e6335f247a9d04","648f4c24f4e6335f247a9c95","648f4c33f4e6335f247a9d55","648f4c23f4e6335f247a9c86"],"taches":[],"tDateDeb":"2022-10-22T00:45:21Z","tDateRet":"2022-12-22T00:45:21Z","moyenTransport":["route"],"moyenTransportRet":["avion"],"createdAt":"2022-09-28T00:45:21Z","updatedAt":"2022-09-30T00:45:21Z","oldDuree":61,"etat":"terminée"},
-{"objetMission":"Formation sur les techniques de forage directionnel","structure":"PMO","type":"etranger","budget":488484.79,"budgetConsome":724567.56,"pays":"Algérie","lieuDep":"Alger","destination":"Adrar","employes":["648f4c1df4e6335f247a9c35","648f4c1ff4e6335f247a9c4d","648f4c1ef4e6335f247a9c3e"],"taches":[{"content":"Élaborer des rapports de conformité réglementaire et suivre les évolutions législatives.","state":"accomplie"},{"content":"Perform risk assessments and develop contingency plans for potential operational hazards.","state":"accomplie"}],"tDateDeb":"2019-12-25T15:09:07Z","tDateRet":"2020-08-25T15:09:07Z","moyenTransport":["route"],"moyenTransportRet":["avion"],"createdAt":"2019-12-09T15:09:07Z","updatedAt":"2019-08-25T15:09:07Z","oldDuree":7,"etat":"terminée"},
-{"objetMission":"Évaluation des impacts environnementaux des opérations de forage","structure":"HCM","type":"etranger","budget":415300.53,"budgetConsome":176894.21,"pays":"Algérie","lieuDep":"Alger","destination":"Adrar","employes":["648f4c08f4e6335f247a9b27","648f4c10f4e6335f247a9b93","648f4c24f4e6335f247a9c95","648f4c1ef4e6335f247a9c3b","648f4c1cf4e6335f247a9c2c"],"taches":[{"content":"Collaborate with research institutions to explore innovative technologies for oil and gas exploration.","state":"non-accomplie"},{"content":"Collaborate with research institutions to explore innovative technologies for oil and gas exploration.","state":"non-accomplie"}],"tDateDeb":"2021-08-24T13:45:37Z","tDateRet":"2022-03-24T13:45:37Z","moyenTransport":["avion","route"],"moyenTransportRet":["route","avion"],"createdAt":"2021-07-31T13:45:37Z","updatedAt":"2021-02-24T13:45:37Z","oldDuree":212,"etat":"terminée"},
-{"objetMission":"Inspection des installations de stockage de gaz naturel","structure":"SD","type":"etranger","budget":772346.86,"budgetConsome":996534.51,"pays":"Algérie","lieuDep":"Alger","destination":"Illizi","employes":["648f4c19f4e6335f247a9c02"],"taches":[{"content":"Assurer la coordination des opérations de forage sur le terrain et superviser les équipes de travail.","state":"non-accomplie"},{"content":"Analyser les données de marché pour identifier les tendances et les opportunités d'affaires.","state":"non-accomplie"},{"content":"Implement data management systems to effectively organize and analyze geological and reservoir data.","state":"non-accomplie"},{"content":"Analyser les données de marché pour identifier les tendances et les opportunités d'affaires.","state":"non-accomplie"},{"content":"Monitor production rates and analyze well performance to optimize reservoir recovery.","state":"accomplie"}],"tDateDeb":"2021-08-22T05:41:57Z","tDateRet":"2021-09-11T05:41:57Z","moyenTransport":["avion"],"moyenTransportRet":["avion"],"createdAt":"2020-11-22T05:41:57Z","updatedAt":"2021-07-25T05:41:57Z","oldDuree":20,"etat":"terminée"},
-{"objetMission":"Formation sur les nouvelles technologies dans l'industrie pétrolière","structure":"DATA","type":"local","budget":55407.0,"budgetConsome":28149.0,"pays":"Algérie","lieuDep":"Alger","destination":"Adrar","employes":["648f4c20f4e6335f247a9c59","648f4c17f4e6335f247a9bed","648f4c22f4e6335f247a9c7a","648f4c10f4e6335f247a9b8a","648f4c28f4e6335f247a9cc5"],"taches":[{"content":"Participer à des conférences et des événements professionnels pour représenter Sonatrach.","state":"non-accomplie"},{"content":"Effectuer des études d'impact environnemental et élaborer des mesures de protection.","state":"accomplie"},{"content":"Effectuer des tests et des analyses sur les échantillons de roche pour évaluer le potentiel pétrolier.","state":"accomplie"},{"content":"Develop and maintain relationships with key stakeholders, including government entities and local communities.","state":"accomplie"}],"tDateDeb":"2021-05-31T21:43:31Z","tDateRet":"2021-06-05T21:43:31Z","moyenTransport":["route","avion"],"moyenTransportRet":["avion","route"],"createdAt":"2021-04-30T21:43:31Z","updatedAt":"2021-04-30T21:43:31Z","oldDuree":17,"etat":"terminée"},
-{"objetMission":"Analyse des données géologiques pour l'exploration de nouveaux gisements","structure":"FIN","type":"local","budget":113950.49,"budgetConsome":465311.18,"pays":"Algérie","lieuDep":"Alger","destination":"Ghardaia","employes":["648fc2f54862fabc27dc8eb7","648f4c31f4e6335f247a9d43","648f4c2cf4e6335f247a9cfb","648f4c30f4e6335f247a9d34","648f4c08f4e6335f247a9b2a"],"taches":[{"content":"Assurer la supervision des opérations de logistique et de transport liées aux activités pétrolières.","state":"non-accomplie"},{"content":"Conduct geological surveys to identify potential oil and gas reserves in specific regions.","state":"non-accomplie"},{"content":"Analyser les données de marché pour identifier les tendances et les opportunités d'affaires.","state":"accomplie"},{"content":"Coordinate with regulatory agencies to ensure compliance with environmental regulations.","state":"accomplie"},{"content":"Gérer les contrats avec les fournisseurs de services et assurer le respect des accords.","state":"accomplie"}],"tDateDeb":"2021-12-30T17:57:03Z","tDateRet":"2022-09-30T17:57:03Z","moyenTransport":["route"],"moyenTransportRet":["avion","route"],"createdAt":"2021-11-30T17:57:03Z","updatedAt":"2021-10-30T17:57:03Z","oldDuree":29,"etat":"terminée"},
-{"objetMission":"Formation sur les meilleures pratiques de sécurité","structure":"PRC","type":"etranger","budget":876975.7,"budgetConsome":919987.15,"pays":"Algérie","lieuDep":"Alger","destination":"Tiaret","employes":["648f4c07f4e6335f247a9b1b","648f4c27f4e6335f247a9cbf","648f4c2bf4e6335f247a9cef"],"taches":[{"content":"Develop and implement safety protocols for offshore drilling operations.","state":"non-accomplie"}],"tDateDeb":"2021-10-16T03:50:02Z","tDateRet":"2021-11-11T03:50:02Z","moyenTransport":["avion","route"],"moyenTransportRet":["avion","route"],"createdAt":"2021-09-30T03:50:02Z","updatedAt":"2021-10-15T03:50:02Z","oldDuree":14,"etat":"terminée"},
-{"objetMission":"Rencontre avec des experts de l'industrie pour partager les meilleures pratiques","structure":"HCM","type":"etranger","budget":613194.82,"budgetConsome":755537.57,"pays":"Algérie","lieuDep":"Alger","destination":"Illizi","employes":["648f4c1bf4e6335f247a9c1a","648f4c08f4e6335f247a9b21"],"taches":[],"tDateDeb":"2022-11-11T06:05:58Z","tDateRet":"2023-11-11T06:05:58Z","moyenTransport":["avion","route"],"moyenTransportRet":["avion","route"],"createdAt":"2021-11-11T06:05:58Z","updatedAt":"2022-03-11T06:05:58Z","oldDuree":365,"etat":"terminée"},
-{"objetMission":"Analyse des coûts de transport pour l'optimisation logistique","structure":"TECH","type":"local","budget":881126.0,"budgetConsome":439695.44,"pays":"Algérie","lieuDep":"Alger","destination":"Adrar","employes":["648f4c15f4e6335f247a9bd5"],"taches":[{"content":"Collaborate with research institutions to explore innovative technologies for oil and gas exploration.","state":"non-accomplie"},{"content":"Analyser les données de marché pour identifier les tendances et les opportunités d'affaires.","state":"accomplie"},{"content":"Perform risk assessments and develop contingency plans for potential operational hazards.","state":"non-accomplie"},{"content":"Élaborer des rapports de conformité réglementaire et suivre les évolutions législatives.","state":"accomplie"},{"content":"Contribuer à l'élaboration de plans de maintenance préventive pour les installations pétrolières.","state":"non-accomplie"},{"content":"Effectuer des évaluations de risques pour les projets d'exploration et de production.","state":"non-accomplie"},{"content":"Conduct geological surveys to identify potential oil and gas reserves in specific regions.","state":"non-accomplie"}],"tDateDeb":"2019-10-13T16:18:09Z","tDateRet":"2019-11-02T16:18:09Z","moyenTransport":["route","avion"],"moyenTransportRet":["route","avion"],"createdAt":"2019-04-13T16:18:09Z","updatedAt":"2019-09-13T16:18:09Z","oldDuree":20,"etat":"terminée"},
-{"objetMission":"Étude de rentabilité pour l'exploration de champs pétroliers","structure":"PDN","type":"local","budget":269796.15,"budgetConsome":467158.25,"pays":"Algérie","lieuDep":"Alger","destination":"Biskra","employes":["648f4c2bf4e6335f247a9cec"],"taches":[{"content":"Conduct geological surveys to identify potential oil and gas reserves in specific regions.","state":"accomplie"},{"content":"Monitor production rates and analyze well performance to optimize reservoir recovery.","state":"accomplie"},{"content":"Effectuer une analyse approfondie des données géologiques pour identifier de nouveaux sites potentiels de forage.","state":"accomplie"},{"content":"Perform quality control checks on oil and gas samples to ensure accurate analysis.","state":"non-accomplie"},{"content":"Contribuer à l'élaboration de plans de maintenance préventive pour les installations pétrolières.","state":"non-accomplie"}],"tDateDeb":"2019-05-03T11:48:45Z","tDateRet":"2019-05-23T11:48:45Z","moyenTransport":["route","avion"],"moyenTransportRet":["avion","route"],"createdAt":"2018-07-03T11:48:45Z","updatedAt":"2019-04-13T11:48:45Z","oldDuree":9,"etat":"terminée"},
-{"objetMission":"Réunion avec les équipes de recherche et développement","structure":"FIN","type":"local","budget":429593.01,"budgetConsome":646494.68,"pays":"Algérie","lieuDep":"Alger","destination":"Oran","employes":["648f4c27f4e6335f247a9cbc","648f4c15f4e6335f247a9bd5","648f4c07f4e6335f247a9b1e","648f4c08f4e6335f247a9b21"],"taches":[],"tDateDeb":"2021-12-02T12:02:07Z","tDateRet":"2022-06-02T12:02:07Z","moyenTransport":["avion","route"],"moyenTransportRet":["route","avion"],"createdAt":"2021-11-23T12:02:07Z","updatedAt":"2021-02-02T12:02:07Z","oldDuree":21,"etat":"terminée"},
-{"objetMission":"Évaluation des impacts environnementaux des opérations de forage","structure":"DATA","type":"local","budget":942124.06,"budgetConsome":802513.67,"pays":"Algérie","lieuDep":"Alger","destination":"Ghardaia","employes":["648f4c2bf4e6335f247a9ce9"],"taches":[{"content":"Participer à des formations spécialisées pour développer des compétences techniques avancées.","state":"non-accomplie"},{"content":"Coordinate with drilling contractors to ensure efficient and safe well operations.","state":"accomplie"},{"content":"Coordinate with regulatory agencies to ensure compliance with environmental regulations.","state":"accomplie"},{"content":"Effectuer une analyse approfondie des données géologiques pour identifier de nouveaux sites potentiels de forage.","state":"accomplie"},{"content":"Effectuer des études d'impact environnemental et élaborer des mesures de protection.","state":"non-accomplie"}],"tDateDeb":"2022-05-13T08:45:27Z","tDateRet":"2022-08-13T08:45:27Z","moyenTransport":["route"],"moyenTransportRet":["avion","route"],"createdAt":"2022-03-13T08:45:27Z","updatedAt":"2022-04-13T08:45:27Z","oldDuree":26,"etat":"terminée"},
-{"objetMission":"Supervision des opérations de maintenance des installations pétrolières","structure":"HCM","type":"etranger","budget":141744.18,"budgetConsome":744660.96,"pays":"Algérie","lieuDep":"Alger","destination":"Ouargla","employes":["648f4c2ff4e6335f247a9d22"],"taches":[],"tDateDeb":"2019-05-14T15:27:13Z","tDateRet":"2020-04-14T15:27:13Z","moyenTransport":["route","avion"],"moyenTransportRet":["route","avion"],"createdAt":"2019-01-14T15:27:13Z","updatedAt":"2019-03-14T15:27:13Z","oldDuree":336,"etat":"terminée"},
-{"objetMission":"Participation à des simulations d'urgence pour tester les plans de réponse","structure":"FIN","type":"local","budget":869040.12,"budgetConsome":400721.24,"pays":"Algérie","lieuDep":"Alger","destination":"Biskra","employes":["648f4c0ef4e6335f247a9b75","648f4c12f4e6335f247a9ba8"],"taches":[{"content":"Contribuer à l'élaboration de plans de maintenance préventive pour les installations pétrolières.","state":"non-accomplie"},{"content":"Mener des études de marché pour évaluer la demande et la rentabilité de l'exploration de champs pétroliers spécifiques.","state":"non-accomplie"},{"content":"Perform quality control checks on oil and gas samples to ensure accurate analysis.","state":"non-accomplie"}],"tDateDeb":"2021-04-01T12:08:25Z","tDateRet":"2021-04-09T12:08:25Z","moyenTransport":["route"],"moyenTransportRet":["route","avion"],"createdAt":"2021-02-01T12:08:25Z","updatedAt":"2021-03-27T12:08:25Z","oldDuree":5,"etat":"terminée"}]
+export const missionsT = [
+  {
+    objetMission: "Audit des processus de production",
+    structure: "DATA",
+    type: "local",
+    budget: 55776.6,
+    pays: "Bangladesh",
+    lieuDep: "Alger",
+    destination: "Kombissiri",
+    employes: [
+      "648f4c13f4e6335f247a9bb7",
+      "648f4c24f4e6335f247a9c8c",
+      "648f4c17f4e6335f247a9bed",
+      "648f4c33f4e6335f247a9d5b",
+      "648f4c09f4e6335f247a9b2d",
+    ],
+    taches: [
+      {
+        content:
+          "Élaborer des rapports de conformité réglementaire et suivre les évolutions législatives.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Assurer la supervision des opérations de logistique et de transport liées aux activités pétrolières.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Collaborer avec des équipes multidisciplinaires pour résoudre des problèmes techniques complexes.",
+        state: "non-accomplie",
+      },
+    ],
+    tDateDeb: "2017-11-15T17:58:41Z",
+    tDateRet: "2018-05-15T17:58:41Z",
+    moyenTransport: ["route", "avion"],
+    moyenTransportRet: ["route"],
+    createdAt: "2017-06-15T17:58:41Z",
+    updatedAt: "2017-11-06T17:58:41Z",
+  },
+  {
+    objetMission:
+      "Rencontre avec des organismes gouvernementaux pour discuter des réglementations",
+    structure: "PRC",
+    type: "etranger",
+    budget: 575509.45,
+    pays: "Irlande",
+    lieuDep: "Alger",
+    destination: "Sete Cidades",
+    employes: [
+      "648f4c1ef4e6335f247a9c3e",
+      "648f4c11f4e6335f247a9b99",
+      "648f4c0ff4e6335f247a9b84",
+    ],
+    taches: [
+      {
+        content:
+          "Conduct geological surveys to identify potential oil and gas reserves in specific regions.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Collaborer avec des équipes multidisciplinaires pour résoudre des problèmes techniques complexes.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Monitor production rates and analyze well performance to optimize reservoir recovery.",
+        state: "non-accomplie",
+      },
+    ],
+    tDateDeb: "2020-05-21T23:36:17Z",
+    tDateRet: "2021-05-21T23:36:17Z",
+    moyenTransport: ["route"],
+    moyenTransportRet: ["avion", "route"],
+    createdAt: "2020-05-10T23:36:17Z",
+    updatedAt: "2020-05-09T23:36:17Z",
+  },
+  {
+    objetMission:
+      "Rencontre avec des experts en technologie pour l'innovation dans le secteur",
+    structure: "DATA",
+    type: "local",
+    budget: 489171.69,
+    pays: "Sénégal",
+    lieuDep: "Alger",
+    destination: "Rustenburg",
+    employes: ["648fc2f54862fabc27dc8eb3", "648f4c1ef4e6335f247a9c44"],
+    taches: [],
+    tDateDeb: "2019-07-04T22:59:01Z",
+    tDateRet: "2019-11-04T22:59:01Z",
+    moyenTransport: ["avion", "route"],
+    moyenTransportRet: ["route"],
+    createdAt: "2018-07-04T22:59:01Z",
+    updatedAt: "2019-04-04T22:59:01Z",
+  },
+  {
+    objetMission:
+      "Évaluation des risques liés à l'exploration en eaux profondes",
+    structure: "IPM",
+    type: "local",
+    budget: 730417.61,
+    pays: "République dominicaine",
+    lieuDep: "Alger",
+    destination: "Magaria",
+    employes: [
+      "648fc2f54862fabc27dc8eb3",
+      "648f4c24f4e6335f247a9c98",
+      "648f4c15f4e6335f247a9bd2",
+    ],
+    taches: [
+      {
+        content:
+          "Conduct economic evaluations of investment opportunities in new oil and gas assets.",
+        state: "non-accomplie",
+      },
+    ],
+    tDateDeb: "2019-01-31T00:30:00Z",
+    tDateRet: "2019-07-31T00:30:00Z",
+    moyenTransport: ["avion"],
+    moyenTransportRet: ["route"],
+    createdAt: "2019-01-25T00:30:00Z",
+    updatedAt: "2019-01-11T00:30:00Z",
+  },
+  {
+    objetMission:
+      "Évaluation des impacts environnementaux des opérations de forage",
+    structure: "MRO",
+    type: "local",
+    budget: null,
+    pays: "Burkina Faso",
+    lieuDep: "Alger",
+    destination: "Aquia",
+    employes: ["648f4c0df4e6335f247a9b6c"],
+    taches: [
+      {
+        content:
+          "Assurer la supervision des opérations de logistique et de transport liées aux activités pétrolières.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Collaborate with geophysicists to interpret seismic data for exploration purposes.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Effectuer des tests et des analyses sur les échantillons de roche pour évaluer le potentiel pétrolier.",
+        state: "non-accomplie",
+      },
+    ],
+    tDateDeb: "2019-09-22T19:26:55Z",
+    tDateRet: "2020-09-22T19:26:55Z",
+    moyenTransport: ["route", "avion"],
+    moyenTransportRet: ["avion"],
+    createdAt: "2019-09-03T19:26:55Z",
+    updatedAt: "2019-03-22T19:26:55Z",
+  },
+  {
+    objetMission: "Supervision du projet de construction d'une raffinerie",
+    structure: "PRC",
+    type: "etranger",
+    budget: 294831.33,
+    pays: "São Tomé-et-Principe",
+    lieuDep: "Alger",
+    destination: "Malichang",
+    employes: [
+      "648f4c20f4e6335f247a9c62",
+      "648f4c1af4e6335f247a9c08",
+      "648f4c2ff4e6335f247a9d28",
+    ],
+    taches: [
+      {
+        content:
+          "Assurer la supervision des opérations de logistique et de transport liées aux activités pétrolières.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Effectuer des évaluations économiques pour déterminer la rentabilité des projets d'investissement.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Gérer les contrats avec les fournisseurs de services et assurer le respect des accords.",
+        state: "non-accomplie",
+      },
+    ],
+    tDateDeb: "2018-09-06T23:45:48Z",
+    tDateRet: "2019-04-06T23:45:48Z",
+    moyenTransport: ["avion", "route"],
+    moyenTransportRet: ["avion"],
+    createdAt: "2018-06-06T23:45:48Z",
+    updatedAt: "2018-05-06T23:45:48Z",
+  },
+  {
+    objetMission:
+      "Rencontre avec les partenaires locaux pour le développement de projets",
+    structure: "PMO",
+    type: "etranger",
+    budget: null,
+    pays: "Laos",
+    lieuDep: "Alger",
+    destination: "Zhanjiang",
+    employes: [
+      "648f4c31f4e6335f247a9d3d",
+      "648f4c0ff4e6335f247a9b87",
+      "648f4c14f4e6335f247a9bc3",
+      "648f4c10f4e6335f247a9b8d",
+      "648f4c06f4e6335f247a9b0c",
+    ],
+    taches: [
+      {
+        content:
+          "Analyser les données de production et identifier des stratégies d'optimisation des rendements.",
+        state: "non-accomplie",
+      },
+    ],
+    tDateDeb: "2017-06-26T02:12:13Z",
+    tDateRet: "2017-07-25T02:12:13Z",
+    moyenTransport: ["route", "avion"],
+    moyenTransportRet: ["avion", "route"],
+    createdAt: "2017-01-26T02:12:13Z",
+    updatedAt: "2017-05-31T02:12:13Z",
+  },
+  {
+    objetMission: "Évaluation des performances des équipes de maintenance",
+    structure: "PRC",
+    type: "etranger",
+    budget: 30548.92,
+    pays: "Guinée équatoriale",
+    lieuDep: "Alger",
+    destination: "Cangchang",
+    employes: ["648f4c30f4e6335f247a9d31"],
+    taches: [],
+    tDateDeb: "2016-01-18T10:30:04Z",
+    tDateRet: "2016-01-30T10:30:04Z",
+    moyenTransport: ["avion", "route"],
+    moyenTransportRet: ["avion"],
+    createdAt: "2015-12-18T10:30:04Z",
+    updatedAt: "2015-03-18T10:30:04Z",
+  },
+  {
+    objetMission:
+      "Formation sur les techniques de réduction des émissions de gaz",
+    structure: "MRO",
+    type: "etranger",
+    budget: 845252.54,
+    pays: "États-Unis",
+    lieuDep: "Alger",
+    destination: "Chengshan",
+    employes: [
+      "648f4c29f4e6335f247a9cd1",
+      "648f4c25f4e6335f247a9c9e",
+      "648f4c22f4e6335f247a9c74",
+    ],
+    taches: [
+      {
+        content:
+          "Gérer les contrats avec les fournisseurs de services et assurer le respect des accords.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Contribuer à l'élaboration de plans de maintenance préventive pour les installations pétrolières.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Effectuer une analyse approfondie des données géologiques pour identifier de nouveaux sites potentiels de forage.",
+        state: "non-accomplie",
+      },
+    ],
+    tDateDeb: "2016-07-12T02:52:17Z",
+    tDateRet: "2017-01-12T02:52:17Z",
+    moyenTransport: ["avion", "route"],
+    moyenTransportRet: ["avion", "route"],
+    createdAt: "2016-06-20T02:52:17Z",
+    updatedAt: "2016-04-12T02:52:17Z",
+  },
+  {
+    objetMission:
+      "Formation sur les techniques avancées de forage directionnel",
+    structure: "DATA",
+    type: "etranger",
+    budget: 256007.46,
+    pays: "République tchèque",
+    lieuDep: "Alger",
+    destination: "Beregovoy",
+    employes: ["648f4c18f4e6335f247a9bf6", "648f4c31f4e6335f247a9d46"],
+    taches: [
+      {
+        content:
+          "Participer à des projets de recherche et développement pour améliorer les techniques d'extraction.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Perform risk assessments and develop contingency plans for potential operational hazards.",
+        state: "non-accomplie",
+      },
+    ],
+    tDateDeb: "2019-03-21T18:13:52Z",
+    tDateRet: "2020-02-21T18:13:52Z",
+    moyenTransport: ["avion"],
+    moyenTransportRet: ["route"],
+    createdAt: "2019-01-21T18:13:52Z",
+    updatedAt: "2018-07-21T18:13:52Z",
+  },
+  {
+    objetMission:
+      "Rencontre avec des représentants syndicaux pour discuter des conditions de travail",
+    structure: "SD",
+    type: "local",
+    budget: 410700.25,
+    pays: "Sri Lanka",
+    lieuDep: "Alger",
+    destination: "Koryukivka",
+    employes: ["648fc2f54862fabc27dc8ed3"],
+    taches: [
+      {
+        content:
+          "Contribuer à l'élaboration de plans de maintenance préventive pour les installations pétrolières.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Develop cost estimation models for new oil and gas development projects.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Participer à des conférences et des événements professionnels pour représenter Sonatrach.",
+        state: "non-accomplie",
+      },
+    ],
+    tDateDeb: "2018-08-13T20:28:16Z",
+    tDateRet: "2018-09-03T20:28:16Z",
+    moyenTransport: ["route", "avion"],
+    moyenTransportRet: ["avion"],
+    createdAt: "2017-09-13T20:28:16Z",
+    updatedAt: "2018-07-30T20:28:16Z",
+  },
+  {
+    objetMission:
+      "Supervision des essais de production pour estimer les débits",
+    structure: "MRO",
+    type: "local",
+    budget: 818692.67,
+    pays: "République tchèque",
+    lieuDep: "Alger",
+    destination: "Mugumu",
+    employes: [
+      "648f4c23f4e6335f247a9c86",
+      "648f4c10f4e6335f247a9b8a",
+      "648f4c2af4e6335f247a9ce3",
+      "648f4c33f4e6335f247a9d55",
+      "648f4c31f4e6335f247a9d3a",
+    ],
+    taches: [
+      {
+        content:
+          "Develop and maintain relationships with key stakeholders, including government entities and local communities.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Veiller à la sécurité et à la conformité des opérations sur les sites pétroliers.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Develop and implement training programs for personnel involved in offshore operations.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Conduct technical evaluations of equipment and technologies for oil and gas operations.",
+        state: "non-accomplie",
+      },
+    ],
+    tDateDeb: "2016-06-10T20:01:01Z",
+    tDateRet: "2016-06-15T20:01:01Z",
+    moyenTransport: ["route", "avion"],
+    moyenTransportRet: ["avion"],
+    createdAt: "2016-05-27T20:01:01Z",
+    updatedAt: "2016-06-08T20:01:01Z",
+  },
+  {
+    objetMission: "Inspection des installations de traitement du gaz naturel",
+    structure: "FIN",
+    type: "local",
+    budget: 735492.59,
+    pays: "Panama",
+    lieuDep: "Alger",
+    destination: "Xiayang",
+    employes: ["648f4c2cf4e6335f247a9cfb"],
+    taches: [],
+    tDateDeb: "2018-07-12T04:17:23Z",
+    tDateRet: "2018-07-29T04:17:23Z",
+    moyenTransport: ["route", "avion"],
+    moyenTransportRet: ["route"],
+    createdAt: "2018-07-05T04:17:23Z",
+    updatedAt: "2018-01-12T04:17:23Z",
+  },
+  {
+    objetMission: "Inspection des installations de traitement du gaz naturel",
+    structure: "PRC",
+    type: "local",
+    budget: 401966.74,
+    pays: "Niger",
+    lieuDep: "Alger",
+    destination: "Stoszowice",
+    employes: ["648f4c08f4e6335f247a9b21", "648f4c1df4e6335f247a9c32"],
+    taches: [
+      {
+        content:
+          "Effectuer des tests et des analyses sur les échantillons de roche pour évaluer le potentiel pétrolier.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Gérer les contrats avec les fournisseurs de services et assurer le respect des accords.",
+        state: "non-accomplie",
+      },
+    ],
+    tDateDeb: "2016-05-08T14:50:19Z",
+    tDateRet: "2016-10-08T14:50:19Z",
+    moyenTransport: ["avion", "route"],
+    moyenTransportRet: ["route"],
+    createdAt: "2016-04-23T14:50:19Z",
+    updatedAt: "2016-02-08T14:50:19Z",
+  },
+  {
+    objetMission:
+      "Formation sur les nouvelles technologies dans l'industrie pétrolière",
+    structure: "PDN",
+    type: "local",
+    budget: 929105.73,
+    pays: "Namibie",
+    lieuDep: "Alger",
+    destination: "Chilecito",
+    employes: ["648f4c2af4e6335f247a9ce3", "648f4c33f4e6335f247a9d55"],
+    taches: [
+      {
+        content:
+          "Participer à des formations spécialisées pour développer des compétences techniques avancées.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Organiser des réunions avec des partenaires externes pour discuter des opportunités de collaboration.",
+        state: "non-accomplie",
+      },
+    ],
+    tDateDeb: "2019-11-03T04:50:52Z",
+    tDateRet: "2019-11-13T04:50:52Z",
+    moyenTransport: ["route", "avion"],
+    moyenTransportRet: ["avion", "route"],
+    createdAt: "2019-10-28T04:50:52Z",
+    updatedAt: "2019-10-06T04:50:52Z",
+  },
+  {
+    objetMission: "Analyse des risques environnementaux",
+    structure: "PMO",
+    type: "etranger",
+    budget: 631906.64,
+    pays: "Islande",
+    lieuDep: "Alger",
+    destination: "Tuapukan",
+    employes: ["648f4c0df4e6335f247a9b63"],
+    taches: [
+      {
+        content:
+          "Mener des études de marché pour évaluer la demande et la rentabilité de l'exploration de champs pétroliers spécifiques.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Monitor production rates and analyze well performance to optimize reservoir recovery.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Perform risk assessments and develop contingency plans for potential operational hazards.",
+        state: "non-accomplie",
+      },
+    ],
+    tDateDeb: "2020-06-28T05:00:30Z",
+    tDateRet: "2020-10-28T05:00:30Z",
+    moyenTransport: ["route", "avion"],
+    moyenTransportRet: ["avion", "route"],
+    createdAt: "2020-02-28T05:00:30Z",
+    updatedAt: "2020-01-28T05:00:30Z",
+  },
+  {
+    objetMission:
+      "Étude de faisabilité pour l'exploration de nouveaux gisements",
+    structure: "FIN",
+    type: "local",
+    budget: 169250.11,
+    pays: "Turquie",
+    lieuDep: "Alger",
+    destination: "Limbo",
+    employes: ["648f4c28f4e6335f247a9ccb", "648f4c1ef4e6335f247a9c3b"],
+    taches: [
+      {
+        content:
+          "Provide technical support and guidance to field operations teams during drilling and production activities.",
+        state: "non-accomplie",
+      },
+    ],
+    tDateDeb: "2019-11-06T16:45:54Z",
+    tDateRet: "2019-11-17T16:45:54Z",
+    moyenTransport: ["route"],
+    moyenTransportRet: ["route"],
+    createdAt: "2019-08-06T16:45:54Z",
+    updatedAt: "2019-10-18T16:45:54Z",
+  },
+  {
+    objetMission:
+      "Rencontre avec des experts en technologie pour l'innovation dans le secteur",
+    structure: "FIN",
+    type: "local",
+    budget: null,
+    pays: "Vatican",
+    lieuDep: "Alger",
+    destination: "Lamont",
+    employes: ["648f4c29f4e6335f247a9cd4", "648f4c16f4e6335f247a9bdb"],
+    taches: [],
+    tDateDeb: "2016-04-24T01:37:03Z",
+    tDateRet: "2016-05-09T01:37:03Z",
+    moyenTransport: ["route"],
+    moyenTransportRet: ["avion"],
+    createdAt: "2015-06-24T01:37:03Z",
+    updatedAt: "2016-04-13T01:37:03Z",
+  },
+  {
+    objetMission:
+      "Évaluation des besoins en personnel pour des projets d'expansion",
+    structure: "IPM",
+    type: "etranger",
+    budget: 462186.04,
+    pays: "Saint-Vincent-et-les-Grenadines",
+    lieuDep: "Alger",
+    destination: "El Galpón",
+    employes: ["648f4c17f4e6335f247a9be4", "648f4c0bf4e6335f247a9b51"],
+    taches: [],
+    tDateDeb: "2016-12-18T16:05:59Z",
+    tDateRet: "2017-01-15T16:05:59Z",
+    moyenTransport: ["avion", "route"],
+    moyenTransportRet: ["route"],
+    createdAt: "2016-10-18T16:05:59Z",
+    updatedAt: "2016-11-18T16:05:59Z",
+  },
+  {
+    objetMission:
+      "Rencontre avec les partenaires locaux pour le développement de projets",
+    structure: "PDN",
+    type: "etranger",
+    budget: 542447.92,
+    pays: "Uruguay",
+    lieuDep: "Alger",
+    destination: "Gainesville",
+    employes: [
+      "648fc2f54862fabc27dc8ed7",
+      "648f4c06f4e6335f247a9b06",
+      "648f4c26f4e6335f247a9caa",
+      "648f4c09f4e6335f247a9b36",
+    ],
+    taches: [
+      {
+        content:
+          "Effectuer des études d'impact environnemental et élaborer des mesures de protection.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Préparer des rapports détaillés sur les résultats des inspections des infrastructures pétrolières et gazières.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Participer à des formations spécialisées pour développer des compétences techniques avancées.",
+        state: "non-accomplie",
+      },
+    ],
+    tDateDeb: "2020-10-08T17:47:57Z",
+    tDateRet: "2021-04-08T17:47:57Z",
+    moyenTransport: ["route"],
+    moyenTransportRet: ["avion"],
+    createdAt: "2020-09-23T17:47:57Z",
+    updatedAt: "2020-10-05T17:47:57Z",
+  },
+  {
+    objetMission: "Inspection des installations de traitement du gaz naturel",
+    structure: "PMO",
+    type: "local",
+    budget: 41494.23,
+    pays: "Antigua-et-Barbuda",
+    lieuDep: "Alger",
+    destination: "Pedome",
+    employes: [
+      "648f4c10f4e6335f247a9b93",
+      "648f4c30f4e6335f247a9d34",
+      "648f4c2cf4e6335f247a9d01",
+      "648f4c2df4e6335f247a9d04",
+    ],
+    taches: [
+      {
+        content:
+          "Analyser les données de production et identifier des stratégies d'optimisation des rendements.",
+        state: "non-accomplie",
+      },
+    ],
+    tDateDeb: "2017-04-18T09:03:10Z",
+    tDateRet: "2017-05-17T09:03:10Z",
+    moyenTransport: ["route"],
+    moyenTransportRet: ["avion", "route"],
+    createdAt: "2017-03-29T09:03:10Z",
+    updatedAt: "2017-03-27T09:03:10Z",
+  },
+  {
+    objetMission:
+      "Étude de marché pour l'identification de nouvelles opportunités",
+    structure: "HCM",
+    type: "local",
+    budget: 124988.06,
+    pays: "Koweït",
+    lieuDep: "Alger",
+    destination: "Grosuplje",
+    employes: ["648f4c22f4e6335f247a9c74"],
+    taches: [
+      {
+        content:
+          "Assurer la supervision des opérations de logistique et de transport liées aux activités pétrolières.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Coordinate with regulatory agencies to ensure compliance with environmental regulations.",
+        state: "non-accomplie",
+      },
+    ],
+    tDateDeb: "2016-06-27T19:14:38Z",
+    tDateRet: "2017-06-27T19:14:38Z",
+    moyenTransport: ["avion", "route"],
+    moyenTransportRet: ["avion", "route"],
+    createdAt: "2016-06-18T19:14:38Z",
+    updatedAt: "2016-06-16T19:14:38Z",
+  },
+  {
+    objetMission: "Supervision des opérations de forage offshore",
+    structure: "PMO",
+    type: "local",
+    budget: null,
+    pays: "Philippines",
+    lieuDep: "Alger",
+    destination: "Fier-Çifçi",
+    employes: [
+      "648f4c10f4e6335f247a9b8d",
+      "648f4c27f4e6335f247a9cbc",
+      "648f4c19f4e6335f247a9c02",
+      "648f4c2bf4e6335f247a9cec",
+    ],
+    taches: [
+      {
+        content:
+          "Collaborer avec des équipes multidisciplinaires pour résoudre des problèmes techniques complexes.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Perform risk assessments and develop contingency plans for potential operational hazards.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Veiller à la sécurité et à la conformité des opérations sur les sites pétroliers.",
+        state: "non-accomplie",
+      },
+    ],
+    tDateDeb: "2017-02-01T18:23:43Z",
+    tDateRet: "2017-02-26T18:23:43Z",
+    moyenTransport: ["avion", "route"],
+    moyenTransportRet: ["route", "avion"],
+    createdAt: "2016-07-01T18:23:43Z",
+    updatedAt: "2016-10-01T18:23:43Z",
+  },
+  {
+    objetMission:
+      "Analyse des coûts de production et proposition d'améliorations",
+    structure: "DATA",
+    type: "local",
+    budget: 236403.93,
+    pays: "Fidji",
+    lieuDep: "Alger",
+    destination: "Żychlin",
+    employes: ["648f4c2cf4e6335f247a9cf8"],
+    taches: [],
+    tDateDeb: "2016-10-04T21:24:18Z",
+    tDateRet: "2017-09-04T21:24:18Z",
+    moyenTransport: ["route", "avion"],
+    moyenTransportRet: ["route"],
+    createdAt: "2016-09-20T21:24:18Z",
+    updatedAt: "2016-09-27T21:24:18Z",
+  },
+  {
+    objetMission:
+      "Analyse des contrats de fournisseurs pour assurer la conformité",
+    structure: "MRO",
+    type: "local",
+    budget: 387889.52,
+    pays: "Gabon",
+    lieuDep: "Alger",
+    destination: "Thị Trấn Bắc Hà",
+    employes: ["648f4c16f4e6335f247a9bdb"],
+    taches: [
+      {
+        content:
+          "Develop and implement safety protocols for offshore drilling operations.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Effectuer des évaluations de risques pour les projets d'exploration et de production.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Manage the logistics and supply chain for offshore exploration and production activities.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Collaborate with geophysicists to interpret seismic data for exploration purposes.",
+        state: "non-accomplie",
+      },
+    ],
+    tDateDeb: "2019-12-13T06:29:31Z",
+    tDateRet: "2020-08-13T06:29:31Z",
+    moyenTransport: ["route"],
+    moyenTransportRet: ["avion"],
+    createdAt: "2019-12-09T06:29:31Z",
+    updatedAt: "2019-06-13T06:29:31Z",
+  },
+  {
+    objetMission:
+      "Analyse des coûts de transport pour l'optimisation logistique",
+    structure: "DATA",
+    type: "etranger",
+    budget: 813631.78,
+    pays: "Lettonie",
+    lieuDep: "Alger",
+    destination: "Żórawina",
+    employes: [
+      "648f4c1cf4e6335f247a9c23",
+      "648f4c31f4e6335f247a9d46",
+      "648f4c1ff4e6335f247a9c53",
+      "648f4c2bf4e6335f247a9cf5",
+      "648f4c24f4e6335f247a9c8c",
+    ],
+    taches: [
+      {
+        content:
+          "Manage the logistics and supply chain for offshore exploration and production activities.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Perform reservoir engineering analysis to optimize oil and gas production rates.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Perform quality control checks on oil and gas samples to ensure accurate analysis.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Manage the logistics and supply chain for offshore exploration and production activities.",
+        state: "non-accomplie",
+      },
+    ],
+    tDateDeb: "2019-03-17T01:11:49Z",
+    tDateRet: "2019-03-18T01:11:49Z",
+    moyenTransport: ["avion", "route"],
+    moyenTransportRet: ["route", "avion"],
+    createdAt: "2018-03-17T01:11:49Z",
+    updatedAt: "2019-03-04T01:11:49Z",
+  },
+  {
+    objetMission: "Formation sur les techniques de forage avancées",
+    structure: "SD",
+    type: "etranger",
+    budget: 340111.97,
+    pays: "Tchad",
+    lieuDep: "Alger",
+    destination: "Pul-e Sangī",
+    employes: ["648f4c1bf4e6335f247a9c1d"],
+    taches: [
+      {
+        content:
+          "Organiser des réunions avec des partenaires externes pour discuter des opportunités de collaboration.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Participate in industry conferences and workshops to stay updated on emerging trends and technologies.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Assurer la supervision des opérations de logistique et de transport liées aux activités pétrolières.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Coordinate with regulatory agencies to ensure compliance with environmental regulations.",
+        state: "non-accomplie",
+      },
+    ],
+    tDateDeb: "2016-05-15T17:54:59Z",
+    tDateRet: "2016-05-23T17:54:59Z",
+    moyenTransport: ["route", "avion"],
+    moyenTransportRet: ["avion"],
+    createdAt: "2016-05-10T17:54:59Z",
+    updatedAt: "2016-01-15T17:54:59Z",
+  },
+  {
+    objetMission:
+      "Rencontre avec les fournisseurs pour la négociation des contrats",
+    structure: "CHANGE",
+    type: "etranger",
+    budget: 591409.58,
+    pays: "Malawi",
+    lieuDep: "Alger",
+    destination: "Ostrów Wielkopolski",
+    employes: ["648f4c06f4e6335f247a9b06", "648f4c10f4e6335f247a9b8a"],
+    taches: [
+      {
+        content:
+          "Préparer des rapports détaillés sur les résultats des inspections des infrastructures pétrolières et gazières.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Conduire des inspections régulières des pipelines pour détecter les fuites et les défauts structurels.",
+        state: "non-accomplie",
+      },
+    ],
+    tDateDeb: "2017-03-28T16:43:49Z",
+    tDateRet: "2017-08-28T16:43:49Z",
+    moyenTransport: ["avion"],
+    moyenTransportRet: ["avion", "route"],
+    createdAt: "2017-03-22T16:43:49Z",
+    updatedAt: "2016-05-28T16:43:49Z",
+  },
+  {
+    objetMission:
+      "Évaluation des opportunités d'exploration dans de nouveaux bassins sédimentaires",
+    structure: "PDN",
+    type: "local",
+    budget: 542522.92,
+    pays: "Tadjikistan",
+    lieuDep: "Alger",
+    destination: "Namboongan",
+    employes: [
+      "648fc2f54862fabc27dc8eb1",
+      "648f4c13f4e6335f247a9bbd",
+      "648f4c18f4e6335f247a9bf3",
+    ],
+    taches: [
+      {
+        content:
+          "Élaborer des rapports de conformité réglementaire et suivre les évolutions législatives.",
+        state: "non-accomplie",
+      },
+    ],
+    tDateDeb: "2019-04-10T15:44:57Z",
+    tDateRet: "2019-08-10T15:44:57Z",
+    moyenTransport: ["route"],
+    moyenTransportRet: ["avion", "route"],
+    createdAt: "2019-02-10T15:44:57Z",
+    updatedAt: "2019-03-10T15:44:57Z",
+  },
+  {
+    objetMission: "Étude de la concurrence sur les marchés internationaux",
+    structure: "PRC",
+    type: "local",
+    budget: 109845.53,
+    pays: "Djibouti",
+    lieuDep: "Alger",
+    destination: "Kineshma",
+    employes: [
+      "648f4c14f4e6335f247a9bcc",
+      "648f4c1ef4e6335f247a9c44",
+      "648f4c0cf4e6335f247a9b5d",
+      "648f4c19f4e6335f247a9c02",
+      "648fc2f54862fabc27dc8eb1",
+    ],
+    taches: [
+      {
+        content:
+          "Mener des études de marché pour évaluer la demande et la rentabilité de l'exploration de champs pétroliers spécifiques.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Élaborer des rapports de conformité réglementaire et suivre les évolutions législatives.",
+        state: "non-accomplie",
+      },
+    ],
+    tDateDeb: "2016-07-21T20:20:20Z",
+    tDateRet: "2016-07-30T20:20:20Z",
+    moyenTransport: ["route", "avion"],
+    moyenTransportRet: ["route"],
+    createdAt: "2016-04-21T20:20:20Z",
+    updatedAt: "2016-07-16T20:20:20Z",
+  },
+  {
+    objetMission: "Formation sur les techniques de fracturation hydraulique",
+    structure: "IPM",
+    type: "local",
+    budget: 879938.06,
+    pays: "Ouganda",
+    lieuDep: "Alger",
+    destination: "Camargo",
+    employes: [
+      "648f4c18f4e6335f247a9bf3",
+      "648f4c0ff4e6335f247a9b81",
+      "648f4c13f4e6335f247a9bb7",
+      "648f4c0af4e6335f247a9b3f",
+    ],
+    taches: [],
+    tDateDeb: "2019-04-03T11:24:11Z",
+    tDateRet: "2019-11-03T11:24:11Z",
+    moyenTransport: ["route"],
+    moyenTransportRet: ["route"],
+    createdAt: "2018-04-03T11:24:11Z",
+    updatedAt: "2018-04-03T11:24:11Z",
+  },
+  {
+    objetMission:
+      "Rencontre avec des experts de l'industrie pour partager les meilleures pratiques",
+    structure: "MRO",
+    type: "local",
+    budget: 413502.69,
+    pays: "Lituanie",
+    lieuDep: "Alger",
+    destination: "Athy",
+    employes: ["648f4c2ef4e6335f247a9d13"],
+    taches: [
+      {
+        content:
+          "Assurer la supervision des opérations de logistique et de transport liées aux activités pétrolières.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Coordinate with drilling contractors to ensure efficient and safe well operations.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Veiller à la sécurité et à la conformité des opérations sur les sites pétroliers.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Collaborate with geophysicists to interpret seismic data for exploration purposes.",
+        state: "non-accomplie",
+      },
+    ],
+    tDateDeb: "2016-12-17T22:10:10Z",
+    tDateRet: "2016-12-22T22:10:10Z",
+    moyenTransport: ["avion", "route"],
+    moyenTransportRet: ["avion", "route"],
+    createdAt: "2016-08-17T22:10:10Z",
+    updatedAt: "2016-12-13T22:10:10Z",
+  },
+  {
+    objetMission:
+      "Étude d'impact environnemental pour l'expansion des opérations",
+    structure: "PMO",
+    type: "etranger",
+    budget: 365827.21,
+    pays: "République tchèque",
+    lieuDep: "Alger",
+    destination: "Bergen",
+    employes: ["648f4c2ef4e6335f247a9d10", "648f4c10f4e6335f247a9b8d"],
+    taches: [],
+    tDateDeb: "2016-12-03T21:18:30Z",
+    tDateRet: "2017-12-03T21:18:30Z",
+    moyenTransport: ["route"],
+    moyenTransportRet: ["route"],
+    createdAt: "2016-01-03T21:18:30Z",
+    updatedAt: "2016-11-19T21:18:30Z",
+  },
+  {
+    objetMission:
+      "Analyse des données de production pour optimiser l'efficacité opérationnelle",
+    structure: "MRO",
+    type: "local",
+    budget: 12315.1,
+    pays: "Grenade",
+    lieuDep: "Alger",
+    destination: "Artimet",
+    employes: ["648f4c06f4e6335f247a9b0c"],
+    taches: [
+      {
+        content:
+          "Participer à des projets de recherche et développement pour améliorer les techniques d'extraction.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Conduire des inspections régulières des pipelines pour détecter les fuites et les défauts structurels.",
+        state: "non-accomplie",
+      },
+    ],
+    tDateDeb: "2020-03-05T08:57:57Z",
+    tDateRet: "2020-07-05T08:57:57Z",
+    moyenTransport: ["route", "avion"],
+    moyenTransportRet: ["avion"],
+    createdAt: "2020-02-23T08:57:57Z",
+    updatedAt: "2020-02-26T08:57:57Z",
+  },
+  {
+    objetMission: "Formation sur les techniques de fracturation hydraulique",
+    structure: "FIN",
+    type: "local",
+    budget: 60169.62,
+    pays: "Éthiopie",
+    lieuDep: "Alger",
+    destination: "Bonneuil-sur-Marne",
+    employes: [
+      "648f4c15f4e6335f247a9bd8",
+      "648f4c2df4e6335f247a9d0d",
+      "648f4c16f4e6335f247a9bde",
+      "648f4c30f4e6335f247a9d31",
+      "648f4c0ef4e6335f247a9b6f",
+    ],
+    taches: [
+      {
+        content:
+          "Préparer des rapports détaillés sur les résultats des inspections des infrastructures pétrolières et gazières.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Effectuer des tests et des analyses sur les échantillons de roche pour évaluer le potentiel pétrolier.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Participer à des projets de recherche et développement pour améliorer les techniques d'extraction.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Conduct technical evaluations of equipment and technologies for oil and gas operations.",
+        state: "non-accomplie",
+      },
+    ],
+    tDateDeb: "2016-09-14T23:14:30Z",
+    tDateRet: "2017-08-14T23:14:30Z",
+    moyenTransport: ["avion"],
+    moyenTransportRet: ["route"],
+    createdAt: "2016-08-14T23:14:30Z",
+    updatedAt: "2016-09-12T23:14:30Z",
+  },
+  {
+    objetMission: "Formation sur les meilleures pratiques de sécurité",
+    structure: "PDN",
+    type: "local",
+    budget: 742093.09,
+    pays: "Ouganda",
+    lieuDep: "Alger",
+    destination: "Povarovo",
+    employes: ["648f4c06f4e6335f247a9b0c"],
+    taches: [],
+    tDateDeb: "2020-09-03T13:54:59Z",
+    tDateRet: "2020-09-12T13:54:59Z",
+    moyenTransport: ["avion", "route"],
+    moyenTransportRet: ["route"],
+    createdAt: "2020-08-31T13:54:59Z",
+    updatedAt: "2020-08-06T13:54:59Z",
+  },
+  {
+    objetMission:
+      "Formation sur la gestion des risques dans l'industrie pétrolière",
+    structure: "PMO",
+    type: "etranger",
+    budget: 677529.41,
+    pays: "Syrie",
+    lieuDep: "Alger",
+    destination: "San Vicente",
+    employes: [
+      "648f4c2ff4e6335f247a9d1f",
+      "648f4c33f4e6335f247a9d55",
+      "648f4c13f4e6335f247a9bbd",
+    ],
+    taches: [
+      {
+        content:
+          "Monitor and analyze drilling data to identify potential drilling problems and propose solutions.",
+        state: "non-accomplie",
+      },
+    ],
+    tDateDeb: "2019-11-26T18:07:06Z",
+    tDateRet: "2020-07-26T18:07:06Z",
+    moyenTransport: ["route"],
+    moyenTransportRet: ["avion"],
+    createdAt: "2018-12-26T18:07:06Z",
+    updatedAt: "2019-11-25T18:07:06Z",
+  },
+  {
+    objetMission: "Étude de faisabilité pour l'expansion des opérations",
+    structure: "CHANGE",
+    type: "local",
+    budget: 38377.71,
+    pays: "Inde",
+    lieuDep: "Alger",
+    destination: "Atlanta",
+    employes: [
+      "648f4c12f4e6335f247a9ba5",
+      "648f4c11f4e6335f247a9ba2",
+      "648f4c15f4e6335f247a9bd8",
+      "648fc2f54862fabc27dc8ed5",
+      "648f4c0df4e6335f247a9b63",
+    ],
+    taches: [],
+    tDateDeb: "2020-10-22T17:39:42Z",
+    tDateRet: "2021-05-22T17:39:42Z",
+    moyenTransport: ["avion"],
+    moyenTransportRet: ["avion", "route"],
+    createdAt: "2020-07-22T17:39:42Z",
+    updatedAt: "2020-03-22T17:39:42Z",
+  },
+  {
+    objetMission:
+      "Étude de faisabilité pour la construction d'une nouvelle raffinerie",
+    structure: "HCM",
+    type: "etranger",
+    budget: 205536.29,
+    pays: "Thaïlande",
+    lieuDep: "Alger",
+    destination: "Grootfontein",
+    employes: ["648f4c1cf4e6335f247a9c23", "648f4c08f4e6335f247a9b27"],
+    taches: [
+      {
+        content:
+          "Participer à des projets de recherche et développement pour améliorer les techniques d'extraction.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Veiller à la sécurité et à la conformité des opérations sur les sites pétroliers.",
+        state: "non-accomplie",
+      },
+    ],
+    tDateDeb: "2020-08-22T02:38:25Z",
+    tDateRet: "2020-10-22T02:38:25Z",
+    moyenTransport: ["avion"],
+    moyenTransportRet: ["route"],
+    createdAt: "2020-01-22T02:38:25Z",
+    updatedAt: "2020-01-22T02:38:25Z",
+  },
+  {
+    objetMission:
+      "Analyse des coûts de production et proposition d'améliorations",
+    structure: "PRC",
+    type: "etranger",
+    budget: 958086.53,
+    pays: "Gambie",
+    lieuDep: "Alger",
+    destination: "Maishi",
+    employes: [
+      "648f4c2ff4e6335f247a9d2b",
+      "648f4c09f4e6335f247a9b2d",
+      "648f4c0cf4e6335f247a9b54",
+      "648f4c12f4e6335f247a9ba5",
+    ],
+    taches: [
+      {
+        content:
+          "Monitor production rates and analyze well performance to optimize reservoir recovery.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Collaborate with research institutions to explore innovative technologies for oil and gas exploration.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Organiser des réunions avec des partenaires externes pour discuter des opportunités de collaboration.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Gérer les contrats avec les fournisseurs de services et assurer le respect des accords.",
+        state: "non-accomplie",
+      },
+    ],
+    tDateDeb: "2020-12-16T04:41:04Z",
+    tDateRet: "2021-08-16T04:41:04Z",
+    moyenTransport: ["avion"],
+    moyenTransportRet: ["route", "avion"],
+    createdAt: "2020-12-03T04:41:04Z",
+    updatedAt: "2020-12-10T04:41:04Z",
+  },
+  {
+    objetMission: "Formation sur les techniques de forage directionnel",
+    structure: "SD",
+    type: "etranger",
+    budget: 804176.42,
+    pays: "Pakistan",
+    lieuDep: "Alger",
+    destination: "Nova Granada",
+    employes: [
+      "648f4c19f4e6335f247a9bff",
+      "648f4c08f4e6335f247a9b21",
+      "648fc2f54862fabc27dc8ed9",
+      "648f4c18f4e6335f247a9bf9",
+      "648f4c23f4e6335f247a9c83",
+    ],
+    taches: [
+      {
+        content:
+          "Participer à des formations spécialisées pour développer des compétences techniques avancées.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Collaborer avec des équipes multidisciplinaires pour résoudre des problèmes techniques complexes.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Participer à des formations spécialisées pour développer des compétences techniques avancées.",
+        state: "non-accomplie",
+      },
+    ],
+    tDateDeb: "2020-05-20T22:19:31Z",
+    tDateRet: "2020-10-20T22:19:31Z",
+    moyenTransport: ["route", "avion"],
+    moyenTransportRet: ["route"],
+    createdAt: "2020-05-13T22:19:31Z",
+    updatedAt: "2020-05-07T22:19:31Z",
+  },
+  {
+    objetMission:
+      "Recherche de partenaires pour des projets de développement commun",
+    structure: "IPM",
+    type: "local",
+    budget: 95079.61,
+    pays: "Slovaquie",
+    lieuDep: "Alger",
+    destination: "Ar Ramāḑīn",
+    employes: [
+      "648f4c13f4e6335f247a9bb7",
+      "648f4c1df4e6335f247a9c38",
+      "648f4c26f4e6335f247a9cb0",
+      "648f4c06f4e6335f247a9b0f",
+    ],
+    taches: [
+      {
+        content:
+          "Gérer les contrats avec les fournisseurs de services et assurer le respect des accords.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Manage the logistics and supply chain for offshore exploration and production activities.",
+        state: "non-accomplie",
+      },
+    ],
+    tDateDeb: "2019-09-25T14:03:43Z",
+    tDateRet: "2019-09-28T14:03:43Z",
+    moyenTransport: ["avion"],
+    moyenTransportRet: ["route"],
+    createdAt: "2019-05-25T14:03:43Z",
+    updatedAt: "2019-06-25T14:03:43Z",
+  },
+  {
+    objetMission:
+      "Participation à des simulations d'urgence pour tester les plans de réponse",
+    structure: "MRO",
+    type: "etranger",
+    budget: 564357.78,
+    pays: "Lituanie",
+    lieuDep: "Alger",
+    destination: "Castro Barros",
+    employes: [
+      "648f4c0bf4e6335f247a9b4e",
+      "648f4c27f4e6335f247a9cb9",
+      "648f4c2ff4e6335f247a9d1f",
+      "648f4c12f4e6335f247a9ba5",
+      "648f4c26f4e6335f247a9caa",
+    ],
+    taches: [
+      {
+        content:
+          "Develop cost estimation models for new oil and gas development projects.",
+        state: "non-accomplie",
+      },
+    ],
+    tDateDeb: "2019-09-12T13:09:53Z",
+    tDateRet: "2019-09-26T13:09:53Z",
+    moyenTransport: ["avion", "route"],
+    moyenTransportRet: ["avion", "route"],
+    createdAt: "2018-09-12T13:09:53Z",
+    updatedAt: "2019-08-20T13:09:53Z",
+  },
+  {
+    objetMission: "Évaluation des ressources pétrolières et gazières",
+    structure: "FIN",
+    type: "etranger",
+    budget: 155859.56,
+    pays: "Sri Lanka",
+    lieuDep: "Alger",
+    destination: "Kresna",
+    employes: [
+      "648f4c29f4e6335f247a9cd1",
+      "648f4c15f4e6335f247a9bd2",
+      "648f4c2ff4e6335f247a9d22",
+      "648f4c26f4e6335f247a9cb3",
+      "648fc2f54862fabc27dc8eb7",
+    ],
+    taches: [
+      {
+        content:
+          "Effectuer des études d'impact environnemental et élaborer des mesures de protection.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Préparer des rapports détaillés sur les résultats des inspections des infrastructures pétrolières et gazières.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Participer à des conférences et des événements professionnels pour représenter Sonatrach.",
+        state: "non-accomplie",
+      },
+    ],
+    tDateDeb: "2017-08-30T01:13:40Z",
+    tDateRet: "2017-09-23T01:13:40Z",
+    moyenTransport: ["avion", "route"],
+    moyenTransportRet: ["avion", "route"],
+    createdAt: "2017-08-11T01:13:40Z",
+    updatedAt: "2016-08-30T01:13:40Z",
+  },
+  {
+    objetMission:
+      "Analyse des contrats de fournisseurs pour assurer la conformité",
+    structure: "PMO",
+    type: "etranger",
+    budget: 139758.21,
+    pays: "Pays-Bas",
+    lieuDep: "Alger",
+    destination: "Tama",
+    employes: [
+      "648f4c0cf4e6335f247a9b54",
+      "648f4c1ef4e6335f247a9c3b",
+      "648f4c2ef4e6335f247a9d19",
+      "648f4c2bf4e6335f247a9cf2",
+    ],
+    taches: [
+      {
+        content:
+          "Monitor and analyze drilling data to identify potential drilling problems and propose solutions.",
+        state: "non-accomplie",
+      },
+    ],
+    tDateDeb: "2017-09-29T14:00:40Z",
+    tDateRet: "2017-10-02T14:00:40Z",
+    moyenTransport: ["route", "avion"],
+    moyenTransportRet: ["route"],
+    createdAt: "2017-02-28T14:00:40Z",
+    updatedAt: "2017-08-29T14:00:40Z",
+  },
+  {
+    objetMission:
+      "Évaluation de l'impact des nouvelles réglementations sur les opérations",
+    structure: "HCM",
+    type: "local",
+    budget: 642930.51,
+    pays: "République centrafricaine",
+    lieuDep: "Alger",
+    destination: "Bator",
+    employes: ["648f4c0af4e6335f247a9b42", "648f4c1cf4e6335f247a9c23"],
+    taches: [
+      {
+        content:
+          "Develop and implement training programs for personnel involved in offshore operations.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Monitor production rates and analyze well performance to optimize reservoir recovery.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Effectuer une analyse approfondie des données géologiques pour identifier de nouveaux sites potentiels de forage.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Organiser des réunions avec des partenaires externes pour discuter des opportunités de collaboration.",
+        state: "non-accomplie",
+      },
+    ],
+    tDateDeb: "2020-08-24T02:11:20Z",
+    tDateRet: "2020-09-14T02:11:20Z",
+    moyenTransport: ["route", "avion"],
+    moyenTransportRet: ["route"],
+    createdAt: "2020-08-08T02:11:20Z",
+    updatedAt: "2020-06-24T02:11:20Z",
+  },
+  {
+    objetMission:
+      "Rencontre avec des experts de l'industrie pour partager les meilleures pratiques",
+    structure: "FIN",
+    type: "local",
+    budget: 641828.21,
+    pays: "Kiribati",
+    lieuDep: "Alger",
+    destination: "Juliaca",
+    employes: [
+      "648f4c0ff4e6335f247a9b7e",
+      "648f4c28f4e6335f247a9cc5",
+      "648f4c0bf4e6335f247a9b48",
+      "648f4c0ef4e6335f247a9b78",
+      "648f4c1df4e6335f247a9c2f",
+    ],
+    taches: [],
+    tDateDeb: "2018-11-28T20:28:03Z",
+    tDateRet: "2019-11-28T20:28:03Z",
+    moyenTransport: ["route", "avion"],
+    moyenTransportRet: ["route"],
+    createdAt: "2018-09-28T20:28:03Z",
+    updatedAt: "2017-11-28T20:28:03Z",
+  },
+  {
+    objetMission:
+      "Analyse des données géologiques pour la planification des activités",
+    structure: "FIN",
+    type: "etranger",
+    budget: 92120.6,
+    pays: "Émirats arabes unis",
+    lieuDep: "Alger",
+    destination: "Quixeramobim",
+    employes: [
+      "648f4c06f4e6335f247a9b0c",
+      "648f4c1cf4e6335f247a9c26",
+      "648f4c31f4e6335f247a9d3d",
+      "648f4c24f4e6335f247a9c98",
+    ],
+    taches: [
+      {
+        content:
+          "Participer à des projets de recherche et développement pour améliorer les techniques d'extraction.",
+        state: "non-accomplie",
+      },
+    ],
+    tDateDeb: "2017-05-15T20:35:14Z",
+    tDateRet: "2017-05-24T20:35:14Z",
+    moyenTransport: ["route"],
+    moyenTransportRet: ["route", "avion"],
+    createdAt: "2017-02-15T20:35:14Z",
+    updatedAt: "2017-02-15T20:35:14Z",
+  },
+  {
+    objetMission:
+      "Évaluation des réserves de gaz naturel pour la planification à long terme",
+    structure: "PMO",
+    type: "local",
+    budget: 670410.85,
+    pays: "Mali",
+    lieuDep: "Alger",
+    destination: "Mollepampa",
+    employes: [
+      "648f4c1af4e6335f247a9c0b",
+      "648fc2f54862fabc27dc8ed5",
+      "648f4c21f4e6335f247a9c6e",
+      "648f4c32f4e6335f247a9d49",
+      "648f4c20f4e6335f247a9c5f",
+    ],
+    taches: [
+      {
+        content:
+          "Develop and implement training programs for personnel involved in offshore operations.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Collaborer avec des équipes multidisciplinaires pour résoudre des problèmes techniques complexes.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Develop and maintain relationships with key stakeholders, including government entities and local communities.",
+        state: "non-accomplie",
+      },
+    ],
+    tDateDeb: "2020-05-19T12:30:00Z",
+    tDateRet: "2020-06-17T12:30:00Z",
+    moyenTransport: ["route", "avion"],
+    moyenTransportRet: ["avion"],
+    createdAt: "2020-03-19T12:30:00Z",
+    updatedAt: "2020-05-15T12:30:00Z",
+  },
+  {
+    objetMission: "Audit des processus de production",
+    structure: "PMO",
+    type: "etranger",
+    budget: 875571.58,
+    pays: "Cambodge",
+    lieuDep: "Alger",
+    destination: "Nubma",
+    employes: [
+      "648f4c2ef4e6335f247a9d1c",
+      "648f4c14f4e6335f247a9bc6",
+      "648f4c26f4e6335f247a9cb3",
+      "648f4c11f4e6335f247a9ba2",
+    ],
+    taches: [],
+    tDateDeb: "2019-12-21T17:48:44Z",
+    tDateRet: "2019-12-29T17:48:44Z",
+    moyenTransport: ["avion", "route"],
+    moyenTransportRet: ["avion"],
+    createdAt: "2019-12-20T17:48:44Z",
+    updatedAt: "2019-11-25T17:48:44Z",
+  },
+  {
+    objetMission: "Examen des procédures de sécurité",
+    structure: "CHANGE",
+    type: "local",
+    budget: 959206.74,
+    budgetConsome: 575711.51,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Illizi",
+    employes: ["648f4c09f4e6335f247a9b33", "648f4c0df4e6335f247a9b69"],
+    taches: [
+      {
+        content:
+          "Monitor and analyze drilling data to identify potential drilling problems and propose solutions.",
+        state: "accomplie",
+      },
+      {
+        content:
+          "Monitor and analyze drilling data to identify potential drilling problems and propose solutions.",
+        state: "non-accomplie",
+      },
+    ],
+    tDateDeb: "2019-12-21T22:20:47Z",
+    tDateRet: "2019-12-25T22:20:47Z",
+    moyenTransport: ["route"],
+    moyenTransportRet: ["avion"],
+    createdAt: "2019-11-27T22:20:47Z",
+    updatedAt: "2019-10-21T22:20:47Z",
+    oldDuree: 4,
+    etat: "terminée",
+  },
+  {
+    objetMission: "Examen des procédures de maintenance préventive",
+    structure: "CHANGE",
+    type: "etranger",
+    budget: 310002.46,
+    budgetConsome: 546148.83,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Biskra",
+    employes: [
+      "648f4c0ef4e6335f247a9b72",
+      "648f4c1af4e6335f247a9c0e",
+      "648f4c0af4e6335f247a9b3c",
+      "648f4c30f4e6335f247a9d37",
+    ],
+    taches: [],
+    tDateDeb: "2019-11-05T02:42:54Z",
+    tDateRet: "2019-12-05T02:42:54Z",
+    moyenTransport: ["avion"],
+    moyenTransportRet: ["avion"],
+    createdAt: "2019-07-05T02:42:54Z",
+    updatedAt: "2019-10-30T02:42:54Z",
+    oldDuree: 30,
+    etat: "terminée",
+  },
+  {
+    objetMission: "Recherche de nouvelles opportunités d'exploration",
+    structure: "DATA",
+    type: "local",
+    budget: 997949.63,
+    budgetConsome: 632910.69,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Alger",
+    employes: ["648f4c1ff4e6335f247a9c50"],
+    taches: [
+      {
+        content:
+          "Analyser les données de marché pour identifier les tendances et les opportunités d'affaires.",
+        state: "accomplie",
+      },
+      {
+        content:
+          "Participate in industry conferences and workshops to stay updated on emerging trends and technologies.",
+        state: "accomplie",
+      },
+      {
+        content:
+          "Effectuer des évaluations économiques pour déterminer la rentabilité des projets d'investissement.",
+        state: "accomplie",
+      },
+      {
+        content:
+          "Effectuer des évaluations de risques pour les projets d'exploration et de production.",
+        state: "accomplie",
+      },
+    ],
+    tDateDeb: "2020-02-13T05:45:37Z",
+    tDateRet: "2020-02-19T05:45:37Z",
+    moyenTransport: ["route", "avion"],
+    moyenTransportRet: ["avion", "route"],
+    createdAt: "2019-06-13T05:45:37Z",
+    updatedAt: "2019-03-13T05:45:37Z",
+    oldDuree: 6,
+    etat: "terminée",
+  },
+  {
+    objetMission:
+      "Supervision des tests de production pour assurer la qualité des hydrocarbures",
+    structure: "PRC",
+    type: "etranger",
+    budget: 370073.23,
+    budgetConsome: 780072.51,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Skikda",
+    employes: ["648f4c14f4e6335f247a9bc0", "648f4c2af4e6335f247a9ce6"],
+    taches: [
+      {
+        content:
+          "Veiller à la sécurité et à la conformité des opérations sur les sites pétroliers.",
+        state: "accomplie",
+      },
+      {
+        content:
+          "Coordinate with regulatory agencies to ensure compliance with environmental regulations.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Develop and implement training programs for personnel involved in offshore operations.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Implement data management systems to effectively organize and analyze geological and reservoir data.",
+        state: "non-accomplie",
+      },
+    ],
+    tDateDeb: "2019-07-27T18:15:09Z",
+    tDateRet: "2019-08-02T18:15:09Z",
+    moyenTransport: ["avion"],
+    moyenTransportRet: ["avion"],
+    createdAt: "2018-12-27T18:15:09Z",
+    updatedAt: "2018-08-27T18:15:09Z",
+    oldDuree: 6,
+    etat: "terminée",
+  },
+  {
+    objetMission:
+      "Supervision des opérations de construction d'un nouveau pipeline",
+    structure: "PMO",
+    type: "etranger",
+    budget: 795421.18,
+    budgetConsome: 60966.35,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Skikda",
+    employes: [
+      "648f4c13f4e6335f247a9bb7",
+      "648f4c0bf4e6335f247a9b4b",
+      "648f4c1ff4e6335f247a9c53",
+      "648f4c0af4e6335f247a9b45",
+    ],
+    taches: [],
+    tDateDeb: "2020-12-31T05:52:39Z",
+    tDateRet: "2021-03-31T05:52:39Z",
+    moyenTransport: ["avion", "route"],
+    moyenTransportRet: ["avion"],
+    createdAt: "2020-02-29T05:52:39Z",
+    updatedAt: "2020-05-31T05:52:39Z",
+    oldDuree: 90,
+    etat: "terminée",
+  },
+  {
+    objetMission: "Visite d'inspection du site pétrolier",
+    structure: "DATA",
+    type: "etranger",
+    budget: 49176.13,
+    budgetConsome: 202232.54,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Bejaia",
+    employes: [
+      "648f4c1cf4e6335f247a9c23",
+      "648f4c15f4e6335f247a9bd8",
+      "648f4c2ef4e6335f247a9d10",
+    ],
+    taches: [
+      {
+        content:
+          "Collaborate with geophysicists to interpret seismic data for exploration purposes.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Conduire des inspections régulières des pipelines pour détecter les fuites et les défauts structurels.",
+        state: "accomplie",
+      },
+      {
+        content:
+          "Participer à des formations spécialisées pour développer des compétences techniques avancées.",
+        state: "accomplie",
+      },
+    ],
+    tDateDeb: "2019-10-27T22:48:55Z",
+    tDateRet: "2019-10-29T22:48:55Z",
+    moyenTransport: ["route"],
+    moyenTransportRet: ["avion", "route"],
+    createdAt: "2019-04-27T22:48:55Z",
+    updatedAt: "2019-10-01T22:48:55Z",
+    oldDuree: 13,
+    etat: "terminée",
+  },
+  {
+    objetMission:
+      "Élaboration d'un plan de communication pour un projet majeur",
+    structure: "IPM",
+    type: "etranger",
+    budget: 447164.27,
+    budgetConsome: 633885.64,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Alger",
+    employes: ["648f4c27f4e6335f247a9cbf"],
+    taches: [
+      {
+        content:
+          "Assurer la supervision des opérations de logistique et de transport liées aux activités pétrolières.",
+        state: "accomplie",
+      },
+      {
+        content:
+          "Participate in industry conferences and workshops to stay updated on emerging trends and technologies.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Perform reservoir engineering analysis to optimize oil and gas production rates.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Organiser des réunions avec des partenaires externes pour discuter des opportunités de collaboration.",
+        state: "accomplie",
+      },
+    ],
+    tDateDeb: "2018-06-18T21:56:08Z",
+    tDateRet: "2018-07-12T21:56:08Z",
+    moyenTransport: ["route"],
+    moyenTransportRet: ["avion", "route"],
+    createdAt: "2018-03-18T21:56:08Z",
+    updatedAt: "2018-05-19T21:56:08Z",
+    oldDuree: 25,
+    etat: "terminée",
+  },
+  {
+    objetMission:
+      "Supervision des opérations de construction d'un nouveau pipeline",
+    structure: "FIN",
+    type: "local",
+    budget: null,
+    budgetConsome: null,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Tiaret",
+    employes: [
+      "648f4c19f4e6335f247a9c02",
+      "648f4c27f4e6335f247a9cb9",
+      "648f4c24f4e6335f247a9c8f",
+    ],
+    taches: [],
+    tDateDeb: "2019-08-18T07:03:43Z",
+    tDateRet: "2019-10-18T07:03:43Z",
+    moyenTransport: ["avion"],
+    moyenTransportRet: ["avion", "route"],
+    createdAt: "2019-08-01T07:03:43Z",
+    updatedAt: "2019-03-18T07:03:43Z",
+    oldDuree: 61,
+    etat: "terminée",
+  },
+  {
+    objetMission:
+      "Rencontre avec des représentants gouvernementaux pour discuter des réglementations",
+    structure: "HCM",
+    type: "local",
+    budget: 286195.03,
+    budgetConsome: 818506.13,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Biskra",
+    employes: [
+      "648f4c2df4e6335f247a9d04",
+      "648f4c1cf4e6335f247a9c29",
+      "648fc2f54862fabc27dc8eb1",
+    ],
+    taches: [
+      {
+        content:
+          "Contribuer à l'élaboration de plans de maintenance préventive pour les installations pétrolières.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Implement data management systems to effectively organize and analyze geological and reservoir data.",
+        state: "accomplie",
+      },
+      {
+        content:
+          "Veiller à la sécurité et à la conformité des opérations sur les sites pétroliers.",
+        state: "accomplie",
+      },
+    ],
+    tDateDeb: "2016-11-27T03:46:56Z",
+    tDateRet: "2017-02-27T03:46:56Z",
+    moyenTransport: ["avion", "route"],
+    moyenTransportRet: ["route"],
+    createdAt: "2016-11-24T03:46:56Z",
+    updatedAt: "2016-07-27T03:46:56Z",
+    oldDuree: 27,
+    etat: "terminée",
+  },
+  {
+    objetMission: "Inspection des installations de stockage de gaz naturel",
+    structure: "IPM",
+    type: "local",
+    budget: 700162.19,
+    budgetConsome: 687959.53,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Tiaret",
+    employes: [
+      "648f4c27f4e6335f247a9cbf",
+      "648f4c1ff4e6335f247a9c53",
+      "648f4c31f4e6335f247a9d3d",
+      "648f4c18f4e6335f247a9bf6",
+    ],
+    taches: [
+      {
+        content:
+          "Perform reservoir engineering analysis to optimize oil and gas production rates.",
+        state: "accomplie",
+      },
+      {
+        content:
+          "Effectuer des évaluations de risques pour les projets d'exploration et de production.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Develop cost estimation models for new oil and gas development projects.",
+        state: "accomplie",
+      },
+    ],
+    tDateDeb: "2017-01-10T20:54:47Z",
+    tDateRet: "2017-01-23T20:54:47Z",
+    moyenTransport: ["route", "avion"],
+    moyenTransportRet: ["avion"],
+    createdAt: "2016-01-10T20:54:47Z",
+    updatedAt: "2016-06-10T20:54:47Z",
+    oldDuree: 13,
+    etat: "terminée",
+  },
+  {
+    objetMission:
+      "Formation sur les nouvelles technologies dans l'industrie pétrolière",
+    structure: "TECH",
+    type: "local",
+    budget: 151005.67,
+    budgetConsome: 211669.02,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Oran",
+    employes: [
+      "648fc2f54862fabc27dc8eb1",
+      "648f4c2bf4e6335f247a9cec",
+      "648f4c13f4e6335f247a9bb4",
+      "648f4c21f4e6335f247a9c65",
+      "648f4c17f4e6335f247a9be7",
+    ],
+    taches: [
+      {
+        content:
+          "Mener des études de marché pour évaluer la demande et la rentabilité de l'exploration de champs pétroliers spécifiques.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Implement data management systems to effectively organize and analyze geological and reservoir data.",
+        state: "accomplie",
+      },
+    ],
+    tDateDeb: "2016-10-05T14:56:20Z",
+    tDateRet: "2016-12-05T14:56:20Z",
+    moyenTransport: ["avion"],
+    moyenTransportRet: ["avion", "route"],
+    createdAt: "2015-11-05T14:56:20Z",
+    updatedAt: "2016-07-05T14:56:20Z",
+    oldDuree: 31,
+    etat: "terminée",
+  },
+  {
+    objetMission:
+      "Supervision des tests de production pour assurer la qualité des hydrocarbures",
+    structure: "IPM",
+    type: "local",
+    budget: 358189.1,
+    budgetConsome: 754052.02,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Ghardaia",
+    employes: [
+      "648f4c2bf4e6335f247a9cec",
+      "648f4c1ef4e6335f247a9c41",
+      "648f4c1cf4e6335f247a9c29",
+      "648f4c29f4e6335f247a9cda",
+      "648f4c06f4e6335f247a9b0c",
+    ],
+    taches: [
+      {
+        content:
+          "Effectuer des études d'impact environnemental et élaborer des mesures de protection.",
+        state: "accomplie",
+      },
+      {
+        content:
+          "Perform quality control checks on oil and gas samples to ensure accurate analysis.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Perform risk assessments and develop contingency plans for potential operational hazards.",
+        state: "accomplie",
+      },
+    ],
+    tDateDeb: "2016-03-09T13:07:27Z",
+    tDateRet: "2016-11-09T13:07:27Z",
+    moyenTransport: ["avion"],
+    moyenTransportRet: ["avion", "route"],
+    createdAt: "2015-04-09T13:07:27Z",
+    updatedAt: "2016-02-09T13:07:27Z",
+    oldDuree: 245,
+    etat: "terminée",
+  },
+  {
+    objetMission: "Évaluation des performances des sous-traitants",
+    structure: "CHANGE",
+    type: "etranger",
+    budget: 707937.85,
+    budgetConsome: 891727.45,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Skikda",
+    employes: [
+      "648f4c33f4e6335f247a9d55",
+      "648f4c2df4e6335f247a9d0a",
+      "648f4c22f4e6335f247a9c71",
+      "648f4c0cf4e6335f247a9b54",
+    ],
+    taches: [],
+    tDateDeb: "2017-06-11T21:39:47Z",
+    tDateRet: "2018-05-11T21:39:47Z",
+    moyenTransport: ["avion"],
+    moyenTransportRet: ["avion", "route"],
+    createdAt: "2017-01-11T21:39:47Z",
+    updatedAt: "2017-06-10T21:39:47Z",
+    oldDuree: 334,
+    etat: "terminée",
+  },
+  {
+    objetMission:
+      "Rencontre avec les fournisseurs pour la négociation des contrats",
+    structure: "CHANGE",
+    type: "etranger",
+    budget: 320904.26,
+    budgetConsome: 753332.46,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Adrar",
+    employes: [
+      "648f4c0df4e6335f247a9b63",
+      "648f4c0ef4e6335f247a9b7b",
+      "648f4c1bf4e6335f247a9c17",
+      "648f4c22f4e6335f247a9c74",
+    ],
+    taches: [],
+    tDateDeb: "2020-08-06T10:55:55Z",
+    tDateRet: "2020-08-14T10:55:55Z",
+    moyenTransport: ["avion"],
+    moyenTransportRet: ["route"],
+    createdAt: "2020-02-06T10:55:55Z",
+    updatedAt: "2020-07-19T10:55:55Z",
+    oldDuree: 8,
+    etat: "terminée",
+  },
+  {
+    objetMission:
+      "Analyse des coûts d'exploitation pour l'optimisation des budgets",
+    structure: "DATA",
+    type: "local",
+    budget: 535635.86,
+    budgetConsome: 341291.52,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Bejaia",
+    employes: [
+      "648f4c33f4e6335f247a9d5b",
+      "648f4c0df4e6335f247a9b69",
+      "648f4c0bf4e6335f247a9b4b",
+    ],
+    taches: [
+      {
+        content:
+          "Analyser les données de production et identifier des stratégies d'optimisation des rendements.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Coordinate with drilling contractors to ensure efficient and safe well operations.",
+        state: "non-accomplie",
+      },
+    ],
+    tDateDeb: "2021-05-07T15:42:31Z",
+    tDateRet: "2022-01-07T15:42:31Z",
+    moyenTransport: ["route", "avion"],
+    moyenTransportRet: ["route"],
+    createdAt: "2021-04-27T15:42:31Z",
+    updatedAt: "2020-12-07T15:42:31Z",
+    oldDuree: 10,
+    etat: "terminée",
+  },
+  {
+    objetMission:
+      "Supervision des tests de production pour assurer la qualité des hydrocarbures",
+    structure: "PRC",
+    type: "etranger",
+    budget: 945392.69,
+    budgetConsome: 450573.33,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Tiaret",
+    employes: [
+      "648f4c2af4e6335f247a9ce6",
+      "648f4c2df4e6335f247a9d0d",
+      "648f4c0ef4e6335f247a9b72",
+      "648f4c14f4e6335f247a9bcc",
+    ],
+    taches: [
+      {
+        content:
+          "Mener des études de marché pour évaluer la demande et la rentabilité de l'exploration de champs pétroliers spécifiques.",
+        state: "accomplie",
+      },
+      {
+        content:
+          "Assurer la coordination des opérations de forage sur le terrain et superviser les équipes de travail.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Gérer les contrats avec les fournisseurs de services et assurer le respect des accords.",
+        state: "accomplie",
+      },
+    ],
+    tDateDeb: "2018-10-10T19:10:47Z",
+    tDateRet: "2019-02-10T19:10:47Z",
+    moyenTransport: ["route"],
+    moyenTransportRet: ["avion"],
+    createdAt: "2018-05-10T19:10:47Z",
+    updatedAt: "2018-10-09T19:10:47Z",
+    oldDuree: 28,
+    etat: "terminée",
+  },
+  {
+    objetMission: "Inspection des équipements de forage",
+    structure: "MRO",
+    type: "etranger",
+    budget: 729303.11,
+    budgetConsome: 533792.38,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Tamanrasset",
+    employes: ["648f4c28f4e6335f247a9cc5", "648f4c14f4e6335f247a9bc3"],
+    taches: [
+      {
+        content:
+          "Élaborer des rapports de conformité réglementaire et suivre les évolutions législatives.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Effectuer des tests et des analyses sur les échantillons de roche pour évaluer le potentiel pétrolier.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Conduct environmental impact assessments for proposed exploration projects.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Coordinate with drilling contractors to ensure efficient and safe well operations.",
+        state: "non-accomplie",
+      },
+    ],
+    tDateDeb: "2019-08-07T22:32:00Z",
+    tDateRet: "2019-10-07T22:32:00Z",
+    moyenTransport: ["avion", "route"],
+    moyenTransportRet: ["route"],
+    createdAt: "2019-05-07T22:32:00Z",
+    updatedAt: "2019-05-07T22:32:00Z",
+    oldDuree: 5,
+    etat: "terminée",
+  },
+  {
+    objetMission: "Évaluation des performances des sous-traitants",
+    structure: "PRC",
+    type: "etranger",
+    budget: 294772.39,
+    budgetConsome: 711873.6,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Tamanrasset",
+    employes: [
+      "648f4c1ef4e6335f247a9c44",
+      "648fc2f54862fabc27dc8eb7",
+      "648f4c22f4e6335f247a9c74",
+      "648f4c12f4e6335f247a9ba5",
+    ],
+    taches: [
+      {
+        content:
+          "Conduct economic evaluations of investment opportunities in new oil and gas assets.",
+        state: "non-accomplie",
+      },
+    ],
+    tDateDeb: "2020-02-28T08:57:00Z",
+    tDateRet: "2020-03-05T08:57:00Z",
+    moyenTransport: ["route", "avion"],
+    moyenTransportRet: ["avion"],
+    createdAt: "2020-01-28T08:57:00Z",
+    updatedAt: "2020-02-22T08:57:00Z",
+    oldDuree: 6,
+    etat: "terminée",
+  },
+  {
+    objetMission:
+      "Rencontre avec des organismes gouvernementaux pour discuter des réglementations",
+    structure: "HCM",
+    type: "local",
+    budget: 883361.83,
+    budgetConsome: 528991.42,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Ouargla",
+    employes: [
+      "648f4c13f4e6335f247a9bb1",
+      "648f4c1ef4e6335f247a9c3e",
+      "648f4c07f4e6335f247a9b18",
+    ],
+    taches: [
+      {
+        content:
+          "Participer à des formations spécialisées pour développer des compétences techniques avancées.",
+        state: "accomplie",
+      },
+      {
+        content:
+          "Organiser des réunions avec des partenaires externes pour discuter des opportunités de collaboration.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Participer à des formations spécialisées pour développer des compétences techniques avancées.",
+        state: "accomplie",
+      },
+      {
+        content:
+          "Collaborate with research institutions to explore innovative technologies for oil and gas exploration.",
+        state: "non-accomplie",
+      },
+    ],
+    tDateDeb: "2016-12-11T22:49:53Z",
+    tDateRet: "2017-01-11T22:49:53Z",
+    moyenTransport: ["avion", "route"],
+    moyenTransportRet: ["route", "avion"],
+    createdAt: "2016-12-08T22:49:53Z",
+    updatedAt: "2016-11-15T22:49:53Z",
+    oldDuree: 0,
+    etat: "terminée",
+  },
+  {
+    objetMission:
+      "Rencontre avec des experts de l'industrie pour partager les meilleures pratiques",
+    structure: "SD",
+    type: "local",
+    budget: 651698.96,
+    budgetConsome: 305221.36,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Biskra",
+    employes: [
+      "648f4c2bf4e6335f247a9cf2",
+      "648fc2f54862fabc27dc8ed7",
+      "648f4c2bf4e6335f247a9cef",
+    ],
+    taches: [
+      {
+        content:
+          "Coordinate with drilling contractors to ensure efficient and safe well operations.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Develop and implement training programs for personnel involved in offshore operations.",
+        state: "accomplie",
+      },
+    ],
+    tDateDeb: "2020-10-05T18:17:06Z",
+    tDateRet: "2020-12-05T18:17:06Z",
+    moyenTransport: ["avion", "route"],
+    moyenTransportRet: ["avion"],
+    createdAt: "2020-03-05T18:17:06Z",
+    updatedAt: "2020-09-15T18:17:06Z",
+    oldDuree: 61,
+    etat: "terminée",
+  },
+  {
+    objetMission:
+      "Rencontre avec des représentants gouvernementaux pour discuter des réglementations",
+    structure: "MRO",
+    type: "etranger",
+    budget: 57633.29,
+    budgetConsome: 614670.29,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Bejaia",
+    employes: [
+      "648f4c29f4e6335f247a9cda",
+      "648f4c15f4e6335f247a9bd2",
+      "648f4c31f4e6335f247a9d40",
+      "648f4c1bf4e6335f247a9c20",
+      "648f4c22f4e6335f247a9c77",
+    ],
+    taches: [],
+    tDateDeb: "2017-05-23T00:43:47Z",
+    tDateRet: "2018-02-23T00:43:47Z",
+    moyenTransport: ["avion", "route"],
+    moyenTransportRet: ["avion"],
+    createdAt: "2017-04-23T00:43:47Z",
+    updatedAt: "2017-05-19T00:43:47Z",
+    oldDuree: 276,
+    etat: "terminée",
+  },
+  {
+    objetMission:
+      "Participation à des salons professionnels pour présenter les activités de Sonatrach",
+    structure: "MRO",
+    type: "local",
+    budget: 114276.78,
+    budgetConsome: 856340.14,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Ghardaia",
+    employes: [
+      "648f4c10f4e6335f247a9b8d",
+      "648f4c11f4e6335f247a9b9f",
+      "648fc2f54862fabc27dc8ed5",
+      "648f4c0af4e6335f247a9b3f",
+      "648f4c13f4e6335f247a9bbd",
+    ],
+    taches: [
+      {
+        content:
+          "Manage the logistics and supply chain for offshore exploration and production activities.",
+        state: "accomplie",
+      },
+      {
+        content:
+          "Coordinate with drilling contractors to ensure efficient and safe well operations.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Effectuer des évaluations économiques pour déterminer la rentabilité des projets d'investissement.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Coordinate with drilling contractors to ensure efficient and safe well operations.",
+        state: "accomplie",
+      },
+    ],
+    tDateDeb: "2016-01-27T08:24:07Z",
+    tDateRet: "2016-08-27T08:24:07Z",
+    moyenTransport: ["route", "avion"],
+    moyenTransportRet: ["route", "avion"],
+    createdAt: "2015-06-27T08:24:07Z",
+    updatedAt: "2016-01-12T08:24:07Z",
+    oldDuree: 213,
+    etat: "terminée",
+  },
+  {
+    objetMission: "Formation sur les techniques de forage directionnel",
+    structure: "PMO",
+    type: "local",
+    budget: 640477.01,
+    budgetConsome: 510975.22,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Adrar",
+    employes: ["648f4c20f4e6335f247a9c56"],
+    taches: [],
+    tDateDeb: "2017-11-21T16:58:33Z",
+    tDateRet: "2018-08-21T16:58:33Z",
+    moyenTransport: ["route", "avion"],
+    moyenTransportRet: ["route"],
+    createdAt: "2017-05-21T16:58:33Z",
+    updatedAt: "2017-08-21T16:58:33Z",
+    oldDuree: 16,
+    etat: "terminée",
+  },
+  {
+    objetMission:
+      "Analyse des données de production pour optimiser l'efficacité opérationnelle",
+    structure: "TECH",
+    type: "local",
+    budget: 831538.47,
+    budgetConsome: 644809.84,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Adrar",
+    employes: ["648f4c2df4e6335f247a9d04"],
+    taches: [
+      {
+        content:
+          "Participer à des conférences et des événements professionnels pour représenter Sonatrach.",
+        state: "non-accomplie",
+      },
+    ],
+    tDateDeb: "2019-11-24T08:58:25Z",
+    tDateRet: "2019-12-22T08:58:25Z",
+    moyenTransport: ["avion", "route"],
+    moyenTransportRet: ["avion", "route"],
+    createdAt: "2019-11-10T08:58:25Z",
+    updatedAt: "2019-07-24T08:58:25Z",
+    oldDuree: 31,
+    etat: "terminée",
+  },
+  {
+    objetMission:
+      "Analyse des données géologiques pour la planification des activités",
+    structure: "CHANGE",
+    type: "local",
+    budget: 535344.32,
+    budgetConsome: 708099.46,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Ghardaia",
+    employes: [
+      "648f4c14f4e6335f247a9bcc",
+      "648f4c23f4e6335f247a9c80",
+      "648f4c2ef4e6335f247a9d10",
+      "648f4c2cf4e6335f247a9cfe",
+    ],
+    taches: [],
+    tDateDeb: "2018-01-10T04:35:59Z",
+    tDateRet: "2018-10-10T04:35:59Z",
+    moyenTransport: ["route"],
+    moyenTransportRet: ["avion", "route"],
+    createdAt: "2017-12-11T04:35:59Z",
+    updatedAt: "2017-11-10T04:35:59Z",
+    oldDuree: 7,
+    etat: "terminée",
+  },
+  {
+    objetMission:
+      "Analyse des indicateurs de performance pour évaluer la productivité des équipes",
+    structure: "HCM",
+    type: "local",
+    budget: 361882.4,
+    budgetConsome: 358340.77,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Ghardaia",
+    employes: [
+      "648f4c2ff4e6335f247a9d28",
+      "648f4c13f4e6335f247a9bb1",
+      "648f4c1cf4e6335f247a9c29",
+      "648f4c17f4e6335f247a9be4",
+      "648f4c0af4e6335f247a9b42",
+    ],
+    taches: [
+      {
+        content:
+          "Préparer des rapports détaillés sur les résultats des inspections des infrastructures pétrolières et gazières.",
+        state: "non-accomplie",
+      },
+    ],
+    tDateDeb: "2016-03-06T02:34:33Z",
+    tDateRet: "2016-03-18T02:34:33Z",
+    moyenTransport: ["route", "avion"],
+    moyenTransportRet: ["route", "avion"],
+    createdAt: "2015-12-06T02:34:33Z",
+    updatedAt: "2015-05-06T02:34:33Z",
+    oldDuree: 31,
+    etat: "terminée",
+  },
+  {
+    objetMission:
+      "Évaluation des besoins en personnel pour des projets d'expansion",
+    structure: "CHANGE",
+    type: "etranger",
+    budget: 905166.04,
+    budgetConsome: 276100.58,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Ouargla",
+    employes: ["648f4c27f4e6335f247a9cc2", "648f4c0ff4e6335f247a9b87"],
+    taches: [],
+    tDateDeb: "2018-07-08T13:14:53Z",
+    tDateRet: "2019-07-08T13:14:53Z",
+    moyenTransport: ["route"],
+    moyenTransportRet: ["route", "avion"],
+    createdAt: "2018-06-09T13:14:53Z",
+    updatedAt: "2018-06-08T13:14:53Z",
+    oldDuree: 1,
+    etat: "terminée",
+  },
+  {
+    objetMission:
+      "Analyse des données sismiques pour l'exploration de nouveaux gisements",
+    structure: "DATA",
+    type: "local",
+    budget: 506689.8,
+    budgetConsome: 37339.34,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Ouargla",
+    employes: ["648f4c2ef4e6335f247a9d1c"],
+    taches: [
+      {
+        content:
+          "Perform quality control checks on oil and gas samples to ensure accurate analysis.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Effectuer des évaluations économiques pour déterminer la rentabilité des projets d'investissement.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Effectuer une analyse approfondie des données géologiques pour identifier de nouveaux sites potentiels de forage.",
+        state: "accomplie",
+      },
+      {
+        content:
+          "Effectuer des évaluations de risques pour les projets d'exploration et de production.",
+        state: "non-accomplie",
+      },
+    ],
+    tDateDeb: "2019-10-12T04:02:59Z",
+    tDateRet: "2020-05-12T04:02:59Z",
+    moyenTransport: ["avion"],
+    moyenTransportRet: ["avion", "route"],
+    createdAt: "2019-01-12T04:02:59Z",
+    updatedAt: "2019-10-05T04:02:59Z",
+    oldDuree: 213,
+    etat: "terminée",
+  },
+  {
+    objetMission: "Étude de faisabilité pour l'expansion des opérations",
+    structure: "SD",
+    type: "local",
+    budget: 942726.97,
+    budgetConsome: 196213.19,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Illizi",
+    employes: [
+      "648f4c17f4e6335f247a9bed",
+      "648f4c17f4e6335f247a9bea",
+      "648fc2f54862fabc27dc8ed5",
+      "648f4c2af4e6335f247a9ce3",
+    ],
+    taches: [
+      {
+        content:
+          "Develop and implement safety protocols for offshore drilling operations.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Perform risk assessments and develop contingency plans for potential operational hazards.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Analyser les données de production et identifier des stratégies d'optimisation des rendements.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Préparer des rapports détaillés sur les résultats des inspections des infrastructures pétrolières et gazières.",
+        state: "accomplie",
+      },
+    ],
+    tDateDeb: "2019-06-19T10:08:35Z",
+    tDateRet: "2019-12-19T10:08:35Z",
+    moyenTransport: ["route"],
+    moyenTransportRet: ["route"],
+    createdAt: "2019-05-19T10:08:35Z",
+    updatedAt: "2019-05-21T10:08:35Z",
+    oldDuree: 183,
+    etat: "terminée",
+  },
+  {
+    objetMission: "Évaluation des performances des équipes de maintenance",
+    structure: "MRO",
+    type: "etranger",
+    budget: 996752.68,
+    budgetConsome: 91038.31,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Adrar",
+    employes: [
+      "648f4c1bf4e6335f247a9c17",
+      "648f4c25f4e6335f247a9ca4",
+      "648f4c12f4e6335f247a9bae",
+      "648f4c0ff4e6335f247a9b84",
+    ],
+    taches: [
+      {
+        content:
+          "Veiller à la sécurité et à la conformité des opérations sur les sites pétroliers.",
+        state: "accomplie",
+      },
+      {
+        content:
+          "Implement data management systems to effectively organize and analyze geological and reservoir data.",
+        state: "non-accomplie",
+      },
+    ],
+    tDateDeb: "2017-12-22T18:41:38Z",
+    tDateRet: "2018-08-22T18:41:38Z",
+    moyenTransport: ["route"],
+    moyenTransportRet: ["route"],
+    createdAt: "2017-11-22T18:41:38Z",
+    updatedAt: "2017-12-10T18:41:38Z",
+    oldDuree: 6,
+    etat: "terminée",
+  },
+  {
+    objetMission:
+      "Formation sur les normes de sécurité internationales dans l'industrie pétrolière",
+    structure: "PDN",
+    type: "etranger",
+    budget: 114555.7,
+    budgetConsome: 569312.2,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Ghardaia",
+    employes: ["648fc2f54862fabc27dc8eb7", "648f4c22f4e6335f247a9c7a"],
+    taches: [
+      {
+        content:
+          "Collaborate with geophysicists to interpret seismic data for exploration purposes.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Conduct geological surveys to identify potential oil and gas reserves in specific regions.",
+        state: "accomplie",
+      },
+      {
+        content:
+          "Assurer la supervision des opérations de logistique et de transport liées aux activités pétrolières.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Conduct economic evaluations of investment opportunities in new oil and gas assets.",
+        state: "non-accomplie",
+      },
+    ],
+    tDateDeb: "2017-07-02T13:01:28Z",
+    tDateRet: "2018-03-02T13:01:28Z",
+    moyenTransport: ["route", "avion"],
+    moyenTransportRet: ["route"],
+    createdAt: "2016-11-02T13:01:28Z",
+    updatedAt: "2017-06-02T13:01:28Z",
+    oldDuree: 243,
+    etat: "terminée",
+  },
+  {
+    objetMission:
+      "Rencontre avec des experts de l'industrie pour partager les meilleures pratiques",
+    structure: "FIN",
+    type: "local",
+    budget: 13168.73,
+    budgetConsome: 628752.41,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Ghardaia",
+    employes: [
+      "648f4c21f4e6335f247a9c6e",
+      "648f4c17f4e6335f247a9be1",
+      "648f4c28f4e6335f247a9cc5",
+      "648f4c22f4e6335f247a9c7d",
+    ],
+    taches: [],
+    tDateDeb: "2019-09-04T22:46:17Z",
+    tDateRet: "2020-03-04T22:46:17Z",
+    moyenTransport: ["avion"],
+    moyenTransportRet: ["route", "avion"],
+    createdAt: "2019-03-04T22:46:17Z",
+    updatedAt: "2018-10-04T22:46:17Z",
+    oldDuree: 182,
+    etat: "terminée",
+  },
+  {
+    objetMission:
+      "Élaboration d'un plan de communication pour un projet majeur",
+    structure: "PRC",
+    type: "etranger",
+    budget: 379909.92,
+    budgetConsome: 356612.53,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Skikda",
+    employes: [
+      "648f4c2bf4e6335f247a9cef",
+      "648f4c0df4e6335f247a9b66",
+      "648f4c1cf4e6335f247a9c23",
+      "648f4c0bf4e6335f247a9b4e",
+      "648f4c22f4e6335f247a9c7a",
+    ],
+    taches: [],
+    tDateDeb: "2020-01-06T00:19:53Z",
+    tDateRet: "2020-01-15T00:19:53Z",
+    moyenTransport: ["avion", "route"],
+    moyenTransportRet: ["avion"],
+    createdAt: "2019-12-29T00:19:53Z",
+    updatedAt: "2019-12-07T00:19:53Z",
+    oldDuree: 2,
+    etat: "terminée",
+  },
+  {
+    objetMission:
+      "Supervision des essais de réservoir pour l'estimation des réserves",
+    structure: "TECH",
+    type: "etranger",
+    budget: 761852.71,
+    budgetConsome: 629672.26,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Ghardaia",
+    employes: ["648f4c18f4e6335f247a9bf0", "648f4c1ef4e6335f247a9c41"],
+    taches: [
+      {
+        content:
+          "Monitor and analyze drilling data to identify potential drilling problems and propose solutions.",
+        state: "non-accomplie",
+      },
+    ],
+    tDateDeb: "2017-11-15T20:07:47Z",
+    tDateRet: "2017-11-29T20:07:47Z",
+    moyenTransport: ["route"],
+    moyenTransportRet: ["avion"],
+    createdAt: "2017-11-11T20:07:47Z",
+    updatedAt: "2017-10-28T20:07:47Z",
+    oldDuree: 18,
+    etat: "terminée",
+  },
+  {
+    objetMission: "Participation à des tests de contrôle de qualité",
+    structure: "FIN",
+    type: "local",
+    budget: 506308.76,
+    budgetConsome: 781308.77,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Illizi",
+    employes: [
+      "648f4c0ef4e6335f247a9b72",
+      "648f4c2cf4e6335f247a9cf8",
+      "648f4c20f4e6335f247a9c62",
+    ],
+    taches: [
+      {
+        content:
+          "Perform quality control checks on oil and gas samples to ensure accurate analysis.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Conduct geological surveys to identify potential oil and gas reserves in specific regions.",
+        state: "accomplie",
+      },
+    ],
+    tDateDeb: "2020-07-21T21:03:18Z",
+    tDateRet: "2021-03-21T21:03:18Z",
+    moyenTransport: ["route"],
+    moyenTransportRet: ["avion", "route"],
+    createdAt: "2020-04-21T21:03:18Z",
+    updatedAt: "2019-08-21T21:03:18Z",
+    oldDuree: 243,
+    etat: "terminée",
+  },
+  {
+    objetMission: "Visite d'inspection du site pétrolier",
+    structure: "FIN",
+    type: "etranger",
+    budget: 625883.31,
+    budgetConsome: 954788.96,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Tiaret",
+    employes: [
+      "648f4c29f4e6335f247a9cd7",
+      "648f4c25f4e6335f247a9ca7",
+      "648f4c15f4e6335f247a9bcf",
+    ],
+    taches: [
+      {
+        content:
+          "Conduct economic evaluations of investment opportunities in new oil and gas assets.",
+        state: "accomplie",
+      },
+      {
+        content:
+          "Participer à des conférences et des événements professionnels pour représenter Sonatrach.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Manage the logistics and supply chain for offshore exploration and production activities.",
+        state: "non-accomplie",
+      },
+    ],
+    tDateDeb: "2018-02-05T23:13:33Z",
+    tDateRet: "2018-02-28T23:13:33Z",
+    moyenTransport: ["route"],
+    moyenTransportRet: ["avion", "route"],
+    createdAt: "2018-01-26T23:13:33Z",
+    updatedAt: "2017-06-05T23:13:33Z",
+    oldDuree: 23,
+    etat: "terminée",
+  },
+  {
+    objetMission: "Formation sur les meilleures pratiques de sécurité",
+    structure: "PMO",
+    type: "local",
+    budget: 938629.41,
+    budgetConsome: 678620.77,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Biskra",
+    employes: ["648f4c1ef4e6335f247a9c3e"],
+    taches: [
+      {
+        content:
+          "Effectuer des tests et des analyses sur les échantillons de roche pour évaluer le potentiel pétrolier.",
+        state: "accomplie",
+      },
+      {
+        content:
+          "Collaborate with research institutions to explore innovative technologies for oil and gas exploration.",
+        state: "accomplie",
+      },
+    ],
+    tDateDeb: "2019-06-04T12:50:54Z",
+    tDateRet: "2019-07-02T12:50:54Z",
+    moyenTransport: ["avion", "route"],
+    moyenTransportRet: ["avion"],
+    createdAt: "2018-12-04T12:50:54Z",
+    updatedAt: "2019-05-21T12:50:54Z",
+    oldDuree: 25,
+    etat: "terminée",
+  },
+  {
+    objetMission:
+      "Évaluation des risques liés à l'exploration en eaux profondes",
+    structure: "DATA",
+    type: "local",
+    budget: 697218.08,
+    budgetConsome: 129828.43,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Ghardaia",
+    employes: [
+      "648f4c09f4e6335f247a9b36",
+      "648f4c31f4e6335f247a9d40",
+      "648f4c2ef4e6335f247a9d13",
+    ],
+    taches: [
+      {
+        content:
+          "Monitor production rates and analyze well performance to optimize reservoir recovery.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Collaborate with geophysicists to interpret seismic data for exploration purposes.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Develop and implement training programs for personnel involved in offshore operations.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Préparer des rapports détaillés sur les résultats des inspections des infrastructures pétrolières et gazières.",
+        state: "non-accomplie",
+      },
+    ],
+    tDateDeb: "2020-02-07T17:33:05Z",
+    tDateRet: "2020-02-22T17:33:05Z",
+    moyenTransport: ["avion"],
+    moyenTransportRet: ["avion"],
+    createdAt: "2019-11-07T17:33:05Z",
+    updatedAt: "2020-02-05T17:33:05Z",
+    oldDuree: 1,
+    etat: "terminée",
+  },
+  {
+    objetMission: "Évaluation des performances des équipes de maintenance",
+    structure: "HCM",
+    type: "etranger",
+    budget: 380985.57,
+    budgetConsome: 58524.61,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Skikda",
+    employes: ["648f4c21f4e6335f247a9c68"],
+    taches: [
+      {
+        content:
+          "Effectuer des tests et des analyses sur les échantillons de roche pour évaluer le potentiel pétrolier.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Participer à des formations spécialisées pour développer des compétences techniques avancées.",
+        state: "accomplie",
+      },
+      {
+        content:
+          "Develop and implement training programs for personnel involved in offshore operations.",
+        state: "accomplie",
+      },
+    ],
+    tDateDeb: "2016-02-19T00:22:24Z",
+    tDateRet: "2016-02-27T00:22:24Z",
+    moyenTransport: ["avion"],
+    moyenTransportRet: ["avion", "route"],
+    createdAt: "2016-01-22T00:22:24Z",
+    updatedAt: "2015-03-19T00:22:24Z",
+    oldDuree: 8,
+    etat: "terminée",
+  },
+  {
+    objetMission:
+      "Rencontre avec des partenaires commerciaux pour discuter de nouvelles opportunités",
+    structure: "MRO",
+    type: "local",
+    budget: 145026.44,
+    budgetConsome: 628735.84,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Ghardaia",
+    employes: ["648f4c28f4e6335f247a9cc5", "648f4c18f4e6335f247a9bf3"],
+    taches: [
+      {
+        content:
+          "Élaborer des rapports de conformité réglementaire et suivre les évolutions législatives.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Conduct geological surveys to identify potential oil and gas reserves in specific regions.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Préparer des rapports détaillés sur les résultats des inspections des infrastructures pétrolières et gazières.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Monitor and analyze drilling data to identify potential drilling problems and propose solutions.",
+        state: "accomplie",
+      },
+    ],
+    tDateDeb: "2016-02-23T06:48:13Z",
+    tDateRet: "2016-03-23T06:48:13Z",
+    moyenTransport: ["route", "avion"],
+    moyenTransportRet: ["route", "avion"],
+    createdAt: "2015-04-23T06:48:13Z",
+    updatedAt: "2016-02-06T06:48:13Z",
+    oldDuree: 20,
+    etat: "terminée",
+  },
+  {
+    objetMission:
+      "Participation à des formations sur la gestion des risques en milieu industriel",
+    structure: "IPM",
+    type: "etranger",
+    budget: 106406.34,
+    budgetConsome: 577978.25,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Skikda",
+    employes: [
+      "648f4c07f4e6335f247a9b18",
+      "648f4c2af4e6335f247a9ce0",
+      "648f4c24f4e6335f247a9c8f",
+    ],
+    taches: [
+      {
+        content:
+          "Conduct geological surveys to identify potential oil and gas reserves in specific regions.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Collaborer avec des équipes multidisciplinaires pour résoudre des problèmes techniques complexes.",
+        state: "non-accomplie",
+      },
+    ],
+    tDateDeb: "2016-09-03T20:01:29Z",
+    tDateRet: "2016-09-28T20:01:29Z",
+    moyenTransport: ["route"],
+    moyenTransportRet: ["route"],
+    createdAt: "2016-08-16T20:01:29Z",
+    updatedAt: "2016-08-30T20:01:29Z",
+    oldDuree: 25,
+    etat: "terminée",
+  },
+  {
+    objetMission:
+      "Inspection des pipelines pour assurer la sécurité des infrastructures",
+    structure: "HCM",
+    type: "local",
+    budget: 246236.81,
+    budgetConsome: 947261.77,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Laghouat",
+    employes: [
+      "648f4c1af4e6335f247a9c0b",
+      "648f4c11f4e6335f247a9b9f",
+      "648f4c27f4e6335f247a9cb6",
+      "648f4c1bf4e6335f247a9c20",
+    ],
+    taches: [
+      {
+        content:
+          "Develop and maintain relationships with key stakeholders, including government entities and local communities.",
+        state: "accomplie",
+      },
+    ],
+    tDateDeb: "2018-06-04T21:06:42Z",
+    tDateRet: "2018-10-04T21:06:42Z",
+    moyenTransport: ["route"],
+    moyenTransportRet: ["route", "avion"],
+    createdAt: "2017-11-04T21:06:42Z",
+    updatedAt: "2018-01-04T21:06:42Z",
+    oldDuree: 122,
+    etat: "terminée",
+  },
+  {
+    objetMission: "Formation sur les meilleures pratiques de sécurité",
+    structure: "TECH",
+    type: "etranger",
+    budget: 109703.18,
+    budgetConsome: 360563.56,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Ouargla",
+    employes: [
+      "648f4c2cf4e6335f247a9d01",
+      "648f4c27f4e6335f247a9cbc",
+      "648f4c24f4e6335f247a9c8f",
+      "648f4c0ef4e6335f247a9b7b",
+    ],
+    taches: [
+      {
+        content:
+          "Collaborer avec des équipes multidisciplinaires pour résoudre des problèmes techniques complexes.",
+        state: "non-accomplie",
+      },
+    ],
+    tDateDeb: "2017-03-13T01:21:37Z",
+    tDateRet: "2018-03-13T01:21:37Z",
+    moyenTransport: ["route"],
+    moyenTransportRet: ["route", "avion"],
+    createdAt: "2017-03-09T01:21:37Z",
+    updatedAt: "2016-11-13T01:21:37Z",
+    oldDuree: 365,
+    etat: "terminée",
+  },
+  {
+    objetMission: "Supervision du projet de construction d'une raffinerie",
+    structure: "CHANGE",
+    type: "local",
+    budget: 182021.71,
+    budgetConsome: 454960.46,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Bejaia",
+    employes: ["648f4c0df4e6335f247a9b69", "648f4c27f4e6335f247a9cb6"],
+    taches: [
+      {
+        content:
+          "Mener des études de marché pour évaluer la demande et la rentabilité de l'exploration de champs pétroliers spécifiques.",
+        state: "accomplie",
+      },
+      {
+        content:
+          "Gérer les contrats avec les fournisseurs de services et assurer le respect des accords.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Conduct geological surveys to identify potential oil and gas reserves in specific regions.",
+        state: "non-accomplie",
+      },
+    ],
+    tDateDeb: "2021-01-27T03:03:57Z",
+    tDateRet: "2021-02-27T03:03:57Z",
+    moyenTransport: ["route"],
+    moyenTransportRet: ["route", "avion"],
+    createdAt: "2021-01-02T03:03:57Z",
+    updatedAt: "2020-12-29T03:03:57Z",
+    oldDuree: 31,
+    etat: "terminée",
+  },
+  {
+    objetMission: "Évaluation des performances des sous-traitants",
+    structure: "TECH",
+    type: "local",
+    budget: 418759.18,
+    budgetConsome: 492477.32,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Tamanrasset",
+    employes: ["648f4c29f4e6335f247a9cda", "648f4c0cf4e6335f247a9b57"],
+    taches: [],
+    tDateDeb: "2016-12-27T19:27:10Z",
+    tDateRet: "2017-01-27T19:27:10Z",
+    moyenTransport: ["avion"],
+    moyenTransportRet: ["avion"],
+    createdAt: "2016-12-16T19:27:10Z",
+    updatedAt: "2016-09-27T19:27:10Z",
+    oldDuree: 11,
+    etat: "terminée",
+  },
+  {
+    objetMission: "Formation sur les techniques de forage directionnel",
+    structure: "PRC",
+    type: "local",
+    budget: 892997.1,
+    budgetConsome: 1195.09,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Alger",
+    employes: [
+      "648f4c09f4e6335f247a9b30",
+      "648f4c32f4e6335f247a9d4c",
+      "648f4c28f4e6335f247a9cc8",
+      "648f4c1af4e6335f247a9c14",
+    ],
+    taches: [
+      {
+        content:
+          "Conduire des inspections régulières des pipelines pour détecter les fuites et les défauts structurels.",
+        state: "non-accomplie",
+      },
+    ],
+    tDateDeb: "2018-02-13T23:39:24Z",
+    tDateRet: "2019-01-13T23:39:24Z",
+    moyenTransport: ["avion", "route"],
+    moyenTransportRet: ["route"],
+    createdAt: "2017-07-13T23:39:24Z",
+    updatedAt: "2017-06-13T23:39:24Z",
+    oldDuree: 334,
+    etat: "terminée",
+  },
+  {
+    objetMission:
+      "Supervision des essais de réservoir pour l'estimation des réserves",
+    structure: "DATA",
+    type: "etranger",
+    budget: 377003.55,
+    budgetConsome: 692639.99,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Skikda",
+    employes: ["648f4c0cf4e6335f247a9b5d"],
+    taches: [
+      {
+        content:
+          "Conduct economic evaluations of investment opportunities in new oil and gas assets.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Manage the logistics and supply chain for offshore exploration and production activities.",
+        state: "non-accomplie",
+      },
+    ],
+    tDateDeb: "2019-12-18T09:50:12Z",
+    tDateRet: "2019-12-27T09:50:12Z",
+    moyenTransport: ["avion", "route"],
+    moyenTransportRet: ["avion", "route"],
+    createdAt: "2019-06-18T09:50:12Z",
+    updatedAt: "2019-12-16T09:50:12Z",
+    oldDuree: 9,
+    etat: "terminée",
+  },
+  {
+    objetMission:
+      "Analyse des indicateurs de performance pour évaluer la productivité des équipes",
+    structure: "DATA",
+    type: "etranger",
+    budget: 942009.84,
+    budgetConsome: 563116.0,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Biskra",
+    employes: [
+      "648f4c27f4e6335f247a9cbf",
+      "648f4c25f4e6335f247a9ca4",
+      "648f4c07f4e6335f247a9b18",
+      "648f4c32f4e6335f247a9d52",
+    ],
+    taches: [
+      {
+        content:
+          "Effectuer des tests et des analyses sur les échantillons de roche pour évaluer le potentiel pétrolier.",
+        state: "accomplie",
+      },
+      {
+        content:
+          "Participer à des formations spécialisées pour développer des compétences techniques avancées.",
+        state: "accomplie",
+      },
+      {
+        content:
+          "Effectuer des études d'impact environnemental et élaborer des mesures de protection.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Collaborate with geophysicists to interpret seismic data for exploration purposes.",
+        state: "accomplie",
+      },
+    ],
+    tDateDeb: "2016-05-08T14:37:34Z",
+    tDateRet: "2016-11-08T14:37:34Z",
+    moyenTransport: ["route"],
+    moyenTransportRet: ["route"],
+    createdAt: "2016-02-08T14:37:34Z",
+    updatedAt: "2015-08-08T14:37:34Z",
+    oldDuree: 184,
+    etat: "terminée",
+  },
+  {
+    objetMission:
+      "Rencontre avec des experts en géophysique pour l'interprétation des données",
+    structure: "TECH",
+    type: "etranger",
+    budget: 990999.3,
+    budgetConsome: 954837.12,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Adrar",
+    employes: [
+      "648f4c1cf4e6335f247a9c2c",
+      "648f4c15f4e6335f247a9bd5",
+      "648f4c17f4e6335f247a9bed",
+    ],
+    taches: [
+      {
+        content:
+          "Effectuer des tests et des analyses sur les échantillons de roche pour évaluer le potentiel pétrolier.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Participer à des conférences et des événements professionnels pour représenter Sonatrach.",
+        state: "accomplie",
+      },
+      {
+        content:
+          "Organiser des réunions avec des partenaires externes pour discuter des opportunités de collaboration.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Organiser des réunions avec des partenaires externes pour discuter des opportunités de collaboration.",
+        state: "non-accomplie",
+      },
+    ],
+    tDateDeb: "2017-12-06T18:09:29Z",
+    tDateRet: "2018-04-06T18:09:29Z",
+    moyenTransport: ["route"],
+    moyenTransportRet: ["route", "avion"],
+    createdAt: "2017-04-06T18:09:29Z",
+    updatedAt: "2017-11-06T18:09:29Z",
+    oldDuree: 17,
+    etat: "terminée",
+  },
+  {
+    objetMission:
+      "Rencontre avec des représentants gouvernementaux pour discuter des réglementations",
+    structure: "HCM",
+    type: "local",
+    budget: 860591.92,
+    budgetConsome: 423090.77,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Ouargla",
+    employes: ["648f4c29f4e6335f247a9cda", "648f4c1df4e6335f247a9c32"],
+    taches: [],
+    tDateDeb: "2020-05-24T14:28:16Z",
+    tDateRet: "2020-06-17T14:28:16Z",
+    moyenTransport: ["avion"],
+    moyenTransportRet: ["route", "avion"],
+    createdAt: "2020-04-24T14:28:16Z",
+    updatedAt: "2020-05-08T14:28:16Z",
+    oldDuree: 31,
+    etat: "terminée",
+  },
+  {
+    objetMission:
+      "Rencontre avec des experts en géophysique pour l'interprétation des données",
+    structure: "FIN",
+    type: "etranger",
+    budget: 220170.16,
+    budgetConsome: 894258.74,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Ghardaia",
+    employes: ["648f4c13f4e6335f247a9bbd", "648f4c09f4e6335f247a9b39"],
+    taches: [
+      {
+        content:
+          "Assurer la coordination des opérations de forage sur le terrain et superviser les équipes de travail.",
+        state: "accomplie",
+      },
+      {
+        content:
+          "Effectuer des évaluations économiques pour déterminer la rentabilité des projets d'investissement.",
+        state: "accomplie",
+      },
+    ],
+    tDateDeb: "2016-06-29T02:47:13Z",
+    tDateRet: "2016-08-29T02:47:13Z",
+    moyenTransport: ["avion"],
+    moyenTransportRet: ["route"],
+    createdAt: "2016-06-26T02:47:13Z",
+    updatedAt: "2016-06-26T02:47:13Z",
+    oldDuree: 61,
+    etat: "terminée",
+  },
+  {
+    objetMission: "Examen des procédures de maintenance préventive",
+    structure: "HCM",
+    type: "etranger",
+    budget: 155540.06,
+    budgetConsome: 149863.08,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Illizi",
+    employes: [
+      "648f4c2ff4e6335f247a9d22",
+      "648f4c09f4e6335f247a9b2d",
+      "648f4c21f4e6335f247a9c6e",
+      "648f4c1af4e6335f247a9c11",
+      "648f4c11f4e6335f247a9b9f",
+    ],
+    taches: [],
+    tDateDeb: "2019-06-28T03:39:54Z",
+    tDateRet: "2019-11-28T03:39:54Z",
+    moyenTransport: ["route"],
+    moyenTransportRet: ["avion"],
+    createdAt: "2018-06-28T03:39:54Z",
+    updatedAt: "2019-06-18T03:39:54Z",
+    oldDuree: 153,
+    etat: "terminée",
+  },
+  {
+    objetMission:
+      "Évaluation des risques géologiques pour la planification des forages",
+    structure: "CHANGE",
+    type: "etranger",
+    budget: 416330.35,
+    budgetConsome: 809137.59,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Alger",
+    employes: [
+      "648f4c2ff4e6335f247a9d22",
+      "648f4c07f4e6335f247a9b18",
+      "648f4c0ef4e6335f247a9b72",
+      "648f4c19f4e6335f247a9bff",
+      "648f4c09f4e6335f247a9b2d",
+    ],
+    taches: [],
+    tDateDeb: "2018-11-07T14:51:41Z",
+    tDateRet: "2018-12-02T14:51:41Z",
+    moyenTransport: ["route"],
+    moyenTransportRet: ["route"],
+    createdAt: "2018-10-17T14:51:41Z",
+    updatedAt: "2018-03-07T14:51:41Z",
+    oldDuree: 19,
+    etat: "terminée",
+  },
+  {
+    objetMission:
+      "Rencontre avec des représentants syndicaux pour discuter des conditions de travail",
+    structure: "TECH",
+    type: "local",
+    budget: 159525.19,
+    budgetConsome: 62794.97,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Tiaret",
+    employes: ["648f4c1cf4e6335f247a9c2c", "648f4c1bf4e6335f247a9c1d"],
+    taches: [
+      {
+        content:
+          "Gérer les contrats avec les fournisseurs de services et assurer le respect des accords.",
+        state: "accomplie",
+      },
+    ],
+    tDateDeb: "2019-11-05T16:52:54Z",
+    tDateRet: "2019-12-04T16:52:54Z",
+    moyenTransport: ["avion"],
+    moyenTransportRet: ["route"],
+    createdAt: "2018-12-05T16:52:54Z",
+    updatedAt: "2019-04-05T16:52:54Z",
+    oldDuree: 13,
+    etat: "terminée",
+  },
+  {
+    objetMission:
+      "Évaluation des besoins en personnel pour des projets d'expansion",
+    structure: "IPM",
+    type: "etranger",
+    budget: 947339.45,
+    budgetConsome: 390322.6,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Illizi",
+    employes: ["648f4c0bf4e6335f247a9b4e", "648f4c32f4e6335f247a9d4f"],
+    taches: [
+      {
+        content:
+          "Conduire des inspections régulières des pipelines pour détecter les fuites et les défauts structurels.",
+        state: "non-accomplie",
+      },
+    ],
+    tDateDeb: "2016-01-08T00:45:43Z",
+    tDateRet: "2016-01-20T00:45:43Z",
+    moyenTransport: ["route"],
+    moyenTransportRet: ["route"],
+    createdAt: "2015-06-08T00:45:43Z",
+    updatedAt: "2015-12-20T00:45:43Z",
+    oldDuree: 12,
+    etat: "terminée",
+  },
+  {
+    objetMission: "Supervision des opérations de forage offshore",
+    structure: "IPM",
+    type: "local",
+    budget: 232697.89,
+    budgetConsome: 27542.21,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Tamanrasset",
+    employes: [
+      "648f4c2ff4e6335f247a9d1f",
+      "648f4c27f4e6335f247a9cbc",
+      "648f4c33f4e6335f247a9d5b",
+      "648f4c08f4e6335f247a9b24",
+    ],
+    taches: [
+      {
+        content:
+          "Provide technical support and guidance to field operations teams during drilling and production activities.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Contribuer à l'élaboration de plans de maintenance préventive pour les installations pétrolières.",
+        state: "accomplie",
+      },
+    ],
+    tDateDeb: "2019-07-06T10:20:28Z",
+    tDateRet: "2019-07-30T10:20:28Z",
+    moyenTransport: ["route", "avion"],
+    moyenTransportRet: ["route", "avion"],
+    createdAt: "2019-06-15T10:20:28Z",
+    updatedAt: "2018-10-06T10:20:28Z",
+    oldDuree: 27,
+    etat: "terminée",
+  },
+  {
+    objetMission:
+      "Rencontre avec des fournisseurs pour l'approvisionnement en équipements",
+    structure: "CHANGE",
+    type: "local",
+    budget: 319558.35,
+    budgetConsome: 623137.22,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Tamanrasset",
+    employes: ["648f4c07f4e6335f247a9b1b", "648f4c13f4e6335f247a9bb7"],
+    taches: [
+      {
+        content:
+          "Participer à des conférences et des événements professionnels pour représenter Sonatrach.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Conduct geological surveys to identify potential oil and gas reserves in specific regions.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Contribuer à l'élaboration de plans de maintenance préventive pour les installations pétrolières.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Préparer des rapports détaillés sur les résultats des inspections des infrastructures pétrolières et gazières.",
+        state: "accomplie",
+      },
+    ],
+    tDateDeb: "2016-06-05T16:56:19Z",
+    tDateRet: "2016-06-22T16:56:19Z",
+    moyenTransport: ["route", "avion"],
+    moyenTransportRet: ["route", "avion"],
+    createdAt: "2016-06-02T16:56:19Z",
+    updatedAt: "2016-05-26T16:56:19Z",
+    oldDuree: 17,
+    etat: "terminée",
+  },
+  {
+    objetMission:
+      "Formation sur les techniques avancées de forage directionnel",
+    structure: "PMO",
+    type: "etranger",
+    budget: 415732.35,
+    budgetConsome: 621887.06,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Laghouat",
+    employes: [
+      "648f4c0ef4e6335f247a9b72",
+      "648f4c22f4e6335f247a9c71",
+      "648f4c0ff4e6335f247a9b84",
+    ],
+    taches: [],
+    tDateDeb: "2016-03-15T10:53:25Z",
+    tDateRet: "2016-04-15T10:53:25Z",
+    moyenTransport: ["avion"],
+    moyenTransportRet: ["avion", "route"],
+    createdAt: "2015-06-15T10:53:25Z",
+    updatedAt: "2016-02-27T10:53:25Z",
+    oldDuree: 31,
+    etat: "terminée",
+  },
+  {
+    objetMission:
+      "Évaluation des réserves de gaz naturel pour la planification à long terme",
+    structure: "DATA",
+    type: "local",
+    budget: 115507.7,
+    budgetConsome: 360370.34,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Tamanrasset",
+    employes: [
+      "648f4c1af4e6335f247a9c14",
+      "648f4c22f4e6335f247a9c7d",
+      "648f4c1ff4e6335f247a9c53",
+    ],
+    taches: [
+      {
+        content:
+          "Conduct economic evaluations of investment opportunities in new oil and gas assets.",
+        state: "accomplie",
+      },
+      {
+        content:
+          "Develop and implement training programs for personnel involved in offshore operations.",
+        state: "accomplie",
+      },
+      {
+        content:
+          "Coordinate with drilling contractors to ensure efficient and safe well operations.",
+        state: "accomplie",
+      },
+    ],
+    tDateDeb: "2017-07-12T12:52:36Z",
+    tDateRet: "2017-08-04T12:52:36Z",
+    moyenTransport: ["route", "avion"],
+    moyenTransportRet: ["route"],
+    createdAt: "2017-03-12T12:52:36Z",
+    updatedAt: "2017-06-12T12:52:36Z",
+    oldDuree: 10,
+    etat: "terminée",
+  },
+  {
+    objetMission: "Formation sur les meilleures pratiques de sécurité",
+    structure: "CHANGE",
+    type: "local",
+    budget: 306782.94,
+    budgetConsome: 765088.72,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Biskra",
+    employes: ["648f4c22f4e6335f247a9c77"],
+    taches: [
+      {
+        content:
+          "Develop cost estimation models for new oil and gas development projects.",
+        state: "accomplie",
+      },
+      {
+        content:
+          "Assurer la coordination des opérations de forage sur le terrain et superviser les équipes de travail.",
+        state: "non-accomplie",
+      },
+    ],
+    tDateDeb: "2016-05-27T17:00:30Z",
+    tDateRet: "2016-06-05T17:00:30Z",
+    moyenTransport: ["avion"],
+    moyenTransportRet: ["route"],
+    createdAt: "2015-07-27T17:00:30Z",
+    updatedAt: "2016-02-27T17:00:30Z",
+    oldDuree: 9,
+    etat: "terminée",
+  },
+  {
+    objetMission:
+      "Rencontre avec des experts en technologie pour l'innovation dans le secteur",
+    structure: "PDN",
+    type: "etranger",
+    budget: 869382.32,
+    budgetConsome: 828519.6,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Alger",
+    employes: [
+      "648f4c0cf4e6335f247a9b54",
+      "648f4c22f4e6335f247a9c7a",
+      "648f4c0df4e6335f247a9b69",
+      "648f4c0cf4e6335f247a9b60",
+      "648f4c0bf4e6335f247a9b48",
+    ],
+    taches: [
+      {
+        content:
+          "Participer à des conférences et des événements professionnels pour représenter Sonatrach.",
+        state: "non-accomplie",
+      },
+    ],
+    tDateDeb: "2020-12-31T04:14:24Z",
+    tDateRet: "2021-01-06T04:14:24Z",
+    moyenTransport: ["avion"],
+    moyenTransportRet: ["avion", "route"],
+    createdAt: "2020-10-31T04:14:24Z",
+    updatedAt: "2020-12-29T04:14:24Z",
+    oldDuree: 12,
+    etat: "terminée",
+  },
+  {
+    objetMission: "Évaluation de l'efficacité énergétique des installations",
+    structure: "PDN",
+    type: "etranger",
+    budget: 458749.44,
+    budgetConsome: 465345.52,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Adrar",
+    employes: [
+      "648f4c31f4e6335f247a9d3a",
+      "648f4c2ff4e6335f247a9d2b",
+      "648f4c31f4e6335f247a9d3d",
+    ],
+    taches: [
+      {
+        content:
+          "Analyser les données de production et identifier des stratégies d'optimisation des rendements.",
+        state: "accomplie",
+      },
+    ],
+    tDateDeb: "2017-05-26T00:52:28Z",
+    tDateRet: "2018-03-26T00:52:28Z",
+    moyenTransport: ["route", "avion"],
+    moyenTransportRet: ["avion", "route"],
+    createdAt: "2016-11-26T00:52:28Z",
+    updatedAt: "2016-11-26T00:52:28Z",
+    oldDuree: 9,
+    etat: "terminée",
+  },
+  {
+    objetMission:
+      "Participation à des réunions de l'industrie pour le réseautage",
+    structure: "SD",
+    type: "etranger",
+    budget: 156087.41,
+    budgetConsome: 246335.13,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Adrar",
+    employes: [
+      "648f4c1af4e6335f247a9c0e",
+      "648f4c25f4e6335f247a9ca7",
+      "648f4c17f4e6335f247a9bea",
+    ],
+    taches: [
+      {
+        content:
+          "Effectuer une analyse approfondie des données géologiques pour identifier de nouveaux sites potentiels de forage.",
+        state: "accomplie",
+      },
+      {
+        content:
+          "Implement data management systems to effectively organize and analyze geological and reservoir data.",
+        state: "non-accomplie",
+      },
+    ],
+    tDateDeb: "2020-12-01T17:57:08Z",
+    tDateRet: "2021-10-01T17:57:08Z",
+    moyenTransport: ["route", "avion"],
+    moyenTransportRet: ["avion", "route"],
+    createdAt: "2020-07-01T17:57:08Z",
+    updatedAt: "2020-11-27T17:57:08Z",
+    oldDuree: 304,
+    etat: "terminée",
+  },
+  {
+    objetMission: "Formation sur les techniques de forage avancées",
+    structure: "MRO",
+    type: "local",
+    budget: 554655.3,
+    budgetConsome: 380340.86,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Alger",
+    employes: ["648f4c09f4e6335f247a9b2d", "648f4c20f4e6335f247a9c62"],
+    taches: [
+      {
+        content:
+          "Provide technical support and guidance to field operations teams during drilling and production activities.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Préparer des rapports détaillés sur les résultats des inspections des infrastructures pétrolières et gazières.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Élaborer des rapports de conformité réglementaire et suivre les évolutions législatives.",
+        state: "accomplie",
+      },
+    ],
+    tDateDeb: "2016-07-07T22:12:01Z",
+    tDateRet: "2016-09-07T22:12:01Z",
+    moyenTransport: ["avion", "route"],
+    moyenTransportRet: ["avion", "route"],
+    createdAt: "2016-05-07T22:12:01Z",
+    updatedAt: "2016-06-17T22:12:01Z",
+    oldDuree: 16,
+    etat: "terminée",
+  },
+  {
+    objetMission:
+      "Élaboration d'un plan de communication pour un projet majeur",
+    structure: "PRC",
+    type: "local",
+    budget: 233518.96,
+    budgetConsome: 50358.47,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Bejaia",
+    employes: [
+      "648f4c0bf4e6335f247a9b4e",
+      "648fc2f54862fabc27dc8eb5",
+      "648f4c07f4e6335f247a9b1e",
+      "648f4c21f4e6335f247a9c6e",
+      "648f4c13f4e6335f247a9bb7",
+    ],
+    taches: [
+      {
+        content:
+          "Collaborer avec des équipes multidisciplinaires pour résoudre des problèmes techniques complexes.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Monitor production rates and analyze well performance to optimize reservoir recovery.",
+        state: "accomplie",
+      },
+    ],
+    tDateDeb: "2017-01-04T03:14:10Z",
+    tDateRet: "2017-02-04T03:14:10Z",
+    moyenTransport: ["route"],
+    moyenTransportRet: ["avion", "route"],
+    createdAt: "2016-05-04T03:14:10Z",
+    updatedAt: "2016-03-04T03:14:10Z",
+    oldDuree: 7,
+    etat: "terminée",
+  },
+  {
+    objetMission:
+      "Supervision des opérations de maintenance des installations pétrolières",
+    structure: "DATA",
+    type: "etranger",
+    budget: 663605.37,
+    budgetConsome: 247391.03,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Illizi",
+    employes: ["648f4c1df4e6335f247a9c38"],
+    taches: [
+      {
+        content:
+          "Participer à des conférences et des événements professionnels pour représenter Sonatrach.",
+        state: "accomplie",
+      },
+      {
+        content:
+          "Effectuer des évaluations de risques pour les projets d'exploration et de production.",
+        state: "accomplie",
+      },
+    ],
+    tDateDeb: "2021-03-12T00:24:03Z",
+    tDateRet: "2021-09-12T00:24:03Z",
+    moyenTransport: ["avion"],
+    moyenTransportRet: ["avion", "route"],
+    createdAt: "2021-02-23T00:24:03Z",
+    updatedAt: "2020-11-12T00:24:03Z",
+    oldDuree: 21,
+    etat: "terminée",
+  },
+  {
+    objetMission:
+      "Participation à des réunions de l'industrie pour le réseautage",
+    structure: "PDN",
+    type: "etranger",
+    budget: 746375.87,
+    budgetConsome: 48991.22,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Illizi",
+    employes: ["648f4c21f4e6335f247a9c68", "648f4c28f4e6335f247a9cc8"],
+    taches: [],
+    tDateDeb: "2018-02-13T14:55:16Z",
+    tDateRet: "2018-09-13T14:55:16Z",
+    moyenTransport: ["route", "avion"],
+    moyenTransportRet: ["route", "avion"],
+    createdAt: "2017-05-13T14:55:16Z",
+    updatedAt: "2018-01-24T14:55:16Z",
+    oldDuree: 16,
+    etat: "terminée",
+  },
+  {
+    objetMission:
+      "Étude d'impact environnemental pour l'expansion des activités de production",
+    structure: "PRC",
+    type: "local",
+    budget: 944173.33,
+    budgetConsome: 538194.17,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Laghouat",
+    employes: [
+      "648f4c0ef4e6335f247a9b7b",
+      "648f4c11f4e6335f247a9b96",
+      "648f4c0ef4e6335f247a9b72",
+      "648f4c14f4e6335f247a9bc6",
+    ],
+    taches: [
+      {
+        content:
+          "Veiller à la sécurité et à la conformité des opérations sur les sites pétroliers.",
+        state: "non-accomplie",
+      },
+    ],
+    tDateDeb: "2020-03-15T01:18:32Z",
+    tDateRet: "2020-03-30T01:18:32Z",
+    moyenTransport: ["route", "avion"],
+    moyenTransportRet: ["route"],
+    createdAt: "2020-02-14T01:18:32Z",
+    updatedAt: "2019-03-15T01:18:32Z",
+    oldDuree: 1,
+    etat: "terminée",
+  },
+  {
+    objetMission:
+      "Visite des installations de raffinage pour l'optimisation des processus",
+    structure: "DATA",
+    type: "etranger",
+    budget: 111618.09,
+    budgetConsome: 44388.87,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Ghardaia",
+    employes: [
+      "648f4c0ef4e6335f247a9b75",
+      "648f4c17f4e6335f247a9bed",
+      "648f4c1af4e6335f247a9c14",
+    ],
+    taches: [
+      {
+        content:
+          "Perform quality control checks on oil and gas samples to ensure accurate analysis.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Participer à des formations spécialisées pour développer des compétences techniques avancées.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Effectuer des évaluations économiques pour déterminer la rentabilité des projets d'investissement.",
+        state: "accomplie",
+      },
+      {
+        content:
+          "Develop and implement safety protocols for offshore drilling operations.",
+        state: "accomplie",
+      },
+    ],
+    tDateDeb: "2020-12-27T17:02:14Z",
+    tDateRet: "2021-01-05T17:02:14Z",
+    moyenTransport: ["avion", "route"],
+    moyenTransportRet: ["route"],
+    createdAt: "2020-11-27T17:02:14Z",
+    updatedAt: "2020-03-27T17:02:14Z",
+    oldDuree: 18,
+    etat: "terminée",
+  },
+  {
+    objetMission:
+      "Formation sur les techniques de réduction des émissions de gaz",
+    structure: "SD",
+    type: "local",
+    budget: 433528.96,
+    budgetConsome: 753537.97,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Laghouat",
+    employes: ["648f4c08f4e6335f247a9b27", "648fc2f54862fabc27dc8eb3"],
+    taches: [],
+    tDateDeb: "2018-04-05T12:51:44Z",
+    tDateRet: "2018-05-02T12:51:44Z",
+    moyenTransport: ["avion", "route"],
+    moyenTransportRet: ["route"],
+    createdAt: "2017-06-05T12:51:44Z",
+    updatedAt: "2018-03-21T12:51:44Z",
+    oldDuree: 27,
+    etat: "terminée",
+  },
+  {
+    objetMission:
+      "Supervision des essais de production pour estimer les débits",
+    structure: "IPM",
+    type: "local",
+    budget: 787520.42,
+    budgetConsome: 586773.19,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Tiaret",
+    employes: [
+      "648f4c2af4e6335f247a9cdd",
+      "648f4c0ff4e6335f247a9b84",
+      "648f4c22f4e6335f247a9c74",
+      "648f4c2bf4e6335f247a9ce9",
+    ],
+    taches: [
+      {
+        content:
+          "Effectuer des études d'impact environnemental et élaborer des mesures de protection.",
+        state: "accomplie",
+      },
+      {
+        content:
+          "Conduct technical evaluations of equipment and technologies for oil and gas operations.",
+        state: "accomplie",
+      },
+      {
+        content:
+          "Gérer les contrats avec les fournisseurs de services et assurer le respect des accords.",
+        state: "accomplie",
+      },
+      {
+        content:
+          "Effectuer des études d'impact environnemental et élaborer des mesures de protection.",
+        state: "accomplie",
+      },
+    ],
+    tDateDeb: "2017-12-14T14:48:20Z",
+    tDateRet: "2018-11-14T14:48:20Z",
+    moyenTransport: ["route", "avion"],
+    moyenTransportRet: ["avion"],
+    createdAt: "2017-03-14T14:48:20Z",
+    updatedAt: "2017-12-12T14:48:20Z",
+    oldDuree: 335,
+    etat: "terminée",
+  },
+  {
+    objetMission: "Évaluation des performances des équipes de maintenance",
+    structure: "PMO",
+    type: "etranger",
+    budget: 810483.52,
+    budgetConsome: 543216.97,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Skikda",
+    employes: [
+      "648f4c27f4e6335f247a9cbc",
+      "648f4c10f4e6335f247a9b8d",
+      "648f4c0cf4e6335f247a9b5d",
+    ],
+    taches: [
+      {
+        content:
+          "Effectuer des études d'impact environnemental et élaborer des mesures de protection.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Analyser les données de marché pour identifier les tendances et les opportunités d'affaires.",
+        state: "accomplie",
+      },
+      {
+        content:
+          "Effectuer des évaluations économiques pour déterminer la rentabilité des projets d'investissement.",
+        state: "non-accomplie",
+      },
+    ],
+    tDateDeb: "2019-01-23T22:31:05Z",
+    tDateRet: "2019-02-23T22:31:05Z",
+    moyenTransport: ["avion", "route"],
+    moyenTransportRet: ["route"],
+    createdAt: "2019-01-01T22:31:05Z",
+    updatedAt: "2018-12-24T22:31:05Z",
+    oldDuree: 31,
+    etat: "terminée",
+  },
+  {
+    objetMission:
+      "Rencontre avec des représentants gouvernementaux pour discuter des réglementations",
+    structure: "CHANGE",
+    type: "local",
+    budget: 400800.09,
+    budgetConsome: 707849.19,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Tamanrasset",
+    employes: ["648f4c25f4e6335f247a9ca1", "648f4c2cf4e6335f247a9d01"],
+    taches: [
+      {
+        content:
+          "Conduire des inspections régulières des pipelines pour détecter les fuites et les défauts structurels.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Monitor and analyze drilling data to identify potential drilling problems and propose solutions.",
+        state: "accomplie",
+      },
+    ],
+    tDateDeb: "2018-03-21T08:10:36Z",
+    tDateRet: "2018-03-24T08:10:36Z",
+    moyenTransport: ["route"],
+    moyenTransportRet: ["route", "avion"],
+    createdAt: "2017-08-21T08:10:36Z",
+    updatedAt: "2018-03-15T08:10:36Z",
+    oldDuree: 3,
+    etat: "terminée",
+  },
+  {
+    objetMission:
+      "Participation à des simulations d'urgence pour tester les plans de réponse",
+    structure: "CHANGE",
+    type: "local",
+    budget: 79153.52,
+    budgetConsome: 206947.25,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Adrar",
+    employes: [
+      "648f4c16f4e6335f247a9bdb",
+      "648f4c11f4e6335f247a9b9f",
+      "648f4c1ef4e6335f247a9c44",
+      "648f4c2ef4e6335f247a9d19",
+      "648f4c19f4e6335f247a9c02",
+    ],
+    taches: [],
+    tDateDeb: "2019-04-28T12:03:21Z",
+    tDateRet: "2019-05-26T12:03:21Z",
+    moyenTransport: ["avion"],
+    moyenTransportRet: ["route", "avion"],
+    createdAt: "2019-01-28T12:03:21Z",
+    updatedAt: "2019-01-28T12:03:21Z",
+    oldDuree: 28,
+    etat: "terminée",
+  },
+  {
+    objetMission: "Élaboration d'un plan d'urgence en cas de catastrophe",
+    structure: "DATA",
+    type: "local",
+    budget: 396420.94,
+    budgetConsome: 751940.3,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Alger",
+    employes: [
+      "648f4c24f4e6335f247a9c95",
+      "648f4c1af4e6335f247a9c0b",
+      "648f4c2ef4e6335f247a9d13",
+      "648f4c0af4e6335f247a9b42",
+    ],
+    taches: [
+      {
+        content:
+          "Conduct economic evaluations of investment opportunities in new oil and gas assets.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Effectuer des études d'impact environnemental et élaborer des mesures de protection.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Effectuer une analyse approfondie des données géologiques pour identifier de nouveaux sites potentiels de forage.",
+        state: "accomplie",
+      },
+      {
+        content:
+          "Coordinate with regulatory agencies to ensure compliance with environmental regulations.",
+        state: "accomplie",
+      },
+    ],
+    tDateDeb: "2016-12-05T13:42:24Z",
+    tDateRet: "2017-10-05T13:42:24Z",
+    moyenTransport: ["route"],
+    moyenTransportRet: ["avion"],
+    createdAt: "2015-12-05T13:42:24Z",
+    updatedAt: "2016-12-02T13:42:24Z",
+    oldDuree: 304,
+    etat: "terminée",
+  },
+  {
+    objetMission: "Évaluation des performances des sous-traitants",
+    structure: "FIN",
+    type: "etranger",
+    budget: 515809.2,
+    budgetConsome: 896676.8,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Bejaia",
+    employes: [
+      "648f4c29f4e6335f247a9cd1",
+      "648f4c1ff4e6335f247a9c50",
+      "648f4c22f4e6335f247a9c77",
+      "648f4c1af4e6335f247a9c0b",
+    ],
+    taches: [
+      {
+        content:
+          "Contribuer à l'élaboration de plans de maintenance préventive pour les installations pétrolières.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Veiller à la sécurité et à la conformité des opérations sur les sites pétroliers.",
+        state: "accomplie",
+      },
+    ],
+    tDateDeb: "2017-08-03T20:13:51Z",
+    tDateRet: "2017-08-22T20:13:51Z",
+    moyenTransport: ["avion"],
+    moyenTransportRet: ["avion", "route"],
+    createdAt: "2016-09-03T20:13:51Z",
+    updatedAt: "2016-08-03T20:13:51Z",
+    oldDuree: 25,
+    etat: "terminée",
+  },
+  {
+    objetMission: "Formation sur les meilleures pratiques de sécurité",
+    structure: "IPM",
+    type: "etranger",
+    budget: 483693.15,
+    budgetConsome: 707834.77,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Biskra",
+    employes: [
+      "648f4c32f4e6335f247a9d4f",
+      "648f4c13f4e6335f247a9bbd",
+      "648f4c14f4e6335f247a9bc9",
+      "648f4c0af4e6335f247a9b45",
+      "648f4c14f4e6335f247a9bc0",
+    ],
+    taches: [
+      {
+        content:
+          "Veiller à la sécurité et à la conformité des opérations sur les sites pétroliers.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Veiller à la sécurité et à la conformité des opérations sur les sites pétroliers.",
+        state: "non-accomplie",
+      },
+    ],
+    tDateDeb: "2018-12-13T07:25:28Z",
+    tDateRet: "2019-08-13T07:25:28Z",
+    moyenTransport: ["route"],
+    moyenTransportRet: ["route"],
+    createdAt: "2018-05-13T07:25:28Z",
+    updatedAt: "2018-11-17T07:25:28Z",
+    oldDuree: 243,
+    etat: "terminée",
+  },
+  {
+    objetMission:
+      "Participation à des formations sur la gestion des risques en milieu industriel",
+    structure: "PDN",
+    type: "local",
+    budget: 20543.29,
+    budgetConsome: 595607.61,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Tiaret",
+    employes: ["648f4c16f4e6335f247a9bde"],
+    taches: [
+      {
+        content:
+          "Effectuer des tests et des analyses sur les échantillons de roche pour évaluer le potentiel pétrolier.",
+        state: "accomplie",
+      },
+      {
+        content:
+          "Conduct economic evaluations of investment opportunities in new oil and gas assets.",
+        state: "non-accomplie",
+      },
+    ],
+    tDateDeb: "2018-04-05T09:33:54Z",
+    tDateRet: "2018-04-15T09:33:54Z",
+    moyenTransport: ["avion"],
+    moyenTransportRet: ["avion"],
+    createdAt: "2017-06-05T09:33:54Z",
+    updatedAt: "2017-06-05T09:33:54Z",
+    oldDuree: 25,
+    etat: "terminée",
+  },
+  {
+    objetMission:
+      "Formation sur la gestion des risques dans l'industrie pétrolière",
+    structure: "DATA",
+    type: "etranger",
+    budget: 225819.54,
+    budgetConsome: 588065.98,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Laghouat",
+    employes: [
+      "648f4c23f4e6335f247a9c86",
+      "648f4c1cf4e6335f247a9c2c",
+      "648f4c1af4e6335f247a9c0b",
+      "648f4c1ff4e6335f247a9c4a",
+    ],
+    taches: [
+      {
+        content:
+          "Coordinate with drilling contractors to ensure efficient and safe well operations.",
+        state: "accomplie",
+      },
+      {
+        content:
+          "Conduct technical evaluations of equipment and technologies for oil and gas operations.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Effectuer une analyse approfondie des données géologiques pour identifier de nouveaux sites potentiels de forage.",
+        state: "non-accomplie",
+      },
+    ],
+    tDateDeb: "2019-08-06T07:02:47Z",
+    tDateRet: "2019-08-27T07:02:47Z",
+    moyenTransport: ["avion"],
+    moyenTransportRet: ["avion"],
+    createdAt: "2019-06-06T07:02:47Z",
+    updatedAt: "2019-07-11T07:02:47Z",
+    oldDuree: 21,
+    etat: "terminée",
+  },
+  {
+    objetMission:
+      "Rencontre avec des experts en géochimie pour l'analyse des échantillons de roche",
+    structure: "PMO",
+    type: "etranger",
+    budget: 44593.11,
+    budgetConsome: 56531.2,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Adrar",
+    employes: [
+      "648f4c23f4e6335f247a9c83",
+      "648f4c1bf4e6335f247a9c17",
+      "648f4c1af4e6335f247a9c08",
+      "648f4c2ef4e6335f247a9d1c",
+    ],
+    taches: [
+      {
+        content:
+          "Coordinate with drilling contractors to ensure efficient and safe well operations.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Participer à des conférences et des événements professionnels pour représenter Sonatrach.",
+        state: "accomplie",
+      },
+      {
+        content:
+          "Organiser des réunions avec des partenaires externes pour discuter des opportunités de collaboration.",
+        state: "non-accomplie",
+      },
+    ],
+    tDateDeb: "2018-10-19T16:09:10Z",
+    tDateRet: "2019-01-19T16:09:10Z",
+    moyenTransport: ["route", "avion"],
+    moyenTransportRet: ["route", "avion"],
+    createdAt: "2018-03-19T16:09:10Z",
+    updatedAt: "2018-09-19T16:09:10Z",
+    oldDuree: 2,
+    etat: "terminée",
+  },
+  {
+    objetMission:
+      "Évaluation des risques géologiques pour la planification des forages",
+    structure: "MRO",
+    type: "etranger",
+    budget: 250645.84,
+    budgetConsome: 923281.65,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Skikda",
+    employes: [
+      "648f4c07f4e6335f247a9b1e",
+      "648f4c0cf4e6335f247a9b5a",
+      "648f4c1df4e6335f247a9c2f",
+      "648f4c21f4e6335f247a9c6b",
+    ],
+    taches: [
+      {
+        content:
+          "Develop and implement safety protocols for offshore drilling operations.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Coordinate with regulatory agencies to ensure compliance with environmental regulations.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Develop and implement safety protocols for offshore drilling operations.",
+        state: "accomplie",
+      },
+    ],
+    tDateDeb: "2020-07-28T16:57:30Z",
+    tDateRet: "2020-08-08T16:57:30Z",
+    moyenTransport: ["avion"],
+    moyenTransportRet: ["route", "avion"],
+    createdAt: "2020-06-28T16:57:30Z",
+    updatedAt: "2020-03-28T16:57:30Z",
+    oldDuree: 23,
+    etat: "terminée",
+  },
+  {
+    objetMission:
+      "Formation sur les nouvelles technologies dans l'industrie pétrolière",
+    structure: "FIN",
+    type: "etranger",
+    budget: 166473.81,
+    budgetConsome: 463406.52,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Tamanrasset",
+    employes: ["648f4c0ef4e6335f247a9b75"],
+    taches: [
+      {
+        content:
+          "Gérer les contrats avec les fournisseurs de services et assurer le respect des accords.",
+        state: "accomplie",
+      },
+      {
+        content:
+          "Develop and maintain relationships with key stakeholders, including government entities and local communities.",
+        state: "accomplie",
+      },
+      {
+        content:
+          "Collaborate with geophysicists to interpret seismic data for exploration purposes.",
+        state: "non-accomplie",
+      },
+    ],
+    tDateDeb: "2019-06-24T01:24:16Z",
+    tDateRet: "2020-01-24T01:24:16Z",
+    moyenTransport: ["avion", "route"],
+    moyenTransportRet: ["route", "avion"],
+    createdAt: "2018-07-24T01:24:16Z",
+    updatedAt: "2019-05-26T01:24:16Z",
+    oldDuree: 8,
+    etat: "terminée",
+  },
+  {
+    objetMission:
+      "Évaluation des besoins en infrastructure pour de nouveaux projets",
+    structure: "SD",
+    type: "etranger",
+    budget: 2479.73,
+    budgetConsome: 492195.28,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Alger",
+    employes: [
+      "648f4c0df4e6335f247a9b66",
+      "648f4c08f4e6335f247a9b27",
+      "648fc2f54862fabc27dc8eb1",
+      "648f4c21f4e6335f247a9c65",
+      "648f4c22f4e6335f247a9c77",
+    ],
+    taches: [
+      {
+        content:
+          "Conduct geological surveys to identify potential oil and gas reserves in specific regions.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Effectuer des évaluations économiques pour déterminer la rentabilité des projets d'investissement.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Implement data management systems to effectively organize and analyze geological and reservoir data.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Préparer des rapports détaillés sur les résultats des inspections des infrastructures pétrolières et gazières.",
+        state: "accomplie",
+      },
+    ],
+    tDateDeb: "2018-03-25T05:48:21Z",
+    tDateRet: "2018-04-25T05:48:21Z",
+    moyenTransport: ["route"],
+    moyenTransportRet: ["avion", "route"],
+    createdAt: "2018-02-27T05:48:21Z",
+    updatedAt: "2018-03-04T05:48:21Z",
+    oldDuree: 27,
+    etat: "terminée",
+  },
+  {
+    objetMission:
+      "Analyse des performances des installations de stockage de pétrole",
+    structure: "MRO",
+    type: "etranger",
+    budget: 108915.08,
+    budgetConsome: 49128.0,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Skikda",
+    employes: [
+      "648fc2f54862fabc27dc8eb7",
+      "648f4c1df4e6335f247a9c35",
+      "648f4c2af4e6335f247a9ce3",
+      "648f4c33f4e6335f247a9d58",
+      "648f4c09f4e6335f247a9b30",
+    ],
+    taches: [
+      {
+        content:
+          "Coordinate with regulatory agencies to ensure compliance with environmental regulations.",
+        state: "accomplie",
+      },
+      {
+        content:
+          "Collaborer avec des équipes multidisciplinaires pour résoudre des problèmes techniques complexes.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Veiller à la sécurité et à la conformité des opérations sur les sites pétroliers.",
+        state: "accomplie",
+      },
+      {
+        content:
+          "Participer à des conférences et des événements professionnels pour représenter Sonatrach.",
+        state: "non-accomplie",
+      },
+    ],
+    tDateDeb: "2020-08-16T02:00:55Z",
+    tDateRet: "2020-08-30T02:00:55Z",
+    moyenTransport: ["avion", "route"],
+    moyenTransportRet: ["avion"],
+    createdAt: "2020-07-16T02:00:55Z",
+    updatedAt: "2020-08-07T02:00:55Z",
+    oldDuree: 14,
+    etat: "terminée",
+  },
+  {
+    objetMission: "Supervision du processus de forage horizontal",
+    structure: "MRO",
+    type: "local",
+    budget: 787677.3,
+    budgetConsome: 343279.07,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Tiaret",
+    employes: ["648f4c09f4e6335f247a9b2d"],
+    taches: [],
+    tDateDeb: "2016-10-25T00:07:05Z",
+    tDateRet: "2016-11-10T00:07:05Z",
+    moyenTransport: ["avion"],
+    moyenTransportRet: ["route"],
+    createdAt: "2016-09-25T00:07:05Z",
+    updatedAt: "2015-12-25T00:07:05Z",
+    oldDuree: 16,
+    etat: "terminée",
+  },
+  {
+    objetMission: "Analyse des risques environnementaux",
+    structure: "HCM",
+    type: "local",
+    budget: 408797.36,
+    budgetConsome: 375032.75,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Adrar",
+    employes: [
+      "648f4c1af4e6335f247a9c08",
+      "648f4c2af4e6335f247a9ce0",
+      "648f4c26f4e6335f247a9cb3",
+      "648f4c21f4e6335f247a9c68",
+      "648f4c09f4e6335f247a9b36",
+    ],
+    taches: [
+      {
+        content:
+          "Préparer des rapports détaillés sur les résultats des inspections des infrastructures pétrolières et gazières.",
+        state: "accomplie",
+      },
+      {
+        content:
+          "Conduire des inspections régulières des pipelines pour détecter les fuites et les défauts structurels.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Analyser les données de production et identifier des stratégies d'optimisation des rendements.",
+        state: "accomplie",
+      },
+      {
+        content:
+          "Develop cost estimation models for new oil and gas development projects.",
+        state: "accomplie",
+      },
+    ],
+    tDateDeb: "2018-04-06T02:38:57Z",
+    tDateRet: "2019-02-06T02:38:57Z",
+    moyenTransport: ["route", "avion"],
+    moyenTransportRet: ["avion"],
+    createdAt: "2017-07-06T02:38:57Z",
+    updatedAt: "2018-04-05T02:38:57Z",
+    oldDuree: 306,
+    etat: "terminée",
+  },
+  {
+    objetMission:
+      "Formation sur les techniques avancées de forage directionnel",
+    structure: "DATA",
+    type: "local",
+    budget: 860402.25,
+    budgetConsome: 778476.56,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Illizi",
+    employes: [
+      "648f4c06f4e6335f247a9b06",
+      "648f4c31f4e6335f247a9d3d",
+      "648f4c1cf4e6335f247a9c2c",
+      "648f4c1af4e6335f247a9c11",
+      "648f4c1ff4e6335f247a9c50",
+    ],
+    taches: [
+      {
+        content:
+          "Contribuer à l'élaboration de plans de maintenance préventive pour les installations pétrolières.",
+        state: "accomplie",
+      },
+    ],
+    tDateDeb: "2019-03-09T21:38:33Z",
+    tDateRet: "2019-03-19T21:38:33Z",
+    moyenTransport: ["avion"],
+    moyenTransportRet: ["avion", "route"],
+    createdAt: "2019-03-08T21:38:33Z",
+    updatedAt: "2018-08-09T21:38:33Z",
+    oldDuree: 22,
+    etat: "terminée",
+  },
+  {
+    objetMission:
+      "Rencontre avec des représentants gouvernementaux pour discuter des réglementations",
+    structure: "DATA",
+    type: "local",
+    budget: 826276.33,
+    budgetConsome: 889401.92,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Tiaret",
+    employes: [
+      "648f4c23f4e6335f247a9c80",
+      "648f4c1bf4e6335f247a9c1a",
+      "648f4c0ff4e6335f247a9b7e",
+      "648f4c31f4e6335f247a9d46",
+    ],
+    taches: [],
+    tDateDeb: "2016-02-10T07:49:55Z",
+    tDateRet: "2016-02-13T07:49:55Z",
+    moyenTransport: ["route"],
+    moyenTransportRet: ["route", "avion"],
+    createdAt: "2016-01-18T07:49:55Z",
+    updatedAt: "2015-02-10T07:49:55Z",
+    oldDuree: 10,
+    etat: "terminée",
+  },
+  {
+    objetMission:
+      "Analyse des indicateurs de performance pour évaluer la productivité des équipes",
+    structure: "CHANGE",
+    type: "etranger",
+    budget: 558722.32,
+    budgetConsome: 280397.95,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Tamanrasset",
+    employes: [
+      "648f4c13f4e6335f247a9bba",
+      "648f4c08f4e6335f247a9b24",
+      "648f4c2df4e6335f247a9d07",
+    ],
+    taches: [],
+    tDateDeb: "2019-12-20T10:43:27Z",
+    tDateRet: "2020-01-20T10:43:27Z",
+    moyenTransport: ["route"],
+    moyenTransportRet: ["avion", "route"],
+    createdAt: "2019-11-29T10:43:27Z",
+    updatedAt: "2019-12-11T10:43:27Z",
+    oldDuree: 31,
+    etat: "terminée",
+  },
+  {
+    objetMission: "Formation sur les normes de sécurité internationales",
+    structure: "HCM",
+    type: "etranger",
+    budget: 803491.14,
+    budgetConsome: 598120.93,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Tamanrasset",
+    employes: [
+      "648f4c20f4e6335f247a9c5c",
+      "648f4c1bf4e6335f247a9c1a",
+      "648f4c0cf4e6335f247a9b5a",
+      "648f4c07f4e6335f247a9b1b",
+      "648f4c10f4e6335f247a9b8d",
+    ],
+    taches: [
+      {
+        content:
+          "Participer à des conférences et des événements professionnels pour représenter Sonatrach.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Gérer les contrats avec les fournisseurs de services et assurer le respect des accords.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Develop and implement safety protocols for offshore drilling operations.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Effectuer des évaluations économiques pour déterminer la rentabilité des projets d'investissement.",
+        state: "accomplie",
+      },
+    ],
+    tDateDeb: "2019-12-13T13:49:05Z",
+    tDateRet: "2020-04-13T13:49:05Z",
+    moyenTransport: ["avion", "route"],
+    moyenTransportRet: ["route"],
+    createdAt: "2019-10-13T13:49:05Z",
+    updatedAt: "2019-12-12T13:49:05Z",
+    oldDuree: 24,
+    etat: "terminée",
+  },
+  {
+    objetMission:
+      "Évaluation de l'impact des nouvelles réglementations sur les opérations",
+    structure: "IPM",
+    type: "local",
+    budget: 462003.02,
+    budgetConsome: 851733.66,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Oran",
+    employes: [
+      "648f4c06f4e6335f247a9b0c",
+      "648f4c0cf4e6335f247a9b57",
+      "648f4c0ff4e6335f247a9b87",
+      "648f4c1bf4e6335f247a9c1d",
+      "648f4c15f4e6335f247a9bd5",
+    ],
+    taches: [
+      {
+        content:
+          "Assurer la coordination des opérations de forage sur le terrain et superviser les équipes de travail.",
+        state: "accomplie",
+      },
+      {
+        content:
+          "Develop cost estimation models for new oil and gas development projects.",
+        state: "accomplie",
+      },
+      {
+        content:
+          "Develop cost estimation models for new oil and gas development projects.",
+        state: "accomplie",
+      },
+    ],
+    tDateDeb: "2017-03-09T07:42:05Z",
+    tDateRet: "2017-03-18T07:42:05Z",
+    moyenTransport: ["route"],
+    moyenTransportRet: ["avion", "route"],
+    createdAt: "2017-02-08T07:42:05Z",
+    updatedAt: "2017-03-03T07:42:05Z",
+    oldDuree: 9,
+    etat: "terminée",
+  },
+  {
+    objetMission:
+      "Étude de marché pour l'identification de nouvelles opportunités",
+    structure: "PDN",
+    type: "etranger",
+    budget: 985408.59,
+    budgetConsome: 19693.29,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Ouargla",
+    employes: ["648f4c25f4e6335f247a9ca4", "648f4c1cf4e6335f247a9c26"],
+    taches: [
+      {
+        content:
+          "Effectuer des évaluations de risques pour les projets d'exploration et de production.",
+        state: "accomplie",
+      },
+      {
+        content:
+          "Perform reservoir engineering analysis to optimize oil and gas production rates.",
+        state: "non-accomplie",
+      },
+    ],
+    tDateDeb: "2018-11-18T20:30:33Z",
+    tDateRet: "2018-11-22T20:30:33Z",
+    moyenTransport: ["route", "avion"],
+    moyenTransportRet: ["avion", "route"],
+    createdAt: "2017-12-18T20:30:33Z",
+    updatedAt: "2018-10-23T20:30:33Z",
+    oldDuree: 9,
+    etat: "terminée",
+  },
+  {
+    objetMission:
+      "Supervision des opérations de construction d'un nouveau pipeline",
+    structure: "SD",
+    type: "etranger",
+    budget: null,
+    budgetConsome: null,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Adrar",
+    employes: [
+      "648fc2f54862fabc27dc8eb3",
+      "648f4c08f4e6335f247a9b24",
+      "648f4c31f4e6335f247a9d46",
+    ],
+    taches: [
+      {
+        content:
+          "Analyser les données de production et identifier des stratégies d'optimisation des rendements.",
+        state: "non-accomplie",
+      },
+    ],
+    tDateDeb: "2020-08-30T21:07:51Z",
+    tDateRet: "2021-05-30T21:07:51Z",
+    moyenTransport: ["route", "avion"],
+    moyenTransportRet: ["route", "avion"],
+    createdAt: "2020-08-09T21:07:51Z",
+    updatedAt: "2020-06-30T21:07:51Z",
+    oldDuree: 273,
+    etat: "terminée",
+  },
+  {
+    objetMission: "Évaluation des performances des plateformes offshore",
+    structure: "PDN",
+    type: "etranger",
+    budget: 811043.85,
+    budgetConsome: 214743.6,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Skikda",
+    employes: ["648f4c07f4e6335f247a9b15", "648f4c17f4e6335f247a9bea"],
+    taches: [],
+    tDateDeb: "2017-05-07T03:31:52Z",
+    tDateRet: "2017-12-07T03:31:52Z",
+    moyenTransport: ["route", "avion"],
+    moyenTransportRet: ["route"],
+    createdAt: "2016-09-07T03:31:52Z",
+    updatedAt: "2017-04-28T03:31:52Z",
+    oldDuree: 214,
+    etat: "terminée",
+  },
+  {
+    objetMission:
+      "Participation à des réunions de l'industrie pour le réseautage",
+    structure: "PDN",
+    type: "local",
+    budget: 463067.87,
+    budgetConsome: 214558.76,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Skikda",
+    employes: ["648f4c31f4e6335f247a9d40"],
+    taches: [
+      {
+        content:
+          "Conduct geological surveys to identify potential oil and gas reserves in specific regions.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Develop and maintain relationships with key stakeholders, including government entities and local communities.",
+        state: "accomplie",
+      },
+    ],
+    tDateDeb: "2019-04-29T14:20:25Z",
+    tDateRet: "2019-05-02T14:20:25Z",
+    moyenTransport: ["avion"],
+    moyenTransportRet: ["route", "avion"],
+    createdAt: "2019-04-25T14:20:25Z",
+    updatedAt: "2019-04-11T14:20:25Z",
+    oldDuree: 3,
+    etat: "terminée",
+  },
+  {
+    objetMission:
+      "Analyse des indicateurs de performance pour évaluer la productivité des équipes",
+    structure: "CHANGE",
+    type: "local",
+    budget: 509517.66,
+    budgetConsome: 773073.76,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Tiaret",
+    employes: ["648f4c20f4e6335f247a9c56", "648f4c1bf4e6335f247a9c1d"],
+    taches: [
+      {
+        content:
+          "Effectuer des études d'impact environnemental et élaborer des mesures de protection.",
+        state: "accomplie",
+      },
+    ],
+    tDateDeb: "2016-03-07T19:57:27Z",
+    tDateRet: "2016-03-18T19:57:27Z",
+    moyenTransport: ["avion", "route"],
+    moyenTransportRet: ["avion"],
+    createdAt: "2016-03-01T19:57:27Z",
+    updatedAt: "2016-02-23T19:57:27Z",
+    oldDuree: 11,
+    etat: "terminée",
+  },
+  {
+    objetMission:
+      "Rencontre avec des représentants syndicaux pour discuter des conditions de travail",
+    structure: "CHANGE",
+    type: "etranger",
+    budget: 885287.66,
+    budgetConsome: 767542.21,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Skikda",
+    employes: [
+      "648f4c32f4e6335f247a9d49",
+      "648f4c1ff4e6335f247a9c4d",
+      "648f4c1ef4e6335f247a9c3e",
+      "648f4c27f4e6335f247a9cbf",
+      "648f4c1df4e6335f247a9c32",
+    ],
+    taches: [
+      {
+        content:
+          "Conduire des inspections régulières des pipelines pour détecter les fuites et les défauts structurels.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Organiser des réunions avec des partenaires externes pour discuter des opportunités de collaboration.",
+        state: "accomplie",
+      },
+      {
+        content:
+          "Analyser les données de production et identifier des stratégies d'optimisation des rendements.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Develop and maintain relationships with key stakeholders, including government entities and local communities.",
+        state: "accomplie",
+      },
+    ],
+    tDateDeb: "2018-09-29T03:07:31Z",
+    tDateRet: "2018-10-06T03:07:31Z",
+    moyenTransport: ["route"],
+    moyenTransportRet: ["route", "avion"],
+    createdAt: "2018-09-05T03:07:31Z",
+    updatedAt: "2018-03-29T03:07:31Z",
+    oldDuree: 30,
+    etat: "terminée",
+  },
+  {
+    objetMission:
+      "Évaluation des besoins en personnel pour des projets d'expansion",
+    structure: "IPM",
+    type: "local",
+    budget: 971203.92,
+    budgetConsome: 120375.52,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Tamanrasset",
+    employes: ["648f4c0ef4e6335f247a9b78"],
+    taches: [
+      {
+        content:
+          "Coordinate with regulatory agencies to ensure compliance with environmental regulations.",
+        state: "accomplie",
+      },
+      {
+        content:
+          "Develop cost estimation models for new oil and gas development projects.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Effectuer une analyse approfondie des données géologiques pour identifier de nouveaux sites potentiels de forage.",
+        state: "accomplie",
+      },
+    ],
+    tDateDeb: "2019-09-23T19:31:57Z",
+    tDateRet: "2020-09-23T19:31:57Z",
+    moyenTransport: ["avion"],
+    moyenTransportRet: ["avion", "route"],
+    createdAt: "2019-08-23T19:31:57Z",
+    updatedAt: "2019-05-23T19:31:57Z",
+    oldDuree: 366,
+    etat: "terminée",
+  },
+  {
+    objetMission:
+      "Analyse des données géologiques pour l'exploration de nouveaux gisements",
+    structure: "HCM",
+    type: "local",
+    budget: 139050.42,
+    budgetConsome: 788696.8,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Ouargla",
+    employes: [
+      "648f4c0ef4e6335f247a9b78",
+      "648f4c06f4e6335f247a9b0c",
+      "648f4c1ef4e6335f247a9c41",
+      "648f4c1bf4e6335f247a9c20",
+    ],
+    taches: [
+      {
+        content:
+          "Effectuer des tests et des analyses sur les échantillons de roche pour évaluer le potentiel pétrolier.",
+        state: "accomplie",
+      },
+    ],
+    tDateDeb: "2018-08-07T12:26:10Z",
+    tDateRet: "2019-04-07T12:26:10Z",
+    moyenTransport: ["route", "avion"],
+    moyenTransportRet: ["avion", "route"],
+    createdAt: "2018-08-02T12:26:10Z",
+    updatedAt: "2018-06-07T12:26:10Z",
+    oldDuree: 243,
+    etat: "terminée",
+  },
+  {
+    objetMission:
+      "Participation à des formations sur la gestion des risques en milieu industriel",
+    structure: "HCM",
+    type: "etranger",
+    budget: 451773.6,
+    budgetConsome: 381045.03,
+    pays: "Algérie",
+    lieuDep: "Alger",
+    destination: "Skikda",
+    employes: ["648f4c0ef4e6335f247a9b7b", "648f4c33f4e6335f247a9d58"],
+    taches: [
+      {
+        content:
+          "Élaborer des rapports de conformité réglementaire et suivre les évolutions législatives.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Gérer les contrats avec les fournisseurs de services et assurer le respect des accords.",
+        state: "non-accomplie",
+      },
+      {
+        content:
+          "Participer à des projets de recherche et développement pour améliorer les techniques d'extraction.",
+        state: "accomplie",
+      },
+      {
+        content:
+          "Monitor production rates and analyze well performance to optimize reservoir recovery.",
+        state: "non-accomplie",
+      },
+    ],
+    tDateDeb: "2017-11-12T21:10:56Z",
+    tDateRet: "2017-12-11T21:10:56Z",
+    moyenTransport: ["avion", "route"],
+    moyenTransportRet: ["avion", "route"],
+    createdAt: "2017-10-29T21:10:56Z",
+    updatedAt: "2017-03-12T21:10:56Z",
+    oldDuree: 17,
+    etat: "terminée",
+  },
+];
