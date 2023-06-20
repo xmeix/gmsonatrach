@@ -127,3 +127,65 @@ export const getGroupedDataForTime = (data, time, fileType, stack) => {
 
   return groupedDataArray;
 };
+
+// PER MISSION
+export const RfmsResolutionRate = (mission, rfms) => {
+  let rfmsMission = rfms.filter((rfm) => rfm.idMission._id === mission._id);
+
+  let A = rfmsMission.length;
+  let B = rfmsMission.filter((t) => t.etat !== "créé").length; // Number of resolved tickets for the mission
+
+  const value = ((B * 100) / A).toFixed(2);
+  return isNaN(value) ? (0).toFixed(2) : value;
+};
+
+// LEAVE GLOBAL
+export const leaveRequestAveragePerYear = (demandes) => {
+  let leaveRequests = demandes.filter((d) => d.__t === "DC");
+
+  // sum number of leave each year / nbr of years
+};
+
+export const leaveRequestAveragePerMonth = (demandes) => {
+  let leaveRequests = demandes.filter((d) => d.__t === "DC");
+  // sum number of leave each month / nbr of months
+};
+
+// PER EMPLOYEE
+export const nbRfmsTotal = (rfms, employee) => {
+  let rfmsMission = rfms.filter((rfm) => rfm.idEmploye._id === employee._id);
+  let A = rfmsMission.length;
+
+  const value = A;
+  return isNaN(value) ? 0 : value;
+};
+
+export const nbRfmsDelayed = (rfms, employee) => {
+  let rfmsMission = rfms.filter((rfm) => rfm.idEmploye._id === employee._id);
+  let A = rfmsMission.filter((t) => t.etat === "créé").length; // Number of resolved tickets for the mission
+
+  const value = A;
+  return isNaN(value) ? 0 : value;
+};
+
+export const RfmsResolutionRatePerEmployee = (rfms, employee) => {
+  let A = nbRfmsTotal(rfms, employee);
+  let B = nbRfmsDelayed(rfms, employee);
+
+  const value = (((A - B) * 100) / A).toFixed(2);
+  return isNaN(value) ? (0).toFixed(2) : value;
+};
+
+export const AverageleaveRequestPerEmployee = (demandes, employee) => {
+  let totalLeaveRequests = demandes.filter((d) => d.__t === "DC");
+
+  let leaveRequests = demandes.filter(
+    (d) => d.idEmetteur._id === employee._id && d.__t === "DC"
+  );
+
+  let A = totalLeaveRequests.length;
+  let B = leaveRequests.length;
+
+  const value = ((B * 100) / A).toFixed(2);
+  return isNaN(value) ? (0).toFixed(2) : value;
+};

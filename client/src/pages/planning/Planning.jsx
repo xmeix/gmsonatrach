@@ -20,7 +20,7 @@ const Planning = () => {
     return new Date(today.getFullYear(), today.getMonth() + monthOffset, 1);
   }, [monthOffset]);
   const users = useSelector((state) => state.auth.users);
-  const {missions} = useSelector((state) => state.mission);
+  const { missions } = useSelector((state) => state.mission);
   const daysInMonth = new Date(
     date.getFullYear(),
     date.getMonth() + 1,
