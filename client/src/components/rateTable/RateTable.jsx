@@ -233,7 +233,6 @@ const RateTable = ({ type }) => {
                           : "ghigh"
                       }
                     >
-                      {" "}
                       {ticketResolutionRate(mission, tickets) + "%"}
                     </span>
                   </TableCell>
@@ -243,7 +242,6 @@ const RateTable = ({ type }) => {
                         tasksResolutionRate(mission) <= 0 ? "bhigh" : "ghigh"
                       }
                     >
-                      {" "}
                       {tasksResolutionRate(mission) + "%"}
                     </span>
                   </TableCell>
@@ -396,7 +394,15 @@ const RateTable = ({ type }) => {
                     {new Date(mission.tDateRet).toISOString().split("T")[0]}
                   </TableCell>
                   <TableCell className={classes.tableCell}>
-                    {RfmsResolutionRate(mission, rfms) + "%"}
+                    <span
+                      className={
+                        RfmsResolutionRate(mission, rfms) > 50
+                          ? "ghigh"
+                          : "bhigh"
+                      }
+                    >
+                      {RfmsResolutionRate(mission, rfms) + "%"}
+                    </span>
                   </TableCell>
                 </TableRow>
               ))}
@@ -447,16 +453,38 @@ const RateTable = ({ type }) => {
                     {user.uid}
                   </TableCell>
                   <TableCell className={classes.tableCell}>
-                    {nbRfmsTotal(rfms, user) + " RFM"}
-                  </TableCell>{" "}
-                  <TableCell className={classes.tableCell}>
-                    {nbRfmsDelayed(rfms, user) + " RFM"}
+                    <span>{nbRfmsTotal(rfms, user) + " RFM"}</span>
                   </TableCell>
                   <TableCell className={classes.tableCell}>
-                    {RfmsResolutionRatePerEmployee(rfms, user) + " %"}
+                    <span
+                      className={
+                        nbRfmsDelayed(rfms, user) === 0 ? "ghigh" : "bhigh"
+                      }
+                    >
+                      {nbRfmsDelayed(rfms, user) + " RFM"}
+                    </span>
                   </TableCell>
                   <TableCell className={classes.tableCell}>
-                    {AverageleaveRequestPerEmployee(demandes, user) + " %"}
+                    <span
+                      className={
+                        RfmsResolutionRatePerEmployee(rfms, user) > 50
+                          ? "ghigh"
+                          : "bhigh"
+                      }
+                    >
+                      {RfmsResolutionRatePerEmployee(rfms, user) + " %"}
+                    </span>
+                  </TableCell>
+                  <TableCell className={classes.tableCell}>
+                    <span
+                      className={
+                        AverageleaveRequestPerEmployee(demandes, user) > 50
+                          ? "ghigh"
+                          : "bhigh"
+                      }
+                    >
+                      {AverageleaveRequestPerEmployee(demandes, user) + " %"}
+                    </span>
                   </TableCell>
                 </TableRow>
               ))}
@@ -479,7 +507,7 @@ const RateTable = ({ type }) => {
         page={page}
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
-      />{" "}
+      />
       {isOpen && (
         <>
           <Popup
@@ -490,7 +518,7 @@ const RateTable = ({ type }) => {
             popupType={popupType}
           />
         </>
-      )}{" "}
+      )}
       {isOpen && <div className="closePopup" onClick={handleCloseForm}></div>}
     </div>
   );

@@ -46,72 +46,43 @@ const FileSection = ({
     <div className="fileSection">
       <div className="file-title">{title} circulants</div>
       <div className="dashboard-content">
-        <div style={{ flexDirection: "row", flexWrap: "wrap" }} className="box">
-          {fileRadialOptions.map((option, i) => (
-            <PieRechart
-              key={i}
-              data={getCountFor(data, option, fileName)}
-              type={"circulation_count"}
-              label="nombre de fichiers"
-              labelType={"label"}
-              title={
-                "Répartition des documents par structure/type/état (current data) "
-              }
-              style={pieType(option)}
-            />
-          ))}
-        </div>
         <div className="g11">
-          <div className="box b1">
-            {customSelecta()}
-            <StackedBarRechart
-              data={getGroupedDataForTime(
-                data,
-                chartPerNum,
-                fileName,
-                option1a.value
-              )}
-              type={"circulation_count"}
-              label={[xlabel, "nombre de fichiers"]}
-              labelType={chartPer}
-              title={"Nombre de fichiers par année,mois et jour"}
-            />
+          <div className="b1 gtt">
+            <div className="box">
+              <RateTable type={4} />
+            </div>
+            <div className="box b1">
+              {customSelecta()}
+              <StackedBarRechart
+                data={getGroupedDataForTime(
+                  data,
+                  chartPerNum,
+                  fileName,
+                  option1a.value
+                )}
+                type={"circulation_count"}
+                label={[xlabel, "nombre de fichiers"]}
+                labelType={chartPer}
+                title={"Nombre de fichiers par année,mois et jour"}
+              />
+            </div>
           </div>
-          <div className="box b1">
-            {customSelectb()}
-            <AreaRechart
-              data={getGroupedDataForTime(
-                data,
-                chartPerNum,
-                fileName,
-                option1b.value
-              )}
-              type={"circulation_count"}
-              label={[xlabel, "nombre de fichiers"]}
-              labelType={chartPer}
-              title={"Nombre de fichiers par année,mois et jour"}
-              fill={false}
-            />
+          <div
+            style={{ flexDirection: "row", flexWrap: "wrap" }}
+            className="box b1"
+          >
+            {fileRadialOptions.map((option, i) => (
+              <PieRechart
+                key={i}
+                data={getCountFor(data, option, fileName)}
+                type={"circulation_count"}
+                label="nombre de fichiers"
+                labelType={"label"}
+                title={`Répartition actuelle des documents par ${option} `}
+                style={pieType(option)}
+              />
+            ))}
           </div>
-        </div>
-        <div className="box">
-          {customSelectc()}
-          <AreaRechart
-            data={getGroupedDataForTime(
-              data,
-              chartPerNum,
-              fileName,
-              option1c.value
-            )}
-            type={"circulation_count"}
-            label={[xlabel, "nombre de fichiers"]}
-            labelType={chartPer}
-            title={"Nombre de fichiers par année,mois et jour"}
-            fill={true}
-          />
-        </div>
-        <div className="box">
-          <RateTable type={4} />
         </div>{" "}
         <div className="box">
           <RateTable type={5} />
