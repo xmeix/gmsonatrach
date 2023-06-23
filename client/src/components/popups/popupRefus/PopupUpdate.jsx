@@ -180,8 +180,8 @@ const PopupUpdate = ({ item, close, setSurvey }) => {
   }
 
   const [body2, setBody2] = useState({
-    dateDebA: item.idMission.DateDebA || item.idMission?.tDateDeb,
-    dateRetA: item.idMission.DateRetA || item.idMission?.tDateRet,
+    dateDebA: item.idMission?.DateDebA || item.idMission?.tDateDeb,
+    dateRetA: item.idMission?.DateRetA || item.idMission?.tDateRet,
     tDateDeb: item.idMission?.tDateDeb,
     tDateRet: item.idMission?.tDateRet,
   });
@@ -383,7 +383,7 @@ const PopupUpdate = ({ item, close, setSurvey }) => {
                           ? new Date(mission.DateDebA)
                               .toISOString()
                               .split("T")[0]
-                          : ""
+                          : new Date()
                       }
                       onChange={(e) => addToDate(e.target.value, 2)}
                     />
@@ -553,7 +553,7 @@ const PopupUpdate = ({ item, close, setSurvey }) => {
                           ? new Date(mission.DateRetA)
                               .toISOString()
                               .split("T")[0]
-                          : ""
+                          : new Date()
                       }
                       onChange={(e) => addToDate(e.target.value, 5)}
                     />
