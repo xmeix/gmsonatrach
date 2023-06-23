@@ -10,7 +10,7 @@ const FileSection = lazy(() =>
 import Loading from "./../../../components/loading/Loading";
 import useFile from "../../../hooks/useFile";
 import Settings from "../../../components/charts/widgets/Settings";
-
+ 
 const FilesDashboard = () => {
   let filesKPISdata = useSelector((state) => state.stat.filesKPIS);
   const { chartPer, chartPerNum, handleButtonClick } = useChartButtons();

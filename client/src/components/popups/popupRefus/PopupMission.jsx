@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
-import { FormControlLabel, FormGroup } from "@mui/material";
+import { FormControlLabel, FormGroup, Tooltip } from "@mui/material";
 import Checkbox from "@mui/material/Checkbox";
 import useBtn from "../../../hooks/useBtn";
 import AddCircleRoundedIcon from "@mui/icons-material/AddCircleRounded";
+import ModeRoundedIcon from "@mui/icons-material/ModeRounded";
 import { verifyProlongement } from "../../../utils/formFieldsVerifications";
 export const ItemDiv = ({ label, content }) => (
   <div className="itemDiv">
@@ -11,7 +12,9 @@ export const ItemDiv = ({ label, content }) => (
     <div className="item-content">{content}</div>
   </div>
 );
-import usePop from "./../../../hooks/usePop";
+import "./../../../components/formulaire/Formulaire.css";
+
+import usePopDate from "../../../hooks/usePopDate";
 const PopupMission = ({ item }) => {
   // console.log("item======>", item);
   // const [tasks, setTasks] = useState(item.taches);
@@ -86,9 +89,9 @@ const PopupMission = ({ item }) => {
     }
     return null;
   };
+  const [date, setDate] = useState(item.tDateRet);
 
-  const CustomComponent = () => {
-    const [date, setDate] = useState("");
+  const CustomComponent = ({ close, date }) => {
     const [error, setError] = useState("");
     const [handleClick] = useBtn();
 
@@ -117,6 +120,7 @@ const PopupMission = ({ item }) => {
           handleClick("update", item, "mission", "", {
             tDateRet: new Date(date).toISOString(),
           });
+          close();
         }
       }
     };
@@ -124,23 +128,31 @@ const PopupMission = ({ item }) => {
     return (
       <div className="custom-component">
         <div className="custom-component-input">
-          <label>nouvelle date de fin</label>
-          <input
-            type="date"
-            min={new Date().toISOString().split("T")[0]}
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
-          />
-          {error && <div className="error-message">{error}</div>}
-        </div>
-        <button className="custom-component-button" onClick={handleModify}>
-          Modifier
-        </button>
+          <label>Nouvelle date de fin</label>
+          <div className="flex inpuy">
+            <div>
+              <input
+                type="date"
+                min={new Date().toISOString().split("T")[0]}
+                 
+                defaultValue={new Date(date).toISOString().substring(0, 10)}
+                onChange={(e) => setDate(e.target.value)}
+              />{" "}
+              {error && <div className="input-error">{error}</div>}
+            </div>
+            <Tooltip title="Modifier">
+              <ModeRoundedIcon className="icn black" onClick={handleModify} />
+            </Tooltip>{" "}
+          </div>{" "}
+        </div>{" "}
+        <div className="custom-component-info">
+          Ancienne date: {new Date(item.tDateRet).toISOString().split("T")[0]}
+        </div>{" "}
       </div>
     );
   };
-  // const { Pop, openPop } = usePop();
 
+  const { isOpenDate, openPopDate, closePopDate } = usePopDate();
   return (
     <div className="popup-mission">
       <div className="title">Information mission</div>
@@ -165,10 +177,25 @@ const PopupMission = ({ item }) => {
               label="Date debut mission"
               content={new Date(item.tDateDeb).toISOString().slice(0, 10)}
             />
-            <ItemDiv
-              label="Date fin mission"
-              content={new Date(item.tDateRet).toISOString().slice(0, 10)}
-            />
+            {!isOpenDate && (
+              <div className="flex">
+                <ItemDiv
+                  label="Date fin mission"
+                  content={new Date(date).toISOString().slice(0, 10)}
+                />
+                {(item.etat === "en-cours" || item.etat === "acceptée") && (
+                  <div className="p-mission-btns">
+                    <Tooltip title=" Modifier la date de fin de mission">
+                      <ModeRoundedIcon
+                        className="icn black"
+                        onClick={openPopDate}
+                      />
+                    </Tooltip>
+                  </div>
+                )}
+              </div>
+            )}
+            {isOpenDate && <CustomComponent date={date} close={closePopDate} />}
             <ItemDiv label="Structure" content={item.structure} />
             <ItemDiv label="Type" content={item.type} />
             <ItemDiv label="Observation" content={item.observation || " / "} />
@@ -252,16 +279,6 @@ const PopupMission = ({ item }) => {
             content={item?.updatedBy?.nom + " " + item?.updatedBy?.prenom}
           />
         </div>
-      </div>
-      {/* <Pop
-        title={"Modifier la date de fin de mission"}
-        component={CustomComponent}
-      /> */}
-      {/* this pop should be shown only when mission en-cours / acceptée */}
-      <div className="p-mission-btns">
-        {/* <button onClick={openPop} className="btn">
-          Modifier la date de fin de mission
-        </button> */}
       </div>
     </div>
   );

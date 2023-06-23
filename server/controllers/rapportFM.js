@@ -70,14 +70,12 @@ export const getAllRapports = async (req, res) => {
       .populate("idEmploye")
       .populate("idMission");
 
-    let filteredRapports;
+    let filteredRapports = rapports;
     if (user.role === "relex") throw new Error("Unauthorized");
     else if (user.role === "employe") {
       filteredRapports = rapports.filter(
         (rapport) => rapport.idEmploye.id === req.user.id
       );
-    } else {
-      filteredRapports = rapports.filter((rapport) => rapport.etat !== "créé");
     }
 
     res.status(200).json(filteredRapports);

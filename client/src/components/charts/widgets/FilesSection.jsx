@@ -8,6 +8,7 @@ import "./FileSection.css";
 import "./../../../pages/profilAdmin/Dashboards/MissionDashboard.css";
 import AreaRechart from "../AreaRechart";
 import useChartSettings from "../../../hooks/useChartSettings";
+import RateTable from "../../rateTable/RateTable";
 const FileSection = ({
   data,
   fileName,
@@ -108,6 +109,12 @@ const FileSection = ({
             title={"Nombre de fichiers par année,mois et jour"}
             fill={true}
           />
+        </div>
+        <div className="box">
+          <RateTable type={4} />
+        </div>{" "}
+        <div className="box">
+          <RateTable type={5} />
         </div>
       </div>
     </div>

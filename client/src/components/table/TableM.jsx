@@ -12,7 +12,7 @@ import SendRoundedIcon from "@mui/icons-material/SendRounded";
 import ModeRoundedIcon from "@mui/icons-material/ModeRounded";
 import SettingsApplicationsRoundedIcon from "@mui/icons-material/SettingsApplicationsRounded";
 import {
-  Table,
+  Table, 
   TableBody,
   TableCell,
   TableContainer,

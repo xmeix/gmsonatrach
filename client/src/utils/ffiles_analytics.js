@@ -60,7 +60,7 @@ export const getGroupedDataForTime = (data, time, fileType, stack) => {
           .filter((doc) => doc.type === fileType)
           .sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt));
 
-  console.log("documents =>", documents);
+  // console.log("documents =>", documents);
 
   let mostRecentDocuments = {};
 
@@ -84,7 +84,7 @@ export const getGroupedDataForTime = (data, time, fileType, stack) => {
     mostRecentDocuments[key] = document;
   }
 
-  console.log("most recent docs", mostRecentDocuments);
+  // console.log("most recent docs", mostRecentDocuments);
 
   let groupedDataArray;
   groupedDataArray = Object.values(mostRecentDocuments).reduce((acc, cur) => {
@@ -131,7 +131,7 @@ export const getGroupedDataForTime = (data, time, fileType, stack) => {
 // PER MISSION
 export const RfmsResolutionRate = (mission, rfms) => {
   let rfmsMission = rfms.filter((rfm) => rfm.idMission._id === mission._id);
- 
+
   let A = rfmsMission.length;
   let B = rfmsMission.filter((t) => t.etat !== "créé").length; // Number of resolved tickets for the mission
 
@@ -153,19 +153,21 @@ export const leaveRequestAveragePerMonth = (demandes) => {
 
 // PER EMPLOYEE
 export const nbRfmsTotal = (rfms, employee) => {
+  console.log("rfms", rfms);
   let rfmsMission = rfms.filter((rfm) => rfm.idEmploye._id === employee._id);
   let A = rfmsMission.length;
 
   const value = A;
-  return isNaN(value) ? 0 : value;
+  return isNaN(value) || A === 0 ? 0 : value;
 };
 
 export const nbRfmsDelayed = (rfms, employee) => {
-  let rfmsMission = rfms.filter((rfm) => rfm.idEmploye._id === employee._id);
-  let A = rfmsMission.filter((t) => t.etat === "créé").length; // Number of resolved tickets for the mission
-
+  let A = rfms.filter(
+    (t) => t.etat === "créé" && t.idEmploye._id === employee._id
+  ).length; // Number of resolved tickets for the mission
+  console.log("rfms", rfms);
   const value = A;
-  return isNaN(value) ? 0 : value;
+  return isNaN(value) || A === 0 ? 0 : value;
 };
 
 export const RfmsResolutionRatePerEmployee = (rfms, employee) => {
@@ -173,19 +175,21 @@ export const RfmsResolutionRatePerEmployee = (rfms, employee) => {
   let B = nbRfmsDelayed(rfms, employee);
 
   const value = (((A - B) * 100) / A).toFixed(2);
-  return isNaN(value) ? (0).toFixed(2) : value;
+  return isNaN(value) || A === 0 || B === 0 ? (0).toFixed(2) : value;
 };
 
 export const AverageleaveRequestPerEmployee = (demandes, employee) => {
-  let totalLeaveRequests = demandes.filter((d) => d.__t === "DC");
+  let totalLeaveRequests = demandes.filter(
+    (d) => d.__t === "DC" && d.etat === "acceptée"
+  );
 
-  let leaveRequests = demandes.filter(
-    (d) => d.idEmetteur._id === employee._id && d.__t === "DC"
+  let leaveRequests = totalLeaveRequests.filter(
+    (d) => d.idEmetteur._id === employee._id
   );
 
   let A = totalLeaveRequests.length;
   let B = leaveRequests.length;
 
   const value = ((B * 100) / A).toFixed(2);
-  return isNaN(value) ? (0).toFixed(2) : value;
+  return isNaN(value) || A === 0 || B === 0 ? (0).toFixed(2) : value;
 };

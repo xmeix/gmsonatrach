@@ -7,7 +7,9 @@ export const verifyProlongement = (miss, objet) => {
   //  et tdateDeb de cette mission et tDateFin de cette mission (tDateFin+ duree)
   // au debut trouver remplacer date de fin par la nouvelle
 
-  if (new Date(newDate) < new Date()) {
+  if (!newDate) {
+    error = "Date Invalide";
+  } else if (new Date(newDate) < new Date()) {
     error = "la nouvelle date de fin doit etre supérieur a la date précédente";
   } else {
     if (miss.employes.length > 0) {

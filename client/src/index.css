@@ -141,7 +141,8 @@ select {
 .annulé,
 .en-attente,
 .créé,
-.en-cours {
+.en-cours,
+.terminée {
   font-family: "Montserrat", sans-serif !important;
   font-weight: 600 !important;
   font-size: 11px !important;
@@ -160,6 +161,11 @@ select {
 .annulée,
 .annulé {
   color: #408dda !important;
+}
+
+.terminée {
+  color: var(--gray1) !important;
+   
 }
 
 .en-attente,

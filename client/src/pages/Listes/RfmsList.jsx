@@ -5,6 +5,8 @@ import "./../../css/Gestion.css";
 
 const RfmsList = () => {
   const { rfms } = useSelector((state) => state.rfms);
+  const { notCreatedRfms } = rfms.filter((e) => e.etat !== "créé");
+  const { user } = useSelector((state) => state.auth);
 
   return (
     <div className="gestion">
@@ -13,7 +15,11 @@ const RfmsList = () => {
         search={["id", "name"]}
         filterOptions={filterRFMOptions}
         columns={columnsRFM}
-        data={rfms}
+        data={
+          user.role === "directeur" || user.role === "responsable"
+            ? notCreatedRfms
+            : rfms
+        }
         colType="rfm"
       />
     </div>

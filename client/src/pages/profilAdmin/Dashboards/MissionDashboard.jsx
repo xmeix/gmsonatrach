@@ -6,7 +6,7 @@ import useChartSettings from "../../../hooks/useChartSettings";
 import {
   getMissionCountFor,
   getMissionGroupedDataForTime,
-  missionCompletionRate,
+  missionCompletionRate, 
   timeToCompletion,
 } from "../../../utils/fmissions_analytics";
 import StackedBarRechart from "../../../components/charts/StackedBarRechart";

@@ -25,6 +25,13 @@ import { getBestEmployes } from "../../api/apiCalls/getCalls";
 import usePopup from "../../hooks/usePopup";
 import Popup from "../popups/Popup";
 import "./RateTable.css";
+import {
+  AverageleaveRequestPerEmployee,
+  RfmsResolutionRate,
+  RfmsResolutionRatePerEmployee,
+  nbRfmsDelayed,
+  nbRfmsTotal,
+} from "../../utils/ffiles_analytics";
 const useStyles = makeStyles({
   table: {
     "& .MuiPaper-root, & .MuiTableContainer-root": {
@@ -102,6 +109,9 @@ const RateTable = ({ type }) => {
   const { users } = useSelector((state) => state.auth);
   const { missions } = useSelector((state) => state.mission);
   const { tickets } = useSelector((state) => state.ticket);
+  const { rfms } = useSelector((state) => state.rfms);
+  const { demandes } = useSelector((state) => state.demande);
+
   const endedMissions = missions.filter((m) => m.etat === "terminée");
   const missionnaires = users.filter(
     (m) => m.role !== "secretaire" && m.role !== "relex"
@@ -136,12 +146,12 @@ const RateTable = ({ type }) => {
   }, [type]);
 
   const paginatedData =
-    type === 1
+    type === 1 || type === 4
       ? endedMissions.slice(
           page * rowsPerPage,
           page * rowsPerPage + rowsPerPage
         )
-      : type === 2
+      : type === 2 || type === 5
       ? missionnaires.slice(
           page * rowsPerPage,
           page * rowsPerPage + rowsPerPage
@@ -348,13 +358,122 @@ const RateTable = ({ type }) => {
             </TableBody>
           </Table>
         )}
+        {type === 4 && (
+          <Table className={classes.table}>
+            <TableHead className={classes.tableHeader}>
+              <TableRow>
+                <TableCell className={classes.tableCell}>ID Mission</TableCell>
+                <TableCell className={classes.tableCell}>
+                  Date de début
+                </TableCell>
+                <TableCell className={classes.tableCell}>Date de fin</TableCell>
+
+                <Tooltip title="Budget Consommé de la mission / nombre Employés ">
+                  <TableCell className={classes.tableCell}>
+                    Taux de résolution de Rapports de fin de mission
+                  </TableCell>
+                </Tooltip>
+              </TableRow>
+            </TableHead>
+            <TableBody className={classes.tableBody}>
+              {paginatedData.map((mission, i) => (
+                <TableRow
+                  key={i}
+                  className={classes.tableRow}
+                  onClick={() => {
+                    setSavedItem(mission);
+                    setSavedType("mission");
+                    openPopup("mission");
+                  }}
+                >
+                  <TableCell className={classes.tableCell}>
+                    {mission.uid}
+                  </TableCell>
+                  <TableCell className={classes.tableCell}>
+                    {new Date(mission.tDateDeb).toISOString().split("T")[0]}
+                  </TableCell>
+                  <TableCell className={classes.tableCell}>
+                    {new Date(mission.tDateRet).toISOString().split("T")[0]}
+                  </TableCell>
+                  <TableCell className={classes.tableCell}>
+                    {RfmsResolutionRate(mission, rfms) + "%"}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        )}
+        {type === 5 && (
+          <Table className={classes.table}>
+            <TableHead className={classes.tableHeader}>
+              <TableRow>
+                <TableCell className={classes.tableCell}>ID Employé</TableCell>
+
+                <Tooltip title="Nombre Rapports de fin de mission">
+                  <TableCell className={classes.tableCell}>
+                    Nombre de rapports total
+                  </TableCell>
+                </Tooltip>
+                <Tooltip title="Nombre Rapports de fin de mission non soumis">
+                  <TableCell className={classes.tableCell}>
+                    Nombre de rapports non-soumis
+                  </TableCell>
+                </Tooltip>
+                <Tooltip title="Taux(%) = Nombre de rapports de fin de mission soumis / Nombre de rapports de fin de mission total">
+                  <TableCell className={classes.tableCell}>
+                    Taux de résolution de rapport fin mission
+                  </TableCell>
+                </Tooltip>
+                <Tooltip title="Taux(%) = Nombre de demandes acceptées total d'un employé / Nombre de demandes acceptées otal">
+                  <TableCell className={classes.tableCell}>
+                    Taux moyen de congés
+                  </TableCell>
+                </Tooltip>
+              </TableRow>
+            </TableHead>
+            <TableBody className={classes.tableBody}>
+              {paginatedData.map((user, i) => (
+                <TableRow
+                  key={i}
+                  className={classes.tableRow}
+                  style={{ backgroundColor: i === 0 ? "var(--blue2)" : "" }}
+                  onClick={() => {
+                    setSavedItem(user);
+                    setSavedType("user");
+                    openPopup("user");
+                  }}
+                >
+                  <TableCell className={classes.tableCell}>
+                    {user.uid}
+                  </TableCell>
+                  <TableCell className={classes.tableCell}>
+                    {nbRfmsTotal(rfms, user) + " RFM"}
+                  </TableCell>{" "}
+                  <TableCell className={classes.tableCell}>
+                    {nbRfmsDelayed(rfms, user) + " RFM"}
+                  </TableCell>
+                  <TableCell className={classes.tableCell}>
+                    {RfmsResolutionRatePerEmployee(rfms, user) + " %"}
+                  </TableCell>
+                  <TableCell className={classes.tableCell}>
+                    {AverageleaveRequestPerEmployee(demandes, user) + " %"}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        )}
       </TableContainer>
       <TablePagination
         className="pagination"
         rowsPerPageOptions={[3, 10, 25]}
         component="div"
         count={
-          type === 1 || type === 2 ? endedMissions.length : bestEmps.length
+          type === 1 || type === 2 || type === 4
+            ? endedMissions.length
+            : type === 5
+            ? missionnaires.length
+            : bestEmps.length
         }
         rowsPerPage={rowsPerPage}
         page={page}
