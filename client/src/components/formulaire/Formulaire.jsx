@@ -135,7 +135,7 @@ const Formulaire = ({ title, entries, buttons, type }) => {
     setErrors(validateAIMissionForm(values, currentUser));
     if (Object.keys(validateAIMissionForm(values, currentUser)).length === 0) {
       // data: [structure, type, budget, pays, destination, NbEmployes, duree];
-      console.log(values);
+      console.log(Object.entries(values));
       fetch("http://localhost:5000/predict", {
         method: "POST",
         headers: {
@@ -147,8 +147,8 @@ const Formulaire = ({ title, entries, buttons, type }) => {
       })
         .then((response) => response.json())
         .then((data) => {
-          setPredResult(parseInt(data.predictions));
-          console.log(data.predictions);
+          setPredResult(parseInt(data.predictions[0]));
+          console.log(data.predictions[0]);
         });
       setErrors({});
     }
@@ -459,7 +459,7 @@ const Formulaire = ({ title, entries, buttons, type }) => {
             predResult > 0 ? "success-predict-message" : "error-predict-message"
           }
         >
-          {predResult > 0
+         {predResult >= 2
             ? successMessages[predResult]
             : errorMessages[predResult]}
         </div>

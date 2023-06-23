@@ -1,45 +1,229 @@
 
 import pandas as pd
 import numpy as np
-from csv import reader
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 from sklearn.preprocessing import LabelEncoder
 from sklearn.preprocessing import MinMaxScaler
 import joblib
-from sklearn.preprocessing import OneHotEncoder
 from sklearn import tree
 
+
+
+
+
+
+def train_model(missions, tickets):
+
+    datasetMissions = cleanData(missions, tickets)
+
+     # Splitting data
+    X_train, X_test, y_train, y_test = train_test_split(datasetMissions.drop(
+        "resultat", axis=1), datasetMissions["resultat"], test_size=0.2)
+
+    X_train_scaled, feature_names = preprocessData(X_train)
+
+    X_test_scaled = preprocessTestData(X_test, feature_names)
+
+    # train_accuracies_dt = []  # Track decision tree accuracies for each iteration
+    # train_accuracies_rf = []  # Track random forest accuracies for each iteration
+
+    dt_model = tree.DecisionTreeClassifier(
+        max_depth=10, min_samples_split=10, min_samples_leaf=6, max_features="sqrt").fit(X_train_scaled, y_train)
+    acc_dt = round(dt_model.score(X_test_scaled, y_test) * 100, 2)
+    # train_accuracies_dt.append(acc_dt)
+    print("Decision Tree Accuracy: %s" % acc_dt)
+
+    randf = RandomForestClassifier(
+        n_estimators=100, max_depth=10, min_samples_split=2, min_samples_leaf=1, max_features="sqrt")
+    rf_model = randf.fit(X_train_scaled, y_train)
+    acc_rf = round(rf_model.score(X_test_scaled, y_test) * 100, 2)
+    # train_accuracies_rf.append(acc_rf)
+    print("Random Forest Accuracy: %s" % acc_rf)
+
+    if acc_dt > acc_rf:
+        score = acc_dt
+        model = dt_model
+        model_name = "decision tree"
+        score2 = acc_rf
+
+    else:
+        score = acc_rf
+        model = rf_model
+        model_name = "random forest"
+        score2 = acc_dt
  
-rf = None
+    return score, model, model_name , X_test_scaled, y_test, score2
+
+def cleanData(missions, tickets):
+    datasetMissions = list(missions.find())
+    datasetTickets = list(tickets.find())
+
+    datasetMissions = pd.DataFrame(datasetMissions)
+    datasetTickets = pd.DataFrame(datasetTickets)
+
+    datasetMissions = datasetMissions[datasetMissions['etat'] == 'terminée']
+
+    datasetMissions = datasetMissions.fillna(method='ffill')
+    datasetMissions = datasetMissions.drop(['observation'], axis=1)
+
+    # FIXING CRITERIA AND ADDING NEW FEATURES TO THE CLASSIFICATION DATA
+    for index, row in datasetMissions.iterrows():
+        taches = row["taches"]
+        filtered_length = len(
+            [tache for tache in taches if tache["state"] == "accomplie"])
+        datasetMissions.at[index, "NbTachesAccomplies"] = filtered_length
+        datasetMissions.at[index, "NbTachesTotal"] = len(taches)
+
+    for index, row in datasetMissions.iterrows():
+        employes = row["employes"]  # Get the array from the "taches" column
+        datasetMissions.at[index, "NbEmployes"] = len(employes)
+
+    for index, mission in datasetMissions.iterrows():
+        mission_id = mission['_id']
+        mission_tickets = datasetTickets[datasetTickets['mission'] == mission_id]
+        num_tickets = len(mission_tickets)
+        datasetMissions.at[index, 'NbTickets'] = num_tickets
+
+    for index, mission in datasetMissions.iterrows():
+        mission_id = mission['_id']
+        mission_tickets = datasetTickets[(datasetTickets['mission'] == mission_id) & (
+            datasetTickets['isSolved'] == True)]
+        num_solved_tickets = len(mission_tickets)
+        datasetMissions.at[index, 'NbTicketsCloture'] = num_solved_tickets
+
+    for index, mission in datasetMissions.iterrows():
+        # Calculate the duration as timedelta
+        # Convert 'tDateRet' and 'tDateDeb' columns to datetime
+        mission['tDateRet'] = pd.to_datetime(mission['tDateRet'])
+        mission['tDateDeb'] = pd.to_datetime(mission['tDateDeb'])
+
+        diff = mission['tDateRet'] - mission['tDateDeb']
+        # Extract the duration in days
+        duration_days = diff.days
+        # Store the duration in a new column
+        datasetMissions.at[index, 'duree'] = duration_days
+
+    for index, row in datasetMissions.iterrows():
+        resultat = 0
+        if float(row['budgetConsome']) <= float(row['budget']):
+            resultat += 1
+
+        if row['duree'] <= row['oldDuree']:
+            resultat += 1
+
+        if row['NbTachesAccomplies'] == row['NbTachesTotal']:
+            resultat += 1
+
+        if row['NbTickets'] == row['NbTicketsCloture']:
+            resultat += 1
+
+        datasetMissions.at[index, 'resultat'] = resultat
+
+    # DROPPING UNNECESSARY COLUMNS
+    columns_to_drop = ['oldDuree', 'employes', 'taches', 'etat', 'tDateDeb', 'tDateRet', '_id', 'uid', 'objetMission', 'budgetConsome', 'NbTachesAccomplies', 'NbTachesTotal',
+                       'NbTickets', 'NbTicketsCloture', 'updatedAt', '__v', 'updatedBy', 'createdAt', 'DateDebA', 'DateRetA',
+                       'observation', 'raisonRefus', 'createdBy', 'moyenTransport', 'lieuDep', 'moyenTransportRet']
+
+    existing_columns = [
+        col for col in columns_to_drop if col in datasetMissions.columns]
+    datasetMissions.drop(existing_columns, axis=1, inplace=True)
+
+    print("datasetMissions.columns")
+    # print(datasetMissions.columns)
+
+    return datasetMissions
 
 
-# Load a CSV file
+
+def preprocessData(X_train):
+
+    X_train = pd.DataFrame(X_train)
+    # ENCODING CATEGORICAL COLS
+    categorical_cols = ['structure', 'pays', 'type', 'destination']
+    label_encoders = {}  # Dictionary to store label encoders for each categorical column
+    for col in categorical_cols:
+        label_encoder = LabelEncoder()
+        X_train[col] = label_encoder.fit_transform(
+            X_train[col])  # Encode categorical column
+        # Store the label encoder for future reference
+        label_encoders[col] = label_encoder
+
+    joblib.dump(label_encoders, 'codifications.joblib')
+
+    # Normalizing numerical features
+    numerical_features = ['structure', 'type', 'budget',
+                          'pays', 'destination', 'NbEmployes', 'duree']
+
+    scaler = MinMaxScaler()
+    scaler.fit(X_train[numerical_features])
+    normalized_features = scaler.transform(X_train[numerical_features])
+    normalized_data = pd.DataFrame(
+        normalized_features, columns=numerical_features)
+
+    joblib.dump(scaler, 'scaler.joblib')
+    X_train[numerical_features] = normalized_features
+
+    X_train_scaled = X_train
+    feature_names = ['structure', 'type', 'budget', 'pays', 'destination', 'NbEmployes', 'duree']
+
+    print("X_train_scaled.columns")
+    # print(X_train_scaled.columns)
+
+    print("feature_names")
+    # print(feature_names)
+    return X_train_scaled, feature_names
 
 
-def load_csv(filename):
-    dataset = list()
-    with open(filename, 'r') as file:
-        csv_reader = reader(file)
-        for row in csv_reader:
-            if not row:
-                continue
-            dataset.append(row)
-    return dataset
+
+def preprocessTestData(X_test,feature_names):
+    label_encoders = joblib.load('codifications.joblib')
+    categorical_cols = ['structure', 'pays', 'type', 'destination']
+
+    # for col in categorical_cols:
+    #     # Retrieve the label encoder for the column
+    #     label_encoder = label_encoders[col]
+    #     X_test[col] = X_test[col].apply(lambda x: label_encoder.transform([x])[
+    #                                     0] if x in label_encoder.classes_ else -1)
+
+    for col in categorical_cols:
+        if col in X_test.columns and col in label_encoders:
+            # Get unique values in the column
+            unique_values = X_test[col].unique()
+            print(col,unique_values)
+            # Add new values to the label encoder
+            new_values = set(unique_values) - set(label_encoders[col].classes_)
+            if new_values:
+                label_encoder = label_encoders[col]
+                label_encoder.classes_ = np.concatenate(
+                    [label_encoder.classes_, list(new_values)])
+                label_encoders[col] = label_encoder
+
+            # Transform the values using the updated label encoder
+            label_encoder = label_encoders[col]
+            X_test[col] = label_encoder.transform(X_test[col])
 
 
-def preprocess_row(row):
-    # Convert the row to a DataFrame
+    scaler = joblib.load('scaler.joblib')
+    numerical_features = ['structure', 'type', 'budget',
+                          'pays', 'destination', 'NbEmployes', 'duree']
+    X_test[numerical_features] = scaler.transform(X_test[numerical_features])
+    X_test_scaled = X_test.reindex(columns=feature_names)
+
+    print("X_test_scaled.columns")
+    # print(X_test_scaled.columns)
+
+    return X_test_scaled
+
+
+def preprocessRow(row):
     row = pd.DataFrame([row])
-
-    # Handle missing values if any
     row = row.fillna(0.5)
 
     # Convert 'tDateRet' and 'tDateDeb' columns to datetime
     row['tDateRet'] = pd.to_datetime(row['tDateRet'])
     row['tDateDeb'] = pd.to_datetime(row['tDateDeb'])
-
     # Calculate the duration as timedelta
     diff = row['tDateRet'] - row['tDateDeb']
     # Extract the duration in days
@@ -47,13 +231,15 @@ def preprocess_row(row):
     # Store the duration in a new column
     row['duree'] = duration_days
 
-    # Load the label encoders
     label_encoders = joblib.load('codifications.joblib')
+    categorical_cols = ['structure', 'pays', 'type', 'destination']
 
-    columns_to_update = ['structure', 'type', 'pays', 'destination']
+    # for col in categorical_cols:
+    #     # Retrieve the label encoder for the column
+    #     label_encoder = label_encoders[col]
+    #     row[col] = label_encoder.transform(row[col])
 
-    # Iterate over the specified columns and update the label encoders
-    for col in columns_to_update:
+    for col in categorical_cols:
         if col in row.columns and col in label_encoders:
             # Get unique values in the column
             unique_values = row[col].unique()
@@ -65,6 +251,7 @@ def preprocess_row(row):
                 label_encoder.classes_ = np.concatenate(
                     [label_encoder.classes_, list(new_values)])
                 label_encoders[col] = label_encoder
+                joblib.dump(label_encoders, 'codifications.joblib')
 
             # Transform the values using the updated label encoder
             label_encoder = label_encoders[col]
@@ -81,198 +268,23 @@ def preprocess_row(row):
         col for col in columns_to_drop if col in row.columns]
     row = row.drop(columns_to_drop_existing, axis=1)
 
+  # Reorder columns
+    row = row[['structure', 'type', 'budget', 'pays', 'destination', 'NbEmployes', 'duree']]
+
+    # scaling
     scaler = joblib.load('scaler.joblib')
     numerical_features = ['structure', 'type', 'budget',
                           'pays', 'destination', 'NbEmployes', 'duree']
-
-    row = scaler.transform(row[numerical_features])
+    row[numerical_features] = scaler.transform(row[numerical_features])
 
     print(row)
     return row
 
-
-def preprocess_data(datasetMissions, datasetTickets):
-
-    datasetMissions = pd.DataFrame(datasetMissions)
-    datasetTickets = pd.DataFrame(datasetTickets)
-
-    # print(len(datasetMissions))
-    # get only data that has etat ==="terminée"
-    datasetMissions = datasetMissions[datasetMissions['etat'] == 'terminée']
-    # print(len(datasetMissions))
-
-    # Handle missing values if any
-    # Replace missing values with 0.5
-    # print(datasetMissions.isnull().sum())
-    datasetMissions = datasetMissions.fillna(0.5)
-    # print(datasetMissions.isnull().sum())
-    # Encode categorical variables if any
-    # Specify the column names of categorical variables
-    categorical_cols = ['structure', 'pays', 'type', 'destination']
-    label_encoders = {}  # Dictionary to store label encoders for each categorical column
-
-    for col in categorical_cols:
-        label_encoder = LabelEncoder()
-        datasetMissions[col] = label_encoder.fit_transform(
-            datasetMissions[col])  # Encode categorical column
-        # Store the label encoder for future reference
-        label_encoders[col] = label_encoder
-
-    joblib.dump(label_encoders, 'codifications.joblib')
-# ____________________________________________________________________________________
-    # GETTING CRITERIA ITEMS#
-# ____________________________________________________________________________________
-
-    # Iterate over each row in the DataFrame
-    for index, row in datasetMissions.iterrows():
-        taches = row["taches"]  # Get the array from the "taches" column
-        # Filter the array based on the "state" field and calculate the length
-        filtered_length = len(
-            [tache for tache in taches if tache["state"] == "accomplie"])
-
-        # Replace the value in the "taches" column with the filtered length
-        datasetMissions.at[index, "NbTachesAccomplies"] = filtered_length
-        datasetMissions.at[index, "NbTachesTotal"] = len(taches)
-
-        # Iterate over each row in the DataFrame
-    for index, row in datasetMissions.iterrows():
-        employes = row["employes"]  # Get the array from the "taches" column
-        # Filter the array based on the "state" field and calculate the length
-        datasetMissions.at[index, "NbEmployes"] = len(employes)
-        # GETTING NB TICKETS TOTALE FOR EACH MISSION
-        # Iterate over each mission
-    for index, mission in datasetMissions.iterrows():
-        mission_id = mission['_id']
-        # Filter the ticket dataset for the current mission
-        mission_tickets = datasetTickets[datasetTickets['mission'] == mission_id]
-        # Count the number of tickets for the current mission
-        num_tickets = len(mission_tickets)
-        # Update the NumTickets column in the mission dataset
-        datasetMissions.at[index, 'NbTickets'] = num_tickets
-
-    for index, mission in datasetMissions.iterrows():
-        mission_id = mission['_id']
-        # Filter the ticket dataset for the current mission and solved tickets
-        mission_tickets = datasetTickets[(datasetTickets['mission'] == mission_id) & (
-            datasetTickets['isSolved'] == True)]
-        # Count the number of solved tickets for the current mission
-        num_solved_tickets = len(mission_tickets)
-        # Update the NumSolvedTickets column in the mission dataset
-        datasetMissions.at[index, 'NbTicketsCloture'] = num_solved_tickets
-
-    for index, mission in datasetMissions.iterrows():
-        # Calculate the duration as timedelta
-        # Convert 'tDateRet' and 'tDateDeb' columns to datetime
-        mission['tDateRet'] = pd.to_datetime(mission['tDateRet'])
-        mission['tDateDeb'] = pd.to_datetime(mission['tDateDeb'])
-
-        diff = mission['tDateRet'] - mission['tDateDeb']
-        # Extract the duration in days
-        duration_days = diff.days
-        # Store the duration in a new column
-        datasetMissions.at[index, 'duree'] = duration_days
-# ____________________________________________________________________________________
-    # FIXING CRITERIA #
-# ____________________________________________________________________________________
-
-    for index, row in datasetMissions.iterrows():
-        resultat = 0
-
-        if float(row['budgetConsome']) <= float(row['budget']):
-            resultat += 1
-
-        if row['duree'] <= row['oldDuree']:
-            resultat += 1
-
-        if row['NbTachesAccomplies'] == row['NbTachesTotal']:
-            resultat += 1
-
-        if row['NbTickets'] == row['NbTicketsCloture']:
-            resultat += 1
-
-        datasetMissions.at[index, 'resultat'] = resultat
-# ____________________________________________________________________________________
-    # Dropping Stuff #
-# ____________________________________________________________________________________
-
-    columns_to_drop = ['oldDuree', 'employes', 'taches', 'etat', 'tDateDeb', 'tDateRet', '_id', 'uid', 'objetMission', 'budgetConsome', 'NbTachesAccomplies', 'NbTachesTotal',
-                       'NbTickets', 'NbTicketsCloture', 'updatedAt', '__v', 'updatedBy', 'createdAt', 'DateDebA', 'DateRetA',
-                       'observation', 'raisonRefus', 'createdBy', 'moyenTransport', 'lieuDep', 'moyenTransportRet']
-
-    existing_columns = [
-        col for col in columns_to_drop if col in datasetMissions.columns]
-    datasetMissions.drop(existing_columns, axis=1, inplace=True)
-# ____________________________________________________________________________________
-    # Normalizing Stuff #
-# ____________________________________________________________________________________
-    # # Normalize numeric features
-
-    numerical_features = ['structure', 'type', 'budget',
-                          'pays', 'destination', 'NbEmployes', 'duree']
-
-    # Create a MinMaxScaler object
-    scaler = MinMaxScaler()
-    # Fit the scaler on the numerical features
-    scaler.fit(datasetMissions[numerical_features])
-    # Transform the numerical features using the scaler
-    normalized_features = scaler.transform(datasetMissions[numerical_features])
-    # Create a new DataFrame with the normalized features
-    normalized_data = pd.DataFrame(
-        normalized_features, columns=numerical_features)
-    joblib.dump(scaler, 'scaler.joblib')
-
-    # Concatenate the normalized features with the non-numerical features and target variable
-    datasetMissions = pd.concat(
-        [normalized_data, datasetMissions[['resultat']]], axis=1)
-
-    # print(datasetMissions)
-    return datasetMissions
-
-
-def train_model(missions, tickets):
-
-    print('training')
-    # Fetch the first 10 documents from MongoDB
-    datasetMissions = list(missions.find())
-    datasetTickets = list(tickets.find())
-
-    data = preprocess_data(datasetMissions, datasetTickets)
-
-    print("data training:", data.head())
-    # Split the data into training and testing sets
-    X_train, X_test, y_train, y_test = train_test_split(data.drop(
-        "resultat", axis=1), data["resultat"], test_size=0.2)
-
-    dt_model = tree.DecisionTreeClassifier().fit(X_train, y_train)
-    acc_dt = round(dt_model.score(X_test, y_test)*100, 2)
-    print("Accuracy: %s" % acc_dt)
-
-    randf = RandomForestClassifier(n_estimators=100)
-    rf_model = randf.fit(X_train, y_train)
-    acc_rf = round(rf_model.score(X_test, y_test)*100, 2)
-    print("Accuracy: %s" % acc_rf)
-    # print("Model trained successfully!")
-
-    if acc_dt > acc_rf:
-        return acc_dt, dt_model
-    else:
-        return acc_rf, rf_model
-
-# structure  type    budget      pays  destination  NbEmployes     duree  resultat
-
 def predict_classification(data):
     # Perform preprocessing on the input data
     model = joblib.load('trained_model.joblib')
-
-    preprocessed_row = preprocess_row(data)
-    column_names = ['structure', 'type', 'budget',
-                    'pays', 'destination', 'NbEmployes', 'duree']
-
-    # Create a new DataFrame with the preprocessed row
-    preprocessed_df = pd.DataFrame(preprocessed_row, columns=column_names)
-    print(preprocessed_df)
-    # Make predictions using the trained model
-    prediction = model.predict(preprocessed_df)
+    preprocessed_row = preprocessRow(data)
+    prediction = model.predict(preprocessed_row)
 
     # Return the predicted label
     return prediction

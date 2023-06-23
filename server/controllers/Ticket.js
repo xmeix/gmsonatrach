@@ -9,8 +9,12 @@ export const createTicket = async (req, res) => {
     await ticket.save();
     await ticket.populate("mission.employes");
 
+
+
+
     // ------------------------------------------------------------------------------------------------------XXXXXXXXXXXXXXXXXXXXXXX
     createOrUpdateFMission("update", {
+      oldMission: mission,
       newMission: mission, // add one ticket to the number of tickets in this mission
       updateType: "ticket",
     });
@@ -68,7 +72,8 @@ export const changeStatus = async (req, res) => {
     ).populate("mission");
 
     createOrUpdateFMission("update", {
-      newMission: mission, // add one ticket to the number of tickets in this mission
+      oldMission: ticket.mission,
+      newMission: ticket.mission, // add one ticket to the number of tickets in this mission
       updateType: "solvedTicket",
     });
     EmitTicket({ others: [...ticket.mission.employes] });

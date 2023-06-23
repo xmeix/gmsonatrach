@@ -131,7 +131,7 @@ export const getGroupedDataForTime = (data, time, fileType, stack) => {
 // PER MISSION
 export const RfmsResolutionRate = (mission, rfms) => {
   let rfmsMission = rfms.filter((rfm) => rfm.idMission._id === mission._id);
-
+ 
   let A = rfmsMission.length;
   let B = rfmsMission.filter((t) => t.etat !== "créé").length; // Number of resolved tickets for the mission
 
