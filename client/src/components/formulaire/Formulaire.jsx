@@ -79,7 +79,7 @@ const Formulaire = ({ title, entries, buttons, type }) => {
       newEmployeesNonMissionnaires = users
         .filter(
           (us) =>
-            us.role === "employe" &&
+            (us.role === "employe" || us.role === "responsable") &&
             !missions.some(
               (mission) =>
                 mission.employes.some(
@@ -88,14 +88,12 @@ const Formulaire = ({ title, entries, buttons, type }) => {
                 (mission.etat === "en-cours" ||
                   mission.etat === "acceptée" ||
                   mission.etat === "en-attente") &&
-                verifyInclusion(
+                !verifyInclusion(
                   new Date(mission.tDateDeb),
                   new Date(mission.tDateRet),
                   new Date(start),
                   new Date(end)
                 )
-              // mission.tDateRet > start &&
-              // mission.tDateDeb < end
             )
         )
         .map((us) => ({
@@ -360,7 +358,9 @@ const Formulaire = ({ title, entries, buttons, type }) => {
                 <Select
                   ref={entry.id === "employes" ? selectInputRef : null}
                   className="select"
-                  options={allowedOptions(entry)}
+                  options={
+                    type === "user" ? allowedOptions(entry) : entry.options
+                  }
                   isMulti={entry.isMulti}
                   placeholder={entry.placeholder}
                   styles={customStyles}
@@ -459,7 +459,7 @@ const Formulaire = ({ title, entries, buttons, type }) => {
             predResult > 0 ? "success-predict-message" : "error-predict-message"
           }
         >
-         {predResult >= 2
+          {predResult >= 2
             ? successMessages[predResult]
             : errorMessages[predResult]}
         </div>

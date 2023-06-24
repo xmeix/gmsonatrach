@@ -82,7 +82,12 @@ app.use(cookieParser());
 // Enable CORS for API calls
 const corsOptions = {
   credentials: true,
-  origin: ["http://127.0.0.1:5173", "http://localhost:5173"],
+  origin: [
+    "http://127.0.0.1:5174",
+    "http://127.0.0.1:5173",
+    "http://localhost:5173",
+    "http://localhost:5174",
+  ],
   methods: ["PATCH", "GET", "POST", "DELETE"],
 };
 app.use(cors(corsOptions));

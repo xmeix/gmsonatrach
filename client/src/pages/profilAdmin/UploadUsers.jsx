@@ -109,16 +109,16 @@ const UploadUsers = () => {
           nom: e[0],
           prenom: e[1],
           fonction: e[2],
-          numTel: "0" + e[7],
+          numTel: e[7][0] === "0" ? e[7] : "0" + e[7],
           email: e[3],
           password: e[4],
           role: e[5],
-          structure: e[6],
+          structure: e[6].toUpperCase(),
         };
         return dbObject;
       });
 
-      // console.log(data);
+      console.log(data);
       let errs = [];
       data.map((u) => {
         const validationErrors = validateUser(u);

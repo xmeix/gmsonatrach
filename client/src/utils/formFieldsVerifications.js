@@ -10,7 +10,8 @@ export const verifyProlongement = (miss, objet) => {
   if (!newDate) {
     error = "Date Invalide";
   } else if (new Date(newDate) < new Date()) {
-    error = "la nouvelle date de fin doit etre supérieur a la date précédente";
+    error =
+      "la nouvelle date de fin doit etre supérieur ou égale a la date actuelle";
   } else {
     if (miss.employes.length > 0) {
       let employes = miss.employes;
@@ -164,6 +165,7 @@ export const validateMission = (mission, user, object) => {
 
   return errors;
 };
+
 export const validateAIMissionForm = (mission, user) => {
   // console.log(mission);
   const errors = {};
@@ -241,7 +243,7 @@ export const verifyInclusion = (st, en, start, end) => {
   if (
     (en >= start && st <= start && en <= end) ||
     (st >= start && en <= end && st <= end && en > start) ||
-    (st <= end && st > start && en >= end)
+    (st <= end && st >= start && en >= end)
   ) {
     return true;
   }
@@ -553,10 +555,19 @@ export const validateDC = (dc) => {
   }
   if (!dc?.DateDepart) {
     errors.DateDepart = "obligatoire";
+  } else if (new Date(dc.DateDepart) <= new Date()) {
+    errors.DateDepart =
+      "la date de départ doit etre supérieure a la date actuelle";
   }
 
   if (!dc?.DateRetour) {
     errors.DateRetour = "obligatoire";
+  } else if (
+    dc.DateDepart &&
+    new Date(dc.DateRetour) <= new Date(dc.DateDepart)
+  ) {
+    errors.DateDepart =
+      "la date de départ doit etre supérieure a la date de retour";
   }
 
   if (

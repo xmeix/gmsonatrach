@@ -12,7 +12,7 @@ import SendRoundedIcon from "@mui/icons-material/SendRounded";
 import ModeRoundedIcon from "@mui/icons-material/ModeRounded";
 import SettingsApplicationsRoundedIcon from "@mui/icons-material/SettingsApplicationsRounded";
 import {
-  Table, 
+  Table,
   TableBody,
   TableCell,
   TableContainer,
@@ -328,6 +328,14 @@ const TableM = ({ title, filterOptions, columns, data, colType }) => {
           const filterValue = trimmedFilter.toLowerCase();
           return (
             cellValue.includes(filterValue) ||
+            (item.prenom + " " + item.nom)
+              .toString()
+              .toLowerCase()
+              .includes(filterValue) ||
+            (item.nom + " " + item.prenom)
+              .toString()
+              .toLowerCase()
+              .includes(filterValue) ||
             ((column.id === "idEmetteur" ||
               column.id === "idEmploye" ||
               column.id === "createdBy") &&

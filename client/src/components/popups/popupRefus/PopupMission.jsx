@@ -134,7 +134,6 @@ const PopupMission = ({ item }) => {
               <input
                 type="date"
                 min={new Date().toISOString().split("T")[0]}
-                 
                 defaultValue={new Date(date).toISOString().substring(0, 10)}
                 onChange={(e) => setDate(e.target.value)}
               />{" "}
@@ -157,7 +156,8 @@ const PopupMission = ({ item }) => {
     <div className="popup-mission">
       <div className="title">Information mission</div>
       <div className="head">
-        <h3>Object Mission: {item.objetMission}</h3>
+        <h3>ID Mission: {item.uid}</h3>
+        <h3>Objet: {item.objetMission}</h3>
         <div className="state">
           <div>
             <span>Etat:</span>
@@ -183,16 +183,18 @@ const PopupMission = ({ item }) => {
                   label="Date fin mission"
                   content={new Date(date).toISOString().slice(0, 10)}
                 />
-                {(item.etat === "en-cours" || item.etat === "acceptée") && (
-                  <div className="p-mission-btns">
-                    <Tooltip title=" Modifier la date de fin de mission">
-                      <ModeRoundedIcon
-                        className="icn black"
-                        onClick={openPopDate}
-                      />
-                    </Tooltip>
-                  </div>
-                )}
+                {(item.etat === "en-cours" || item.etat === "acceptée") &&
+                  user.role !== "employe" &&
+                  user.role !== "relex" && (
+                    <div className="p-mission-btns">
+                      <Tooltip title=" Modifier la date de fin de mission">
+                        <ModeRoundedIcon
+                          className="icn black"
+                          onClick={openPopDate}
+                        />
+                      </Tooltip>
+                    </div>
+                  )}
               </div>
             )}
             {isOpenDate && <CustomComponent date={date} close={closePopDate} />}
