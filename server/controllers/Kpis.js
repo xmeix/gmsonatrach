@@ -227,24 +227,44 @@ export const createOrUpdateFMission = async (operation, needs) => {
             country: newMission.pays,
             departure: newMission.lieuDep,
             destination: newMission.destination,
-            mission_count: recentFMission ? recentFMission.mission_count : 1,
-            solved_ticket_count: recentFMission.solved_ticket_count,
-            total_ticket_count: recentFMission.total_ticket_count,
-            done_tasks_count: recentFMission
-              ? diff > 0
-                ? recentFMission.done_tasks_count - 1
-                : recentFMission.done_tasks_count + 1
-              : diff > 0
-              ? 0
+            mission_count: recentFMission
+              ? recentFMission
+                ? recentFMission.mission_count
+                : 1
               : 1,
-            total_tasks_count: recentFMission.total_tasks_count, //this one stays the same
-            employee_count: recentFMission.employee_count,
-            road_utilization_count: recentFMission.road_utilization_count,
-            airline_utilization_count: recentFMission.airline_utilization_count,
-            estimated_budget: recentFMission.estimated_budget,
-            consumed_budget: recentFMission.consumed_budget,
-            time_Estimated: recentFMission.time_Estimated,
-            time_Spent: recentFMission.time_Spent,
+            solved_ticket_count: recentFMission
+              ? recentFMission.solved_ticket_count
+              : 1,
+            total_ticket_count: recentFMission
+              ? recentFMission.total_ticket_count
+              : 1,
+            done_tasks_count: recentFMission
+              ? recentFMission
+                ? diff > 0
+                  ? recentFMission.done_tasks_count - 1
+                  : recentFMission.done_tasks_count + 1
+                : diff > 0
+                ? 0
+                : 1
+              : 1,
+            total_tasks_count: recentFMission
+              ? recentFMission.total_tasks_count
+              : 1, //this one stays the same
+            employee_count: recentFMission ? recentFMission.employee_count : 1,
+            road_utilization_count: recentFMission
+              ? recentFMission.road_utilization_count
+              : 1,
+            airline_utilization_count: recentFMission
+              ? recentFMission.airline_utilization_count
+              : 1,
+            estimated_budget: recentFMission
+              ? recentFMission.estimated_budget
+              : 1,
+            consumed_budget: recentFMission
+              ? recentFMission.consumed_budget
+              : 1,
+            time_Estimated: recentFMission ? recentFMission.time_Estimated : 1,
+            time_Spent: recentFMission ? recentFMission.time_Spent : 1,
             createdAt: created ? created : new Date(),
           });
           await newDocument.save();
@@ -257,19 +277,38 @@ export const createOrUpdateFMission = async (operation, needs) => {
             country: newMission.pays,
             departure: newMission.lieuDep,
             destination: newMission.destination,
-            mission_count: recentFMission ? recentFMission?.mission_count : 1,
-            solved_ticket_count: recentFMission?.solved_ticket_count,
-            total_ticket_count: recentFMission?.total_ticket_count + 1,
-            done_tasks_count: recentFMission?.done_tasks_count,
-            total_tasks_count: recentFMission?.total_tasks_count, //this one stays the same
-            employee_count: recentFMission?.employee_count,
-            road_utilization_count: recentFMission?.road_utilization_count,
-            airline_utilization_count:
-              recentFMission?.airline_utilization_count,
-            estimated_budget: recentFMission?.estimated_budget,
-            consumed_budget: recentFMission?.consumed_budget,
-            time_Estimated: recentFMission?.time_Estimated,
-            time_Spent: recentFMission?.time_Spent,
+            mission_count: recentFMission
+              ? recentFMission
+                ? recentFMission?.mission_count
+                : 1
+              : 1,
+            solved_ticket_count: recentFMission
+              ? recentFMission?.solved_ticket_count
+              : 1,
+            total_ticket_count: recentFMission
+              ? recentFMission?.total_ticket_count + 1
+              : 1,
+            done_tasks_count: recentFMission
+              ? recentFMission?.done_tasks_count
+              : 1,
+            total_tasks_count: recentFMission
+              ? recentFMission?.total_tasks_count
+              : 1, //this one stays the same
+            employee_count: recentFMission ? recentFMission?.employee_count : 1,
+            road_utilization_count: recentFMission
+              ? recentFMission?.road_utilization_count
+              : 1,
+            airline_utilization_count: recentFMission
+              ? recentFMission?.airline_utilization_count
+              : 1,
+            estimated_budget: recentFMission
+              ? recentFMission?.estimated_budget
+              : 1,
+            consumed_budget: recentFMission
+              ? recentFMission?.consumed_budget
+              : 1,
+            time_Estimated: recentFMission ? recentFMission?.time_Estimated : 1,
+            time_Spent: recentFMission ? recentFMission?.time_Spent : 1,
             createdAt: created ? created : new Date(),
           });
           await newFTdocument.save();

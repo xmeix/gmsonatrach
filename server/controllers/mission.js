@@ -152,9 +152,7 @@ export const createMission = async (req, res) => {
     }
     //____________________________________________________________________________________;
 
-    res
-      .status(201)
-      .json({ savedMission, msg: "mission créée avec succés" });
+    res.status(201).json({ savedMission, msg: "mission créée avec succés" });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -208,7 +206,8 @@ export const updateMissionEtat = async (req, res) => {
 
     const populatedMission = await Mission.findById(updatedMission.id)
       .populate("createdBy")
-      .populate("updatedBy");
+      .populate("updatedBy")
+      .populate("employes");
     if (req.body.etat) {
       const operation = req.body.etat;
       // ________________________________________________________________________________________
@@ -252,10 +251,11 @@ export const updateMissionEtat = async (req, res) => {
       }
 
       sendEmits("update", {
-        others: employes.map((employe) => employe._id),
+        others: employes.map((employe) => employe),
         structure: mission.structure,
         etat: operation,
       });
+
       sendNotification("update", {
         mission,
         etat: updatedMission.etat,

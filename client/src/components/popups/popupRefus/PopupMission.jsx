@@ -94,13 +94,15 @@ const PopupMission = ({ item }) => {
   const CustomComponent = ({ close, date }) => {
     const [error, setError] = useState("");
     const [handleClick] = useBtn();
+    const [selectedDate, setSelectedDate] = useState(new Date(date));
 
     const handleModify = () => {
       setError("");
-      console.log("Modified date:", date);
+      console.log("Modified date:", selectedDate);
+
       if (
-        new Date(date).getTime() <= new Date(item.tDateDeb).getTime() ||
-        new Date(date).getTime() <= new Date().getTime()
+        selectedDate.getTime() <= new Date(item.tDateDeb).getTime() ||
+        selectedDate.getTime() <= new Date().getTime()
       ) {
         setError(
           "La date de fin de mission doit être postérieure à la date actuelle (ou la date de début de mission)."
@@ -108,21 +110,25 @@ const PopupMission = ({ item }) => {
       } else {
         const error = verifyProlongement(item, {
           missions: missions,
-          newDate: date,
+          newDate: selectedDate,
         });
         if (error !== "") {
           console.log(error);
           setError(error);
         } else {
-          // call api , and not forget that i need to emit a lot of things
-          // first thing i have to change is the oldDuree
-          // second thing is tDateRet
           handleClick("update", item, "mission", "", {
-            tDateRet: new Date(date).toISOString(),
+            tDateRet: selectedDate.toISOString(),
           });
           close();
         }
       }
+    };
+
+    const handleDateChange = (e) => {
+      const inputValue = e.target.value;
+      const newDate = inputValue ? new Date(inputValue) : null;
+
+      setSelectedDate(newDate);
     };
 
     return (
@@ -133,20 +139,21 @@ const PopupMission = ({ item }) => {
             <div>
               <input
                 type="date"
-                min={new Date().toISOString().split("T")[0]}
-                defaultValue={new Date(date).toISOString().substring(0, 10)}
-                onChange={(e) => setDate(e.target.value)}
-              />{" "}
+                value={
+                  selectedDate ? selectedDate.toISOString().split("T")[0] : ""
+                }
+                onChange={handleDateChange}
+              />
               {error && <div className="input-error">{error}</div>}
             </div>
             <Tooltip title="Modifier">
               <ModeRoundedIcon className="icn black" onClick={handleModify} />
-            </Tooltip>{" "}
-          </div>{" "}
-        </div>{" "}
+            </Tooltip>
+          </div>
+        </div>
         <div className="custom-component-info">
           Ancienne date: {new Date(item.tDateRet).toISOString().split("T")[0]}
-        </div>{" "}
+        </div>
       </div>
     );
   };
