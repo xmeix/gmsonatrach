@@ -54,8 +54,7 @@ const PopupMission = ({ item }) => {
               <input
                 type="number"
                 style={{
-                  width: "100px",
-                  height: "10px",
+                  maxWidth: "70%",
                 }}
                 min={0}
                 onChange={(e) => setBudgetConsomme(e.target.value)}
@@ -65,7 +64,7 @@ const PopupMission = ({ item }) => {
               ) && (
                 <button
                   onClick={() => {
-                    if (budgetConsome) {
+                    if (budgetConsome > 0 ) {
                       handleClick("update", item, "mission", "", {
                         budgetConsome: budgetConsome,
                       });

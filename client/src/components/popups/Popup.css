@@ -327,7 +327,14 @@
   text-align: left !important;
   margin: 0.5em 0;
 }
-
+.itemDiv .bgt {
+  margin-top: 1em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1em;
+  flex-wrap: wrap;
+}
 .info-creation .item-label {
   font-weight: bold;
   margin-bottom: 5px;

@@ -63,8 +63,8 @@ const PopupDB = ({ item }) => {
       .split("/")
       .join("-"),
     numSC: numSC ? numSC : "",
-    designationSC: designationSC ? designationSC : "",
-    montantEngage: montantEngage ? montantEngage : "",
+    designationSC: designationSC ? designationSC : "/",
+    montantEngage: montantEngage ? montantEngage : "/",
     nature:
       nature === "aller-retour"
         ? `${depart} / ${destination} / ${depart} `
@@ -170,10 +170,10 @@ const PopupDB = ({ item }) => {
                   </div>
                   <div>
                     <span>Désignation sous compte:</span>
-                    {FileItem.designationSC}
+                    {FileItem.designationSC || "/"}
                   </div>
                   <div>
-                    <span>Montant engagé:</span> {FileItem.montantEngage}
+                    <span>Montant engagé:</span> {FileItem.montantEngage || "/"}
                   </div>
                 </TableCell>
               </TableRow>

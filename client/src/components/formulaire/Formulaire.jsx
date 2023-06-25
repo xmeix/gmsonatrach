@@ -74,7 +74,10 @@ const Formulaire = ({ title, entries, buttons, type }) => {
     if (
       start &&
       end &&
-      (type === "mission" || type === "DB" || type === "ia-form")
+      (type === "mission" ||
+        type === "DB" ||
+        type === "ia-form" ||
+        (type === "demande" && item.__t === "DB"))
     ) {
       newEmployeesNonMissionnaires = users
         .filter(
@@ -83,7 +86,7 @@ const Formulaire = ({ title, entries, buttons, type }) => {
             !missions.some(
               (mission) =>
                 mission.employes.some(
-                  (u) => u._id.toString() === us._id.toString()
+                  (u) => u._id === us._id
                 ) &&
                 (mission.etat === "en-cours" ||
                   mission.etat === "acceptée" ||
@@ -102,7 +105,7 @@ const Formulaire = ({ title, entries, buttons, type }) => {
         }));
 
       let newEntries;
-      if (type === "mission" || type === "ia-form") {
+      if (type === "mission" || type === "ia-form" || type === "DB") {
         newEntries = entries.map((entry) => {
           if (entry.id === "employes") {
             entry.options = newEmployeesNonMissionnaires;
@@ -110,7 +113,7 @@ const Formulaire = ({ title, entries, buttons, type }) => {
           }
           return entry;
         });
-      } else if (type === "DB") {
+      } else if (type === "demande" && item.__t === "DB") {
         newEntries = entries.map((entry) => {
           if (entry.id === "employes") {
             entry.options = newEmployeesNonMissionnaires;

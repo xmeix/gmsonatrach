@@ -254,7 +254,7 @@ export const verifyInclusion = (st, en, start, end) => {
 export const validateDB = (db, object) => {
   const errors = {};
 
-  if (!db.nature) {
+  if (!db.nature.trim()) {
     errors.nature = "La nature de la demande est obligatoire";
   } else if (!["aller-retour", "retour", "aller"].includes(db.nature)) {
     errors.nature =
@@ -322,7 +322,7 @@ export const validateDB = (db, object) => {
       return employee && employee.structure !== object.user.structure;
     });
     if (!hasSameStructureAndEmployee) {
-      errors.employesStructure = "pas la meme structure";
+      errors.employesStructure = "un employé n'est pas de la meme structure";
     }
   }
   return errors;
@@ -385,7 +385,7 @@ export const verifyDuplicates = (data) => {
         // console.log("employeOverlap: ", employeOverlap);
         if (employeOverlap) {
           // console.log("error");
-          errors.duplicates = `line ${index} and line ${index2}`;
+          errors.duplicates = `line ${index} and line ${index2}: Un des employés contribue a deux demandes de billetterie qui ont des dates qui intersecte au niveau du meme fichier `;
           return errors;
         }
       }
@@ -430,7 +430,7 @@ export const verifyWithRD = (db, demandes) => {
 
     if (isEmployeeAssignedAlreadyToDemand === true) {
       errors.employes =
-        "Les employées ne doivent pas avoir des demandes soumises prévues à une même période pour les memes employés.";
+        "Les employées ne doivent pas avoir des demandes soumises prévues à une même période pour les memes employés au niveau de la base de données.";
       return errors;
     }
   }
