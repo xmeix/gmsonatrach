@@ -9,9 +9,6 @@ export const createTicket = async (req, res) => {
     await ticket.save();
     await ticket.populate("mission.employes");
 
-
-
-
     // ------------------------------------------------------------------------------------------------------XXXXXXXXXXXXXXXXXXXXXXX
     createOrUpdateFMission("update", {
       oldMission: mission,
@@ -86,33 +83,71 @@ export const changeStatus = async (req, res) => {
 
 export const getEmployeesBySolvedTickets = async (req, res) => {
   try {
-    const employees = await Ticket.aggregate([
-      {
-        $group: {
-          _id: "$employe",
-          totalSolvedTickets: {
-            $sum: { $cond: [{ $eq: ["$isSolved", true] }, 1, 0] },
+    const structure = req.user.structure;
+    const role = req.user.role;
+    let employees;
+
+    if (role === "responsable") {
+      employees = await Ticket.aggregate([
+        {
+          $group: {
+            _id: "$employe",
+
+            totalSolvedTickets: {
+              $sum: { $cond: [{ $eq: ["$isSolved", true] }, 1, 0] },
+            },
           },
         },
-      },
-      { $sort: { totalSolvedTickets: -1 } },
-      {
-        $lookup: {
-          from: "users",
-          localField: "_id",
-          foreignField: "_id",
-          as: "employeeDetails",
+        { $sort: { totalSolvedTickets: -1 } },
+        {
+          $lookup: {
+            from: "users",
+            localField: "_id",
+            foreignField: "_id",
+            as: "employeeDetails",
+          },
         },
-      },
-      { $unwind: "$employeeDetails" },
-      {
-        $project: {
-          employee: "$employeeDetails",
-          totalSolvedTickets: 1,
-          _id: 0,
+        { $unwind: "$employeeDetails" },
+        {
+          $match: { "employeeDetails.structure": structure },
         },
-      },
-    ]);
+        {
+          $project: {
+            employee: "$employeeDetails",
+            totalSolvedTickets: 1,
+            _id: 0,
+          },
+        },
+      ]);
+    } else {
+      employees = await Ticket.aggregate([
+        {
+          $group: {
+            _id: "$employe",
+            totalSolvedTickets: {
+              $sum: { $cond: [{ $eq: ["$isSolved", true] }, 1, 0] },
+            },
+          },
+        },
+        { $sort: { totalSolvedTickets: -1 } },
+        {
+          $lookup: {
+            from: "users",
+            localField: "_id",
+            foreignField: "_id",
+            as: "employeeDetails",
+          },
+        },
+        { $unwind: "$employeeDetails" },
+        {
+          $project: {
+            employee: "$employeeDetails",
+            totalSolvedTickets: 1,
+            _id: 0,
+          },
+        },
+      ]);
+    }
 
     const sortedEmployees = employees.map(
       ({ employee, totalSolvedTickets }) => ({
@@ -120,6 +155,7 @@ export const getEmployeesBySolvedTickets = async (req, res) => {
         totalSolvedTickets,
       })
     );
+    console.log(sortedEmployees.filter((e) => e.uid === "04100010"));
 
     // console.log(sortedEmployees);
     res.json(sortedEmployees);

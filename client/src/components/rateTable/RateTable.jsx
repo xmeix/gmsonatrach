@@ -308,7 +308,7 @@ const RateTable = ({ type }) => {
                 <TableCell className={classes.tableCell}>ID Employé</TableCell>
                 <TableCell className={classes.tableCell}>Nom</TableCell>
                 <TableCell className={classes.tableCell}>Prénom</TableCell>
-                <Tooltip title="Nombre total de tickets clos / Nombre total de missions">
+                <Tooltip title="Nombre total de tickets cloturés / Nombre total de missions">
                   <TableCell className={classes.tableCell}>
                     Nombre moyen de tickets traités par mission
                   </TableCell>

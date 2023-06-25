@@ -338,9 +338,10 @@ export const ticketResolutionRate = (mission, tickets) => {
   const mtickets = tickets.filter((t) => t.mission?._id === mission?._id);
   // console.log(tickets.map((e) => e.mission));
   let A = mtickets.length; // Number of tickets for the mission
-  let B = mtickets.filter((t) => t.isSolved).length; // Number of resolved tickets for the mission
-
-  const value = ((B * 100) / A).toFixed(2);
+  let B = mtickets.filter((t) => t.isSolved === true).length; // Number of resolved tickets for the mission
+  
+  const value =
+    isNaN(B) || isNaN(A) ? (0).toFixed(2) : ((B * 100) / A).toFixed(2);
   return isNaN(value) ? (0).toFixed(2) : value;
 };
 // nb tickets resolus / nb tickets total
@@ -424,6 +425,6 @@ export const AverageTicketPerMissionPerEmployee = (
 
   // Calculate the number of missions contributed by the user
   const A = userMissions.length;
-  const value = ((totalTickets) / A).toFixed(2);
-  return isNaN(value) ? 0 : value;
+  const value = (totalTickets / A).toFixed(2);
+  return isNaN(value) || A === 0 ? (0).toFixed(2) : value;
 };
