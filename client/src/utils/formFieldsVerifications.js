@@ -65,7 +65,7 @@ export const validateMission = (mission, user, object) => {
   //   errors.budget = "obligatoire";
   // }
 
-  if (mission?.budget < 0) {
+  if (mission?.budget <= 0) {
     errors.budget = "le budget doit être supérieur à 0";
   }
 
@@ -158,7 +158,7 @@ export const validateMission = (mission, user, object) => {
 
       if (isEmployeeAssignedToMission) {
         errors.employes =
-          "Les employées ne doivent pas avoir des missions entre date de début et date de fin de missions introduites";
+          "Les employées ne doivent pas avoir des missions entre date de début et date de fin des missions introduites";
       }
     }
   }

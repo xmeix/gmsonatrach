@@ -26,6 +26,7 @@ const PopupMission = ({ item }) => {
   const belongs = () =>
     item.employes.some((employee) => employee._id === user._id);
   const [budgetConsome, setBudgetConsomme] = useState(0);
+  const [err, setErr] = useState("");
   const handleCheck = (check, id) => {
     const newTasks = tasksRef.current.map((task) => {
       if (task._id === id) {
@@ -53,28 +54,31 @@ const PopupMission = ({ item }) => {
             <div className="bgt">
               <input
                 type="number"
-                style={{
-                  maxWidth: "70%",
-                }}
                 min={0}
                 onChange={(e) => setBudgetConsomme(e.target.value)}
               />
-              {["secretaire", "directeur", "responsable"].includes(
-                user.role
-              ) && (
-                <button
-                  onClick={() => {
-                    if (budgetConsome > 0 ) {
-                      handleClick("update", item, "mission", "", {
-                        budgetConsome: budgetConsome,
-                      });
-                    }
-                  }}
-                >
-                  OK
-                </button>
+              {err && (
+                <div className="input-error" style={{ alignSelf: "flex-end" }}>
+                  {err}
+                </div>
               )}
-            </div>
+            </div>{" "}
+            {["secretaire", "directeur", "responsable"].includes(user.role) && (
+              <button
+                onClick={() => {
+                  if (budgetConsome > 0) {
+                    handleClick("update", item, "mission", "", {
+                      budgetConsome: budgetConsome,
+                    });
+                    setErr("");
+                  } else {
+                    setErr("Budget non valide");
+                  }
+                }}
+              >
+                OK
+              </button>
+            )}
           </div>
         );
       } else {

@@ -331,8 +331,7 @@
   margin-top: 1em;
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 1em;
+  justify-content: center; 
   flex-wrap: wrap;
 }
 .info-creation .item-label {
