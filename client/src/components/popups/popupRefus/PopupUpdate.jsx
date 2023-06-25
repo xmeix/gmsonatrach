@@ -10,9 +10,7 @@ import {
 } from "@material-ui/core";
 import useBtn from "../../../hooks/useBtn";
 import { useSelector } from "react-redux";
-import PopupSurvey from "./PopupSurvey";
 import useFileGenerator from "../../../hooks/useFileGenerator";
-import { convertLength } from "@mui/material/styles/cssUtils";
 import { TableContainer } from "@material-ui/core";
 
 const useStyles = makeStyles({
@@ -625,19 +623,19 @@ const PopupUpdate = ({ item, close, setSurvey }) => {
                 className="update"
                 onClick={() => {
                   //console.log(item.idMission);
+                  handleClick("update", item, "rfm", "", { deroulement: body });
                   handleClick("update", item.idMission, "mission", "", {
                     DateDebA: new Date(body2?.dateDebA),
                     DateRetA: new Date(body2?.dateRetA),
                     tDateDeb: new Date(body2?.tDateDeb),
                     tDateRet: new Date(body2?.tDateRet),
                   });
-                  handleClick("update", item, "rfm", "", { deroulement: body });
                   close();
                 }}
               >
                 Update
               </button>
-              {item?.mission?.etat === "terminée" && (
+              {item?.idMission?.etat === "terminée" && (
                 <button
                   className="send"
                   onClick={() => {
@@ -647,9 +645,11 @@ const PopupUpdate = ({ item, close, setSurvey }) => {
                       tDateDeb: body2?.tDateDeb,
                       tDateRet: body2?.tDateRet,
                     });
+
                     handleClick("update", item, "rfm", "", {
                       deroulement: body,
                     });
+
                     handleClick("send", item, "rfm", "");
                     if (item.nbRefus === 0 && item.etat !== "accepté") {
                       setSurvey(true);

@@ -198,6 +198,7 @@ export const updateMissionEtat = async (req, res) => {
     const mission = await Mission.findById(req.params.id);
     const employes = mission.employes;
 
+    let oldDate = mission.tDateRet;
     const updatedMission = await Mission.findByIdAndUpdate(
       req.params.id,
       { ...req.body, updatedBy: updatedBy },
@@ -294,7 +295,10 @@ export const updateMissionEtat = async (req, res) => {
       //____________________________________________________________________________________
     }
 
-    if (req.body.tDateRet) {
+    if (
+      req.body.tDateRet &&
+      new Date(req.body.tDateRet).getTime() !== new Date(oldDate).getTime()
+    ) {
       sendEmits("update", {
         others: employes.map((employe) => employe._id),
         structure: mission.structure,

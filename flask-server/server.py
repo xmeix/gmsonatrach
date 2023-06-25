@@ -29,7 +29,7 @@ try:
     # Print the first 10 documents in the collection
     # trained_model = train_model(missions, tickets)
     # joblib.dump(trained_model, 'trained_model.joblib')
-    best_accuracy = 0  # Track the current best accuracy
+    best_accuracy = 46.32   # Track the current best accuracy
     best_model = None  # Track the best model
     best_model_name = ""
     train_accuracies_dt = []  # Track decision tree accuracies for each iteration
@@ -38,7 +38,7 @@ try:
     # Perform iterative training
     
     # Perform iterative training
-    for i in range(3):
+    for i in range(6):
         print('iteration: ', i)
         score,model,model_name,X_test_scaled,y_test,score2= train_model(missions, tickets)
         if model_name == "random forest":

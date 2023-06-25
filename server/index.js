@@ -229,7 +229,7 @@ mongoose
   });
 
 // CRON JOB POUR UNE APPLICATION TEMPS REEL
-cron.schedule("20 14 * * *", async () => {
+cron.schedule("53 20 * * *", async () => {
   console.log("Cron job starting...");
 
   //_____________________________________________________________________________________________________
@@ -315,7 +315,7 @@ cron.schedule("20 14 * * *", async () => {
       users: [...employeIds],
       message:
         "Votre rapport de fin de mission a été créé et doit être rempli dans les délais impartis. Merci de prendre les mesures nécessaires pour le compléter.",
-      path: "/gestion-des-missions/rfms",
+      path: "/gestion-des-mission/rfms",
       type: "RFM",
     });
     // emitNotification({ others: mission.employes });
@@ -380,7 +380,7 @@ cron.schedule("20 14 * * *", async () => {
           /\//g,
           "-"
         )} a été automatiquement rejetée en raison d'une absence de réponse.`,
-      path: "",
+      path: "/gestion-des-mission/rfms",
       type: "mission",
     });
     // emitNotification({ others: [...users, mission.createdBy] });
@@ -431,7 +431,7 @@ cron.schedule("20 14 * * *", async () => {
     //  SEND REMINDER FOR EACH EMPLOYES
     // __________________________________
     createNotification({
-      users: [employeIds],
+      users: [...employeIds],
       message:
         "Mission réussie ! Merci de nous envoyer votre rapport de fin de mission dûment rempli.",
       path: "/gestion-des-mission/rfms",

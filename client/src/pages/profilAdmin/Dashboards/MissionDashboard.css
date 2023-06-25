@@ -16,6 +16,7 @@
   box-shadow: none;
   background-color: transparent;
   cursor: pointer;
+  color: black !important;
 }
 
 .subchart-buttons {

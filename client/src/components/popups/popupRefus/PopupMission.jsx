@@ -209,13 +209,15 @@ const PopupMission = ({ item }) => {
             <ItemDiv label="Type" content={item.type} />
             <ItemDiv label="Observation" content={item.observation || " / "} />
           </div>
-          <div>
-            <ItemDiv
-              label="Budget"
-              content={item.budget ? item.budget : 0 + " DA"}
-            />
-            {renderBudgetComponent()}
-          </div>
+          {user.role !== "employe" && (
+            <div>
+              <ItemDiv
+                label="Budget"
+                content={item.budget ? item.budget : 0 + " DA"}
+              />
+              {renderBudgetComponent()}
+            </div>
+          )}
         </div>
       </>
       <div className="employes">

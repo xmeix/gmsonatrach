@@ -9,7 +9,7 @@ const useBtn = () => {
 
     console.log("inside handleClick " + _id + " " + route);
     switch (btnType.toLowerCase()) {
-      case "accept":
+      case "accept": 
         const etatAccept = type === "rfm" ? "accepté" : "acceptée";
         callApi("patch", `${route}/${_id}`, { etat: etatAccept });
         break;

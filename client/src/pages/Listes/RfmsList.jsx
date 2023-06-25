@@ -5,7 +5,7 @@ import "./../../css/Gestion.css";
 
 const RfmsList = () => {
   const { rfms } = useSelector((state) => state.rfms);
-  const { notCreatedRfms } = rfms.filter((e) => e.etat !== "créé");
+  const notCreatedRfms = rfms.filter((e) => e.etat !== "créé");
   const { user } = useSelector((state) => state.auth);
 
   return (

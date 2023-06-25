@@ -26,7 +26,8 @@ export const columnsRFM = [
   { id: "etat", label: "état", minWidth: "20px" },
 ];
 
-export const filterRFMOptions = ["en-attente", "accepté"];
+export const filterRFMOptions = ["créé", "en-attente", "accepté"];
+export const filterRFMOptionsDir = ["en-attente", "accepté"];
 
 // export const columnsUsersEmp = [
 //   { id: "createdAt", label: "date de création", minWidth: "20px" },
@@ -43,9 +44,9 @@ export const columnsUsersEmp = [
   { id: "prenom", label: "prénom", minWidth: "20px" },
 ];
 export const filterResOptions = [
-   "secretaire",
-  "employe", 
-   "non-missionnaire",
+  "secretaire",
+  "employe",
+  "non-missionnaire",
   "missionnaire",
 ];
 export const filterUserOptions = [
