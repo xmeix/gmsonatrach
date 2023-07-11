@@ -26,39 +26,39 @@ try:
     db = client["test"]
     missions = db['missions']
     tickets = db['tickets']
-    # Print the first 10 documents in the collection
-    # trained_model = train_model(missions, tickets)
-    # joblib.dump(trained_model, 'trained_model.joblib')
-    best_accuracy = 46.32   # Track the current best accuracy
-    best_model = None  # Track the best model
-    best_model_name = ""
-    train_accuracies_dt = []  # Track decision tree accuracies for each iteration
-    train_accuracies_rf = []  # Track random forest accuracies for each iteration
+    # # Print the first 10 documents in the collection
+    # # trained_model = train_model(missions, tickets)
+    # # joblib.dump(trained_model, 'trained_model.joblib')
+    # best_accuracy = 46.32   # Track the current best accuracy
+    # best_model = None  # Track the best model
+    # best_model_name = ""
+    # train_accuracies_dt = []  # Track decision tree accuracies for each iteration
+    # train_accuracies_rf = []  # Track random forest accuracies for each iteration
 
-    # Perform iterative training
+    # # Perform iterative training
     
-    # Perform iterative training
-    for i in range(6):
-        print('iteration: ', i)
-        score,model,model_name,X_test_scaled,y_test,score2= train_model(missions, tickets)
-        if model_name == "random forest":
-          train_accuracies_rf.append(score)
-          train_accuracies_dt.append(score2)
-        else:
-          train_accuracies_dt.append(score)
-          train_accuracies_rf.append(score2)
+    # # Perform iterative training
+    # for i in range(6):
+    #     print('iteration: ', i)
+    #     score,model,model_name,X_test_scaled,y_test,score2= train_model(missions, tickets)
+    #     if model_name == "random forest":
+    #       train_accuracies_rf.append(score)
+    #       train_accuracies_dt.append(score2)
+    #     else:
+    #       train_accuracies_dt.append(score)
+    #       train_accuracies_rf.append(score2)
 
-        if score > best_accuracy:
-            best_accuracy = score
-            best_model = model
-            best_model_name = model_name
+    #     if score > best_accuracy:
+    #         best_accuracy = score
+    #         best_model = model
+    #         best_model_name = model_name
 
 
-    # Save the best model
-    if best_model is not None:
-        joblib.dump(best_model, 'trained_model.joblib')
-        print("Best model saved successfully!")
-        print("Best accuracy: ", best_accuracy)
+    # # Save the best model
+    # if best_model is not None:
+    #     joblib.dump(best_model, 'trained_model.joblib')
+    #     print("Best model saved successfully!")
+    #     print("Best accuracy: ", best_accuracy)
 
 except Exception as e:
     print(e)
